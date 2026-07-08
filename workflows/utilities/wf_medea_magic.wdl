@@ -50,39 +50,31 @@ workflow medea_magic {
     File cryptoneo_reference_fasta = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.fasta"
     # user-supplied reference fasta; when provided, overrides the hosted/organism reference
     File? reference_genome_fasta
-    # bwa alignment options (illumina variant calling)
-    String? bwa_docker_image
-    Int? bwa_cpu
-    Int? bwa_memory
-    Int? bwa_disk_size
+    # shared compute for the read_aligners (bwa for illumina, minimap2 for ont);
+    # these tracks are mutually exclusive (ont_data), and each task still falls back
+    # to its own docker default when read_aligner_docker is left unset
+    String? read_aligner_docker
+    Int? read_aligner_cpu
+    Int? read_aligner_memory
+    Int? read_aligner_disk_size
+    # shared compute for the variant callers (gatk variants/filter and clair3);
+    # these tracks are mutually exclusive (ont_data), and each task still falls back
+    # to its own docker default when variant_caller_docker is left unset
+    String? variant_caller_docker
+    Int? variant_caller_cpu
+    Int? variant_caller_memory
+    Int? variant_caller_disk_size
     # gatk variant-calling options (illumina)
     Int? gatk_ploidy
     File? gatk_intervals_file
-    String? gatk_variants_docker_image
-    Int? gatk_variants_cpu
-    Int? gatk_variants_memory
-    Int? gatk_variants_disk_size
     # gatk filtering options (illumina)
     Int? gatk_filter_min_variant_quality
     Int? gatk_filter_min_depth
     Float? gatk_filter_min_map_quality
     Int? gatk_filter_min_quality_by_depth
     String? gatk_filter_expression
-    String? gatk_filter_docker_image
-    Int? gatk_filter_cpu
-    Int? gatk_filter_memory
-    Int? gatk_filter_disk_size
-    # minimap2 alignment options (ont variant calling)
-    String? minimap2_docker_image
-    Int? minimap2_cpu
-    Int? minimap2_memory
-    Int? minimap2_disk_size
     # clair3 variant-calling options (ont)
     String? clair3_model
-    String? clair3_docker_image
-    Int? clair3_cpu
-    Int? clair3_memory
-    Int? clair3_disk_size
     Int? clair3_variant_quality
     Boolean? clair3_include_all_contigs
     Boolean? clair3_enable_haploid_precise
@@ -138,10 +130,10 @@ workflow medea_magic {
           read2 = read2,
           samplename = samplename,
           reference_genome = variant_calling_reference_fastas[0],
-          cpu = bwa_cpu,
-          memory = bwa_memory,
-          disk_size = bwa_disk_size,
-          docker = bwa_docker_image
+          cpu = read_aligner_cpu,
+          memory = read_aligner_memory,
+          disk_size = read_aligner_disk_size,
+          docker = read_aligner_docker
       }
       call gatk_variants_task.gatk_variants as gatk_variants {
         input:
@@ -151,10 +143,10 @@ workflow medea_magic {
           reference_genome = variant_calling_reference_fastas[0],
           ploidy = gatk_ploidy,
           intervals_file = gatk_intervals_file,
-          docker = gatk_variants_docker_image,
-          cpu = gatk_variants_cpu,
-          memory = gatk_variants_memory,
-          disk_size = gatk_variants_disk_size
+          docker = variant_caller_docker,
+          cpu = variant_caller_cpu,
+          memory = variant_caller_memory,
+          disk_size = variant_caller_disk_size
       }
       call gatk_filter_task.gatk_filter as gatk_filter {
         input:
@@ -167,10 +159,10 @@ workflow medea_magic {
           min_map_quality = gatk_filter_min_map_quality,
           min_quality_by_depth = gatk_filter_min_quality_by_depth,
           filter_expression = gatk_filter_expression,
-          docker = gatk_filter_docker_image,
-          cpu = gatk_filter_cpu,
-          memory = gatk_filter_memory,
-          disk_size = gatk_filter_disk_size
+          docker = variant_caller_docker,
+          cpu = variant_caller_cpu,
+          memory = variant_caller_memory,
+          disk_size = variant_caller_disk_size
       }
     }
     # ONT long-read track: minimap2 alignment + Clair3 variant calling
@@ -183,10 +175,10 @@ workflow medea_magic {
           mode = "map-ont",
           output_sam = true,
           long_read_flags = true,
-          docker = minimap2_docker_image,
-          cpu = minimap2_cpu,
-          memory = minimap2_memory,
-          disk_size = minimap2_disk_size
+          docker = read_aligner_docker,
+          cpu = read_aligner_cpu,
+          memory = read_aligner_memory,
+          disk_size = read_aligner_disk_size
       }
       # convert the minimap2 SAM to the sorted, indexed BAM Clair3 expects
       call parse_mapping_task.sam_to_sorted_bam as clair3_sorted_bam {
@@ -209,10 +201,10 @@ workflow medea_magic {
           disable_phasing = clair3_disable_phasing,
           enable_gvcf = clair3_enable_gvcf,
           enable_long_indel = clair3_enable_long_indel,
-          docker = clair3_docker_image,
-          memory = clair3_memory,
-          cpu = clair3_cpu,
-          disk_size = clair3_disk_size
+          docker = variant_caller_docker,
+          memory = variant_caller_memory,
+          cpu = variant_caller_cpu,
+          disk_size = variant_caller_disk_size
       }
     }
   }
