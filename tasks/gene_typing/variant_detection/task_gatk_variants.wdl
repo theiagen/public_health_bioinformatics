@@ -57,49 +57,47 @@ task gatk_variants {
       ~{if defined(intervals_file) then "-L ~{intervals_file}" else ""} \
       -O ~{samplename}_genotype.g.vcf.gz \
 
-    # sequentially prepare variant filter expression and write it to FILTER_EXPRESSION.txt
+    # assemble the VariantFiltration arguments in python, giving each filter its
+    # own descriptive --filter-name, and writing them to a single line so bash can
+    # pass them straight to gatk
     python3 <<'CODE'
-    filter_conditions = []
+    # each entry is (filter_name, jexl_expression); VariantFiltration flags a
+    # variant with filter_name when its expression evaluates to true. these
+    # threshold expressions are written without spaces so bash word-splitting
+    # keeps each token intact. the user-supplied filter_expression may contain
+    # spaces, so it is handled separately as a quoted argument in the gatk call
+    filters = []
 
-    # start with the user-provided base filter expression, if any
-    base_filter = "~{filter_expression}".strip()
-    if base_filter:
-        filter_conditions.append(base_filter)
+    # optional threshold-based filters, each with a name matching its function
+    ~{if defined(min_variant_quality) then "filters.append(('variant_quality_filter', 'QUAL<~{min_variant_quality}'))" else ""}
+    ~{if defined(min_depth) then "filters.append(('depth_filter', 'DP<~{min_depth}'))" else ""}
+    ~{if defined(min_map_quality) then "filters.append(('mapping_quality_filter', 'MQ<~{min_map_quality}'))" else ""}
+    ~{if defined(min_quality_by_depth) then "filters.append(('quality_by_depth_filter', 'QD<~{min_quality_by_depth}'))" else ""}
 
-    # append each optional threshold-based condition when its input is defined
-    ~{if defined(min_variant_quality) then "filter_conditions.append('QUAL < ~{min_variant_quality}')" else ""}
-    ~{if defined(min_depth) then "filter_conditions.append('DP < ~{min_depth}')" else ""}
-    ~{if defined(min_map_quality) then "filter_conditions.append('MQ < ~{min_map_quality}')" else ""}
-    ~{if defined(min_quality_by_depth) then "filter_conditions.append('QD < ~{min_quality_by_depth}')" else ""}
-
-    # join all conditions with logical AND (empty string if none were provided)
-    filter_expression = " && ".join(filter_conditions)
+    # build the flat argument list; an empty list yields an empty file so no
+    # filters are applied
+    args = []
+    for filter_name, filter_expr in filters:
+        args += ["--filter-name", filter_name, "--filter-expression", filter_expr]
 
     with open("FILTER_EXPRESSION.txt", "w") as outfile:
-        outfile.write(filter_expression)
+        outfile.write(" ".join(args))
 
-    if filter_expression:
-        print('Filtering variants with the following expression: "{}"'.format(filter_expression))
+    if filters:
+        print("Applying the following VariantFiltration filters:")
+        for filter_name, filter_expr in filters:
+            print('  {}: "{}"'.format(filter_name, filter_expr))
     else:
-        print("No filter expression provided; running VariantFiltration without a filter.")
+        print("No filter expression provided; running VariantFiltration without filters.")
     CODE
 
-    FILTER_EXPRESSION=$(cat FILTER_EXPRESSION.txt)
-
-    # call VariantFiltration, applying the assembled filter only when one exists
-    if [[ -n "$FILTER_EXPRESSION" ]]; then
-      gatk --java-options "-Xmx~{memory}G" VariantFiltration \
-        -R ~{reference_genome} \
-        -V ~{samplename}_genotype.g.vcf.gz \
-        -O ~{samplename}_filtered.g.vcf.gz \
-        --filter-name "gatk_variant_filter" \
-        -filter "$FILTER_EXPRESSION"
-    else
-      gatk --java-options "-Xmx~{memory}G" VariantFiltration \
-        -R ~{reference_genome} \
-        -V ~{samplename}_genotype.g.vcf.gz \
-        -O ~{samplename}_filtered.g.vcf.gz
-    fi
+    # call VariantFiltration with optional filter expression(s)
+    gatk --java-options "-Xmx~{memory}G" VariantFiltration \
+      -R ~{reference_genome} \
+      -V ~{samplename}_genotype.g.vcf.gz \
+      -O ~{samplename}_filtered.g.vcf.gz \
+      ~{if defined(filter_expression) then '--filter-name "user_filter" --filter-expression "~{filter_expression}"' else ""} \
+      $(cat FILTER_EXPRESSION.txt)
 
     # call SelectVariants
     gatk --java-options "-Xmx~{memory}G" SelectVariants \
