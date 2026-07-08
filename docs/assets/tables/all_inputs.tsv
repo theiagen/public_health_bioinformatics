@@ -596,9 +596,9 @@ core_iqtree	alrt	Int	Number of replicates to use for the SH-like approximate lik
 core_iqtree	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Core_Gene_SNP	runtime	
 core_iqtree	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Core_Gene_SNP	runtime	
 core_iqtree	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/iqtree:1.6.7	Optional	Core_Gene_SNP	docker	
-core_iqtree	iqtree_model	String	Substitution model, frequency type (optional) and rate heterogeneity type (optional) used by IQ-TREE. This string follows the IQ-TREE "-m" option. For comparison to other tools use HKY for Bactopia, GTR+F+I for Grandeur, GTR+G4 for Nullarbor, GTR+G for Dryad	GTR+I+G	Optional	Core_Gene_SNP	general	
-core_iqtree	iqtree_opts	String	Additional options for IQ-TREE, see <https://iqtree.github.io/doc/Command-Reference>		Optional	Core_Gene_SNP	general	
-core_iqtree	iqtree_ultrafast_bootstraps	Int	Number of ultrafast bootstrap replicates. Follows IQ-TREE "-bb" option.	1000	Optional	Core_Gene_SNP	general	
+core_iqtree	iqtree2_model	String	Substitution model, frequency type (optional) and rate heterogeneity type (optional) used by IQ-TREE. This string follows the IQ-TREE "-m" option. For comparison to other tools use HKY for Bactopia, GTR+F+I for Grandeur, GTR+G4 for Nullarbor, GTR+G for Dryad	GTR+I+G	Optional	Core_Gene_SNP	general	
+core_iqtree	iqtree2_opts	String	Additional options for IQ-TREE, see <https://iqtree.github.io/doc/Command-Reference>		Optional	Core_Gene_SNP	general	
+core_iqtree	iqtree2_ultrafast_bootstraps	Int	Number of ultrafast bootstrap replicates. Follows IQ-TREE "-bb" option.	1000	Optional	Core_Gene_SNP	general	
 core_iqtree	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Core_Gene_SNP	runtime	
 core_ksnp3_shared_snps_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	kSNP3	runtime	
 core_ksnp4_shared_snps_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	kSNP4	runtime	
@@ -979,8 +979,8 @@ freyja_plot_task	plot_time_interval	String	Options: "MS" for month, "D" for day	
 gambit	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Gambit_Query, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 gambit	disk_size	Int	Amount of storage (in GB) to allocate to the task	20	Optional	Gambit_Query, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 gambit	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0	Optional	Gambit_Query, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-gambit	gambit_db_genomes	File	Database of metadata for assembled query genomes; requires complementary signatures file. If not provided, uses default database "/gambit-db"	gs://gambit-databases-rp/2.2.0/gambit-metadata-2.2.0-20251111.gdb	Optional	Gambit_Query, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	
-gambit	gambit_db_signatures	File	Signatures file; requires complementary genomes file. If not specified, the file from the docker container will be used.	gs://gambit-databases-rp/2.2.0/gambit-signatures-2.2.0-20251111.gs	Optional	Gambit_Query, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	
+gambit	gambit_db_genomes	File	Database of metadata for assembled query genomes; requires complementary signatures file. If not provided, uses default database "/gambit-db"	gs://gambit-databases-rp/3.0.0/gambit-metadata-3.0.0-20260601.gdb	Optional	Gambit_Query, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	
+gambit	gambit_db_signatures	File	Signatures file; requires complementary genomes file. If not specified, the file from the docker container will be used.	gs://gambit-databases-rp/3.0.0/gambit-signatures-3.0.0-20260601.gs	Optional	Gambit_Query, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	
 gambit	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Gambit_Query, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 gamma	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 gamma	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
@@ -1648,7 +1648,7 @@ nanoplot_raw	max_length	Int	The maximum length of clean reads, for which reads l
 nanoplot_raw	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	Freyja_FASTQ, TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT	runtime	
 nanoq	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_ONT	runtime	
 nanoq	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_ONT	runtime	
-nanoq	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/nanoq:0.9.0--hec16e2b_1	Optional	TheiaViral_ONT	docker	
+nanoq	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/nanoq:0.10.0--hc1c3326_4	Optional	TheiaViral_ONT	docker	
 nanoq	max_read_length	Int	Maximum read length to keep	100000	Optional	TheiaViral_ONT	general	
 nanoq	max_read_qual	Int	Maximum read quality to keep	100	Optional	TheiaViral_ONT	general	
 nanoq	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaViral_ONT	runtime	
@@ -1731,9 +1731,9 @@ pan_iqtree	alrt	Int	Number of replicates to use for the SH-like approximate like
 pan_iqtree	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Core_Gene_SNP	runtime	
 pan_iqtree	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Core_Gene_SNP	runtime	
 pan_iqtree	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/iqtree:1.6.7	Optional	Core_Gene_SNP	docker	
-pan_iqtree	iqtree_model	String	Substitution model, frequency type (optional) and rate heterogeneity type (optional) used by IQ-TREE. This string follows the IQ-TREE "-m" option. For comparison to other tools use HKY for Bactopia, GTR+F+I for Grandeur, GTR+G4 for Nullarbor, GTR+G for Dryad	GTR+I+G	Optional	Core_Gene_SNP	general	
-pan_iqtree	iqtree_opts	String	Additional options for IQ-TREE, see <https://iqtree.github.io/doc/Command-Reference>		Optional	Core_Gene_SNP	general	
-pan_iqtree	iqtree_ultrafast_bootstraps	Int	Number of ultrafast bootstrap replicates. Follows IQ-TREE "-bb" option.	1000	Optional	Core_Gene_SNP	general	
+pan_iqtree	iqtree2_model	String	Substitution model, frequency type (optional) and rate heterogeneity type (optional) used by IQ-TREE. This string follows the IQ-TREE "-m" option. For comparison to other tools use HKY for Bactopia, GTR+F+I for Grandeur, GTR+G4 for Nullarbor, GTR+G for Dryad	GTR+I+G	Optional	Core_Gene_SNP	general	
+pan_iqtree	iqtree2_opts	String	Additional options for IQ-TREE, see <https://iqtree.github.io/doc/Command-Reference>		Optional	Core_Gene_SNP	general	
+pan_iqtree	iqtree2_ultrafast_bootstraps	Int	Number of ultrafast bootstrap replicates. Follows IQ-TREE "-bb" option.	1000	Optional	Core_Gene_SNP	general	
 pan_iqtree	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Core_Gene_SNP	runtime	
 pan_reorder_matrix	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Core_Gene_SNP, kSNP3, kSNP4	runtime	
 pan_reorder_matrix	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Core_Gene_SNP, kSNP3, kSNP4	runtime	
@@ -1929,7 +1929,7 @@ read_QC_trim	min_expected_contaminants	Int	Minimum expected sequences detected f
 read_QC_trim	min_length	Int	Internal component, do not modify	400	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 read_QC_trim	nanoq_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	runtime	
 read_QC_trim	nanoq_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	runtime	
-read_QC_trim	nanoq_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/nanoq:0.9.0--hec16e2b_1	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	docker	
+read_QC_trim	nanoq_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/nanoq:0.10.0--hc1c3326_4	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	docker	
 read_QC_trim	nanoq_max_read_length	Int	The maximum read length to keep after trimming	100000	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	general	
 read_QC_trim	nanoq_max_read_qual	Int	The maximum read quality to keep after trimming	100	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	general	
 read_QC_trim	nanoq_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	runtime	
@@ -1986,7 +1986,7 @@ read_QC_trim_ont	metabuli_taxdump_path	File	Path to taxonkit-generated taxdump f
 read_QC_trim_ont	min_length	Int	Internal component, do not modify	400	Optional	Freyja_FASTQ	general	
 read_QC_trim_ont	nanoq_cpu	Int	Number of CPUs to allocate to the task	2	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_ont	nanoq_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime	
-read_QC_trim_ont	nanoq_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/nanoq:0.9.0--hec16e2b_1	Optional	Freyja_FASTQ	docker	
+read_QC_trim_ont	nanoq_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/nanoq:0.10.0--hc1c3326_4	Optional	Freyja_FASTQ	docker	
 read_QC_trim_ont	nanoq_max_read_length	Int	Maximum read length to use for filtering	100000	Optional	Freyja_FASTQ	general	
 read_QC_trim_ont	nanoq_max_read_qual	Int	Maximum read quality to use for filtering	100	Optional	Freyja_FASTQ	general	
 read_QC_trim_ont	nanoq_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Freyja_FASTQ	runtime	
@@ -2178,7 +2178,7 @@ snippy_tree_wf	gubbins_docker	String	The Docker container to use for the task	us
 snippy_tree_wf	gubbins_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
 snippy_tree_wf	iqtree2_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
 snippy_tree_wf	iqtree2_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
-snippy_tree_wf	iqtree2_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/iqtree2:2.1.2	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	docker	
+snippy_tree_wf	iqtree2_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/iqtree2:2.4.0	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	docker	
 snippy_tree_wf	iqtree2_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
 snippy_tree_wf	iqtree2_model	String	Nucelotide substitution model to use when generating the final tree with IQ-TREE 2. By default, IQ-TREE 2 runs its ModelFinder algorithm to identify the model it thinks best fits your dataset		Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
 snippy_tree_wf	iqtree2_opts	String	Additional options to pass to IQ-TREE 2		Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
