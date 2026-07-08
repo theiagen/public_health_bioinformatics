@@ -5,6 +5,7 @@ task gatk_filter {
     String samplename
     File reference_genome
     File gvcf
+    File gvcf_index
 
     Int? min_variant_quality
     Int? min_depth
@@ -23,6 +24,12 @@ task gatk_filter {
 
     # obtain version
     gatk --version | grep GATK | grep -Po "v[^ ]+$" | tee VERSION
+
+    # index reference FASTA (fast enough to rerun w/o importing)
+    samtools faidx ~{reference_genome}
+
+    # create reference dictionary (fast enough to rerun w/o importing)
+    gatk CreateSequenceDictionary -R ~{reference_genome}
 
     # assemble the VariantFiltration arguments, giving each filter its
     # own descriptive --filter-name
