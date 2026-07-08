@@ -36,7 +36,7 @@ Sequencing data used in the Snippy_Tree workflow must:
 
         - `core_genome` = true (creates core genome phylogeny)
         - `use_gubbins` = true (recombination masked)
-        - nucleotide substitution model will be defined by IQ-TREE's Model Finder
+        - nucleotide substitution model will be defined by IQ-TREE's ModelFinder
 
     ??? toggle "Phylogenies of _Mycobacterium tuberculosis_ complex"
 

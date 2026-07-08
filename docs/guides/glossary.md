@@ -46,7 +46,7 @@ coverage (depth)
 :   How many times, on average, each base in a genome is represented by sequencing reads. Higher coverage generally means more reliable results.
 
 de novo assembly
-:   Assembling a genome from reads alone, without aligning to a reference genome. (*De novo* is Latin for "from the beginning".)
+:   Assembling a genome from reads alone, without aligning to a reference genome. (_De novo_ is Latin for "from the beginning".)
 
 genome annotation
 :   Identifying and labeling the features (such as genes and coding sequences) within an assembled genome.
@@ -58,7 +58,7 @@ indel
 :   An insertion or deletion of one or more bases in a DNA sequence.
 
 k-mer
-:   A short subsequence of DNA of a fixed length *k*, used for fast sequence comparison and classification.
+:   A short subsequence of DNA of a fixed length _k_, used for fast sequence comparison and classification.
 
 locus (plural: loci)
 :   A fixed position in a genome, such as the location of a particular gene.

@@ -23,7 +23,6 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
     2. the identified `centroid` genome by setting `use_centroid_as_reference` to true
     3. automatically selected using the `centroid` task and `reference_seeker` task to find a close reference genome to your dataset by leaving the `reference_genome_file` and `use_centroid_as_reference` fields blank
 
-
 !!! dna "Phylogenetic Tree Construction Options"
     There are several options that can be used to customize the phylogenetic tree, including:
 
@@ -57,7 +56,7 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
 
         - `core_genome` = true (creates core genome phylogeny)
         - `use_gubbins` = true (recombination masked)
-        - nucleotide substitution model will be defined by IQ-TREE 2's Model Finder
+        - nucleotide substitution model will be defined by IQ-TREE 2's ModelFinder
 
     ??? toggle "Phylogenies of _Mycobacterium tuberculosis_ complex"
 

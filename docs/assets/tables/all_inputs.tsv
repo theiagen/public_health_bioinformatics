@@ -2199,7 +2199,7 @@ snippy_tree_wf	snp_sites_cpu	Int	Number of CPUs to allocate to the task	1	Option
 snippy_tree_wf	snp_sites_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
 snippy_tree_wf	snp_sites_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/snp-sites:2.5.1	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	docker	
 snippy_tree_wf	snp_sites_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
-snippy_tree_wf	use_gubbins	Boolean	When "true", workflow removes recombination with Gubbins tasks; when "false", gubbins is not used	True	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
+snippy_tree_wf	use_gubbins	Boolean	When "true", workflow removes recombination with Gubbins tasks; when "false", Gubbins is not used	True	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
 snippy_variants	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Snippy_Variants	runtime	
 snippy_variants_wf	assembly_fasta	File	The assembly file for your sample in FASTA format		Optional	Snippy_Streamline, Snippy_Variants	general	
 snippy_variants_wf	base_quality	Int	Minimum quality for a nucleotide to be used in variant calling	13	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Variants	general	

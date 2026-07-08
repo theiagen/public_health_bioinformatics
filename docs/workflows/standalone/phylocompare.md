@@ -46,6 +46,6 @@ It is recommended to root a phylogeny and PhyloCompare can root upon an outgroup
 
 ## References
 
-> - Lin, Y., Rajan, V., Moret, B. M. E. (2012). A metric for phylogenetic trees based on matching. IEEE/ACM Transactions on Computational Biology and Bioinformatics, 9(4), 1014-22, <https://doi.org/10.1109/tcbb.2011.157>
-
-> - Moon, J. & Eulenstein, O. (2018). Cluster Matching Distance for Rooted Phylogenetic Trees. Lecture Notes in Computer Science, 10847, <https://doi.org/10.1007/978-3-319-94968-0_31>
+> Lin, Y., Rajan, V., Moret, B. M. E. (2012). A metric for phylogenetic trees based on matching. IEEE/ACM Transactions on Computational Biology and Bioinformatics, 9(4), 1014-22, <https://doi.org/10.1109/tcbb.2011.157>
+<!-- -->
+> Moon, J. & Eulenstein, O. (2018). Cluster Matching Distance for Rooted Phylogenetic Trees. Lecture Notes in Computer Science, 10847, <https://doi.org/10.1007/978-3-319-94968-0_31>

@@ -1,6 +1,6 @@
 # GAMBIT
 
-**GAMBIT (Genomic Approximation Method for Bacterial Identification and Tracking)** determines the taxon of the query genome assembly using a ***k*-mer-based approach** to match the assembly sequence to the closest complete genome in a database.
+**GAMBIT (Genomic Approximation Method for Bacterial Identification and Tracking)** determines the taxon of the query genome assembly using a **_k_-mer-based approach** to match the assembly sequence to the closest complete genome in a database.
 
 !!! dna "GAMBIT genomic distance metric correlates with sequence identity!"
     GAMBIT uses an efficient genomic distance metric along with a curated database to identify genome assemblies in seconds. You can read more about how the distance metric is calculated in the [Technical Details](#technical-details) section!
@@ -116,7 +116,7 @@ pip install .
 
 ### Usage
 
-Positional arguments are one or more FASTA files containing query genome assemblies. You must provide the path to the directory containing the database files using either the `-d` option (*before* the `query` subcommand) or by setting the `GAMBIT_DB_PATH` environment variable. The results can be optionally outputted to a file, but by default, they are written to the terminal.
+Positional arguments are one or more FASTA files containing query genome assemblies. You must provide the path to the directory containing the database files using either the `-d` option (_before_ the `query` subcommand) or by setting the `GAMBIT_DB_PATH` environment variable. The results can be optionally outputted to a file, but by default, they are written to the terminal.
 
 ```bash
 gambit [-d </path/to/database/>] query [-o results.csv] genome1.fasta genome2.fasta ...
@@ -573,7 +573,7 @@ In GAMBIT, the Jaccard Distance is calculated between two pre-computed k-mer set
 
 GAMBIT classifies unknown genomes by finding the distance to the closest reference genome and comparing that distance against the thresholds of the reference genome’s species and genus.
 
-For GAMBIT Prokaryotic database v2.0.0 and above, the threshold for a given species corresponds to the maximum intra-species distance ("max intra," or diameter) ([Figure 1](#figure1)). Some species are not well separated from their closest sister taxon and, in some cases, even overlap. Such as the case of _Escherichia coli_ and _Shigella sonnei_ in GAMBIT’s Prokaryotic Database. In these scenarios, the species were divided into subspecies groups based on clustering of their intra-species distances, and then reporting matches to these subgroups and their parent species.
+For GAMBIT Prokaryotic database v2.0.0 and above, the threshold for a given species corresponds to the maximum intra-species distance ("max intra," or diameter) ([Figure 1](./#figure1)). Some species are not well separated from their closest sister taxon and, in some cases, even overlap. Such as the case of _Escherichia coli_ and _Shigella sonnei_ in GAMBIT’s Prokaryotic Database. In these scenarios, the species were divided into subspecies groups based on clustering of their intra-species distances, and then reporting matches to these subgroups and their parent species.
 
 If the query genome distance is greater than the species diameter, GAMBIT attempts to report the genus. Genus diameters are computed and manually curated based on the diversity of the genus.
 ///
@@ -607,7 +607,7 @@ The ANI values were compared against GAMBIT distances for all pairs of genomes i
     | Set 3 | 88 | High (multiple phyla) | Medium | <https://doi.org/10.1371/journal.pone.0277575> |
     | Set 4 | 604 | High (multiple phyla) | Medium | <https://doi.org/10.1371/journal.pone.0277575> |
 
-Spearman correlation was high in all four data sets ([Figure 2](#figure2)) (Set 1 = -0.977; Set 2 = -0.968; Set 3 = -0.969; Set 4 = -0.979) for comparisons in which the ANI was reported by the FastANI tool (100%, 5.59%, 7.42% and 47.4%), revealing a nearly monotonic relationship between GAMBIT distance and ANI.
+Spearman correlation was high in all four data sets ([Figure 2](./#figure2)) (Set 1 = -0.977; Set 2 = -0.968; Set 3 = -0.969; Set 4 = -0.979) for comparisons in which the ANI was reported by the FastANI tool (100%, 5.59%, 7.42% and 47.4%), revealing a nearly monotonic relationship between GAMBIT distance and ANI.
 ///
 
 /// html | div[style='float: right; width: 50%; padding: 20px;']

@@ -178,7 +178,10 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads gene
 
 ///
 
+<!-- markdownlint-disable MD053 -->
+<!-- this section throws a linter error since the footnote is in the output table -->
 [^1]: Direct quote from the abstract of _Yang C, Chowdhury D, Zhang Z, Cheung WK, Lu A, Bian Z, Zhang L. A review of computational tools for generating metagenome-assembled genomes from metagenomic sequencing data. Comput Struct Biotechnol J. 2021;19:6301-14. doi: 10.1016/j.csbj.2021.11.028._ This is a paper from 2021 that reviews some of the tools used in this workflow, though not all.
+<!-- markdownlint-enable MD053 -->
 
 ## References
 

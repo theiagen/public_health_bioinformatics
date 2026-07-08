@@ -1,4 +1,4 @@
-name: docs-lint
+name: lint-documentation
 
 # Lints documentation on pull requests that touch docs or the lint config.
 on:
@@ -7,11 +7,10 @@ on:
       - "docs/**"
       - "includes/**"
       - ".vale.ini"
-      - "styles/**"
       - ".markdownlint.yaml"
       - ".markdownlintignore"
       - ".pre-commit-config.yaml"
-      - ".github/workflows/docs-lint.yml"
+      - ".github/workflows/lint-documentation.yml"
   workflow_dispatch:
 
 permissions:

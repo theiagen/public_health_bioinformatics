@@ -78,13 +78,13 @@ You can expect a careful review of every PR and receive feedback as needed befor
 <!--
 A Public Service Announcement regarding calculating the contribution math:
 
-Andrew Hale added a .txt database file to docs/assets that artifically inflates his line
-count by 55,316 lmao. This was not code and shouldn't be considered as such. Please subtract
+Andrew Hale added a .txt database file to docs/assets that artificially inflates his line
+count by 55,316. This was not code and shouldn't be considered as such. Please subtract
 55,316 from his line count when updating this list. Sage Wright subsequently deleted that .txt
 database in a later commit (on 2025-09-03), so also please subtract 55,316 from Sage Wright's
 line count as well.
 
-okay thanks byee
+okay thanks bye
 -->
 
 (Ordered by contribution [# of lines changed] as of 2026-05-06)

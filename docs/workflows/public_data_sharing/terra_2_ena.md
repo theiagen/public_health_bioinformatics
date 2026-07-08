@@ -54,6 +54,7 @@ Before you can submit data to ENA you must [register](https://www.ebi.ac.uk/ena/
 </div>
 
 #### Sample Metadata Fields
+
 ??? tip "Using Customized Column Names in Terra Tables"
 
     In some cases, users may have data tables in Terra with column names that differ from the field names expected by ENA. The `Terra_2_ENA` workflow allows users to supply a **custom column mapping file**, enabling them to specify how their columns map to the required/mandatory field names.
@@ -168,7 +169,6 @@ Before you can submit data to ENA you must [register](https://www.ebi.ac.uk/ena/
 
     Reference: [ENA viral minimal sample checklist](https://www.ebi.ac.uk/ena/browser/view/ERC000033)
 
-
 ### Inputs
 
 It's important to note that the `Terra_2_ENA` workflow is designed to run on set-level data tables. This means that the workflow will process all samples within a set together, rather than handling each sample individually. The `samples` input variable expects an array of sample IDs, corresponding to a set table. In most cases, set tables are generated automatically when running a workflow. However, if you need to create one manually, refer to this guide on [how to create a set table](https://support.terra.bio/hc/en-us/articles/6660506445339-How-to-make-a-set-table).
@@ -190,6 +190,7 @@ It's important to note that the `Terra_2_ENA` workflow is designed to run on set
 ///
 
 ## References
+
 - [ENA prokaryotic pathogen minimal sample checklist](https://www.ebi.ac.uk/ena/browser/view/ERC000028)
 - [ENA viral minimal sample checklist](https://www.ebi.ac.uk/ena/browser/view/ERC000033)
 - [ENA Data Submission Documentation](https://ena-docs.readthedocs.io/en/latest/index.html)

@@ -26,8 +26,7 @@ The [**TheiaCoV Workflow Series**](../workflows/genomic_characterization/theiaco
     - **Influenza** (`"flu"`, `"influenza"`, `"Flu"`, `"Influenza"`)
     - **RSV-A** (`"rsv_a"`, `"rsv-a"`, `"RSV-A"`, `"RSV_A"`)
     - **RSV-B** (`"rsv_b"`, `"rsv-b"`, `"RSV-B"`, `"RSV_B"`)
-    - **Measles** (**`"measles"`**, `"Measles"`, `"mev"`, `"MeV"`, `"Morbillivirus"`, `"morbillivirus"`)
-
+    - **Measles** (`"measles"`, `"Measles"`, `"mev"`, `"MeV"`, `"Morbillivirus"`, `"morbillivirus"`)
 
 These workflows currently support eight organisms (see above). The workflows are adaptable, with parameters that can be customized for specific organisms. Input JSON files with preset configurations for each supported virus are provided [on the TheiaCoV workflow page](../workflows/genomic_characterization/theiacov.md#theiacov-workflows), streamlining the setup process.
 

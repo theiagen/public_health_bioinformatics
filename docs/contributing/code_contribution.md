@@ -13,11 +13,11 @@ Style guide inspired by Scott Frazer’s [WDL Best Practices Style Guide](https:
 
 All trailing whitespace should be removed (unless in a TSV, where a trailing tab character is considered valid data).
 
-***Modularity and Metadata***
+**_Modularity and Metadata_**
 
 - **Best Practice:** Place tasks and workflows in separate files to maintain modularity and clarity.
 
-***Docker Containers***
+**_Docker Containers_**
 
 - Use a specific Docker container version instead of 'latest' to ensure reproducibility and prevent unexpected changes in container behavior.
 
@@ -27,7 +27,7 @@ All trailing whitespace should be removed (unless in a TSV, where a trailing tab
 
 - Preferentially use containers from [`Google's Artifact Registry`](https://console.cloud.google.com/artifacts/docker/general-theiagen/us) rather than those from [`quay.io`](http://quay.io) or [`dockerhub`](https://hub.docker.com/)
 
-***Indentation and Whitespace***
+**_Indentation and Whitespace_**
 
 - Use 2-space indentation for all blocks. Avoid using tabs to ensure uniform formatting across editors:
 
@@ -40,7 +40,7 @@ All trailing whitespace should be removed (unless in a TSV, where a trailing tab
 
 - Use a single space when defining variables (`this = that` _not_ `this= that` (unless a bash variable where `this=that` is required))
 
-***Bracket and Spacing Conventions***
+**_Bracket and Spacing Conventions_**
 
 - Avoid line breaks for opening braces. Keep them on the same line as the declaration. i.e `input {` instead of `input\n{`
 
@@ -60,7 +60,7 @@ All trailing whitespace should be removed (unless in a TSV, where a trailing tab
 - Use single space when defining input/output variables & runtime attributes  (`output {` instead of `output{`)
 - Separate non-indented constructs (like input and output sections) with a single-line break for readability.
 
-***Command Block Syntax***
+**_Command Block Syntax_**
 
 - Enclose command blocks in triple angle brackets (<<< ... >>>) for consistency and easier handling of multi-line scripts. It also avoids issues with unescaped special characters in the command block:
 
@@ -222,7 +222,7 @@ A WDL workflow block orchestrates the execution of tasks and subworkflows. It de
 ### The `import` section
 
 - Include a block of `import` statements (sorted in alphabetical order).
-  - When a workflow imports a task, ensure it is imported under a unique name to avoid conflicts.
+    - When a workflow imports a task, ensure it is imported under a unique name to avoid conflicts.
 
       ```bash
       import "../tasks/task_task1.wdl" as task1_task

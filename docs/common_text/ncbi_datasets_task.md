@@ -14,7 +14,7 @@ fragment: true
 <!-- endif -->
 <!-- if: snippy -->
     !!! dna "`include_gbff` behavior"
-        If `include_gbff` is set to `true`, the gbff file will be used as the reference for `Snippy_Variants` and `Snippy_Tree`. If `include_gbff` is set to `false`, the fasta file will be used as the reference for `Snippy_Variants` and `Snippy_Tree`. Tree topology should not differ, though annotations may.
+        If `include_gbff` is set to `true`, the GBFF file will be used as the reference for `Snippy_Variants` and `Snippy_Tree`. If `include_gbff` is set to `false`, the fasta file will be used as the reference for `Snippy_Variants` and `Snippy_Tree`. Tree topology should not differ, though annotations may.
 <!-- endif -->
 
     !!! techdetails "NCBI Datasets Technical Details"

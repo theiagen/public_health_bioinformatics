@@ -34,7 +34,7 @@ The `Clair3_Variants` workflow processes Oxford Nanopore Technologies (ONT) sequ
 | `ont_guppy5` | Various | Legacy (For Guppy5 data) |
 
 !!! hint ""
-    The latest models for ONT are downloaded from the [nanoporetech/rerio github](https://github.com/nanoporetech/rerio?tab=readme-ov-file#clair3-models). Please let us know if there is a model not included you would like to see added.
+    The latest models for ONT are downloaded from the [nanoporetech/rerio GitHub](https://github.com/nanoporetech/rerio?tab=readme-ov-file#clair3-models). Please let us know if there is a model not included you would like to see added.
 
 ### Inputs
 

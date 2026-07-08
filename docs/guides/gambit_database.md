@@ -261,7 +261,7 @@ while to_download:
 
 #### Step 6: Create the database
 
-The next step is to create the SQLite database file for the GAMBIT database. [Figure 1](#figure1) depicts the database structure expected by GAMBIT.
+The next step is to create the SQLite database file for the GAMBIT database. [Figure 1](./#figure1) depicts the database structure expected by GAMBIT.
 
 We provide a Python script to accomplish this. Please add the missing information marked with `<>` to make the utility function and make sure you have all the required dependencies installed in your system, including [GAMBIT](./gambit.md) and [SQLalchemy](https://www.sqlalchemy.org/).
 
