@@ -25,6 +25,7 @@ workflow allele_clustering {
   }
   output {
     File concatenated_allele_jsons = allele_clustering_task.concatenated_jsons
+    File allele_clustering_distance_matrix = allele_clustering_task.distance_matrix
     File allele_clustering_tree = allele_clustering_task.tree
     String allele_clustering_wf_version = version_capture.phb_version
     String allele_clustering_wf_analysis_date = version_capture.date

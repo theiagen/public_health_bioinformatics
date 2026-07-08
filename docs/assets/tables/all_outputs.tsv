@@ -47,6 +47,7 @@ allele_calling_scheme	String	The BLAST database scheme used	TheiaProk_FASTA, The
 allele_calling_standard_json	File	A JSON listing the allele hashes for all loci	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 allele_calling_total_loci_count	Int	The total number of loci	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 allele_clustering_tree	File	The NWK file containing the resulting tree	Allele_Clustering
+allele_clustering_distance_matrix	File	The distance matrix of the resulting tree	Allele_Clustering
 allele_clustering_wf_analysis_date	String	Date of analysis	Allele_Clustering
 allele_clustering_wf_version	String	Version of PHB used for analysis	Allele_Clustering
 amr_results_csv	File	CSV formatted AMR profile	AMR_Search

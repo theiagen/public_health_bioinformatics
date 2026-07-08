@@ -14,7 +14,7 @@ task allele_clustering {
 
     Int cpu = 2
     Int disk_size = 100
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/allele-clustering:1.0.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/allele-clustering:1.1.0-dev"
     Int memory = 4
   }
   command <<<
@@ -38,6 +38,7 @@ task allele_clustering {
   >>>
   output {
     File concatenated_jsons = "~{tree_name}_concatenated_profiles.ndjson"
+    File distance_matrix = "~{tree_name}.matrix.csv"
     File tree = "~{tree_name}.nwk"
   }
   runtime {
