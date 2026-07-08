@@ -21,6 +21,7 @@ workflow cauris_cladetyper {
     String cauris_cladetyper_wf_analysis_date = version_capture.date
     String cladetyper_clade = cladetyper.gambit_cladetype
     String cladetyper_annotated_reference = cladetyper.annotated_reference
+    String cladetyper_assembly_reference = cladetyper.assembly_reference
     String cladetyper_gambit_version = cladetyper.gambit_version
     String cladetyper_docker_image = cladetyper.gambit_cladetyper_docker_image
   }
