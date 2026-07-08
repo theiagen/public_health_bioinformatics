@@ -89,6 +89,7 @@ task cauris_cladetyper {
         if top_clade == edit_ref2:
             claderef = annotation[0]
             cladetype = annotation[1]
+            cladefa = ref
             break
 
     # report top clade
@@ -96,12 +97,15 @@ task cauris_cladetyper {
         claderef_file.write(claderef)
     with open("CLADETYPE", 'w') as cladetype_file:
         cladetype_file.write(cladetype)
+    with open("CLADEFASTA", 'w') as cladefasta_file:
+        cladefasta_file.write(cladefa)
     CODE
   >>>
   output {
     String gambit_version = read_string("VERSION")
     String gambit_cladetype = read_string("CLADETYPE")
     String annotated_reference = read_string("CLADEREF")
+    String assembly_reference = read_string("CLADEFASTA")
     String gambit_cladetyper_docker_image = docker
   }
   runtime {
