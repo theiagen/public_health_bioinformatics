@@ -182,13 +182,13 @@ Options:
 
     This database is a **major update** to the GTDB v2.2.0 database. This iteration of the GAMBIT database relies upon the [Genome Taxonomy Database](https://gtdb.ecogenomic.org/) (GTDB), an initiative to establish a standardised microbial taxonomy based on genome phylogeny. The genomes used to construct the phylogeny are obtained from [RefSeq](https://www.ncbi.nlm.nih.gov/refseq/) and [GenBank](https://www.ncbi.nlm.nih.gov/genbank/), independently quality-controlled using [CheckM](https://github.com/Ecogenomics/CheckM/wiki) before inclusion in GTDB.
 
-    This database was computed from [GTDB Release 232](https://gtdb.ecogenomic.org/stats/r232) as of April 15th, 2025. It contains 8661 species and 144178 genomes. 
+    This database was computed from [GTDB Release 232](https://gtdb.ecogenomic.org/stats/r232) as of April 15th, 2025. It contains 8661 species and 144178 genomes.
 
     - **Database Creation Workflow**
-         
+
         The v3.0.0 GTDB GAMBIT Database was created leveraging [GAMBITdb-nf workflow](), version 1.1.2. This workflow creates GAMBIT databases automatically from GTDB metadata spreadhseets. The process followed was:
 
-        1. The bacterial metadata spreadsheet for GTDB r232 was downloaded from <https://data.gtdb.aau.ecogenomic.org/releases/release232/232.0/bac120_metadata_r232.tsv.gz> 
+        1. The bacterial metadata spreadsheet for GTDB r232 was downloaded from <https://data.gtdb.aau.ecogenomic.org/releases/release232/232.0/bac120_metadata_r232.tsv.gz>
         2. Metagenomic Assembled Genomes (MAGs) were filtered out from the metadata spreadsheet by removing all genome entries that contained the word "metagenome" in the `ncbi_genome_category`column
         3. The database was created with the following parameters:
 
@@ -201,7 +201,7 @@ Options:
             4. _Jaccard distance_: changed to `rowwise-stream` for speed
 
             5. _Taxonomy source_: GTDB with whitelist file provided
-        
+
         4. The following genus were whitelisted
 
             1. _Escherichia_
@@ -213,9 +213,9 @@ Options:
             4. _Proteus_
 
     - **Curation efforts**
-        
+
         The following curation steps were followed:
-        
+
         - *Eschrichia* and *Shigella*
             - A new database for just genomes classified as either *Escherichia* or *Shigella* in the `ncbi_taxonomy`column was created though the following steps:
 
@@ -238,19 +238,19 @@ Options:
                     4. _Jaccard distance_: changed to `rowwise-stream` for speed
 
                     5. _Taxonomy source_: NCBI
-                
+
                 4. This new database was merged with GAMBIT Database v3.0.0 by removing the pre-existing *Escherichia*/*Shigella* genomes and appending the new database
 
                     a. There were 5 genomes that the original v3.0.0 DB called *Enterbacter flexneri_A*, but the *Esherichia*/*Shigella* build labeled as *Escherichia coli*. To avoid misclassifications, these were removed.
-        
+
         - *Enterbacter flexneri_A*
 
             - The *Enterobacter flexneri_A* species was removed outright from v3.0.0 GAMBIT Database as this cluster was composed mostly of genomes that are classified *Escherichia coli* in NCBI but are low quality.
-        
+
         - *Enterobacter* sp.
 
             - After manual curation of the species calls, it was decided that GTDB-defined clusters were to be silenced by turning the report boolean to FALSE. An exception was made for *Enterobacter hormaechei_C* as it clusters with *Enterobacter hormaechei*.
-            
+
         - *Tropheryma whipplei*
 
             - This species has a low completeness score of around 75% and over 100 contigs, therefore it has not been included in the original v3.0.0 database
@@ -290,7 +290,7 @@ Options:
     Summary of species represented in the database with number of genomes representing each species and the species threshold:
 
     - <https://storage.googleapis.com/gambit-databases-rp/3.0.0/gambit-taxa-3.0.0-20260601.csv>
-    
+
         Note: Species with a threshold of "0" have been sub-speciated.
 
 #### GAMBIT GTDB Database v2.2.0
