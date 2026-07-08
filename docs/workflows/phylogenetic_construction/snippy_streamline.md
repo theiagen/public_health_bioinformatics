@@ -30,7 +30,7 @@ The `Snippy_Streamline` workflow is an all-in-one approach to generating a refer
     1. masking user-specified regions of the genome (_by providing a bed file to `snippy_core_bed`_)
     2. producing either a core or pan-genome phylogeny and SNP-matrix (_by altering `core_genome`; true [default] = core genome, false = pan-genome_)
     3. choosing the nucleotide substitution (_by altering `iqtree2_model` [see below for possible nucleotide substitution models]_), or allowing IQ-TREE's ModelFinder to identify the best model for your dataset (default)
-    4. masking recombination detected by gubbins, or not (_by altering `use_gubbins`; true [default] = recombination masking, false = no recombination masking_)
+    4. masking recombination detected by Gubbins, or not (_by altering `use_gubbins`; true [default] = recombination masking, false = no recombination masking_)
 
     !!! warning "Multiple Contigs in Reference Genomes"
 
@@ -59,7 +59,7 @@ To run Snippy_Streamline, either a reference genome must be provided (`reference
 
         - `core_genome` = true (creates core genome phylogeny)
         - `use_gubbins` = true (recombination masked)
-        - nucleotide substitution model will be defined by IQTree's Model Finder
+        - nucleotide substitution model will be defined by IQ-TREE's Model Finder
 
     ??? toggle "Phylogenies of _Mycobacterium tuberculosis_ complex"
 
@@ -108,7 +108,7 @@ To run Snippy_Streamline, either a reference genome must be provided (`reference
     ==**Please see the full documentation for [Snippy_Tree](./snippy_tree.md) for more information.**==
 
 !!! tip "Gubbins Nucleotide Substitution Model"
-    In Snippy_Streamline, the nucleotide substitution model used by gubbins will always be **GTR+GAMMA**.
+    In Snippy_Streamline, the nucleotide substitution model used by Gubbins will always be **GTR+GAMMA**.
 
 {{ include_md("common_text/snippy_core_task.md", condition="snippy_streamline") }}
 {{ include_md("common_text/gubbins_task.md", condition="snippy_streamline") }}
@@ -134,4 +134,4 @@ To run Snippy_Streamline, either a reference genome must be provided (`reference
 <!-- -->
 > SNP-sites: Page, Andrew J., Ben Taylor, Aidan J. Delaney, Jorge Soares, Torsten Seemann, Jacqueline A. Keane, and Simon R. Harris. 2016. "SNP-Sites: Rapid Efficient Extraction of SNPs from Multi-FASTA Alignments." Microbial Genomics 2 (4): e000056.
 <!-- -->
-> IQTree: Nguyen, Lam-Tung, Heiko A. Schmidt, Arndt von Haeseler, and Bui Quang Minh. 2015. "IQ-TREE: A Fast and Effective Stochastic Algorithm for Estimating Maximum-Likelihood Phylogenies." Molecular Biology and Evolution 32 (1): 268–74.
+> IQ-TREE: Nguyen, Lam-Tung, Heiko A. Schmidt, Arndt von Haeseler, and Bui Quang Minh. 2015. "IQ-TREE: A Fast and Effective Stochastic Algorithm for Estimating Maximum-Likelihood Phylogenies." Molecular Biology and Evolution 32 (1): 268–74.

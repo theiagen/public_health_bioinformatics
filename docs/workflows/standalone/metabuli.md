@@ -8,7 +8,7 @@
 
 **The Metabuli workflow assesses the taxonomic profile of raw sequencing data (FASTQ files).**
 
-Metabuli is suitable for classifying short reads *AND* long reads by comparing them to reference genomes. Optionally it can enable the extraction of reads from a specific NCBI taxon ID of interest. Metabuli uses a novel k-mer structure, called a "metamer", which incorporates both the DNA sequence for high specificity and amino acid conservation for sensitive homology detection.
+Metabuli is suitable for classifying short reads _AND_ long reads by comparing them to reference genomes. Optionally it can enable the extraction of reads from a specific NCBI taxon ID of interest. Metabuli uses a novel k-mer structure, called a "metamer", which incorporates both the DNA sequence for high specificity and amino acid conservation for sensitive homology detection.
 
 The Metabuli_PHB workflow additionally includes read trimming software, Fastp (Illumina) and fastplong (ONT), for adapter trimming (recommended) and basic read preprocessing.
 
@@ -20,7 +20,7 @@ The Metabuli_PHB workflow additionally includes read trimming software, Fastp (I
 ### Databases
 
 !!! info  "Database selection"
-    The Metabuli software is database-dependent and **taxonomic assignments are highly sensitive to the database used**. An appropriate database should contain the expected organism(s) (e.g. *Escherichia coli*) and other taxa that may be present in the reads (e.g. *Citrobacter freundii*, a common contaminant). To enable read extraction, the database taxon inputs must correspond to an appropriate compressed taxdump, e.g. NCBI taxdump for RefSeq databases and GTDB taxdump for GTDB databases (see [suggested databases](#suggested-databases) for example).
+    The Metabuli software is database-dependent and **taxonomic assignments are highly sensitive to the database used**. An appropriate database should contain the expected organism(s) (e.g. _Escherichia coli_) and other taxa that may be present in the reads (e.g. _Citrobacter freundii_, a common contaminant). To enable read extraction, the database taxon inputs must correspond to an appropriate compressed taxdump, e.g. NCBI taxdump for RefSeq databases and GTDB taxdump for GTDB databases (see [suggested databases](#suggested-databases) for example).
 
 !!! warning "Adjusting computational resources"
     Default random-access memory (RAM) is typically sufficient for Metabuli, though this may need to be adjusted if an out-of-memory (OOM) error is returned. Additionally, the default `disk_space` is sufficient for the databases noted below, but this input must be adjusted to accommodate larger databases based on their decompressed size.
@@ -50,8 +50,6 @@ The Metabuli_PHB workflow additionally includes read trimming software, Fastp (I
 
         {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "Metabuli"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
-
-
 
 ### Workflow Tasks
 

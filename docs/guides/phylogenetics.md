@@ -91,7 +91,7 @@ The comparison of SNP distances between potentially related strains and backgrou
 
 !!! tip "Recommendations"
     - **Auspice** for phylogenetic trees generated using the Augur workflows
-    - **Phandango** for visualizing metadata against the phylogenetic tree (e.g. presence/absence of ARGs or plasmid replicons, SNP-distance matrices, recombination gff files from gubbins, or pangenome visualizations)
+    - **Phandango** for visualizing metadata against the phylogenetic tree (e.g. presence/absence of ARGs or plasmid replicons, SNP-distance matrices, recombination gff files from Gubbins, or pangenome visualizations)
     - **FigTree** for re-[rooting phylogenetic trees](http://cabbagesofdoom.blogspot.com/2012/06/how-to-root-phylogenetic-tree.html), visualizing trees with annotated nodes (e.g. time-dated phylogenies) and looking at branch lengths
     - **MicrobeTrace** for visualizing phylogenetic trees with transmission networks
 

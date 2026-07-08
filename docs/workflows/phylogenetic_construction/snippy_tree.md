@@ -36,7 +36,7 @@ Sequencing data used in the Snippy_Tree workflow must:
 
         - `core_genome` = true (creates core genome phylogeny)
         - `use_gubbins` = true (recombination masked)
-        - nucleotide substitution model will be defined by IQTree's Model Finder
+        - nucleotide substitution model will be defined by IQ-TREE's Model Finder
 
     ??? toggle "Phylogenies of _Mycobacterium tuberculosis_ complex"
 
@@ -83,4 +83,4 @@ Sequencing data used in the Snippy_Tree workflow must:
 <!-- -->
 > **SNP-sites:** Page, Andrew J., Ben Taylor, Aidan J. Delaney, Jorge Soares, Torsten Seemann, Jacqueline A. Keane, and Simon R. Harris. 2016. "SNP-Sites: Rapid Efficient Extraction of SNPs from Multi-FASTA Alignments." Microbial Genomics 2 (4): e000056.
 <!-- -->
-> **IQTree:** Nguyen, Lam-Tung, Heiko A. Schmidt, Arndt von Haeseler, and Bui Quang Minh. 2015. "IQ-TREE: A Fast and Effective Stochastic Algorithm for Estimating Maximum-Likelihood Phylogenies." Molecular Biology and Evolution 32 (1): 268–74.
+> **IQ-TREE:** Nguyen, Lam-Tung, Heiko A. Schmidt, Arndt von Haeseler, and Bui Quang Minh. 2015. "IQ-TREE: A Fast and Effective Stochastic Algorithm for Estimating Maximum-Likelihood Phylogenies." Molecular Biology and Evolution 32 (1): 268–74.

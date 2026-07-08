@@ -185,7 +185,7 @@ Options:
     1. GTDB refers to _Proteus terrae_ subspecies _cibarius_ (NCBI name) as _Proteus cibarius_. This species has been renamed to align with NCBI
         a. Rationale: This GAMBIT patch database renamed the species to align with NCBI’s naming convention and public health practice.
     2. The following genomes below were removed.
-        a. Rationale: These genomes are currently named as *Shigella* species in NCBI, but are actually *Escherichia coli* according to the best match type strain using ANI. Their removal from the database prevents false assignment of *Escherichia coli* query genomes to *Shigella* species.
+        a. Rationale: These genomes are currently named as _Shigella_ species in NCBI, but are actually _Escherichia coli_ according to the best match type strain using ANI. Their removal from the database prevents false assignment of _Escherichia coli_ query genomes to _Shigella_ species.
 
         GCF_020539805.1
         GCF_022494035.1
@@ -193,11 +193,11 @@ Options:
         GCF_013374815.1
         GCF_019793575.1
 
-        b. Rationale: This genome is currently named as *Klebsiella oxytoca*, but is actually *Escherichia coli* according to the best match type strain using ANI. Its removal from the database prevents false assignment of *Klebsiella oxytoca* query genomes to *Escherichia coli* species.
+        b. Rationale: This genome is currently named as _Klebsiella oxytoca_, but is actually _Escherichia coli_ according to the best match type strain using ANI. Its removal from the database prevents false assignment of _Klebsiella oxytoca_ query genomes to *Escherichia coli_ species.
 
         GCA_900083935.1
 
-        c. Rationale: This genome is currently named as *Clostridium perfringens*, but is actually *Enterococcus lactis* according to the best match type strain using ANI. Their removal from the database prevents false assignment of *Enterococcus lactis* query genomes to *Clostridium perfringens* species.
+        c. Rationale: This genome is currently named as _Clostridium perfringens_, but is actually _Enterococcus lactis_ according to the best match type strain using ANI. Their removal from the database prevents false assignment of _Enterococcus lactis_ query genomes to _Clostridium perfringens_ species.
 
         GCA_013390155.1
 
@@ -221,12 +221,12 @@ Options:
 
     This database is a **minor update** to the v2.0.1 database. This database is identical to the v2.0.1 database, **except for the following modifications**.
 
-    1. Genomes representing *Salmonella enterica* subspecies houtenae and diarizonae were added to the database.
-        a. Rationale: In the v2.0.0 and v2.0.1 databases, no genomes representing these subspecies are present, therefore query genomes representing these subspecies were not reliably classified as *Salmonella enterica*.
-    2. The *Salmonella arizonae* species was modified to be a subspecies of *Salmonella enterica*.
-        a. Rationale: While GTDB classifies *Salmonella arizonae* as its own species due to its divergence from other Salmonella species, NCBI considers *Salmonella arizonae* a subspecies of *Salmonella enterica*. *Salmonella enterica* is also the typical naming convention within public health laboratories, therefore we have renamed the species to align with user preference.
+    1. Genomes representing _Salmonella enterica_ subspecies houtenae and diarizonae were added to the database.
+        a. Rationale: In the v2.0.0 and v2.0.1 databases, no genomes representing these subspecies are present, therefore query genomes representing these subspecies were not reliably classified as _Salmonella enterica_.
+    2. The _Salmonella arizonae_ species was modified to be a subspecies of _Salmonella enterica_.
+        a. Rationale: While GTDB classifies _Salmonella arizonae_ as its own species due to its divergence from other Salmonella species, NCBI considers _Salmonella arizonae_ a subspecies of _Salmonella enterica_. _Salmonella enterica_ is also the typical naming convention within public health laboratories, therefore we have renamed the species to align with user preference.
     3. The following genomes below were removed.
-        a. Rationale: These genomes are currently named as *Shigella* species in NCBI, but are actually *Escherichia coli* according to the best match type strain using ANI. Their removal from the database prevents false assignment of *Escherichia coli* query genomes to *Shigella* species.
+        a. Rationale: These genomes are currently named as _Shigella_ species in NCBI, but are actually _Escherichia coli_ according to the best match type strain using ANI. Their removal from the database prevents false assignment of _Escherichia coli_ query genomes to _Shigella_ species.
 
         GCF_002247485.1
         GCF_002248245.1
@@ -272,7 +272,7 @@ Options:
         GCF_001063095.1
         GCF_002248705.1
 
-    These genomes are currently named as *Shigella* species in NCBI, but are actually *Escherichia coli* according to the best match type strain using ANI. Their removal from the database prevents false assignment of *Escherichia coli* query genomes to *Shigella* species.
+    These genomes are currently named as _Shigella_ species in NCBI, but are actually _Escherichia coli_ according to the best match type strain using ANI. Their removal from the database prevents false assignment of _Escherichia coli_ query genomes to _Shigella_ species.
 
     **Database Files**
 
@@ -303,12 +303,12 @@ Options:
 
         The following species were updated:
 
-        - *Shigella* sp*.*
-            - This genus is not present in GTDB  as it is collapsed under *Escherichia coli;*
+        - _Shigella_ sp*.*
+            - This genus is not present in GTDB  as it is collapsed under _Escherichia coli;_
             - All Shigella genomes in RefSeq were added to the database with no clustering using default quality criteria.
-        - *Mycolicibacterium/Mycolicibacter/Mycolicibacillus/Mycobacteroides/Mycobacterium* sp.
+        - _Mycolicibacterium/Mycolicibacter/Mycolicibacillus/Mycobacteroides/Mycobacterium_ sp.
             - All genomes available were used.
-        - *Tropheryma whipplei*
+        - _Tropheryma whipplei_
             - This species has a low completeness score of 75%;
             - The CheckM completeness score was lowered to 70% for genomes belonging to this species.
 
@@ -343,7 +343,7 @@ Options:
 
         The following species were updated:
 
-        - *Mycolicibacterium/Mycolicibacter/Mycolicibacillus/Mycobacteroides/Mycobacterium* sp.
+        - _Mycolicibacterium/Mycolicibacter/Mycolicibacillus/Mycobacteroides/Mycobacterium_ sp.
             - All genomes available were used
 
     **Database Files**
@@ -387,7 +387,7 @@ Options:
 
         Manually curated updates to several taxa relevant to public health. All genomes representing the taxa below were removed and replaced with the RefSeq genomes representing each species as of August 11th, 2023.
 
-        - *Citrobacter, Providencia, Hafnia, Neisseria, Proteus, Achromobacter, Aeromonas, Bacillus, Brucella, Afipia, Burkholderia, Paraburkholderia, Corynebacterium, Morganella*
+        - _Citrobacter, Providencia, Hafnia, Neisseria, Proteus, Achromobacter, Aeromonas, Bacillus, Brucella, Afipia, Burkholderia, Paraburkholderia, Corynebacterium, Morganella_
 
     **Database Files**
 
@@ -489,7 +489,7 @@ Options:
      - Species were curated based on GAMBIT diameter:
      - The database was manually curated to remove highly distant genomes which were likely mislabeled.
      - Six species were divided into subspecies to ensure non-overlapping species diameters.
-     - Two pairs of species were too closely related to distinguish (*Aspergillus flavus/Aspergillus oryzae* and *Aspergillus niger/Aspergillus welwitschiae*), therefore were combined.
+     - Two pairs of species were too closely related to distinguish (*Aspergillus flavus/Aspergillus oryzae* and _Aspergillus niger/Aspergillus welwitschiae_), therefore were combined.
 
     **Database Files**
 
@@ -524,7 +524,7 @@ Options:
     - Species were curated based on GAMBIT diameter:
     - The database was manually curated to remove highly distant genomes which were likely mislabeled.
     - Nine species were divided into subspecies to ensure non-overlapping species diameters.
-    - Two pairs of species were too closely related to distinguish (*Aspergillus flavus/Aspergillus oryzae* and *Aspergillus niger/Aspergillus welwitschiae*), therefore were combined.
+    - Two pairs of species were too closely related to distinguish (*Aspergillus flavus/Aspergillus oryzae* and _Aspergillus niger/Aspergillus welwitschiae_), therefore were combined.
 
     **Database Files**
 
@@ -552,7 +552,7 @@ Options:
 
 ### K-mer-based representation of the genomes
 
-A GAMBIT signature is a compressed representation of a genome sequence that supports the efficient calculation of the **GAMBIT genomic distance metric**. It is defined as the set of *k*-mers present in the genome which occur immediately following a fixed prefix sequence. **GAMBIT finds all 11-mers in a genome assembly that immediately follows the prefix sequence ATGAC**.
+A GAMBIT signature is a compressed representation of a genome sequence that supports the efficient calculation of the **GAMBIT genomic distance metric**. It is defined as the set of _k_-mers present in the genome which occur immediately following a fixed prefix sequence. **GAMBIT finds all 11-mers in a genome assembly that immediately follows the prefix sequence ATGAC**.
 
 This allows not only thousands of genomes to be represented in a relatively small (~3GB) database, but the comparison of the query genome to the set of references provided in the used GAMBIT database to be performed very fast.
 
@@ -573,7 +573,7 @@ In GAMBIT, the Jaccard Distance is calculated between two pre-computed k-mer set
 
 GAMBIT classifies unknown genomes by finding the distance to the closest reference genome and comparing that distance against the thresholds of the reference genome’s species and genus.
 
-For GAMBIT Prokaryotic database v2.0.0 and above, the threshold for a given species corresponds to the maximum intra-species distance ("max intra," or diameter) ([Figure 1](#figure1)). Some species are not well separated from their closest sister taxon and, in some cases, even overlap. Such as the case of *Escherichia coli* and *Shigella sonnei* in GAMBIT’s Prokaryotic Database. In these scenarios, the species were divided into subspecies groups based on clustering of their intra-species distances, and then reporting matches to these subgroups and their parent species.
+For GAMBIT Prokaryotic database v2.0.0 and above, the threshold for a given species corresponds to the maximum intra-species distance ("max intra," or diameter) ([Figure 1](#figure1)). Some species are not well separated from their closest sister taxon and, in some cases, even overlap. Such as the case of _Escherichia coli_ and _Shigella sonnei_ in GAMBIT’s Prokaryotic Database. In these scenarios, the species were divided into subspecies groups based on clustering of their intra-species distances, and then reporting matches to these subgroups and their parent species.
 
 If the query genome distance is greater than the species diameter, GAMBIT attempts to report the genus. Genus diameters are computed and manually curated based on the diversity of the genus.
 ///

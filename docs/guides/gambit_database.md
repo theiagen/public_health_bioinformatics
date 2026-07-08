@@ -173,7 +173,7 @@ Most GAMBIT databases are curated by examining the pairwise GAMBIT distance matr
     1. **Manifestation:** The genome will be distant from all other genomes in the distance matrix.
     2. **Solution:** Remove this genome.
 
-Any remaining species overlaps following removal of outlier genomes and separation of subspecies is likely the result of species groupings reflecting historical practices that do not align well with genetic distinctions between species (i.e. _E. coli_ and _Shigella_).
+Any remaining species overlaps following removal of outlier genomes and separation of subspecies is likely the result of species groupings reflecting historical practices that do not align well with genetic distinctions between species (i.e., _E. coli_ and _Shigella_).
 
 #### Step 5: Download taxa
 

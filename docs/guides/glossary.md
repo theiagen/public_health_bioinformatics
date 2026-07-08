@@ -164,13 +164,13 @@ AMR
 :   Antimicrobial resistance — the ability of a microbe to survive drugs that would normally kill it or stop its growth.
 
 antigen
-:   A molecule (often on a microbe's surface) that the immune system recognizes; surface antigens are the basis of serotyping (e.g., the O and H antigens of *E. coli*).
+:   A molecule (often on a microbe's surface) that the immune system recognizes; surface antigens are the basis of serotyping (e.g., the O and H antigens of _E. coli_).
 
 ARG
 :   Antimicrobial resistance gene — a gene that confers resistance to one or more antimicrobial drugs.
 
 biotype
-:   A subdivision of a species distinguished by physiological or biochemical traits (for example, the "Classical" and "El Tor" biotypes of *Vibrio cholerae*).
+:   A subdivision of a species distinguished by physiological or biochemical traits (for example, the "Classical" and "El Tor" biotypes of _Vibrio cholerae_).
 
 clade
 :   A group of organisms that all descend from a single common ancestor on a phylogenetic tree.
@@ -197,13 +197,13 @@ point mutation
 :   A change at a single position in the DNA; some antimicrobial resistance is caused by point mutations rather than acquired genes.
 
 serogroup
-:   A group of related serotypes (for example, the O1 and O139 serogroups of *Vibrio cholerae*).
+:   A group of related serotypes (for example, the O1 and O139 serogroups of _Vibrio cholerae_).
 
 serotype
 :   A subdivision of a species distinguished by molecules on its surface (antigens).
 
 serovar
-:   A serologically distinct variant within a species; used interchangeably with serotype, especially for *Salmonella*.
+:   A serologically distinct variant within a species; used interchangeably with serotype, especially for _Salmonella_.
 
 ST
 :   Sequence type — a strain designation assigned by MLST.
@@ -275,7 +275,7 @@ SRA / ENA / DRA
 ## Pathogens and organisms
 
 EIEC
-:   Enteroinvasive *Escherichia coli* — a pathogenic *E. coli* group closely related to, and differentiated from, *Shigella*.
+:   Enteroinvasive _Escherichia coli_ — a pathogenic _E. coli_ group closely related to, and differentiated from, _Shigella_.
 
 HIV
 :   Human immunodeficiency virus.
@@ -284,10 +284,10 @@ MPXV
 :   Monkeypox (mpox) virus.
 
 MRSA
-:   Methicillin-resistant *Staphylococcus aureus*.
+:   Methicillin-resistant _Staphylococcus aureus_.
 
 MTBC
-:   *Mycobacterium tuberculosis* complex — the group of closely related species that cause tuberculosis.
+:   _Mycobacterium tuberculosis_ complex — the group of closely related species that cause tuberculosis.
 
 RSV
 :   Respiratory syncytial virus.

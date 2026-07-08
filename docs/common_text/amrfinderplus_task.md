@@ -10,7 +10,7 @@ fragment: true
     You can check if a gene or point mutation is in the AMRFinderPlus database with the [Reference Gene Catalog](https://www.ncbi.nlm.nih.gov/pathogens/refgene/#), find the sequences of reference genes in the [Bacterial Antimicrobial Resistance Reference Gene Database BioProject](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA313047), and search the query Hidden Markov Models (HMMs) used by AMRFinderPlus to identify AMR genes and some stress and virulence proteins in the [Reference HMM Catalog](https://www.ncbi.nlm.nih.gov/pathogens/hmm/). The AMRFinderPlus database is updated frequently. You can ensure you are using the most up-to-date version by specifying the Docker image in the optional workflow input.
 
     ??? toggle "AMRFinderPlus results can be used to confirm taxonomic assignment in _A. baumannii_"
-        The *bla*OXA-51-like genes, also known as _oxaAB_, are considered intrinsic to _Acinetobacter baumannii_ but are not found in other *Acinetobacter* species. **Identification of a *bla*OXA-51-like gene with this tool is therefore considered to confirm the species' identity as _A. baumannii_.**
+        The _bla_OXA-51-like genes, also known as _oxaAB_, are considered intrinsic to _Acinetobacter baumannii_ but are not found in other _Acinetobacter_ species. **Identification of a _bla_OXA-51-like gene with this tool is therefore considered to confirm the species' identity as _A. baumannii_.**
 
     !!! techdetails "AMRFinderPlus Technical Details"
         |  | Links |

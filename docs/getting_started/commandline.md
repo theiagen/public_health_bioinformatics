@@ -1,7 +1,7 @@
 # Getting Started with the Command-Line
 
 !!! dna "What is WDL?"
-    Running workflows on the command-line requires the direct use of the WDL (Workflow Development Language). As the name suggests, this is the workflow management language that is used to write and execute workflows. Frank has put together a great video describing 📺 [**WDL Task and Workflow Files**](https://www.youtube.com/watch?v=DNtdra59Y6o) and you can find full instructions below on running these WDL workflows.
+    Running workflows on the command-line requires the direct use of the WDL (Workflow Development Language). As the name suggests, this is the workflow management language that is used to write and execute workflows. Frank has put together a great video describing [**WDL Task and Workflow Files**](https://www.youtube.com/watch?v=DNtdra59Y6o) and you can find full instructions below on running these WDL workflows.
 
 ## Step 1: Obtain the Workflow and Data
 
@@ -70,7 +70,7 @@ This should display the files and directories within the <https://github.com/the
 
 Congratulations! You've successfully cloned the <https://github.com/theiagen/public_health_bioinformatics.git> repository from GitHub to your local command-line environment. You're now ready to proceed with running the bioinformatics analysis workflows using WDL as described in subsequent steps.
 
-## Step 2: Install docker and miniWDL
+## Step 2: Install docker and miniwdl
 
 Docker and miniwdl will be required for command-line execution. We will check if these are installed on your system and if not, install them now.
 

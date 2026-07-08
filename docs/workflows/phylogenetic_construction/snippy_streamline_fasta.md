@@ -30,7 +30,7 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
     1. masking user-specified regions of the genome (_by providing a bed file to `snippy_core_bed`_)
     2. producing either a core or pan-genome phylogeny and SNP-matrix (_by altering `core_genome`; true [default] = core genome, false = pan-genome_)
     3. choosing the nucleotide substitution (_by altering `iqtree2_model` [see below for possible nucleotide substitution models]_), or allowing IQ-TREE's ModelFinder to identify the best model for your dataset (default)
-    4. masking recombination detected by gubbins, or not (_by altering `use_gubbins`; true [default] = recombination masking, false = no recombination masking_)
+    4. masking recombination detected by Gubbins, or not (_by altering `use_gubbins`; true [default] = recombination masking, false = no recombination masking_)
 
     !!! warning "Multiple Contigs in Reference Genomes"
 
@@ -106,7 +106,7 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
     ==**Please see the full documentation for [Snippy_Tree](./snippy_tree.md) for more information.**==
 
 !!! tip "Gubbins Nucleotide Substitution Model"
-    In Snippy_Streamline_FASTA, the nucleotide substitution model used by gubbins will always be **GTR+GAMMA**.
+    In Snippy_Streamline_FASTA, the nucleotide substitution model used by Gubbins will always be **GTR+GAMMA**.
 
 {{ include_md("common_text/snippy_core_task.md", condition="snippy_streamline") }}
 {{ include_md("common_text/gubbins_task.md", condition="snippy_streamline") }}

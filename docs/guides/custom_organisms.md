@@ -19,7 +19,7 @@ The [**TheiaCoV Workflow Series**](../workflows/genomic_characterization/theiaco
 !!! dna "Supported Organisms"
     These workflows currently support the following organisms:
 
-    - **SARS-CoV-2** (`"sars-cov-2"`, `"SARS-CoV-2"`) - *default organism input*
+    - **SARS-CoV-2** (`"sars-cov-2"`, `"SARS-CoV-2"`) - _default organism input_
     - **Mpox virus** (`"MPXV"`, `"mpox"`, `"monkeypox"`, `"Monkeypox virus"`, `"Mpox"`)
     - **Human Immunodeficiency Virus** (`"HIV"`)
     - **West Nile Virus** (`"WNV"`, `"wnv"`, `"West Nile virus"`)
@@ -47,7 +47,7 @@ For default organisms, we provide all the necessary files for all of these proce
 
 ### Workflow Recommendations for "Custom" Viruses
 
-We encourage users to refer to the [TheiaViral workflow series](../workflows/genomic_characterization/theiaviral.md) for assembling viruses that are not accounted for in TheiaCoV. Tiled amplicon viruses may fail TheiaViral's *de novo* assembly process, though a reference genome can be provided by the user to bypass this step. The following is legacy information on running custom viruses with TheiaCoV.
+We encourage users to refer to the [TheiaViral workflow series](../workflows/genomic_characterization/theiaviral.md) for assembling viruses that are not accounted for in TheiaCoV. Tiled amplicon viruses may fail TheiaViral's _de novo_ assembly process, though a reference genome can be provided by the user to bypass this step. The following is legacy information on running custom viruses with TheiaCoV.
 
 TheiaCoV is not designed for custom viruses, so it is important to assess the validity of resulting assemblies. The custom virus approach requires a closely related reference genome as input, or else the workflow will fail due to an insufficient quantity of reads mapping to the reference. Such errors will occur at the `ivar_consensus` task during read alignment/extraction or during post-assembly variant calling because a consensus assembly comprising degenerate nucleotides was created. These errors primarily occur due to read mapping difficulty in small (< 20 kb), recombinant, or evolutionarily diverse lineages, such as norovirus or rhinovirus. Contamination can also cause reference mapping errors, so it is important to review the Kraken2 report to ensure the taxonomic composition of the sample sufficiently comprises the expected viral lineage.
 
@@ -59,7 +59,7 @@ TheiaCoV is not designed for custom viruses, so it is important to assess the va
     | theiacov_* | _genome_length_ | Expected genome length of organism | Required |
     | theiacov_* | _organism_ | Name of expected organism | Required |
     | theiacov_* | _reference_gff_ | Reference sequence in GFF3 format | Required for SE, PE, ONT;<br>Omitted from FASTA |
-    | theiacov_* | _primer_bed_ | Bed file with primer locations | Required for ONT;<br>Optional for SE and PE only if *trim_primers* is set to False |
+    | theiacov_* | _primer_bed_ | Bed file with primer locations | Required for ONT;<br>Optional for SE and PE only if _trim_primers_ is set to False |
     | theiacov_* | _reference_gene_locations_bed_ | Bed file with gene location | Optional to estimate gene coverage |
     | theiacov_* | _reference_genome_ | Reference sequence in FASTA format | Required |
     | theiacov_* | _target_organism_ | Name of the expected organism in Kraken2 database | Optional to quantify percent of reads matching target organism |

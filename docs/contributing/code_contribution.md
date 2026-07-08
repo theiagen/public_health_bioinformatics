@@ -38,7 +38,7 @@ All trailing whitespace should be removed (unless in a TSV, where a trailing tab
     fi
     ```
 
-- Use a single space when defining variables (`this = that` *not* `this= that` (unless a bash variable where `this=that` is required))
+- Use a single space when defining variables (`this = that` _not_ `this= that` (unless a bash variable where `this=that` is required))
 
 ***Bracket and Spacing Conventions***
 
@@ -224,10 +224,10 @@ A WDL workflow block orchestrates the execution of tasks and subworkflows. It de
 - Include a block of `import` statements (sorted in alphabetical order).
   - When a workflow imports a task, ensure it is imported under a unique name to avoid conflicts.
 
-    ```bash
-    import "../tasks/task_task1.wdl" as task1_task
-    import "../tasks/task_task2.wdl" as task2_task
-    ```
+      ```bash
+      import "../tasks/task_task1.wdl" as task1_task
+      import "../tasks/task_task2.wdl" as task2_task
+      ```
 
 - Order import statements alphabetically by the path of the imported file.
 

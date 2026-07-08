@@ -46,12 +46,12 @@ fragment: true
 
         The following query genes are used by default:
 
-        - *Aspergillus fumigatus*: `Cyp51A`, `HapE`, `AFUA_4G08340` (COX10 in the default reference)
-        - *Candidozyma auris*: `FKS1`, `lanosterol.14-alpha.demethylase`, `uracil.phosphoribosyltransferase`, `B9J08_005340`, `B9J08_000401`, `B9J08_003102`, `B9J08_003737`, `B9J08_005343`
-        - *Cryptococcus neoformans*: `CNA00300` (ERG11 in the default reference)
+        - _Aspergillus fumigatus_: `Cyp51A`, `HapE`, `AFUA_4G08340` (COX10 in the default reference)
+        - _Candidozyma auris_: `FKS1`, `lanosterol.14-alpha.demethylase`, `uracil.phosphoribosyltransferase`, `B9J08_005340`, `B9J08_000401`, `B9J08_003102`, `B9J08_003737`, `B9J08_005343`
+        - _Cryptococcus neoformans_: `CNA00300` (ERG11 in the default reference)
 <!-- endif -->
 
-    !!! techdetails "Gene Coverage Technical Details"  
+    !!! techdetails "Gene Coverage Technical Details"
         |  | Links |
         | --- | --- |
         | Task | [task_gene_coverage.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_gene_coverage.wdl) |

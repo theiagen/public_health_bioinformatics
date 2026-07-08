@@ -38,7 +38,7 @@ This workflow runs on the sample level, and takes assembly FASTA files and assoc
         - `country` - Denotes the country where the sample originated (e.g.: `Argentina`, `Japan`, `USA`)
         - `divisions` - Denotes divisions, or states, or sometimes cities, within the country (e.g.: `California`, `Colorado`, `Cork`)
         - `location` - Highest-level resolution, often used for custom latitude and longitude for further detail on divisions, like cities within states. Just ensure that this level is provided in either the default latitude and longitude file or in a custom one.
-    - Optional **clade** information, such as the one assigned by *Nextclade*.
+    - Optional **clade** information, such as the one assigned by _Nextclade_.
     - Optional **Pangolin lineage** information for SARS-CoV-2 samples.
 
 #### Augur_Prep Inputs

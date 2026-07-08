@@ -197,22 +197,22 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 ??? toggle "_Escherichia_ or _Shigella_ spp."
     ##### _Escherichia_ or _Shigella_ spp. {% raw %} {#escherichia-or-shigella} {% endraw %}
 
-    The *Escherichia* and *Shigella* genera are [difficult to differentiate as they do not comply with genomic definitions of genera and species](https://www.sciencedirect.com/science/article/abs/pii/S1286457902016374). Consequently, when either _Escherichia_ or _Shigella_ are identified by GAMBIT, all tools intended for these taxa are used.
+    The _Escherichia_ and _Shigella_ genera are [difficult to differentiate as they do not comply with genomic definitions of genera and species](https://www.sciencedirect.com/science/article/abs/pii/S1286457902016374). Consequently, when either _Escherichia_ or _Shigella_ are identified by GAMBIT, all tools intended for these taxa are used.
 
     !!! tip ""
-        `SerotypeFinder` and `ECTyper` are intended for analysis of *E. coli*. Both tools are used as there are occasional discrepancies between the serotypes predicted. This primarily arises due to differences in the databases used by each tool.
+        `SerotypeFinder` and `ECTyper` are intended for analysis of _E. coli_. Both tools are used as there are occasional discrepancies between the serotypes predicted. This primarily arises due to differences in the databases used by each tool.
 
 {{ include_md("common_text/serotypefinder_task.md", indent=4)}}
 
 {{ include_md("common_text/ectyper_task.md", indent=4)}}
 
     !!! tip ""
-        `VirulenceFinder` identifies virulence genes in total or partial sequenced isolates of bacteria. Currently, only *E. coli* is supported in TheiaProk workflows.
+        `VirulenceFinder` identifies virulence genes in total or partial sequenced isolates of bacteria. Currently, only _E. coli_ is supported in TheiaProk workflows.
 
 {{ include_md("common_text/virulencefinder_task.md", indent=4) }}
 
     !!! tip ""
-        `ShigaPass`, `ShigaTyper`, and `ShigEiFinder` are intended for differentiation and serotype prediction for any *Shigella* species and enteroinvasive *Escherichia coli* (EIEC). You can read about differences between _Shigella_ and EIEC in [_Molecular Evolutionary Relationships of Enteroinvasive Escherichia coli and Shigella spp._](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC517479/) and [_Shigella and enteroinvasive Escherichia coli strains are derived from distinct ancestral strains of E. coli_](https://www.microbiologyresearch.org/content/journal/micro/10.1099/00221287-144-9-2667). ShigEiFinder can be run using either the assembly (default) or reads. These tasks will report if the samples are neither *Shigella* nor EIEC.
+        `ShigaPass`, `ShigaTyper`, and `ShigEiFinder` are intended for differentiation and serotype prediction for any _Shigella_ species and enteroinvasive _Escherichia coli_ (EIEC). You can read about differences between _Shigella_ and EIEC in [_Molecular Evolutionary Relationships of Enteroinvasive Escherichia coli and Shigella spp._](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC517479/) and [_Shigella and enteroinvasive Escherichia coli strains are derived from distinct ancestral strains of E. coli_](https://www.microbiologyresearch.org/content/journal/micro/10.1099/00221287-144-9-2667). ShigEiFinder can be run using either the assembly (default) or reads. These tasks will report if the samples are neither _Shigella_ nor EIEC.
 
 {{ include_md("common_text/shigapass_task.md", indent=4) }}
 
@@ -221,7 +221,7 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 {{ include_md("common_text/shigeifinder_task.md", indent=4) }}
 
     !!! tip ""
-        `SonneiTyper` is run only when GAMBIT predicts the *S. sonnei* species. This is the most common *Shigella* species in the United States.
+        `SonneiTyper` is run only when GAMBIT predicts the _S. sonnei_ species. This is the most common _Shigella_ species in the United States.
 
 {{ include_md("common_text/sonneityper_task.md", indent=4)}}
 
@@ -275,7 +275,7 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
     ##### _Salmonella_ spp. {% raw %} {#salmonella} {% endraw %}
 
     !!! tip ""
-        Both SISTR and SeqSero2 are used for serotyping all *Salmonella* spp. Occasionally, the predicted serotypes may differ between SISTR and SeqSero2. When this occurs, differences are typically small and analogous, and are likely as a result of differing source databases. For more information, see [this guide to _Salmonella_ serovar nomenclature](https://www.happykhan.com/posts/binfie-guide-serovar/).
+        Both SISTR and SeqSero2 are used for serotyping all _Salmonella_ spp. Occasionally, the predicted serotypes may differ between SISTR and SeqSero2. When this occurs, differences are typically small and analogous, and are likely as a result of differing source databases. For more information, see [this guide to _Salmonella_ serovar nomenclature](https://www.happykhan.com/posts/binfie-guide-serovar/).
 
 {{ include_md("common_text/sistr_task.md", indent=4) }}
 

@@ -10,7 +10,7 @@ fragment: true
 
     Activate this task by providing a value for the `output_taxon_table` input variable. If provided, the user must also provide values to the `terra_project` and `terra_workspace` optional input variables.
 
-    The Export Taxon Table module will copy sample data to a different data table based on the taxonomic assignment. For example, if an *influenza* sample is analyzed, the module will copy the sample data to a new table for *influenza* samples or add the sample data to an existing table.
+    The Export Taxon Table module will copy sample data to a different data table based on the taxonomic assignment. For example, if an _influenza_ sample is analyzed, the module will copy the sample data to a new table for _influenza_ samples or add the sample data to an existing table.
 
     !!! tip ""
         **Formatting the `output_taxon_table` file**
@@ -31,7 +31,7 @@ fragment: true
 
     Activate this task by providing a value for the `taxon_tables` input variable. If provided, the user must also provide values to the `terra_project` and `terra_workspace` optional input variables.
 
-    The Export Taxon Table module, if enabled, will copy sample data to a different data table based on the taxonomic assignment. For example, if an *E. coli* sample is analyzed, the module will copy the sample data to a new table for *E. coli* samples or add the sample data to an existing table.
+    The Export Taxon Table module, if enabled, will copy sample data to a different data table based on the taxonomic assignment. For example, if an _E. coli_ sample is analyzed, the module will copy the sample data to a new table for _E. coli_ samples or add the sample data to an existing table.
 
     !!! tip ""
         To activate the Export Taxon Table module, provide a file indicating data table names to copy samples of each taxa to in the `taxon_tables` input variable.

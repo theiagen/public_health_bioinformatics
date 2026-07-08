@@ -5,7 +5,7 @@ fragment: true
 ??? task "`KmerFinder`: Taxon Assignment (optional)"
     To activate this task, set `call_kmerfinder` to `true`.
 
-    KmerFinder predicts prokaryotic species based on the number of overlapping (co-occurring) *k*-mers, i.e., 16-mers, between the query genome and genomes in a reference database. These *k*-mers are selected with the prefix of `ATGAC` in order to focus on coding regions of genomes. A prediction is made by identifying which species in the training data has the highest number of 16-mers in common with the query. This match is made regardless of position. Ties will result in an alphabetical sorting of tied species and the return of the first species in the alphabetical list.
+    KmerFinder predicts prokaryotic species based on the number of overlapping (co-occurring) _k_-mers, i.e., 16-mers, between the query genome and genomes in a reference database. These _k_-mers are selected with the prefix of `ATGAC` in order to focus on coding regions of genomes. A prediction is made by identifying which species in the training data has the highest number of 16-mers in common with the query. This match is made regardless of position. Ties will result in an alphabetical sorting of tied species and the return of the first species in the alphabetical list.
 
     This is a simpler approach than other *k*-mer based tools such as GAMBIT, which uses an 11-mer approach while implementing thresholds to its classification algorithm allowing it to re-assess at a higher level of classification if need be.
 

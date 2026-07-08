@@ -102,7 +102,6 @@ This workflow runs on the sample level.
 {{ include_md("common_text/qualimap_task.md", condition="freyja", indent=4) }}
 {{ include_md("common_text/qc_check_task.md", condition="freyja", indent=4) }}
 
-
 === "Illumina single-end input data"
 
 {{ include_md("common_text/read_qc_trim_illumina_wf.md", indent=4, condition="theiacov") }}
@@ -374,7 +373,7 @@ The barcodes file can be passed directly to Freyja by the `freyja_barcodes` opti
 
 If you use any of the Freyja workflows, please cite:
 
-> Karthikeyan, S., Levy, J.I., De Hoff, P. *et al.* Wastewater sequencing reveals early cryptic SARS-CoV-2 variant transmission. *Nature* **609**, 101–108 (2022). <https://doi.org/10.1038/s41586-022-05049-6>
+> Karthikeyan, S., Levy, J.I., De Hoff, P. _et al._ Wastewater sequencing reveals early cryptic SARS-CoV-2 variant transmission. _Nature_ **609**, 101–108 (2022). <https://doi.org/10.1038/s41586-022-05049-6>
 <!-- -->
 > Freyja source code can be found at <https://github.com/andersen-lab/Freyja>
 <!-- -->
