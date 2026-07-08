@@ -24,9 +24,8 @@ task gatk_filter {
     # obtain version
     gatk --version | grep GATK | grep -Po "v[^ ]+$" | tee VERSION
 
-    # assemble the VariantFiltration arguments in python, giving each filter its
-    # own descriptive --filter-name, and writing them to a single line so bash can
-    # pass them straight to gatk
+    # assemble the VariantFiltration arguments, giving each filter its
+    # own descriptive --filter-name
     python3 <<'CODE'
     # each entry is (filter_name, jexl_expression); VariantFiltration flags a
     # variant with filter_name when its expression evaluates to true. these
