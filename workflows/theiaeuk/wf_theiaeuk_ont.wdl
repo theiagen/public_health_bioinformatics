@@ -109,13 +109,14 @@ workflow theiaeuk_ont {
           gambit_db_genomes = gambit_db_genomes,
           gambit_db_signatures = gambit_db_signatures
       }
-      # call medea magic for cladetyper and AMR search, snippy variants
+      # call medea magic for cladetyper and AMR search
+      # snippy variants and BWA/GATK variant calling are read-based and are skipped here since no reads are supplied for long-read data
        call medea_magic_workflow.medea_magic {
         input:
           samplename = samplename,
           medea_tag = gambit.merlin_tag,
           assembly = flye_denovo.assembly_fasta,
-          assembly_only = true # can only run assembly mode on Snippy variants for long reads
+          ont_data = true
       }
     }
   }
