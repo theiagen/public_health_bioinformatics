@@ -193,7 +193,7 @@ Options:
         GCF_013374815.1
         GCF_019793575.1
 
-        b. Rationale: This genome is currently named as _Klebsiella oxytoca_, but is actually _Escherichia coli_ according to the best match type strain using ANI. Its removal from the database prevents false assignment of _Klebsiella oxytoca_ query genomes to *Escherichia coli_ species.
+        b. Rationale: This genome is currently named as _Klebsiella oxytoca_, but is actually _Escherichia coli_ according to the best match type strain using ANI. Its removal from the database prevents false assignment of _Klebsiella oxytoca_ query genomes to _Escherichia coli_ species.
 
         GCA_900083935.1
 
@@ -303,8 +303,8 @@ Options:
 
         The following species were updated:
 
-        - _Shigella_ sp*.*
-            - This genus is not present in GTDB  as it is collapsed under _Escherichia coli;_
+        - _Shigella_ sp.
+            - This genus is not present in GTDB  as it is collapsed under _Escherichia coli_;
             - All Shigella genomes in RefSeq were added to the database with no clustering using default quality criteria.
         - _Mycolicibacterium/Mycolicibacter/Mycolicibacillus/Mycobacteroides/Mycobacterium_ sp.
             - All genomes available were used.

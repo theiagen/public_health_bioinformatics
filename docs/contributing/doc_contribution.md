@@ -235,7 +235,7 @@ If you are adding a new workflow, there are a number of things to do in order to
      - Workflow Level (_on Terra_) - Options: "Sample-level", "Set-level", "Table-level", or ""
      - Workflow Type - Link one of the following options to the corresponding heading in the `docs/workflows_overview/workflows_type.md` file. Options: "Data Import", "Genomic Characterization", "Phylogenetic Construction", "Phylogenetic Placement", "Public Data Sharing", "Exporting Data from Terra", "Comparative Analysis" or "Standalone"; this should match the location/naming of the workflow page in `docs/workflows/` (except Comparative Analysis, which should go in the `standalone` directory if appropriate).
      - Command-line compatibility - Options: "Yes", "No", and/or "Some optional features incompatible"
-     - The version where the last known changes occurred (likely the upcoming version if it is a new workflow -- if the upcoming version number is currently unknown, please use `**vX.X.X**`)
+     - The version where the last known changes occurred (likely the upcoming version if it is a new workflow -- if the upcoming version number is currently unknown, please use `vX.X.X`)
      - Link to the workflow on Dockstore - Link the workflow name to the information tab on Dockstore.
 3. Format this information in the `assets/tables/all_workflows.tsv` file.
 4. Copy the path to the workflow documentation page to ==**ALL**== of the appropriate locations in the `mkdocs.yml` file (under the `nav:` section) in the main directory of this repository. This ensures the workflow can be accessed from the navigation sidebar.
