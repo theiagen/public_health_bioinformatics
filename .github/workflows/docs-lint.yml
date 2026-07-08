@@ -1,0 +1,53 @@
+name: docs-lint
+
+# Lints documentation on pull requests that touch docs or the lint config.
+on:
+  pull_request:
+    paths:
+      - "docs/**"
+      - "includes/**"
+      - ".vale.ini"
+      - "styles/**"
+      - ".markdownlint.yaml"
+      - ".markdownlintignore"
+      - ".pre-commit-config.yaml"
+      - ".github/workflows/docs-lint.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    env:
+      VALE_VERSION: "3.9.1"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
+
+      - name: Setup Node (for markdownlint)
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Vale
+        run: |
+          curl -sfL \
+            "https://github.com/errata-ai/vale/releases/download/v${VALE_VERSION}/vale_${VALE_VERSION}_Linux_64-bit.tar.gz" \
+            | sudo tar -xz -C /usr/local/bin vale
+          vale --version
+
+      - name: Install pre-commit
+        run: pip install pre-commit
+
+      # Runs every hook (whitespace, markdownlint, vale) against all files.
+      # The whitespace auto-fixers fail the job if they would change anything,
+      # printing the diff so contributors can see exactly what to fix.
+      - name: Run linters
+        run: pre-commit run --all-files --show-diff-on-failure

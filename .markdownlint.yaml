@@ -1,0 +1,75 @@
+# markdownlint configuration for PHB documentation
+# https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md
+#
+# Run locally with:   markdownlint-cli2 "docs/**/*.md"
+#   or (auto-fix):    markdownlint-cli2 --fix "docs/**/*.md"
+# Also run via pre-commit and in CI (.github/workflows/docs-lint.yml).
+
+# Start from all rules enabled, then tune for this repo's theme conventions.
+default: true
+
+# --- Rules relaxed because of Zensical/Material conventions ---
+
+# MD013 line-length: prose lines are intentionally long (one sentence per line
+# is not used here, and tables/macros produce very long lines).
+MD013: false
+
+# MD033 no-inline-html: the docs use md_in_html, <div>, <abbr>, <sup>, etc.
+MD033: false
+
+# MD046 code-block-style: admonitions mix indented and fenced content.
+MD046: false
+
+# MD040 fenced-code-language: many illustrative blocks have no language.
+MD040: false
+
+# MD036 no-emphasis-as-heading: bold is used as inline sub-labels inside
+# admonitions (e.g. **How to prepare metadata**).
+MD036: false
+
+# MD041 first-line-h1: common_text/* fragments are includes, not standalone
+# pages, and legitimately start with a lower-level heading or prose.
+MD041: false
+
+# --- Rules kept, but configured for this repo ---
+
+# MD007 ul-indent: this theme REQUIRES four-space indentation for nested lists.
+MD007:
+  indent: 4
+
+# MD024 no-duplicate-heading: Input/Output/References headings recur under
+# different parent sections; only forbid duplicates among siblings.
+MD024:
+  siblings_only: true
+
+# MD029 ordered-list-item-prefix: allow ordered lists to use "1." throughout.
+MD029:
+  style: one_or_ordered
+
+# MD004 unordered-list-style: standardize on dashes.
+MD004:
+  style: dash
+
+# MD010 no-hard-tabs: allow tabs INSIDE code blocks (used to show tab-delimited
+# / TSV file and database formats); still flag stray tabs in prose.
+MD010:
+  code_blocks: false
+
+# MD030 list-marker-space: the docs intentionally align list content to the
+# theme's four-space stop (e.g. "-   item"); don't flag the extra spaces.
+MD030: false
+
+# MD049/MD050 emphasis style: match the house style documented in this guide —
+# underscores for italics, asterisks for bold.
+MD049:
+  style: underscore
+MD050:
+  style: asterisk
+
+# --- Accessibility / hygiene rules deliberately LEFT ON ---
+# MD001 heading-increment  -> catches skipped heading levels (H2 -> H4)
+# MD034 no-bare-urls       -> catches bare URLs (use descriptive link text)
+# MD009 no-trailing-spaces -> whitespace hygiene
+# MD010 no-hard-tabs       -> whitespace hygiene
+# MD012 no-multiple-blanks -> whitespace hygiene
+# MD047 single-trailing-newline -> matches "end all pages with an empty line"

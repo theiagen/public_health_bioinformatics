@@ -1,0 +1,70 @@
+# Pre-commit hooks for PHB documentation.
+# Install once:   pip install pre-commit && pre-commit install
+# Run manually:   pre-commit run --all-files
+#
+# Vale must be installed separately (it is a Go binary, not a Python package):
+#   https://vale.sh/docs/vale-cli/installation/
+# CI installs it automatically (.github/workflows/docs-lint.yml).
+
+minimum_pre_commit_version: "3.0.0"
+
+repos:
+  # -------------------------------------------------------------------------
+  # (3) Whitespace hygiene — these hooks AUTO-FIX in place.
+  # -------------------------------------------------------------------------
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+        name: trim trailing whitespace
+        # Preserve intentional Markdown hard line breaks (two trailing spaces).
+        args: [--markdown-linebreak-ext=md]
+        files: ^docs/.*\.md$
+      - id: end-of-file-fixer
+        name: ensure files end with a single newline
+        files: ^docs/.*\.md$
+      - id: mixed-line-ending
+        name: normalize line endings to LF
+        args: [--fix=lf]
+        files: ^docs/.*\.md$
+
+  # -------------------------------------------------------------------------
+  # (3) Whitespace/prose hygiene — pattern checks (report only, no auto-fix).
+  # -------------------------------------------------------------------------
+  - repo: local
+    hooks:
+      - id: no-space-before-percent
+        name: no space before a percent sign (write "95%" not "95 %")
+        language: pygrep
+        entry: '[0-9] +%'
+        files: ^docs/.*\.md$
+      - id: no-inputted
+        name: avoid "inputted" (use "input" or "provided")
+        language: pygrep
+        entry: '(?i)\binputted\b'
+        files: ^docs/.*\.md$
+
+  # -------------------------------------------------------------------------
+  # (4) markdownlint — structural/formatting rules (report only here; run with
+  #     `markdownlint-cli2 --fix "docs/**/*.md"` locally to auto-correct).
+  # -------------------------------------------------------------------------
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.44.0
+    hooks:
+      - id: markdownlint
+        name: markdownlint
+        files: ^docs/.*\.md$
+
+  # -------------------------------------------------------------------------
+  # (1)+(2) Vale — tool-name consistency, American spelling, spelling, doubled
+  #         words. Uses .vale.ini and styles/. Requires the `vale` binary.
+  # -------------------------------------------------------------------------
+  - repo: local
+    hooks:
+      - id: vale
+        name: vale (prose, tool names, American spelling)
+        language: system
+        entry: vale
+        files: ^docs/.*\.md$
+        # Fail the commit only on warnings and above; suggestions are advisory.
+        args: ["--minAlertLevel=warning"]

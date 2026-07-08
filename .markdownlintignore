@@ -1,0 +1,11 @@
+# Paths markdownlint should skip.
+node_modules/
+site/
+.cache/
+
+# Generated review artifacts (not part of the published docs)
+docs_review*.md
+alt_text_*.md
+
+# Glossary tooltip include is a machine-consumed snippet, not a page
+includes/abbreviations.md
