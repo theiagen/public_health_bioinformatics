@@ -9,6 +9,7 @@ task gene_coverage {
     File? bedfile # BEDfile including region names and/or coordinates
     File? reference_gbff # GBFF including annotated regions 
     String? query_genes # comma-delimited list of strings
+    File? vcf # optional VCF to extract variant calls from
     
     String feature_type = "CDS" # GBFF feature type to use for coordinate extraction
     String feature_qualifier = "product" # GBFF feature qualifier to use for comparison to query gene
@@ -20,7 +21,7 @@ task gene_coverage {
 
     String? organism # used to determine if S gene coverage should be reported for SARS-CoV-2
 
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23.1"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23.2-dev"
     Int disk_size = 100
     Int memory = 8
     Int cpu = 2
@@ -40,9 +41,12 @@ task gene_coverage {
       ~{if exact_match then "--exact_match" else ""} \
       ~{if defined(bedfile) then "--bedfile ~{bedfile}" else ""} \
       ~{if defined(reference_gbff) then "--reference_gbff ~{reference_gbff}" else ""} \
-      ~{if ambiguous_contig then "--ambiguous_contig" else ""}
+      ~{if ambiguous_contig then "--ambiguous_contig" else ""} \
+      ~{if defined(vcf) then "--vcf ~{vcf}" else ""}
 
+    # rename files
     mv COVERAGE_STATS.tsv ~{samplename}.coverage_stats.tsv
+    ~{if defined(vcf) then "mv GENE_VARIANTS.vcf ~{samplename}.genes.vcf" else ""}
 
     # deprecated outputs v4.2.0
     python3 <<CODE
@@ -64,6 +68,7 @@ task gene_coverage {
     File gene_coverage_stats = "~{samplename}.coverage_stats.tsv"
     Map[String, Float] depth_by_gene = read_json("DEPTH_DICT.json")
     Map[String, Float] breadth_by_gene = read_json("COVERAGE_DICT.json")
+    File? gene_vcf = "~{samplename}.genes.vcf"
     # deprecated v4.2.0
     Float sc2_s_gene_depth = read_string("SC2_S_GENE_DEPTH")
     Float sc2_s_gene_coverage = read_string("SC2_S_GENE_COVERAGE")
