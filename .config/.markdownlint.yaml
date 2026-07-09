@@ -1,9 +1,10 @@
 # markdownlint configuration for PHB documentation
 # https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md
 #
-# Run locally with:   markdownlint-cli2 "docs/**/*.md"
-#   or (auto-fix):    markdownlint-cli2 --fix "docs/**/*.md"
-# Also run via pre-commit and in CI (.github/workflows/docs-lint.yml).
+# This file lives in .config/ — run it with explicit -c/-p flags:
+#   markdownlint -c .config/.markdownlint.yaml -p .config/.markdownlintignore "docs/**/*.md"
+#   (add --fix to auto-correct)
+# Also run via pre-commit and in CI (.github/workflows/lint-documentation.yml).
 
 # Start from all rules enabled, then tune for this repo's theme conventions.
 default: true

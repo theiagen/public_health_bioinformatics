@@ -1,12 +1,22 @@
 # Pre-commit hooks for PHB documentation.
-# Install once:   pip install pre-commit && pre-commit install
-# Run manually:   pre-commit run --all-files
+#
+# This file lives in .config/, so pre-commit needs an explicit -c flag:
+#   Install once:   pip install pre-commit && pre-commit install -c .config/.pre-commit-config.yaml
+#   Run manually:    pre-commit run --all-files -c .config/.pre-commit-config.yaml
+# `install -c ...` bakes the path into the generated git hook, so ordinary
+# `git commit` afterwards "just works" with no further flags needed.
 #
 # Vale must be installed separately (it is a Go binary, not a Python package):
 #   https://vale.sh/docs/vale-cli/installation/
-# CI installs it automatically (.github/workflows/docs-lint.yml).
+# CI installs it automatically (.github/workflows/lint-documentation.yml).
 
 minimum_pre_commit_version: "3.0.0"
+
+# Applies to every hook below unless a hook sets its own `exclude`.
+# docs/macros/ is the macro implementation (Python + its own README), not a
+# documentation page — none of these checks should run against it, even
+# though docs/macros/README.md would otherwise match `^docs/.*\.md$`.
+exclude: ^docs/macros/
 
 repos:
   # -------------------------------------------------------------------------
@@ -46,7 +56,8 @@ repos:
 
   # -------------------------------------------------------------------------
   # (4) markdownlint — structural/formatting rules (report only here; run with
-  #     `markdownlint-cli2 --fix "docs/**/*.md"` locally to auto-correct).
+  #     `markdownlint -c .config/.markdownlint.yaml --fix "docs/**/*.md"`
+  #     locally to auto-correct).
   # -------------------------------------------------------------------------
   - repo: https://github.com/igorshubovych/markdownlint-cli
     rev: v0.44.0
@@ -54,10 +65,15 @@ repos:
       - id: markdownlint
         name: markdownlint
         files: ^docs/.*\.md$
+        # docs/assets/abbreviations.md is a machine-consumed tooltip snippet,
+        # not a page — exclude it (markdownlint's -p/--ignore-path is broken
+        # in this CLI version, so the exclusion is inlined here instead).
+        args: ["-c", ".config/.markdownlint.yaml", "-i", "docs/assets/abbreviations.md"]
 
   # -------------------------------------------------------------------------
   # (1)+(2) Vale — tool-name consistency, American spelling, spelling, doubled
-  #         words. Uses .vale.ini and styles/. Requires the `vale` binary.
+  #         words. Uses .config/.vale.ini and docs/styles/. Requires the
+  #         `vale` binary.
   # -------------------------------------------------------------------------
   - repo: local
     hooks:
@@ -67,4 +83,4 @@ repos:
         entry: vale
         files: ^docs/.*\.md$
         # Fail the commit only on warnings and above; suggestions are advisory.
-        args: ["--minAlertLevel=warning"]
+        args: ["--config=.config/.vale.ini", "--minAlertLevel=warning"]

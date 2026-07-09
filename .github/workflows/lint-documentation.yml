@@ -5,11 +5,7 @@ on:
   pull_request:
     paths:
       - "docs/**"
-      - "includes/**"
-      - ".vale.ini"
-      - ".markdownlint.yaml"
-      - ".markdownlintignore"
-      - ".pre-commit-config.yaml"
+      - ".config/**"
       - ".github/workflows/lint-documentation.yml"
   workflow_dispatch:
 
@@ -49,4 +45,4 @@ jobs:
       # The whitespace auto-fixers fail the job if they would change anything,
       # printing the diff so contributors can see exactly what to fix.
       - name: Run linters
-        run: pre-commit run --all-files --show-diff-on-failure
+        run: pre-commit run --all-files --show-diff-on-failure -c .config/.pre-commit-config.yaml

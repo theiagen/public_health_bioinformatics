@@ -80,10 +80,10 @@ During outbreak investigations, SNP distances are sometimes used to help interpr
 
 It can be difficult to determine SNP thresholds because of:
 
-    - within-host diversity
-    - unknown number of transmissions/other bottlenecks decreasing genetic diversity
-    - variable mutation rates between strains, in different environments, and/or in different regions of the genome
-    - imprecise removal of recombination or erroneous SNPs
+- within-host diversity
+- unknown number of transmissions/other bottlenecks decreasing genetic diversity
+- variable mutation rates between strains, in different environments, and/or in different regions of the genome
+- imprecise removal of recombination or erroneous SNPs
 
 The comparison of SNP distances between potentially related strains and background strains can be helpful for source attribution (e.g. foodborne outbreaks). Combination with epidemiological data can help identify suitable thresholds to rule out transmission. In addition, mutation rates can be calculated based on SNPs at different time points, allowing inference of start of outbreak. Be aware of incomplete sampling as SNP distances don’t reveal if there were other infected individuals that weren’t sampled.
 

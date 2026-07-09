@@ -116,7 +116,7 @@ pip install .
 
 ### Usage
 
-Positional arguments are one or more FASTA files containing query genome assemblies. You must provide the path to the directory containing the database files using either the `-d` option (_before_ the `query` subcommand) or by setting the `GAMBIT_DB_PATH` environment variable. The results can be optionally outputted to a file, but by default, they are written to the terminal.
+Positional arguments are one or more FASTA files containing query genome assemblies. You must provide the path to the directory containing the database files using either the `-d` option (_before_ the `query` subcommand) or by setting the `GAMBIT_DB_PATH` environment variable. The results can be optionally output to a file, but by default, they are written to the terminal.
 
 ```bash
 gambit [-d </path/to/database/>] query [-o results.csv] genome1.fasta genome2.fasta ...

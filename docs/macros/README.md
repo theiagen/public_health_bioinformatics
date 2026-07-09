@@ -126,7 +126,6 @@ ENDIF_RE = re.compile(r'<!--\s*endif\s*-->') # conditional end
           - include the header which contains a "title" and the tag `fragment: true` at the top of the file.
      - make sure any **assets** in the included Markdown file are prefixed with `../../` to ensure they are correctly resolved relative to the final output location. This is important for images, files, and other assets to ensure they are correctly displayed in the final documentation. You may recieve a "WARNING" but this is expected and can be ignored if the assets are correctly displayed in the rendered documentation.
 
-
 ---
 
 ## For Developers
@@ -156,8 +155,7 @@ Macros are defined in a `define_env(env)` function. This is the entry point that
 |-------------------|---------|
 | normalize_filters | makes filters into a consistent format { name: [values] } |
 | row_matches       | returns true if a row meets all of a filter's conditions |
-| normalize_sort    | turns sorting parms into a consistent format [(name, reverse flag), ...] |
-
+| normalize_sort    | turns sorting params into a consistent format [(name, reverse flag), ...] |
 
 #### `include_md(...)`
 

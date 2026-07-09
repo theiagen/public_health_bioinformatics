@@ -212,6 +212,7 @@ nav:
 not_in_nav: |
   assets/*
   common_text/*
+  macros/*
 
 theme:
   variant: classic
@@ -270,9 +271,9 @@ markdown_extensions:
   - pymdownx.mark
   - pymdownx.snippets:
       # Append the glossary abbreviations to every page so terms render as
-      # hover tooltips site-wide. See includes/abbreviations.md.
+      # hover tooltips site-wide. See docs/assets/abbreviations.md.
       auto_append:
-        - includes/abbreviations.md
+        - docs/assets/abbreviations.md
   - pymdownx.superfences
   - pymdownx.tabbed:
       alternate_style: true
@@ -284,7 +285,7 @@ markdown_extensions:
   - toc:
       permalink: true
   - zensical.extensions.macros:
-      module_name: macros/main
+      module_name: docs/macros/main
       on_error_fail: true
   - zensical.extensions.glightbox
 

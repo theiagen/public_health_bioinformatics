@@ -44,7 +44,7 @@ fragment: true
         - does _not_ affect read-level classification and extraction
         - will _not_ be used in downstream `percent_human` and `percent_target_organism` calculations
         - is provided in place of Kraken reports in downstream tasks, such as `qc_check` and `krona`
-        - outputted separate of the `kraken/kraken2_report`
+        - output separate of the `kraken/kraken2_report`
 
          By default, Bracken will reference the k-mer database that is closest to the mean read length of the input. This reference k-mer database size can be directly set using the `bracken_kmer_length` input, though it MUST correspond to an available k-mer database within the Kraken2 database (named `database<KMER_LENGTH>mers.kmer_distrib`). Bracken will be skipped if there are no k-mer libraries in the Kraken2 database.
 

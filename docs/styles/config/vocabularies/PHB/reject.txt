@@ -7,3 +7,4 @@
 # PHB.AmericanSpelling substitution rule (which also suggests the fix). This
 # file is a backstop for forms not covered there.
 inputted
+outputted

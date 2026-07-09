@@ -1,9 +1,9 @@
 # Glossary
 
-This glossary defines the acronyms, file formats, and technical terms used throughout the PHB documentation. It is written for a public health audience and favors plain-language explanations over strict formal definitions.
+This glossary defines the acronyms, file formats, and technical terms used throughout the PHB documentation.
 
 !!! dna "Hover for definitions in the docs"
-    Organization abbreviations (e.g. `ENA`, `GISAID`, `INSDC`) appear as **hover tooltips** throughout the documentation — hover over one (or focus it with the keyboard) to see a short definition without leaving the page. This page is the complete reference for every term below.
+    Organization abbreviations (e.g. `ENA`, `GISAID`, `INSDC`) appear as **hover tooltips** throughout the documentation — hover over one (or focus it with the keyboard) to see a short definition without leaving the page.
 
     Contributors: to add or edit an entry, see the [Documentation Contribution Guide](../contributing/doc_contribution.md#glossary-and-abbreviations).
 
@@ -216,6 +216,9 @@ subtype
 
 taxon (plural: taxa)
 :   A named group of organisms, such as a species or genus.
+
+typing scheme
+:   A standardized method for categorizing organisms into groups using the DNA sequences of multiple housekeeping genes to characterize isolates of different species.
 
 virulence
 :   The capacity of a microbe to cause disease; virulence genes contribute to this capacity.
