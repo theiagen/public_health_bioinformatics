@@ -628,6 +628,33 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Glossary
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1412,7 +1439,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -1439,7 +1466,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -1466,7 +1493,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -1493,7 +1520,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -1520,7 +1547,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -2799,7 +2826,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -3451,7 +3478,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -3478,7 +3505,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -4020,7 +4047,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -4258,33 +4285,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/ncbi_amrfinderplus/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  NCBI-AMRFinderPlus
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../phylogenetic_construction/snippy_variants/" class="md-nav__link">
         
   
@@ -4346,7 +4346,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -4753,7 +4753,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -4780,7 +4780,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -6032,7 +6032,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -6059,7 +6059,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -6086,7 +6086,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -6113,7 +6113,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -6140,7 +6140,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -6167,7 +6167,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -6722,7 +6722,7 @@
 <p>The <code>Assembly_Fetch</code> workflow downloads assemblies from NCBI. This is particularly useful when you need to align reads against a reference genome, for example during a reference-based phylogenetics workflow. This workflow can be run in two ways:</p>
 <ol>
 <li>You can provide an accession for the specific assembly that you want to download, and <code>Assembly_Fetch</code> will run only the NCBI genome download task to download this assembly,</li>
-<li>You can provide an assembly, and <code>Assembly_Fetch</code> will first use the <code>ReferenceSeeker</code> task to first find the closest reference genome in RefSeq to your query assembly and then will run the NCBI genome download task to download that reference assembly.</li>
+<li>You can provide an assembly, and <code>Assembly_Fetch</code> will first use the <code>ReferenceSeeker</code> task to find the closest reference genome in RefSeq to your query assembly and then will run the NCBI genome download task to download that reference assembly.</li>
 </ol>
 <div class="admonition info">
 <p class="admonition-title">Call-Caching Disabled</p>
@@ -6910,13 +6910,13 @@
 <p>ReferenceSeeker uses the draft assembly to identify closely related bacterial, viral, fungal, or plasmid genome assemblies in <a href="https://www.ncbi.nlm.nih.gov/refseq/">RefSeq</a>.</p>
 <p>Databases that can be used with ReferenceSeeker are as follows, and can be used by pasting the GSURI in double quotation marks <code>""</code> into the <code>referenceseeker_db</code> optional input:</p>
 <ul>
-<li><strong>archea</strong>:  <code>gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-archaea-refseq-205.v20210406.tar.gz</code></li>
+<li><strong>archaea</strong>:  <code>gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-archaea-refseq-205.v20210406.tar.gz</code></li>
 <li><strong>bacterial</strong> (<strong>default</strong>): <code>gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-bacteria-refseq-205.v20210406.tar.gz</code></li>
 <li><strong>fungi</strong>: <code>gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-fungi-refseq-205.v20210406.tar.gz</code></li>
 <li><strong>plasmids</strong>: <code>gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-plasmids-refseq-205.v20210406.tar.gz</code></li>
 <li><strong>viral</strong>: <code>gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-viral-refseq-205.v20210406.tar.gz</code></li>
 </ul>
-<p>For ReferenceSeeker to identify a genome, it must meet user-specified thresholds for sequence coverage (<code>referenceseeker_conserved_dna_threshold</code>; default &gt;= 0.69) and identity (<code>referenceseeker_ani_threshold</code>; default &gt;= 0.95 ). </p>
+<p>For ReferenceSeeker to identify a genome, it must meet user-specified thresholds for sequence coverage (<code>referenceseeker_conserved_dna_threshold</code>; default &gt;= 0.69) and identity (<code>referenceseeker_ani_threshold</code>; default &gt;= 0.95 ).</p>
 <p>A list of closely related genomes is provided in <code>referenceseeker_tsv</code>. The reference genome that ranks highest according to ANI and conserved DNA values is considered the closest match and will be downloaded, with information about this provided in the <code>assembly_fetch_referenceseeker_top_hit_ncbi_accession</code> output.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">ReferenceSeeker Technical Details</p>
@@ -7069,6 +7069,28 @@
 <blockquote>
 <p><strong>NCBI Datasets:</strong> O’Leary NA, Cox E, Holmes JB, et al. Exploring and retrieving sequence and metadata for species across the tree of life with NCBI Datasets. Sci Data 11, 732 (2024).</p>
 </blockquote>
+<!--
+  PHB organization tooltips.
+
+  This file is AUTO-APPENDED to every documentation page by pymdownx.snippets
+  (see the `auto_append` setting under markdown_extensions in mkdocs.yml). The
+  `abbr` extension turns each definition below into a hover tooltip wherever the
+  organization abbreviation appears in the rendered docs — no per-page work
+  required.
+
+  SCOPE: this file holds ONLY organization abbreviations (repositories,
+  databases, and networks, e.g. ENA, GISAID, INSDC). Every other kind of term
+  (file types, characterization terms, general/assay terms, organisms, and other
+  acronyms) lives ONLY on the Glossary page — do NOT add them here.
+
+  HOW TO ADD AN ORGANIZATION:
+    1. Add one line here in the form:  *[ABBR]: short definition
+    2. Add the same abbreviation (with a fuller definition) to
+       docs/guides/glossary.md under "Databases, repositories, and
+       organizations".
+
+  Matching is CASE-SENSITIVE and whole-word only.
+-->
 
 
 

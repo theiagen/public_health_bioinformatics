@@ -616,6 +616,33 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Glossary
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1245,7 +1272,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -1272,7 +1299,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -1299,7 +1326,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -1326,7 +1353,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -1353,7 +1380,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -2632,7 +2659,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -3284,7 +3311,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -3311,7 +3338,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -3853,7 +3880,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -4091,33 +4118,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../workflows/standalone/ncbi_amrfinderplus/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  NCBI-AMRFinderPlus
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../workflows/phylogenetic_construction/snippy_variants/" class="md-nav__link">
         
   
@@ -4179,7 +4179,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -4586,7 +4586,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -4613,7 +4613,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -5865,7 +5865,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -5892,7 +5892,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -5919,7 +5919,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -5946,7 +5946,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -5973,7 +5973,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -6000,7 +6000,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -6321,7 +6321,7 @@
 <summary><code>fastplong</code>: ONT Read Trimming</summary>
 <p>fastplong trims low-quality regions with a sliding window (with a default window size of 4, specified with <code>fastplong_window_size</code>), cutting once the average quality within the window falls below the <code>fastplong_quality_trim_score</code> (default of 20). The read is discarded if it is trimmed below <code>fastplong_min_length</code> (default of 15 bases). These trimming options are conducted according to a sliding window, but the directionality of this window can be specified by setting <code>cut_front</code> (5' to 3') or <code>cut_tail</code> (3' to 5') to "true".</p>
 <p>Adapter trimming is enabled by default and can be disabled by setting <code>fastplong_trim_adapters</code> to "false". Automatic adapter detection is enabled by default, though a FASTA, a string of start, or a string of end adapters can be specified with <code>fastplong_adapter_fasta</code>, <code>fastplong_start_adapter</code>, or <code>fastplong_end_adapter</code> inputs respectively.</p>
-<p>Additional arguments can be passed using the <code>fastplong_args</code> optional parameter. Please reference the <a href="https://github.com/OpenGene/fastplong">fastp GitHub</a> for a comprehensive list of arguments.</p>
+<p>Additional arguments can be passed using the <code>fastplong_args</code> optional parameter. Please reference the <a href="https://github.com/OpenGene/fastplong">fastplong GitHub</a> for a comprehensive list of arguments.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">fastplong Technical Details</p>
 <table>
@@ -6334,7 +6334,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastplong.wdl">task_fastp.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastplong.wdl">task_fastplong.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -6352,6 +6352,28 @@
 </table>
 </div>
 </details>
+<!--
+  PHB organization tooltips.
+
+  This file is AUTO-APPENDED to every documentation page by pymdownx.snippets
+  (see the `auto_append` setting under markdown_extensions in mkdocs.yml). The
+  `abbr` extension turns each definition below into a hover tooltip wherever the
+  organization abbreviation appears in the rendered docs — no per-page work
+  required.
+
+  SCOPE: this file holds ONLY organization abbreviations (repositories,
+  databases, and networks, e.g. ENA, GISAID, INSDC). Every other kind of term
+  (file types, characterization terms, general/assay terms, organisms, and other
+  acronyms) lives ONLY on the Glossary page — do NOT add them here.
+
+  HOW TO ADD AN ORGANIZATION:
+    1. Add one line here in the form:  *[ABBR]: short definition
+    2. Add the same abbreviation (with a fuller definition) to
+       docs/guides/glossary.md under "Databases, repositories, and
+       organizations".
+
+  Matching is CASE-SENSITIVE and whole-word only.
+-->
 
 
 

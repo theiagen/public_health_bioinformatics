@@ -628,6 +628,33 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Glossary
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1373,7 +1400,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -1400,7 +1427,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -1427,7 +1454,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -1454,7 +1481,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -1481,7 +1508,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -2760,7 +2787,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -3412,7 +3439,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -3439,7 +3466,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -3981,7 +4008,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -4219,33 +4246,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/ncbi_amrfinderplus/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  NCBI-AMRFinderPlus
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../phylogenetic_construction/snippy_variants/" class="md-nav__link">
         
   
@@ -4307,7 +4307,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -4714,7 +4714,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -4741,7 +4741,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -5993,7 +5993,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -6020,7 +6020,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -6047,7 +6047,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -6074,7 +6074,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -6101,7 +6101,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -6128,7 +6128,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -6644,7 +6644,7 @@
 <p>The <code>SRA_Fetch</code> workflow downloads sequence data from NCBI's Sequence Read Archive (SRA). It requires an SRA run accession then populates the associated read files to a Terra data table.</p>
 <p>Read files associated with the SRA run accession provided as input are copied to a Terra-accessible Google bucket. Hyperlinks to those files are shown in the "read1" and "read2" columns of the Terra data table.</p>
 <h3 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">&para;</a></h3>
-<p>The only required input for the SRA_Fetch workflow is an SRA run accession beginning "SRR", an ENA run accession beginning "ERR", or a DRA run accession which beginning "DRR".</p>
+<p>The only required input for the SRA_Fetch workflow is an SRA run accession beginning "SRR", an <abbr title="European Nucleotide Archive">ENA</abbr> run accession beginning "ERR", or a <abbr title="DDBJ Sequence Read Archive">DRA</abbr> run accession beginning "DRR".</p>
 <p>Please see the <a href="https://www.ncbi.nlm.nih.gov/sra/docs/submitmeta/">NCBI Metadata and Submission Overview</a> for assistance with identifying accessions. Briefly, NCBI-accessioned objects have the following naming scheme:</p>
 <table>
 <thead>
@@ -6685,7 +6685,7 @@
 <td>fetch_sra_to_fastq</td>
 <td><strong>accession</strong></td>
 <td>String</td>
-<td>SRA, ENA, or DRA accession number</td>
+<td>SRA, <abbr title="European Nucleotide Archive">ENA</abbr>, or <abbr title="DDBJ Sequence Read Archive">DRA</abbr> accession number</td>
 <td></td>
 <td>Required</td>
 </tr>
@@ -6749,8 +6749,8 @@
 </table>
 </div>
 <h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
-<p>Read data are available either with full base quality scores (<strong>SRA Normalized Format</strong>) or with simplified quality scores (<strong>SRA Lite</strong>). The <strong>SRA Normalized Format</strong> includes full, per-base quality scores, whereas <strong>base quality scores</strong> <strong>have been simplified in SRA Lite files.</strong> This means that all quality scores have been artificially set to Q-30 or Q3. More information about these files can be found <a href="https://www.ncbi.nlm.nih.gov/sra/docs/sra-data-formats/">here</a>.</p>
-<p>Given the lack of usefulness of SRA Lite formatted FASTQ files, we try to avoid these by preferentially searching SRA directly (SRA-Lite is more probably to be the file synced to other repositories), but sometimes downloading these files is unavoidable. To make the user aware of this, a warning column is present that is populated when an SRA-Lite file is detected.</p>
+<p>Read data are available either with full base quality scores (<strong>SRA Normalized Format</strong>) or with simplified quality scores (<strong>SRA Lite</strong>). The SRA Normalized Format includes full, per-base quality scores, whereas base quality scores have been simplified in SRA Lite files. This means that all quality scores in SRA Lite files have been artificially set to Q30 or Q3. More information about these files can be found in <a href="https://www.ncbi.nlm.nih.gov/sra/docs/sra-data-formats/">NCBI's SRA data formats documentation</a>.</p>
+<p>Given the lack of usefulness of SRA Lite formatted FASTQ files, we try to avoid these by preferentially searching SRA directly (SRA-Lite is more likely to be the file synced to other repositories), but sometimes downloading these files is unavoidable. To make the user aware of this, a warning column is present that is populated when an SRA-Lite file is detected.</p>
 <div class="searchable-table">
 <table>
 <thead>
@@ -6811,8 +6811,30 @@
 </div>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <blockquote>
-<p><strong>fastq-dl</strong>: Petit III, R. A., Hall, M. B., Tonkin-Hill, G., Zhu, J., &amp; Read, T. D. fastq-dl: efficiently download FASTQ files from SRA or ENA repositories (Version 2.0.2) [Computer software]. <a href="https://github.com/rpetit3/fastq-dl">https://github.com/rpetit3/fastq-dl</a></p>
+<p><strong>fastq-dl</strong>: Petit III, R. A., Hall, M. B., Tonkin-Hill, G., Zhu, J., &amp; Read, T. D. fastq-dl: efficiently download FASTQ files from SRA or <abbr title="European Nucleotide Archive">ENA</abbr> repositories (Version 2.0.2) [Computer software]. <a href="https://github.com/rpetit3/fastq-dl">https://github.com/rpetit3/fastq-dl</a></p>
 </blockquote>
+<!--
+  PHB organization tooltips.
+
+  This file is AUTO-APPENDED to every documentation page by pymdownx.snippets
+  (see the `auto_append` setting under markdown_extensions in mkdocs.yml). The
+  `abbr` extension turns each definition below into a hover tooltip wherever the
+  organization abbreviation appears in the rendered docs — no per-page work
+  required.
+
+  SCOPE: this file holds ONLY organization abbreviations (repositories,
+  databases, and networks, e.g. ENA, GISAID, INSDC). Every other kind of term
+  (file types, characterization terms, general/assay terms, organisms, and other
+  acronyms) lives ONLY on the Glossary page — do NOT add them here.
+
+  HOW TO ADD AN ORGANIZATION:
+    1. Add one line here in the form:  *[ABBR]: short definition
+    2. Add the same abbreviation (with a fuller definition) to
+       docs/guides/glossary.md under "Databases, repositories, and
+       organizations".
+
+  Matching is CASE-SENSITIVE and whole-word only.
+-->
 
 
 

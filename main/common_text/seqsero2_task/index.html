@@ -616,6 +616,33 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Glossary
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1245,7 +1272,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -1272,7 +1299,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -1299,7 +1326,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -1326,7 +1353,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -1353,7 +1380,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -2632,7 +2659,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -3284,7 +3311,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -3311,7 +3338,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -3853,7 +3880,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -4091,33 +4118,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../workflows/standalone/ncbi_amrfinderplus/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  NCBI-AMRFinderPlus
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../workflows/phylogenetic_construction/snippy_variants/" class="md-nav__link">
         
   
@@ -4179,7 +4179,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -4586,7 +4586,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -4613,7 +4613,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -5865,7 +5865,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -5892,7 +5892,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -5919,7 +5919,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -5946,7 +5946,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -5973,7 +5973,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -6000,7 +6000,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -6320,7 +6320,7 @@
 <details class="task">
 <summary><code>SeqSero2</code>: <em>Salmonella</em> Serotyping</summary>
 <p><a href="https://github.com/denglab/SeqSero2">SeqSero2</a> is a tool for <em>Salmonella</em> serotype prediction. In the TheiaProk Illumina workflows, SeqSero2 takes in raw sequencing reads and performs targeted assembly of serotype determinant alleles, which can be used to predict serotypes including contamination between serotypes. For the TheiaProk ONT and FASTA workflows, SeqSero2 uses the genome assembly as input.</p>
-<p>If reads are provided, SeqSero2 performs allele micro-assembly by default. This occurs through targeted assembly of serotype determinant alleles, and any assembled alleles are used to predict the sample's serotype, and can predict potential contamination. If the <code>seqsero2_mode</code> optional variable is changed to <code>"k"</code> (for k-mer mode), SeqSero2 will perform serotyping based on unique k-mers of serotype determinants. If the input data is an assembly FASTA, the k-mer mode must be used, and the genome assembly is used to generate the search k-mers instead of the raw reads. </p>
+<p>If reads are provided, SeqSero2 performs allele micro-assembly by default. This occurs through targeted assembly of serotype determinant alleles, and any assembled alleles are used to predict the sample's serotype, and can predict potential contamination. If the <code>seqsero2_mode</code> optional variable is changed to <code>"k"</code> (for k-mer mode), SeqSero2 will perform serotyping based on unique k-mers of serotype determinants. If the input data is an assembly FASTA, the k-mer mode must be used, and the genome assembly is used to generate the search k-mers instead of the raw reads.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">SeqSero2 Technical Details</p>
 <table>
@@ -6351,6 +6351,28 @@
 </table>
 </div>
 </details>
+<!--
+  PHB organization tooltips.
+
+  This file is AUTO-APPENDED to every documentation page by pymdownx.snippets
+  (see the `auto_append` setting under markdown_extensions in mkdocs.yml). The
+  `abbr` extension turns each definition below into a hover tooltip wherever the
+  organization abbreviation appears in the rendered docs — no per-page work
+  required.
+
+  SCOPE: this file holds ONLY organization abbreviations (repositories,
+  databases, and networks, e.g. ENA, GISAID, INSDC). Every other kind of term
+  (file types, characterization terms, general/assay terms, organisms, and other
+  acronyms) lives ONLY on the Glossary page — do NOT add them here.
+
+  HOW TO ADD AN ORGANIZATION:
+    1. Add one line here in the form:  *[ABBR]: short definition
+    2. Add the same abbreviation (with a fuller definition) to
+       docs/guides/glossary.md under "Databases, repositories, and
+       organizations".
+
+  Matching is CASE-SENSITIVE and whole-word only.
+-->
 
 
 

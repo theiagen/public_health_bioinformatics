@@ -616,6 +616,33 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Glossary
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1245,7 +1272,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -1272,7 +1299,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -1299,7 +1326,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -1326,7 +1353,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -1353,7 +1380,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -2632,7 +2659,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -3284,7 +3311,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -3311,7 +3338,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -3853,7 +3880,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -4091,33 +4118,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../workflows/standalone/ncbi_amrfinderplus/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  NCBI-AMRFinderPlus
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../workflows/phylogenetic_construction/snippy_variants/" class="md-nav__link">
         
   
@@ -4179,7 +4179,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -4586,7 +4586,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -4613,7 +4613,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -5865,7 +5865,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -5892,7 +5892,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -5919,7 +5919,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -5946,7 +5946,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -5973,7 +5973,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -6000,7 +6000,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -6363,12 +6363,12 @@ Bracken is a refinement module that improves the resolution of Kraken2 reports.
 <div class="language-text highlight"><pre><span></span><code>!!! info &quot;Bracken report refinement&quot;
     Bracken refines the Kraken2 taxon classification report when `call_bracken` is set to &quot;true&quot; (default). Bracken uses a Bayesian model to probabilistically estimate read abundances at the species/genus-level. Bracken will output a `bracken_report` that:
 
-    - increases report-level classification resolution *up to* the species level
-    - decreases resolution of sub-species report-level classifications, e.g. Severe acute respiratory syndrome coronavirus 2 will be grouped into *Betacoronavirus pandemicum*
-    - does *not* affect read-level classification and extraction
-    - will *not* be used in downstream `percent_human` and `percent_target_organism` calculations
-    - inputted in place of Kraken reports in downstream tasks, such as `qc_check` and `krona`
-    - outputted separate of the `kraken/kraken2_report`
+    - increases report-level classification resolution _up to_ the species level
+    - decreases resolution of sub-species report-level classifications, e.g. Severe acute respiratory syndrome coronavirus 2 will be grouped into _Betacoronavirus pandemicum_
+    - does _not_ affect read-level classification and extraction
+    - will _not_ be used in downstream `percent_human` and `percent_target_organism` calculations
+    - is provided in place of Kraken reports in downstream tasks, such as `qc_check` and `krona`
+    - output separate of the `kraken/kraken2_report`
 
      By default, Bracken will reference the k-mer database that is closest to the mean read length of the input. This reference k-mer database size can be directly set using the `bracken_kmer_length` input, though it MUST correspond to an available k-mer database within the Kraken2 database (named `database&lt;KMER_LENGTH&gt;mers.kmer_distrib`). Bracken will be skipped if there are no k-mer libraries in the Kraken2 database.
 
@@ -6380,6 +6380,28 @@ Bracken is a refinement module that improves the resolution of Kraken2 reports.
     | Software Documentation | [Kraken2 Documentation](https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown)&lt;br&gt;[Bracken Documentation](https://github.com/jenniferlu717/Bracken/blob/master/README.md) |
     | Original Publication(s) | [Improved metagenomic analysis with Kraken 2](https://link.springer.com/article/10.1186/s13059-019-1891-0)&lt;br&gt;[Bracken: estimating species abundance in metagenomics data](https://doi.org/10.7717/peerj-cs.104) |
 </code></pre></div>
+<!--
+  PHB organization tooltips.
+
+  This file is AUTO-APPENDED to every documentation page by pymdownx.snippets
+  (see the `auto_append` setting under markdown_extensions in mkdocs.yml). The
+  `abbr` extension turns each definition below into a hover tooltip wherever the
+  organization abbreviation appears in the rendered docs — no per-page work
+  required.
+
+  SCOPE: this file holds ONLY organization abbreviations (repositories,
+  databases, and networks, e.g. ENA, GISAID, INSDC). Every other kind of term
+  (file types, characterization terms, general/assay terms, organisms, and other
+  acronyms) lives ONLY on the Glossary page — do NOT add them here.
+
+  HOW TO ADD AN ORGANIZATION:
+    1. Add one line here in the form:  *[ABBR]: short definition
+    2. Add the same abbreviation (with a fuller definition) to
+       docs/guides/glossary.md under "Databases, repositories, and
+       organizations".
+
+  Matching is CASE-SENSITIVE and whole-word only.
+-->
 
 
 

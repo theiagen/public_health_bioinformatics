@@ -628,6 +628,33 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Glossary
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1261,7 +1288,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -1288,7 +1315,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -1315,7 +1342,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -1342,7 +1369,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -1369,7 +1396,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -2782,7 +2809,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -3434,7 +3461,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -3461,7 +3488,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -4003,7 +4030,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -4241,33 +4268,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/ncbi_amrfinderplus/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  NCBI-AMRFinderPlus
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../snippy_variants/" class="md-nav__link">
         
   
@@ -4329,7 +4329,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -4736,7 +4736,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -4763,7 +4763,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -6015,7 +6015,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -6042,7 +6042,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -6069,7 +6069,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -6096,7 +6096,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -6123,7 +6123,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -6150,7 +6150,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -6690,7 +6690,7 @@
 <div class="admonition caption">
 <p class="admonition-title">Lyve-SET Workflow Diagram</p>
 <p><div style="text-align: center;">
-<a class="glightbox" data-type="image" href="../../../assets/figures/Lyve_Set.png"><img alt="Lyve-SET Workflow Diagram" src="../../../assets/figures/Lyve_Set.png" /></a>
+<a class="glightbox" data-type="image" href="../../../assets/figures/Lyve_Set.png"><img alt="Lyve-SET workflow taking genomic DNA reads through reference procurement, SNP discovery, and filtering steps to produce a multiple sequence alignment used for phylogenetic inference and pairwise distance comparison." src="../../../assets/figures/Lyve_Set.png" /></a>
 </div></p>
 </div>
 <h3 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">&para;</a></h3>
@@ -6922,7 +6922,7 @@
 <p>The Lyve_SET WDL workflow is run using read data from a set of samples. The workflow will produce a pairwise SNP matrix for the sample set and a maximum likelihood phylogenetic tree. Details regarding the default implementation of Lyve_SET and optional modifications are listed below.</p>
 <ol>
 <li>Read processing<ol>
-<li>By default, the Lyve_SET WDL workflow will perform read cleaning using the CG-Pipeline "CGP". However, read cleaning can be turned off or performed using "BayesHammer" using the <code>read_cleaner</code> input variable.</li>
+<li>By default, the Lyve_SET WDL workflow will perform read cleaning using the CG-Pipeline ("CGP"). However, read cleaning can be turned off or performed using "BayesHammer" using the <code>read_cleaner</code> input variable.</li>
 </ol>
 </li>
 <li>Reference procurement<ol>
@@ -7010,6 +7010,28 @@
 <blockquote>
 <p><strong>Lyve-SET</strong> Katz LS, Griswold T, Williams-Newkirk AJ, Wagner D, Petkau A, et al. (2017) A Comparative Analysis of the Lyve-SET Phylogenomics Pipeline for Genomic Epidemiology of Foodborne Pathogens. Frontiers in Microbiology 8.</p>
 </blockquote>
+<!--
+  PHB organization tooltips.
+
+  This file is AUTO-APPENDED to every documentation page by pymdownx.snippets
+  (see the `auto_append` setting under markdown_extensions in mkdocs.yml). The
+  `abbr` extension turns each definition below into a hover tooltip wherever the
+  organization abbreviation appears in the rendered docs — no per-page work
+  required.
+
+  SCOPE: this file holds ONLY organization abbreviations (repositories,
+  databases, and networks, e.g. ENA, GISAID, INSDC). Every other kind of term
+  (file types, characterization terms, general/assay terms, organisms, and other
+  acronyms) lives ONLY on the Glossary page — do NOT add them here.
+
+  HOW TO ADD AN ORGANIZATION:
+    1. Add one line here in the form:  *[ABBR]: short definition
+    2. Add the same abbreviation (with a fuller definition) to
+       docs/guides/glossary.md under "Databases, repositories, and
+       organizations".
+
+  Matching is CASE-SENSITIVE and whole-word only.
+-->
 
 
 

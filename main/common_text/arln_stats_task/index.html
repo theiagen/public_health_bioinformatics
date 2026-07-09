@@ -616,6 +616,33 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Glossary
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1245,7 +1272,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -1272,7 +1299,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -1299,7 +1326,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -1326,7 +1353,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -1353,7 +1380,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -2632,7 +2659,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -3284,7 +3311,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -3311,7 +3338,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -3853,7 +3880,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -4091,33 +4118,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../workflows/standalone/ncbi_amrfinderplus/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  NCBI-AMRFinderPlus
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../workflows/phylogenetic_construction/snippy_variants/" class="md-nav__link">
         
   
@@ -4179,7 +4179,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -4586,7 +4586,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -4613,7 +4613,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -5865,7 +5865,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -5892,7 +5892,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -5919,7 +5919,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -5946,7 +5946,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -5973,7 +5973,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -6000,7 +6000,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -6318,13 +6318,13 @@
   <h1 id="__skip">Task Fragment `arln_stats`</h1>
 
 <details class="task">
-<summary><code>arln_stats</code>: Quality Assessment for ARLN (optional)</summary>
+<summary><code>arln_stats</code>: Quality Assessment for <abbr title="Antimicrobial Resistance Laboratory Network">ARLN</abbr> (optional)</summary>
 <p>To activate this task, set <code>call_arln_stats</code> to <code>true</code>.</p>
-<p>This task will provide the user with Antimicrobial Resistance Laboratory Network (<a href="https://www.cdc.gov/antimicrobial-resistance-laboratory-networks/php/about/domestic.html">ARLN</a>)-compliant statistics used for PASS/FAIL assessment, such as assembly ratio, percent GC statistics, and the percent Q30 of raw and cleaned reads.</p>
-<p>The Q30 statistics are calculated via a Python script (<a href="https://github.com/theiagen/theiagen_docker_builds/blob/main/arln_stats/1.0.0/q30.py">q30.py</a>) that is incorporated within this task's Docker image. The assembly ratio statistic is obtained by parsing an included <a href="https://github.com/CDCgov/phoenix/blob/v2.1.0/assets/databases/NCBI_Assembly_stats_20240124.txt">NCBI Assembly Stats</a> text file that is created by the CDC to aggregate NCBI prokaryotic assembly data. The file is sorted by taxon and has statistics for each taxon (see toggle below). This data is used to obtain and calculate the assembly ratio of samples, much the same as CDC's <a href="https://github.com/CDCgov/phoenix/wiki/Pipeline-Overview#qc-of-assembled-scaffolds--500bps">Phoenix pipeline</a>.</p>
+<p>This task will provide the user with Antimicrobial Resistance Laboratory Network (<a href="https://www.cdc.gov/antimicrobial-resistance-laboratory-networks/php/about/domestic.html"><abbr title="Antimicrobial Resistance Laboratory Network">ARLN</abbr></a>)-compliant statistics used for PASS/FAIL assessment, such as assembly ratio, percent GC statistics, and the percent Q30 of raw and cleaned reads.</p>
+<p>The Q30 statistics are calculated via a Python script (<a href="https://github.com/theiagen/theiagen_docker_builds/blob/main/arln_stats/1.0.0/q30.py">q30.py</a>) that is incorporated within this task's Docker image. The assembly ratio statistic is obtained by parsing an included <a href="https://github.com/CDCgov/phoenix/blob/v2.1.0/assets/databases/NCBI_Assembly_stats_20240124.txt">NCBI Assembly Stats</a> text file that is created by the <abbr title="Centers for Disease Control and Prevention">CDC</abbr> to aggregate NCBI prokaryotic assembly data. The file is sorted by taxon and has statistics for each taxon (see toggle below). This data is used to obtain and calculate the assembly ratio of samples, much the same as <abbr title="Centers for Disease Control and Prevention">CDC</abbr>'s <a href="https://github.com/CDCgov/phoenix/wiki/Pipeline-Overview#qc-of-assembled-scaffolds--500bps">Phoenix pipeline</a>.</p>
 <details class="toggle">
 <summary>NCBI Assembly Stats Explained</summary>
-<p>This aggregated data file is produced by the <a href="https://github.com/CDCgov/phoenix/wiki/Pipeline-Overview#qc-of-assembled-scaffolds--500bps">CDC</a> and the columns are as follows: </p>
+<p>This aggregated data file is produced by the <a href="https://github.com/CDCgov/phoenix/wiki/Pipeline-Overview#qc-of-assembled-scaffolds--500bps"><abbr title="Centers for Disease Control and Prevention">CDC</abbr></a> and the columns are as follows:</p>
 <ul>
 <li>Species</li>
 <li>Assembly_Size_Min</li>
@@ -6366,6 +6366,28 @@
 </table>
 </div>
 </details>
+<!--
+  PHB organization tooltips.
+
+  This file is AUTO-APPENDED to every documentation page by pymdownx.snippets
+  (see the `auto_append` setting under markdown_extensions in mkdocs.yml). The
+  `abbr` extension turns each definition below into a hover tooltip wherever the
+  organization abbreviation appears in the rendered docs — no per-page work
+  required.
+
+  SCOPE: this file holds ONLY organization abbreviations (repositories,
+  databases, and networks, e.g. ENA, GISAID, INSDC). Every other kind of term
+  (file types, characterization terms, general/assay terms, organisms, and other
+  acronyms) lives ONLY on the Glossary page — do NOT add them here.
+
+  HOW TO ADD AN ORGANIZATION:
+    1. Add one line here in the form:  *[ABBR]: short definition
+    2. Add the same abbreviation (with a fuller definition) to
+       docs/guides/glossary.md under "Databases, repositories, and
+       organizations".
+
+  Matching is CASE-SENSITIVE and whole-word only.
+-->
 
 
 

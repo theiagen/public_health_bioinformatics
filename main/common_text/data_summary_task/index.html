@@ -616,6 +616,33 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Glossary
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1245,7 +1272,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -1272,7 +1299,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -1299,7 +1326,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -1326,7 +1353,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -1353,7 +1380,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -2632,7 +2659,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -3284,7 +3311,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -3311,7 +3338,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -3853,7 +3880,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -4091,33 +4118,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../workflows/standalone/ncbi_amrfinderplus/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  NCBI-AMRFinderPlus
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../workflows/phylogenetic_construction/snippy_variants/" class="md-nav__link">
         
   
@@ -4179,7 +4179,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -4586,7 +4586,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -4613,7 +4613,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -5865,7 +5865,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -5892,7 +5892,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -5919,7 +5919,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -5946,7 +5946,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -5973,7 +5973,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -6000,7 +6000,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -6321,34 +6321,66 @@
 <summary><code>summarize_data</code>: Presence/Absence Data Summary  (optional)</summary>
 </details>
 <!-- if: snippy -->
-<p>##### Data Summary (optional)</p>
+<div class="language-text highlight"><pre><span></span><code>##### Data Summary (optional)
+</code></pre></div>
 <!-- endif -->
-<p>!!! tip "Command-line incompatible"
-        This task is not compatible with command-line use, even with modifications. It is engineered to run on Terra. To run this workflow on the command line, you must leave the <code>data_summary_*</code> and <code>sample_names</code> optional variables blank to prevent this task from running.</p>
-<div class="language-text highlight"><pre><span></span><code>If you fill out the `data_summary_*` and `sample_names` optional variables, you can use the optional `summarize_data` task. The task takes a comma-separated list of column names from the Terra data table, which should each contain a list of comma-separated items. For example, `&quot;amrfinderplus_virulence_genes,amrfinderplus_stress_genes&quot;` (with quotes, comma separated, no spaces) for these output columns from running TheiaProk. The task checks whether those comma-separated items are present in each row of the data table (sample), then creates a CSV file of these results. The CSV file indicates presence (TRUE) or absence (empty) for each item. By default, the task does not add a Phandango coloring tag to group items from the same column, but you can turn this on by setting `phandango_coloring` to `true`.
+<div class="language-text highlight"><pre><span></span><code>!!! tip &quot;Command-line incompatible&quot;
+    This task is not compatible with command-line use, even with modifications. It is engineered to run on Terra. To run this workflow on the command line, you must leave the `data_summary_*` and `sample_names` optional variables blank to prevent this task from running.
 
-??? toggle &quot;**Example output CSV**&quot;
+If you fill out the `data_summary_*` and `sample_names` optional inputs, you can use the optional `summarize_data` task. The task takes a comma-separated list of column names from the Terra data table. The task checks whether the contents of the columns are shared between the samples and creates a CSV file of the results.
 
-    ```text linenums=&quot;1&quot;
-    Sample_Name,aph(3&#39;)-IIa,blaCTX-M-65,blaOXA-193,tet(O)
-    sample1,TRUE,,TRUE,TRUE
-    sample2,,,FALSE,TRUE
-    sample3,,,FALSE,
-    ```
+Given the following input:
 
-??? toggle &quot;**Example use of Phandango coloring**&quot;
+| Sample Name | my_input_column |
+| --- | --- |
+| sample1 | aph(3&#39;)-IIa,blacOXA-193 |
+| sample2 | blaCTX-M-65,tet(0) |
+| sample3 | blaCTX-M-65 |
 
-    Data summary produced using the `phandango_coloring` option, visualized alongside Newick tree at &lt;http://jameshadfield.github.io/phandango/#/main&gt;
+The output CSV would appear as follows:
 
-    !!! caption &quot;Example phandango_coloring output&quot;
-        ![Phandango coloring example](../../assets/figures/example_phandango_coloring.png)
+```text linenums=&quot;1&quot;
+Sample_Name,aph(3&#39;)-IIa,blaCTX-M-65,blaOXA-193,tet(O)
+sample1,TRUE,,TRUE,
+sample2,,TRUE,,TRUE
+sample3,,TRUE,,
+```
+
+The CSV file indicates presence (TRUE) or absence (empty) for each item. By default, the task does not add a Phandango coloring tag to group items from the same column, but you can turn this on by setting `phandango_coloring` to `true`.
+
+??? toggle &quot;Example use of Phandango coloring&quot;
+    Data summary produced using the `phandango_coloring` option, visualized alongside a Newick tree at &lt;http://jameshadfield.github.io/phandango/#/main&gt;
+
+    !!! caption &quot;Phandango: Phylogenetic Tree with AMR Gene Heatmap&quot;
+        ![Phandango visualization showing a phylogenetic tree of 10 samples alongside a heatmap of antimicrobial resistance gene presence, with purple blocks indicating gene detection for aph(3&#39;)-IIa, blaCTX-M-65, blaOXA-193, and tet(O).](../../assets/figures/example_phandango_coloring.png)
 
 !!! techdetails &quot;Data summary technical details&quot;
-
     |  | Links |
     | --- | --- |
     | Task | [task_summarize_data.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_summarize_data.wdl) |
 </code></pre></div>
+<!--
+  PHB organization tooltips.
+
+  This file is AUTO-APPENDED to every documentation page by pymdownx.snippets
+  (see the `auto_append` setting under markdown_extensions in mkdocs.yml). The
+  `abbr` extension turns each definition below into a hover tooltip wherever the
+  organization abbreviation appears in the rendered docs — no per-page work
+  required.
+
+  SCOPE: this file holds ONLY organization abbreviations (repositories,
+  databases, and networks, e.g. ENA, GISAID, INSDC). Every other kind of term
+  (file types, characterization terms, general/assay terms, organisms, and other
+  acronyms) lives ONLY on the Glossary page — do NOT add them here.
+
+  HOW TO ADD AN ORGANIZATION:
+    1. Add one line here in the form:  *[ABBR]: short definition
+    2. Add the same abbreviation (with a fuller definition) to
+       docs/guides/glossary.md under "Databases, repositories, and
+       organizations".
+
+  Matching is CASE-SENSITIVE and whole-word only.
+-->
 
 
 

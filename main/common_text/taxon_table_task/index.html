@@ -616,6 +616,33 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Glossary
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1245,7 +1272,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -1272,7 +1299,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -1299,7 +1326,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -1326,7 +1353,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -1353,7 +1380,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -2632,7 +2659,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -3284,7 +3311,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -3311,7 +3338,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -3853,7 +3880,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -4091,33 +4118,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../workflows/standalone/ncbi_amrfinderplus/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  NCBI-AMRFinderPlus
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../workflows/phylogenetic_construction/snippy_variants/" class="md-nav__link">
         
   
@@ -4179,7 +4179,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -4586,7 +4586,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -4613,7 +4613,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -5865,7 +5865,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -5892,7 +5892,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -5919,7 +5919,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -5946,7 +5946,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -5973,7 +5973,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -6000,7 +6000,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -6326,12 +6326,12 @@
 
 Activate this task by providing a value for the `output_taxon_table` input variable. If provided, the user must also provide values to the `terra_project` and `terra_workspace` optional input variables.
 
-The Export Taxon Table module will copy sample data to a different data table based on the taxonomic assignment. For example, if an *influenza* sample is analyzed, the module will copy the sample data to a new table for *influenza* samples or add the sample data to an existing table.
+The Export Taxon Table module will copy sample data to a different data table based on the taxonomic assignment. For example, if an _influenza_ sample is analyzed, the module will copy the sample data to a new table for _influenza_ samples or add the sample data to an existing table.
 
 !!! tip &quot;&quot;
     **Formatting the `output_taxon_table` file**
 
-    The `output_taxon_table` file must be uploaded a Google storage bucket that is accessible by Terra and should be in **tab-delimited** format and include a header. Briefly, the viral taxon name should be listed in the leftmost column with the name of the data table to copy samples of that taxon to in the rightmost column.
+    The `output_taxon_table` file must be uploaded to a Google storage bucket that is accessible by Terra and should be in **tab-delimited** format and include a header. Briefly, the viral taxon name should be listed in the leftmost column with the name of the data table to copy samples of that taxon to in the rightmost column.
 
     | taxon | taxon_table |
     | --- | --- |
@@ -6347,14 +6347,14 @@ The Export Taxon Table module will copy sample data to a different data table ba
 
 Activate this task by providing a value for the `taxon_tables` input variable. If provided, the user must also provide values to the `terra_project` and `terra_workspace` optional input variables.
 
-The Export Taxon Table module, if enabled, will copy sample data to a different data table based on the taxonomic assignment. For example, if an *E. coli* sample is analyzed, the module will copy the sample data to a new table for *E. coli* samples or add the sample data to an existing table.
+The Export Taxon Table module, if enabled, will copy sample data to a different data table based on the taxonomic assignment. For example, if an _E. coli_ sample is analyzed, the module will copy the sample data to a new table for _E. coli_ samples or add the sample data to an existing table.
 
 !!! tip &quot;&quot;
     To activate the Export Taxon Table module, provide a file indicating data table names to copy samples of each taxa to in the `taxon_tables` input variable.
 
     **Formatting the `taxon_tables` file**
 
-    The `taxon_tables` file must be uploaded a Google storage bucket that is accessible by Terra and should be in the format below. Briefly, the bacterial genera or species should be listed in the leftmost column with the name of the data table to copy samples of that taxon to in the rightmost column.
+    The `taxon_tables` file must be uploaded to a Google storage bucket that is accessible by Terra and should be in the format below. Briefly, the bacterial genera or species should be listed in the leftmost column with the name of the data table to copy samples of that taxon to in the rightmost column.
 
     | taxon | taxon_table |
     | --- | --- |
@@ -6362,25 +6362,47 @@ The Export Taxon Table module, if enabled, will copy sample data to a different 
     | Salmonella | salmonella_specimen |
     | Escherichia | ecoli_specimen |
     | Shigella | shigella_specimen |
-    | Streptococcus | strep_pneumo_specimen |
+    | Streptococcus | streptococcus_specimen |
     | Legionella | legionella_specimen |
     | Klebsiella | klebsiella_specimen |
     | Mycobacterium | mycobacterium_specimen |
     | Acinetobacter | acinetobacter_specimen |
     | Pseudomonas | pseudomonas_specimen |
-    | Staphylococcus | staphyloccus_specimen |
+    | Staphylococcus | staphylococcus_specimen |
     | Neisseria | neisseria_specimen |
 </code></pre></div>
 <!-- endif -->
 
 <div class="language-text highlight"><pre><span></span><code>!!! tip &quot;&quot;
-    There are no output columns for the taxon table task. The only output of the task is that additional data tables will appear for in the Terra workspace for samples matching a taxa in the taxon table file.
+    There are no output columns for the taxon table task. The only output of the task is that additional data tables will appear in the Terra workspace for samples matching a taxa in the taxon table file.
 
 !!! techdetails &quot;Export Taxon Table Technical Details&quot;
     |  | Links |
     | --- | --- |
     | Task | [task_export_taxon_table.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_export/task_export_taxon_table.wdl) |
 </code></pre></div>
+<!--
+  PHB organization tooltips.
+
+  This file is AUTO-APPENDED to every documentation page by pymdownx.snippets
+  (see the `auto_append` setting under markdown_extensions in mkdocs.yml). The
+  `abbr` extension turns each definition below into a hover tooltip wherever the
+  organization abbreviation appears in the rendered docs — no per-page work
+  required.
+
+  SCOPE: this file holds ONLY organization abbreviations (repositories,
+  databases, and networks, e.g. ENA, GISAID, INSDC). Every other kind of term
+  (file types, characterization terms, general/assay terms, organisms, and other
+  acronyms) lives ONLY on the Glossary page — do NOT add them here.
+
+  HOW TO ADD AN ORGANIZATION:
+    1. Add one line here in the form:  *[ABBR]: short definition
+    2. Add the same abbreviation (with a fuller definition) to
+       docs/guides/glossary.md under "Databases, repositories, and
+       organizations".
+
+  Matching is CASE-SENSITIVE and whole-word only.
+-->
 
 
 

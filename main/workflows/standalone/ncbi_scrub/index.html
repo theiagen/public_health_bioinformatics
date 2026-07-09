@@ -628,6 +628,33 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Glossary
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1261,7 +1288,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -1288,7 +1315,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -1315,7 +1342,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -1342,7 +1369,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -1369,7 +1396,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -2760,7 +2787,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -3412,7 +3439,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -3439,7 +3466,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -3981,7 +4008,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -4219,33 +4246,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../ncbi_amrfinderplus/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  NCBI-AMRFinderPlus
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../phylogenetic_construction/snippy_variants/" class="md-nav__link">
         
   
@@ -4307,7 +4307,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -4714,7 +4714,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -4741,7 +4741,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -5993,7 +5993,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -6020,7 +6020,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -6047,7 +6047,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -6074,7 +6074,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -6101,7 +6101,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -6128,7 +6128,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -6642,7 +6642,7 @@
 </table>
 <h2 id="ncbi-scrub-workflows">NCBI Scrub Workflows<a class="headerlink" href="#ncbi-scrub-workflows" title="Permanent link">&para;</a></h2>
 <p>NCBI Scrub, also known as the human read removal tool (HRRT), is based on the <a href="https://doi.org/10.1186/s13059-021-02490-0">SRA Taxonomy Analysis Tool</a> that will take as input a FASTQ file, and produce as output a FASTQ file in which all reads identified as potentially of human origin are either removed (default) or masked with 'N'.
-There are three Kraken2 workflows:</p>
+There are two NCBI Scrub workflows:</p>
 <ul>
 <li><code>NCBI_Scrub_PE</code> is compatible with <strong>Illumina paired-end data</strong></li>
 <li><code>NCBI_Scrub_SE</code> is compatible with <strong>Illumina single-end data</strong></li>
@@ -7014,7 +7014,7 @@ There are three Kraken2 workflows:</p>
 <p>This workflow is composed of two tasks, one to dehost the input reads and another to screen the clean reads with kraken2 and the viral+human database.</p>
 <details class="task">
 <summary><code>HRRT</code>: Human Host Sequence Removal</summary>
-<p>All reads of human origin <strong>are removed</strong>, including their mates, by using NCBI's <a href="https://github.com/ncbi/sra-human-scrubber"><strong>human read removal tool (HRRT)</strong></a>. </p>
+<p>All reads of human origin <strong>are removed</strong>, including their mates, by using NCBI's <a href="https://github.com/ncbi/sra-human-scrubber"><strong>human read removal tool (HRRT)</strong></a>.</p>
 <p>HRRT is based on the <a href="https://doi.org/10.1186/s13059-021-02490-0">SRA Taxonomy Analysis Tool</a> and employs a k-mer database constructed of k-mers from Eukaryota derived from all human RefSeq records with any k-mers found in non-Eukaryota RefSeq records subtracted from the database.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">HRRT Technical Details</p>
@@ -7059,10 +7059,10 @@ There are three Kraken2 workflows:</p>
 <li>decreases resolution of sub-species report-level classifications, e.g. Severe acute respiratory syndrome coronavirus 2 will be grouped into <em>Betacoronavirus pandemicum</em></li>
 <li>does <em>not</em> affect read-level classification and extraction</li>
 <li>will <em>not</em> be used in downstream <code>percent_human</code> and <code>percent_target_organism</code> calculations</li>
-<li>inputted in place of Kraken reports in downstream tasks, such as <code>qc_check</code> and <code>krona</code></li>
-<li>outputted separate of the <code>kraken/kraken2_report</code></li>
+<li>is provided in place of Kraken reports in downstream tasks, such as <code>qc_check</code> and <code>krona</code></li>
+<li>output separate of the <code>kraken/kraken2_report</code></li>
 </ul>
-<p>By default, Bracken will reference the k-mer database that is closest to the mean read length of the input. This reference k-mer database size can be directly set using the <code>bracken_kmer_length</code> input, though it MUST correspond to an available k-mer database within the Kraken2 database (named <code>database&lt;KMER_LENGTH&gt;mers.kmer_distrib</code>). Bracken will be skipped if there are no k-mer libraries in the Kraken2 database. </p>
+<p>By default, Bracken will reference the k-mer database that is closest to the mean read length of the input. This reference k-mer database size can be directly set using the <code>bracken_kmer_length</code> input, though it MUST correspond to an available k-mer database within the Kraken2 database (named <code>database&lt;KMER_LENGTH&gt;mers.kmer_distrib</code>). Bracken will be skipped if there are no k-mer libraries in the Kraken2 database.</p>
 </div>
 <div class="admonition techdetails">
 <p class="admonition-title">Kraken2 Technical Details</p>
@@ -7226,6 +7226,28 @@ There are three Kraken2 workflows:</p>
 </div>
 </div>
 </div>
+<!--
+  PHB organization tooltips.
+
+  This file is AUTO-APPENDED to every documentation page by pymdownx.snippets
+  (see the `auto_append` setting under markdown_extensions in mkdocs.yml). The
+  `abbr` extension turns each definition below into a hover tooltip wherever the
+  organization abbreviation appears in the rendered docs — no per-page work
+  required.
+
+  SCOPE: this file holds ONLY organization abbreviations (repositories,
+  databases, and networks, e.g. ENA, GISAID, INSDC). Every other kind of term
+  (file types, characterization terms, general/assay terms, organisms, and other
+  acronyms) lives ONLY on the Glossary page — do NOT add them here.
+
+  HOW TO ADD AN ORGANIZATION:
+    1. Add one line here in the form:  *[ABBR]: short definition
+    2. Add the same abbreviation (with a fuller definition) to
+       docs/guides/glossary.md under "Databases, repositories, and
+       organizations".
+
+  Matching is CASE-SENSITIVE and whole-word only.
+-->
 
 
 

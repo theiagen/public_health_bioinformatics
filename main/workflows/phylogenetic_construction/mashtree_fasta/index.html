@@ -628,6 +628,33 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Glossary
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1261,7 +1288,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -1288,7 +1315,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -1315,7 +1342,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -1342,7 +1369,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -1369,7 +1396,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -2771,7 +2798,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -3423,7 +3450,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -3450,7 +3477,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -3992,7 +4019,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -4230,33 +4257,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/ncbi_amrfinderplus/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  NCBI-AMRFinderPlus
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../snippy_variants/" class="md-nav__link">
         
   
@@ -4318,7 +4318,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -4725,7 +4725,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -4752,7 +4752,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -6004,7 +6004,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -6031,7 +6031,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -6058,7 +6058,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -6085,7 +6085,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -6112,7 +6112,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -6139,7 +6139,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -6971,24 +6971,46 @@
 <p class="admonition-title">Command-line incompatible</p>
 <p>This task is not compatible with command-line use, even with modifications. It is engineered to run on Terra. To run this workflow on the command line, you must leave the <code>data_summary_*</code> and <code>sample_names</code> optional variables blank to prevent this task from running.</p>
 </div>
-<p>If you fill out the <code>data_summary_*</code> and <code>sample_names</code> optional variables, you can use the optional <code>summarize_data</code> task. The task takes a comma-separated list of column names from the Terra data table, which should each contain a list of comma-separated items. For example, <code>"amrfinderplus_virulence_genes,amrfinderplus_stress_genes"</code> (with quotes, comma separated, no spaces) for these output columns from running TheiaProk. The task checks whether those comma-separated items are present in each row of the data table (sample), then creates a CSV file of these results. The CSV file indicates presence (TRUE) or absence (empty) for each item. By default, the task does not add a Phandango coloring tag to group items from the same column, but you can turn this on by setting <code>phandango_coloring</code> to <code>true</code>.</p>
-<details class="toggle">
-<summary><strong>Example output CSV</strong></summary>
+<p>If you fill out the <code>data_summary_*</code> and <code>sample_names</code> optional inputs, you can use the optional <code>summarize_data</code> task. The task takes a comma-separated list of column names from the Terra data table. The task checks whether the contents of the columns are shared between the samples and creates a CSV file of the results.</p>
+<p>Given the following input:</p>
+<table>
+<thead>
+<tr>
+<th>Sample Name</th>
+<th>my_input_column</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sample1</td>
+<td>aph(3')-IIa,blacOXA-193</td>
+</tr>
+<tr>
+<td>sample2</td>
+<td>blaCTX-M-65,tet(0)</td>
+</tr>
+<tr>
+<td>sample3</td>
+<td>blaCTX-M-65</td>
+</tr>
+</tbody>
+</table>
+<p>The output CSV would appear as follows:</p>
 <div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
 <span class="normal"><a href="#__codelineno-0-2">2</a></span>
 <span class="normal"><a href="#__codelineno-0-3">3</a></span>
 <span class="normal"><a href="#__codelineno-0-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a>Sample_Name,aph(3&#39;)-IIa,blaCTX-M-65,blaOXA-193,tet(O)
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2"></a>sample1,TRUE,,TRUE,TRUE
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3"></a>sample2,,,FALSE,TRUE
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4"></a>sample3,,,FALSE,
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2"></a>sample1,TRUE,,TRUE,
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3"></a>sample2,,TRUE,,TRUE
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4"></a>sample3,,TRUE,,
 </span></code></pre></div></td></tr></table></div>
-</details>
+<p>The CSV file indicates presence (TRUE) or absence (empty) for each item. By default, the task does not add a Phandango coloring tag to group items from the same column, but you can turn this on by setting <code>phandango_coloring</code> to <code>true</code>.</p>
 <details class="toggle">
-<summary><strong>Example use of Phandango coloring</strong></summary>
-<p>Data summary produced using the <code>phandango_coloring</code> option, visualized alongside Newick tree at <a href="http://jameshadfield.github.io/phandango/#/main">http://jameshadfield.github.io/phandango/#/main</a></p>
+<summary>Example use of Phandango coloring</summary>
+<p>Data summary produced using the <code>phandango_coloring</code> option, visualized alongside a Newick tree at <a href="http://jameshadfield.github.io/phandango/#/main">http://jameshadfield.github.io/phandango/#/main</a></p>
 <div class="admonition caption">
-<p class="admonition-title">Example phandango_coloring output</p>
-<p><a class="glightbox" data-type="image" href="../../../assets/figures/example_phandango_coloring.png"><img alt="Phandango coloring example" src="../../../assets/figures/example_phandango_coloring.png" /></a></p>
+<p class="admonition-title">Phandango: Phylogenetic Tree with AMR Gene Heatmap</p>
+<p><a class="glightbox" data-type="image" href="../../../assets/figures/example_phandango_coloring.png"><img alt="Phandango visualization showing a phylogenetic tree of 10 samples alongside a heatmap of antimicrobial resistance gene presence, with purple blocks indicating gene detection for aph(3')-IIa, blaCTX-M-65, blaOXA-193, and tet(O)." src="../../../assets/figures/example_phandango_coloring.png" /></a></p>
 </div>
 </details>
 <div class="admonition techdetails">
@@ -7065,12 +7087,34 @@
 </div>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <blockquote>
-<p>Katz, L. S., Griswold, T., Morrison, S., Caravas, J., Zhang, S., den Bakker, H.C., Deng, X., and Carleton, H. A., (2019). Mashtree: a rapid comparison of whole genome sequence files. Journal of Open Source Software, 4(44), 1762, <a href="https://doi.org/10.21105/joss.01762">https://doi.org/10.21105/joss.01762</a></p>
+<p>Katz, L. S., Griswold, T., Morrison, S., Caravas, J., Zhang, S., den Bakker, H.C., Deng, X., and Carleton, H. A., (2019). Mashtree: a rapid comparison of whole genome sequence files. Journal of Open Source Software, 4(44), 1762, <a href="https://doi.org/10.21105/joss.01762">https://doi.org/10.21105/joss.01762</a></p>
 </blockquote>
 <!-- -->
 <blockquote>
 <p>Ondov, B. D., Treangen, T. J., Melsted, P., Mallonee, A. B., Bergman, N. H., Koren, S., &amp; Phillippy, A. M. (2016). Mash: Fast genome and metagenome distance estimation using minhash. Genome Biology, 17(1), 132. doi:10.1186/s13059-016-0997-x</p>
 </blockquote>
+<!--
+  PHB organization tooltips.
+
+  This file is AUTO-APPENDED to every documentation page by pymdownx.snippets
+  (see the `auto_append` setting under markdown_extensions in mkdocs.yml). The
+  `abbr` extension turns each definition below into a hover tooltip wherever the
+  organization abbreviation appears in the rendered docs — no per-page work
+  required.
+
+  SCOPE: this file holds ONLY organization abbreviations (repositories,
+  databases, and networks, e.g. ENA, GISAID, INSDC). Every other kind of term
+  (file types, characterization terms, general/assay terms, organisms, and other
+  acronyms) lives ONLY on the Glossary page — do NOT add them here.
+
+  HOW TO ADD AN ORGANIZATION:
+    1. Add one line here in the form:  *[ABBR]: short definition
+    2. Add the same abbreviation (with a fuller definition) to
+       docs/guides/glossary.md under "Databases, repositories, and
+       organizations".
+
+  Matching is CASE-SENSITIVE and whole-word only.
+-->
 
 
 

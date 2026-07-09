@@ -616,6 +616,33 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Glossary
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1245,7 +1272,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -1272,7 +1299,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -1299,7 +1326,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -1326,7 +1353,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -1353,7 +1380,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -2632,7 +2659,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -3284,7 +3311,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -3311,7 +3338,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -3853,7 +3880,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -4091,33 +4118,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../workflows/standalone/ncbi_amrfinderplus/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  NCBI-AMRFinderPlus
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../workflows/phylogenetic_construction/snippy_variants/" class="md-nav__link">
         
   
@@ -4179,7 +4179,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -4586,7 +4586,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -4613,7 +4613,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -5865,7 +5865,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -5892,7 +5892,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -5919,7 +5919,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -5946,7 +5946,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -5973,7 +5973,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -6000,7 +6000,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -6319,22 +6319,22 @@
 
 <details class="task">
 <summary><code>BBDuk</code>: Adapter Trimming and PhiX Removal</summary>
-<p>Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about <a href="https://knowledge.illumina.com/software/general/software-general-reference_material-list/000002905">Illumina adapters here</a>. For genome analysis, it's important to remove these sequences since they're not actually from your sample. If you don't remove them, the downstream analysis may be affected.</p>
+<p>Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about <a href="https://knowledge.illumina.com/software/general/software-general-reference_material-list/000002905">Illumina's adapter-sequence reference</a>. For genome analysis, it's important to remove these sequences since they're not actually from your sample. If you don't remove them, the downstream analysis may be affected.</p>
 <p>By default, the BBDuk task will:</p>
 <ul>
 <li>
 <p><strong>Repair disordered read pairs</strong> (if they exist) so that the first read in <code>read1</code> is the same mate of the first read in <code>read2</code>. See the <a href="https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/repair-guide/"><code>Repair Guide</code></a> from the <a href="https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/">BBTools</a> package.</p>
 </li>
 <li>
-<p><strong>Remove PhiX contamination</strong> by filtering out all reads that have a 31-mer match to <a href="https://emea.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html">PhiX</a>. PhiX is a viral genome that is often used as a control in Illumina sequencing runs. Removing PhiX sequences helps to ensure that the data reflects only the target organism's genome. By default this task uses the built-in PhiX reference fasta provided with BBTools (see <a href="https://github.com/bbushnell/BBTools/blob/master/resources/phix174_ill.ref.fa.gz">here</a>), but a custom PhiX reference can be provided via the <code>phix_fasta</code> input parameter.</p>
+<p><strong>Remove PhiX contamination</strong> by filtering out all reads that have a 31-mer match to <a href="https://emea.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html">PhiX</a>. PhiX is a viral genome that is often used as a control in Illumina sequencing runs. Removing PhiX sequences helps to ensure that the data reflects only the target organism's genome. By default this task uses the built-in PhiX reference fasta provided with BBTools (see <a href="https://github.com/bbushnell/BBTools/blob/master/resources/phix174_ill.ref.fa.gz">the PhiX reference sequence</a>), but a custom PhiX reference can be provided via the <code>phix_fasta</code> input parameter.</p>
 </li>
 <li>
-<p><strong>Trim adapters</strong> with <a href="https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/">BBDuk</a>  (<em>"Bestus Bioinformaticus" Decontamination Using Kmers</em>). By default this uses the built-in adapter sequences provided with BBTools (see <a href="https://github.com/bbushnell/BBTools/blob/master/resources/adapters.fa">here</a>). If you have custom adapter sequences specific to your library preparation, you can provide them via the <code>adapters_fasta</code> input parameter.</p>
+<p><strong>Trim adapters</strong> with <a href="https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/">BBDuk</a> (<em>"Bestus Bioinformaticus" Decontamination Using Kmers</em>). By default this uses the built-in adapter sequences provided with BBTools (see <a href="https://github.com/bbushnell/BBTools/blob/master/resources/adapters.fa">the BBTools adapter reference (<code>adapters.fa</code>)</a>). If you have custom adapter sequences specific to your library preparation, you can provide them via the <code>adapters_fasta</code> input parameter.</p>
 </li>
 </ul>
 </details>
 <!-- if: theiaviral -->
-<div class="language-text highlight"><pre><span></span><code>Optionally, primers can be trimmed using an alignment-based approach implemented in BBDuk. To activate this functionality, primers must be provided via a standard format FASTA file (`primers_fasta`), with each entry depicting a separate primer, or can be inputted as a comma-delimited string of primers (`primers_literal`).
+<div class="language-text highlight"><pre><span></span><code>Optionally, primers can be trimmed using an alignment-based approach implemented in BBDuk. To activate this functionality, primers must be provided via a standard format FASTA file (`primers_fasta`), with each entry depicting a separate primer, or can be input as a comma-delimited string of primers (`primers_literal`).
 
 By default, the kmer size used for primer trimming will automatically be set based on the individual lengths of each primer sequence provided. Additionally primers will be trimmed from both the 5&#39; and 3&#39; ends of reads.
 
@@ -6354,6 +6354,28 @@ The sensitivity of alignment-based primer trimming can be tuned via several para
     | Software Source Code | [BBMap on SourceForge](https://sourceforge.net/projects/bbmap/) |
     | Software Documentation | [BBDuk Guide (archived)](https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/) |
 </code></pre></div>
+<!--
+  PHB organization tooltips.
+
+  This file is AUTO-APPENDED to every documentation page by pymdownx.snippets
+  (see the `auto_append` setting under markdown_extensions in mkdocs.yml). The
+  `abbr` extension turns each definition below into a hover tooltip wherever the
+  organization abbreviation appears in the rendered docs — no per-page work
+  required.
+
+  SCOPE: this file holds ONLY organization abbreviations (repositories,
+  databases, and networks, e.g. ENA, GISAID, INSDC). Every other kind of term
+  (file types, characterization terms, general/assay terms, organisms, and other
+  acronyms) lives ONLY on the Glossary page — do NOT add them here.
+
+  HOW TO ADD AN ORGANIZATION:
+    1. Add one line here in the form:  *[ABBR]: short definition
+    2. Add the same abbreviation (with a fuller definition) to
+       docs/guides/glossary.md under "Databases, repositories, and
+       organizations".
+
+  Matching is CASE-SENSITIVE and whole-word only.
+-->
 
 
 

@@ -22,6 +22,9 @@
         <loc>https://theiagen.github.io/public_health_bioinformatics/main/guides/versions/</loc>
       </url>
       <url>
+        <loc>https://theiagen.github.io/public_health_bioinformatics/main/guides/glossary/</loc>
+      </url>
+      <url>
         <loc>https://theiagen.github.io/public_health_bioinformatics/main/guides/gambit/</loc>
       </url>
       <url>
@@ -320,9 +323,6 @@
       </url>
       <url>
         <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/phylogenetic_construction/mashtree_fasta/</loc>
-      </url>
-      <url>
-        <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/standalone/ncbi_amrfinderplus/</loc>
       </url>
       <url>
         <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/phylogenetic_construction/snippy_variants/</loc>

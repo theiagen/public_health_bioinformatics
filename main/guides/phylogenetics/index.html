@@ -628,6 +628,33 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Glossary
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1397,7 +1424,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -1424,7 +1451,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -1451,7 +1478,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -1478,7 +1505,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -1505,7 +1532,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -2784,7 +2811,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -3436,7 +3463,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -3463,7 +3490,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -4005,7 +4032,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -4243,33 +4270,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../workflows/standalone/ncbi_amrfinderplus/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  NCBI-AMRFinderPlus
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../workflows/phylogenetic_construction/snippy_variants/" class="md-nav__link">
         
   
@@ -4331,7 +4331,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -4738,7 +4738,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -4765,7 +4765,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -6017,7 +6017,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -6044,7 +6044,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -6071,7 +6071,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -6098,7 +6098,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -6125,7 +6125,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -6152,7 +6152,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -6625,7 +6625,7 @@
 <ul>
 <li><strong>Goal</strong>: Determine the evolutionary relationship between a set of sequences, often to rule out likely transmission</li>
 <li><strong>Pros</strong>:<ul>
-<li>Can be constructed form any suitable set of samples</li>
+<li>Can be constructed from any suitable set of samples</li>
 <li>More accurate than phylogenetic placement when a high-quality dataset and appropriate methods are used</li>
 </ul>
 </li>
@@ -6702,7 +6702,7 @@
 <td>NJ tree based on mash distances</td>
 <td>Identification of obvious outliers/contaminated samples in a dataset; analysis of extensive datasets where other methods are not suitable (thousands of samples)</td>
 <td>Very quick; low computational cost; fairly accurate for large low-diversity trees; does not require input reference genome; very easy to run</td>
-<td>Does not model evolution; cannot handle complex evolutionary histories (recombination, HGT, etc) or highly divergent genomes; does not compute SNPs to identify SNP distances</td>
+<td>Does not model evolution; cannot handle complex evolutionary histories (recombination, HGT [horizontal gene transfer], etc) or highly divergent genomes; does not compute SNPs to identify SNP distances</td>
 </tr>
 <tr>
 <td><strong>kSNP3</strong></td>
@@ -6758,18 +6758,20 @@
 <li>Identify potential transmission clusters</li>
 <li>Rule out transmission events (may be directional, between two specified location/people)</li>
 </ul>
-<p>It can be difficult to determine SNP thresholds because of:
-    - within-host diversity
-    - unknown number of transmissions/other bottlenecks decreasing genetic diversity
-    - variable mutation rates between strains, in different environments, and/or in different regions of the genome
-    - imprecise removal of recombination or erroneous SNPs</p>
-<p>The comparison of SNP distances between potentially related strains and background strains can be helpful for source attribution (e.g. foodborne outbreaks). Combination with epidemiological data can help identify suitable thresholds to rule out transmission. In addition, mutation rates can be calculated based on SNPs at different time points, allowing inference of start of outbreak. Be aware of incomplete sampling as SNP distances don't reveal if there were other infected individuals that weren’t sampled</p>
+<p>It can be difficult to determine SNP thresholds because of:</p>
+<ul>
+<li>within-host diversity</li>
+<li>unknown number of transmissions/other bottlenecks decreasing genetic diversity</li>
+<li>variable mutation rates between strains, in different environments, and/or in different regions of the genome</li>
+<li>imprecise removal of recombination or erroneous SNPs</li>
+</ul>
+<p>The comparison of SNP distances between potentially related strains and background strains can be helpful for source attribution (e.g. foodborne outbreaks). Combination with epidemiological data can help identify suitable thresholds to rule out transmission. In addition, mutation rates can be calculated based on SNPs at different time points, allowing inference of start of outbreak. Be aware of incomplete sampling as SNP distances don’t reveal if there were other infected individuals that weren’t sampled.</p>
 <h2 id="visualizing-phylogenetic-trees">Visualizing phylogenetic trees<a class="headerlink" href="#visualizing-phylogenetic-trees" title="Permanent link">&para;</a></h2>
 <div class="admonition tip">
 <p class="admonition-title">Recommendations</p>
 <ul>
 <li><strong>Auspice</strong> for phylogenetic trees generated using the Augur workflows</li>
-<li><strong>Phandango</strong> for visualizing metadata against the phylogenetic tree (e.g. presence/absence of ARGs or plasmid replicons, SNP-distance matrices, recombination gff files from gubbins, or pangenome visualizations)</li>
+<li><strong>Phandango</strong> for visualizing metadata against the phylogenetic tree (e.g. presence/absence of ARGs or plasmid replicons, SNP-distance matrices, recombination gff files from Gubbins, or pangenome visualizations)</li>
 <li><strong>FigTree</strong> for re-<a href="http://cabbagesofdoom.blogspot.com/2012/06/how-to-root-phylogenetic-tree.html">rooting phylogenetic trees</a>, visualizing trees with annotated nodes (e.g. time-dated phylogenies) and looking at branch lengths</li>
 <li><strong>MicrobeTrace</strong> for visualizing phylogenetic trees with transmission networks</li>
 </ul>
@@ -6854,7 +6856,7 @@
 </tr>
 <tr>
 <td><strong>Saving tree views</strong></td>
-<td>?</td>
+<td>Unknown</td>
 <td>Image files only</td>
 <td>Nexus, image files (PNG, SVG, JPEG), and PDF</td>
 <td>Export options are limited in the free version</td>
@@ -6873,11 +6875,11 @@
 <tr>
 <td><strong>Other considerations</strong></td>
 <td>Highly interactive; a great all-rounder</td>
-<td>Great quickly assessing associations between tree topology and metadata, e.g. cluster association with a given characteristic; can also visualize recombination and pangenome assessments relative to tree</td>
+<td>Great for quickly assessing associations between tree topology and metadata, e.g. cluster association with a given characteristic; can also visualize recombination and pangenome assessments relative to tree</td>
 <td>No longer under active development, so some bugs may not be fixed, very useful for rearranging tree view and viewing dates of nodes</td>
 <td>Very useful for rearranging tree view</td>
 <td></td>
-<td>Primarily intended for visualization of transmission networks with steep learning curve; actively maintained by CDC</td>
+<td>Primarily intended for visualization of transmission networks with steep learning curve; actively maintained by <abbr title="Centers for Disease Control and Prevention">CDC</abbr></td>
 </tr>
 <tr>
 <td><strong>Limitations</strong></td>
@@ -6900,7 +6902,29 @@
 </tbody>
 </table>
 </details>
-<p>To learn more about MicrobeTrace, please see the following video: <strong>📺 <a href="https://www.youtube.com/watch?v=iRpNDun46R8">Using KSNP3 in Terra and Visualizing Bacterial Genomic Networks in MicrobeTrace</a></strong></p>
+<p>To learn more about MicrobeTrace, please see the following video: <strong>📺 <a href="https://www.youtube.com/watch?v=iRpNDun46R8">Using kSNP3 in Terra and Visualizing Bacterial Genomic Networks in MicrobeTrace</a></strong></p>
+<!--
+  PHB organization tooltips.
+
+  This file is AUTO-APPENDED to every documentation page by pymdownx.snippets
+  (see the `auto_append` setting under markdown_extensions in mkdocs.yml). The
+  `abbr` extension turns each definition below into a hover tooltip wherever the
+  organization abbreviation appears in the rendered docs — no per-page work
+  required.
+
+  SCOPE: this file holds ONLY organization abbreviations (repositories,
+  databases, and networks, e.g. ENA, GISAID, INSDC). Every other kind of term
+  (file types, characterization terms, general/assay terms, organisms, and other
+  acronyms) lives ONLY on the Glossary page — do NOT add them here.
+
+  HOW TO ADD AN ORGANIZATION:
+    1. Add one line here in the form:  *[ABBR]: short definition
+    2. Add the same abbreviation (with a fuller definition) to
+       docs/guides/glossary.md under "Databases, repositories, and
+       organizations".
+
+  Matching is CASE-SENSITIVE and whole-word only.
+-->
 
 
 

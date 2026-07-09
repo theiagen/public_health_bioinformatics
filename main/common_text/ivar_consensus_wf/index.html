@@ -616,6 +616,33 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Glossary
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1245,7 +1272,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -1272,7 +1299,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -1299,7 +1326,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -1326,7 +1353,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -1353,7 +1380,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -2632,7 +2659,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -3284,7 +3311,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -3311,7 +3338,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -3853,7 +3880,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -4091,33 +4118,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../workflows/standalone/ncbi_amrfinderplus/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  NCBI-AMRFinderPlus
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../workflows/phylogenetic_construction/snippy_variants/" class="md-nav__link">
         
   
@@ -4179,7 +4179,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -4586,7 +4586,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -4613,7 +4613,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -5865,7 +5865,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -5892,7 +5892,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -5919,7 +5919,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -5946,7 +5946,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -5973,7 +5973,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -6000,7 +6000,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -6322,7 +6322,7 @@
 <p>iVar Consensus is a sub-workflow within TheiaCoV that performs reference-based consensus assembly using the <a href="https://andersen-lab.github.io/ivar/html/index.html">iVar</a> tool by Nathan Grubaugh from the Andersen lab.</p>
 <details class="task">
 <summary><code>BWA</code>: Read Alignment to the Assembly</summary>
-<p>BWA (Burrow-Wheeler Aligner) is used to align the cleaned read files to a reference genome, either determined by the user or provided by the <a href="../theiacov/#org-specific"><em>organism-specific parameters</em> section</a> (see above). The resulting BAM file is used for primer trimming, variant calling, and consensus generation in downstream tasks.</p>
+<p>BWA (Burrows-Wheeler Aligner) is used to align the cleaned read files to a reference genome, either determined by the user or provided by the <a href="../theiacov/#org-specific"><em>organism-specific parameters</em> section</a> (see above). The resulting BAM file is used for primer trimming, variant calling, and consensus generation in downstream tasks.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">BWA Technical Details</p>
 <table>
@@ -6348,6 +6348,42 @@
 <tr>
 <td>Original Publication(s)</td>
 <td><a href="https://doi.org/10.1093/bioinformatics/btp324">Fast and accurate short read alignment with Burrows-Wheeler transform</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>iVar trim</code>: Primer Trimming (optional)</summary>
+<p>To deactivate this task, set <code>trim_primers</code> to <code>false</code>.</p>
+<p>Using the user-provided (or a <a href="../theiacov/#org-specific"><em>organism-specific parameters</em>-determined</a>) <code>primer_bed</code> file, iVar soft-clips primer sequences from an aligned and sorted BAM file.</p>
+<p>iVar will trim any reads that start or end within the (0-based index) coordinates provided in the BED file. It does not take the sequence of bases itself into account. This allows iVar to accurately trim primer sequences despite potential mismatches between sequencing reads and primer sequences in the aligned region.</p>
+<p>Following the trimming of primer sequences, iVar then trims the reads based on a quality threshold of 20 using a sliding window approach (default: 4). If the average base quality drops below the threshold, the remainder of the read is soft-clipped. Reads exceeding the minimum length (default: 30) after trimming are retained in the output BAM file.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">iVar Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_ivar_primer_trim.wdl">task_ivar_primer_trim.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://andersen-lab.github.io/ivar/html/">iVar on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://andersen-lab.github.io/ivar/html/">iVar on GitHub</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="http://dx.doi.org/10.1186/s13059-018-1618-7">An amplicon-based sequencing framework for accurately measuring intrahost virus diversity using PrimalSeq and iVar</a></td>
 </tr>
 </tbody>
 </table>
@@ -6434,7 +6470,7 @@
 <ul>
 <li>minimum quality: 20</li>
 <li>minimum depth: 100</li>
-<li>minimum allele frequency: 0.06</li>
+<li>minimum allele frequency: 0.6</li>
 </ul>
 <div class="admonition techdetails">
 <p class="admonition-title">iVar Technical Details</p>
@@ -6484,6 +6520,28 @@
 </table>
 </div>
 </details>
+<!--
+  PHB organization tooltips.
+
+  This file is AUTO-APPENDED to every documentation page by pymdownx.snippets
+  (see the `auto_append` setting under markdown_extensions in mkdocs.yml). The
+  `abbr` extension turns each definition below into a hover tooltip wherever the
+  organization abbreviation appears in the rendered docs — no per-page work
+  required.
+
+  SCOPE: this file holds ONLY organization abbreviations (repositories,
+  databases, and networks, e.g. ENA, GISAID, INSDC). Every other kind of term
+  (file types, characterization terms, general/assay terms, organisms, and other
+  acronyms) lives ONLY on the Glossary page — do NOT add them here.
+
+  HOW TO ADD AN ORGANIZATION:
+    1. Add one line here in the form:  *[ABBR]: short definition
+    2. Add the same abbreviation (with a fuller definition) to
+       docs/guides/glossary.md under "Databases, repositories, and
+       organizations".
+
+  Matching is CASE-SENSITIVE and whole-word only.
+-->
 
 
 

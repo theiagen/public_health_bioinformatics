@@ -628,6 +628,33 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Glossary
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1401,7 +1428,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -1428,7 +1455,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -1455,7 +1482,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -1482,7 +1509,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -1509,7 +1536,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -2788,7 +2815,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -3440,7 +3467,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -3467,7 +3494,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -4009,7 +4036,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -4247,33 +4274,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/ncbi_amrfinderplus/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  NCBI-AMRFinderPlus
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../phylogenetic_construction/snippy_variants/" class="md-nav__link">
         
   
@@ -4335,7 +4335,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -4742,7 +4742,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -4769,7 +4769,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -6021,7 +6021,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -6048,7 +6048,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -6075,7 +6075,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -6102,7 +6102,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -6129,7 +6129,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -6156,7 +6156,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -6723,7 +6723,7 @@
 </span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>├── ABC123_these_files_will_be_ignored_0.fastq.gz
 </span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>└── ABC123_these_files_will_be_ignored_1.fastq.gz
 </span></code></pre></div>
-<p>The <code>input_bucket_path</code> in would point to <code>gs://input_bucket_path/</code>, and the workflow would automatically find and concatenate all reads within each subdirectory (both <code>barcode*/</code> and <code>random_name/</code>). <a href="#data-upload">Learn how to upload your files in this structure below</a>. Please note: <em>If there are reads located in the parent directory (e.g., <code>ABC123_these_files_will_be_ignored_0.fastq.gz</code> and <code>ABC123_these_files_will_be_ignored_1.fastq.gz</code>), they will be ignored.</em></p>
+<p>The <code>input_bucket_path</code> would point to <code>gs://input_bucket_path/</code>, and the workflow would automatically find and concatenate all reads within each subdirectory (both <code>barcode*/</code> and <code>random_name/</code>). <a href="#data-upload">Learn how to upload your files in this structure below</a>. Please note: <em>If there are reads located in the parent directory (e.g., <code>ABC123_these_files_will_be_ignored_0.fastq.gz</code> and <code>ABC123_these_files_will_be_ignored_1.fastq.gz</code>), they will be ignored.</em></p>
 <p>After concatenation, the resulting reads will appear in the <code>gs://output_bucket_path</code> under the following names:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>output_bucket_path/
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>├── previously_concatenated_sample.all.fastq.gz
@@ -6794,40 +6794,40 @@
 <p>Navigate to your Terra workspace's Dashboard page and click on "Open bucket in browser" under the "Cloud Information" toggle on the right hand side.</p>
 <div class="admonition caption narrow">
 <p class="admonition-title">Open bucket in browser</p>
-<p><a class="glightbox" data-type="image" href="../../../assets/figures/ONT_Barcode_Concatenation_figure1.png"><img alt="Open the Google Bucket" src="../../../assets/figures/ONT_Barcode_Concatenation_figure1.png" /></a></p>
+<p><a class="glightbox" data-type="image" href="../../../assets/figures/ONT_Barcode_Concatenation_figure1.png"><img alt="Terra workspace Dashboard showing the Storage Details section, with the &quot;Open bucket in browser&quot; link highlighted to indicate where to click to access the Google Cloud bucket." src="../../../assets/figures/ONT_Barcode_Concatenation_figure1.png" /></a></p>
 </div>
 </li>
 <li>
 <p>Click on the <code>uploads</code> folder.</p>
 <div class="admonition caption narrow">
 <p class="admonition-title">Open the <code>uploads</code> folder</p>
-<p><a class="glightbox" data-type="image" href="../../../assets/figures/ONT_Barcode_Concatenation_figure2.png"><img alt="Enter the uploads folder" src="../../../assets/figures/ONT_Barcode_Concatenation_figure2.png" /></a></p>
+<p><a class="glightbox" data-type="image" href="../../../assets/figures/ONT_Barcode_Concatenation_figure2.png"><img alt="Google Cloud Storage bucket browser showing a folder tree with submissions/ and uploads/ directories and a file listing in the main panel." src="../../../assets/figures/ONT_Barcode_Concatenation_figure2.png" /></a></p>
 </div>
 </li>
 <li>
 <p>Click on "Create folder". Name the folder a unique name that can be used to identify your run or group of data. Click on "Create" once you have entered the new folder name.</p>
 <div class="admonition caption narrow">
 <p class="admonition-title">Create a new folder</p>
-<p><a class="glightbox" data-type="image" href="../../../assets/figures/ONT_Barcode_Concatenation_figure3.png"><img alt="Create a new folder" src="../../../assets/figures/ONT_Barcode_Concatenation_figure3.png" /></a></p>
+<p><a class="glightbox" data-type="image" href="../../../assets/figures/ONT_Barcode_Concatenation_figure3.png"><img alt="Google Cloud Storage &quot;Create folder&quot; dialog with the Name field filled in as &quot;my-unique-folder-name&quot;, ready to create a new folder in the uploads bucket." src="../../../assets/figures/ONT_Barcode_Concatenation_figure3.png" /></a></p>
 </div>
 </li>
 <li>
 <p>Navigate into the newly created folder by clicking on it. You can now drag and drop entire barcode directories into the browser with your new Google bucket. This process uploads the data directly into your Terra workspace.</p>
 <div class="admonition caption narrow">
 <p class="admonition-title">Drag your barcode folders onto the browser</p>
-<p><a class="glightbox" data-type="image" href="../../../assets/figures/ONT_Barcode_Concatenation_figure4.png"><img alt="Upload your barcode directories" src="../../../assets/figures/ONT_Barcode_Concatenation_figure4.png" /></a></p>
+<p><a class="glightbox" data-type="image" href="../../../assets/figures/ONT_Barcode_Concatenation_figure4.png"><img alt="Windows File Explorer showing four barcode folders (barcode01–barcode04) all selected, being dragged to a drop zone labeled &quot;Drop files here to upload them to: my-unique-folder-name&quot;." src="../../../assets/figures/ONT_Barcode_Concatenation_figure4.png" /></a></p>
 </div>
 <p>When your files are uploaded, you should see them appear.</p>
 <div class="admonition caption narrow">
 <p class="admonition-title">Uploaded folders should look like this</p>
-<p><a class="glightbox" data-type="image" href="../../../assets/figures/ONT_Barcode_Concatenation_figure5.png"><img alt="Uploaded files" src="../../../assets/figures/ONT_Barcode_Concatenation_figure5.png" /></a></p>
+<p><a class="glightbox" data-type="image" href="../../../assets/figures/ONT_Barcode_Concatenation_figure5.png"><img alt="Google Cloud Storage bucket view showing four barcode subfolders (barcode01/ through barcode04/) successfully uploaded inside the designated uploads folder." src="../../../assets/figures/ONT_Barcode_Concatenation_figure5.png" /></a></p>
 </div>
 </li>
 <li>
 <p>Once your files are uploaded, you can identify the <code>input_bucket_path</code> by clicking on the two squares next to the file path at the top of the screen, shown below. When pasting this into the workflow inputs, you will need to add the <code>gs://</code> prefix.</p>
 <div class="admonition caption narrow">
 <p class="admonition-title">Copy the file path</p>
-<p><a class="glightbox" data-type="image" href="../../../assets/figures/ONT_Barcode_Concatenation_figure6.png"><img alt="Copy the file path" src="../../../assets/figures/ONT_Barcode_Concatenation_figure6.png" /></a></p>
+<p><a class="glightbox" data-type="image" href="../../../assets/figures/ONT_Barcode_Concatenation_figure6.png"><img alt="Google Cloud Storage browser showing a folder path with a &quot;Copy the path to the clipboard&quot; tooltip highlighted next to the folder name." src="../../../assets/figures/ONT_Barcode_Concatenation_figure6.png" /></a></p>
 </div>
 </li>
 </ol>
@@ -6845,7 +6845,7 @@
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>barcode02   sample02
 </span></code></pre></div>
 <p>The first column is the <strong>name of the folder</strong> and the second column is the <strong>desired sample name</strong>.</p>
-<p>Upload this file to your Terra bucket using either the Data Uploader or by clicking on the file icon on the right sidebar. Copy the file path into the <code>barcode_renaming_file</code> variable, and your files will be appropriate renamed.</p>
+<p>Upload this file to your Terra bucket using either the Data Uploader or by clicking on the file icon on the right sidebar. Copy the file path into the <code>barcode_renaming_file</code> variable, and your files will be appropriately renamed.</p>
 <div class="searchable-table">
 <table>
 <thead>
@@ -6990,6 +6990,28 @@
 <li>The name of the workflow (<code>ONT_Barcode_Concatenation_PHB</code>) under the <code>table_created_by</code> column, to indicate the samples were added by this workflow.</li>
 <li>The date of upload/when the workflow was run under the <code>upload_date</code> column</li>
 </ul>
+<!--
+  PHB organization tooltips.
+
+  This file is AUTO-APPENDED to every documentation page by pymdownx.snippets
+  (see the `auto_append` setting under markdown_extensions in mkdocs.yml). The
+  `abbr` extension turns each definition below into a hover tooltip wherever the
+  organization abbreviation appears in the rendered docs — no per-page work
+  required.
+
+  SCOPE: this file holds ONLY organization abbreviations (repositories,
+  databases, and networks, e.g. ENA, GISAID, INSDC). Every other kind of term
+  (file types, characterization terms, general/assay terms, organisms, and other
+  acronyms) lives ONLY on the Glossary page — do NOT add them here.
+
+  HOW TO ADD AN ORGANIZATION:
+    1. Add one line here in the form:  *[ABBR]: short definition
+    2. Add the same abbreviation (with a fuller definition) to
+       docs/guides/glossary.md under "Databases, repositories, and
+       organizations".
+
+  Matching is CASE-SENSITIVE and whole-word only.
+-->
 
 
 

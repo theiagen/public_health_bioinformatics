@@ -616,6 +616,33 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Glossary
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1245,7 +1272,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -1272,7 +1299,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -1299,7 +1326,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -1326,7 +1353,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -1353,7 +1380,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -2632,7 +2659,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -3284,7 +3311,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -3311,7 +3338,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -3853,7 +3880,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -4091,33 +4118,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../workflows/standalone/ncbi_amrfinderplus/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  NCBI-AMRFinderPlus
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../workflows/phylogenetic_construction/snippy_variants/" class="md-nav__link">
         
   
@@ -4179,7 +4179,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -4586,7 +4586,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -4613,7 +4613,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -5865,7 +5865,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -5892,7 +5892,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -5919,7 +5919,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -5946,7 +5946,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -5973,7 +5973,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -6000,7 +6000,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -6320,14 +6320,14 @@
 <!-- if: theiaviral -->
 <details class="task">
 <summary><code>host_decontaminate</code>: Host Read Decontamination</summary>
-<p>Host genetic data is frequently incidentally sequenced alongside pathogens, which can negatively affect the quality of downstream analysis. Host Decontaminate attempts to remove host reads by aligning to a reference host genome that is directly inputted or acquired on-the-fly. The reference host genome can be inputted into the <code>host</code> input field as an assembly file (with <code>is_genome</code> set to "true"), acquired via <a href="https://www.ncbi.nlm.nih.gov/taxonomy">NCBI Taxonomy-compatible</a> taxon input, or assembly accession (with <code>is_accession</code> set to "true"). Host Decontaminate maps inputted reads to the host genome using <code>minimap2</code>, reports mapping statistics to this host genome, and outputs the unaligned dehosted reads. </p>
+<p>Host genetic data is frequently incidentally sequenced alongside pathogens, which can negatively affect the quality of downstream analysis. Host Decontaminate attempts to remove host reads by aligning to a reference host genome that is directly input or acquired on-the-fly. The reference host genome can be provided into the <code>host</code> input field as an assembly file (with <code>is_genome</code> set to "true"), acquired via <a href="https://www.ncbi.nlm.nih.gov/taxonomy">NCBI Taxonomy-compatible</a> taxon input, or assembly accession (with <code>is_accession</code> set to "true"). Host Decontaminate maps input reads to the host genome using <code>minimap2</code>, reports mapping statistics to this host genome, and outputs the unaligned dehosted reads.</p>
 <p>The detailed steps and tasks are as follows:</p>
 <details class="task">
 <summary><code>NCBI datasets</code>: Estimating Genome Length</summary>
-<p>This task uses <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/taxonomy/">NCBI Datasets</a> to acquire genome length metadata for an inputted taxon and retrieve a top reference accession. This task generates a summary file of all successful hits to the input <code>taxon</code>, which includes each genome's accession number, completeness status, genome length, source, and other relevant metadata. The task will then calculate the average expected genome length in basepairs for the input <code>taxon</code>.</p>
+<p>This task uses <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/taxonomy/">NCBI Datasets</a> to acquire genome length metadata for a provided taxon and retrieve a top reference accession. This task generates a summary file of all successful hits to the input <code>taxon</code>, which includes each genome's accession number, completeness status, genome length, source, and other relevant metadata. The task will then calculate the average expected genome length in basepairs for the input <code>taxon</code>.</p>
 <details class="dna">
 <summary><code>taxon</code> input parameter</summary>
-<p>This parameter accepts either a NCBI taxon ID (e.g. <code>11292</code>) or an organism name (e.g. <code>Lyssavirus rabies</code>).</p>
+<p>This parameter accepts either an NCBI taxon ID (e.g. <code>11292</code>) or an organism name (e.g. <code>Lyssavirus rabies</code>).</p>
 </details>
 <div class="admonition techdetails">
 <p class="admonition-title">NCBI Datasets Technical Details</p>
@@ -6362,7 +6362,7 @@
 <details class="task">
 <summary><code>NCBI Datasets</code>: Assembly Download</summary>
 <p>The <a href="https://www.ncbi.nlm.nih.gov/datasets/">NCBI Datasets</a> task downloads specified assemblies from NCBI using either the <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/virus-genome/">virus</a> or <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/genome/">genome</a> (for all other genome types) package as appropriate.</p>
-<p>This task uses the accession ID output from the <code>skani</code> task to download the the most closely related reference genome to the input assembly. The downloaded reference is then used for downstream analysis, including variant calling and consensus generation.</p>
+<p>This task uses the accession ID output from the <code>skani</code> task to download the most closely related reference genome to the input assembly. The downloaded reference is then used for downstream analysis, including variant calling and consensus generation.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">NCBI Datasets Technical Details</p>
 <table>
@@ -6400,7 +6400,7 @@
 <details class="task">
 <summary><code>read_decontaminate</code>: Mapping-based Read Decontamination (optional)</summary>
 <p>Activate this task by providing a <code>read_decontaminate_fasta</code>.</p>
-<p>Known contaminant genetic data can be removed by mapping directly to an inputted <code>read_decontaminate_fasta</code>. This input can be a host genome, common microbial contaminant genome, or intentionally spiked sequences. The mapping statistics and aligned reads to the contaminant FASTA are outputted in JSON-formatted mappings, while downstream quality control tasks will input the decontaminated reads. An optional "pass/fail" status can be outputted based on identification of expected/unexpected sequences if the <code>expected_contaminants</code> input is populated with a comma-delimitted string of expected sequence headers - <code>expected_contaminants</code> must exactly match sequence headers in the input.</p>
+<p>Known contaminant genetic data can be removed by mapping directly to an input <code>read_decontaminate_fasta</code>. This input can be a host genome, common microbial contaminant genome, or intentionally spiked sequences. The mapping statistics and aligned reads to the contaminant FASTA are output in JSON-formatted mappings, while downstream quality control tasks will input the decontaminated reads. An optional "pass/fail" status can be output based on identification of expected/unexpected sequences if the <code>expected_contaminants</code> input is populated with a comma-delimited string of expected sequence headers - <code>expected_contaminants</code> must exactly match sequence headers in the input.</p>
 <p>The detailed steps and tasks are as follows:</p>
 </details>
 <!-- endif -->
@@ -6414,7 +6414,7 @@
 
 
 
-    For more information regarding modes and the available options for Minimap2, please see the [Minimap2 manpage](https://lh3.github.io/minimap2/minimap2.html)
+    For more information regarding modes and the available options for Minimap2, please see the [Minimap2 manpage](https://lh3.github.io/minimap2/minimap2.html).
 
     !!! techdetails &quot;Minimap2 Technical Details&quot;
         | | Links |
@@ -6450,7 +6450,7 @@
         | Original Publication(s) | [The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)&lt;br&gt;[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |
 
 ??? task &quot;`Contaminant_Check`: Contaminant Sequence Status Check&quot;
-    The Contaminant Check task outputs a pass/fail status based on if contaminant/host sequences pass thresholds for breadth of coverage, depth of coverage, and number of reads mapped. This task is activated by inputting a comma-delimited string of `expected_sequences`, which match sequence headers in the inputted contaminant/host FASTA. Each sequence from the previously inputted contaminant/host FASTA is checked for sufficient read mapping statistics.
+    The Contaminant Check task outputs a pass/fail status based on if contaminant/host sequences pass thresholds for breadth of coverage, depth of coverage, and number of reads mapped. This task is activated by inputting a comma-delimited string of `expected_sequences`, which match sequence headers in the provided contaminant/host FASTA. Each sequence from the previously provided contaminant/host FASTA is checked for sufficient read mapping statistics.
 
     The composite status, `contaminant_check_status`, will report `&quot;PASS&quot;` if expected and unexpected sequences are identified within the `min_expected_seq` and `max_unexpected_seq` thresholds; if not, `&quot;FAIL ...&quot;` is reported depicting which `expected_sequences` failed and why, along with which unexpected sequences were identified.
 
@@ -6466,6 +6466,28 @@
     | --- | --- |
     | Subworkflow | [wf_read_decontaminate.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_decontaminate.wdl) |
 </code></pre></div>
+<!--
+  PHB organization tooltips.
+
+  This file is AUTO-APPENDED to every documentation page by pymdownx.snippets
+  (see the `auto_append` setting under markdown_extensions in mkdocs.yml). The
+  `abbr` extension turns each definition below into a hover tooltip wherever the
+  organization abbreviation appears in the rendered docs — no per-page work
+  required.
+
+  SCOPE: this file holds ONLY organization abbreviations (repositories,
+  databases, and networks, e.g. ENA, GISAID, INSDC). Every other kind of term
+  (file types, characterization terms, general/assay terms, organisms, and other
+  acronyms) lives ONLY on the Glossary page — do NOT add them here.
+
+  HOW TO ADD AN ORGANIZATION:
+    1. Add one line here in the form:  *[ABBR]: short definition
+    2. Add the same abbreviation (with a fuller definition) to
+       docs/guides/glossary.md under "Databases, repositories, and
+       organizations".
+
+  Matching is CASE-SENSITIVE and whole-word only.
+-->
 
 
 

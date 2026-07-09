@@ -616,6 +616,33 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Glossary
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1245,7 +1272,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -1272,7 +1299,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -1299,7 +1326,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -1326,7 +1353,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -1353,7 +1380,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -2632,7 +2659,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -3284,7 +3311,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -3311,7 +3338,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -3853,7 +3880,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -4091,33 +4118,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../workflows/standalone/ncbi_amrfinderplus/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  NCBI-AMRFinderPlus
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../workflows/phylogenetic_construction/snippy_variants/" class="md-nav__link">
         
   
@@ -4179,7 +4179,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -4586,7 +4586,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -4613,7 +4613,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -5865,7 +5865,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -5892,7 +5892,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -5919,7 +5919,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -5946,7 +5946,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -5973,7 +5973,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -6000,7 +6000,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -6320,7 +6320,7 @@
 <details class="task">
 <summary><code>TS_MLST</code>: MLST Profiling</summary>
 <p><a href="https://doi.org/10.1073/pnas.95.6.3140">Multilocus sequence typing (MLST)</a> is a typing method reflecting population structure. It was developed as a portable, unambiguous method for global epidemiology using PCR, but can be applied to whole-genome sequences <em>in silico</em>. MLST is commonly used for pathogen surveillance, ruling out transmission, and grouping related genomes for comparative analysis.</p>
-<p>TheiaProk uses <a href="https://github.com/tseemann/mlst">the MLST tool developed by Torsten Seeman</a> to assess MLST using traditional <a href="https://pubmlst.org/">PubMLST</a> typing schemes. </p>
+<p>TheiaProk uses <a href="https://github.com/tseemann/mlst">the MLST tool developed by Torsten Seeman</a> to assess MLST using traditional <a href="https://pubmlst.org/">PubMLST</a> typing schemes.</p>
 <p>MLST schemes are taxa-specific. Each scheme uses fragments of typically 7 housekeeping genes ("loci") and has a database associating an arbitrary number with each distinct allele of each locus. Each unique combination of alleles ("allelic profile") is assigned a numbered sequence type (ST). Significant diversification of genomes is captured by changes to the MLST loci via mutational events creating new alleles and STs, or recombinational events replacing the allele and changing the ST. Relationships between STs are based on the number of alleles they share. Clonal complexes share a scheme-specific number of alleles (usually for five of the seven loci).</p>
 <div class="admonition tip">
 <p class="admonition-title">MLST Limitations</p>
@@ -6328,15 +6328,15 @@
 </div>
 <details class="toggle" open="open">
 <summary>Interpretation of MLST results</summary>
-<p>Each MLST results file returns the ST and allele results for one sample. If the alleles and ST are correctly assigned, only a single integer value will be present for each. If an ST cannot be assigned, multiple integers or additional characters will be shown, <a href="https://github.com/tseemann/mlst/tree/v2.22.0#missing-data">representing the issues with assignment as described here</a>.</p>
+<p>Each MLST results file returns the ST and allele results for one sample. If the alleles and ST are correctly assigned, only a single integer value will be present for each. If an ST cannot be assigned, multiple integers or additional characters will be shown, <a href="https://github.com/tseemann/mlst/tree/v2.22.0#missing-data">representing the issues with assignment as described in the mlst documentation</a>.</p>
 </details>
 <details class="toggle">
 <summary>Identifying novel alleles and STs</summary>
-<p>The MLST schemes used in TheiaProk are curated on the PubMLST website.If you identify novel alleles or allelic profiles in your data using TheiaProk's MLST task, you can get these assigned via PubMLST:</p>
+<p>The MLST schemes used in TheiaProk are curated on the PubMLST website. If you identify novel alleles or allelic profiles in your data using TheiaProk's MLST task, you can get these assigned via PubMLST:</p>
 <ol>
-<li>Check that the novel allele or ST has not already been assigned a type on PubMLST. <ol>
+<li>Check that the novel allele or ST has not already been assigned a type on PubMLST.<ol>
 <li>Download the assembly file from Terra for your sample with the novel allele or ST</li>
-<li>Go to the <a href="https://pubmlst.org/organisms">PubMLST webpage for the organism of interest</a> </li>
+<li>Go to the <a href="https://pubmlst.org/organisms">PubMLST webpage for the organism of interest</a></li>
 <li>Navigate to the organism "Typing" page</li>
 <li>Under "Query a sequence" choose "Single sequence" (e.g., <a href="https://pubmlst.org/bigsdb?db=pubmlst_hinfluenzae_seqdef&amp;page=sequenceQuery">this is the page for <em>H. influenzae</em></a>), select the MLST scheme under "Please select locus/scheme", upload the assembly fasta file, and click submit</li>
 <li>Results will be returned lower on the page</li>
@@ -6347,7 +6347,7 @@
 </details>
 <details class="toggle" open="open">
 <summary>Taxa with multiple MLST schemes</summary>
-<p>By default, the MLST tool automatically detects the genome's taxa to select the MLST scheme. Users may specify a desired scheme using the <code>scheme</code> variable of the <code>ts_mlst</code> task. Available schemes are listed <a href="https://github.com/tseemann/mlst/blob/master/db/scheme_species_map.tab">here</a> and the scheme name should be provided in quotation marks ("...").</p>
+<p>By default, the MLST tool automatically detects the genome's taxa to select the MLST scheme. Users may specify a desired scheme using the <code>scheme</code> variable of the <code>ts_mlst</code> task. Available schemes are listed in <a href="https://github.com/tseemann/mlst/blob/master/db/scheme_species_map.tab">the mlst scheme-to-species map</a> and the scheme name should be provided in quotation marks ("...").</p>
 <p>Some taxa have multiple MLST schemes, e.g. the <em>Escherichia</em> and <em>Leptospira</em> genera,  <em>Acinetobacter baumannii</em>, <em>Clostridium difficile</em>, and <em>Streptococcus thermophilus</em>. Only one scheme will be used by default. This can be changed for <em>Escherichia</em> and <em>A. baumannii</em> by setting the <code>ts_mlst run_secondary_scheme</code> variable to <code>true</code>. This will cause MLST to run the other scheme associated with those organisms and output those results in addition to the default scheme.</p>
 <p>For <em>E. coli</em>, the user may set <code>ts_mlst scheme_override</code> to be <code>true</code> to prevent running <em>E. coli</em> samples through the "aeromonas", "cfreundii", and "senterica" schemes, which can be common mischaracterizations.</p>
 </details>
@@ -6381,6 +6381,28 @@
 </table>
 </div>
 </details>
+<!--
+  PHB organization tooltips.
+
+  This file is AUTO-APPENDED to every documentation page by pymdownx.snippets
+  (see the `auto_append` setting under markdown_extensions in mkdocs.yml). The
+  `abbr` extension turns each definition below into a hover tooltip wherever the
+  organization abbreviation appears in the rendered docs — no per-page work
+  required.
+
+  SCOPE: this file holds ONLY organization abbreviations (repositories,
+  databases, and networks, e.g. ENA, GISAID, INSDC). Every other kind of term
+  (file types, characterization terms, general/assay terms, organisms, and other
+  acronyms) lives ONLY on the Glossary page — do NOT add them here.
+
+  HOW TO ADD AN ORGANIZATION:
+    1. Add one line here in the form:  *[ABBR]: short definition
+    2. Add the same abbreviation (with a fuller definition) to
+       docs/guides/glossary.md under "Databases, repositories, and
+       organizations".
+
+  Matching is CASE-SENSITIVE and whole-word only.
+-->
 
 
 

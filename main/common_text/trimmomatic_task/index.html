@@ -616,6 +616,33 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Glossary
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1245,7 +1272,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -1272,7 +1299,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -1299,7 +1326,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -1326,7 +1353,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -1353,7 +1380,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -2632,7 +2659,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -3284,7 +3311,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -3311,7 +3338,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -3853,7 +3880,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -4091,33 +4118,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../workflows/standalone/ncbi_amrfinderplus/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  NCBI-AMRFinderPlus
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../workflows/phylogenetic_construction/snippy_variants/" class="md-nav__link">
         
   
@@ -4179,7 +4179,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -4586,7 +4586,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -4613,7 +4613,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -5865,7 +5865,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaCoV Workflow Series
+  TheiaCoV™ Workflow Series
 
     
   </span>
@@ -5892,7 +5892,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaEuk Workflow Series
+  TheiaEuk™ Workflow Series
 
     
   </span>
@@ -5919,7 +5919,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaMeta
+  TheiaMeta™
 
     
   </span>
@@ -5946,7 +5946,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaProk Workflow Series
+  TheiaProk™ Workflow Series
 
     
   </span>
@@ -5973,7 +5973,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaValidate
+  TheiaValidate™
 
     
   </span>
@@ -6000,7 +6000,7 @@
   <span class="md-ellipsis">
     
   
-  TheiaViral Workflow Series
+  TheiaViral™ Workflow Series
 
     
   </span>
@@ -6319,7 +6319,7 @@
 
 <details class="task">
 <summary><code>Trimmomatic</code>: Read Trimming (default)</summary>
-<p>Read proccessing is available via Trimmomatic by default.</p>
+<p>Read processing is available via Trimmomatic by default.</p>
 <p>Trimmomatic trims low-quality regions of Illumina paired-end or single-end reads with a sliding window (with a default window size of 4, specified with <code>trim_window_size</code>), cutting once the average quality within the window falls below the <code>trimmomatic_window_quality</code> (default of 30 for both paired-end and single-end). The read is discarded if it is trimmed below <code>trimmomatic_min_length</code> (default of 75 for paired-end, 25 for single-end).</p>
 <p>Adapter trimming with Trimmomatic is disabled by default. It can be enabled by setting <code>trimmomatic_trim_adapters=true</code>. When enabled, Trimmomatic uses its default adapter sequences, <a href="https://github.com/usadellab/Trimmomatic/tree/main/adapters"><code>TruSeq3-PE-2.fa</code></a> (for paired-end) or <a href="https://github.com/usadellab/Trimmomatic/tree/main/adapters"><code>TruSeq3-SE.fa</code></a> (for single-end) with default adapter clipping settings equivalent to:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ILLUMINACLIP:&lt;adapter_fasta&gt;:2:30:10
@@ -6328,7 +6328,7 @@
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>30 = palindrome clip threshold
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>10 = simple clip threshold
 </span></code></pre></div>
-<p>Users can optionally provide a custom adapter file or modify adapter trimming parameters using the <code>trimmomatic_adapter_fasta</code> and <code>trimmomatic_adapter_trim_args</code> respectively. See the <a href="https://github.com/usadellab/Trimmomatic?tab=readme-ov-file#the-adapter-fasta-files">Trimmomatic adapter documentation</a> for more details. The <code>trimmomatic_adapter_fasta</code> parameter should just include the path to your fasta file. The <code>trimmomatic_adapter_trim_args</code> parameter should only contain the colon-delimited values that comes after the adapter fasta file in the <code>ILLUMINACLIP</code> argument. Example usage:</p>
+<p>Users can optionally provide a custom adapter file or modify adapter trimming parameters using the <code>trimmomatic_adapter_fasta</code> and <code>trimmomatic_adapter_trim_args</code> respectively. See the <a href="https://github.com/usadellab/Trimmomatic?tab=readme-ov-file#the-adapter-fasta-files">Trimmomatic adapter documentation</a> for more details. The <code>trimmomatic_adapter_fasta</code> parameter should just include the path to your fasta file. The <code>trimmomatic_adapter_trim_args</code> parameter should only contain the colon-delimited values that come after the adapter fasta file in the <code>ILLUMINACLIP</code> argument. Example usage:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>trimmomatic_adapter_fasta=&quot;path/to/my_custom_adapters.fa&quot;
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>trimmomatic_adapter_trim_args=&quot;2:30:10&quot;
 </span></code></pre></div>
@@ -6366,6 +6366,28 @@
 </table>
 </div>
 </details>
+<!--
+  PHB organization tooltips.
+
+  This file is AUTO-APPENDED to every documentation page by pymdownx.snippets
+  (see the `auto_append` setting under markdown_extensions in mkdocs.yml). The
+  `abbr` extension turns each definition below into a hover tooltip wherever the
+  organization abbreviation appears in the rendered docs — no per-page work
+  required.
+
+  SCOPE: this file holds ONLY organization abbreviations (repositories,
+  databases, and networks, e.g. ENA, GISAID, INSDC). Every other kind of term
+  (file types, characterization terms, general/assay terms, organisms, and other
+  acronyms) lives ONLY on the Glossary page — do NOT add them here.
+
+  HOW TO ADD AN ORGANIZATION:
+    1. Add one line here in the form:  *[ABBR]: short definition
+    2. Add the same abbreviation (with a fuller definition) to
+       docs/guides/glossary.md under "Databases, repositories, and
+       organizations".
+
+  Matching is CASE-SENSITIVE and whole-word only.
+-->
 
 
 
