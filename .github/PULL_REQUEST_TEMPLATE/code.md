@@ -1,5 +1,5 @@
 <!--
-Thank you for contributing to Theiagen's Public Health Bioinformatics repository! 
+Thank you for contributing to Theiagen's Public Health Bioinformatics repository!
 
 Please ensure your contributions are formatted following our style guide, which can be found here: <https://theiagen.github.io/public_health_bioinformatics/latest/contributing/code_contribution/>.
 
@@ -51,8 +51,7 @@ This PR uses an element that could cause duplicate runs to have different result
 ## 🎯 Reviewer Checklist
 <!--  Indicate NA when not applicable  -->
 - [ ] All changed results have been confirmed
-- [ ] You have tested the PR appropriately (see the [testing guide](https://theiagen.notion.site/PR-Testing-Guide-Determining-Appropriate-Levels-of-Testing-4764e98a6aeb460185039c0896714590) for more information)
+- [ ] You have tested the changes appropriately
 - [ ] All code adheres to the [style guide](https://theiagen.github.io/public_health_bioinformatics/main/contributing/code_contribution/)
-- [ ] MD5 sums have been updated
 - [ ] The PR author has addressed all comments
 - [ ] The documentation has been updated and adheres to the [documentation style guide](https://theiagen.github.io/public_health_bioinformatics/main/contributing/doc_contribution/)
