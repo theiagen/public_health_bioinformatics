@@ -109,13 +109,14 @@ workflow theiaeuk_ont {
           gambit_db_genomes = gambit_db_genomes,
           gambit_db_signatures = gambit_db_signatures
       }
-      # call medea magic for cladetyper and AMR search
-      # snippy variants and BWA/GATK variant calling are read-based and are skipped here since no reads are supplied for long-read data
+      # call medea magic for cladetyper, AMR search, and read-based variant calling
+      # (minimap2 + Clair3) and gene coverage, feeding the cleaned long reads
        call medea_magic_workflow.medea_magic {
         input:
           samplename = samplename,
           medea_tag = gambit.merlin_tag,
           assembly = flye_denovo.assembly_fasta,
+          read1 = read_QC_trim.read1_clean,
           ont_data = true
       }
     }
@@ -213,24 +214,19 @@ workflow theiaeuk_ont {
     String? amr_search_associated_resistances = medea_magic.amr_search_associated_resistances
     String? amr_search_docker = medea_magic.amr_search_docker
     String? amr_search_version = medea_magic.amr_search_version
-    # Snippy variants outputs
-    String? theiaeuk_snippy_variants_version = medea_magic.snippy_variants_version
-    String? theiaeuk_snippy_variants_query = medea_magic.snippy_variants_query
-    String? theiaeuk_snippy_variants_query_check = medea_magic.snippy_variants_query_check
-    String? theiaeuk_snippy_variants_hits = medea_magic.snippy_variants_hits
-    String? theiaeuk_snippy_variants_gene_query_results = medea_magic.snippy_variants_gene_query_results
-    String? theiaeuk_snippy_variants_outdir_tarball = medea_magic.snippy_variants_outdir_tarball
-    String? theiaeuk_snippy_variants_results = medea_magic.snippy_variants_results
-    String? theiaeuk_snippy_variants_bam = medea_magic.snippy_variants_bam
-    String? theiaeuk_snippy_variants_bai = medea_magic.snippy_variants_bai
-    String? theiaeuk_snippy_variants_summary = medea_magic.snippy_variants_summary
-    String? theiaeuk_snippy_variants_num_reads_aligned = medea_magic.snippy_variants_num_reads_aligned
-    String? theiaeuk_snippy_variants_coverage_tsv = medea_magic.snippy_variants_coverage_tsv
-    String? theiaeuk_snippy_variants_num_variants = medea_magic.snippy_variants_num_variants
-    String? theiaeuk_snippy_variants_percent_ref_coverage = medea_magic.snippy_variants_percent_ref_coverage
+    # Variant Calling Outputs (minimap2 alignment + Clair3)
+    String? theiaeuk_minimap2_version = medea_magic.minimap2_version
+    File? theiaeuk_variant_calling_bam = medea_magic.ont_variant_calling_bam
+    File? theiaeuk_variant_calling_bai = medea_magic.ont_variant_calling_bai
+    String? theiaeuk_clair3_version = medea_magic.clair3_version
+    File? theiaeuk_clair3_variants_vcf = medea_magic.clair3_variants_vcf
+    File? theiaeuk_clair3_variants_gvcf = medea_magic.clair3_variants_gvcf
+    String? theiaeuk_clair3_docker = medea_magic.clair3_docker
+    String? theiaeuk_clair3_model_used = medea_magic.clair3_model_used
     # Gene Coverage Outputs
     File? gene_coverage_stats = medea_magic.gene_coverage_stats
-    Map[String, Float]? gene_coverage_depth_by_gene = medea_magic.depth_by_gene
-    Map[String, Float]? gene_coverage_percent_coverage_by_gene = medea_magic.percent_coverage_by_gene
+    Map[String, Float]? gene_coverage_depth_by_gene = medea_magic.gene_coverage_depth_by_gene
+    Map[String, Float]? gene_coverage_breadth_by_gene = medea_magic.gene_coverage_breadth_by_gene
+    File? gene_coverage_gene_vcf = medea_magic.gene_coverage_gene_vcf
   }
 }

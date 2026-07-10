@@ -9,6 +9,7 @@ import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/gene_typing/variant_detection/task_clair3_variants.wdl" as clair3_task
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
 import "../../tasks/utilities/data_handling/task_fasta_utilities.wdl" as fasta_utilities_task
+import "../../tasks/quality_control/basic_statistics/task_gene_coverage.wdl" as gene_coverage_task
 
 workflow medea_magic {
   meta {
@@ -22,7 +23,6 @@ workflow medea_magic {
     File? read2
     Boolean run_amr_search = false
     # variant calling logic
-    Boolean run_variant_calling = true
     Boolean ont_data = false
     String? amr_search_docker_image
     String? cauris_cladetyper_docker_image
@@ -57,23 +57,21 @@ workflow medea_magic {
     Int? read_aligner_cpu
     Int? read_aligner_memory
     Int? read_aligner_disk_size
-    # shared compute for the variant callers (gatk variants/filter and clair3);
-    # these tracks are mutually exclusive (ont_data), and each task still falls back
-    # to its own docker default when variant_caller_docker is left unset
+    # shared options for the variant callers (gatk variants/filter and clair3)
     String? variant_caller_docker
     Int? variant_caller_cpu
     Int? variant_caller_memory
     Int? variant_caller_disk_size
-    # gatk variant-calling options (illumina)
+    # gatk-specific variant-calling options (illumina)
     Int? gatk_ploidy
     File? gatk_intervals_file
-    # gatk filtering options (illumina)
+    # gatk-specific filtering options (illumina)
     Int? gatk_filter_min_variant_quality
     Int? gatk_filter_min_depth
     Float? gatk_filter_min_map_quality
     Int? gatk_filter_min_quality_by_depth
     String? gatk_filter_expression
-    # clair3 variant-calling options (ont)
+    # clair3 variant-calling & filtering options (ont)
     String? clair3_model
     Int? clair3_variant_quality
     Boolean? clair3_include_all_contigs
@@ -81,6 +79,10 @@ workflow medea_magic {
     Boolean? clair3_disable_phasing
     Boolean? clair3_enable_gvcf
     Boolean? clair3_enable_long_indel
+    # gene coverage options; user-supplied inputs take priority
+    File? gene_coordinates_bed
+    String? query_genes
+    File? reference_genome_gbff
   }
   if (medea_tag == "Candidozyma auris" || medea_tag == "Candida auris") {
     call cauris_cladetyper.cauris_cladetyper as cladetyper {
@@ -103,25 +105,30 @@ workflow medea_magic {
         max_distance = cladetyper_max_distance,
         docker = cauris_cladetyper_docker_image
     }
-    # only proceed if cladetyper retrieves an annotated_reference (e.g. non-functional for clade VI)
-    if (cladetyper.annotated_reference != "None") {
-      # cladetyper fasta output feeds the variant-calling alignment reference for C. auris
-      File cauris_variant_fasta = cladetyper.assembly_reference
+    # cladetyper fasta output feeds the variant-calling alignment reference for C. auris
+    File cauris_variant_fasta = cladetyper.assembly_reference
+    # organism-specific gene coverage targets used when query_genes is not user-supplied
+    String cauris_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,B9J08_005340,B9J08_000401,B9J08_003102,B9J08_003737,B9J08_005343"
     }
   }
   if (medea_tag == "Aspergillus fumigatus") {
     # hosted fasta (user-supplied fasta takes precedence downstream) feeds the variant-calling reference
     File afumigatus_variant_fasta = afumigatus_reference_fasta
+    # organism-specific gene coverage targets used when query_genes is not user-supplied
+    String afumigatus_query_genes = "Cyp51A,HapE,AFUA_4G08340"
   }
   if (medea_tag == "Cryptococcus neoformans") {
     # hosted fasta (user-supplied fasta takes precedence downstream) feeds the variant-calling reference
     File cryptoneo_variant_fasta = cryptoneo_reference_fasta
+    # organism-specific gene coverage targets used when query_genes is not user-supplied
+    String cryptoneo_query_genes = "CNA00300"
   }
-  # Reference-based variant calling. A single reference FASTA accounts for every organism:
+  # Reference-based variant calling.
   # a user-supplied fasta takes precedence, otherwise the organism-specific reference is used
   # (cladetyper fasta for C. auris, hosted fasta for A. fumigatus and C. neoformans).
   Array[File] variant_calling_reference_fastas = select_all([reference_genome_fasta, cauris_variant_fasta, afumigatus_variant_fasta, cryptoneo_variant_fasta])
-  if (run_variant_calling && length(variant_calling_reference_fastas) > 0 && defined(read1)) {
+  # variant calling runs automatically whenever a reference fasta and read1 are available
+  if (length(variant_calling_reference_fastas) > 0 && defined(read1)) {
     # Illumina short-read track: BWA alignment + GATK variant calling
     if (!ont_data) {
       call bwa_task.bwa as bwa_variant_calling {
@@ -208,6 +215,31 @@ workflow medea_magic {
       }
     }
   }
+  # Gene coverage. The user-supplied query_genes takes priority; otherwise the
+  # organism-specific default set (if any) is used. Inherently depends on variant calling
+  Array[String] query_genes_options = select_all([query_genes, cauris_query_genes, afumigatus_query_genes, cryptoneo_query_genes])
+  if (length(query_genes_options) > 0) {
+    String resolved_query_genes = query_genes_options[0]
+  }
+  # tracks are mutually exclusive (ont_data), so each select_all yields at most one element
+  Array[File] gene_coverage_bams = select_all([bwa_variant_calling.sorted_bam, clair3_sorted_bam.bam])
+  Array[File] gene_coverage_bais = select_all([bwa_variant_calling.sorted_bai, clair3_sorted_bam.bai])
+  Array[File] gene_coverage_vcfs = select_all([gatk_filter.gatk_filtered_vcf, clair3_variant_calling.clair3_variants_vcf])
+  if (length(gene_coverage_vcfs) > 0) {
+    File gene_coverage_vcf = gene_coverage_vcfs[0]
+  }
+  if (length(gene_coverage_bams) > 0) {
+    call gene_coverage_task.gene_coverage {
+      input:
+        bam = gene_coverage_bams[0],
+        bai = gene_coverage_bais[0],
+        samplename = samplename,
+        bedfile = gene_coordinates_bed,
+        reference_gbff = reference_genome_gbff,
+        query_genes = resolved_query_genes,
+        vcf = gene_coverage_vcf
+    }
+  }
   # Running AMR Search
   if (run_amr_search) {
     # Map containing the taxon tag reported by typing paired with it's taxon code for AMR search.
@@ -261,5 +293,10 @@ workflow medea_magic {
     File? clair3_variants_gvcf = clair3_variant_calling.clair3_variants_gvcf
     String? clair3_docker = clair3_variant_calling.clair3_variants_docker_image
     String? clair3_model_used = clair3_variant_calling.clair3_model_used
+    # gene coverage
+    File? gene_coverage_stats = gene_coverage.gene_coverage_stats
+    Map[String, Float]? gene_coverage_depth_by_gene = gene_coverage.depth_by_gene
+    Map[String, Float]? gene_coverage_breadth_by_gene = gene_coverage.breadth_by_gene
+    File? gene_coverage_gene_vcf = gene_coverage.gene_vcf
   }
 }
