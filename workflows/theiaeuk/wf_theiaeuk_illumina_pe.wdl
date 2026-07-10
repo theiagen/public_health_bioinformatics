@@ -182,7 +182,8 @@ workflow theiaeuk_illumina_pe {
           assembly = digger_denovo.assembly_fasta,
           samplename = samplename,
           read1 = read_QC_trim.read1_clean,
-          read2 = read_QC_trim.read2_clean
+          read2 = read_QC_trim.read2_clean,
+          ont_data = false
       }
     }
   }
