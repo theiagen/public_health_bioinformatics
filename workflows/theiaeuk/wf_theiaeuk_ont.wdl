@@ -221,7 +221,7 @@ workflow theiaeuk_ont {
     String? theiaeuk_clair3_version = medea_magic.clair3_version
     File? theiaeuk_clair3_variants_vcf = medea_magic.clair3_variants_vcf
     File? theiaeuk_clair3_variants_gvcf = medea_magic.clair3_variants_gvcf
-    String? theiaeuk_clair3_docker = medea_magic.clair3_docker
+    String? theiaeuk_clair3_docker = medea_magic.clair3_variants_docker
     String? theiaeuk_clair3_model_used = medea_magic.clair3_model_used
     # Gene Coverage Outputs
     File? gene_coverage_stats = medea_magic.gene_coverage_stats
