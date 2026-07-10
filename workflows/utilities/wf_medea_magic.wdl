@@ -109,7 +109,6 @@ workflow medea_magic {
     File cauris_variant_fasta = cladetyper.assembly_reference
     # organism-specific gene coverage targets used when query_genes is not user-supplied
     String cauris_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,B9J08_005340,B9J08_000401,B9J08_003102,B9J08_003737,B9J08_005343"
-    }
   }
   if (medea_tag == "Aspergillus fumigatus") {
     # hosted fasta (user-supplied fasta takes precedence downstream) feeds the variant-calling reference
