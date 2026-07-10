@@ -302,7 +302,7 @@ workflow medea_magic {
     String? clair3_version = clair3_variant_calling.clair3_version
     File? clair3_variants_vcf = clair3_variant_calling.clair3_variants_vcf
     File? clair3_variants_gvcf = clair3_variant_calling.clair3_variants_gvcf
-    String? clair3_docker = clair3_variant_calling.clair3_variants_docker_image
+    String? clair3_variants_docker = clair3_variant_calling.clair3_variants_docker_image
     String? clair3_model_used = clair3_variant_calling.clair3_model_used
     # gene coverage
     File? gene_coverage_stats = gene_coverage.gene_coverage_stats
