@@ -21,16 +21,15 @@ workflow medea_magic {
     File assembly
     File? read1
     File? read2
-    Boolean run_amr_search = false
-    # variant calling logic
     Boolean ont_data = false
-    String? amr_search_docker_image
-    String? cauris_cladetyper_docker_image
     # amr_search options
     Int? amr_search_cpu
     Int? amr_search_memory
     Int? amr_search_disk_size
+    String? amr_search_docker_image
+    Boolean run_amr_search = false
     # cladetyper options - primarily files we host
+    String? cauris_cladetyper_docker_image
     Int? cladetyper_kmer_size
     File? cladetyper_ref_clade1
     File? cladetyper_ref_clade1_annotated
@@ -45,23 +44,18 @@ workflow medea_magic {
     File? cladetyper_ref_clade6
     File? cladetyper_ref_clade6_annotated
     Float? cladetyper_max_distance
-    # reference genomes - hosted fastas feed the variant-calling reference for each organism
-    File afumigatus_reference_fasta = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.fasta"
-    File cryptoneo_reference_fasta = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.fasta"
     # user-supplied reference fasta; when provided, overrides the hosted/organism reference
     File? reference_genome_fasta
     # shared compute for the read_aligners (bwa for illumina, minimap2 for ont);
-    # these tracks are mutually exclusive (ont_data), and each task still falls back
-    # to its own docker default when read_aligner_docker is left unset
     String? read_aligner_docker
     Int? read_aligner_cpu
     Int? read_aligner_memory
     Int? read_aligner_disk_size
     # shared options for the variant callers (gatk variants/filter and clair3)
-    String? variant_caller_docker
-    Int? variant_caller_cpu
-    Int? variant_caller_memory
-    Int? variant_caller_disk_size
+    String? gatk_docker
+    Int? gatk_cpu
+    Int? gatk_memory
+    Int? gatk_disk_size
     # gatk-specific variant-calling options (illumina)
     Int? gatk_ploidy
     File? gatk_intervals_file
@@ -79,6 +73,10 @@ workflow medea_magic {
     Boolean? clair3_disable_phasing
     Boolean? clair3_enable_gvcf
     Boolean? clair3_enable_long_indel
+    String? clair3_docker
+    Int? clair3_cpu
+    Int? clair3_memory
+    Int? clair3_disk_size
     # gene coverage options; user-supplied inputs take priority
     File? gene_coordinates_bed
     String? query_genes
@@ -107,18 +105,26 @@ workflow medea_magic {
     }
     # cladetyper fasta output feeds the variant-calling alignment reference for C. auris
     File cauris_variant_fasta = cladetyper.assembly_reference
+    # cladetyper GBFF output feeds gene coverage annotation, but only when a clade match is found
+    if (cladetyper.annotated_reference != "None") {
+      File cauris_variant_gbff = cladetyper.annotated_reference
+    }
     # organism-specific gene coverage targets used when query_genes is not user-supplied
     String cauris_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,B9J08_005340,B9J08_000401,B9J08_003102,B9J08_003737,B9J08_005343"
   }
   if (medea_tag == "Aspergillus fumigatus") {
     # hosted fasta (user-supplied fasta takes precedence downstream) feeds the variant-calling reference
-    File afumigatus_variant_fasta = afumigatus_reference_fasta
+    File afumigatus_variant_fasta = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.fasta"
+    # hosted GBFF (user-supplied reference_genome_gbff takes precedence downstream) feeds gene coverage annotation
+    File afumigatus_variant_gbff = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff"
     # organism-specific gene coverage targets used when query_genes is not user-supplied
     String afumigatus_query_genes = "Cyp51A,HapE,AFUA_4G08340"
   }
   if (medea_tag == "Cryptococcus neoformans") {
     # hosted fasta (user-supplied fasta takes precedence downstream) feeds the variant-calling reference
-    File cryptoneo_variant_fasta = cryptoneo_reference_fasta
+    File cryptoneo_variant_fasta = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.fasta"
+    # hosted GBFF (user-supplied reference_genome_gbff takes precedence downstream) feeds gene coverage annotation
+    File cryptoneo_variant_gbff = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff"
     # organism-specific gene coverage targets used when query_genes is not user-supplied
     String cryptoneo_query_genes = "CNA00300"
   }
@@ -149,10 +155,10 @@ workflow medea_magic {
           reference_genome = variant_calling_reference_fastas[0],
           ploidy = gatk_ploidy,
           intervals_file = gatk_intervals_file,
-          docker = variant_caller_docker,
-          cpu = variant_caller_cpu,
-          memory = variant_caller_memory,
-          disk_size = variant_caller_disk_size
+          docker = gatk_docker,
+          cpu = gatk_cpu,
+          memory = gatk_memory,
+          disk_size = gatk_disk_size
       }
       call gatk_filter_task.gatk_filter as gatk_filter {
         input:
@@ -165,10 +171,10 @@ workflow medea_magic {
           min_map_quality = gatk_filter_min_map_quality,
           min_quality_by_depth = gatk_filter_min_quality_by_depth,
           filter_expression = gatk_filter_expression,
-          docker = variant_caller_docker,
-          cpu = variant_caller_cpu,
-          memory = variant_caller_memory,
-          disk_size = variant_caller_disk_size
+          docker = gatk_docker,
+          cpu = gatk_cpu,
+          memory = gatk_memory,
+          disk_size = gatk_disk_size
       }
     }
     # ONT long-read track: minimap2 alignment + Clair3 variant calling
@@ -187,16 +193,16 @@ workflow medea_magic {
           disk_size = read_aligner_disk_size
       }
       # convert the minimap2 SAM to the sorted, indexed BAM Clair3 expects
-      call parse_mapping_task.sam_to_sorted_bam as clair3_sorted_bam {
+      call parse_mapping_task.sam_to_sorted_bam as ont_bam_sorting {
         input:
           sam = minimap2_variant_calling.minimap2_out,
           samplename = samplename
       }
-      # index the reference FASTA; Clair3 requires the accompanying .fai
+      # variant calling
       call clair3_task.clair3_variants as clair3_variant_calling {
         input:
-          alignment_bam_file = clair3_sorted_bam.bam,
-          alignment_bam_file_index = clair3_sorted_bam.bai,
+          alignment_bam_file = ont_bam_sorting.bam,
+          alignment_bam_file_index = ont_bam_sorting.bai,
           reference_genome_file = variant_calling_reference_fastas[0],
           sequencing_platform = "ont",
           samplename = samplename,
@@ -207,10 +213,10 @@ workflow medea_magic {
           disable_phasing = clair3_disable_phasing,
           enable_gvcf = clair3_enable_gvcf,
           enable_long_indel = clair3_enable_long_indel,
-          docker = variant_caller_docker,
-          memory = variant_caller_memory,
-          cpu = variant_caller_cpu,
-          disk_size = variant_caller_disk_size
+          docker = clair3_docker,
+          memory = clair3_memory,
+          cpu = clair3_cpu,
+          disk_size = clair3_disk_size
       }
     }
   }
@@ -220,9 +226,15 @@ workflow medea_magic {
   if (length(query_genes_options) > 0) {
     String resolved_query_genes = query_genes_options[0]
   }
+  # a user-supplied reference_genome_gbff takes precedence, otherwise the organism-specific GBFF
+  # is used (cladetyper GBFF for C. auris when a clade matches, hosted GBFF for A. fumigatus and C. neoformans)
+  Array[File] reference_gbff_options = select_all([reference_genome_gbff, cauris_variant_gbff, afumigatus_variant_gbff, cryptoneo_variant_gbff])
+  if (length(reference_gbff_options) > 0) {
+    File resolved_reference_gbff = reference_gbff_options[0]
+  }
   # tracks are mutually exclusive (ont_data), so each select_all yields at most one element
-  Array[File] gene_coverage_bams = select_all([bwa_variant_calling.sorted_bam, clair3_sorted_bam.bam])
-  Array[File] gene_coverage_bais = select_all([bwa_variant_calling.sorted_bai, clair3_sorted_bam.bai])
+  Array[File] gene_coverage_bams = select_all([bwa_variant_calling.sorted_bam, ont_bam_sorting.bam])
+  Array[File] gene_coverage_bais = select_all([bwa_variant_calling.sorted_bai, ont_bam_sorting.bai])
   Array[File] gene_coverage_vcfs = select_all([gatk_filter.gatk_filtered_vcf, clair3_variant_calling.clair3_variants_vcf])
   if (length(gene_coverage_vcfs) > 0) {
     File gene_coverage_vcf = gene_coverage_vcfs[0]
@@ -234,7 +246,7 @@ workflow medea_magic {
         bai = gene_coverage_bais[0],
         samplename = samplename,
         bedfile = gene_coordinates_bed,
-        reference_gbff = reference_genome_gbff,
+        reference_gbff = resolved_reference_gbff,
         query_genes = resolved_query_genes,
         vcf = gene_coverage_vcf
     }
@@ -285,8 +297,8 @@ workflow medea_magic {
     File? gatk_selected_vcf = gatk_filter.gatk_selected_vcf
     # variant calling - ont (minimap2 alignment + clair3)
     String? minimap2_version = minimap2_variant_calling.minimap2_version
-    File? ont_variant_calling_bam = clair3_sorted_bam.bam
-    File? ont_variant_calling_bai = clair3_sorted_bam.bai
+    File? ont_variant_calling_bam = ont_bam_sorting.bam
+    File? ont_variant_calling_bai = ont_bam_sorting.bai
     String? clair3_version = clair3_variant_calling.clair3_version
     File? clair3_variants_vcf = clair3_variant_calling.clair3_variants_vcf
     File? clair3_variants_gvcf = clair3_variant_calling.clair3_variants_gvcf
