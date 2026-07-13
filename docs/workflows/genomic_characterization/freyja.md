@@ -343,12 +343,12 @@ When using the `freyja_pathogen` flag, the user must set the optional `update_db
 Allowed options:
 
 - SARS-CoV-2 (default)
-- MPXV
+- MPX
 - H1N1pdm
 - H5NX
 - FLU-B-VIC
 - MEASLESN450
-- MEASLES
+- MEASLESgenome
 - RSVa
 - RSVb
 
