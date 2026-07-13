@@ -1,0 +1,10 @@
+# PHB rejected-spelling vocabulary (used by Vale.Spelling).
+# Terms listed here are always flagged as misspellings, even if a dictionary
+# would otherwise accept them. Use this for words we never want to appear.
+# One case-insensitive regex per line.
+#
+# Note: most British -> American conversions are handled by the
+# PHB.AmericanSpelling substitution rule (which also suggests the fix). This
+# file is a backstop for forms not covered there.
+inputted
+outputted

@@ -3,15 +3,15 @@ title: Task Fragment `flye`
 fragment: true
 ---
 ??? task "`Flye`: _De novo_ Assembly"
-    Flye is a _de novo_ assembler for long read data using repeat graphs. Compared to de Bruijn graphs, which require exact k-mer matches, repeat graphs can use approximate matches which better tolerates the error rate of ONT data.
+    Flye is a _de novo_ assembler for long read data using repeat graphs. Compared to de Bruijn graphs, which require exact k-mer matches, repeat graphs can use approximate matches which better tolerate the error rate of ONT data.
 
 <!-- if: theiaviral -->
     It can be enabled by setting the `call_raven` parameter to `false`. Flye is used as a fallback option if Raven fails during execution (see the Raven task for more details).
 <!-- endif -->
 
-    ??? dna "`flye_read_type` input parameter" 
+    ??? dna "`flye_read_type` input parameter"
         This input parameter specifies the type of sequencing reads being used for assembly. This parameter significantly impacts the assembly process and should match the characteristics of your input data. Below are the available options:
-    
+
         | **Parameter** | **Explanation** |
         | --- | --- |
         | `--nano-hq` (default) | Optimized for ONT high-quality reads, such as Guppy5+ SUP or Q20 (<5% error). Recommended for ONT reads processed with Guppy5 or newer |
@@ -20,8 +20,8 @@ fragment: true
         | `--pacbio-raw` | PacBio regular CLR reads (<20% error) |
         | `--pacbio-corr` | PacBio reads corrected with other methods (<3% error) |
         | `--pacbio-hifi` | PacBio HiFi reads (<1% error) |
-    
-        Refer to the Flye documentation for detailed guidance on selecting the appropriate `flye_read_type` based on your sequencing data and additional optional paramaters.
+
+        Refer to the Flye documentation for detailed guidance on selecting the appropriate `flye_read_type` based on your sequencing data and additional optional parameters.
 
     ???+ warning "Non-deterministic output(s)"
         This task may yield non-deterministic outputs.

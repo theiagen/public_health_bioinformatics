@@ -1,10 +1,10 @@
 # PHB Code Contributions
 
-Theiagen Genomics’ [**Public Health Bioinformatics (PHB)**](https://github.com/theiagen/public_health_bioinformatics) workflows are written in [WDL](https://github.com/openwdl/wdl), a language for specifying data processing workflows with a human-readable and writable syntax. Contributions to the workflows contained in the repository are warmly welcomed.
+Theiagen Genomics’ [**Public Health Bioinformatics (PHB)**](https://github.com/theiagen/public_health_bioinformatics) workflows are written in [WDL](https://github.com/openwdl/wdl), a language for specifying data processing workflows with a human-readable and writable syntax. Contributions to the workflows contained in the repository are warmly welcomed.
 
 This document gives coding conventions for the WDL code comprising the workflow and task development for PHB. This style guide evolves over time as additional conventions are identified and past conventions are rendered obsolete by changes in the language itself.
 
-Style guide inspired by Scott Frazer’s [WDL Best Practices Style Guide](https://gist.github.com/scottfrazer/aa4ab1945a6a4c331211).
+Style guide inspired by Scott Frazer’s [WDL Best Practices Style Guide](https://gist.github.com/scottfrazer/aa4ab1945a6a4c331211).
 
 ## General Guidelines
 
@@ -13,11 +13,11 @@ Style guide inspired by Scott Frazer’s [WDL Best Practices Style Guide](http
 
 All trailing whitespace should be removed (unless in a TSV, where a trailing tab character is considered valid data).
 
-***Modularity and Metadata***
+**_Modularity and Metadata_**
 
 - **Best Practice:** Place tasks and workflows in separate files to maintain modularity and clarity.
 
-***Docker Containers***
+**_Docker Containers_**
 
 - Use a specific Docker container version instead of 'latest' to ensure reproducibility and prevent unexpected changes in container behavior.
 
@@ -25,9 +25,9 @@ All trailing whitespace should be removed (unless in a TSV, where a trailing tab
     String docker = "us-docker.pkg.dev/docker_image:version"
     ```
 
-- Preferentially use containers [`Google's Artifact Registry`](https://console.cloud.google.com/artifacts/docker/general-theiagen/us) rather than those from [`quay.io`](http://quay.io) or [`dockerhub`](https://hub.docker.com/)
+- Preferentially use containers from [`Google's Artifact Registry`](https://console.cloud.google.com/artifacts/docker/general-theiagen/us) rather than those from [`quay.io`](http://quay.io) or [`dockerhub`](https://hub.docker.com/)
 
-***Indentation and Whitespace***
+**_Indentation and Whitespace_**
 
 - Use 2-space indentation for all blocks. Avoid using tabs to ensure uniform formatting across editors:
 
@@ -38,9 +38,9 @@ All trailing whitespace should be removed (unless in a TSV, where a trailing tab
     fi
     ```
 
-- Use a single space when defining variables (`this = that` *not* `this= that` (unless a bash variable where `this=that` is required))
+- Use a single space when defining variables (`this = that` _not_ `this= that` (unless a bash variable where `this=that` is required))
 
-***Bracket and Spacing Conventions***
+**_Bracket and Spacing Conventions_**
 
 - Avoid line breaks for opening braces. Keep them on the same line as the declaration. i.e `input {` instead of `input\n{`
 
@@ -60,7 +60,7 @@ All trailing whitespace should be removed (unless in a TSV, where a trailing tab
 - Use single space when defining input/output variables & runtime attributes  (`output {` instead of `output{`)
 - Separate non-indented constructs (like input and output sections) with a single-line break for readability.
 
-***Command Block Syntax***
+**_Command Block Syntax_**
 
 - Enclose command blocks in triple angle brackets (<<< ... >>>) for consistency and easier handling of multi-line scripts. It also avoids issues with unescaped special characters in the command block:
 
@@ -222,12 +222,12 @@ A WDL workflow block orchestrates the execution of tasks and subworkflows. It de
 ### The `import` section
 
 - Include a block of `import` statements (sorted in alphabetical order).
-  - When a workflow imports a task, ensure it is imported under a unique name to avoid conflicts.
+    - When a workflow imports a task, ensure it is imported under a unique name to avoid conflicts.
 
-    ```bash
-    import "../tasks/task_task1.wdl" as task1_task
-    import "../tasks/task_task2.wdl" as task2_task
-    ```
+      ```bash
+      import "../tasks/task_task1.wdl" as task1_task
+      import "../tasks/task_task2.wdl" as task2_task
+      ```
 
 - Order import statements alphabetically by the path of the imported file.
 
@@ -246,7 +246,7 @@ input {
 
 ### The `call` sections
 
-- Import task files as something other than the included task nam in order to avoid namespace conflicts
+- Import task files as something other than the included task name in order to avoid namespace conflicts
 
 ```bash
 call task1_task.task1 {
@@ -288,7 +288,7 @@ output {
       input {
         String input
         String task1_docker = "us-docker.pkg.dev/general-theiagen/task_1:version"
-        String task2_docker = "us-docker.pkg.dev/general-theiagen//task_2:version"
+        String task2_docker = "us-docker.pkg.dev/general-theiagen/task_2:version"
         String? hidden_task3_argument
         String? hidden_task3_docker
         String? hidden_task4_docker
@@ -307,7 +307,7 @@ output {
         input:
           input = input,
           task3_argument = hidden_task3_argument,
-          task3_docker = hidden_task3_docker
+          task3_docker = hidden_task3_docker,
           task4_docker = hidden_task4_docker
       }
       output {

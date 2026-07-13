@@ -7,7 +7,7 @@ fragment: true
 
 <!-- if: metabuli -->
     ??? dna "`taxon_id` input parameter"
-        `taxon_id` triggers read extraction by retrieving the inputted NCBI taxon ID and all descendant taxon IDs derived from the input.
+        `taxon_id` triggers read extraction by retrieving a NCBI taxon ID and all descendant taxon IDs derived from the input.
 
     ??? dna "Precision mode and `min_score` / `min_sp_score` input parameters"
         The `min_score` parameter is the minimum score (DNA-level identity) required for a read to be classified and the `min_sp_score` parameter is the minimum score for a read to be classified at or below species rank. Metabuli precision mode is defined by its authors as more stringently setting the `min_score` and `min_sp_score` parameters for specific read types:
@@ -35,7 +35,7 @@ fragment: true
 
 <!--if: theiaviral -->
     ???+ warning "Descendant taxa reads are extracted"
-        This task will extract reads classified to the input `taxon` and **all of its descendant taxa**. The `rank` input parameter controls the extraction of reads classified at the specified `rank` and all subordiante taxonomic levels. See task `ncbi_identify` under the **Taxonomic Identification** section above for more details on the `rank` input parameter.
+        This task will extract reads classified to the input `taxon` and **all of its descendant taxa**. The `rank` input parameter controls the extraction of reads classified at the specified `rank` and all subordinate taxonomic levels. See task `ncbi_identify` under the **Taxonomic Identification** section above for more details on the `rank` input parameter.
 <!-- endif -->
 
     !!! techdetails "Metabuli Technical Details"
@@ -45,4 +45,3 @@ fragment: true
         | Software Source Code | [Metabuli on GitHub](https://github.com/steineggerlab/Metabuli) |
         | Software Documentation | [Metabuli Documentation](https://github.com/steineggerlab/Metabuli/blob/master/README.md) |
         | Original Publication(s) | [Metabuli: sensitive and specific metagenomic classification via joint analysis of amino acid and DNA](https://doi.org/10.1038/s41592-024-02273-y) |
-

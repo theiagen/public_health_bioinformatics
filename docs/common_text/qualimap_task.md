@@ -5,7 +5,7 @@ fragment: true
 ??? task "`QualiMap`: BAM File Quality Assessment"
     QualiMap evaluates the quality of alignment data in BAM files by computing various metrics including coverage distribution, mapping quality, GC content, and various metrics analyzed across the reference. It provides comprehensive quality control reports for next-generation sequencing alignment data.
 
-    This task generates both standard QualiMap reports and custom interactive HTML visualizations for genome coverage and mapping quality across the reference sequence. The results are bundled into a compressed archive for easy download and review, especially since for the QualiMap report to render the pngs correctly, it needs to preserve directory structure. 
+    This task generates both standard QualiMap reports and custom interactive HTML visualizations for genome coverage and mapping quality across the reference sequence. The results are bundled into a compressed archive for easy download and review.
 
     !!! techdetails "QualiMap Technical Details"
         |  | Links |

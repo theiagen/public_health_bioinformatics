@@ -10,7 +10,7 @@ The Dorado Basecalling workflow is used to convert Oxford Nanopore `POD5` sequen
 
 !!! caption "Dorado_Basecalling_PHB Workflow Diagram"
     <div style="text-align: center;">
-    ![Dorado_Basecalling_PHB Workflow Diagram](../../assets/figures/Dorado_Basecalling_PHB.png){: onload="this.width/=2;this.onload=null;" }
+    ![Workflow taking POD5 files from Google Cloud storage through Dorado basecalling and demultiplexing, with optional trimming using custom FASTA primers, and outputting a data table of FASTQ files.](../../assets/figures/Dorado_Basecalling_PHB.png){: onload="this.width/=2;this.onload=null;" }
     </div>
 
 ### Configuring Workflow in Terra
@@ -29,16 +29,16 @@ We recommend running this workflow with **"Run workflow with inputs defined by f
         After the upload is complete, right-click the collection name and select "Copy link address"
 
         !!! caption "Copy link address"
-            ![Data Uploader](../../assets/figures/dorado_pod5_bucket_path.png)
+            ![Terra Data Uploader showing a right-click context menu on the collection bucket path link, with "Copy link address" highlighted to copy the POD5 bucket path.](../../assets/figures/dorado_pod5_bucket_path.png)
 
     3. **Paste the GCS Path into the Workflow Input**
 
         Open the workflow configuration screen in Terra. Paste the copied GCS path into the `pod5_bucket_path` input field for the Dorado Basecalling Workflow.
 
-        Make sure the select the `"Run workflow with inputs defined by file paths"` option, as shown.
+        Make sure you select the `"Run workflow with inputs defined by file paths"` option, as shown.
 
-        !!! caption "Workflow Inputs"
-            ![Workflow Inputs](../../assets/figures/dorado_workflow_inputs.png)
+        !!! caption "Dorado Basecalling Workflow Inputs in Terra"
+            ![Terra workflow configuration page for Dorado_Basecalling_PHB showing the Inputs tab with required fields including kit_name, pod5_bucket_path, and terra_project, with the pod5_bucket_path field highlighted.](../../assets/figures/dorado_workflow_inputs.png)
 
 ### Model Type Selection
 
@@ -50,7 +50,7 @@ Users can configure the basecalling model by setting the `dorado_model` input pa
 - **`hac`** (high-accuracy): This model provides a balance between speed and accuracy. This model basecalls faster than `sup`, but those basecalls will be less accurate. It is recommended for most users by the Dorado developers.
 - **`fast`** (fast model): This model is the fastest and least accurate and is recommended when speed is prioritized over accuracy, such as for initial analyses or non-critical applications.
 
-**Manual Model Input:** Alternatively, users can specify either a simplex model path or a model complex (e.g.`dna_r10.4.1_e8.2_400bps_hac@v4.2.0` or `hac,5mCG_5hmCG`). Please see the [Dorado documentation](https://dorado-docs.readthedocs.io/en/latest/models/models/) for more details on the manual model naming conventions. You can also find the [full list of available simplex and modified basecalling models here](https://dorado-docs.readthedocs.io/en/latest/models/list/).
+**Manual Model Input:** Alternatively, users can specify either a simplex model path or a model complex (e.g.`dna_r10.4.1_e8.2_400bps_hac@v4.2.0` or `hac,5mCG_5hmCG`). Please see the [Dorado documentation](https://dorado-docs.readthedocs.io/en/latest/models/models/) for more details on the manual model naming conventions. [A full list of simplex and modified basecalling models is available](https://dorado-docs.readthedocs.io/en/latest/models/list/).
 
 !!! tip "Example Manual Models"
     - `sup,5mCG_5hmCG,6mA`
@@ -59,7 +59,7 @@ Users can configure the basecalling model by setting the `dorado_model` input pa
 
 ### Supported Kit Names
 
-Ensure you use an accepted barcoding kit name in the `kit_name` parameter. Check if your barcoding kit is supported by the Dorado workflow by clicking the toggle below. If not, please contact <support@theiagen.com> for assistance
+Ensure you use an accepted barcoding kit name in the `kit_name` parameter. Check if your barcoding kit is supported by the Dorado workflow by clicking the toggle below. If not, please contact <support@theiagen.com> for assistance.
 
 ??? toggle "Click to see a list of currently accepted kit names"
     - EXP-NBD103
@@ -132,7 +132,7 @@ Ensure you use an accepted barcoding kit name in the `kit_name` parameter. Check
 This workflow is composed of several tasks to process, basecall, and analyze Oxford Nanopore `POD5` files.
 
 ??? task "`find_files`: Identifying all POD5 files in the `pod5_bucket_path`"
-    Since this workflow only recieves a location for the POD5 files, this task was created to search the `pod5_bucket_path` location in order to create a list of all included POD5 files so that later tasks can perform basecalling on them. By default, this task is configured to search for `.pod5` files.
+    Since this workflow only receives a location for the POD5 files, this task was created to search the `pod5_bucket_path` location in order to create a list of all included POD5 files so that later tasks can perform basecalling on them. By default, this task is configured to search for `.pod5` files.
 
     !!! techdetails "Find Files Technical Details"
         |  | Links |
@@ -148,12 +148,12 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
         | Task | [task_chunk_files.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/file_handling/task_chunk_files.wdl) |
 
 ??? task "`dorado_basecall`: Basecalling POD5 files"
-    The basecalling task takes POD5 files as input and converts each individual POD5 into 'BAM' format using the either the default or user-specified model. This step leverages GPU acceleration for efficient processing.
+    The basecalling task takes POD5 files as input and converts each individual POD5 file into 'BAM' format using either the default or user-specified model. This step leverages GPU acceleration for efficient processing.
 
     Please see the [Dorado documentation](https://dorado-docs.readthedocs.io/en/latest/basecaller/basecall_overview/) for more details, but what follows is a brief overview of the basecalling process:
 
     1. POD5 files are pre-processed via signal scaling and normalization.
-    2. The machine learning algorithm decodes the sequence signals into nucleotide base calls. There are different machine learning models that can be specified as input; more details can be found above [here](#model-type-selection).
+    2. The machine learning algorithm decodes the sequence signals into nucleotide base calls. There are different machine learning models that can be specified as input; see [Model Type Selection](#model-type-selection).
     3. [Barcode classification](https://dorado-docs.readthedocs.io/en/latest/barcoding/barcoding/) is performed based on the indicated kit name to enable downstream demultiplexing.
 
         !!! info "Barcode Trimming"
@@ -172,7 +172,7 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
         | Software Documentation | [Dorado ReadTheDocs](https://dorado-docs.readthedocs.io/en/latest/) |
 
 ??? task "`dorado_demux`: Produces barcode-specific FASTQ files"
-    This task takes every basecalled BAM files and demultiplexes them based on the identified barcodes found during basecalling. An individual FASTQ file is generated for each barcode found per BAM file. All FASTQ files that are associated with a single barcode are then merged.
+    This task takes each basecalled BAM file and demultiplexes it based on the identified barcodes found during basecalling. An individual FASTQ file is generated for each barcode found per BAM file. All FASTQ files that are associated with a single barcode are then merged.
 
     !!! info "Disabling Barcode Trimming"
         By default, barcodes _are_ trimmed during demultiplexing.
@@ -187,7 +187,7 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
         | Software Documentation | [Dorado ReadTheDocs](https://dorado-docs.readthedocs.io/en/latest/) |
 
 ??? task "`dorado_trim`: Custom Primer Trimming (optional)"
-    If a the optional input `custom_primers` is provided, this task is activated that will trim the primer sequences from the beginning and end of the demultiplexed reads.
+    If the optional input `custom_primers` is provided, this task is activated to trim the primer sequences from the beginning and end of the demultiplexed reads.
 
     To determine how to format the FASTA file that is expected in `custom_primers` please see the [Dorado documentation](https://dorado-docs.readthedocs.io/en/latest/barcoding/custom_primers/), specifically the section on "Custom adapter/primer file format".
 
@@ -209,7 +209,7 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
     - `dorado_docker`: Docker image used in the `dorado_basecall` task
     - `dorado_version`: Version of Dorado used in the `dorado_basecall` task
     - `dorado_model_name`: Model used for basecalling
-    - `read1`: the FASTQ file containing the read name
+    - `read1`: the FASTQ file containing the reads
     - `table_created_by`: this column will indicate that this table was created by "Dorado_Basecalling_PHB"
     - `upload_date`: the date the table was uploaded to Terra
 
