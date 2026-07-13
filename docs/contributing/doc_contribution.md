@@ -24,11 +24,11 @@ This will prompt you to open your browser to the appropriate local host address 
 
 ### VSCode Extensions
 
-Here are some VSCode Extensions can help you write and edit your markdown files (and allow you preview changes without running the server, though formatting will suffer):
+Here are some VSCode Extensions that can help you write and edit your markdown files (and allow you preview changes without running the server, though formatting will suffer):
 
 - [Markdown Preview Enhanced (Yiyi Wang)](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced) - This extension is good for previewing markdown files in VSCode, but is **not** good at rendering any of the more advanced features such as callouts or tables.
 - [Markdown All in One (Yu Zhang)](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one) - This extension allows you to use regular word-processing short-cuts to format your markdown files, like Ctrl-B to bold text, Ctrl-I for italics without having to manually type the `**` or `_` characters.
-- [markdownlint (David Anson)](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint) - This extension will help you catch any formatting errors in your markdown files.
+- [markdownlint (David Anson)](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint) - This extension will help you catch any formatting errors in your markdown files. Since our config lives at `.config/.markdownlint.yaml` rather than the workspace root, add the following to your workspace `.vscode/settings.json` so the extension picks it up: `{"markdownlint.configFile": ".config/.markdownlint.yaml"}`.
 
 ### Helpful Websites
 
@@ -70,7 +70,7 @@ The following language conventions should be followed when writing documentation
 
     Please see the [Admonition documentation](https://zensical.org/docs/authoring/admonitions/) for more information on how to change the title, enable toggles, and more.
 
-    The following custom callout types are supported _in addition to the standard admonitions supported by our theme_ [more information on the standard admonitions here](https://zensical.org/docs/authoring/admonitions/#supported-types):
+    The following custom callout types are supported _in addition to the standard admonitions supported by our theme_ ([The Zensical documentation offers more information on the standard admonitions](https://zensical.org/docs/authoring/admonitions/#supported-types)):
 
     !!! dna
         This is a DNA admonition. Admire the cute green DNA emoji. You can create this with the `!!! dna` syntax.
@@ -83,7 +83,7 @@ The following language conventions should be followed when writing documentation
         Use this admonition when wanting to provide additional _optional_ information or details that are not strictly necessary, or take up a lot of space.
 
     ???+ task
-        This is a toggle-able section **for a workflow task**. The emoji is a gear. Use the `??? task` syntax to create this admonition. Use `!!! task` if you want to have it be permanently expanded. I have add a `+` at the end of the question marks to make this admonition open by default and still enable its collapse.
+        This is a toggle-able section **for a workflow task**. The emoji is a gear. Use the `??? task` syntax to create this admonition. Use `!!! task` if you want to have it be permanently expanded. I have added a `+` at the end of the question marks to make this admonition open by default and still enable its collapse.
 
         Use this admonition when providing details on a workflow, task, or tool.
 
@@ -131,13 +131,73 @@ The following language conventions should be followed when writing documentation
 
     Note that this is not a "pretty" markdown table. This is because the spacing would be crazy in the markdown file, especially for tables with a lot of text and/or columns. The table will render correctly in the documentation.
 
-- Links - Use the following syntax to create a link. This is works for both files and websites. If linking a file, use the relative path.
+- Links - Use the following syntax to create a link. This works for both files and websites. If linking a file, use the relative path.
 
     ```markdown
     [Link Text](https://www.example.com)
     ```
 
 - End all pages with an empty line
+
+## Glossary and Abbreviations
+
+PHB documentation serves a public health audience that may not be familiar with bioinformatics jargon. To keep terminology consistent and approachable, we maintain a single glossary and surface it automatically across the site.
+
+There are two files, with a clear division of labor:
+
+- **`docs/assets/abbreviations.md`** (repository root) — the machine-readable source of hover tooltips. It holds **only organization abbreviations** (repositories, databases, and networks, e.g. `ENA`, `GISAID`, `INSDC`). Each line is an [abbreviation definition](https://zensical.org/docs/authoring/tooltips/#adding-a-glossary) in the form `*[ABBR]: short definition`. This file is **automatically appended to every page** (via the `pymdownx.snippets` `auto_append` setting in `mkdocs.yml`), so wherever an organization abbreviation appears in the rendered docs it becomes a hover tooltip — no per-page work is required.
+- **`docs/guides/glossary.md`** — the human-readable [Glossary](../guides/glossary.md) page and the complete reference for **every** term. It is organized into these sections: "Sequencing and analysis terms"; "File formats"; "Genomic characterization terms"; "Platforms and tools"; "Databases, repositories, and organizations"; "Pathogens and organisms"; and "Acronyms and abbreviations".
+
+To add or change an entry:
+
+1. Always add or edit the entry in `docs/guides/glossary.md`, under the section that best fits it.
+2. **If it is an organization abbreviation**, also add or edit the matching one-line tooltip in `docs/assets/abbreviations.md`.
+
+!!! tip "Why only organizations get tooltips"
+    Tooltip matching is **case-sensitive** and **whole-word only**, so full words like "read" or "coverage" would create misleading tooltips on unrelated text, and very common acronyms (e.g. `SNP`, `QC`) would underline nearly every page. Limiting tooltips to organization abbreviations keeps them useful and unobtrusive, while the Glossary page remains the complete reference.
+
+**Expand each abbreviation on first use per page**, then rely on the Glossary (and, for organizations, the tooltip) thereafter.
+
+## Linting and Automated Checks
+
+Documentation is checked automatically to catch typos, spelling, formatting, and naming inconsistencies. The same checks run locally (via [pre-commit](https://pre-commit.com/)) and in CI (the `lint-documentation` GitHub Actions workflow) on any pull request that touches `docs/`.
+
+All lint/tooling configuration lives under **`.config/`** at the repository root, to keep the root directory itself uncluttered. Because these files aren't in their tools' default locations, every command below needs an explicit config flag — this is documented inline in each config file too.
+
+Four categories of checks are enforced:
+
+| Check | Tool | Config | What it catches |
+| --- | --- | --- | --- |
+| Tool-name consistency | [Vale](https://vale.sh/) | `docs/styles/PHB/ToolNames.yml` | Inconsistent capitalization/spelling of tools (e.g. `IQTree` → `IQ-TREE`, `Github` → `GitHub`) |
+| American spelling | Vale | `docs/styles/PHB/AmericanSpelling.yml` | British spellings (e.g. `characterise` → `characterize`, `colour` → `color`) |
+| Spelling & doubled words | Vale | `.config/.vale.ini` + `docs/styles/config/vocabularies/PHB/` | Typos and repeated words; domain terms are whitelisted in `accept.txt` |
+| Whitespace hygiene | pre-commit hooks | `.config/.pre-commit-config.yaml` | Trailing whitespace, missing final newline, space before `%` |
+| Markdown formatting | [markdownlint](https://github.com/DavidAnson/markdownlint) | `.config/.markdownlint.yaml` | Skipped heading levels, bare URLs, list/heading spacing, etc. |
+
+### Running the checks locally
+
+The whitespace and Markdown tools install themselves through pre-commit; only Vale needs to be [installed separately](https://vale.sh/docs/vale-cli/installation/) (it is a standalone binary).
+
+```bash
+# one-time setup
+pip install pre-commit
+pre-commit install -c .config/.pre-commit-config.yaml   # bakes the config path into the git hook
+
+# run all checks against everything at any time
+pre-commit run --all-files -c .config/.pre-commit-config.yaml
+
+# or run an individual tool directly
+vale --config=.config/.vale.ini docs/
+markdownlint -c .config/.markdownlint.yaml "docs/**/*.md"   # add --fix to auto-correct
+```
+
+Once installed with `-c .config/.pre-commit-config.yaml`, the git hook remembers that path — ordinary `git commit` afterwards runs the checks with no extra flags needed.
+
+The whitespace hooks and `markdownlint --fix` correct issues automatically; Vale reports each issue with the suggested replacement so you can apply it.
+
+!!! dna "Adding an accepted term or tool name"
+    - If Vale flags a valid domain term as a misspelling, add it to `docs/styles/config/vocabularies/PHB/accept.txt`.
+    - To standardize a new tool name, add the incorrect → correct mapping to `docs/styles/PHB/ToolNames.yml`.
 
 ## Documentation Structure
 
@@ -151,7 +211,7 @@ A brief description of the documentation structure is as follows:
         - `metadata_formatters/` - Contains the most up-to-date metadata formatters for our submission workflows.
         - `sops/` - Contains any Standard Operating Procedures (SOPs) that correspond to workflows in the documentation.
         - `tables/` - Contains TSV files used to generate tables in the documentation. These are used to generate the overview tables for workflows, as well as the input and output tables for workflows.
-        - `new_workflow_template.md` - A template for adding a new workflow page to the documentation. [You can see this template here](../assets/new_workflow_template.md)
+        - `new_workflow_template.md` - [A template for adding a new workflow page to the documentation](../assets/new_workflow_template.md).
     - `common_text/` - Contains the Markdown files for common text used in the documentation. This includes task descriptions, workflow descriptions, and other common text. This is where you will put any new task descriptions or workflow descriptions that are not specific to a single workflow. This enables modular and reusable documentation.
     - `contributing/` - Contains the Markdown files for our contribution guides, such as this file
     - `javascripts/` - Contains JavaScript files used in the documentation.
@@ -167,7 +227,7 @@ A brief description of the documentation structure is as follows:
 ### Adding a Page for a New Workflow {% raw %} {#new-page} {% endraw %}
 
 !!! tip "Hey, we've got a template for that!"
-    [Please see our template here](../assets/new_workflow_template.md) for ease of use. Please remove all italicized text and replace with the appropriate information. If in doubt, please refer to existing documentation.
+    We have a [new workflow template](../assets/new_workflow_template.md) for ease of use. Please remove all italicized text and replace with the appropriate information. If in doubt, please refer to existing documentation.
 
 If you are adding a new workflow, there are a number of things to do in order to include the page in the documentation:
 
@@ -176,10 +236,10 @@ If you are adding a new workflow, there are a number of things to do in order to
      - Workflow Name - Link the name with a relative path to the workflow page in appropriate `docs/workflows/` subdirectory
      - Workflow Description - Brief description of the workflow
      - Applicable Kingdom - Link one of the following options to the corresponding heading in the `docs/workflows_overview/workflows_kingdom.md` file. Options: "Any taxa", "Bacteria", "Mycotics", "Viral"
-     - Workflow Level (_on Terra_) - Options: "Sample-level", "Set-level", or ""
-     - Workflow Type - Link one of the following options to the corresponding heading in the `docs/workflows_overview/workflows_type.md` file. Options: "Data Import", "Genomic Characterization", "Phylogenetic Construction", "Phylogenetic Placement", "Public Data Sharing", "Exporting Data from Terra", or "Standalone"; this should match the location/naming of the workflow page in `docs/workflows/`.
+     - Workflow Level (_on Terra_) - Options: "Sample-level", "Set-level", "Table-level", or ""
+     - Workflow Type - Link one of the following options to the corresponding heading in the `docs/workflows_overview/workflows_type.md` file. Options: "Data Import", "Genomic Characterization", "Phylogenetic Construction", "Phylogenetic Placement", "Public Data Sharing", "Exporting Data from Terra", "Comparative Analysis" or "Standalone"; this should match the location/naming of the workflow page in `docs/workflows/` (except Comparative Analysis, which should go in the `standalone` directory if appropriate).
      - Command-line compatibility - Options: "Yes", "No", and/or "Some optional features incompatible"
-     - The version where the last known changes occurred (likely the upcoming version if it is a new workflow -- if the upcoming version number is currently unknown, please use **vX.X.X**)
+     - The version where the last known changes occurred (likely the upcoming version if it is a new workflow -- if the upcoming version number is currently unknown, please use `vX.X.X`)
      - Link to the workflow on Dockstore - Link the workflow name to the information tab on Dockstore.
 3. Format this information in the `assets/tables/all_workflows.tsv` file.
 4. Copy the path to the workflow documentation page to ==**ALL**== of the appropriate locations in the `mkdocs.yml` file (under the `nav:` section) in the main directory of this repository. This ensures the workflow can be accessed from the navigation sidebar.

@@ -7,11 +7,11 @@ fragment: true
 
     In the TheiaProk_Illumina workflows, SeqSero2S takes in raw sequencing reads and performs targeted assembly of serotype determinant alleles, which can be used to predict serotypes including contamination between serotypes. For the TheiaProk ONT and FASTA workflows, SeqSero2S uses the genome assembly as input.
 
-    If reads are provided, SeqSero2S performs allele micro-assembly by default. This occurs through targeted assembly of serotype determinant alleles, and any assembled alleles are used to predict the sample's serotype, and can predict potential contamination. If the `seqsero2s_mode` optional variable is changed to `"k"` (for k-mer mode), SeqSero2S will perform serotyping based on unique k-mers of serotype determinants. If the input data is an assembly FASTA, the k-mer mode _must_ be used, and the genome assembly is used to generate the search k-mers instead of the raw reads. 
+    If reads are provided, SeqSero2S performs allele micro-assembly by default. This occurs through targeted assembly of serotype determinant alleles, and any assembled alleles are used to predict the sample's serotype, and can predict potential contamination. If the `seqsero2s_mode` optional variable is changed to `"k"` (for k-mer mode), SeqSero2S will perform serotyping based on unique k-mers of serotype determinants. If the input data is an assembly FASTA, the k-mer mode _must_ be used, and the genome assembly is used to generate the search k-mers instead of the raw reads.
 
     ??? dna "What is the difference between SeqSero2 and SeqSero2S?"
         Recently, the SeqSero2S software was released and adopted by the PulseNet 2.0 (PN2.0) platform for subspecies identification and serotype determination of _Salmonella_ spp. Genetic determination of rarer serotypes can be problematic due to a lack of sequences for rare antigen types and alleles, a lack of understanding of the genetic basis for some antigens, or some inconsistencies in the White-Kauffmann-Le Minor (WKL) Scheme for _Salmonella_ serotype designation. As such, SeqSero2S predicts serotypes using a simplified interpretation based on the most commonly seen serotypes. SeqSero2S also includes additional functionalities to improve genomic prediction of serotypes in general and mitigate potential drawbacks of the simplified scheme.
-        
+
         The simplification of SeqSero2S can be summarized as such:
 
         - 178 serotypes were provisionally removed
@@ -22,7 +22,7 @@ fragment: true
             - 4 serotypes could not be differentiated from other serotypes
         - 57 serotypes were merged into other serotypes
         - The antigenic formulae of 890 serotypes were simplified, but the simplifications did not result in merging
-       
+
     !!! techdetails "SeqSero2S Technical Details"
         |  | Links |
         | --- | --- |
