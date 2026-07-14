@@ -309,16 +309,20 @@ This workflow runs on the set level.
 The main requirement to run Freyja on other pathogens is **the existence of a barcode file for your pathogen of interest**. Currently, barcodes exist for the following organisms:
 
 - SARS-CoV-2 (default)
-- FLU-B-VIC
-- H1N1
-- H3N2
-- H5Nx-cattle
-- H5NX
-- MEASLESN450
-- MEASLESgenome
 - MPX
+- H5Nx
+- FLU-B-VIC
+- MEASLESgenome
 - RSVa
 - RSVb
+- H5Nx-cattle
+- H1N1
+- H3N2 
+- DENV1 
+- DENV2 
+- DENV3
+- DENV4 
+- MTB
 
 !!! dna "Freyja barcodes for other pathogens"
 
@@ -335,6 +339,10 @@ There are two ways to run [**Freyja_FASTQ_PHB**](freyja.md#freyja_fastq) for non
 
 When using the `freyja_pathogen` flag, the user must set the optional `update_db` flag to _true_, so that the latest version of the barcode file is automatically downloaded by Freyja.
 
+!!! warning 
+
+    When using `depth_cutoff` and `freyja_pathogen` the only pathogens currently functional are MPX, MEASLESgenome, and H5Nx-cattle. See the [pathogen configuration.](https://github.com/andersen-lab/Freyja/blob/v2.0.3/freyja/data/pathogen_config.yml). Lineage files for other pathogens are not yet implemented. This can be circumvented by supplying the correct barcode file. See providing the appropriate barcode file.
+    
 !!! caption "Figure 2:  Optional input for Freyja_FASTQ_PHB to provide the pathogen to be used by Freyja"
     ##### Figure 2 { #figure2 }
     ![Terra workflow inputs table showing the optional freyja_pathogen string variable for the freyja task, with an empty input value field.](../../assets/figures/Freyja_figure2.png)
@@ -343,13 +351,19 @@ Allowed options:
 
 - SARS-CoV-2 (default)
 - MPX
-- H1N1pdm
-- H5NX
+- H5Nx
 - FLU-B-VIC
-- MEASLESN450
 - MEASLESgenome
 - RSVa
 - RSVb
+- H5Nx-cattle
+- H1N1
+- H3N2 
+- DENV1 
+- DENV2 
+- DENV3
+- DENV4 
+- MTB
 
 !!! warning
 
