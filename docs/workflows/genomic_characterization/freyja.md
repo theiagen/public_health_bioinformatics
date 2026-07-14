@@ -339,7 +339,7 @@ There are two ways to run [**Freyja_FASTQ_PHB**](freyja.md#freyja_fastq) for non
 
 When using the `freyja_pathogen` flag, the user must set the optional `update_db` flag to _true_, so that the latest version of the barcode file is automatically downloaded by Freyja.
 
-!!! warning 
+!!! warning
 
     When using `depth_cutoff` and `freyja_pathogen` the only pathogens currently functional are MPX, MEASLESgenome, and H5Nx-cattle. See the [pathogen configuration.](https://github.com/andersen-lab/Freyja/blob/v2.0.3/freyja/data/pathogen_config.yml). Lineage files for other pathogens are not yet implemented. This can be circumvented by supplying the correct barcode file. See providing the appropriate barcode file.
     
