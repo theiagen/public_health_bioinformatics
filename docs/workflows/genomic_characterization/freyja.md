@@ -317,11 +317,11 @@ The main requirement to run Freyja on other pathogens is **the existence of a ba
 - RSVb
 - H5Nx-cattle
 - H1N1
-- H3N2 
-- DENV1 
-- DENV2 
+- H3N2
+- DENV1
+- DENV2
 - DENV3
-- DENV4 
+- DENV4
 - MTB
 
 !!! dna "Freyja barcodes for other pathogens"
