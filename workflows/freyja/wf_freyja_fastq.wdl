@@ -79,7 +79,7 @@ workflow freyja_fastq {
         samplename = samplename,
         est_genome_length = get_fasta_genome_size.fasta_length
     }
-    if (read_qc_trim){
+    if (read_qc_trim) {
       call read_qc_ont.read_QC_trim_ont {
         input:
           samplename = samplename,
@@ -98,7 +98,7 @@ workflow freyja_fastq {
       input:
         samplename = samplename,
         reference = reference_genome,
-        query1 = select_first([read_QC_trim_ont.read1_clean,read1]),
+        query1 = select_first([read_QC_trim_ont.read1_clean, read1]),
         output_sam = true,
         mode = "map-ont",
         long_read_flags = false
