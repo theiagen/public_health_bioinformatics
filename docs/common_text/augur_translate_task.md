@@ -5,7 +5,7 @@ fragment: true
 ??? task "`augur translate`: Translate Nucleotide Sequences"
     The `augur translate` command translates nucleotide sequences of nodes in a phylogeny to amino acids based on annotated features in the required `reference_genbank` input.
 
-    !!! techdetails "Augur `translate` Technical Details"        
+    !!! techdetails "Augur `translate` Technical Details"  
         |  | Links |
         | --- | --- |
         | Task | [task_augur_translate.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/augur/task_augur_translate.wdl) |

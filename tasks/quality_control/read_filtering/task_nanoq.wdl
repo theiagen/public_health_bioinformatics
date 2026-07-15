@@ -4,7 +4,7 @@ task nanoq {
   input {
     File read1 # intended for ONT data only
     String samplename
-    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/nanoq:0.9.0--hec16e2b_1"
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/nanoq:0.10.0--hc1c3326_4"
     Int disk_size = 100
     Int max_read_length = 100000
     Int min_read_length = 500
@@ -17,10 +17,15 @@ task nanoq {
     # capture date and version
     nanoq --version | grep nanoq | tee VERSION
 
-    nanoq -i ~{read1} --min-len ~{min_read_length} --max-len ~{max_read_length} --min-qual ~{min_read_qual} --max-qual ~{max_read_qual} -o ~{samplename}_read1.fastq.gz
+    nanoq -i ~{read1} --min-len ~{min_read_length} --max-len ~{max_read_length} --min-qual ~{min_read_qual} --max-qual ~{max_read_qual} -o ~{samplename}_read1.fastq.gz --json -r ~{samplename}_summary_report.json
+
+    echo "DEBUG: Metrics of filtered reads..."
+    cat ~{samplename}_summary_report.json
+
   >>>
   output {
     File filtered_read1 = "${samplename}_read1.fastq.gz"
+    File summary_report = "${samplename}_summary_report.json"
     String version = read_string("VERSION")
   }
   runtime {

@@ -12,7 +12,7 @@ fragment: true
 
 {{ include_md("common_text/metabuli_task.md", indent=4, condition="theiacov") }}
 <!-- endif -->
-  
+
 <!-- if: theiaprok -->
     !!! dna "A note on estimated genome length and Rasusa"
 
