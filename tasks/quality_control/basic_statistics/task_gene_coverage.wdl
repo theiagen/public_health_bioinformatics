@@ -48,6 +48,22 @@ task gene_coverage {
     mv COVERAGE_STATS.tsv ~{samplename}.coverage_stats.tsv
     ~{if defined(vcf) then "mv GENE_VARIANTS.vcf ~{samplename}.genes.vcf" else ""}
 
+    # annotate the protein-level consequences of variants overlapping the query genes;
+    # this requires a reference GBFF (coding sequences), a VCF (variants) and query
+    # genes, so it only runs when all three are provided. Kept non-fatal so an
+    # annotation failure never discards the coverage outputs above.
+    if ~{if defined(reference_gbff) && defined(vcf) && defined(query_genes) then "true" else "false"}; then
+      python3 /usr/bin/variant_annotation.py \
+        --vcf ~{vcf} \
+        --reference_gbff ~{reference_gbff} \
+        --query_genes ~{query_genes} \
+        --feature_type ~{feature_type} \
+        --feature_qualifier ~{feature_qualifier} \
+        ~{if exact_match then "--exact_match" else ""} \
+        --output ~{samplename}.variant_annotations.txt \
+        || echo "WARNING: variant_annotation.py failed; continuing without a variant annotation report"
+    fi
+
     # deprecated outputs v4.2.0
     python3 <<CODE
     import json
@@ -69,6 +85,7 @@ task gene_coverage {
     Map[String, Float] depth_by_gene = read_json("DEPTH_DICT.json")
     Map[String, Float] breadth_by_gene = read_json("COVERAGE_DICT.json")
     File? gene_vcf = "~{samplename}.genes.vcf"
+    File? variant_annotations = "~{samplename}.variant_annotations.txt"
     # deprecated v4.2.0
     Float sc2_s_gene_depth = read_string("SC2_S_GENE_DEPTH")
     Float sc2_s_gene_coverage = read_string("SC2_S_GENE_COVERAGE")
