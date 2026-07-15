@@ -342,7 +342,7 @@ When using the `freyja_pathogen` flag, the user must set the optional `update_db
 !!! warning
 
     When using `depth_cutoff` and `freyja_pathogen` the only pathogens currently functional are MPX, MEASLESgenome, and H5Nx-cattle. See the [pathogen configuration.](https://github.com/andersen-lab/Freyja/blob/v2.0.3/freyja/data/pathogen_config.yml). Lineage files for other pathogens are not yet implemented. This can be circumvented by supplying the correct barcode file. See providing the appropriate barcode file.
-    
+
 !!! caption "Figure 2:  Optional input for Freyja_FASTQ_PHB to provide the pathogen to be used by Freyja"
     ##### Figure 2 { #figure2 }
     ![Terra workflow inputs table showing the optional freyja_pathogen string variable for the freyja task, with an empty input value field.](../../assets/figures/Freyja_figure2.png)
