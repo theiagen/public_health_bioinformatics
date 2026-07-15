@@ -309,5 +309,6 @@ workflow medea_magic {
     Map[String, Float]? gene_coverage_depth_by_gene = gene_coverage.depth_by_gene
     Map[String, Float]? gene_coverage_breadth_by_gene = gene_coverage.breadth_by_gene
     File? gene_coverage_gene_vcf = gene_coverage.gene_vcf
+    File? gene_coverage_variant_annotations = gene_coverage.variant_annotations
   }
 }
