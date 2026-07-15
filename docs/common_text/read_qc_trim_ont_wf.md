@@ -16,7 +16,7 @@ fragment: true
 <!-- if: theiaprok -->
     !!! dna "A note on estimated genome length and Rasusa"
 
-        Previously, `genome_length` was defaulted to 5 Mb, which caused Rasusa to run on every sample. That default has been removed, so Rasusa is now skipped unless the user explicitly requests downsampling by setting one of the following: `genome_length`, `rasusa_num_bases`, `rasusa_fraction_of_reads`, or `rasusa_num_reads`. To downsample by coverage, please provide the genome length of your expected taxa. Downsampling is beneficial when coverage exceeds ~150x as this can increase assembly time, computational costs, and can introduce errors. 
+        Rasusa is now skipped unless the user explicitly requests downsampling by setting one of the following: `genome_length`, `rasusa_num_bases`, `rasusa_fraction_of_reads`, or `rasusa_num_reads`. To downsample by coverage, please provide the genome length of your expected taxa. Downsampling is beneficial when coverage exceeds ~150x as this can increase assembly time, computational costs, and can introduce errors. 
 
 {{ include_md("common_text/rasusa_task.md", indent=4, condition="ont") }}
 
@@ -27,7 +27,7 @@ fragment: true
 
 !!! dna "Nanoplot and genome length"
 
-    If `genome_length` is not provided Nanoplot will utilize the Quast assembly length to calculate the estimated coverage. 
+    If `genome_length` is not provided Nanoplot will use the Quast assembly length to calculate the estimated coverage. 
 
 {{ include_md("common_text/nanoplot_task.md", indent=4, condition="ont") }}
 
