@@ -21,11 +21,13 @@ task gatk_variants {
     # obtain version
     gatk --version | grep GATK | grep -Po "v[^ ]+$" | tee VERSION
 
-    # index reference FASTA
-    samtools faidx ~{reference_genome}
 
-    # create reference dictionary
-    gatk CreateSequenceDictionary -R ~{reference_genome}
+    # create reference index and dictionary (have to symlink in case the source is not writeable)
+    local_ref=$(basename ~{reference_genome})
+    ln -s ~{reference_genome} ${local_ref}
+    # index reference FASTA
+    samtools faidx ${local_ref}
+    gatk CreateSequenceDictionary -R ${local_ref}
 
     # call HaplotypeCaller to generate an intermediate GVCF output depicting 
     # single-nucleotide polymorphisms (SNPs) and structural variants (SVs)
@@ -33,7 +35,7 @@ task gatk_variants {
     gatk \
       --java-options "-Xms~{memory}G -Xmx~{memory}G" \
       HaplotypeCaller \
-      -R ~{reference_genome} \
+      -R ${local_ref} \
       -I ~{bam} \
       -O ~{samplename}_haplotypecall.g.vcf.gz \
       -ploidy ~{ploidy} \
@@ -46,7 +48,7 @@ task gatk_variants {
     # there is no need to specify ploidy for non-diploid organisms."
     gatk --java-options "-Xmx~{memory}G" \
       GenotypeGVCFs \
-      -R ~{reference_genome} \
+      -R ${local_ref} \
       -V ~{samplename}_haplotypecall.g.vcf.gz \
       ~{if defined(intervals_file) then "-L ~{intervals_file}" else ""} \
       -O ~{samplename}_genotype.g.vcf.gz \
