@@ -12,17 +12,17 @@ task cauris_cladetyper {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0"
     Int memory = 16
 
-    String ref_clade1 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.fasta"
+    File ref_clade1 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.fasta"
     String ref_clade1_annotated = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.gbff"
-    String ref_clade2 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.fasta"
+    File ref_clade2 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.fasta"
     String ref_clade2_annotated = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.gbff"
-    String ref_clade3 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.fasta"
+    File ref_clade3 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.fasta"
     String ref_clade3_annotated = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.gbff"
-    String ref_clade4 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.fasta"
+    File ref_clade4 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.fasta"
     String ref_clade4_annotated = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.gbff"
-    String ref_clade5 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.fasta"
+    File ref_clade5 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.fasta"
     String ref_clade5_annotated = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.gbff"
-    String ref_clade6 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade6_GCA_032714025.1_ASM3271402v1_genomic.fasta"
+    File ref_clade6 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade6_GCA_032714025.1_ASM3271402v1_genomic.fasta"
     String? ref_clade6_annotated
     }
   command <<<
@@ -44,7 +44,7 @@ task cauris_cladetyper {
     sort -k8 -t ',' "~{samplename}_matrix.csv" | head -2 | tail -n-1 | awk -F',' '{print$8}' > MIN_DISTANCE
 
     # create empty files for clade reference and clade type
-    echo "None" > CLADEREF
+    echo "None" > CLADEANNOTATION
     echo "" > CLADETYPE
 
     python3 <<CODE
@@ -79,7 +79,7 @@ task cauris_cladetyper {
                       "~{ref_clade4}": ["~{if defined(ref_clade4_annotated) then ref_clade4_annotated else 'None'}", "Clade4"],
                       "~{ref_clade5}": ["~{if defined(ref_clade5_annotated) then ref_clade5_annotated else 'None'}", "Clade5"],
                       "~{ref_clade6}": ["~{if defined(ref_clade6_annotated) then ref_clade6_annotated else 'None'}", "Clade6"]}
-    claderef, cladetype = "None", ""
+    cladeann, cladetype = "None", ""
     for ref, annotation in ref2annotation.items():
         if ref.endswith('/'):
             ref = ref[:-1]  # remove trailing slash if present
@@ -87,14 +87,14 @@ task cauris_cladetyper {
         edit_ref1 = strip_extensions(edit_ref0, gzip_exts)
         edit_ref2 = strip_extensions(edit_ref1, fa_exts)
         if top_clade == edit_ref2:
-            claderef = annotation[0]
+            cladeann = annotation[0]
             cladetype = annotation[1]
             cladefa = ref
             break
 
     # report top clade
-    with open("CLADEREF", 'w') as claderef_file:
-        claderef_file.write(claderef)
+    with open("CLADEANNOTATION", 'w') as cladeann_file:
+        cladeann_file.write(cladeann)
     with open("CLADETYPE", 'w') as cladetype_file:
         cladetype_file.write(cladetype)
     with open("CLADEFASTA", 'w') as cladefasta_file:
@@ -104,8 +104,8 @@ task cauris_cladetyper {
   output {
     String gambit_version = read_string("VERSION")
     String gambit_cladetype = read_string("CLADETYPE")
-    String annotated_reference = read_string("CLADEREF")
-    String assembly_reference = read_string("CLADEFASTA")
+    String annotated_reference = read_string("CLADEANNOTATION")
+    File assembly_reference = read_string("CLADEFASTA")
     String gambit_cladetyper_docker_image = docker
   }
   runtime {
