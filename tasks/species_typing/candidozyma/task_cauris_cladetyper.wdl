@@ -12,26 +12,33 @@ task cauris_cladetyper {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0"
     Int memory = 16
 
-    File ref_clade1 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.fasta"
+    String ref_clade1 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.fasta"
     String ref_clade1_annotated = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.gbff"
-    File ref_clade2 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.fasta"
+    String ref_clade2 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.fasta"
     String ref_clade2_annotated = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.gbff"
-    File ref_clade3 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.fasta"
+    String ref_clade3 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.fasta"
     String ref_clade3_annotated = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.gbff"
-    File ref_clade4 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.fasta"
+    String ref_clade4 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.fasta"
     String ref_clade4_annotated = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.gbff"
-    File ref_clade5 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.fasta"
+    String ref_clade5 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.fasta"
     String ref_clade5_annotated = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.gbff"
-    File ref_clade6 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade6_GCA_032714025.1_ASM3271402v1_genomic.fasta"
+    String ref_clade6 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade6_GCA_032714025.1_ASM3271402v1_genomic.fasta"
     String? ref_clade6_annotated
     }
+    # localize actual files
+    File ref_clade1_file = ref_clade1
+    File ref_clade2_file = ref_clade2
+    File ref_clade3_file = ref_clade3
+    File ref_clade4_file = ref_clade4
+    File ref_clade5_file = ref_clade5
+    File ref_clade6_file = ref_clade6
   command <<<
     set -euo pipefail
 
     gambit --version | tee VERSION
 
     # create gambit signature file for six clades + input assembly
-    gambit signatures create -o my-signatures.h5 -k ~{kmer_size} -p ATGAC ~{ref_clade1} ~{ref_clade2} ~{ref_clade3} ~{ref_clade4} ~{ref_clade5} ~{ref_clade6} ~{assembly_fasta}
+    gambit signatures create -o my-signatures.h5 -k ~{kmer_size} -p ATGAC ~{ref_clade1_file} ~{ref_clade2_file} ~{ref_clade3_file} ~{ref_clade4_file} ~{ref_clade5_file} ~{ref_clade6_file} ~{assembly_fasta}
     # calculate distance matrix for all seven signatures
     gambit dist --qs my-signatures.h5 --square -o ~{samplename}_matrix.csv
 
