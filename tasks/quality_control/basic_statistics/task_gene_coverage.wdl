@@ -85,7 +85,7 @@ task gene_coverage {
     Map[String, Float] depth_by_gene = read_json("DEPTH_DICT.json")
     Map[String, Float] breadth_by_gene = read_json("COVERAGE_DICT.json")
     File? gene_vcf = "~{samplename}.genes.vcf"
-    File? variant_annotations = "~{samplename}.variant_annotations.txt"
+    String? variant_annotations = read_string("~{samplename}.variant_annotations.txt")
     # deprecated v4.2.0
     Float sc2_s_gene_depth = read_string("SC2_S_GENE_DEPTH")
     Float sc2_s_gene_coverage = read_string("SC2_S_GENE_COVERAGE")
