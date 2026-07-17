@@ -6,6 +6,10 @@
   --md-primary-fg-color: #116eb7;
   --md-accent-bg-color: #ffffff;
   --md-accent-fg-color: #1da74a;
+  /* subtle table row treatments */
+  --table-stripe: rgba(0, 0, 0, 0.02);
+  --table-row-hover: rgba(0, 0, 0, 0.045);
+  --table-header-hover: #f5f7fa;
   th {
     background: #ffffff;
     color: #262626;
@@ -13,7 +17,8 @@
   div.searchable-table input.table-search-input {
     background-color: #ffffff;
     color: #000000;
-    border: 1px solid #e0e1e1;
+    /* match the table/admonition border color */
+    border: 1px solid var(--md-default-fg-color--lightest);
   }
   div.searchable-table input.table-search-input::placeholder {
     color: #888888;
@@ -27,20 +32,28 @@
   --md-primary-fg-color: #262626;
   --md-accent-bg-color: #ffffff;
   --md-accent-fg-color: #1da74a;
+  /* subtle table row treatments */
+  --table-stripe: rgba(255, 255, 255, 0.025);
+  --table-row-hover: rgba(255, 255, 255, 0.055);
+  --table-header-hover: #2b303b;
   th {
-    background: #1f2029;
+    /* match the table body background so the sticky header blends in
+       (consistent with light mode, where both are the page background) */
+    background: var(--md-default-bg-color);
     color: #ffffff;
   }
   div.searchable-table input.table-search-input {
     background-color: #1f2029;
     color: #ffffff;
-    border: 1px solid #373b40;
+    /* match the table/admonition border color */
+    border: 1px solid var(--md-default-fg-color--lightest);
   }
   div.searchable-table input.table-search-input::placeholder {
     color: #bbbbbb;
     font-style: italic;
   }
 }
+
 
 /* CUSTOM ADMONITIONS */
 
@@ -203,32 +216,257 @@
 
 /* TABLE FORMATTING */
 
-/* add a scrollbar and resizable columns in tables */
-table {
-  overflow-y: scroll;
-  max-height: 500px;
-  max-width: 100vw;
-  display: block;
+/*
+ * Base appearance for ALL content tables (searchable or not). Plain tables keep
+ * essentially their original look: scrollable, sticky header, and NO divider
+ * line under the header and NO zebra striping. The richer treatment (scroll
+ * container border, header divider, zebra striping, resizable columns) is added
+ * by javascripts/table-resize.js and layered on only for `.searchable-table`
+ * tables further down.
+ */
+.md-typeset table:not([class]) {
+  display: table;
 }
-th {
+.md-typeset table:not([class]) th {
   position: sticky;
   top: 0;
-  resize: horizontal;
-  overflow: auto;
+  z-index: 2;
+  transition: background-color 120ms ease;
 }
-td {
-  word-break: break-all;
+/* center every cell vertically so rows read evenly */
+.md-typeset table:not([class]) th,
+.md-typeset table:not([class]) td {
+  vertical-align: middle;
+}
+.md-typeset table:not([class]) td {
   overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+/*
+ * ---- resizable columns: ALL tables ----
+ * table-resize.js wraps every content table in a `.md-table-wrap` scroll
+ * container so its columns can be resized. These rules are purely functional
+ * (scroll + fixed layout) and deliberately carry no border/striping, so plain
+ * tables keep their original look.
+ */
+
+/* scroll container added by table-resize.js */
+.md-typeset .md-table-wrap {
+  /*
+   * Cap the height at (almost) the window height so short/medium tables show in
+   * full and only genuinely tall tables scroll internally. Every wrapped table
+   * gets an exterior border.
+   */
+  max-height: 90vh;
+  /* span the full available width */
+  width: 100%;
+  max-width: 100%;
+  overflow: auto;
+  position: relative;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.2rem;
+  /* thin scrollbars, equal in both directions (native, so they stay symmetric) */
+  scrollbar-width: thin;
+}
+
+/*
+ * The wrapped table fills the container and lays out responsively: `width: 100%`
+ * with auto layout means it always fills the CURRENT viewport, and the per-cell
+ * `min-width` below means a horizontal scrollbar only appears once columns would
+ * have to shrink past that threshold. (A manual column drag switches the table
+ * to fixed layout with explicit widths via table-resize.js.)
+ */
+ .md-typeset .md-table-wrap > table:not([class]) {
+   display: table;
+   width: 100%;
+   max-height: none;
+   overflow: visible;
+   margin: 0;
+   border: 0;
+   border-radius: 0;
+   box-shadow: none;
+   table-layout: auto;
+ }
+
+ .md-typeset .md-table-wrap > table[data-manual] {
+   table-layout: fixed;
+ }
+
+/*
+ * Minimum column width. Columns shrink to fill the viewport down to this width;
+ * below it a horizontal scrollbar appears instead. Once a table is manually
+ * resized it may go down to the true minimum used while dragging.
+ */
+.md-typeset .md-table-wrap > table:not([class]) th,
+.md-typeset .md-table-wrap > table:not([class]) td {
+  min-width: 5.5rem; /* ~90px = 1.5x the 60px manual-drag minimum */
+}
+.md-typeset .md-table-wrap > table:not([class])[data-manual] th,
+.md-typeset .md-table-wrap > table:not([class])[data-manual] td {
+  min-width: 3.75rem; /* 60px */
+}
+
+/*
+ * ---- richer visual treatment: searchable tables only ----
+ * Border, header divider line, padding and zebra striping are applied only to
+ * the large `.searchable-table` tables; plain tables stay unstyled.
+ */
+/* the large searchable tables keep a fixed, more compact height cap */
+.md-typeset .searchable-table .md-table-wrap {
+  max-height: 32rem;
+}
+
+/* header cells: padded, with a faint divider line */
+.md-typeset .searchable-table .md-table-wrap > table:not([class]) th {
+  padding: 0.5em 0.9em;
+  font-weight: 700;
+  text-align: left;
+  box-shadow: inset 0 -1px 0 var(--md-default-fg-color--lightest);
+}
+.md-typeset .searchable-table .md-table-wrap > table:not([class]) td {
+  padding: 0.45em 0.9em;
+}
+
+/* subtle zebra striping + row hover (searchable tables only) */
+.md-typeset .searchable-table .md-table-wrap > table:not([class]) tbody tr:nth-child(even) {
+  background-color: var(--table-stripe);
+}
+.md-typeset .searchable-table .md-table-wrap > table:not([class]) tbody tr:hover {
+  background-color: var(--table-row-hover);
+}
+
+/*
+ * Column resize handle added by table-resize.js: a grab zone on the header
+ * cell's right edge with the native col-resize cursor. Its `::after` reproduces
+ * the browser's original `resize: horizontal` grip — a small cluster of diagonal
+ * lines in the bottom-right corner of the header cell.
+ */
+.col-resize-handle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8px;
+  height: 100%;
+  z-index: 3;
+  cursor: col-resize;
+  touch-action: none;
+  user-select: none;
+}
+.col-resize-handle::after {
+  content: "";
+  position: absolute;
+  right: 1px;
+  bottom: 1px;
+  width: 8px;
+  height: 8px;
+  opacity: 0.5;
+  /* diagonal grip lines, clipped to the bottom-right corner triangle */
+  background: repeating-linear-gradient(
+    135deg,
+    transparent 0 1.5px,
+    var(--md-default-fg-color--light) 1.5px 2.5px
+  );
+  clip-path: polygon(100% 0, 0 100%, 100% 100%);
+  transition: opacity 120ms ease;
+}
+.col-resize-handle:hover::after,
+body.col-resizing .col-resize-handle::after {
+  opacity: 0.9;
+}
+
+/* while dragging: consistent cursor and no accidental text selection */
+body.col-resizing {
+  cursor: col-resize !important;
+  user-select: none !important;
+}
+
+/*
+ * Table sorting affordance: sortable headers get a pointer cursor and a
+ * subtle hover treatment. The active sort state is still indicated by
+ * tablesort without adding width-consuming icons to the header text.
+ */
+.md-typeset table:not([class]) th {
+  cursor: pointer;
+}
+
+.md-typeset table:not([class]) th:hover {
+  /*background-color: var(--table-row-hover) !important;
+  transition: background-color 120ms ease;*/
+  background-color: var(--table-header-hover) !important;
+}
+
+/* Resize handles should always look like resize controls */
+.md-typeset .col-resize-handle {
+  cursor: col-resize;
+}
+
+/* toolbar row that holds the reset button + search box, above the table */
+div.searchable-table .table-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  /*
+   * Use padding (not margin) for the top gap: inside a content tab the toolbar
+   * is the first flow child, so a top margin would collapse out of the tab and
+   * the controls would overlap the tab's divider line. Padding never collapses.
+   */
+  padding-top: 0.7rem;
+  margin-bottom: 0.6rem;
 }
 
 /* Base styles for the search box */
 div.searchable-table input.table-search-input {
-  width: 25%;
-  padding: 10px;
-  margin-bottom: 12px;
-  font-size: 12px;
+  width: 100%;
+  max-width: 20rem;
+  padding: 0.5rem 0.7rem;
+  margin: 0;
+  /* match the table body font size (theme default for content tables) */
+  font-size: 0.64rem;
   box-sizing: border-box;
-  border-radius: 2px;
+  border-radius: 0.2rem;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+div.searchable-table input.table-search-input:focus {
+  outline: none;
+  border-color: var(--md-primary-fg-color);
+  box-shadow: 0 0 0 2px var(--md-primary-fg-color--transparent, rgba(17, 110, 183, 0.2));
+}
+
+/*
+ * Small, unobtrusive reset button (clears search + sort order). It is pinned to
+ * the far right of the toolbar (so it stays anchored to the right edge of the
+ * table as the window resizes), matches the search box height, and is hidden by
+ * table-search.js until a search or sort is active.
+ */
+div.searchable-table .table-reset-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  align-self: stretch; /* match the search box height */
+  margin-left: auto; /* push to the far right of the table */
+  width: 1.9rem;
+  padding: 0;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.2rem;
+  background-color: transparent;
+  color: var(--md-default-fg-color--light);
+  cursor: pointer;
+  transition: color 120ms ease, border-color 120ms ease, background-color 120ms ease;
+}
+div.searchable-table .table-reset-button.is-hidden {
+  display: none;
+}
+div.searchable-table .table-reset-button:hover {
+  color: var(--md-primary-fg-color);
+  border-color: var(--md-primary-fg-color);
+  background-color: var(--md-default-fg-color--lightest);
+}
+div.searchable-table .table-reset-button svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  fill: currentColor;
 }
 
 /* modify heading level 5 appearance */
