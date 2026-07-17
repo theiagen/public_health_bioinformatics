@@ -301,6 +301,7 @@ extra_javascript:
   - javascripts/table-sort.js
   - javascripts/table-search.js
   - javascripts/table-resize.js
+  - javascripts/toggle-animate.js
 
 extra_css:
   - stylesheets/extra.css

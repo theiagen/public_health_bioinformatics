@@ -1,3 +1,77 @@
+/* ============================================================================
+ * READING THIS FILE — a primer for non-CSS developers
+ * ============================================================================
+ *
+ * This is the documentation site's custom stylesheet. It is listed in the site
+ * configuration (the `extra_css` setting) so the browser loads it AFTER the
+ * theme's built-in styles — meaning anything here overrides or adds to the
+ * Material/Zensical defaults. Its companion JavaScript lives in
+ * ../javascripts/ (table-resize.js, table-search.js, table-sort.js); those
+ * scripts create most of the wrapper elements and classes the rules below
+ * target (e.g. .md-table-wrap, .table-scrolltop, .col-resize-handle).
+ *
+ * ---- How to read a rule ----
+ *     selector {
+ *       property: value;      <- one "declaration"; always ends with ;
+ *     }
+ * The selector picks WHICH elements to style; the block sets HOW they look.
+ *
+ * ---- Selectors you'll see here ----
+ *     th, td, table     an HTML element, by tag name
+ *     .searchable-table  any element with class="searchable-table" (leading dot)
+ *     [data-manual]      any element carrying that HTML attribute
+ *     :root              the whole page (a common home for global variables)
+ *     A B   (a space)    a B anywhere inside an A            (descendant)
+ *     A > B              a B that is a DIRECT child of an A   (child)
+ *     A, B  (a comma)    applies to A and to B  (grouping, avoids repetition)
+ *     :not([class])      elements that have NO class attribute (see note)
+ *     :hover / :focus    a STATE: mouse is over it / the field is focused
+ *     ::before / ::after a generated sub-element (used here for icons/accents)
+ *
+ *   Why `table:not([class])`? The docs contain two kinds of tables: plain
+ *   content tables written in Markdown (which have no class) and tables the
+ *   tooling generates for layout — chiefly the line-number tables that wrap
+ *   code blocks (<table class="highlighttable">). Styling only the class-less
+ *   ones keeps all this table formatting off those code listings. (The big
+ *   searchable tables are still class-less <table>s — the "searchable-table"
+ *   class sits on a <div> that WRAPS the table, so those are styled, not
+ *   skipped.)
+ *
+ * ---- Custom properties ("CSS variables") ----
+ *     --table-header-hover: #f5f7fa;          defines a reusable value
+ *     background: var(--table-header-hover);  uses it
+ *     var(--x, blue)                          uses --x, or blue if --x is unset
+ *   Names beginning with --md- come from the Material theme itself. A variable
+ *   defined inside a selector only applies to that selector's elements.
+ *
+ * ---- Light vs. dark mode ----
+ *     [data-md-color-scheme="light"] { ... }   applies in light mode
+ *     [data-md-color-scheme="slate"] { ... }   applies in dark mode
+ *   The theme sets that attribute on the page; we redefine colors inside each
+ *   so the site reads well in both themes.
+ *
+ * ---- Units ----
+ *     px  fixed pixels                 rem  multiples of the base font size
+ *     em  multiples of THIS element's  %    relative to the parent/container
+ *         font size                    vh   1% of the browser window height
+ *
+ * ---- Colors ----
+ *     #rrggbb    red / green / blue, fully opaque
+ *     #rrggbbaa  the same, plus a transparency byte (00 = clear, ff = solid);
+ *                these 8-digit ones are flagged with an inline comment below.
+ *
+ * ---- !important ----
+ *   Forces a value to win over competing rules (including the theme's). Used
+ *   sparingly, only where the theme would otherwise override us.
+ *
+ * ---- Map of this file ----
+ *   1. COLOR SCHEME        light/dark variables, header + search-box colors
+ *   2. CUSTOM ADMONITIONS  the colored "callout" boxes (dna, task, caption...)
+ *   3. TABLE FORMATTING    the searchable / sortable / resizable data tables
+ *   4. IMAGE CAPTIONS      figure + caption layout
+ * ============================================================================ */
+
+
 /* COLOR SCHEME */
 
 /* Light mode styles */
@@ -7,8 +81,8 @@
   --md-accent-bg-color: #ffffff;
   --md-accent-fg-color: #1da74a;
   /* subtle table row treatments */
-  --table-stripe: rgba(0, 0, 0, 0.02);
-  --table-row-hover: rgba(0, 0, 0, 0.045);
+  --table-stripe: #00000005; /* last 2 digits = transparency */
+  --table-row-hover: #0000000b; /* last 2 digits = transparency */
   --table-header-hover: #f5f7fa;
   th {
     background: #ffffff;
@@ -33,8 +107,8 @@
   --md-accent-bg-color: #ffffff;
   --md-accent-fg-color: #1da74a;
   /* subtle table row treatments */
-  --table-stripe: rgba(255, 255, 255, 0.025);
-  --table-row-hover: rgba(255, 255, 255, 0.055);
+  --table-stripe: #ffffff06; /* last 2 digits = transparency */
+  --table-row-hover: #ffffff0e; /* last 2 digits = transparency */
   --table-header-hover: #2b303b;
   th {
     /* match the table body background so the sticky header blends in
@@ -55,7 +129,18 @@
 }
 
 
-/* CUSTOM ADMONITIONS */
+/* ===== CUSTOM ADMONITIONS =====
+ * "Admonitions" are the colored callout boxes (the note/tip/warning style).
+ * Each block below adds one custom type, always with the same three steps:
+ *   1. store an SVG icon in a variable — the long url('data:image/svg+xml,...')
+ *      is just an image written inline instead of a separate file;
+ *   2. set the box's border color and its title-bar background color;
+ *   3. stamp the icon into the title bar with `mask-image`, which uses the SVG
+ *      as a stencil and fills it with a `background-color` — so one icon shape
+ *      can be shown in any color. (`-webkit-mask-image` is the same thing for
+ *      older Safari/Chrome.)
+ * Doc authors then use a type in Markdown as, e.g.,  `!!! dna "Title"`.
+ */
 
 /* dna admonition */
 :root {
@@ -63,21 +148,22 @@
 }
 .md-typeset .admonition.dna,
 .md-typeset details.dna {
-  border-color: rgb(43, 155, 70);
+  border-color: #2b9b46;
 }
 .md-typeset .dna > .admonition-title,
 .md-typeset .dna > summary {
-  background-color: rgba(43, 155, 70, 0.1);
+  background-color: #2b9b461a; /* last 2 digits = transparency */
 }
 .md-typeset .dna > .admonition-title::before,
 .md-typeset .dna > summary::before {
   background-color: #1da74a;
   -webkit-mask-image: var(--md-admonition-icon--dna);
   mask-image: var(--md-admonition-icon--dna);
+  transition: transform 200ms ease;
 }
-.md-typeset .dna > h5 {
-  /* hides the header, but allows it to appear in the sidebar TOC */
-  display: none;
+
+.md-typeset details.dna[open] > summary::before {
+  transform: rotate(90deg);
 }
 
 /* dna_blue admonition*/
@@ -86,21 +172,22 @@
 }
 .md-typeset .admonition.dna_blue,
 .md-typeset details.dna_blue {
-  border-color: rgb(43, 120, 155);
+  border-color: #2b789b;
 }
 .md-typeset .dna_blue > .admonition-title,
 .md-typeset .dna_blue > summary {
-  background-color: rgba(43, 120, 155, 0.1);
+  background-color: #2b789b1a; /* last 2 digits = transparency */
 }
 .md-typeset .dna_blue > .admonition-title::before,
 .md-typeset .dna_blue > summary::before {
-  background-color: rgb(43, 105, 155);
+  background-color: #2b699b;
   -webkit-mask-image: var(--md-admonition-icon--dna_blue);
   mask-image: var(--md-admonition-icon--dna_blue);
+  transition: transform 200ms ease;
 }
-.md-typeset .dna_blue > h5 {
-  /* hides the header, but allows it to appear in the sidebar TOC */
-  display: none;
+
+.md-typeset details.dna_blue[open] > summary::before {
+  transform: rotate(90deg);
 }
 
 /* techdetails admonition */
@@ -109,7 +196,7 @@
 }
 .md-typeset .admonition.techdetails,
 .md-typeset details.techdetails {
-  border-color: rgb(70, 18, 116);
+  border-color: #461274;
 }
 .md-typeset .admonition.techdetails {
   max-width: auto;
@@ -117,11 +204,11 @@
 }
 .md-typeset .techdetails > .admonition-title,
 .md-typeset .techdetails > summary {
-  background-color: rgba(132, 89, 168, 0.1);
+  background-color: #8459a81a; /* last 2 digits = transparency */
 }
 .md-typeset .techdetails > .admonition-title::before,
 .md-typeset .techdetails > summary::before {
-  background-color: rgb(70, 18, 116);
+  background-color: #461274;
   -webkit-mask-image: var(--md-admonition-icon--techdetails);
   mask-image: var(--md-admonition-icon--techdetails);
 }
@@ -132,21 +219,35 @@
 }
 .md-typeset .admonition.toggle,
 .md-typeset details.toggle {
-  border-color: rgba(255, 255, 255, 0);
+  border-color: #ffffff00; /* last 2 digits = transparency */
 }
 .md-typeset .toggle > .admonition-title,
 .md-typeset .toggle > summary {
-  background-color: rgba(255, 255, 255, 0);
+  background-color: #ffffff00; /* last 2 digits = transparency */
 }
 .md-typeset .toggle > .admonition-title::before,
 .md-typeset .toggle > summary::before {
-  background-color: rgb(125, 125, 125);
+  background-color: #7d7d7d;
   -webkit-mask-image: var(--md-admonition-icon--toggle);
   mask-image: var(--md-admonition-icon--toggle);
+  /*
+   * The rotation angle is driven by javascripts/admonition-toggle.js, which adds
+   * 180° on every open/close so the icon keeps spinning the SAME way (clockwise)
+   * instead of reversing. It writes the running angle into --toggle-rotation on
+   * the <details>; we read it here. Static `!!! toggle` boxes have no script and
+   * no variable, so they fall back to 0° (upright).
+   *
+   * Note: the transition lives on the `.toggle-animate` rule below, NOT here, so
+   * the script can set each box's STARTING angle instantly (no spin on load) and
+   * only turn animation on afterwards.
+   */
+  transform: rotate(var(--toggle-rotation, 0deg));
 }
-.md-typeset .toggle > h5 {
-  /* hides the header, but allows it to appear in the sidebar TOC */
-  display: none;
+/* the script adds this class right after setting a box's initial angle, so the
+   starting orientation (upright when closed, flipped when open) never animates
+   on page load; only later open/close clicks animate */
+.md-typeset details.toggle.toggle-animate > summary::before {
+  transition: transform 200ms ease;
 }
 
 /* task admonition */
@@ -155,21 +256,22 @@
 }
 .md-typeset .admonition.task,
 .md-typeset details.task {
-  border-color: rgba(255, 255, 255, 0);
+  border-color: #ffffff00; /* last 2 digits = transparency */
 }
 .md-typeset .task > .admonition-title,
 .md-typeset .task > summary {
-  background-color: rgba(255, 255, 255, 0);
+  background-color: #ffffff00; /* last 2 digits = transparency */
 }
 .md-typeset .task > .admonition-title::before,
 .md-typeset .task > summary::before {
-  background-color: rgb(125, 125, 125);
+  background-color: #7d7d7d;
   -webkit-mask-image: var(--md-admonition-icon--task);
   mask-image: var(--md-admonition-icon--task);
+  transition: transform 200ms ease;
 }
-.md-typeset .task > h5 {
-  /* hides the header, but allows it to appear in the sidebar TOC */
-  display: none;
+
+.md-typeset details.task[open] > summary::before {
+  transform: rotate(120deg);
 }
 
 /* caption admonition */
@@ -178,27 +280,76 @@
 }
 .md-typeset .admonition.caption,
 .md-typeset details.caption {
-  border-color: rgb(135, 142, 143);
+  border-color: #878e8f;
 }
 .md-typeset .caption > .admonition-title,
 .md-typeset .caption > summary {
-  background-color: rgba(72, 119, 127, 0.1);
+  background-color: #48777f1a; /* last 2 digits = transparency */
 }
 .md-typeset .caption > .admonition-title::before,
 .md-typeset .caption > summary::before {
-  background-color: rgb(135, 142, 143);
+  background-color: #878e8f;
   -webkit-mask-image: var(--md-admonition-icon--caption);
   mask-image: var(--md-admonition-icon--caption);
 }
-.md-typeset .caption > h5 {
-  /* hides the header, but allows it to appear in the sidebar TOC */
-  display: none;
+
+/*
+ * These admonitions use a hidden <h5> as their heading so the box still gets a
+ * table-of-contents (TOC) entry. We deliberately do NOT use `display: none`: a
+ * display:none element has no position on the page, so clicking its TOC link
+ * would scroll to the wrong spot. Instead we keep the <h5> in the page but
+ * shrink it to an invisible 1px and pin it to the TOP-LEFT corner of its box
+ * (position: absolute; top: 0). That way a TOC click scrolls to the TOP of the
+ * box — its title bar — instead of the content beneath it.
+ *
+ * The box gets `position: relative` so the h5's "top: 0" means the top of the
+ * box. The theme already offsets heading anchors from the fixed top navigation
+ * via scroll-margin-top (its --md-scroll-margin variable, ~3.6rem), so we reuse
+ * that here; no magic number needed.
+ */
+.md-typeset .dna,
+.md-typeset .dna_blue,
+.md-typeset .toggle,
+.md-typeset .task,
+.md-typeset .caption,
+.md-typeset .tip {
+  position: relative;
+}
+.md-typeset .dna > h5,
+.md-typeset .dna_blue > h5,
+.md-typeset .toggle > h5,
+.md-typeset .task > h5,
+.md-typeset .caption > h5,
+.md-typeset .tip > h5 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0); /* clip the (now off-screen-sized) text so it's invisible */
+  pointer-events: none; /* never intercept clicks meant for the title bar */
+  scroll-margin-top: var(--md-scroll-margin, 3.6rem);
 }
 
-/* tip admonition */
-.md-typeset .tip > h5 {
-  /* hides the header, but allows it to appear in the sidebar TOC */
-  display: none;
+/* modify heading level 5 appearance */
+.md-content h5 {
+  all: unset;
+  /*
+   * These were Sass px2em(...) calls. Sass is a CSS pre-processor whose
+   * functions must be compiled away before the browser sees them; left as-is in
+   * a plain .css file the browser treats them as invalid and silently ignores
+   * the two lines. Converted here to the plain-CSS em values Sass would have
+   * produced against a 16px base: 16/12.8 = 1.25, and 12.8/16 = 0.8.
+   * (em on font-size is relative to the parent; em on margin is relative to
+   * this element's own font-size, so 1.25em here renders as ~16px.)
+   */
+  margin: 1.25em 0;
+  font-weight: 500;
+  font-size: 0.8em;
+  letter-spacing: -0.01em;
 }
 
 /* content width */
@@ -214,23 +365,47 @@
   display: inline-block; /* make the admonition width fit the content */
 }
 
+/* IMAGE CAPTION FORMATTING */
+
+.md-typeset figure {
+  display: table;
+  margin: 0 auto;
+}
+
+.md-typeset figure figcaption {
+  display: table-caption;
+  caption-side: bottom;
+  max-width: none !important;
+  margin: 0.25rem 0.5rem 0 0.5rem !important;
+  line-height: 1.3;
+}
+
+.md-typeset figure figcaption p {
+  text-align: left !important;
+}
+
+
 /* TABLE FORMATTING */
 
 /*
  * Base appearance for ALL content tables (searchable or not). Plain tables keep
- * essentially their original look: scrollable, sticky header, and NO divider
- * line under the header and NO zebra striping. The richer treatment (scroll
- * container border, header divider, zebra striping, resizable columns) is added
- * by javascripts/table-resize.js and layered on only for `.searchable-table`
- * tables further down.
+ * essentially their original look: scrollable, sticky header (a header that
+ * stays pinned in view while you scroll the table), and NO divider line under
+ * the header and NO zebra striping (zebra striping = alternating row shading).
+ * The richer treatment (scroll container border, header divider, zebra
+ * striping, resizable columns) is added by javascripts/table-resize.js and
+ * layered on only for `.searchable-table` tables further down.
  */
 .md-typeset table:not([class]) {
   display: table;
 }
+/* sticky header; the pointer cursor is the sort affordance (affordance = a
+   visual cue hinting a header can be clicked to sort) */
 .md-typeset table:not([class]) th {
   position: sticky;
   top: 0;
   z-index: 2;
+  cursor: pointer;
   transition: background-color 120ms ease;
 }
 /* center every cell vertically so rows read evenly */
@@ -264,15 +439,14 @@
   max-width: 100%;
   overflow: auto;
   position: relative;
-  border: 1px solid var(--md-default-fg-color--lightest);
+  border: 1px solid var(--md-default-fg-color--lighter);
   border-radius: 0.2rem;
-  /* thin scrollbars, equal in both directions (native, so they stay symmetric) */
-  scrollbar-width: thin;
 }
 
 /*
- * The wrapped table fills the container and lays out responsively: `width: 100%`
- * with auto layout means it always fills the CURRENT viewport, and the per-cell
+ * The wrapped table fills the container and lays out responsively (responsive =
+ * adapts to the window size): `width: 100%` with auto layout means it always
+ * fills the current viewport (the visible browser area), and the per-cell
  * `min-width` below means a horizontal scrollbar only appears once columns would
  * have to shrink past that threshold. (A manual column drag switches the table
  * to fixed layout with explicit widths via table-resize.js.)
@@ -312,9 +486,10 @@
  * Border, header divider line, padding and zebra striping are applied only to
  * the large `.searchable-table` tables; plain tables stay unstyled.
  */
+
 /* the large searchable tables keep a fixed, more compact height cap */
 .md-typeset .searchable-table .md-table-wrap {
-  max-height: 32rem;
+  max-height: 24rem;
 }
 
 /* header cells: padded, with a faint divider line */
@@ -353,6 +528,11 @@
   touch-action: none;
   user-select: none;
 }
+/* the last column's edge handle sits beside the container's scrollbar, so give
+   it a slightly wider grab zone (added by table-resize.js) */
+.col-resize-handle--edge {
+  width: 12px;
+}
 .col-resize-handle::after {
   content: "";
   position: absolute;
@@ -382,23 +562,13 @@ body.col-resizing {
 }
 
 /*
- * Table sorting affordance: sortable headers get a pointer cursor and a
- * subtle hover treatment. The active sort state is still indicated by
- * tablesort without adding width-consuming icons to the header text.
+ * Sort affordance (continued): the header hover highlight; the pointer cursor
+ * lives with the base th rule above. Together they hint a header is clickable to
+ * sort. The active sort state is shown by tablesort without adding
+ * width-consuming icons to the header text.
  */
-.md-typeset table:not([class]) th {
-  cursor: pointer;
-}
-
 .md-typeset table:not([class]) th:hover {
-  /*background-color: var(--table-row-hover) !important;
-  transition: background-color 120ms ease;*/
   background-color: var(--table-header-hover) !important;
-}
-
-/* Resize handles should always look like resize controls */
-.md-typeset .col-resize-handle {
-  cursor: col-resize;
 }
 
 /* toolbar row that holds the reset button + search box, above the table */
@@ -407,9 +577,11 @@ div.searchable-table .table-toolbar {
   align-items: center;
   gap: 0.5rem;
   /*
-   * Use padding (not margin) for the top gap: inside a content tab the toolbar
-   * is the first flow child, so a top margin would collapse out of the tab and
-   * the controls would overlap the tab's divider line. Padding never collapses.
+   * Use padding (not margin) for the top gap. Because the toolbar is the first
+   * thing inside a content tab, a top *margin* would (due to a CSS quirk called
+   * "margin collapsing") slip outside the tab instead of pushing the toolbar
+   * down, letting the controls overlap the tab's divider line. Padding is not
+   * affected by that quirk.
    */
   padding-top: 0.7rem;
   margin-bottom: 0.6rem;
@@ -430,7 +602,7 @@ div.searchable-table input.table-search-input {
 div.searchable-table input.table-search-input:focus {
   outline: none;
   border-color: var(--md-primary-fg-color);
-  box-shadow: 0 0 0 2px var(--md-primary-fg-color--transparent, rgba(17, 110, 183, 0.2));
+  box-shadow: 0 0 0 2px var(--md-primary-fg-color--transparent, #116eb733); /* last 2 digits = transparency */
 }
 
 /*
@@ -458,41 +630,77 @@ div.searchable-table .table-reset-button {
 div.searchable-table .table-reset-button.is-hidden {
   display: none;
 }
-div.searchable-table .table-reset-button:hover {
-  color: var(--md-primary-fg-color);
-  border-color: var(--md-primary-fg-color);
-  background-color: var(--md-default-fg-color--lightest);
-}
+/* hover treatment is shared with the scroll-to-top button; see below */
 div.searchable-table .table-reset-button svg {
   width: 0.9rem;
   height: 0.9rem;
   fill: currentColor;
+  /* tilt the circular arrow 30° counter-clockwise */
+  transform: rotate(-30deg);
 }
 
-/* modify heading level 5 appearance */
-.md-content h5 {
-  all: unset;
-  margin: px2em(16px, 12.8px) 0;
-  font-weight: 500;
-  font-size: px2em(12.8px);
-  letter-spacing: -0.01em;
+/*
+ * Non-scrolling positioning layer wrapped around the scroll container by
+ * table-resize.js. Hosts the floating scroll-to-top button so it stays pinned to
+ * the visible corner instead of scrolling away with the table content.
+ */
+.md-typeset .md-table-scroll-region {
+  position: relative;
 }
 
-/* IMAGE CAPTION FORMATTING */
-
-.md-typeset figure {
-  display: table;
-  margin: 0 auto;
+/*
+ * Floating "scroll to top of table" button. Pinned to the bottom-right of the
+ * scroll container and revealed by table-resize.js once the table is scrolled
+ * down. Fades rather than hard-toggling, and ignores clicks while hidden.
+ */
+.md-typeset .table-scrolltop {
+  position: absolute;
+  bottom: 0.75rem;
+  right: 0.75rem;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  padding: 0;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 50%;
+  background-color: var(--md-default-bg-color);
+  color: var(--md-default-fg-color--light);
+  cursor: pointer;
+  box-shadow: 0 1px 4px #00000033; /* last 2 digits = transparency */
+  transition: opacity 150ms ease, color 120ms ease,
+    border-color 120ms ease, background-color 120ms ease;
+}
+.md-typeset .table-scrolltop.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.md-typeset .table-scrolltop svg {
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
 }
 
-.md-typeset figure figcaption {
-  display: table-caption;
-  caption-side: bottom;
-  max-width: none !important;
-  margin: 0.25rem 0.5rem 0 0.5rem !important;
-  line-height: 1.3;
+/*
+ * Shared hover treatment for both icon buttons (toolbar reset + floating
+ * scroll-to-top): the icon and border take the primary color over an opaque
+ * wash.
+ */
+div.searchable-table .table-reset-button:hover,
+.md-typeset .table-scrolltop:hover {
+  color: var(--md-primary-fg-color);
+  border-color: var(--md-primary-fg-color);
+  background-color: var(--table-header-hover);
 }
-
-.md-typeset figure figcaption p {
-  text-align: left !important;
+/*
+ * In dark mode --md-primary-fg-color is near-black, which would darken the icon
+ * into the button; brighten it to a white icon instead.
+ */
+[data-md-color-scheme="slate"] div.searchable-table .table-reset-button:hover,
+[data-md-color-scheme="slate"] .md-typeset .table-scrolltop:hover {
+  color: #ffffff;
+  border-color: var(--md-default-fg-color--light);
+  background-color: var(--table-header-hover);
 }
