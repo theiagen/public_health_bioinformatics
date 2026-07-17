@@ -25,11 +25,12 @@ task gatk_filter {
     # obtain version
     gatk --version | grep GATK | grep -Po "v[^ ]+$" | tee VERSION
 
-    # index reference FASTA (fast enough to rerun w/o importing)
-    samtools faidx ~{reference_genome}
-
-    # create reference dictionary (fast enough to rerun w/o importing)
-    gatk CreateSequenceDictionary -R ~{reference_genome}
+    # create reference index and dictionary (have to symlink in case the source is not writeable)
+    local_ref=$(basename ~{reference_genome})
+    ln -s ~{reference_genome} ${local_ref}
+    # index reference FASTA
+    samtools faidx ${local_ref}
+    gatk CreateSequenceDictionary -R ${local_ref}
 
     # assemble the VariantFiltration arguments, giving each filter its
     # own descriptive --filter-name
@@ -66,7 +67,7 @@ task gatk_filter {
 
     # call VariantFiltration with optional filter expression(s)
     gatk --java-options "-Xmx~{memory}G" VariantFiltration \
-      -R ~{reference_genome} \
+      -R ${local_ref} \
       -V ~{gvcf} \
       -O ~{samplename}_filtered.g.vcf.gz \
       ~{if defined(filter_expression) then '--filter-name "user_filter" --filter-expression "~{filter_expression}"' else ""} \

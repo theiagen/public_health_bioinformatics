@@ -53,11 +53,11 @@ task gatk_variants {
       bam=~{bam}
     fi
 
-    # iteratively call HaplotypeCaller on each contig to generate an intermediate GVCF output depicting
+    # iteratively call HaplotypeCaller on each read_group to generate intermediate GVCF outputs
     mkdir gvcfs/
     count=0
     for read_group in $(cat read_groups.txt | grep -v "\*"); do
-      # single-nucleotide polymorphisms (SNPs) and structural variants (SVs)
+      # Generate GVCF depicting single-nucleotide polymorphisms (SNPs) and structural variants (SVs)
       # via local de-novo assembly of haplotypes in variant regions
       gatk \
         --java-options "-Xms~{memory}G -Xmx~{memory}G" \
