@@ -53,7 +53,7 @@ task freyja_one_sample {
     fi
     # configure lineage metadata
     if [[ ! -z "~{freyja_lineage_metadata}" ]]; then
-      echo "User lineage metadata; ~{freyja_lineage_metadata} will be utilized fre freyja demixing"
+      echo "User lineage metadata; ~{freyja_lineage_metadata} will be utilized freyja demixing"
       freyja_metadata_version=$(basename -- "~{freyja_lineage_metadata}")
     else
       freyja_metadata_version="unmodified from freyja container: ~{docker}"
