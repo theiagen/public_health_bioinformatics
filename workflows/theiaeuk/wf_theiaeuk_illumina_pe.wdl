@@ -324,7 +324,7 @@ workflow theiaeuk_illumina_pe {
     File? gene_coverage_stats = medea_magic.gene_coverage_stats
     Map[String, Float]? gene_coverage_depth_by_gene = medea_magic.gene_coverage_depth_by_gene
     Map[String, Float]? gene_coverage_breadth_by_gene = medea_magic.gene_coverage_breadth_by_gene
-    File? gene_coverage_gene_vcf = medea_magic.gene_coverage_gene_vcf
+    File? variant_annotation_gene_vcf = medea_magic.variant_annotation_gene_vcf
     String? variant_annotations = medea_magic.variant_annotations
   }
 }
