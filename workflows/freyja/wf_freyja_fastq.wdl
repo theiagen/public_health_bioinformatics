@@ -87,13 +87,13 @@ workflow freyja_fastq {
           workflow_series = "theiacov",
           target_organism = kraken2_target_organism
       }
-    }
-    call nanoplot_task.nanoplot as nanoplot_clean {
-      input:
-        read1 = select_first([read_QC_trim_ont.read1_clean, read1]),
-        samplename = samplename,
-        est_genome_length = get_fasta_genome_size.fasta_length
+      call nanoplot_task.nanoplot as nanoplot_clean {
+        input:
+          read1 = read_QC_trim_ont.read1_clean,
+          samplename = samplename,
+          est_genome_length = get_fasta_genome_size.fasta_length
       }
+    }
     call minimap2_task.minimap2 {
       input:
         samplename = samplename,
