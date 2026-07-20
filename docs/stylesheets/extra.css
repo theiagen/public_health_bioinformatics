@@ -69,6 +69,8 @@
  *   2. CUSTOM ADMONITIONS  the colored "callout" boxes (dna, task, caption...)
  *   3. TABLE FORMATTING    the searchable / sortable / resizable data tables
  *   4. IMAGE CAPTIONS      figure + caption layout
+ *   5. ACCESSIBILITY       high-contrast / forced-colors adjustments (only apply
+ *                          when the user's OS/browser asks for them)
  * ============================================================================ */
 
 
@@ -95,7 +97,7 @@
     border: 1px solid var(--md-default-fg-color--lightest);
   }
   div.searchable-table input.table-search-input::placeholder {
-    color: #888888;
+    color: #767676;
     font-style: italic;
   }
 }
@@ -117,7 +119,9 @@
     color: #ffffff;
   }
   div.searchable-table input.table-search-input {
-    background-color: #1f2029;
+    /* match the page background (like light mode's white box) so the search box
+       sits on the page, set apart only by its border */
+    background-color: var(--md-default-bg-color);
     color: #ffffff;
     /* match the table/admonition border color */
     border: 1px solid var(--md-default-fg-color--lightest);
@@ -621,8 +625,19 @@ div.searchable-table input.table-search-input {
 }
 div.searchable-table input.table-search-input:focus {
   outline: none;
-  border-color: var(--md-primary-fg-color);
-  box-shadow: 0 0 0 2px var(--md-primary-fg-color--transparent, #116eb733); /* last 2 digits = transparency */
+  /* green focus ring in light mode, matching the accent color of active content
+     tabs so a focused search box is clearly and consistently indicated */
+  border-color: #1da74a;
+  box-shadow: 0 0 0 2px #1da74a33; /* last 2 digits = transparency (soft glow) */
+}
+/*
+ * In dark mode the green ring is hard to distinguish; use a white ring instead
+ * so keyboard focus stays obvious against the dark input. (The old ring reused
+ * --md-primary-fg-color, which is near-black in dark mode = invisible.)
+ */
+[data-md-color-scheme="slate"] div.searchable-table input.table-search-input:focus {
+  border-color: #ffffff;
+  box-shadow: 0 0 0 2px #ffffff33; /* last 2 digits = transparency (soft glow) */
 }
 
 /*
