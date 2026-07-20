@@ -297,11 +297,15 @@ plugins:
       canonical_version: null
 
 extra_javascript:
+  # table-utils.js defines window.mdTables and must load before the other
+  # table-*.js files (and toggle-spin.js, which uses mdTables.onPageLoad).
+  - javascripts/table-utils.js
   - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
   - javascripts/table-sort.js
   - javascripts/table-search.js
   - javascripts/table-resize.js
-  - javascripts/toggle-animate.js
+  - javascripts/table-scrolltop.js
+  - javascripts/toggle-spin.js
 
 extra_css:
   - stylesheets/extra.css

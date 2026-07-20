@@ -12,13 +12,8 @@
  * the stylesheet reads it:
  *     summary::before { transform: rotate(var(--toggle-rotation)); }
  *
- * Terms (see also the primer at the top of table-resize.js):
- *   - DOM: the browser's live, in-memory tree of the page.
- *   - document$: Material's page signal; .subscribe(fn) runs fn on first load
- *     AND after every "instant navigation" (in-place page change).
- *   - the "toggle" event: fires on a <details> each time it opens or closes.
- *   - CSS custom property ("variable"): a `--name` value CSS can read via
- *     var(--name); element.style.setProperty(...) updates it from JavaScript.
+ * Uses mdTables.onPageLoad (table-utils.js) for its page-load registration; it
+ * has no other dependency on the table scripts.
  */
 function spinToggleAdmonitions() {
   document.querySelectorAll("details.toggle").forEach(function (details) {
@@ -46,8 +41,4 @@ function spinToggleAdmonitions() {
 }
 
 // Run on first load and after every instant-navigation page change.
-if (typeof document$ !== "undefined" && document$.subscribe) {
-  document$.subscribe(spinToggleAdmonitions);
-} else {
-  document.addEventListener("DOMContentLoaded", spinToggleAdmonitions);
-}
+window.mdTables.onPageLoad(spinToggleAdmonitions);

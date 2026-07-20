@@ -3,28 +3,44 @@
  * column. The sorting itself is done by the Tablesort library (loaded
  * separately); this file just attaches it to the right tables on every page.
  *
- * Terms used below:
- *   - DOM (Document Object Model): the browser's live, in-memory tree of the
- *     page. JavaScript reads and changes the page by walking this tree.
- *   - document.querySelectorAll(selector): finds ALL elements in the DOM that
- *     match a CSS selector, returning a list you can loop over with forEach.
- *     (querySelector — no "All" — returns just the first match.)
- *   - document$ : a Material for MkDocs "observable" (a signal you can subscribe
- *     to). document$.subscribe(fn) runs fn once when the page loads AND again
- *     after every "instant navigation" — Material swaps page content without a
- *     full reload, so an ordinary page-load event would not fire on later pages.
+ * Depends on window.mdTables (table-utils.js) for the page-load hook and the
+ * content-table selector, and on the Tablesort library. It publishes
+ * mdTables.resetSort(table) and mdTables.isSortActive(table) so table-search.js's
+ * reset button can clear the sort without knowing how Tablesort marks it.
  *
- * Tables with a single data row are skipped — there is nothing to sort. (A
- * fuller primer on these concepts lives at the top of table-resize.js.)
+ * Tables with a single data row are skipped — there is nothing to sort.
  */
-document$.subscribe(function() {
-  var tables = document.querySelectorAll("article table:not([class])")
-  tables.forEach(function(table) {
-    // Skip tables with a single data row — there is nothing to sort, so the
-    // sort affordance (the visual cue that a header is clickable to sort) would
-    // be pointless (e.g. Quick Facts tables).
-    var body = table.tBodies[0]
-    if (!body || body.rows.length <= 1) return
-    new Tablesort(table)
-  })
-})
+(function () {
+  const { onPageLoad, getContentTables } = window.mdTables;
+
+  // Tablesort marks the sorted column by setting aria-sort on its header; both
+  // helpers below key off that single marker.
+  function isSortActive(table) {
+    return !!table.querySelector("th[aria-sort]");
+  }
+
+  // Clear Tablesort's markers so the next header click sorts fresh (ascending).
+  // Note: this only removes the sort indicator; it does not restore the original
+  // row order — table-search.js's reset button handles that.
+  function resetSort(table) {
+    table.querySelectorAll("th[aria-sort]").forEach((th) => {
+      th.removeAttribute("aria-sort");
+    });
+  }
+
+  function enableSorting() {
+    getContentTables().forEach(function (table) {
+      // Skip tables with a single data row — there is nothing to sort, so the
+      // sort affordance (the visual cue that a header is clickable to sort) would
+      // be pointless (e.g. Quick Facts tables).
+      const body = table.tBodies[0];
+      if (!body || body.rows.length <= 1) return;
+      new Tablesort(table);
+    });
+  }
+
+  window.mdTables.resetSort = resetSort;
+  window.mdTables.isSortActive = isSortActive;
+
+  onPageLoad(enableSorting);
+})();
