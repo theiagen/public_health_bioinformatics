@@ -40,7 +40,6 @@ task variant_annotate {
       || echo "WARNING: variant_annotation.py failed; continuing without a variant annotation report"
   >>>
   output {
-    File? gene_vcf = "~{samplename}.genes.vcf"
     String? variant_annotations = read_string("~{samplename}.variant_annotations.txt")
   }
   runtime {
