@@ -259,7 +259,7 @@ workflow freyja_fastq {
     # Read QC - bbduk outputs - Illumina PE and SE
     String bbduk_docker = select_first([read_QC_trim_pe.bbduk_docker, read_QC_trim_se.bbduk_docker, ""])
     # Read QC - clean reads - all
-    String read1_clean = select_first([read_QC_trim_pe.read1_clean, read_QC_trim_se.read1_clean, read_QC_trim_ont.read1_clean,""])
+    String read1_clean = select_first([read_QC_trim_pe.read1_clean, read_QC_trim_se.read1_clean, read_QC_trim_ont.read1_clean, ""])
     String read2_clean = select_first([read_QC_trim_pe.read2_clean, ""])
     # Read QC - dehosting outputs - all
     String read1_dehosted = select_first([read_QC_trim_pe.read1_dehosted, read_QC_trim_se.read1_dehosted, read_QC_trim_ont.read1_dehosted, ""])
