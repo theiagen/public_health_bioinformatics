@@ -10,7 +10,7 @@ import "../../tasks/gene_typing/variant_detection/task_clair3_variants.wdl" as c
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
 import "../../tasks/utilities/data_handling/task_fasta_utilities.wdl" as fasta_utilities_task
 import "../../tasks/quality_control/basic_statistics/task_gene_coverage.wdl" as gene_coverage_task
-import "../../tasks/quality_control/basic_statistics/task_variant_annotate.wdl" as variant_annotate_task
+import "../../tasks/gene_typing/variant_detection/task_variant_annotate.wdl" as variant_annotate_task
 
 workflow medea_magic {
   meta {
@@ -248,16 +248,15 @@ workflow medea_magic {
         samplename = samplename,
         reference_gff = reference_gff,
         reference_gbff = resolved_reference_gbff,
-        query_genes = resolved_query_genes,
-        vcf = gene_coverage_vcf
+        query_genes = resolved_query_genes
     }
     call variant_annotate_task.variant_annotate {
       input:
         reference_gbff = resolved_reference_gbff,
         reference_gff = reference_gff,
         reference_fa = variant_calling_reference_fastas[0],
-        query_genes = resolved_query_genes,
-        vcf = gene_coverage_vcf
+        query_genes = select_first([resolved_query_genes]),
+        vcf = select_first([gene_coverage_vcf])
     }
   }
   # Running AMR Search

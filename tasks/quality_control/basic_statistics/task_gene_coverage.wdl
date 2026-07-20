@@ -7,9 +7,9 @@ task gene_coverage {
 
     File? bai
     File? bedfile # BEDfile including region names and/or coordinates
+    File? reference_gff # GFF including annotated regions
     File? reference_gbff # GBFF including annotated regions 
     String? query_genes # comma-delimited list of strings
-    File? vcf # optional VCF to extract variant calls from
     
     String feature_type = "CDS" # GBFF feature type to use for coordinate extraction
     String feature_qualifier = "product" # GBFF feature qualifier to use for comparison to query gene
