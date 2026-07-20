@@ -247,8 +247,7 @@ workflow medea_magic {
         bai = gene_coverage_bais[0],
         samplename = samplename,
         reference_gbff = resolved_reference_gbff,
-        query_genes = resolved_query_genes,
-        vcf = gene_coverage_vcf
+        query_genes = resolved_query_genes
     }
     if (defined(resolved_query_genes)) {
       call variant_annotate_task.variant_annotate {
