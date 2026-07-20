@@ -34,8 +34,13 @@ task variant_annotate {
       ~{if exact_match then "--exact_match" else ""} \
       --output ~{samplename}.variant_annotations.txt \
       || echo "WARNING: variant_annotation.py failed; continuing without a variant annotation report"
+
+    if [ -f GENE_VARIANTS.vcf ]; then
+      mv GENE_VARIANTS.vcf ~{samplename}.genes.vcf
+    fi
   >>>
   output {
+    File? gene_vcf = "~{samplename}.genes.vcf"
     String? variant_annotations = read_string("~{samplename}.variant_annotations.txt")
   }
   runtime {
