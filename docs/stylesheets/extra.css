@@ -430,8 +430,7 @@
 .md-typeset .md-table-wrap {
   /*
    * Cap the height at (almost) the window height so short/medium tables show in
-   * full and only genuinely tall tables scroll internally. Every wrapped table
-   * gets an exterior border.
+   * full and only genuinely tall tables scroll internally.
    */
   max-height: 90vh;
   /* span the full available width */
@@ -439,8 +438,29 @@
   max-width: 100%;
   overflow: auto;
   position: relative;
-  border: 1px solid var(--md-default-fg-color--lighter);
-  border-radius: 0.2rem;
+  /*
+   * The exterior border + rounded corners live on the parent
+   * .md-table-scroll-region (which adds overflow: hidden), NOT here — so the
+   * rounded corners CLIP the scrollbar instead of the scrollbar cutting across
+   * the curve. (border-radius on the very element that scrolls squares off the
+   * corner wherever the scrollbar sits, which looked unfinished.)
+   */
+}
+
+/*
+ * In dark mode the native scrollbar's track defaults to a shade that doesn't
+ * quite match the page behind the table. `scrollbar-color: <thumb> <track>`
+ * (the standard property, no ::-webkit rules so no sizing conflict) recolors the
+ * track to the page background so it blends in, with a subtle thumb.
+ *
+ * A wide table can end up scrolling on either of two nested wrappers, so we cover
+ * both: our own .md-table-wrap AND the theme's own .md-typeset__scrollwrap (which
+ * Material puts around content tables). Whichever one shows the horizontal bar,
+ * it matches.
+ */
+[data-md-color-scheme="slate"] .md-typeset .md-table-wrap,
+[data-md-color-scheme="slate"] .md-typeset__scrollwrap {
+  scrollbar-color: var(--md-default-fg-color--lighter) var(--md-default-bg-color);
 }
 
 /*
@@ -646,6 +666,14 @@ div.searchable-table .table-reset-button svg {
  */
 .md-typeset .md-table-scroll-region {
   position: relative;
+  /*
+   * The exterior border + rounded corners moved here from .md-table-wrap, and
+   * overflow: hidden makes those rounded corners CLIP the inner scrollbar — so
+   * the scrollbar no longer collides with (and squares off) the curved border.
+   */
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 0.2rem;
+  overflow: hidden;
 }
 
 /*
