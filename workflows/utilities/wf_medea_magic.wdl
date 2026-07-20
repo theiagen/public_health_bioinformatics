@@ -252,11 +252,12 @@ workflow medea_magic {
         vcf = gene_coverage_vcf
     }
     call variant_annotate_task.variant_annotate {
-      reference_gbff = resolved_reference_gbff,
-      reference_gff = reference_gff,
-      reference_fa = variant_calling_reference_fastas[0],
-      query_genes = resolved_query_genes,
-      vcf = gene_coverage_vcf
+      input:
+        reference_gbff = resolved_reference_gbff,
+        reference_gff = reference_gff,
+        reference_fa = variant_calling_reference_fastas[0],
+        query_genes = resolved_query_genes,
+        vcf = gene_coverage_vcf
     }
   }
   # Running AMR Search
