@@ -5,8 +5,6 @@ task variant_annotate {
     String samplename
 
     File? reference_gbff # Reference GBFF including annotated regions 
-    File? reference_gff # Reference GFF including annotated regions
-    File? reference_fa # Reference genome FASTA to be used in conjunction with GFF for gene coordinate extraction
     String query_genes # comma-delimited list of strings
     File vcf
     
@@ -30,8 +28,6 @@ task variant_annotate {
     python3 /usr/bin/variant_annotation.py \
       --vcf ~{vcf} \
       ~{if defined(reference_gbff) then "--reference_gbff ~{reference_gbff}" else ""} \
-      ~{if defined(reference_fa) then "--reference_fa ~{reference_fa}" else ""} \
-      ~{if defined(reference_gff) then "--reference_gff ~{reference_gff}" else ""} \
       --query_genes ~{query_genes} \
       --feature_type ~{feature_type} \
       --feature_qualifier ~{feature_qualifier} \

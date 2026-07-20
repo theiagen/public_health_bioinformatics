@@ -48,7 +48,6 @@ workflow medea_magic {
     # user-supplied reference fasta; when provided, overrides the hosted/organism reference
     File? reference_genome_fasta
     File? reference_gbff
-    File? reference_gff
     # shared compute for the read_aligners (bwa for illumina, minimap2 for ont);
     String? read_aligner_docker
     Int? read_aligner_cpu
@@ -247,7 +246,6 @@ workflow medea_magic {
         bam = gene_coverage_bams[0],
         bai = gene_coverage_bais[0],
         samplename = samplename,
-        reference_gff = reference_gff,
         reference_gbff = resolved_reference_gbff,
         query_genes = resolved_query_genes,
         vcf = gene_coverage_vcf
@@ -256,9 +254,7 @@ workflow medea_magic {
       call variant_annotate_task.variant_annotate {
         input:
           reference_gbff = resolved_reference_gbff,
-          reference_gff = reference_gff,
-          reference_fa = variant_calling_reference_fasta,
-          query_genes = select_first([resolved_query_genes]),
+          query_genes = resolved_query_genes,
           vcf = select_first([gene_coverage_vcf])
       }
     }
