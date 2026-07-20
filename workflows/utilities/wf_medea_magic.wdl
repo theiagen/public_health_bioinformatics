@@ -10,6 +10,7 @@ import "../../tasks/gene_typing/variant_detection/task_clair3_variants.wdl" as c
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
 import "../../tasks/utilities/data_handling/task_fasta_utilities.wdl" as fasta_utilities_task
 import "../../tasks/quality_control/basic_statistics/task_gene_coverage.wdl" as gene_coverage_task
+import "../../tasks/quality_control/basic_statistics/task_variant_annotate.wdl" as variant_annotate_task
 
 workflow medea_magic {
   meta {
@@ -46,6 +47,8 @@ workflow medea_magic {
     Float? cladetyper_max_distance
     # user-supplied reference fasta; when provided, overrides the hosted/organism reference
     File? reference_genome_fasta
+    File? reference_gbff
+    File? reference_gff
     # shared compute for the read_aligners (bwa for illumina, minimap2 for ont);
     String? read_aligner_docker
     Int? read_aligner_cpu
@@ -78,9 +81,7 @@ workflow medea_magic {
     Int? clair3_memory
     Int? clair3_disk_size
     # gene coverage options; user-supplied inputs take priority
-    File? gene_coordinates_bed
     String? query_genes
-    File? reference_genome_gbff
   }
   if (medea_tag == "Candidozyma auris" || medea_tag == "Candida auris") {
     call cauris_cladetyper.cauris_cladetyper as cladetyper {
@@ -115,7 +116,7 @@ workflow medea_magic {
   if (medea_tag == "Aspergillus fumigatus") {
     # hosted fasta (user-supplied fasta takes precedence downstream) feeds the variant-calling reference
     File afumigatus_variant_fasta = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.fasta"
-    # hosted GBFF (user-supplied reference_genome_gbff takes precedence downstream) feeds gene coverage annotation
+    # hosted GBFF (user-supplied reference_gbff takes precedence downstream) feeds gene coverage annotation
     File afumigatus_variant_gbff = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff"
     # organism-specific gene coverage targets used when query_genes is not user-supplied
     String afumigatus_query_genes = "Cyp51A,HapE,AFUA_4G08340"
@@ -123,7 +124,7 @@ workflow medea_magic {
   if (medea_tag == "Cryptococcus neoformans") {
     # hosted fasta (user-supplied fasta takes precedence downstream) feeds the variant-calling reference
     File cryptoneo_variant_fasta = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.fasta"
-    # hosted GBFF (user-supplied reference_genome_gbff takes precedence downstream) feeds gene coverage annotation
+    # hosted GBFF (user-supplied reference_gbff takes precedence downstream) feeds gene coverage annotation
     File cryptoneo_variant_gbff = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff"
     # organism-specific gene coverage targets used when query_genes is not user-supplied
     String cryptoneo_query_genes = "CNA00300"
@@ -226,9 +227,9 @@ workflow medea_magic {
   if (length(query_genes_options) > 0) {
     String resolved_query_genes = query_genes_options[0]
   }
-  # a user-supplied reference_genome_gbff takes precedence, otherwise the organism-specific GBFF
+  # a user-supplied reference_gbff takes precedence, otherwise the organism-specific GBFF
   # is used (cladetyper GBFF for C. auris when a clade matches, hosted GBFF for A. fumigatus and C. neoformans)
-  Array[File] reference_gbff_options = select_all([reference_genome_gbff, cauris_variant_gbff, afumigatus_variant_gbff, cryptoneo_variant_gbff])
+  Array[File] reference_gbff_options = select_all([reference_gbff, cauris_variant_gbff, afumigatus_variant_gbff, cryptoneo_variant_gbff])
   if (length(reference_gbff_options) > 0) {
     File resolved_reference_gbff = reference_gbff_options[0]
   }
@@ -245,10 +246,17 @@ workflow medea_magic {
         bam = gene_coverage_bams[0],
         bai = gene_coverage_bais[0],
         samplename = samplename,
-        bedfile = gene_coordinates_bed,
+        reference_gff = reference_gff,
         reference_gbff = resolved_reference_gbff,
         query_genes = resolved_query_genes,
         vcf = gene_coverage_vcf
+    }
+    call variant_annotate_task.variant_annotate {
+      reference_gbff = resolved_reference_gbff,
+      reference_gff = reference_gff,
+      reference_fa = variant_calling_reference_fastas[0],
+      query_genes = resolved_query_genes,
+      vcf = gene_coverage_vcf
     }
   }
   # Running AMR Search
@@ -308,7 +316,7 @@ workflow medea_magic {
     File? gene_coverage_stats = gene_coverage.gene_coverage_stats
     Map[String, Float]? gene_coverage_depth_by_gene = gene_coverage.depth_by_gene
     Map[String, Float]? gene_coverage_breadth_by_gene = gene_coverage.breadth_by_gene
-    File? gene_coverage_gene_vcf = gene_coverage.gene_vcf
-    String? gene_coverage_variant_annotations = gene_coverage.variant_annotations
+    File? variant_annotate_gene_vcf = variant_annotate.gene_vcf
+    String? variant_annotations = variant_annotate.variant_annotations
   }
 }
