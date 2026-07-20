@@ -4,8 +4,8 @@ task variant_annotate {
   input {
     String samplename
 
-    File? reference_gbff # Reference GBFF including annotated regions 
-    String query_genes # comma-delimited list of strings
+    File reference_gbff # Reference GBFF including annotated regions 
+    String? query_genes # comma-delimited list of strings
     File vcf
     
     String feature_type = "CDS" # GBFF feature type to use for coordinate extraction
@@ -27,8 +27,8 @@ task variant_annotate {
     # annotation failure never discards the coverage outputs above.
     python3 /usr/bin/variant_annotation.py \
       --vcf ~{vcf} \
-      ~{if defined(reference_gbff) then "--reference_gbff ~{reference_gbff}" else ""} \
-      --query_genes ~{query_genes} \
+      --reference_gbff ~{reference_gbff} \
+      ~{if defined(query_genes) then "--query_genes ~{query_genes}" else ""} \
       --feature_type ~{feature_type} \
       --feature_qualifier ~{feature_qualifier} \
       ~{if exact_match then "--exact_match" else ""} \

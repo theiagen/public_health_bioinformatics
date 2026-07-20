@@ -253,7 +253,8 @@ workflow medea_magic {
     if (defined(resolved_query_genes)) {
       call variant_annotate_task.variant_annotate {
         input:
-          reference_gbff = resolved_reference_gbff,
+          samplename = samplename,
+          reference_gbff = select_first([resolved_reference_gbff]),
           query_genes = resolved_query_genes,
           vcf = select_first([gene_coverage_vcf])
       }
