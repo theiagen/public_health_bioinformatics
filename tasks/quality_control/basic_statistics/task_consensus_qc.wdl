@@ -43,11 +43,11 @@ task consensus_qc {
     echo $num_total | tee NUM_TOTAL
   >>>
   output {
-    Int number_N = read_string("NUM_N")
-    Int number_ATCG = read_string("NUM_ACTG")
-    Int number_Degenerate = read_string("NUM_DEGENERATE")
-    Int number_Total = read_string("NUM_TOTAL")
-    Float percent_reference_coverage = read_string("PERCENT_REF_COVERAGE")
+    Int number_N = read_int("NUM_N")
+    Int number_ATCG = read_int("NUM_ACTG")
+    Int number_Degenerate = read_int("NUM_DEGENERATE")
+    Int number_Total = read_int("NUM_TOTAL")
+    Float percent_reference_coverage = read_float("PERCENT_REF_COVERAGE")
   }
   runtime {
     docker: docker
