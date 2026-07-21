@@ -34,7 +34,7 @@
   // px — the minimum width a column may be dragged to (matches the [data-manual]
   // min-width in extra.css). Shared by table-resize.js (the drag floor) and used
   // when computing a table's intrinsic minimum width.
-  const MIN_COLUMN_WIDTH = 70;
+  const MIN_COLUMN_WIDTH = 60;
 
   // Register fn to run on first page load AND after every Material "instant
   // navigation" page change, falling back to DOMContentLoaded when the document$

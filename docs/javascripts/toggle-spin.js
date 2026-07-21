@@ -15,30 +15,34 @@
  * Uses mdTables.onPageLoad (table-utils.js) for its page-load registration; it
  * has no other dependency on the table scripts.
  */
-function spinToggleAdmonitions() {
-  document.querySelectorAll("details.toggle").forEach(function (details) {
-    // Don't bind twice if this runs again (e.g. an instant-navigation re-render).
-    if (details.dataset.spinBound === "true") {
-      return;
-    }
-    details.dataset.spinBound = "true";
+(function () {
+  const { onPageLoad } = window.mdTables;
 
-    // Match the starting angle to the current state: upright (0°) when closed,
-    // flipped (180°) when it loads already open — so an open-by-default box looks
-    // the same as one you opened yourself. There's no transition until we add the
-    // "toggle-animate" class below, so this starting angle applies instantly (no
-    // spin on page load); only later open/close clicks animate.
-    let rotation = details.open ? 180 : 0;
-    details.style.setProperty("--toggle-rotation", rotation + "deg");
-    void details.offsetWidth; // commit the starting angle before enabling animation
-    details.classList.add("toggle-animate");
+  function spinToggleAdmonitions() {
+    document.querySelectorAll("details.toggle").forEach(function (details) {
+      // Don't bind twice if this runs again (e.g. an instant-navigation re-render).
+      if (details.dataset.spinBound === "true") {
+        return;
+      }
+      details.dataset.spinBound = "true";
 
-    details.addEventListener("toggle", function () {
-      rotation += 180; // always the same direction -> continuous clockwise
+      // Match the starting angle to the current state: upright (0°) when closed,
+      // flipped (180°) when it loads already open — so an open-by-default box looks
+      // the same as one you opened yourself. There's no transition until we add the
+      // "toggle-animate" class below, so this starting angle applies instantly (no
+      // spin on page load); only later open/close clicks animate.
+      let rotation = details.open ? 180 : 0;
       details.style.setProperty("--toggle-rotation", rotation + "deg");
-    });
-  });
-}
+      void details.offsetWidth; // commit the starting angle before enabling animation
+      details.classList.add("toggle-animate");
 
-// Run on first load and after every instant-navigation page change.
-window.mdTables.onPageLoad(spinToggleAdmonitions);
+      details.addEventListener("toggle", function () {
+        rotation += 180; // always the same direction -> continuous clockwise
+        details.style.setProperty("--toggle-rotation", rotation + "deg");
+      });
+    });
+  }
+
+  // Run on first load and after every instant-navigation page change.
+  onPageLoad(spinToggleAdmonitions);
+})();

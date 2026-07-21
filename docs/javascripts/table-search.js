@@ -39,7 +39,6 @@
     containers.forEach((container) => {
       const table = container.querySelector("table");
       if (!table) {
-        console.log("Table not found within container.");
         return;
       }
 

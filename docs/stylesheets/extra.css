@@ -1,90 +1,61 @@
 /* ============================================================================
- * READING THIS FILE — a primer for non-CSS developers
+ * ABOUT THIS FILE
  * ============================================================================
+ * This is the documentation site's custom stylesheet, loaded via the
+ * `extra_css` setting AFTER the theme's built-in styles — meaning anything
+ * here overrides or adds to the Material/Zensical defaults. Its companion
+ * JavaScript lives in ../javascripts/: table-utils.js is a shared foundation
+ * used by the table feature scripts (table-resize.js, table-scrolltop.js,
+ * table-search.js, table-sort.js), which together create most of the wrapper
+ * elements and classes the TABLE FORMATTING rules below target (e.g.
+ * .md-table-wrap, .table-scrolltop, .col-resize-handle). toggle-spin.js is
+ * unrelated to tables — it drives the `toggle` admonition's spin animation
+ * (see CUSTOM ADMONITIONS below).
  *
- * This is the documentation site's custom stylesheet. It is listed in the site
- * configuration (the `extra_css` setting) so the browser loads it AFTER the
- * theme's built-in styles — meaning anything here overrides or adds to the
- * Material/Zensical defaults. Its companion JavaScript lives in
- * ../javascripts/ (table-resize.js, table-search.js, table-sort.js); those
- * scripts create most of the wrapper elements and classes the rules below
- * target (e.g. .md-table-wrap, .table-scrolltop, .col-resize-handle).
- *
- * ---- How to read a rule ----
- *     selector {
- *       property: value;      <- one "declaration"; always ends with ;
- *     }
- * The selector picks WHICH elements to style; the block sets HOW they look.
- *
- * ---- Selectors you'll see here ----
- *     th, td, table     an HTML element, by tag name
- *     .searchable-table  any element with class="searchable-table" (leading dot)
- *     [data-manual]      any element carrying that HTML attribute
- *     :root              the whole page (a common home for global variables)
- *     A B   (a space)    a B anywhere inside an A            (descendant)
- *     A > B              a B that is a DIRECT child of an A   (child)
- *     A, B  (a comma)    applies to A and to B  (grouping, avoids repetition)
- *     :not([class])      elements that have NO class attribute (see note)
- *     :hover / :focus    a STATE: mouse is over it / the field is focused
- *     ::before / ::after a generated sub-element (used here for icons/accents)
- *
- *   Why `table:not([class])`? The docs contain two kinds of tables: plain
- *   content tables written in Markdown (which have no class) and tables the
- *   tooling generates for layout — chiefly the line-number tables that wrap
- *   code blocks (<table class="highlighttable">). Styling only the class-less
- *   ones keeps all this table formatting off those code listings. (The big
- *   searchable tables are still class-less <table>s — the "searchable-table"
- *   class sits on a <div> that WRAPS the table, so those are styled, not
- *   skipped.)
- *
- * ---- Custom properties ("CSS variables") ----
- *     --table-header-hover: #f5f7fa;          defines a reusable value
- *     background: var(--table-header-hover);  uses it
- *     var(--x, blue)                          uses --x, or blue if --x is unset
- *   Names beginning with --md- come from the Material theme itself. A variable
- *   defined inside a selector only applies to that selector's elements.
- *
- * ---- Light vs. dark mode ----
- *     [data-md-color-scheme="light"] { ... }   applies in light mode
- *     [data-md-color-scheme="slate"] { ... }   applies in dark mode
- *   The theme sets that attribute on the page; we redefine colors inside each
- *   so the site reads well in both themes.
- *
- * ---- Units ----
- *     px  fixed pixels                 rem  multiples of the base font size
- *     em  multiples of THIS element's  %    relative to the parent/container
- *         font size                    vh   1% of the browser window height
- *
- * ---- Colors ----
- *     #rrggbb    red / green / blue, fully opaque
- *     #rrggbbaa  the same, plus a transparency byte (00 = clear, ff = solid);
- *                these 8-digit ones are flagged with an inline comment below.
- *
- * ---- !important ----
- *   Forces a value to win over competing rules (including the theme's). Used
- *   sparingly, only where the theme would otherwise override us.
+ * `table:not([class])` targets plain content tables while skipping
+ * tooling-generated ones (e.g. the line-number <table class="highlighttable">
+ * that wraps code blocks). The large searchable tables are still class-less
+ * <table>s — the "searchable-table" class sits on a wrapping <div>, so those
+ * ARE styled, not skipped.
  *
  * ---- Map of this file ----
- *   1. COLOR SCHEME        light/dark variables, header + search-box colors
- *   2. CUSTOM ADMONITIONS  the colored "callout" boxes (dna, task, caption...)
- *   3. TABLE FORMATTING    the searchable / sortable / resizable data tables
+ *   1. LAYOUT              page-width override
+ *   2. COLOR SCHEME        light/dark variables, header + search-box colors
+ *   3. CUSTOM ADMONITIONS  the colored "callout" boxes (dna, task, caption...)
  *   4. IMAGE CAPTIONS      figure + caption layout
- *   5. ACCESSIBILITY       high-contrast / forced-colors adjustments (only apply
- *                          when the user's OS/browser asks for them)
+ *   5. TABLE FORMATTING    the searchable / sortable / resizable data tables
  * ============================================================================ */
+
+
+/* LAYOUT */
+
+.md-grid {
+  max-width: initial;
+}
 
 
 /* COLOR SCHEME */
 
+/*
+ * A handful of colors below are written as 8-digit hex (#rrggbbaa) instead of
+ * 6-digit (#rrggbb): the extra 2 digits are an alpha/transparency byte, from
+ * 00 (fully clear) to ff (fully solid) — e.g. #1da74a33 is the brand green at
+ * low opacity, used for soft glows and faint tints.
+ */
+:root {
+  --brand-green: #1da74a; /* accent color shared by both modes; also used by the dna admonition icon and the search-box focus ring below */
+  --brand-blue: #116eb7; /* only used once, but it's the theiagen blue */
+}
+
 /* Light mode styles */
 [data-md-color-scheme="light"] {
   --md-primary-bg-color: #ffffff;
-  --md-primary-fg-color: #116eb7;
+  --md-primary-fg-color: var(--brand-blue);
   --md-accent-bg-color: #ffffff;
-  --md-accent-fg-color: #1da74a;
+  --md-accent-fg-color: var(--brand-green);
   /* subtle table row treatments */
-  --table-stripe: #00000005; /* last 2 digits = transparency */
-  --table-row-hover: #0000000b; /* last 2 digits = transparency */
+  --table-stripe: #00000005;
+  --table-row-hover: #0000000b;
   --table-header-hover: #f5f7fa;
   th {
     background: #ffffff;
@@ -104,13 +75,13 @@
 
 /* Dark mode styles */
 [data-md-color-scheme="slate"] {
-  --md-primary-bg-color: #1da74a;
+  --md-primary-bg-color: var(--brand-green);
   --md-primary-fg-color: #262626;
   --md-accent-bg-color: #ffffff;
-  --md-accent-fg-color: #1da74a;
+  --md-accent-fg-color: var(--brand-green);
   /* subtle table row treatments */
-  --table-stripe: #ffffff06; /* last 2 digits = transparency */
-  --table-row-hover: #ffffff0e; /* last 2 digits = transparency */
+  --table-stripe: #ffffff06;
+  --table-row-hover: #ffffff0e;
   --table-header-hover: #2b303b;
   th {
     /* match the table body background so the sticky header blends in
@@ -133,60 +104,70 @@
 }
 
 
-/* ===== CUSTOM ADMONITIONS =====
+/* CUSTOM ADMONITIONS */
+
+/*
  * "Admonitions" are the colored callout boxes (the note/tip/warning style).
- * Each block below adds one custom type, always with the same three steps:
- *   1. store an SVG icon in a variable — the long url('data:image/svg+xml,...')
- *      is just an image written inline instead of a separate file;
- *   2. set the box's border color and its title-bar background color;
- *   3. stamp the icon into the title bar with `mask-image`, which uses the SVG
- *      as a stencil and fills it with a `background-color` — so one icon shape
- *      can be shown in any color. (`-webkit-mask-image` is the same thing for
- *      older Safari/Chrome.)
- * Doc authors then use a type in Markdown as, e.g.,  `!!! dna "Title"`.
+ * Each custom type below follows the same pattern:
+ *   1. an SVG icon, stored as a data URI in one of the --md-admonition-icon--*
+ *      variables (an image written inline instead of a separate file);
+ *   2. the box's border color and title-bar background color;
+ *   3. the icon stamped into the title bar with `mask-image`, which uses the
+ *      SVG as a stencil filled with a `background-color` — so one icon shape
+ *      can be shown in any color. (`-webkit-mask-image` covers older
+ *      Safari/Chrome.)
+ * Doc authors use a type in Markdown as, e.g., `!!! dna "Title"`.
+ *
+ * dna_blue reuses the dna icon (identical SVG, different color), so only one
+ * variable is defined for both.
  */
 
-/* dna admonition */
+ /* admonition svgs */
 :root {
   --md-admonition-icon--dna: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4V2m14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4V2m-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42l1.83-1.19M7 3h10v1l-.06.5H7.06L7 4V3m.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06l.51-.44m-2.03 3h9.88l.06.5v1H7v-1l.06-.5Z"/></svg>');
+  --md-admonition-icon--techdetails: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 22v-2h3v-3h2v3.5c0 .39-.16.74-.46 1.04-.3.3-.65.46-1.04.46H17M7 22H3.5c-.39 0-.74-.16-1.04-.46-.3-.3-.46-.65-.46-1.04V17h2v3h3v2M17 2h3.5c.39 0 .74.16 1.04.46.3.3.46.65.46 1.04V7h-2V4h-3V2M7 2v2H4v3H2V3.5c0-.39.16-.74.46-1.04.3-.3.65-.46 1.04-.46H7m3.5 4C13 6 15 8 15 10.5c0 .88-.25 1.7-.69 2.4l3.26 3.26-1.41 1.41-3.26-3.26c-.7.44-1.52.69-2.4.69C8 15 6 13 6 10.5S8 6 10.5 6m0 2a2.5 2.5 0 0 0 0 5 2.5 2.5 0 0 0 0-5Z"/></svg>');
+  --md-admonition-icon--toggle: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.5 14.5 16 20l-5.5-5.5 1.41-1.41L15 16.17V10.5C15 8 13 6 10.5 6H4V4h6.5a6.5 6.5 0 0 1 6.5 6.5v5.67l3.09-3.09z"/></svg>');
+  --md-admonition-icon--task: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M495.9 166.6c3.2 8.7.5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4l-55.6 17.8c-8.8 2.8-18.6.3-24.5-6.8-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4c-1.1-8.4-1.7-16.9-1.7-25.5s.6-17.1 1.7-25.4l-43.3-39.4c-6.9-6.2-9.6-15.9-6.4-24.6 4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2 5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5 0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8 8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3zM256 336a80 80 0 1 0 0-160 80 80 0 1 0 0 160"/></svg>');
+  --md-admonition-icon--caption: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 14.29 6.5 19h10.96l-2.71-3.54-1.97 2.34L10 14.29M5 21V7h13.96v14H5m7-18.6 2.61 2.63H9.37L12 2.4M5 5.03c-.5 0-1 .19-1.39.58C3.2 6 3 6.46 3 7v14c0 .5.2 1 .61 1.39C4 22.8 4.5 23 5 23h13.96c.54 0 1-.2 1.41-.61.4-.39.63-.89.63-1.39V7c0-.54-.23-1-.63-1.39-.41-.39-.87-.58-1.41-.58H16L12 1 7.96 5.03H5Z"/></svg>');
 }
+
+/* dna admonition */
 .md-typeset .admonition.dna,
 .md-typeset details.dna {
   border-color: #2b9b46;
 }
 .md-typeset .dna > .admonition-title,
 .md-typeset .dna > summary {
-  background-color: #2b9b461a; /* last 2 digits = transparency */
+  background-color: #2b9b461a;
 }
 .md-typeset .dna > .admonition-title::before,
 .md-typeset .dna > summary::before {
-  background-color: #1da74a;
+  background-color: var(--brand-green);
   -webkit-mask-image: var(--md-admonition-icon--dna);
   mask-image: var(--md-admonition-icon--dna);
+  /* rotate upon opening/closing the toggle */
   transition: transform 200ms ease;
 }
 
 .md-typeset details.dna[open] > summary::before {
+  /* start rotated if the admonition is default open */
   transform: rotate(90deg);
 }
 
-/* dna_blue admonition*/
-:root {
-  --md-admonition-icon--dna_blue: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4V2m14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4V2m-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42l1.83-1.19M7 3h10v1l-.06.5H7.06L7 4V3m.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06l.51-.44m-2.03 3h9.88l.06.5v1H7v-1l.06-.5Z"/></svg>');
-}
+/* dna_blue admonition */
 .md-typeset .admonition.dna_blue,
 .md-typeset details.dna_blue {
   border-color: #2b789b;
 }
 .md-typeset .dna_blue > .admonition-title,
 .md-typeset .dna_blue > summary {
-  background-color: #2b789b1a; /* last 2 digits = transparency */
+  background-color: #2b789b1a;
 }
 .md-typeset .dna_blue > .admonition-title::before,
 .md-typeset .dna_blue > summary::before {
   background-color: #2b699b;
-  -webkit-mask-image: var(--md-admonition-icon--dna_blue);
-  mask-image: var(--md-admonition-icon--dna_blue);
+  -webkit-mask-image: var(--md-admonition-icon--dna);
+  mask-image: var(--md-admonition-icon--dna);
   transition: transform 200ms ease;
 }
 
@@ -195,20 +176,13 @@
 }
 
 /* techdetails admonition */
-:root {
-  --md-admonition-icon--techdetails: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 22v-2h3v-3h2v3.5c0 .39-.16.74-.46 1.04-.3.3-.65.46-1.04.46H17M7 22H3.5c-.39 0-.74-.16-1.04-.46-.3-.3-.46-.65-.46-1.04V17h2v3h3v2M17 2h3.5c.39 0 .74.16 1.04.46.3.3.46.65.46 1.04V7h-2V4h-3V2M7 2v2H4v3H2V3.5c0-.39.16-.74.46-1.04.3-.3.65-.46 1.04-.46H7m3.5 4C13 6 15 8 15 10.5c0 .88-.25 1.7-.69 2.4l3.26 3.26-1.41 1.41-3.26-3.26c-.7.44-1.52.69-2.4.69C8 15 6 13 6 10.5S8 6 10.5 6m0 2a2.5 2.5 0 0 0 0 5 2.5 2.5 0 0 0 0-5Z"/></svg>');
-}
 .md-typeset .admonition.techdetails,
 .md-typeset details.techdetails {
   border-color: #461274;
 }
-.md-typeset .admonition.techdetails {
-  max-width: auto;
-  margin-inline: auto;
-}
 .md-typeset .techdetails > .admonition-title,
 .md-typeset .techdetails > summary {
-  background-color: #8459a81a; /* last 2 digits = transparency */
+  background-color: #8459a81a;
 }
 .md-typeset .techdetails > .admonition-title::before,
 .md-typeset .techdetails > summary::before {
@@ -218,16 +192,13 @@
 }
 
 /* toggle admonition */
-:root {
-  --md-admonition-icon--toggle: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.5 14.5 16 20l-5.5-5.5 1.41-1.41L15 16.17V10.5C15 8 13 6 10.5 6H4V4h6.5a6.5 6.5 0 0 1 6.5 6.5v5.67l3.09-3.09z"/></svg>');
-}
 .md-typeset .admonition.toggle,
 .md-typeset details.toggle {
-  border-color: #ffffff00; /* last 2 digits = transparency */
+  border-color: #ffffff00;
 }
 .md-typeset .toggle > .admonition-title,
 .md-typeset .toggle > summary {
-  background-color: #ffffff00; /* last 2 digits = transparency */
+  background-color: #ffffff00;
 }
 .md-typeset .toggle > .admonition-title::before,
 .md-typeset .toggle > summary::before {
@@ -235,7 +206,7 @@
   -webkit-mask-image: var(--md-admonition-icon--toggle);
   mask-image: var(--md-admonition-icon--toggle);
   /*
-   * The rotation angle is driven by javascripts/admonition-toggle.js, which adds
+   * The rotation angle is driven by javascripts/toggle-spin.js, which adds
    * 180° on every open/close so the icon keeps spinning the SAME way (clockwise)
    * instead of reversing. It writes the running angle into --toggle-rotation on
    * the <details>; we read it here. Static `!!! toggle` boxes have no script and
@@ -255,16 +226,13 @@
 }
 
 /* task admonition */
-:root {
-  --md-admonition-icon--task: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M495.9 166.6c3.2 8.7.5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4l-55.6 17.8c-8.8 2.8-18.6.3-24.5-6.8-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4c-1.1-8.4-1.7-16.9-1.7-25.5s.6-17.1 1.7-25.4l-43.3-39.4c-6.9-6.2-9.6-15.9-6.4-24.6 4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2 5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5 0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8 8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3zM256 336a80 80 0 1 0 0-160 80 80 0 1 0 0 160"/></svg>');
-}
 .md-typeset .admonition.task,
 .md-typeset details.task {
-  border-color: #ffffff00; /* last 2 digits = transparency */
+  border-color: #ffffff00;
 }
 .md-typeset .task > .admonition-title,
 .md-typeset .task > summary {
-  background-color: #ffffff00; /* last 2 digits = transparency */
+  background-color: #ffffff00;
 }
 .md-typeset .task > .admonition-title::before,
 .md-typeset .task > summary::before {
@@ -279,16 +247,13 @@
 }
 
 /* caption admonition */
-:root {
-  --md-admonition-icon--caption: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 14.29 6.5 19h10.96l-2.71-3.54-1.97 2.34L10 14.29M5 21V7h13.96v14H5m7-18.6 2.61 2.63H9.37L12 2.4M5 5.03c-.5 0-1 .19-1.39.58C3.2 6 3 6.46 3 7v14c0 .5.2 1 .61 1.39C4 22.8 4.5 23 5 23h13.96c.54 0 1-.2 1.41-.61.4-.39.63-.89.63-1.39V7c0-.54-.23-1-.63-1.39-.41-.39-.87-.58-1.41-.58H16L12 1 7.96 5.03H5Z"/></svg>');
-}
 .md-typeset .admonition.caption,
 .md-typeset details.caption {
   border-color: #878e8f;
 }
 .md-typeset .caption > .admonition-title,
 .md-typeset .caption > summary {
-  background-color: #48777f1a; /* last 2 digits = transparency */
+  background-color: #48777f1a;
 }
 .md-typeset .caption > .admonition-title::before,
 .md-typeset .caption > summary::before {
@@ -341,24 +306,10 @@
 /* modify heading level 5 appearance */
 .md-content h5 {
   all: unset;
-  /*
-   * These were Sass px2em(...) calls. Sass is a CSS pre-processor whose
-   * functions must be compiled away before the browser sees them; left as-is in
-   * a plain .css file the browser treats them as invalid and silently ignores
-   * the two lines. Converted here to the plain-CSS em values Sass would have
-   * produced against a 16px base: 16/12.8 = 1.25, and 12.8/16 = 0.8.
-   * (em on font-size is relative to the parent; em on margin is relative to
-   * this element's own font-size, so 1.25em here renders as ~16px.)
-   */
   margin: 1.25em 0;
   font-weight: 500;
   font-size: 0.8em;
   letter-spacing: -0.01em;
-}
-
-/* content width */
-.md-grid {
-  max-width: initial;
 }
 
 /* center admonition and reduce width if given `narrow` modifer */
@@ -369,7 +320,8 @@
   display: inline-block; /* make the admonition width fit the content */
 }
 
-/* IMAGE CAPTION FORMATTING */
+
+/* IMAGE CAPTIONS */
 
 .md-typeset figure {
   display: table;
@@ -391,20 +343,30 @@
 
 /* TABLE FORMATTING */
 
+/* ---- Map of this section ----
+ *   1. BASE TABLE            sticky header, cell alignment (all content tables)
+ *   2. RESIZABLE COLUMNS     scroll wrapper, responsive column widths (all tables)
+ *   3. SEARCHABLE TABLES     border, header divider, zebra striping (searchable-table only)
+ *   4. COLUMN RESIZE HANDLE  drag handle + grip icon
+ *   5. SORT ICONS            custom chevron icons, hover/sorted reveal
+ *   6. TOOLBAR               search box + reset button
+ *   7. SCROLL-TO-TOP         scroll region wrapper + floating button
+ *   8. SHARED BUTTON HOVER   toolbar reset + scroll-to-top hover treatment
+ */
+
+/* 1. BASE TABLE */
+
 /*
- * Base appearance for ALL content tables (searchable or not). Plain tables keep
- * essentially their original look: scrollable, sticky header (a header that
- * stays pinned in view while you scroll the table), and NO divider line under
- * the header and NO zebra striping (zebra striping = alternating row shading).
- * The richer treatment (scroll container border, header divider, zebra
- * striping, resizable columns) is added by javascripts/table-resize.js and
- * layered on only for `.searchable-table` tables further down.
+ * Base appearance for ALL content tables (`table:not([class])`). Plain tables
+ * keep their original look: scrollable with a sticky header. The richer
+ * treatment (scroll container border, header divider, zebra striping,
+ * resizable columns) is added by javascripts/table-resize.js and layered on
+ * only for `.searchable-table` tables further down.
  */
 .md-typeset table:not([class]) {
   display: table;
 }
-/* sticky header; the pointer cursor is the sort affordance (affordance = a
-   visual cue hinting a header can be clicked to sort) */
+/* sticky header; the pointer cursor is the sort affordance */
 .md-typeset table:not([class]) th {
   position: sticky;
   top: 0;
@@ -422,58 +384,43 @@
   word-break: normal;
 }
 
+/* 2. RESIZABLE COLUMNS */
+
 /*
- * ---- resizable columns: ALL tables ----
- * table-resize.js wraps every content table in a `.md-table-wrap` scroll
- * container so its columns can be resized. These rules are purely functional
- * (scroll + fixed layout) and deliberately carry no border/striping, so plain
- * tables keep their original look.
+ * ALL tables. table-resize.js wraps every content table in a `.md-table-wrap`
+ * scroll container so its columns can be resized. These rules are purely
+ * functional (scroll + fixed layout) and deliberately carry no
+ * border/striping, so plain tables keep their original look.
  */
 
-/* scroll container added by table-resize.js */
+/* scroll container added by table-utils.js's shared getTableWrap() helper,
+   used by both table-resize.js and table-scrolltop.js */
 .md-typeset .md-table-wrap {
   /*
-   * Cap the height at (almost) the window height so short/medium tables show in
+   * Cap the height at 3/4 the window height so short/medium tables show in
    * full and only genuinely tall tables scroll internally.
    */
-  max-height: 90vh;
+  max-height: 75vh;
   /* span the full available width */
   width: 100%;
   max-width: 100%;
   overflow: auto;
   position: relative;
-  /*
-   * The exterior border + rounded corners live on the parent
-   * .md-table-scroll-region (which adds overflow: hidden), NOT here — so the
-   * rounded corners CLIP the scrollbar instead of the scrollbar cutting across
-   * the curve. (border-radius on the very element that scrolls squares off the
-   * corner wherever the scrollbar sits, which looked unfinished.)
-   */
 }
 
-/*
- * In dark mode the native scrollbar's track defaults to a shade that doesn't
- * quite match the page behind the table. `scrollbar-color: <thumb> <track>`
- * (the standard property, no ::-webkit rules so no sizing conflict) recolors the
- * track to the page background so it blends in, with a subtle thumb.
- *
- * A wide table can end up scrolling on either of two nested wrappers, so we cover
- * both: our own .md-table-wrap AND the theme's own .md-typeset__scrollwrap (which
- * Material puts around content tables). Whichever one shows the horizontal bar,
- * it matches.
- */
+/* adjust color of table scrollbar (from the shared .md-table-wrap scroll container) */
 [data-md-color-scheme="slate"] .md-typeset .md-table-wrap,
 [data-md-color-scheme="slate"] .md-typeset__scrollwrap {
   scrollbar-color: var(--md-default-fg-color--lighter) var(--md-default-bg-color);
 }
 
 /*
- * The wrapped table fills the container and lays out responsively (responsive =
- * adapts to the window size): `width: 100%` with auto layout means it always
- * fills the current viewport (the visible browser area), and the per-cell
- * `min-width` below means a horizontal scrollbar only appears once columns would
- * have to shrink past that threshold. (A manual column drag switches the table
- * to fixed layout with explicit widths via table-resize.js.)
+ * The wrapped table fills the container and lays out responsively:
+ * `width: 100%` with auto layout means it always fills the current viewport
+ * (the visible browser area), and the per-cell `min-width` below means a
+ * horizontal scrollbar only appears once columns would have to shrink past
+ * that threshold. (A manual column drag switches the table to fixed layout
+ * with explicit widths via table-resize.js.)
  */
  .md-typeset .md-table-wrap > table:not([class]) {
    display: table;
@@ -505,8 +452,9 @@
   min-width: 3.75rem; /* 60px */
 }
 
+/* 3. SEARCHABLE TABLES */
+
 /*
- * ---- richer visual treatment: searchable tables only ----
  * Border, header divider line, padding and zebra striping are applied only to
  * the large `.searchable-table` tables; plain tables stay unstyled.
  */
@@ -527,13 +475,15 @@
   padding: 0.45em 0.9em;
 }
 
-/* subtle zebra striping + row hover (searchable tables only) */
+/* subtle zebra striping + row hover */
 .md-typeset .searchable-table .md-table-wrap > table:not([class]) tbody tr:nth-child(even) {
   background-color: var(--table-stripe);
 }
 .md-typeset .searchable-table .md-table-wrap > table:not([class]) tbody tr:hover {
   background-color: var(--table-row-hover);
 }
+
+/* 4. COLUMN RESIZE HANDLE */
 
 /*
  * Column resize handle added by table-resize.js: a grab zone on the header
@@ -585,15 +535,41 @@ body.col-resizing {
   user-select: none !important;
 }
 
+/* 5. SORT ICONS */
+
+/* Custom icons for table sorting */
+:root {
+  --md-typeset-table-sort-icon--asc: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg>');
+  --md-typeset-table-sort-icon--desc: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>');
+  --md-typeset-table-sort-icon--combo: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10l6-5 6 5"/><path d="M6 14l6 5 6-5"/></svg>');
+  --md-typeset-table-sort-icon: var(--md-typeset-table-sort-icon--combo);
+}
+
 /*
- * Sort affordance (continued): the header hover highlight; the pointer cursor
- * lives with the base th rule above. Together they hint a header is clickable to
- * sort. The active sort state is shown by tablesort without adding
- * width-consuming icons to the header text.
+ * Enable header hover highlight and a pointer cursor hint for sorting. Float
+ * the sorting symbol so it doesn't affect layout; only reveal it on hover or on
+ * the actively sorted column.
  */
 .md-typeset table:not([class]) th:hover {
   background-color: var(--table-header-hover) !important;
 }
+
+.md-typeset table:not([class]) th[role="columnheader"]::after {
+  position: absolute;
+  top: 50%;
+  right: 0.5em;
+  margin-left: 0;
+  transform: translateY(-50%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 120ms ease, background-color 125ms ease;
+}
+.md-typeset table:not([class]) th[role="columnheader"]:hover::after,
+.md-typeset table:not([class]) th[role="columnheader"][aria-sort]::after {
+  opacity: 1;
+}
+
+/* 6. TOOLBAR */
 
 /* toolbar row that holds the reset button + search box, above the table */
 div.searchable-table .table-toolbar {
@@ -627,17 +603,16 @@ div.searchable-table input.table-search-input:focus {
   outline: none;
   /* green focus ring in light mode, matching the accent color of active content
      tabs so a focused search box is clearly and consistently indicated */
-  border-color: #1da74a;
-  box-shadow: 0 0 0 2px #1da74a33; /* last 2 digits = transparency (soft glow) */
+  border-color: var(--brand-green);
+  box-shadow: 0 0 0 2px #1da74a33; /* soft glow */
 }
 /*
- * In dark mode the green ring is hard to distinguish; use a white ring instead
- * so keyboard focus stays obvious against the dark input. (The old ring reused
- * --md-primary-fg-color, which is near-black in dark mode = invisible.)
+ * In dark mode use a white ring instead so keyboard focus stays obvious
+ * against the dark input.
  */
 [data-md-color-scheme="slate"] div.searchable-table input.table-search-input:focus {
   border-color: #ffffff;
-  box-shadow: 0 0 0 2px #ffffff33; /* last 2 digits = transparency (soft glow) */
+  box-shadow: 0 0 0 2px #ffffff33; /* soft glow */
 }
 
 /*
@@ -674,10 +649,12 @@ div.searchable-table .table-reset-button svg {
   transform: rotate(-30deg);
 }
 
+/* 7. SCROLL-TO-TOP */
+
 /*
  * Non-scrolling positioning layer wrapped around the scroll container by
- * table-resize.js. Hosts the floating scroll-to-top button so it stays pinned to
- * the visible corner instead of scrolling away with the table content.
+ * table-scrolltop.js. Hosts the floating scroll-to-top button so it stays
+ * pinned to the visible corner instead of scrolling away with the table content.
  */
 .md-typeset .md-table-scroll-region {
   position: relative;
@@ -693,8 +670,8 @@ div.searchable-table .table-reset-button svg {
 
 /*
  * Floating "scroll to top of table" button. Pinned to the bottom-right of the
- * scroll container and revealed by table-resize.js once the table is scrolled
- * down. Fades rather than hard-toggling, and ignores clicks while hidden.
+ * scroll container and revealed by table-scrolltop.js once the table is
+ * scrolled down. Fades rather than hard-toggling, and ignores clicks while hidden.
  */
 .md-typeset .table-scrolltop {
   position: absolute;
@@ -712,7 +689,7 @@ div.searchable-table .table-reset-button svg {
   background-color: var(--md-default-bg-color);
   color: var(--md-default-fg-color--light);
   cursor: pointer;
-  box-shadow: 0 1px 4px #00000033; /* last 2 digits = transparency */
+  box-shadow: 0 1px 4px #00000033;
   transition: opacity 150ms ease, color 120ms ease,
     border-color 120ms ease, background-color 120ms ease;
 }
@@ -725,6 +702,8 @@ div.searchable-table .table-reset-button svg {
   height: 1rem;
   fill: currentColor;
 }
+
+/* 8. SHARED BUTTON HOVER */
 
 /*
  * Shared hover treatment for both icon buttons (toolbar reset + floating
