@@ -21,7 +21,7 @@ task gene_coverage {
 
     String? organism # used to determine if S gene coverage should be reported for SARS-CoV-2
 
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23.2-dev"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiagene:1.0.0-dev"
     Int disk_size = 100
     Int memory = 8
     Int cpu = 2

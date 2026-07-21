@@ -12,7 +12,7 @@ task variant_annotate {
     String feature_qualifier = "product" # GBFF feature qualifier to use for comparison to query gene
     Boolean exact_match = false # use an exact match for qualifier mapping (always case-sensitive)
 
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23.2-dev"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiagene:1.0.0-dev"
     Int disk_size = 100
     Int memory = 8
     Int cpu = 2
