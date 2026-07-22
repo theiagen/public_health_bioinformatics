@@ -37,7 +37,7 @@ jobs:
 
       - name: Install latest Sprocket
         if: steps.filter.outputs.wdl == 'true'
-        uses: jaxxstorm/action-install-gh-release@v3
+        uses: jaxxstorm/action-install-gh-release@v3.0.0
         with:
           repo: stjude-rust-labs/sprocket
           tag: latest
