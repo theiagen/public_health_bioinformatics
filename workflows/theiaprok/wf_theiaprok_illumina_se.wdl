@@ -339,6 +339,7 @@ workflow theiaprok_illumina_se {
                 "allele_calling_result": merlin_magic.allele_calling_result,
                 "allele_calling_scheme": merlin_magic.allele_calling_scheme,
                 "allele_calling_standard_json": merlin_magic.allele_calling_standard_json,
+                "allele_calling_core_json": merlin_magic.allele_calling_core_json,
                 "allele_calling_total_loci_count": merlin_magic.allele_calling_total_loci_count,
                 "amr_search_all_resistances": merlin_magic.amr_search_all_resistances,
                 "amr_search_associated_resistances": merlin_magic.amr_search_associated_resistances,

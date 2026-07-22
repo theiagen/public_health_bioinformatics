@@ -59,11 +59,15 @@ task allele_calling {
     cp *.gz *.json *.bam ${ORIGINAL_DIR}
     cd $ORIGINAL_DIR
 
+    # unzip file for later format conversion
+    gunzip calls_core_standard.csv.gz
+
     # print the outputs json to stdout for debugging purposes
     echo "outputs.json:"
     cat outputs.json
 
     # parse the results file `outputs.json` for the QC metrics
+    # also convert core calls into JSON
     python3 <<CODE
     import json
 
@@ -83,12 +87,35 @@ task allele_calling {
       with open(field.upper(), "w") as outfile:
         outfile.write(str(metrics[field]))
 
+    ###### convert core allele calls into JSON format ######
+    import csv
+
+    with open("calls_core_standard.csv", newline="") as infile:
+      reader = csv.DictReader(infile)
+      row = next(reader)
+
+    values = {}
+    for allele, hash in row.items():
+      if allele == "Sample_ID":
+        continue
+      if hash == "?": # replace ? characters with ""
+        values[allele] = ""
+      else:
+        values[allele] = int(hash)
+
+    with open("calls_core.json", "w") as outfile:
+      json.dump({"sample_id": row["Sample_ID"], "values": values}, outfile)
+
     CODE
+
+    # rezip file
+    gzip calls_core.json
   >>>
   output {
     String allele_calling_scheme = scheme
     String allele_calling_result = read_string("ALLELE_CALLING_RESULT")
     File allele_calling_standard_json = "calls_standard.json.gz"
+    File allele_calling_core_json = "calls_core.json.gz"
     File allele_calling_bam = "allele_calls.bam"
     # QC metrics
     Int allele_calling_core_count = read_int("CORECOUNT")
