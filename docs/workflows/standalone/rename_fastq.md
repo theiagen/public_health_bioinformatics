@@ -18,7 +18,7 @@ This sample-level workflow receives a read file or a pair of read files (FASTQ),
 
 ### Outputs
 
-If a reverse read (`read2`) is provided, the files get renamed to the provided `new_filename` input with the notation `<new_filename>_R1.fastq.gz` and `<new_filename>_R2.fastq.gz`. If only `read1` is provided, the file is renamed to `<new_filename>.fastq.gz`.
+If a reverse read (`read2`) is provided, the files get renamed to the provided `new_filename` input with the notation `<new_filename>_R1.fastq.gz` and `<new_filename>_R2.fastq.gz`. If only `read1` is provided, the file is renamed to `<new_filename>.fastq.gz`.
 
 /// html | div[class="searchable-table"]
 

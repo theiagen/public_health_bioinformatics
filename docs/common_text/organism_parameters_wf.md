@@ -74,8 +74,8 @@ fragment: true
         - min_num_unambig = 10850
         - clades_tsv = `"gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_a_clades.tsv"`
         - reference_fasta = `"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.EPI_ISL_412866.fasta"`
-        - reference_genbank = `""gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.gb"`
-        - auspice_config = `""gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_auspice_config.json"`
+        - reference_genbank = `"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.gb"`
+        - auspice_config = `"gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_auspice_config.json"`
         - min_date = 2020.0
         - pivot_interval = 1
         - narrow_bandwidth = 0.1666667
@@ -85,8 +85,8 @@ fragment: true
         - min_num_unambig = 10850
         - clades_tsv = `"gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_b_clades.tsv"`
         - reference_fasta = `"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.EPI_ISL_1653999.fasta"`
-        - reference_genbank = `""gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.gb"`
-        - auspice_config = `""gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_auspice_config.json"`
+        - reference_genbank = `"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.gb"`
+        - auspice_config = `"gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_auspice_config.json"`
         - min_date = 2020.0
         - pivot_interval = 1
         - narrow_bandwidth = 0.1666667
@@ -94,8 +94,8 @@ fragment: true
 
     <!-- endif -->
 
-  
-    !!! techdetails "Organism Parameters Technical Details"        
+
+    !!! techdetails "Organism Parameters Technical Details"
         |  | Links |
         | --- | --- |
         | Task | [wf_organism_parameters.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl) |

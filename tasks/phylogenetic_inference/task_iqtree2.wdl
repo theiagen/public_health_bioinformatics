@@ -9,7 +9,7 @@ task iqtree2 {
     Int alrt = 1000 # SH-like approximate likelihood ratio test (SH-aLRT) replicates
     String? iqtree2_opts
 
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/iqtree2:2.1.2"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/iqtree2:2.4.0"
     Int disk_size = 100
     Int cpu = 4
     Int memory = 32
@@ -18,7 +18,7 @@ task iqtree2 {
     # date and version control
     date | tee DATE
 
-    # multiple sed statements to get down to a string that is just "version 2.1.2"
+    # multiple sed statements to get down to a string that is just "version 2.4.0"
     iqtree2 --version | grep version | sed 's|.*version|version|;s| COVID-edition for Linux.*||' | tee VERSION
 
     # check if iqtree2_model input is set and output for sanity

@@ -6,7 +6,7 @@ fragment: true
 ??? task "`fastq-scan`: Read Quantification (default)"
     Read quantification is available via fastq-scan by default.
 
-    fastq-scan quantifies the forward and reverse reads in FASTQ files. For paired-end data, it also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect **fewer** clean reads than raw reads.
+    fastq-scan quantifies the forward and reverse reads in FASTQ files. For paired-end data, it also provides the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect **fewer** clean reads than raw reads.
 <!-- endif -->
 <!-- if: clearlabs -->
 ??? task "`fastq-scan`: Read Quantification"

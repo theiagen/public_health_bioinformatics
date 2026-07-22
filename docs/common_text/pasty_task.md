@@ -5,7 +5,7 @@ fragment: true
 ??? task "`pasty`: _Pseudomonas aeruginosa_ Serotyping"
     pasty is a tool for _in silico_ serogrouping of _Pseudomonas aeruginosa_ isolates. pasty was developed by Robert Petit, based on the [PAst](https://github.com/Sandramses/PAst) tool from the Centre for Genomic Epidemiology.
 
-    pasty uses the [camlhmp](https://github.com/rpetit3/camlhmp) tool to identify the serogroup. It uses BLAST to compare an input asssembly against a set of O-antigens. The serogroup can be predicted based off of those results.
+    pasty uses the [camlhmp](https://github.com/rpetit3/camlhmp) tool to identify the serogroup. It uses BLAST to compare an input assembly against a set of O-antigens. The serogroup can be predicted based off of those results.
 
     !!! techdetails "pasty Technical Details"
         |  | Links |
