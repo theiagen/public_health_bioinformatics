@@ -228,7 +228,7 @@ add_biosample_accessions	docker	String	The Docker container to use for the task	
 add_biosample_accessions	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Terra_2_NCBI	runtime	
 allele_clustering_task	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Allele_Clustering	runtime	
 allele_clustering_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Allele_Clustering	runtime	
-allele_clustering_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/allele-clustering:1.0.0	Optional	Allele_Clustering	docker	
+allele_clustering_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/allele-clustering:1.2.0-dev	Optional	Allele_Clustering	docker	
 allele_clustering_task	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Allele_Clustering	runtime	
 amr_search	cpu	Int	Number of CPUs to allocate to the task	2	Optional	AMR_Search	runtime	
 amr_search	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	AMR_Search	runtime	
