@@ -6,16 +6,12 @@ on:
     paths:
       - "tasks/**"
       - "workflows/**"
-      - "sprocket.toml"
-      - ".sprocketignore"
       - ".github/workflows/sprocket-lint.yml"
   pull_request:
     branches: [main]
     paths:
       - "tasks/**"
       - "workflows/**"
-      - "sprocket.toml"
-      - ".sprocketignore"
       - ".github/workflows/sprocket-lint.yml"
   workflow_dispatch:
 
@@ -23,11 +19,8 @@ permissions:
   contents: read
 
 jobs:
-  changes:
-    name: Check for WDL changes
+  lint:
     runs-on: ubuntu-latest
-    outputs:
-      wdl_files: ${{ steps.filter.outputs.wdl_files }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -42,20 +35,8 @@ jobs:
               - added|modified: "workflows/**/*.wdl"
           list-files: json
 
-  lint:
-    name: Lint ${{ matrix.wdl }}
-    needs: changes
-    if: ${{ needs.changes.outputs.wdl_files != '[]' }}
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        wdl: ${{ fromJSON(needs.changes.outputs.wdl_files) }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-
       - name: Install latest Sprocket
+        if: steps.filter.outputs.wdl == 'true'
         uses: jaxxstorm/action-install-gh-release@v3
         with:
           repo: stjude-rust-labs/sprocket
@@ -63,4 +44,9 @@ jobs:
           asset-name: sprocket
 
       - name: Lint WDL
-        run: sprocket lint "${{ matrix.wdl }}"
+        if: steps.filter.outputs.wdl == 'true'
+        env:
+          WDL_FILES: ${{ steps.filter.outputs.wdl_files }}
+        run: |
+          mapfile -t wdl_files < <(jq -r '.[]' <<< "$WDL_FILES")
+          sprocket lint "${wdl_files[@]}"
