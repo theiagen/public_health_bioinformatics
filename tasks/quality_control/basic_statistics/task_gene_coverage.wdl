@@ -31,7 +31,7 @@ task gene_coverage {
     set -euo pipefail
 
     # run calculations
-    python3 /usr/bin/gene_coverage.py \
+    theiagene gene_coverage \
       --bam ~{bam} \
       --feature_type ~{feature_type} \
       --feature_qualifier ~{feature_qualifier} \

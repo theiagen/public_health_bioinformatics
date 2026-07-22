@@ -8,7 +8,6 @@ task variant_annotate {
     String? query_genes # comma-delimited list of strings
     File vcf
     
-    String feature_type = "CDS" # GBFF feature type to use for coordinate extraction
     String feature_qualifier = "product" # GBFF feature qualifier to use for comparison to query gene
     Boolean exact_match = false # use an exact match for qualifier mapping (always case-sensitive)
 
@@ -25,11 +24,10 @@ task variant_annotate {
     # this requires a reference GBFF (coding sequences), a VCF (variants) and query
     # genes, so it only runs when all three are provided. Kept non-fatal so an
     # annotation failure never discards the coverage outputs above.
-    python3 /usr/bin/variant_annotation.py \
+    theiagene variant_annotation \
       --vcf ~{vcf} \
       --reference_gbff ~{reference_gbff} \
       ~{if defined(query_genes) then "--query_genes ~{query_genes}" else ""} \
-      --feature_type ~{feature_type} \
       --feature_qualifier ~{feature_qualifier} \
       ~{if exact_match then "--exact_match" else ""} \
       --output ~{samplename}.variant_annotations.txt \
