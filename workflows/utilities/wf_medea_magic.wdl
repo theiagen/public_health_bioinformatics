@@ -60,7 +60,7 @@ workflow medea_magic {
     Float? freebayes_min_alternate_fraction
     Int? freebayes_min_alternate_count
     Int? freebayes_min_coverage
-    Boolean? freebayes_output_gvcf
+    Boolean? freebayes_enable_gvcf
     String? freebayes_docker
     Int? freebayes_cpu
     Int? freebayes_memory
@@ -161,7 +161,7 @@ workflow medea_magic {
           min_alternate_fraction = freebayes_min_alternate_fraction,
           min_alternate_count = freebayes_min_alternate_count,
           min_coverage = freebayes_min_coverage,
-          output_gvcf = freebayes_output_gvcf,
+          output_gvcf = freebayes_enable_gvcf,
           docker = freebayes_docker,
           cpu = freebayes_cpu,
           memory = freebayes_memory,
