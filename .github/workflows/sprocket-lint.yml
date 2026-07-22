@@ -1,0 +1,66 @@
+name: Sprocket Lint
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "tasks/**"
+      - "workflows/**"
+      - "sprocket.toml"
+      - ".sprocketignore"
+      - ".github/workflows/sprocket-lint.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "tasks/**"
+      - "workflows/**"
+      - "sprocket.toml"
+      - ".sprocketignore"
+      - ".github/workflows/sprocket-lint.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  changes:
+    name: Check for WDL changes
+    runs-on: ubuntu-latest
+    outputs:
+      wdl_files: ${{ steps.filter.outputs.wdl_files }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Find changed WDL files
+        id: filter
+        uses: dorny/paths-filter@v4
+        with:
+          filters: |
+            wdl:
+              - added|modified: "tasks/**/*.wdl"
+              - added|modified: "workflows/**/*.wdl"
+          list-files: json
+
+  lint:
+    name: Lint ${{ matrix.wdl }}
+    needs: changes
+    if: ${{ needs.changes.outputs.wdl_files != '[]' }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        wdl: ${{ fromJSON(needs.changes.outputs.wdl_files) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Install latest Sprocket
+        uses: jaxxstorm/action-install-gh-release@v3
+        with:
+          repo: stjude-rust-labs/sprocket
+          tag: latest
+          asset-name: sprocket
+
+      - name: Lint WDL
+        run: sprocket lint "${{ matrix.wdl }}"
