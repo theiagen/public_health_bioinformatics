@@ -64,10 +64,18 @@ task freebayes {
     bgzip ~{samplename}.freebayes.vcf
     tabix -p vcf ~{samplename}.freebayes.vcf.gz
 
-    # optional gVCF pass to hand off to task_gatk_filter.wdl, which expects a bgzipped,
-    # tabix-indexed .g.vcf.gz + .tbi pair (identical calling options as the VCF pass)
+    # optional gVCF pass (identical calling options as the VCF pass), emitting a
+    # bgzipped, tabix-indexed .g.vcf.gz + .tbi pair suitable for GATK (task_gatk_filter).
+    # freebayes --gvcf emits each contig's trailing reference block as a malformed record
+    # with a missing reference allele (REF ".") carrying the previous contig's boundary
+    # coordinates. GATK/htsjdk rejects "REF ." ("reference allele cannot be missing") and
+    # those same records also sit out of positional order (breaking tabix). They are
+    # non-variant blocks, so drop them (awk), then restore positional order.
     if [ "~{output_gvcf}" == "true" ]; then
-      freebayes "${freebayes_opts[@]}" --gvcf "${local_bam}" > ~{samplename}.freebayes.g.vcf
+      # vcfstreamsort -a loads the whole gvcf in memory, which ought to be fine for non-plant/animal genomes
+      freebayes "${freebayes_opts[@]}" --gvcf "${local_bam}" \
+        | awk -F'\t' '/^#/ || $4 != "."' \
+        | vcfstreamsort -a > ~{samplename}.freebayes.g.vcf
       bgzip ~{samplename}.freebayes.g.vcf
       tabix -p vcf ~{samplename}.freebayes.g.vcf.gz
     fi

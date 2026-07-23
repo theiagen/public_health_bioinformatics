@@ -4,6 +4,7 @@ import "../../tasks/species_typing/candidozyma/task_cauris_cladetyper.wdl" as ca
 import "../../tasks/gene_typing/drug_resistance/task_amr_search.wdl" as amr_search_task
 import "../../tasks/alignment/task_bwa.wdl" as bwa_task
 import "../../tasks/gene_typing/variant_detection/task_freebayes.wdl" as freebayes_task
+import "../../tasks/gene_typing/variant_detection/task_gatk_filter.wdl" as gatk_filter_task
 import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/gene_typing/variant_detection/task_clair3_variants.wdl" as clair3_task
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
@@ -60,11 +61,20 @@ workflow medea_magic {
     Float? freebayes_min_alternate_fraction
     Int? freebayes_min_alternate_count
     Int? freebayes_min_coverage
-    Boolean? freebayes_enable_gvcf
     String? freebayes_docker
     Int? freebayes_cpu
     Int? freebayes_memory
     Int? freebayes_disk_size
+    # gatk_filter post-call filtering options, applied to the freebayes gVCF (illumina)
+    Int? gatk_filter_min_variant_quality
+    Int? gatk_filter_min_depth
+    Float? gatk_filter_min_map_quality
+    Int? gatk_filter_min_quality_by_depth
+    String? gatk_filter_expression
+    String? gatk_filter_docker
+    Int? gatk_filter_cpu
+    Int? gatk_filter_memory
+    Int? gatk_filter_disk_size
     # clair3 variant-calling & filtering options (ont)
     String? clair3_model
     Int? clair3_variant_quality
@@ -147,7 +157,8 @@ workflow medea_magic {
           docker = read_aligner_docker
       }
       # freebayes applies its native input filters (mapping/base quality, allele
-      # support, coverage) during calling, so no separate post-call filter step is used
+      # support, coverage) during calling and is pinned to --gvcf so its gVCF can be
+      # handed to gatk_filter for post-call FILTER annotation (QUAL/DP/MQ/QD)
       call freebayes_task.freebayes as freebayes {
         input:
           samplename = samplename,
@@ -161,11 +172,29 @@ workflow medea_magic {
           min_alternate_fraction = freebayes_min_alternate_fraction,
           min_alternate_count = freebayes_min_alternate_count,
           min_coverage = freebayes_min_coverage,
-          output_gvcf = freebayes_enable_gvcf,
+          output_gvcf = true,
           docker = freebayes_docker,
           cpu = freebayes_cpu,
           memory = freebayes_memory,
           disk_size = freebayes_disk_size
+      }
+      # freebayes has no native post-call VCF filtering, so run gatk_filter
+      # (VariantFiltration + SelectVariants) over the freebayes gVCF
+      call gatk_filter_task.gatk_filter as gatk_filter {
+        input:
+          samplename = samplename,
+          reference_genome = variant_calling_reference_fasta,
+          gvcf = select_first([freebayes.freebayes_gvcf]),
+          gvcf_index = select_first([freebayes.freebayes_gvcf_index]),
+          min_variant_quality = gatk_filter_min_variant_quality,
+          min_depth = gatk_filter_min_depth,
+          min_map_quality = gatk_filter_min_map_quality,
+          min_quality_by_depth = gatk_filter_min_quality_by_depth,
+          filter_expression = gatk_filter_expression,
+          docker = gatk_filter_docker,
+          cpu = gatk_filter_cpu,
+          memory = gatk_filter_memory,
+          disk_size = gatk_filter_disk_size
       }
     }
     # ONT long-read track: minimap2 alignment + Clair3 variant calling
@@ -226,7 +255,7 @@ workflow medea_magic {
   # tracks are mutually exclusive (ont_data), so each select_all yields at most one element
   Array[File] gene_coverage_bams = select_all([bwa_variant_calling.sorted_bam, ont_bam_sorting.bam])
   Array[File] gene_coverage_bais = select_all([bwa_variant_calling.sorted_bai, ont_bam_sorting.bai])
-  Array[File] gene_coverage_vcfs = select_all([freebayes.freebayes_vcf, clair3_variant_calling.clair3_variants_vcf])
+  Array[File] gene_coverage_vcfs = select_all([gatk_filter.gatk_filtered_vcf, clair3_variant_calling.clair3_variants_vcf])
   if (length(gene_coverage_vcfs) > 0) {
     File gene_coverage_vcf = gene_coverage_vcfs[0]
   }
@@ -284,7 +313,7 @@ workflow medea_magic {
     String? cladetyper_version = cladetyper.gambit_version
     String? cladetyper_docker_image = cladetyper.gambit_cladetyper_docker_image
     String? cladetype_annotated_ref = cladetyper.annotated_reference
-    # variant calling - illumina (bwa alignment + freebayes)
+    # variant calling - illumina (bwa alignment + freebayes + gatk post-call filtering)
     String? bwa_version = bwa_variant_calling.bwa_version
     File? variant_calling_bam = bwa_variant_calling.sorted_bam
     File? variant_calling_bai = bwa_variant_calling.sorted_bai
@@ -294,6 +323,9 @@ workflow medea_magic {
     File? freebayes_vcf_index = freebayes.freebayes_vcf_index
     File? freebayes_gvcf = freebayes.freebayes_gvcf
     File? freebayes_gvcf_index = freebayes.freebayes_gvcf_index
+    String? gatk_filter_version = gatk_filter.gatk_version
+    File? gatk_filtered_vcf = gatk_filter.gatk_filtered_vcf
+    File? gatk_selected_vcf = gatk_filter.gatk_selected_vcf
     # variant calling - ont (minimap2 alignment + clair3)
     String? minimap2_version = minimap2_variant_calling.minimap2_version
     File? ont_variant_calling_bam = ont_bam_sorting.bam

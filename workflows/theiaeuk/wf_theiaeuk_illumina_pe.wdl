@@ -311,7 +311,7 @@ workflow theiaeuk_illumina_pe {
     String? cladetyper_gambit_version = medea_magic.cladetyper_version
     String? cladetyper_docker_image = medea_magic.cladetyper_docker_image
     String? cladetyper_annotated_reference = medea_magic.cladetype_annotated_ref
-    # Variant Calling Outputs (BWA alignment + freebayes)
+    # Variant Calling Outputs (BWA alignment + freebayes + GATK post-call filtering)
     String? theiaeuk_bwa_version = medea_magic.bwa_version
     File? theiaeuk_variant_calling_bam = medea_magic.variant_calling_bam
     File? theiaeuk_variant_calling_bai = medea_magic.variant_calling_bai
@@ -321,6 +321,9 @@ workflow theiaeuk_illumina_pe {
     File? theiaeuk_freebayes_vcf_index = medea_magic.freebayes_vcf_index
     File? theiaeuk_freebayes_gvcf = medea_magic.freebayes_gvcf
     File? theiaeuk_freebayes_gvcf_index = medea_magic.freebayes_gvcf_index
+    String? theiaeuk_gatk_filter_version = medea_magic.gatk_filter_version
+    File? theiaeuk_gatk_filtered_vcf = medea_magic.gatk_filtered_vcf
+    File? theiaeuk_gatk_selected_vcf = medea_magic.gatk_selected_vcf
     # Gene Coverage Outputs
     File? gene_coverage_stats = medea_magic.gene_coverage_stats
     Map[String, Float]? gene_coverage_depth_by_gene = medea_magic.gene_coverage_depth_by_gene
