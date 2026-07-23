@@ -20,6 +20,7 @@ task freebayes {
     # gVCF hand-off: freebayes has no native post-call VCF filtering (QUAL/DP/MQ/QD FILTER flags),
     # so emit a bgzipped, tabix-indexed gVCF that can be fed to task_gatk_filter.wdl for that step
     Boolean output_gvcf = false
+    Boolean strict_vcf = true
 
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/freebayes:1.3.10"
     Int cpu = 8
@@ -57,6 +58,7 @@ task freebayes {
       ~{if defined(min_alternate_count) then "--min-alternate-count " + min_alternate_count else ""} \
       ~{if defined(min_coverage) then "--min-coverage " + min_coverage else ""} \
       ~{if defined(targets_bed) then "--targets " + targets_bed else ""} \
+      ~{if strict_vcf then "--strict-vcf" else ""} # ensure the GQ is casted as an integer for downstream compatibility
     )
 
     # primary variant call: standard VCF output, then bgzip + tabix index
