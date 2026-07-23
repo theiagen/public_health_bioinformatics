@@ -6372,9 +6372,9 @@
 <!-- endif -->
 
 <!-- if: theiaprok -->
-<div class="language-text highlight"><pre><span></span><code>!!! dna &quot;A note on estimated genome length&quot;
+<div class="language-text highlight"><pre><span></span><code>!!! dna &quot;A note on estimated genome length and Rasusa&quot;
 
-    By default, the estimated genome length is set to 5 Mb, which is around 0.7 Mb higher than the average bacterial genome length, according to [a collation of statistics from thousands of NCBI bacterial assemblies](https://github.com/CDCgov/phoenix/blob/717d19c19338373fc0f89eba30757fe5cfb3e18a/assets/databases/NCBI_Assembly_stats_20240124.txt). This estimate can be overwritten by the user and is used by `Rasusa`.
+    Rasusa is now skipped unless the user explicitly requests downsampling by setting one of the following: `genome_length`, `rasusa_num_bases`, `rasusa_fraction_of_reads`, or `rasusa_num_reads`. To downsample by coverage, please provide the genome length of your expected taxa. Downsampling is beneficial when coverage exceeds ~150x as this can increase assembly time, computational costs, and can introduce errors.
 
 ??? task &quot;`Rasusa`: Read Subsampling&quot;
     Rasusa is a tool to randomly subsample sequencing reads to a specified coverage without assuming that all reads are of equal length, making it especially suitable for long-read data while still being applicable to short-read data.
@@ -6443,24 +6443,61 @@
 </code></pre></div>
 <!-- endif -->
 
-<div class="language-text highlight"><pre><span></span><code>??? task &quot;`NanoPlot`: Read Quantification&quot;
-    NanoPlot is used for the determination of mean quality scores, read lengths, and number of reads. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect **fewer** clean reads than raw reads.
-
-    While this task currently is run _outside_ of the `read_QC_trim_ont` workflow, it is being included here as it calculates statistics on the read data. This is done so that the actual assembly genome lengths can be used (if an estimated genome length is not provided by the user) to ensure the estimated coverage statistics are accurate.
-
-    !!! techdetails &quot;NanoPlot Technical Details&quot;
-        |  | Links |
-        | --- | --- |
-        | Task | [task_nanoplot.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_nanoplot.wdl) |
-        | Software Source Code | [NanoPlot on GitHub](https://github.com/wdecoster/NanoPlot) |
-        | Software Documentation | [NanoPlot Documentation](https://github.com/wdecoster/NanoPlot/blob/master/README.md) |
-        | Original Publication(s) | [NanoPack2: population-scale evaluation of long-read sequencing data](https://academic.oup.com/bioinformatics/article/39/5/btad311/7160911) |
-
-!!! techdetails &quot;read_QC_trim_ont Technical Details&quot;
-    |  | Links |
-    | --- | --- |
-    | Subworkflow | [wf_read_QC_trim_ont.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_ont.wdl) |
-</code></pre></div>
+<div class="admonition dna">
+<p class="admonition-title">Nanoplot and genome length</p>
+<p>If <code>genome_length</code> is not provided Nanoplot will use the Quast assembly length to calculate the estimated coverage.</p>
+<details class="task">
+<summary><code>NanoPlot</code>: Read Quantification</summary>
+<p>NanoPlot is used for the determination of mean quality scores, read lengths, and number of reads. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
+<p>While this task currently is run <em>outside</em> of the <code>read_QC_trim_ont</code> workflow, it is being included here as it calculates statistics on the read data. This is done so that the actual assembly genome lengths can be used (if an estimated genome length is not provided by the user) to ensure the estimated coverage statistics are accurate.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">NanoPlot Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_nanoplot.wdl">task_nanoplot.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/wdecoster/NanoPlot">NanoPlot on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/wdecoster/NanoPlot/blob/master/README.md">NanoPlot Documentation</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://academic.oup.com/bioinformatics/article/39/5/btad311/7160911">NanoPack2: population-scale evaluation of long-read sequencing data</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">read_QC_trim_ont Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Subworkflow</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_ont.wdl">wf_read_QC_trim_ont.wdl</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <!--
   PHB organization tooltips.
 

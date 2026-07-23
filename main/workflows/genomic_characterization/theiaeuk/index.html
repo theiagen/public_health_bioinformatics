@@ -10578,8 +10578,8 @@
 <summary><code>read_QC_trim_ont</code>: Read Quality Trimming, Quantification, and Identification</summary>
 <p><code>read_QC_trim_ont</code> is a sub-workflow that filters low-quality reads and trims low-quality regions of reads. It uses several tasks, described below.</p>
 <div class="admonition dna">
-<p class="admonition-title">A note on estimated genome length</p>
-<p>By default, the estimated genome length is set to 5 Mb, which is around 0.7 Mb higher than the average bacterial genome length, according to <a href="https://github.com/CDCgov/phoenix/blob/717d19c19338373fc0f89eba30757fe5cfb3e18a/assets/databases/NCBI_Assembly_stats_20240124.txt">a collation of statistics from thousands of NCBI bacterial assemblies</a>. This estimate can be overwritten by the user and is used by <code>Rasusa</code>.</p>
+<p class="admonition-title">A note on estimated genome length and Rasusa</p>
+<p>Rasusa is now skipped unless the user explicitly requests downsampling by setting one of the following: <code>genome_length</code>, <code>rasusa_num_bases</code>, <code>rasusa_fraction_of_reads</code>, or <code>rasusa_num_reads</code>. To downsample by coverage, please provide the genome length of your expected taxa. Downsampling is beneficial when coverage exceeds ~150x as this can increase assembly time, computational costs, and can introduce errors.</p>
 </div>
 <details class="task">
 <summary><code>Rasusa</code>: Read Subsampling</summary>
@@ -10726,6 +10726,10 @@
 </table>
 </div>
 </details>
+</details>
+<div class="admonition dna">
+<p class="admonition-title">Nanoplot and genome length</p>
+<p>If <code>genome_length</code> is not provided Nanoplot will use the Quast assembly length to calculate the estimated coverage.</p>
 <details class="task">
 <summary><code>NanoPlot</code>: Read Quantification</summary>
 <p>NanoPlot is used for the determination of mean quality scores, read lengths, and number of reads. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
@@ -10777,7 +10781,7 @@
 </tbody>
 </table>
 </div>
-</details>
+</div>
 <div class="admonition dna">
 <p>These tasks assemble the reads into a <em>de novo</em> assembly and assess the quality of the assembly.</p>
 </div>

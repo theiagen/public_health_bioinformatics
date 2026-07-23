@@ -13443,6 +13443,10 @@
 </table>
 </div>
 </details>
+</details>
+<div class="admonition dna">
+<p class="admonition-title">Nanoplot and genome length</p>
+<p>If <code>genome_length</code> is not provided Nanoplot will use the Quast assembly length to calculate the estimated coverage.</p>
 <details class="task">
 <summary><code>NanoPlot</code>: Read Quantification</summary>
 <p>NanoPlot is used for the determination of mean quality scores, read lengths, and number of reads. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
@@ -13494,7 +13498,7 @@
 </tbody>
 </table>
 </div>
-</details>
+</div>
 <details class="task">
 <summary><code>Minimap2</code>: Read Alignment</summary>
 <p>Minimap2 is a popular aligner that is used to align reads (or assemblies) to an assembly file. In Minimap2, "modes" are a group of preset options.</p>
