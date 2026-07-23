@@ -31,7 +31,7 @@ task variant_annotate {
       --feature_qualifier ~{feature_qualifier} \
       ~{if exact_match then "--exact_match" else ""} \
       --output ~{samplename}.variant_annotations.txt \
-      || echo "WARNING: variant_annotation.py failed; continuing without a variant annotation report"
+      || echo "WARNING: variant_annotation failed; continuing without a variant annotation report"
 
     if [ -f GENE_VARIANTS.vcf ]; then
       mv GENE_VARIANTS.vcf ~{samplename}.genes.vcf
