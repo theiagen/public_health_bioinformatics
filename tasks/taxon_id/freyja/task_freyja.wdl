@@ -9,6 +9,7 @@ task freyja_one_sample {
     String? freyja_pathogen
     File? freyja_barcodes
     File? freyja_lineage_metadata
+    File? freyja_lineage_yml
     Boolean auto_adapt = false
     Float eps = 0.001 # set to mirror v2.0.1 default
     Float adapt = 0.0 # set to mirror v2.0.1 default
@@ -79,6 +80,7 @@ task freyja_one_sample {
     ~{"--pathogen " + freyja_pathogen} \
     ~{"--eps " + eps} \
     ~{"--meta " + freyja_lineage_metadata} \
+    ~{'--lineageyml ' + freyja_lineage_yml} \
     ~{"--barcodes " + freyja_barcodes} \
     ~{"--depthcutoff " + depth_cutoff} \
     ~{"--nb " + number_bootstraps } \
@@ -96,6 +98,7 @@ task freyja_one_sample {
     ~{"--pathogen " + freyja_pathogen} \
     ~{'--eps ' + eps} \
     ~{'--meta ' + freyja_lineage_metadata} \
+    ~{'--lineageyml ' + freyja_lineage_yml} \
     ~{'--barcodes ' + freyja_barcodes} \
     ~{'--depthcutoff ' + depth_cutoff} \
     ~{true='--confirmedonly' false='' confirmed_only} \
