@@ -531,8 +531,8 @@ body.col-resizing .col-resize-handle::after {
 
 /* while dragging: consistent cursor and no accidental text selection */
 body.col-resizing {
-  cursor: col-resize !important;
-  user-select: none !important;
+  cursor: col-resize !important; /* don't switch to a regular cursor on drag */
+  user-select: none !important;/* don't highlight text while dragging */
 }
 
 /* 5. SORT ICONS */

@@ -1,63 +1,56 @@
 /*
- * Adds a toolbar above each ".searchable-table" containing a search box (which
- * filters the table's rows as the reader types) and a reset button (which clears
- * the search, sort, and manual column widths at once).
- *
- * This file owns TWO things, kept in clearly separated sections below:
- *   1. SEARCH — the search input and the incremental row-filtering it drives.
- *      This is the file's core responsibility.
- *   2. RESET BUTTON — the reset button and the "is anything active?" logic that
- *      shows/hides it. Reset is cross-cutting: it clears search (owned here) plus
- *      sort and resize, which it delegates to the other features via
- *      window.mdTables (resetSort/resetResize + isSortActive/isResizeActive) so
- *      this file never reaches into their internals.
- *
- * Search performance notes:
- *   - caches each row's text once, so typing never re-reads the DOM;
- *   - runs the filter on the next animation frame, so fast keystrokes are
- *     batched into a single update;
- *   - narrows incrementally: when the query grows (a character is typed), only
- *     rows that are still visible are re-checked, because a row already hidden
- *     cannot match a longer query.
- *
- * Depends on window.mdTables (table-utils.js) for the page-load hook and the
- * per-feature reset/active-check helpers.
+ * Adds a toolbar above each ".searchable-table" containing a search box and a
+ * reset button to clear any search or table visual manipulation
  */
 (function () {
-  const { onPageLoad, resetSort, isSortActive, resetResize, isResizeActive } =
-    window.mdTables;
+  // functions from table-utils.js
+  const { onPageLoad } = window.mdTables;
 
-  // Reset icon (circular arrow) used by the per-table reset button.
+  // icon for table reset button
   const RESET_ICON =
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">' +
     '<path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>' +
     '</svg>';
 
+  // enable table search (and reset button) to tables
   function addTableSearch() {
+    // Read these here (not at file load) so it doesn't matter that
+    // table-resize.js loads after this file — by the time addTableSearch runs
+    // (on page load), every table-*.js file has already published to mdTables.
+    const {
+      resetSort,
+      isSortActive,
+      resetResize,
+      isResizeActive,
+      scrollTableToTop,
+    } = window.mdTables;
+
+    // find all searchable table tags on the page
     const containers = document.querySelectorAll(".searchable-table");
 
+    // for each container that has a table
     containers.forEach((container) => {
       const table = container.querySelector("table");
       if (!table) {
         return;
       }
 
-      // Don't add a second toolbar if this container is already enhanced.
+      // only add one search bar
       if (container.querySelector(".table-toolbar")) {
         return;
       }
 
-      // ----- Toolbar: search box (left) + reset button (right) -----
+      // create tool bar
       const toolbar = document.createElement("div");
       toolbar.classList.add("table-toolbar");
 
+      // add search bar (left)
       const searchInput = document.createElement("input");
       searchInput.setAttribute("type", "search");
       searchInput.setAttribute("placeholder", "Search");
       searchInput.classList.add("table-search-input");
 
-      // Reset button: clears the search, sort order, and manual column widths.
-      // Pinned to the far right via CSS and hidden until something is active.
+      // add reset button (right); hidden until something is active.
       const resetButton = document.createElement("button");
       resetButton.type = "button";
       resetButton.classList.add("table-reset-button", "is-hidden");
@@ -67,26 +60,24 @@
 
       toolbar.appendChild(searchInput);
       toolbar.appendChild(resetButton);
+
+      // add the toolbar before the table
       container.insertBefore(toolbar, container.firstChild);
 
-      // ----- Row bookkeeping (shared by search + reset) -----
-      // Capture the original row order so reset can restore it (tablesort
+      // save the original row order so reset can restore it (tablesort
       // reorders these same <tr> nodes in place, so the references stay valid).
       const tbody = table.tBodies[0];
       const originalOrder = tbody ? Array.from(tbody.rows) : [];
 
-      // Live collection of the data rows (header lives in <thead>, so this is
-      // body-only). Reused across keystrokes instead of re-querying each time.
+      // a live list of the rows (in whatever order the sort puts it into)
       const bodyRows = tbody ? tbody.rows : [];
 
-      /* ======================================================================
-       * SECTION 1 — SEARCH: filter rows as the reader types
-       * ==================================================================== */
+/* ======================================================================
+* SEARCH: filter rows as the reader types
+* ==================================================================== */
 
-      // Return a row's uppercased searchable text, caching it on the element.
-      // textContent (not innerText) avoids forcing a layout on every read, and
-      // the cache means repeated keystrokes never touch the DOM for reading.
-      // The cache rides on the <tr>, so tablesort/reset reordering keeps it.
+      // cache a row's text in uppercase to the <tr> element so it's only
+      // accessed once from the DOM and won't be lost during sorting
       function rowSearchText(row) {
         if (row._searchText === undefined) {
           row._searchText = row.textContent.toUpperCase();
@@ -94,69 +85,66 @@
         return row._searchText;
       }
 
-      // State for incremental narrowing (see applyFilter).
-      let filterScheduled = false;
-      let lastFilter = "";
-      let visibleRows = null; // null = unknown, must re-scan every row
+      // vars to allow for incremental narrowing
+      let filterScheduled = false; // flag to avoid event firing when typing fast
+      let lastFilter = ""; // contains what the last time the search was run
+      let visibleRows = null; // the list of rows that matched last time
 
-      // Apply the current filter against the cached per-row text. Only writes
-      // style.display when a row's visibility actually flips, so unchanged rows
-      // never invalidate layout.
-      //
-      // Incremental narrowing: when the new query CONTAINS the previous one
-      // (e.g. the user typed another character), any row already hidden cannot
-      // match the longer query, so we only re-check the rows still visible.
-      // When the query widens (characters removed) we re-scan every row.
+      // perform the search filter
       function applyFilter() {
         filterScheduled = false;
+        // convert the searchbar text to uppercase
         const filter = searchInput.value.toUpperCase();
 
+        // check to see if the search is narrowing vs widening
+        // (the filter contains the same text as last time and rows are visible)
         const narrowing = visibleRows !== null && filter.includes(lastFilter);
+        // if narrowing, search the visible rows; if not, search all rows
         const rows = narrowing ? visibleRows : bodyRows;
         const nextVisible = [];
 
+        // search for the matching text in the searchable rows
         for (let i = 0; i < rows.length; i++) {
           const row = rows[i];
+          // does the row have matching text?
           const match = filter === "" || rowSearchText(row).includes(filter);
 
           if (match) {
+            // if there's a match, show the row if it was hidden
             if (row.style.display === "none") row.style.display = "";
             nextVisible.push(row);
           } else if (row.style.display !== "none") {
+            // if it doesn't match, hide it if it wasn't already hidden
             row.style.display = "none";
           }
         }
 
+        // update the list of visible rows and lastFilter
         visibleRows = nextVisible;
         lastFilter = filter;
+        // indicate that a filter was set
         updateResetVisibility();
       }
 
-      // Filter as the user types. Rapid keystrokes coalesce into a single pass
-      // on the next animation frame instead of one full pass per keypress.
+      // filter as the user types. wait until they're done typing to search
       searchInput.addEventListener("input", function () {
         if (filterScheduled) return;
         filterScheduled = true;
         requestAnimationFrame(applyFilter);
       });
 
-      /* ======================================================================
-       * SECTION 2 — RESET BUTTON: clear search + sort + resize together
-       *
-       * Everything below is about the reset button, not searching. It shows the
-       * button whenever ANY feature is active, and on click clears this file's
-       * search state while delegating sort and resize back to their own scripts.
-       * ==================================================================== */
+/* ======================================================================
+* RESET BUTTON: clear search, sort, scroll, and resize together
+* ==================================================================== */
 
-      // Show every data row again (used by reset, after clearing the filter).
+      // undo any row filtering
       function showAllRows() {
         for (let i = 0; i < bodyRows.length; i++) {
           bodyRows[i].style.display = "";
         }
       }
 
-      // Show the reset button only once a search, sort, or resize is active.
-      // Sort/resize state is owned by the other scripts and read via mdTables.
+      // only show the reset button when a search, reset, or sort was performed.
       function updateResetVisibility() {
         const active =
           searchInput.value.trim() !== "" ||
@@ -165,40 +153,40 @@
         resetButton.classList.toggle("is-hidden", !active);
       }
 
-      // React to sort / resize (driven by the other scripts) so the button
-      // appears the moment a column is sorted or a resize is committed.
-      // Tablesort sets aria-sort on the sorted header; watch for that.
+      // react to sort / resize (driven by the other scripts) so the button
+      // appears the moment a column is sorted or a resized.
       const thead = table.tHead || table;
       const sortObserver = new MutationObserver(updateResetVisibility);
       sortObserver.observe(thead, {
         subtree: true,
         attributes: true,
-        attributeFilter: ["aria-sort"],
+        attributeFilter: ["aria-sort"], // tablesort flag
       });
       document.addEventListener("table-resized", updateResetVisibility);
 
-      // Reset: clear this file's search + row order, then delegate sort and
-      // resize back to their owning scripts.
+      // listen for when the reset button is clicked to reset
       resetButton.addEventListener("click", function () {
-        // --- search (owned here) ---
+        // reestablish the row original order
         searchInput.value = "";
         if (tbody) {
           originalOrder.forEach((row) => tbody.appendChild(row));
         }
         showAllRows();
-        // Reset narrowing state so the next filter re-scans every row.
+        // reset narrowing state so the next filter re-scans every row.
         visibleRows = null;
         lastFilter = "";
 
-        // --- delegated to the other features ---
+        // reset sorting, resizing, and any scrolling
         resetSort(table);
         resetResize(table);
+        scrollTableToTop(table);
 
+        // re-hide the reset button
         updateResetVisibility();
       });
     });
   }
 
-  // addTableSearch is idempotent per container (guards on an existing toolbar).
+  // when the page loads, add the table search bar
   onPageLoad(addTableSearch);
 })();
