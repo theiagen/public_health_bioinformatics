@@ -19,6 +19,8 @@ task freyja_dashboard_task {
     Int cpu = 1
   }
   command <<<
+
+  export PANDAS_FUTURE_INFER_STRING=0
   # capture version
   freyja --version | tee FREYJA_VERSION
 
