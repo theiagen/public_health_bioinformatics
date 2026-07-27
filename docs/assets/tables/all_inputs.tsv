@@ -1361,7 +1361,7 @@ merlin_magic	emmtyper_min_good	Int	Minimum size where there must be 2 matches fo
 merlin_magic	emmtyper_min_percent_identity	Int	Minimal percent identity of sequence.	95	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	emmtyper_min_perfect	Int	Minimum size of perfect match at 3' primer end.	15	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	emmtyper_mismatch	Int	Threshold for number of mismatch to allow in BLAST hit.	4	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	emmtyper_wf	String	Choose workflow [blast|pcr]	blast	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	emmtyper_wf	String	Choose workflow (blast\|pcr)	blast	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	emmtypingtool_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/emmtypingtool:0.0.1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
 merlin_magic	genotyphi_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.11.0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
 merlin_magic	hicap_broken_gene_length	Int	Minimum length to consider a broken gene	60	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
