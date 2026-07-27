@@ -6839,7 +6839,7 @@
 </span><span id="__span-0-171"><a id="__codelineno-0-171" name="__codelineno-0-171" href="#__codelineno-0-171"></a>        | merlin_magic | <span class="gs">**emmtyper_min_percent_identity**</span> | Int | Minimal percent identity of sequence. | 95 | Optional |
 </span><span id="__span-0-172"><a id="__codelineno-0-172" name="__codelineno-0-172" href="#__codelineno-0-172"></a>        | merlin_magic | <span class="gs">**emmtyper_min_perfect**</span> | Int | Minimum size of perfect match at 3&#39; primer end. | 15 | Optional |
 </span><span id="__span-0-173"><a id="__codelineno-0-173" name="__codelineno-0-173" href="#__codelineno-0-173"></a>        | merlin_magic | <span class="gs">**emmtyper_mismatch**</span> | Int | Threshold for number of mismatch to allow in BLAST hit. | 4 | Optional |
-</span><span id="__span-0-174"><a id="__codelineno-0-174" name="__codelineno-0-174" href="#__codelineno-0-174"></a>        | merlin_magic | <span class="gs">**emmtyper_wf**</span> | String | Choose workflow [blast|pcr] | blast | Optional |
+</span><span id="__span-0-174"><a id="__codelineno-0-174" name="__codelineno-0-174" href="#__codelineno-0-174"></a>        | merlin_magic | <span class="gs">**emmtyper_wf**</span> | String | Choose workflow (blast\|pcr) | blast | Optional |
 </span><span id="__span-0-175"><a id="__codelineno-0-175" name="__codelineno-0-175" href="#__codelineno-0-175"></a>        | merlin_magic | <span class="gs">**emmtypingtool_docker_image**</span> | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/emmtypingtool:0.0.1 | Optional |
 </span><span id="__span-0-176"><a id="__codelineno-0-176" name="__codelineno-0-176" href="#__codelineno-0-176"></a>        | merlin_magic | <span class="gs">**genotyphi_docker_image**</span> | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.11.0 | Optional |
 </span><span id="__span-0-177"><a id="__codelineno-0-177" name="__codelineno-0-177" href="#__codelineno-0-177"></a>        | merlin_magic | <span class="gs">**hicap_broken_gene_length**</span> | Int | Minimum length to consider a broken gene | 60 | Optional |
@@ -7169,7 +7169,7 @@
 </span><span id="__span-1-87"><a id="__codelineno-1-87" name="__codelineno-1-87" href="#__codelineno-1-87"></a>    | busco_database | String | BUSCO database used |
 </span><span id="__span-1-88"><a id="__codelineno-1-88" name="__codelineno-1-88" href="#__codelineno-1-88"></a>    | busco_docker | String | BUSCO docker image used |
 </span><span id="__span-1-89"><a id="__codelineno-1-89" name="__codelineno-1-89" href="#__codelineno-1-89"></a>    | busco_report | File | A plain text summary of the results in BUSCO notation |
-</span><span id="__span-1-90"><a id="__codelineno-1-90" name="__codelineno-1-90" href="#__codelineno-1-90"></a>    | busco_results | String | BUSCO results (see relevant toggle in [<span class="nt">this block</span>](<span class="na">https://theiagen.github.io/public_health_bioinformatics/latest/workflows/genomic_characterization/theiaprok/#post-assembly-tasks-performed-for-all-taxa</span>)) |
+</span><span id="__span-1-90"><a id="__codelineno-1-90" name="__codelineno-1-90" href="#__codelineno-1-90"></a>    | busco_results | String | BUSCO results (see relevant toggle in [<span class="nt">this block</span>](<span class="na">https://theiagen.github.io/public_health_bioinformatics/latest/workflows/genomic_characterization/theiaprok/#post-assembly-tasks</span>)) |
 </span><span id="__span-1-91"><a id="__codelineno-1-91" name="__codelineno-1-91" href="#__codelineno-1-91"></a>    | busco_version | String | BUSCO software version used |
 </span><span id="__span-1-92"><a id="__codelineno-1-92" name="__codelineno-1-92" href="#__codelineno-1-92"></a>    | cg_pipeline_docker | String | Docker file used for running CG-Pipeline on cleaned reads |
 </span><span id="__span-1-93"><a id="__codelineno-1-93" name="__codelineno-1-93" href="#__codelineno-1-93"></a>    | cg_pipeline_report_clean | File | TSV file of read metrics from clean reads, including average read length, number of reads, and estimated genome coverage |
@@ -7898,11 +7898,19 @@
     
       <script src="../assets/javascripts/bundle.6e5f0216.min.js"></script>
       
+        <script src="../javascripts/table-utils.js"></script>
+      
         <script src="https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js"></script>
       
-        <script src="../javascripts/tablesort.js"></script>
+        <script src="../javascripts/table-sort.js"></script>
       
         <script src="../javascripts/table-search.js"></script>
+      
+        <script src="../javascripts/table-resize.js"></script>
+      
+        <script src="../javascripts/table-scrolltop.js"></script>
+      
+        <script src="../javascripts/toggle-spin.js"></script>
       
     
   </body>

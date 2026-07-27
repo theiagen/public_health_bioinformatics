@@ -1976,6 +1976,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Tasks
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#outputs" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -6434,6 +6445,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Tasks
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#outputs" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -6754,6 +6776,41 @@
 </tbody>
 </table>
 </div>
+<h3 id="tasks">Tasks<a class="headerlink" href="#tasks" title="Permanent link">&para;</a></h3>
+<details class="task">
+<summary><code>Nextclade</code>: Clade Assignment</summary>
+<p>Nextclade is an open-source project used to analyze viral genomes, particularly for clade assignment and mutation calling. Simply, Nextclade works by aligning viral genomes to a reference genome, calling variants between the two sequences, and then assigning clades based on those identified mutations.</p>
+<p>Clade assignment is performed via <em>phylogenetic placement</em>. Phylogenetic placement compares the mutations of the provided sequence to the mutations of each node found in a reference tree, where the root of that tree is the reference genome. The node that is most similar to the sample is used to both assign a clade designation and calculate where the sample should be placed in the phylogenetic tree.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Nextclade Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_nextclade.wdl">task_nextclade.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/nextstrain/nextclade">https://github.com/nextstrain/nextclade</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://docs.nextstrain.org/projects/nextclade/en/stable/">Nextclade</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.21105/joss.03773">Nextclade: clade assignment, mutation calling and quality control for viral genomes.</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
 <h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
 <div class="searchable-table">
 <table>
@@ -6932,11 +6989,19 @@
     
       <script src="../../../assets/javascripts/bundle.6e5f0216.min.js"></script>
       
+        <script src="../../../javascripts/table-utils.js"></script>
+      
         <script src="https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js"></script>
       
-        <script src="../../../javascripts/tablesort.js"></script>
+        <script src="../../../javascripts/table-sort.js"></script>
       
         <script src="../../../javascripts/table-search.js"></script>
+      
+        <script src="../../../javascripts/table-resize.js"></script>
+      
+        <script src="../../../javascripts/table-scrolltop.js"></script>
+      
+        <script src="../../../javascripts/toggle-spin.js"></script>
       
     
   </body>
