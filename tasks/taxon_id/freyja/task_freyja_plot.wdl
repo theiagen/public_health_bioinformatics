@@ -18,7 +18,7 @@ task freyja_plot_task {
   }
   command <<<
   # This export is a stop gap to prevent pandas v2 vs v3 type errors.
-  # Check in future impelementations of staphb/freyja for resolution.
+  # Check in future implementations of staphb/freyja for resolution.
   export PANDAS_FUTURE_INFER_STRING=0
 
   # capture version
