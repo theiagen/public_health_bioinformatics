@@ -308,6 +308,9 @@ This workflow runs on the set level.
 
 The main requirement to run Freyja on other pathogens is **the existence of a barcode file for your pathogen of interest**. Currently, barcodes exist for the following organisms:
 
+!!! warning "v2.0.3: MPX and Depth Cutoff"
+    Currently, a lineage YAML provided through `freyja_lineage_yml` is required when running MPX alongside `depth_cutoff` due to Freyja's inability to correctly pull the necessary YAML.
+
 - DENV1
 - DENV2
 - DENV3
