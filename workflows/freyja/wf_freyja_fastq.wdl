@@ -30,7 +30,7 @@ workflow freyja_fastq {
     File? freyja_lineage_metadata
     Int? depth_cutoff
     Boolean ont = false
-    Boolean read_qc_trim = true
+    Boolean call_read_qc_trim = true
     String kraken2_target_organism = "Severe acute respiratory syndrome coronavirus 2"
     # qc check parameters
     File? qc_check_table
@@ -45,7 +45,7 @@ workflow freyja_fastq {
     String freyja_long_format_docker = "us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.2"
     File sc2_gene_bed = "gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_gene_locations.bed"
   }
-  if (defined(read2) && read_qc_trim) {
+  if (defined(read2) && call_read_qc_trim) {
     call read_qc_pe.read_QC_trim_pe as read_QC_trim_pe {
       input:
         samplename = samplename,
@@ -57,7 +57,7 @@ workflow freyja_fastq {
         call_kraken = true
     }
   }
-  if (! defined(read2) && ! ont && read_qc_trim) {
+  if (! defined(read2) && ! ont && call_read_qc_trim) {
     call read_qc_se.read_QC_trim_se as read_QC_trim_se {
       input:
         samplename = samplename,
@@ -79,7 +79,7 @@ workflow freyja_fastq {
         samplename = samplename,
         est_genome_length = get_fasta_genome_size.fasta_length
     }
-    if (read_qc_trim) {
+    if (call_read_qc_trim) {
       call read_qc_ont.read_QC_trim_ont {
         input:
           samplename = samplename,
