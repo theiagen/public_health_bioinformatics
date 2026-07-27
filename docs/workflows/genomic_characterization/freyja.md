@@ -308,21 +308,21 @@ This workflow runs on the set level.
 
 The main requirement to run Freyja on other pathogens is **the existence of a barcode file for your pathogen of interest**. Currently, barcodes exist for the following organisms:
 
-- SARS-CoV-2 (default)
-- MPX
-- H5Nx
-- FLU-B-VIC
-- MEASLESgenome
-- RSVa
-- RSVb
-- H5Nx-cattle
-- H1N1
-- H3N2
 - DENV1
 - DENV2
 - DENV3
 - DENV4
+- FLU-B-VIC
+- H1N1
+- H3N2
+- H5Nx
+- H5Nx-cattle
+- MEASLESgenome
+- MPX
 - MTB
+- RSVa
+- RSVb
+- SARS-CoV-2 (default)
 
 !!! dna "Freyja barcodes for other pathogens"
 
@@ -349,21 +349,21 @@ When using the `freyja_pathogen` flag, the user must set the optional `update_db
 
 Allowed options:
 
-- SARS-CoV-2 (default)
-- MPX
-- H5Nx
-- FLU-B-VIC
-- MEASLESgenome
-- RSVa
-- RSVb
-- H5Nx-cattle
-- H1N1
-- H3N2
 - DENV1
 - DENV2
 - DENV3
 - DENV4
+- FLU-B-VIC
+- H1N1
+- H3N2
+- H5Nx
+- H5Nx-cattle
+- MEASLESgenome
+- MPX
 - MTB
+- RSVa
+- RSVb
+- SARS-CoV-2 (default)
 
 !!! warning
 
