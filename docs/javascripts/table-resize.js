@@ -1,12 +1,13 @@
 /*
  * Makes every content table's columns resizable:
  *   - drag an internal header border to trade width between it and its right
- *     neighbour (the table's total width stays fixed), and
- *   - drag a handle on the table's far-right header border to widen the last
- *     column / the whole table (adding a horizontal scrollbar) or shrink it
+ *     neighbor
+ *   - drag a handle on the table's far-right header border to widen or shrink the
+ *     last column/whole table
  */
 (function () {
-  const { // these parameters and functions are set in table-utils.js
+  const {
+    // these parameters and functions are set in table-utils.js
     MIN_COLUMN_WIDTH,
     onPageLoad,
     getHeaderRow,
@@ -16,8 +17,8 @@
 
   /* ===== column resize helper functions ===== */
 
-  // Freeze the current (CSS-computed) column widths as explicit pixels and switch
-  // to fixed layout so a drag can adjust them precisely.
+  // freeze the current column widths as explicit pixels and switch to fixed
+  // layout so a drag can adjust them precisely.
   function pinColumnPercentages(table, headers) {
     // get widths of columns and calculate total width
     const widths = headers.map(th => th.getBoundingClientRect().width);
@@ -37,9 +38,8 @@
     table.dataset.manual = "true";
   }
 
-  // Like pinColumnPercentages, but freezes column widths in PIXELS instead of
-  // percentages; used by the last-column edge handle, which changes the table's
-  // TOTAL width
+  // freeze the current column widths in PIXELS; used by the last-column edge
+  // handle, which changes the table's TOTAL width
   function pinColumnWidthsPx(table, headers) {
     const widths = headers.map(th => th.getBoundingClientRect().width);
     const total = widths.reduce((sum, w) => sum + w, 0);
@@ -82,7 +82,6 @@
       startX = event.clientX;
 
       // calculate starting column width percentages for both sides
-      // of the pointer
       startLeftPct =
         parseFloat(header.style.width) ||
         (header.getBoundingClientRect().width / tableWidth) * 100;
@@ -127,7 +126,7 @@
         leftPct = totalPct - rightPct;
       }
 
-      // set the columns to be the new widths by percentage
+      // set the columns to the new widths by percentage
       header.style.width = leftPct + "%";
       nextHeader.style.width = rightPct + "%";
     }
@@ -156,7 +155,7 @@
 
   // resizable last column (which can change the entire table width)
   function makeLastColumnResizable(header, table, headers) {
-    // make resize icon (specific for the edge)
+    // make resize icon (specific class name for the edge)
     const handle = document.createElement("span");
     handle.className = "col-resize-handle col-resize-handle--edge";
     handle.setAttribute("aria-hidden", "true");
@@ -305,6 +304,6 @@
   window.mdTables.resetResize = resetResize;
   window.mdTables.isResizeActive = isResizeActive;
 
-  // enable all the tables when a page is loaded
+  // enable all the tables to be resized when a page is loaded
   onPageLoad(enableAllTables);
 })();

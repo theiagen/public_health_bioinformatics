@@ -21,7 +21,7 @@
     return (table.tHead && table.tHead.rows[0]) || table.rows[0] || null;
   }
 
-  // grab every plain content table100and
+  // grab every plain content table
   // `:not([class])` skips tables that we've given an explicit class
   function getContentTables() {
     return document.querySelectorAll("article table:not([class])");

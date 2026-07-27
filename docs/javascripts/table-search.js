@@ -15,7 +15,7 @@
   // enable table search (and reset button) to tables
   function addTableSearch() {
     // Read these here (not at file load) so it doesn't matter that
-    // table-resize.js loads after this file — by the time addTableSearch runs
+    // table-resize.js loads after this file; by the time addTableSearch runs
     // (on page load), every table-*.js file has already published to mdTables.
     const {
       resetSort,
