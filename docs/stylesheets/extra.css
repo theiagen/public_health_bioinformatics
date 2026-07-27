@@ -3,7 +3,7 @@
  * ============================================================================
  * This is the documentation site's custom stylesheet, loaded via the
  * `extra_css` setting AFTER the theme's built-in styles — meaning anything
- * here overrides or adds to the Material/Zensical defaults. Its companion
+ * here overrides or adds to the Zensical defaults. Its companion
  * JavaScript lives in ../javascripts/: table-utils.js is a shared foundation
  * used by the table feature scripts (table-resize.js, table-scrolltop.js,
  * table-search.js, table-sort.js), which together create most of the wrapper
