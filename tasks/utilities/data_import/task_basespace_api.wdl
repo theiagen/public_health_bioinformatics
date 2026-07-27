@@ -17,6 +17,10 @@ task fetch_bs {
 
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/bioforklift:0.5.0-dev"
   }
+  meta {
+    # added so that call caching is always turned off
+    volatile: true
+  }
   command <<<
     set -euo pipefail
 
