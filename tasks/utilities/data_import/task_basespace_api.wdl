@@ -13,7 +13,7 @@ task fetch_bs {
 
     Int memory = 8
     Int cpu = 2
-    Int disk_size = 100
+    Int disk_size = 250
 
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/bioforklift:0.5.0-dev"
   }
