@@ -192,7 +192,7 @@ task retrieve_pe_reads_bam {
     File bam
     String samplename
     String prefix = ""
-    Int sam_flag = "4" # unmapped reads (SAM flag 4)
+    Int sam_flag = 4 # unmapped reads (SAM flag 4)
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17"
     Int disk_size = 100
     Int cpu = 2

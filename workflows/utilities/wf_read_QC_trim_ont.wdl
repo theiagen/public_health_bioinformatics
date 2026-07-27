@@ -18,7 +18,7 @@ workflow read_QC_trim_ont {
     # kmc has been observed to be unreliable for genome length estimation, so we are now using a fixed value
     # setting this to be 5Mb which is around .7Mb greater than the mean genome length of bacteria (based on https://github.com/CDCgov/phoenix/blob/717d19c19338373fc0f89eba30757fe5cfb3e18a/assets/databases/NCBI_Assembly_stats_20240124.txt)
     # this default will not be used for TheiaCoV as that workflow series pass in the expected length based on the organism tag
-    Int genome_length = 5000000
+    Int? genome_length
 
     String? workflow_series
 
@@ -126,27 +126,29 @@ workflow read_QC_trim_ont {
         taxdump_path = metabuli_taxdump_path
     }
   }
-  if ("~{workflow_series}" == "theiaprok" || "~{workflow_series}" == "theiaeuk") {
+  if ( "~{workflow_series}" == "theiaprok" || "~{workflow_series}" == "theiaeuk" ) {
     # rasusa for random downsampling
-    call rasusa_task.rasusa {
-      input:
-        read1 = read1,
-        samplename = samplename,
-        num_bases = rasusa_num_bases,
-        coverage = rasusa_downsampling_coverage,
-        cpu = rasusa_cpu,
-        disk_size = rasusa_disk_size,
-        docker = rasusa_docker,
-        fraction_of_reads = rasusa_fraction_of_reads,
-        genome_length = genome_length,
-        memory = rasusa_memory,
-        num_reads = rasusa_num_reads,
-        seed = rasusa_seed
+    if ( defined(genome_length) ||  defined(rasusa_fraction_of_reads) || defined(rasusa_num_bases) || defined(rasusa_num_reads) ) {
+      call rasusa_task.rasusa {
+        input:
+          read1 = read1,
+          samplename = samplename,
+          num_bases = rasusa_num_bases,
+          coverage = rasusa_downsampling_coverage,
+          cpu = rasusa_cpu,
+          disk_size = rasusa_disk_size,
+          docker = rasusa_docker,
+          fraction_of_reads = rasusa_fraction_of_reads,
+          genome_length = genome_length,
+          memory = rasusa_memory,
+          num_reads = rasusa_num_reads,
+          seed = rasusa_seed
+      }
     }
     # nanoq for filtering
     call nanoq_task.nanoq {
       input:
-        read1 = rasusa.read1_subsampled,
+        read1 = select_first([rasusa.read1_subsampled, read1]),
         samplename = samplename,
         cpu = nanoq_cpu,
         disk_size = nanoq_disk_size,
@@ -192,7 +194,7 @@ workflow read_QC_trim_ont {
     String metabuli_database = select_first([metabuli_theiacov_raw.metabuli_database, metabuli_theiaprok.metabuli_database, ""])
 
     # estimated genome length -- by default for TheiaProk this is 5Mb
-    Int est_genome_length = genome_length
+    Int? est_genome_length = genome_length
 
     # nanoq outputs
     File read1_clean = select_first([nanoq.filtered_read1, read_filtering.read1_clean])

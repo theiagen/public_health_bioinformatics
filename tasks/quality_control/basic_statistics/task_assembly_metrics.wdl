@@ -81,11 +81,11 @@ task stats_n_coverage {
     File cov_hist = "~{samplename}.cov.hist"
     File cov_stats = "~{samplename}.cov.txt"
     File flagstat = "~{samplename}.flagstat.txt"
-    Float coverage = read_string("COVERAGE")
-    Float depth = read_string("DEPTH")
-    Float meanbaseq = read_string("MEANBASEQ")
-    Float meanmapq = read_string("MEANMAPQ")
-    Float percentage_mapped_reads = read_string("PERCENTAGE_MAPPED_READS")
+    Float coverage = read_float("COVERAGE")
+    Float depth = read_float("DEPTH")
+    Float meanbaseq = read_float("MEANBASEQ")
+    Float meanmapq = read_float("MEANMAPQ")
+    Float percentage_mapped_reads = read_float("PERCENTAGE_MAPPED_READS")
     File metrics_txt = "~{samplename}_metrics.txt"
 
   }

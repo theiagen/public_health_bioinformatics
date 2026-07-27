@@ -1,0 +1,67 @@
+# TheiaValidate v2 preset: theiaeuk_ont
+# Auto-generated from validation-criteria-v4-2-0-theiaeuk_ont.tsv
+#
+# KEYLESS preset: the Terra entity-id column (entity:<table>_id) differs per
+# export, so pass the key at run time, e.g.:
+#   theiavalidate validate T1 T2 --preset theiaeuk_ont \
+#     --key1 entity:<table1>_id --key2 entity:<table2>_id
+# (or --key <col> when both tables share one key column).
+
+columns:
+  amr_search_results:
+    method: exact
+    type: set[str]
+    delimiter: ","
+  assembly_length:
+    method: percent_diff
+    threshold: 0.05
+    type: float
+  cladetyper_clade:
+    method: exact
+  est_coverage_clean:
+    method: percent_diff
+    threshold: 0.05
+    type: float
+  est_coverage_raw:
+    method: percent_diff
+    threshold: 0.05
+    type: float
+  gambit_next_taxon:
+    method: exact
+  gambit_next_taxon_rank:
+    method: exact
+  gambit_predicted_taxon:
+    method: exact
+  gambit_predicted_taxon_rank:
+    method: exact
+  merlin_tag:
+    method: exact
+  n50_value:
+    method: percent_diff
+    threshold: 0.05
+    type: float
+  nanoplot_num_reads_clean1:
+    method: percent_diff
+    threshold: 0.05
+    type: float
+  nanoplot_num_reads_raw1:
+    method: exact
+  number_contigs:
+    type: float
+    any_of:
+      - method: percent_diff
+        threshold: 0.05
+      - method: range
+        threshold: 2
+  quast_gc_percent:
+    method: percent_diff
+    threshold: 0.01
+    type: float
+  theiaeuk_snippy_variants_num_reads_aligned:
+    method: percent_diff
+    threshold: 0.05
+    type: float
+  theiaeuk_snippy_variants_percent_ref_coverage:
+    method: percent_diff
+    threshold: 0.05
+    type: float

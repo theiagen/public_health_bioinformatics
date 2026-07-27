@@ -27,7 +27,6 @@ fragment: true
         | _Salmonella_ Typhi           | 90370     |
         | _Streptococcus pneumoniae_   | 1313      |
         | _Klebsiella_                | 570       |
-        | _Escherichia_                | 561       |
         | _Mycobacterium tuberculosis_ | 1773      |
         | _Candida auris_              | 498019    |
         | _Vibrio cholerae_            | 666       |
