@@ -21,6 +21,10 @@ Contact us if you need help generating your own mutation-annotated tree, or foll
 
 ///
 
+### Tasks
+
+{{ include_md("common_text/nextclade_task.md") }}
+
 ### Outputs
 
 /// html | div[class="searchable-table"]
