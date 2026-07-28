@@ -8,17 +8,32 @@
 
 The `BaseSpace_Fetch` workflow facilitates the transfer of Illumina sequencing data from BaseSpace (a cloud location) to a workspace on the [Terra.bio](http://Terra.bio) platform. Rather than downloading the files to a local drive and then re-uploading them to another location, we can perform a cloud-to-cloud transfer with the `BaseSpace_Fetch` workflow.
 
-### Setting up BaseSpace_Fetch
 
-Some initial set-up is required to use the workflow. To access one's BaseSpace account from within a workflow on Terra.bio, it is necessary to retrieve an access token and the API server address using the BaseSpace command-line tool. The access token is unique to a BaseSpace account. If it is necessary to transfer data from multiple BaseSpace accounts, multiple access tokens will need to be retrieved. Please see the ["Retrieving BaseSpace Access Credentials"](#retrieving-basespace-access-credentials) section below.
+**What you need before you start:**
 
-#### Retrieving BaseSpace Access Credentials
+- A BaseSpace account with access to the **Run** or **Project** holding your data.
+- A BaseSpace access token ([Step 1](#step-1-access-token)).
+- A Terra data table with one row per sample ([Step 4](#step-4-data-table)).
 
-This process must be performed on a command-line before using the `BaseSpace_Fetch` workflow for the first time. This can be set up in Terra, however it will work in any command-line environment that has access to the internet to install & run the BaseSpace command-line tool: `bs`.
+## Contents
 
-_If you already have a command-line environment available_, you can skip ahead to [Step 2](#install-bs-cli).
+1. [Step 1 — Get your `access_token`](#step-1-access-token)
+2. [Step 2 — Find your `basespace_collection_id`](#step-2-collection-id)
+3. [Step 3 — Find your `basespace_sample_name`](#step-3-sample-name)
+4. [Step 4 — Build the Terra data table](#step-4-data-table)
+5. [Step 5 — Upload the data table to Terra](#step-5-upload)
+6. [Inputs](#inputs)
+7. [Outputs](#outputs)
 
-##### Step 1: Create a command-line environment {% raw %} {#create-environment} {% endraw %}
+---
+
+## Step 1 — Get your `access_token` {% raw %} {#step-1-access-token} {% endraw %}
+
+This workflow requires a BaseSpace access token to authenticate your BaseSpace account and download FASTQ files from your Runs/Projects. Each `access_token` is tied to a single BaseSpace account, so you'll need a separate token for every account you want the workflow to access. The simplest way to obtain this token is with the BaseSpace command-line tool (`bs`), described below.
+
+_Already have a command-line environment available?_ You can skip ahead to [1.2 `bs` CLI installation](#install-bs-cli).
+
+#### 1.1 Create a command-line environment
 
 ??? toggle "Click for more information"
 
@@ -45,7 +60,7 @@ _If you already have a command-line environment available_, you can skip ahead t
         !!! caption narrow "Environment creation in progress"
             ![Terra sidebar showing a Jupyter environment being created, with a tooltip displaying the cost rate of $0.06 per hour for compute and under $0.01 per hour for disk.](../../assets/figures/basespace_fetch/info3-creation-in-progress.png)
 
-##### Step 2: Install the BaseSpace Command-Line Tool to Retrieve the Access Token and API Server Address {% raw %} {#install-bs-cli} {% endraw %}
+#### 1.2 Install the BaseSpace command-line tool and retrieve the access token {% raw %} {#install-bs-cli} {% endraw %}
 
 ??? toggle "Click for more information"
 
@@ -79,49 +94,93 @@ _If you already have a command-line environment available_, you can skip ahead t
 
         # navigate to the link provided in stdout and accept the authentication request through BaseSpace
 
-        # Print the api server and access token to stdout (replace the path below with the appropriate path returned by the find command above)
+        # Print the api server and access token to stdout
         cat ~/.basespace/default.cfg
         ```
 
-    3. Copy and paste the contents of the `~/.basespace/default.cfg` (specifically, the **access_token** & **API server** details) of the `default.cfg` file into Terra as workspace data elements.
-        1. Navigate to the Terra "DATA" tab, and select "Workspace Data" at the bottom of the left sidebar.
-        2. Click on "Edit" and then "Add variable" to add the new workspace data elements as in the examples below.
-
-        !!! caption narrow "Create workspace data elements"
-            ![Workspace data table showing the basespace_access_token and basespace_api_server key-value pairs required for BaseSpace configuration.](../../assets/figures/basespace_fetch/info5-copy-information.png)
-
-#### Preparing to retrieve a run with BaseSpace_Fetch
-
-##### Step 1: Create a Metadata Sheet from the BaseSpace SampleSheet {% raw %} {#prep-metadata} {% endraw %}
+#### 1.3 Store the token as Terra workspace data {% raw %} {#store-token} {% endraw %}
 
 ??? toggle "Click for more information"
 
-    !!! tip "Best Practices for Sample Identifiers"
-        - Avoid the use of underscores and whitespaces in the BaseSpace Project/Run name and/or the sample identifiers
-        - Underscores in a sample name may lead to BaseSpace_Fetch failure
-        - Avoid re-using Sample IDs. Make all sample IDs unique!
+    Copy the contents of `~/.basespace/default.cfg` (specifically the **accessToken** details) into Terra as a workspace data element. Storing this here means you can enter the token once per workspace instead of repeating it on every row of every data table.
 
-    1. Download the sample sheet from BaseSpace.
+    1. Navigate to the Terra "DATA" tab, and select "Workspace Data" at the bottom of the left sidebar.
+    2. Click on "Edit" and then "Add variable" to add the new workspace data elements as in the examples below.
 
-        On the BaseSpace portal, you can navigate to this via: Runs → {run} → Files → SampleSheet.csv
+    !!! caption narrow "Create workspace data elements"
+        ![Workspace data table showing the basespace_access_token and basespace_api_server key-value pairs required for BaseSpace configuration.](../../assets/figures/basespace_fetch/info5-copy-information.png)
 
-        !!! caption narrow "Example SampleSheet.csv"
-            ![A dialog box previewing SampleSheet.csv contents, showing sample IDs, names, and index sequences, with Cancel and Download buttons.](../../assets/figures/basespace_fetch/step6-sample-sheet.png)
+    When you launch the workflow, point the `access_token` input at this variable using `workspace.basespace_access_token`.
 
-    2. In Excel or an alternative spreadsheet software, set up a metadata sheet for Terra, with a row for each sample. Please feel free to use our [BaseSpace_Fetch Template](https://storage.cloud.google.com/theiagen-public-resources-rp/reference_data/family_agnostic/bs_fetch_template_20231103.tsv) to help ensure the file is formatted correctly.
-        1. In cell A1, enter the data table name with the "**entity:**TABLENAME**_id**" format
-        2. Create a column called `basespace_sample_name` and populate this with the data found under the `Sample_Name` column in the BaseSpace sample sheet.
+    !!! info "Pulling from more than one BaseSpace account in a single run"
+        `access_token` is an ordinary workflow input, so it does not *have* to come from workspace data. If different samples live under different BaseSpace accounts, add an `access_token` column to your data table and point the input at `this.access_token` instead.
 
-            !!! warning "Watch out"
-                If the contents of the `Sample_Name` and `Sample_ID` columns in the BaseSpace sample sheet are different, make a `basespace_sample_id` column in your spreadsheet and populate this with the data found under the `Sample_ID` column in the BaseSpace sample sheet.
+---
 
-        3. Create a `basespace_collection_id` column, and populate it with the BaseSpace Project or Run identifier
-        4. Populate column A of the spreadsheet with the sample names as seen in the sample sheet
+## Step 2 — Find your `basespace_collection_id` {% raw %} {#step-2-collection-id} {% endraw %}
 
-            !!! caption narrow "Example Metadata Sheet"
-                ![A spreadsheet with columns for bs_fetch_sample_id, basespace_sample_name, and basespace_collection_id, populated with six example sample rows all belonging to Run_01.](../../assets/figures/basespace_fetch/step7-metadata-sheet.png)
+In this guide, a "collection" refers to the BaseSpace **Run** or **Project** that contains your FASTQ files. The examples below show where to find the **Run** or **Project** name/numeric ID to enter as your `basespace_collection_id`.
 
-##### Step 2: Upload the metadata spreadsheet to the destination workspace in Terra.bio {% raw %} {#upload-metadata} {% endraw %}
+??? toggle "If your collection is a **Run**"
+    ![A gif visually showing which BaseSpace Run values can be used as a collection_id.](../../assets/figures/basespace_fetch/collection_id_run.gif)
+
+??? toggle "If your collection is a **Project**"
+    ![A gif visually showing which BaseSpace Project values can be used as a collection_id.](../../assets/figures/basespace_fetch/collection_id_project.gif)
+
+**Recommendation: use the numeric ID from the URL.** It is unambiguous, it never changes, and it avoids every problem below:
+
+!!! warning "Warnings for `basespace_collection_id`"
+    - **Matching is exact and case-sensitive.** BaseSpace's own search box is forgiving about case and partial words; this workflow is not.
+    - **Only Runs and Projects are supported.** A biosample, an app result, or an analysis cannot be used as a `basespace_collection_id`.
+    - **If nothing matches `basespace_collection_id`**, you'll get the error:
+      ```
+      Could not resolve input collection ID `X`: no project or run exactly matches it by id or name.
+      ```
+    - **If more than one thing matches `basespace_collection_id`** - for example a Run and a Project sharing the same name, you'll get the error:
+      ```
+      Input collection ID `X` is ambiguous; it matches: [...]. Provide a more specific id or name.
+      ```
+    Both errors can be fixed by switching to the numeric ID from the URL.
+
+---
+
+## Step 3 — Find your `basespace_sample_name` {% raw %} {#step-3-sample-name} {% endraw %}
+
+The workflow matches the string you provide exactly, against the BaseSpace ***FastQ Dataset*** or ***Dataset Name*** columns.
+
+??? toggle "If your collection is a **Run**"
+
+    Open the **Run** tab and go to the **Biosamples** tab. Use the values in the **FastQ Dataset** column as your `basespace_sample_name`. Alternatively, you can click on each individual Biosample and go to the **FASTQs** tab and use the values in the **Dataset Name** column.
+
+    ![A gif visually showing which BaseSpace Run values can be used as a `basespace_sample_name`.](../../assets/figures/basespace_fetch/basespace_sample_name_run.gif)
+
+??? toggle "If your collection is a **Project**"
+
+    Open the project and go to the **FASTQs** tab. Use the values in the **Dataset Name** column.
+
+    ![A gif visually showing which BaseSpace Project values can be used as a `basespace_sample_name`.](../../assets/figures/basespace_fetch/basespace_sample_name_project.gif)
+
+---
+
+## Step 4 — Build the Terra data table {% raw %} {#step-4-data-table} {% endraw %}
+
+In Excel or an alternative spreadsheet software, set up a data table for Terra, with a row for each sample. Please feel free to use our [BaseSpace_Fetch Template](https://storage.cloud.google.com/theiagen-public-resources-rp/reference_data/family_agnostic/bs_fetch_template_20231103.tsv) to help ensure the file is formatted correctly.
+
+1. In the first column's **header**, enter the data table name with the format `entity:TABLENAME_id`.
+2. Populate the first column with a unique identifier for each sample. This value can be the same as the corresponding `basespace_sample_name` or any other name you choose, as long as no two rows have the same value.
+
+    !!! warning "This column determines your final FASTQ filenames"
+        The FASTQ files downlaoded from your BaseSpace **Run** or **Project** are renamed to `{TABLENAME_id}_R1.fastq.gz` / `{TABLENAME_id}_R2.fastq.gz` using the value in the first column, **not** `basespace_sample_name`.
+
+3. Create a `basespace_sample_name` column and populate it with the samples found in [Step 3](#step-3-sample-name).
+4. Create a `basespace_collection_id` column and populate it with the BaseSpace Project or Run identifier from [Step 2](#step-2-collection-id).
+
+??? toggle "Example Terra data table"
+    ![A spreadsheet with columns for bs_fetch_sample_id, basespace_sample_name, and basespace_collection_id, populated with six example sample rows all belonging to Run_01.](../../assets/figures/basespace_fetch/step7-metadata-sheet.png)
+
+---
+
+## Step 5 — Upload the data table to Terra {% raw %} {#step-5-upload} {% endraw %}
 
 ??? toggle "Click for more information"
 
@@ -137,16 +196,12 @@ _If you already have a command-line environment available_, you can skip ahead t
 
     You can now use the created table to run the BaseSpace_Fetch workflow.
 
-### Inputs
+---
+
+## Inputs
 
 !!! info "Call-Caching Disabled"
     If using BaseSpace_Fetch workflow version 1.3.0 or higher, the call-caching feature of Terra has been DISABLED to ensure that the workflow is run from the beginning and data is downloaded fresh. Call-caching will not be enabled, even if the user checks the box ✅ in the Terra workflow interface.
-
-!!! warning "Sample_Name _and_ Sample_ID"
-    If the Sample_Name and Sample_ID in the BaseSpace sample sheet are different, set the `basespace_sample_id` input attribute to `"this.basespace_sample_id"`.
-
-!!! warning "Nested Samplenames"
-    Erroneous matches may occur when a samplename is nested within another samplename in the same batch, separated by an underscore or space. This will occur when no lane suffix is present within the BaseSpace dataset. For example, "sample1" will retrieve "sample1_1", however, "sample1_L1" will NOT retrieve "sample1_1_L1". This should be taken into consideration when using certain naming conventions.
 
 /// html | div[class="searchable-table"]
 
