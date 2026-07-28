@@ -308,9 +308,6 @@ This workflow runs on the set level.
 
 The main requirement to run Freyja on other pathogens is **the existence of a barcode file for your pathogen of interest**. Currently, barcodes exist for the following organisms:
 
-!!! warning "v2.0.3: MPX and Depth Cutoff"
-    Currently, a lineage YAML provided through `freyja_lineage_yml` is required when running MPX alongside `depth_cutoff` due to Freyja's inability to correctly pull the necessary YAML.
-
 - DENV1
 - DENV2
 - DENV3
@@ -342,10 +339,6 @@ There are two ways to run [**Freyja_FASTQ_PHB**](freyja.md#freyja_fastq) for non
 
 When using the `freyja_pathogen` flag, the user must set the optional `update_db` flag to _true_, so that the latest version of the barcode file is automatically downloaded by Freyja.
 
-!!! warning
-
-    When using `depth_cutoff` and `freyja_pathogen` the only pathogens functional with v2.0.3 are MPX, MEASLESgenome, and H5Nx-cattle due to the `lineageyml` only being provided for these organisms. See the [2.0.3 Freyja pathogen configuration](https://github.com/andersen-lab/Freyja/blob/v2.0.3/freyja/data/pathogen_config.yml). Lineage files for other pathogens are not yet implemented. This can be circumvented by supplying the [correct barcode file](https://github.com/andersen-lab/Freyja-barcodes).
-
 !!! caption "Figure 2:  Optional input for Freyja_FASTQ_PHB to provide the pathogen to be used by Freyja"
     ##### Figure 2 { #figure2 }
     ![Terra workflow inputs table showing the optional freyja_pathogen string variable for the freyja task, with an empty input value field.](../../assets/figures/Freyja_figure2.png)
@@ -371,6 +364,19 @@ Allowed options:
 !!! warning
 
     The `freyja_pathogen` flag is not used if a barcodes file is provided. This means that this option is ignored if a barcode file is provided through `freyja_barcodes`.
+
+### Using the `freyja_pathogen` flag with `depth_cutoff`
+
+When using `depth_cutoff` on pathogens other than SARS-CoV-2, Freyja requires the existence of a lineage hierarchy file, `lineages.yml`, within the [Freyja-barcodes repository](https://github.com/andersen-lab/Freyja-barcodes). This file is present for the following pathogens, as listed in the [pathogen config file](https://github.com/andersen-lab/Freyja/blob/v2.0.3/freyja/data/pathogen_config.yml).
+
+Pathogens compatible with `depth_cutoff`:
+
+- H5Nx-cattle
+- MEASLESgenome
+- MPX
+
+!!! warning "v2.0.3 and MPX"
+    If you wish to run `depth_cutoff` with MPX, you must include its lineage hierarchy file via `freyja_lineage_yml`, as Freyja is unable to download the YAML present in the repository due to issues with the link. The lineage hierarchy file can be obtained [here](https://github.com/andersen-lab/Freyja-barcodes/blob/main/MPX/latest/lineages.yml).
 
 ### Providing the appropriate barcode file
 
