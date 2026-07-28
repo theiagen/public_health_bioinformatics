@@ -30,6 +30,7 @@ workflow freyja_fastq {
     File? freyja_lineage_metadata
     Int? depth_cutoff
     Boolean ont = false
+    Boolean call_read_qc_trim = true
     String kraken2_target_organism = "Severe acute respiratory syndrome coronavirus 2"
     # qc check parameters
     File? qc_check_table
@@ -44,7 +45,7 @@ workflow freyja_fastq {
     String freyja_long_format_docker = "us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.2"
     File sc2_gene_bed = "gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_gene_locations.bed"
   }
-  if (defined(read2)) {
+  if (defined(read2) && call_read_qc_trim) {
     call read_qc_pe.read_QC_trim_pe as read_QC_trim_pe {
       input:
         samplename = samplename,
@@ -56,7 +57,7 @@ workflow freyja_fastq {
         call_kraken = true
     }
   }
-  if (! defined(read2) && ! ont) {
+  if (! defined(read2) && ! ont && call_read_qc_trim) {
     call read_qc_se.read_QC_trim_se as read_QC_trim_se {
       input:
         samplename = samplename,
@@ -78,24 +79,26 @@ workflow freyja_fastq {
         samplename = samplename,
         est_genome_length = get_fasta_genome_size.fasta_length
     }
-    call read_qc_ont.read_QC_trim_ont {
-      input:
-        samplename = samplename,
-        read1 = read1,
-        workflow_series = "theiacov",
-        target_organism = kraken2_target_organism
-    }
-    call nanoplot_task.nanoplot as nanoplot_clean {
-      input:
-        read1 = read_QC_trim_ont.read1_clean,
-        samplename = samplename,
-        est_genome_length = get_fasta_genome_size.fasta_length
+    if (call_read_qc_trim) {
+      call read_qc_ont.read_QC_trim_ont {
+        input:
+          samplename = samplename,
+          read1 = read1,
+          workflow_series = "theiacov",
+          target_organism = kraken2_target_organism
       }
+      call nanoplot_task.nanoplot as nanoplot_clean {
+        input:
+          read1 = read_QC_trim_ont.read1_clean,
+          samplename = samplename,
+          est_genome_length = get_fasta_genome_size.fasta_length
+      }
+    }
     call minimap2_task.minimap2 {
       input:
         samplename = samplename,
         reference = reference_genome,
-        query1 = read_QC_trim_ont.read1_clean,
+        query1 = select_first([read_QC_trim_ont.read1_clean, read1]),
         output_sam = true,
         mode = "map-ont",
         long_read_flags = false
@@ -111,8 +114,8 @@ workflow freyja_fastq {
       input:
         samplename = samplename,
         reference_genome = reference_genome,
-        read1 = select_first([read_QC_trim_pe.read1_clean, read_QC_trim_se.read1_clean]),
-        read2 = read_QC_trim_pe.read2_clean
+        read1 = select_first([read_QC_trim_pe.read1_clean, read_QC_trim_se.read1_clean, read1]),
+        read2 = select_first([read_QC_trim_pe.read2_clean, read2])
     }
   }
   # Called when the primer_bed file is present, primers are trimmed and trimmed bam is passed to freyja
@@ -256,11 +259,11 @@ workflow freyja_fastq {
     # Read QC - bbduk outputs - Illumina PE and SE
     String bbduk_docker = select_first([read_QC_trim_pe.bbduk_docker, read_QC_trim_se.bbduk_docker, ""])
     # Read QC - clean reads - all
-    File read1_clean = select_first([read_QC_trim_pe.read1_clean, read_QC_trim_se.read1_clean, read_QC_trim_ont.read1_clean])
-    File? read2_clean = read_QC_trim_pe.read2_clean
+    String read1_clean = select_first([read_QC_trim_pe.read1_clean, read_QC_trim_se.read1_clean, read_QC_trim_ont.read1_clean, ""])
+    String read2_clean = select_first([read_QC_trim_pe.read2_clean, ""])
     # Read QC - dehosting outputs - all
-    File read1_dehosted = select_first([read_QC_trim_pe.read1_dehosted, read_QC_trim_se.read1_dehosted, read_QC_trim_ont.read1_dehosted])
-    File? read2_dehosted = read_QC_trim_pe.read2_dehosted
+    String read1_dehosted = select_first([read_QC_trim_pe.read1_dehosted, read_QC_trim_se.read1_dehosted, read_QC_trim_ont.read1_dehosted, ""])
+    String read2_dehosted = select_first([read_QC_trim_pe.read2_dehosted, ""])
     # Read QC - kraken outputs - all
     String kraken_version = select_first([read_QC_trim_pe.kraken2_version, read_QC_trim_se.kraken2_version, ""])
     String kraken_human = select_first([read_QC_trim_pe.kraken2_human, read_QC_trim_se.kraken2_human, ""])
