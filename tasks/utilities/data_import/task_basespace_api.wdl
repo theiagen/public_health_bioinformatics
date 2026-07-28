@@ -8,8 +8,6 @@ task fetch_bs {
     String access_token
 
     Boolean validate_paired_end = true
-    Boolean validate_lane_naming = false
-    Boolean group_by_lane = false
 
     Int memory = 8
     Int cpu = 2
@@ -29,8 +27,6 @@ task fetch_bs {
 
     # convert boolean WDL inputs to pythonic type bool
     validate_paired_end = "~{validate_paired_end}" == "true"
-    validate_lane_naming = "~{validate_lane_naming}" == "true"
-    group_by_lane = "~{group_by_lane}" == "true"
 
     bs = BaseSpace(
         access_token="~{access_token}",
@@ -39,11 +35,7 @@ task fetch_bs {
     bs.fetch_sample_fastqs(
         collection_id="~{basespace_collection_id}",
         samples=["~{basespace_sample_name}"],
-        dataset_types=["common.fastq"],             # required for this task
-        concatenate=True,                           # required for this task
-        group_by_lane=group_by_lane,
         validate_paired_end=validate_paired_end,
-        validate_lane_naming=validate_lane_naming,
     )
     CODE
 

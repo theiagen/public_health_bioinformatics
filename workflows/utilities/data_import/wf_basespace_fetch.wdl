@@ -11,8 +11,6 @@ workflow basespace_fetch {
     String access_token
 
     Boolean? validate_paired_end
-    Boolean? validate_lane_naming
-    Boolean? group_by_lane
   }
   call basespace.fetch_bs {
     input:
@@ -21,8 +19,6 @@ workflow basespace_fetch {
       basespace_collection_id = basespace_collection_id,
       access_token = access_token,
       validate_paired_end = validate_paired_end,
-      validate_lane_naming = validate_lane_naming,
-      group_by_lane = group_by_lane,
   }
   call versioning_task.version_capture {
     input:
