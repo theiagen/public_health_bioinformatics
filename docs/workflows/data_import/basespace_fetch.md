@@ -8,7 +8,6 @@
 
 The `BaseSpace_Fetch` workflow facilitates the transfer of Illumina sequencing data from BaseSpace (a cloud location) to a workspace on the [Terra.bio](http://Terra.bio) platform. Rather than downloading the files to a local drive and then re-uploading them to another location, we can perform a cloud-to-cloud transfer with the `BaseSpace_Fetch` workflow.
 
-
 **What you need before you start:**
 
 - A BaseSpace account with access to the **Run** or **Project** holding your data.
@@ -33,7 +32,7 @@ This workflow requires a BaseSpace access token to authenticate your BaseSpace a
 
 _Already have a command-line environment available?_ You can skip ahead to [1.2 `bs` CLI installation](#install-bs-cli).
 
-#### 1.1 Create a command-line environment
+### 1.1 Create a command-line environment
 
 ??? toggle "Click for more information"
 
@@ -60,7 +59,7 @@ _Already have a command-line environment available?_ You can skip ahead to [1.2 
         !!! caption narrow "Environment creation in progress"
             ![Terra sidebar showing a Jupyter environment being created, with a tooltip displaying the cost rate of $0.06 per hour for compute and under $0.01 per hour for disk.](../../assets/figures/basespace_fetch/info3-creation-in-progress.png)
 
-#### 1.2 Install the BaseSpace command-line tool and retrieve the access token {% raw %} {#install-bs-cli} {% endraw %}
+### 1.2 Install the BaseSpace command-line tool and retrieve the access token {% raw %} {#install-bs-cli} {% endraw %}
 
 ??? toggle "Click for more information"
 
@@ -98,7 +97,7 @@ _Already have a command-line environment available?_ You can skip ahead to [1.2 
         cat ~/.basespace/default.cfg
         ```
 
-#### 1.3 Store the token as Terra workspace data {% raw %} {#store-token} {% endraw %}
+### 1.3 Store the token as Terra workspace data {% raw %} {#store-token} {% endraw %}
 
 ??? toggle "Click for more information"
 
@@ -113,7 +112,7 @@ _Already have a command-line environment available?_ You can skip ahead to [1.2 
     When you launch the workflow, point the `access_token` input at this variable using `workspace.basespace_access_token`.
 
     !!! info "Pulling from more than one BaseSpace account in a single run"
-        `access_token` is an ordinary workflow input, so it does not *have* to come from workspace data. If different samples live under different BaseSpace accounts, add an `access_token` column to your data table and point the input at `this.access_token` instead.
+        `access_token` is an ordinary workflow input, so it does not _have_ to come from workspace data. If different samples live under different BaseSpace accounts, add an `access_token` column to your data table and point the input at `this.access_token` instead.
 
 ---
 
@@ -146,7 +145,7 @@ In this guide, a "collection" refers to the BaseSpace **Run** or **Project** tha
 
 ## Step 3 — Find your `basespace_sample_name` {% raw %} {#step-3-sample-name} {% endraw %}
 
-The workflow matches the string you provide exactly, against the BaseSpace ***FastQ Dataset*** or ***Dataset Name*** columns.
+The workflow matches the string you provide exactly, against the BaseSpace **_FastQ Dataset_** or **_Dataset Name_** columns.
 
 ??? toggle "If your collection is a **Run**"
 
@@ -209,7 +208,7 @@ In Excel or an alternative spreadsheet software, set up a data table for Terra, 
 
 ///
 
-### Outputs
+## Outputs
 
 The outputs of this workflow will be the fastq files imported from BaseSpace into the data table where the sample ID information had originally been uploaded.
 
