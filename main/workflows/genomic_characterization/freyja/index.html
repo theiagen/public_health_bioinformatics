@@ -1547,6 +1547,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#using-the-freyja_pathogen-flag-with-depth_cutoff" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Using the <code>freyja_pathogen</code> flag with <code>depth_cutoff</code>
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#providing-the-appropriate-barcode-file" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -6919,6 +6930,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#using-the-freyja_pathogen-flag-with-depth_cutoff" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Using the <code>freyja_pathogen</code> flag with <code>depth_cutoff</code>
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#providing-the-appropriate-barcode-file" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -7354,7 +7376,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.1</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.3</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7363,6 +7385,14 @@
 <td>Float</td>
 <td>The minimum lineage abundance cut-off value</td>
 <td>0.001</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja</td>
+<td><strong>freyja_lineage_yml</strong></td>
+<td>File</td>
+<td>Lineage hierarchy file in yaml format used in conjunction with <code>depth_cutoff</code></td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7387,6 +7417,14 @@
 <td>Boolean</td>
 <td>Updates the Freyja reference files (the usher barcodes and lineage metadata files) but will not save them as output (use Freyja_Update for that purpose). If set to true, the freyja_lineage_metadata and freyja_barcodes files are not required.</td>
 <td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_fastq</td>
+<td><strong>call_read_qc_trim</strong></td>
+<td>Boolean</td>
+<td>When false QC steps will be skipped</td>
+<td>True</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8908,7 +8946,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.1</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.3</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8917,6 +8955,14 @@
 <td>Float</td>
 <td>The minimum lineage abundance cut-off value</td>
 <td>0.001</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja</td>
+<td><strong>freyja_lineage_yml</strong></td>
+<td>File</td>
+<td>Lineage hierarchy file in yaml format used in conjunction with <code>depth_cutoff</code></td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8941,6 +8987,14 @@
 <td>Boolean</td>
 <td>Updates the Freyja reference files (the usher barcodes and lineage metadata files) but will not save them as output (use Freyja_Update for that purpose). If set to true, the freyja_lineage_metadata and freyja_barcodes files are not required.</td>
 <td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_fastq</td>
+<td><strong>call_read_qc_trim</strong></td>
+<td>Boolean</td>
+<td>When false QC steps will be skipped</td>
+<td>True</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10462,7 +10516,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.1</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.3</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10471,6 +10525,14 @@
 <td>Float</td>
 <td>The minimum lineage abundance cut-off value</td>
 <td>0.001</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja</td>
+<td><strong>freyja_lineage_yml</strong></td>
+<td>File</td>
+<td>Lineage hierarchy file in yaml format used in conjunction with <code>depth_cutoff</code></td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10495,6 +10557,14 @@
 <td>Boolean</td>
 <td>Updates the Freyja reference files (the usher barcodes and lineage metadata files) but will not save them as output (use Freyja_Update for that purpose). If set to true, the freyja_lineage_metadata and freyja_barcodes files are not required.</td>
 <td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_fastq</td>
+<td><strong>call_read_qc_trim</strong></td>
+<td>Boolean</td>
+<td>When false QC steps will be skipped</td>
+<td>True</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -15693,7 +15763,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.1</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.3</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16015,7 +16085,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.1</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.3</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16158,17 +16228,21 @@
 </div>
 <p>The main requirement to run Freyja on other pathogens is <strong>the existence of a barcode file for your pathogen of interest</strong>. Currently, barcodes exist for the following organisms:</p>
 <ul>
-<li>SARS-CoV-2 (default)</li>
+<li>DENV1</li>
+<li>DENV2</li>
+<li>DENV3</li>
+<li>DENV4</li>
 <li>FLU-B-VIC</li>
 <li>H1N1</li>
 <li>H3N2</li>
+<li>H5Nx</li>
 <li>H5Nx-cattle</li>
-<li>H5NX</li>
-<li>MEASLESN450</li>
 <li>MEASLESgenome</li>
 <li>MPX</li>
+<li>MTB</li>
 <li>RSVa</li>
 <li>RSVb</li>
+<li>SARS-CoV-2 (default)</li>
 </ul>
 <div class="admonition dna">
 <p class="admonition-title">Freyja barcodes for other pathogens</p>
@@ -16189,19 +16263,37 @@
 </div>
 <p>Allowed options:</p>
 <ul>
-<li>SARS-CoV-2 (default)</li>
-<li>MPXV</li>
-<li>H1N1pdm</li>
-<li>H5NX</li>
+<li>DENV1</li>
+<li>DENV2</li>
+<li>DENV3</li>
+<li>DENV4</li>
 <li>FLU-B-VIC</li>
-<li>MEASLESN450</li>
-<li>MEASLES</li>
+<li>H1N1</li>
+<li>H3N2</li>
+<li>H5Nx</li>
+<li>H5Nx-cattle</li>
+<li>MEASLESgenome</li>
+<li>MPX</li>
+<li>MTB</li>
 <li>RSVa</li>
 <li>RSVb</li>
+<li>SARS-CoV-2 (default)</li>
 </ul>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>The <code>freyja_pathogen</code> flag is not used if a barcodes file is provided. This means that this option is ignored if a barcode file is provided through <code>freyja_barcodes</code>.</p>
+</div>
+<h3 id="using-the-freyja_pathogen-flag-with-depth_cutoff">Using the <code>freyja_pathogen</code> flag with <code>depth_cutoff</code><a class="headerlink" href="#using-the-freyja_pathogen-flag-with-depth_cutoff" title="Permanent link">&para;</a></h3>
+<p>When using <code>depth_cutoff</code> on pathogens other than SARS-CoV-2, Freyja requires the existence of a lineage hierarchy file, <code>lineages.yml</code>, within the <a href="https://github.com/andersen-lab/Freyja-barcodes">Freyja-barcodes repository</a>. This file is present for the following pathogens, as listed in the <a href="https://github.com/andersen-lab/Freyja/blob/v2.0.3/freyja/data/pathogen_config.yml">pathogen config file</a>.</p>
+<p>Pathogens compatible with <code>depth_cutoff</code>:</p>
+<ul>
+<li>H5Nx-cattle</li>
+<li>MEASLESgenome</li>
+<li>MPX</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">v2.0.3 and MPX</p>
+<p>If you wish to run <code>depth_cutoff</code> with MPX, you must include its lineage hierarchy file via <code>freyja_lineage_yml</code>, as Freyja is unable to download the YAML present in the repository due to issues with the link. The lineage hierarchy file can be obtained <a href="https://github.com/andersen-lab/Freyja-barcodes/blob/main/MPX/latest/lineages.yml">here</a>.</p>
 </div>
 <h3 id="providing-the-appropriate-barcode-file">Providing the appropriate barcode file<a class="headerlink" href="#providing-the-appropriate-barcode-file" title="Permanent link">&para;</a></h3>
 <p>The appropriate barcode file for your organism of interest and reference sequence need to be downloaded and uploaded to your <a href="http://Terra.bio">Terra.bio</a> workspace. When running <a href="../freyja/#freyja_fastq"><strong>Freyja_FASTQ_PHB</strong></a>, the appropriate reference and barcodes file need to be passed as inputs. The first is a required input and will show up at the top of the workflows inputs page on <a href="http://Terra.bio">Terra.bio</a> (<a href="../freyja/#figure3">Figure 3</a>).</p>
