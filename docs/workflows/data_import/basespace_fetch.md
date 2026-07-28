@@ -122,10 +122,10 @@ _Already have a command-line environment available?_ You can skip ahead to [1.2 
 In this guide, a "collection" refers to the BaseSpace **Run** or **Project** that contains your FASTQ files. The examples below show where to find the **Run** or **Project** name/numeric ID to enter as your `basespace_collection_id`.
 
 ??? toggle "If your collection is a **Run**"
-    ![A gif visually showing which BaseSpace Run values can be used as a collection_id.](../../assets/figures/basespace_fetch/collection_id_run.gif)
+    ![visually showing which BaseSpace Run values can be used as a collection_id.](../../assets/figures/basespace_fetch/collection_id_run.gif)
 
 ??? toggle "If your collection is a **Project**"
-    ![A gif visually showing which BaseSpace Project values can be used as a collection_id.](../../assets/figures/basespace_fetch/collection_id_project.gif)
+    ![visually showing which BaseSpace Project values can be used as a collection_id.](../../assets/figures/basespace_fetch/collection_id_project.gif)
 
 **Recommendation: use the numeric ID from the URL.** It is unambiguous, it never changes, and it avoids every problem below:
 
@@ -152,13 +152,13 @@ The workflow matches the string you provide exactly, against the BaseSpace ***Fa
 
     Open the **Run** tab and go to the **Biosamples** tab. Use the values in the **FastQ Dataset** column as your `basespace_sample_name`. Alternatively, you can click on each individual Biosample and go to the **FASTQs** tab and use the values in the **Dataset Name** column.
 
-    ![A gif visually showing which BaseSpace Run values can be used as a `basespace_sample_name`.](../../assets/figures/basespace_fetch/basespace_sample_name_run.gif)
+    ![visually showing which BaseSpace Run values can be used as a `basespace_sample_name`.](../../assets/figures/basespace_fetch/basespace_sample_name_run.gif)
 
 ??? toggle "If your collection is a **Project**"
 
     Open the project and go to the **FASTQs** tab. Use the values in the **Dataset Name** column.
 
-    ![A gif visually showing which BaseSpace Project values can be used as a `basespace_sample_name`.](../../assets/figures/basespace_fetch/basespace_sample_name_project.gif)
+    ![visually showing which BaseSpace Project values can be used as a `basespace_sample_name`.](../../assets/figures/basespace_fetch/basespace_sample_name_project.gif)
 
 ---
 
@@ -170,7 +170,7 @@ In Excel or an alternative spreadsheet software, set up a data table for Terra, 
 2. Populate the first column with a unique identifier for each sample. This value can be the same as the corresponding `basespace_sample_name` or any other name you choose, as long as no two rows have the same value.
 
     !!! warning "This column determines your final FASTQ filenames"
-        The FASTQ files downlaoded from your BaseSpace **Run** or **Project** are renamed to `{TABLENAME_id}_R1.fastq.gz` / `{TABLENAME_id}_R2.fastq.gz` using the value in the first column, **not** `basespace_sample_name`.
+        The FASTQ files downloaded from your BaseSpace **Run** or **Project** are renamed to `{TABLENAME_id}_R1.fastq.gz` / `{TABLENAME_id}_R2.fastq.gz` using the value in the first column, **not** `basespace_sample_name`.
 
 3. Create a `basespace_sample_name` column and populate it with the samples found in [Step 3](#step-3-sample-name).
 4. Create a `basespace_collection_id` column and populate it with the BaseSpace Project or Run identifier from [Step 2](#step-2-collection-id).
