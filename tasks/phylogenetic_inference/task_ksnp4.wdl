@@ -48,6 +48,8 @@ task ksnp4 {
     echo "ksnp4_input.tsv:: "
     cat ksnp4_input.tsv
 
+    export HOME="$PWD"
+
     # run ksnp4 on input assemblies
     kSNP4 \
       -in ksnp4_input.tsv \
