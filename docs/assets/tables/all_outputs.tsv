@@ -1322,7 +1322,7 @@ trimmomatic_read2_trimmed	File	The read2 file post trimming	TBProfiler_tNGS
 trimmomatic_stats	File	The read trimming statistics	TBProfiler_tNGS
 trimmomatic_version	String	The version of Trimmomatic used	Freyja_FASTQ, TBProfiler_tNGS, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 ts_mlst_allelic_profile	String	Profile of MLST loci and allele numbers predicted by MLST	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-ts_mlst_combined_format	String	DESCRIPTION	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+ts_mlst_combined_format	String	Combined reporting format of ST type and scheme from MLST, ST#_scheme	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ts_mlst_docker	String	Docker image used for MLST	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ts_mlst_novel_alleles	File	FASTA file containing nucleotide sequence of any alleles that are not in the MLST database used by TheiaProk	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ts_mlst_predicted_secondary_st	String	ST predicted by secondary MLST run	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
