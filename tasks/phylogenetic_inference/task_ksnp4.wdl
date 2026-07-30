@@ -10,8 +10,8 @@ task ksnp4 {
     String docker_image = "us-docker.pkg.dev/general-theiagen/staphb/ksnp4:4.1"
     File? previous_ksnp4_snps
     Int memory = 16
-    Int cpu = 2
-    Int disk_size = 100
+    Int cpu = 8
+    Int disk_size = 500
   }
   command <<<
     assembly_array=(~{sep=' ' assembly_fasta})
