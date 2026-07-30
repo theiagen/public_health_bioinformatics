@@ -5,7 +5,8 @@ task fetch_bs {
     String sample_name
     String basespace_sample_name
     String basespace_collection_id
-    String access_token
+    String basespace_access_token
+    String basespace_api_url = "https://api.basespace.illumina.com"
 
     Boolean validate_paired_end = true
 
@@ -29,7 +30,8 @@ task fetch_bs {
     validate_paired_end = "~{validate_paired_end}" == "true"
 
     bs = BaseSpace(
-        access_token="~{access_token}",
+        access_token="~{basespace_access_token}",
+        basespace_api_url="~{basespace_api_url}"
     )
 
     bs.fetch_sample_fastqs(

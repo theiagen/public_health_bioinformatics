@@ -8,8 +8,9 @@ workflow basespace_fetch {
     String sample_name
     String basespace_sample_name
     String basespace_collection_id
-    String access_token
+    String basespace_access_token
 
+    String? basespace_api_url
     Boolean? validate_paired_end
   }
   call basespace.fetch_bs {
@@ -17,7 +18,8 @@ workflow basespace_fetch {
       sample_name = sample_name,
       basespace_sample_name = basespace_sample_name,
       basespace_collection_id = basespace_collection_id,
-      access_token = access_token,
+      basespace_access_token = basespace_access_token,
+      basespace_api_url = basespace_api_url,
       validate_paired_end = validate_paired_end,
   }
   call versioning_task.version_capture {
