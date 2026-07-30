@@ -48,6 +48,7 @@ task ksnp4 {
     echo "ksnp4_input.tsv:: "
     cat ksnp4_input.tsv
 
+    # Sets the HOME variable to the data disk moving the cache off of the boot disk
     export HOME="$PWD"
 
     # run ksnp4 on input assemblies
