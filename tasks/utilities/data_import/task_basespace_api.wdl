@@ -9,6 +9,7 @@ task fetch_bs {
     String basespace_api_url = "https://api.basespace.illumina.com"
 
     Boolean validate_paired_end = true
+    Boolean group_by_lane = true
 
     Int memory = 8
     Int cpu = 2
@@ -28,6 +29,7 @@ task fetch_bs {
 
     # convert boolean WDL inputs to pythonic type bool
     validate_paired_end = "~{validate_paired_end}" == "true"
+    group_by_lane = "~{group_by_lane}" == "true"
 
     bs = BaseSpace(
         access_token="~{basespace_access_token}",
@@ -38,6 +40,7 @@ task fetch_bs {
         collection_id="~{basespace_collection_id}",
         samples=["~{basespace_sample_name}"],
         validate_paired_end=validate_paired_end,
+        group_by_lane=group_by_lane,
     )
     CODE
 

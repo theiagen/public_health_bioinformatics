@@ -12,6 +12,7 @@ workflow basespace_fetch {
 
     String? basespace_api_url
     Boolean? validate_paired_end
+    Boolean? group_by_lane
   }
   call basespace.fetch_bs {
     input:
@@ -21,6 +22,7 @@ workflow basespace_fetch {
       basespace_access_token = basespace_access_token,
       basespace_api_url = basespace_api_url,
       validate_paired_end = validate_paired_end,
+      group_by_lane = group_by_lane,
   }
   call versioning_task.version_capture {
     input:

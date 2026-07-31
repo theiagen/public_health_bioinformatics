@@ -120,7 +120,7 @@ In this guide, a "collection" refers to the BaseSpace **Run** or **Project** tha
 
 **Recommendation: use the numeric ID from the URL.** It is unambiguous, it never changes, and it avoids every problem below:
 
-!!! warning "Warnings for `basespace_collection_id`"
+??? warning "Warnings for `basespace_collection_id`"
     - **Matching is exact and case-sensitive.** BaseSpace's own search box is forgiving about case and partial words; this workflow is not.
     - **Only Runs and Projects are supported.** A biosample, an app result, or an analysis cannot be used as a `basespace_collection_id`.
     - **If nothing matches `basespace_collection_id`**, you'll get the error:
@@ -131,27 +131,101 @@ In this guide, a "collection" refers to the BaseSpace **Run** or **Project** tha
       ```
       Input collection ID `X` is ambiguous; it matches: [...]. Provide a more specific id or name.
       ```
-    Both errors can be fixed by switching to the numeric ID from the URL.
 
 ---
 
 ## Step 3 — Find your `basespace_sample_name` {% raw %} {#step-3-sample-name} {% endraw %}
 
-The workflow matches the string you provide exactly, against the BaseSpace **_FastQ Dataset_** or **_Dataset Name_** columns.
+`basespace_sample_name` is matched against the **_datasets_** inside your "collection". These **_datasets_** are shown under the **_FastQ Dataset_** column for a Run, or the **_Dataset Name_** column for a Project.
+
+### 3.1 Finding **_datasets_** in BaseSpace {% raw %} {#step-3.1-finding-datasets} {% endraw %}
 
 ??? toggle "If your collection is a **Run**"
 
-    Open the **Run** tab and go to the **Biosamples** tab. Use the values in the **FastQ Dataset** column as your `basespace_sample_name`.
+    Open the **Run** tab and go to the **Biosamples** tab. The values in the **_FastQ Dataset_** column are the dataset names.
 
     !!! caption "BaseSpace Run - **_FastQ Dataset_**"
         ![visually showing which BaseSpace Run values can be used as a `basespace_sample_name`.](../../assets/figures/basespace_fetch/basespace_sample_name_run_pt1.gif)
 
 ??? toggle "If your collection is a **Project**"
 
-    Open the project and go to the **FASTQs** tab. Use the values in the **Dataset Name** column.
+    Open the project and go to the **FASTQs** tab. The values in the **_Dataset Name_** column are the dataset names.
 
     !!! caption "BaseSpace Project - **_Dataset Name_**"
         ![visually showing which BaseSpace Project values can be used as a `basespace_sample_name`.](../../assets/figures/basespace_fetch/basespace_sample_name_project.gif)
+
+### 3.2 How your `basespace_sample_name` name is matched
+
+The workflow searches for each `basespace_sample_name` in the following order, stopping after the first successful match:
+
+1. **Exact dataset name.** If a dataset name **exactly** matches the value you provided, that dataset is used to retrieve the associated FASTQ files.
+2. **Lane-suffixed datasets.** If no dataset name **exactly** matches the value you provided, and `group_by_lane` is `true` (the default), the workflow searches for datasets with that value followed by a lane suffix. FASTQ files from matching datasets are then merged into a single R1/R2 pair.
+
+    !!! info "Note"
+        A dataset is considered a lane-suffixed dataset if removing its lane suffix (for example, `_L001` or `-L001`) leaves a name that **exactly** matches the value you provided. See examples below.
+
+!!! info "Note"
+    All output FASTQ files are written as `{TABLENAME_id}_R1.fastq.gz` / `{TABLENAME_id}_R2.fastq.gz` using the first column of your Terra table, not from `basespace_sample_name`. See [Step 4](#step-4-data-table).
+
+### 3.3 Worked examples
+
+Each example below lists the datasets that exist in a collection, then shows what a given `basespace_sample_name` resolves to with `group_by_lane` on (the default) and off.
+
+??? toggle "A sample split across lanes (most common)"
+
+    ```
+    Dataset Name:
+
+    Sample-2026-001_L001
+    Sample-2026-001_L002
+    Sample-2026-001_L003
+    Sample-2026-001_L004
+    Sample-2026-0010_L001
+    ```
+
+    | `basespace_sample_name` | `group_by_lane = true` (default) | `group_by_lane = false` |
+    | --- | --- | --- |
+    | `Sample-2026` | ❌ Fails — `No exact dataset match` | ❌ Fails — `No exact dataset match` |
+    | `sample-2026-001` | ❌ Fails — `No exact dataset match` | ❌ Fails — `No exact dataset match` |
+    | `Sample-2026-001` | ✅ All four lanes merged into **one** R1/R2 pair | ❌ Fails — `Partial dataset match` |
+    | `Sample-2026-001_L001` | ✅ Lane 1 only, on its own | ✅ Lane 1 only, on its own |
+
+    !!! warning "Note"
+        Writing the **lane-less** sample name is what triggers grouping. A name that already carries a lane suffix is an exact match, so it returns just that one lane whether or not `group_by_lane` is on.
+
+    !!! warning "Note"
+        `Sample-2026-0010_L001` is never swept in by `Sample-2026-001`. The lane suffix is removed and what remains (`Sample-2026-0010`) has to equal your string **exactly**.
+
+??? toggle "An un-laned dataset sitting alongside lanes"
+
+    ```
+    Dataset Name:
+
+    Sample-2026-002
+    Sample-2026-002_L001
+    Sample-2026-002_L002
+    ```
+
+    | `basespace_sample_name` | `group_by_lane = true` (default) | `group_by_lane = false` |
+    | --- | --- | --- |
+    | `Sample-2026-002` | ⚠️ Only the `Sample-2026-002` dataset (PASSES with warning) | ⚠️ Only the `Sample-2026-002` dataset (PASSES with warning) |
+    | `Sample-2026-002_L001` | ✅ Lane 1 only, on its own | ✅ Lane 1 only, on its own |
+
+    !!! warning "Note"
+        An exact dataset name always wins, so `group_by_lane` changes nothing here. Although rare, this is the one case where you can quietly end up with a different result than you expected.
+
+### 3.4 Starting from a SampleSheet.csv
+
+If you have the Run's sample sheet, its `Sample_ID` column is a good starting point:
+
+```
+Runs → {run} → Files → SampleSheet.csv
+```
+
+Treat those values as a strong starting point rather than the authoritative answer. Per Illumina's [BaseSpace data model](https://knowledge.illumina.com/software/cloud-software/software-cloud-software-reference_material-list/000007009), `Sample_ID` becomes the **biosample** name and `Sample_Name` becomes the **library** name. A FASTQ dataset is a separate object produced downstream by demultiplexing, so while the `Sample_ID` often matches the resulting dataset name, it is not guaranteed to. In practice, if the FASTQ dataset name differs from the `Sample_ID`, it's usually because a lane suffix was added.
+
+!!! warning "Note"
+    Always verify the `Sample_ID` value against the dataset sources shown in [Step 3.1](#step-3.1-finding-datasets) before using it. The SampleSheet.csv column names do not necessarily correspond directly to this workflow's inputs.
 
 ---
 
