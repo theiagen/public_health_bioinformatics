@@ -10,7 +10,7 @@ task variant_annotate {
     File? bedfile
     File vcf
     
-    String feature_qualifier = "product" # comma-delimited list of GFF feature qualifier to use for comparison to query gene
+    String feature_qualifier = "product" # GFF feature qualifier to use for comparison to query gene
     Boolean exact_match = false # use an exact match for qualifier mapping (always case-sensitive)
     Boolean ambiguous_contig = false # relate bedfile to GFF and FASTA ambiguous
 
@@ -22,7 +22,6 @@ task variant_annotate {
   command <<<
     # fail hard
     set -euo pipefail
-
 
     # extract a sub-VCF only when a subset of genes/regions is requested, then
     # annotate that extracted subset instead of the full VCF
@@ -41,7 +40,6 @@ task variant_annotate {
       # by default, annotate the VCF passed directly to the task
       vep_vcf="~{vcf}"
     fi
-
 
 # VEP requires the GFF sorted by contig then start coordinate; sort while
 # keeping comment/header lines (leading '#') at the top of the file
@@ -80,15 +78,25 @@ PYEOF
       --tab \
       --hgvs \
       --hgvsp_use_prediction \
+      --distance 0 \
       -o ~{samplename}_variant_annotations
 
     mv ~{samplename}_variant_annotations ~{samplename}_variant_annotations.tsv
+    gunzip reference_sorted.gff.gz
+
+    theiagene report_variants \
+      --vep_tsv ~{samplename}_variant_annotations.tsv \
+      --reference_gff reference_sorted.gff \
+      --suppress coding_sequence_variant,intergenic_variant \
+      --feature_qualifier ~{feature_qualifier} \
+      > VARIANT_REPORT
   >>>
   output {
     File variant_annotations_tsv = "~{samplename}_variant_annotations.tsv"
     File variant_annotation_warnings = "~{samplename}_variant_annotations_warnings.txt"
     File variant_annotations_html = "~{samplename}_variant_annotations_summary.html"
     File? variant_annotations_gene_vcf = "~{samplename}.genes.vcf"
+    String variant_hits = read_string("VARIANT_REPORT")
   }
   runtime {
     docker: docker
