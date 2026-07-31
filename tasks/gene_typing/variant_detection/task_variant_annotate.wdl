@@ -30,6 +30,7 @@ task variant_annotate {
       theiagene extract_variants \
         --vcf ~{vcf} \
         ~{if defined(query_genes) then "--query_genes ~{query_genes}" else ""} \
+        ~{if defined(reference_gff) then "--reference_gff ~{reference_gff}" else ""} \
         ~{if defined(bedfile) then "--bedfile ~{bedfile}" else ""} \
         ~{if exact_match then "--exact_match" else ""} \
         ~{if ambiguous_contig then "--ambiguous_contig" else ""} \
