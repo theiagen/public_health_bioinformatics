@@ -10,8 +10,8 @@ task ksnp4 {
     String docker_image = "us-docker.pkg.dev/general-theiagen/staphb/ksnp4:4.1"
     File? previous_ksnp4_snps
     Int memory = 16
-    Int cpu = 2
-    Int disk_size = 100
+    Int cpu = 8
+    Int disk_size = 500
   }
   command <<<
     assembly_array=(~{sep=' ' assembly_fasta})
@@ -47,6 +47,9 @@ task ksnp4 {
 
     echo "ksnp4_input.tsv:: "
     cat ksnp4_input.tsv
+
+    # Sets the HOME variable to the data disk moving the cache off of the boot disk
+    export HOME="$PWD"
 
     # run ksnp4 on input assemblies
     kSNP4 \
