@@ -20,7 +20,6 @@ workflow cauris_cladetyper {
     String cauris_cladetyper_wf_version = version_capture.phb_version
     String cauris_cladetyper_wf_analysis_date = version_capture.date
     String cladetyper_clade = cladetyper.gambit_cladetype
-    String cladetyper_annotated_reference_gbff = cladetyper.annotated_reference_gbff
     String cladetyper_annotated_reference_gff = cladetyper.annotated_reference_gff
     String cladetyper_assembly_reference = cladetyper.assembly_reference
     String cladetyper_gambit_version = cladetyper.gambit_version
