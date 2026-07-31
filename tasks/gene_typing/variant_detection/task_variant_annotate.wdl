@@ -77,6 +77,7 @@ PYEOF
       --gff reference_sorted.gff.gz \
       --tab \
       --hgvs \
+      --hgvsg \
       --hgvsp_use_prediction \
       --distance 0 \
       -o ~{samplename}_variant_annotations
@@ -85,6 +86,7 @@ PYEOF
     gunzip reference_sorted.gff.gz
 
     theiagene report_variants \
+      --vcf "${vep_vcf}" \
       --vep_tsv ~{samplename}_variant_annotations.tsv \
       --reference_gff reference_sorted.gff \
       --suppress coding_sequence_variant,intergenic_variant \
