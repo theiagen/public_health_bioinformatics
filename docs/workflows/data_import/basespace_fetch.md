@@ -138,7 +138,7 @@ In this guide, a "collection" refers to the BaseSpace **Run** or **Project** tha
 
 `basespace_sample_name` is matched against the **_datasets_** inside your "collection". These **_datasets_** are shown under the **_FastQ Dataset_** column for a Run, or the **_Dataset Name_** column for a Project.
 
-### 3.1 Finding **_datasets_** in BaseSpace {% raw %} {#step-3.1-finding-datasets} {% endraw %}
+### 3.1 Finding **_datasets_** in BaseSpace {% raw %} {#step-3-1-finding-datasets} {% endraw %}
 
 ??? toggle "If your collection is a **Run**"
 
@@ -225,7 +225,7 @@ Runs → {run} → Files → SampleSheet.csv
 Treat those values as a strong starting point rather than the authoritative answer. Per Illumina's [BaseSpace data model](https://knowledge.illumina.com/software/cloud-software/software-cloud-software-reference_material-list/000007009), `Sample_ID` becomes the **biosample** name and `Sample_Name` becomes the **library** name. A FASTQ dataset is a separate object produced downstream by demultiplexing, so while the `Sample_ID` often matches the resulting dataset name, it is not guaranteed to. In practice, if the FASTQ dataset name differs from the `Sample_ID`, it's usually because a lane suffix was added.
 
 !!! warning "Note"
-    Always verify the `Sample_ID` value against the dataset sources shown in [Step 3.1](#step-3.1-finding-datasets) before using it. The SampleSheet.csv column names do not necessarily correspond directly to this workflow's inputs.
+    Always verify the `Sample_ID` value against the dataset sources shown in [Step 3.1](#step-3-1-finding-datasets) before using it. The SampleSheet.csv column names do not necessarily correspond directly to this workflow's inputs.
 
 ---
 
