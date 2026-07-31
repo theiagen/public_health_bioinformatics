@@ -8,11 +8,10 @@ task gene_coverage {
     File? bai
     File? bedfile # BEDfile including region names and/or coordinates
     File? reference_gff # GFF including annotated regions
-    File? reference_gbff # GBFF including annotated regions 
     String? query_genes # comma-delimited list of strings
-    
-    String feature_type = "CDS" # GBFF feature type to use for coordinate extraction
-    String feature_qualifier = "product" # GBFF feature qualifier to use for comparison to query gene
+
+    String feature_type = "CDS" # GFF feature type to use for coordinate extraction
+    String feature_qualifier = "product" # GFF feature qualifier to use for comparison to query gene
     Boolean exact_match = false # use an exact match for qualifier mapping (always case-sensitive)
     Boolean ambiguous_contig = false # apply coordinates from BED to first identified contig in BAM
 
@@ -21,7 +20,7 @@ task gene_coverage {
 
     String? organism # used to determine if S gene coverage should be reported for SARS-CoV-2
 
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiagene:1.0.0-dev"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/ensembl-vep:116.0-dev"
     Int disk_size = 100
     Int memory = 8
     Int cpu = 2
@@ -40,7 +39,7 @@ task gene_coverage {
       ~{if defined(query_genes) then "--query_genes ~{query_genes}" else ""} \
       ~{if exact_match then "--exact_match" else ""} \
       ~{if defined(bedfile) then "--bedfile ~{bedfile}" else ""} \
-      ~{if defined(reference_gbff) then "--reference_gbff ~{reference_gbff}" else ""} \
+      ~{if defined(reference_gff) then "--reference_gff ~{reference_gff}" else ""} \
       ~{if ambiguous_contig then "--ambiguous_contig" else ""} \
 
     # rename files

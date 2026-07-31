@@ -83,13 +83,11 @@ PYEOF
       -o ~{samplename}_variant_annotations
 
     mv ~{samplename}_variant_annotations ~{samplename}_variant_annotations.tsv
-    gunzip reference_sorted.gff.gz
 
     theiagene report_variants \
       --vcf "${vep_vcf}" \
       --vep_tsv ~{samplename}_variant_annotations.tsv \
-      --reference_gff reference_sorted.gff \
-      --suppress coding_sequence_variant,intergenic_variant \
+      --reference_gff reference_sorted.gff.gz \
       --feature_qualifier ~{feature_qualifier} \
       > VARIANT_REPORT
   >>>
