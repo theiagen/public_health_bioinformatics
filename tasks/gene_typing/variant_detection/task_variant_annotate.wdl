@@ -35,8 +35,8 @@ task variant_annotate {
         ~{if exact_match then "--exact_match" else ""} \
         ~{if ambiguous_contig then "--ambiguous_contig" else ""} \
         --feature_qualifier ~{feature_qualifier} \
-        --output ~{samplename}.extracted.vcf
-      vep_vcf="~{samplename}.extracted.vcf"
+        --output ~{samplename}.genes.vcf
+      vep_vcf="~{samplename}.genes.vcf"
     else
       # by default, annotate the VCF passed directly to the task
       vep_vcf="~{vcf}"
@@ -77,8 +77,9 @@ PYEOF
       -i "${vep_vcf}" \
       --fasta ~{reference_fasta}.gz \
       --gff reference_sorted.gff.gz \
-      --vcf \
+      --tab \
       --hgvs \
+      --hgvsp_use_prediction \
       -o ~{samplename}_variant_annotations
 
     mv ~{samplename}_variant_annotations ~{samplename}_variant_annotations.tsv
@@ -86,7 +87,8 @@ PYEOF
   output {
     File variant_annotations_tsv = "~{samplename}_variant_annotations.tsv"
     File variant_annotation_warnings = "~{samplename}_variant_annotations_warnings.txt"
-    File variant_annotations_html = "~{samplename}_variant_annotations.html"
+    File variant_annotations_html = "~{samplename}_variant_annotations_summary.html"
+    File? variant_annotations_gene_vcf = "~{samplename}.genes.vcf"
   }
   runtime {
     docker: docker
