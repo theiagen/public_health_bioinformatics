@@ -92,11 +92,11 @@ PYEOF
       > VARIANT_REPORT
   >>>
   output {
-    File variant_annotations_tsv = "~{samplename}_variant_annotations.tsv"
+    File variant_annotation_tsv = "~{samplename}_variant_annotations.tsv"
     File variant_annotation_warnings = "~{samplename}_variant_annotations_warnings.txt"
-    File variant_annotations_html = "~{samplename}_variant_annotations_summary.html"
-    File? variant_annotations_gene_vcf = "~{samplename}.genes.vcf"
-    String variant_hits = read_string("VARIANT_REPORT")
+    File variant_annotation_html = "~{samplename}_variant_annotations_summary.html"
+    File? variant_annotation_gene_vcf = "~{samplename}.genes.vcf"
+    String variant_annotation = read_string("VARIANT_REPORT")
   }
   runtime {
     docker: docker

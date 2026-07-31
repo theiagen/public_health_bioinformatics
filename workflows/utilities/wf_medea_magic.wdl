@@ -33,17 +33,17 @@ workflow medea_magic {
     String? cauris_cladetyper_docker_image
     Int? cladetyper_kmer_size
     File? cladetyper_ref_clade1
-    File? cladetyper_ref_clade1_annotated
+    File? cladetyper_ref_clade1_gff
     File? cladetyper_ref_clade2
-    File? cladetyper_ref_clade2_annotated
+    File? cladetyper_ref_clade2_gff
     File? cladetyper_ref_clade3
-    File? cladetyper_ref_clade3_annotated
+    File? cladetyper_ref_clade3_gff
     File? cladetyper_ref_clade4
-    File? cladetyper_ref_clade4_annotated
+    File? cladetyper_ref_clade4_gff
     File? cladetyper_ref_clade5
-    File? cladetyper_ref_clade5_annotated
+    File? cladetyper_ref_clade5_gff
     File? cladetyper_ref_clade6
-    File? cladetyper_ref_clade6_annotated
+    File? cladetyper_ref_clade6_gff
     Float? cladetyper_max_distance
     # user-supplied reference fasta; when provided, overrides the hosted/organism reference
     File? reference_genome_fasta
@@ -89,28 +89,25 @@ workflow medea_magic {
         samplename = samplename,
         kmer_size = cladetyper_kmer_size,
         ref_clade1 = cladetyper_ref_clade1,
-        ref_clade1_annotated = cladetyper_ref_clade1_annotated,
+        ref_clade1_gff = cladetyper_ref_clade1_gff,
         ref_clade2 = cladetyper_ref_clade2,
-        ref_clade2_annotated = cladetyper_ref_clade2_annotated,
+        ref_clade2_gff = cladetyper_ref_clade2_gff,
         ref_clade3 = cladetyper_ref_clade3,
-        ref_clade3_annotated = cladetyper_ref_clade3_annotated,
+        ref_clade3_gff = cladetyper_ref_clade3_gff,
         ref_clade4 = cladetyper_ref_clade4,
-        ref_clade4_annotated = cladetyper_ref_clade4_annotated,
+        ref_clade4_gff = cladetyper_ref_clade4_gff,
         ref_clade5 = cladetyper_ref_clade5,
-        ref_clade5_annotated = cladetyper_ref_clade5_annotated,
+        ref_clade5_gff = cladetyper_ref_clade5_gff,
         ref_clade6 = cladetyper_ref_clade6,
-        ref_clade6_annotated = cladetyper_ref_clade6_annotated,
+        ref_clade6_gff = cladetyper_ref_clade6_gff,
         max_distance = cladetyper_max_distance,
         docker = cauris_cladetyper_docker_image
     }
     # cladetyper fasta output feeds the variant-calling alignment reference for C. auris
     File cauris_variant_fasta = cladetyper.assembly_reference
-    # cladetyper GFF/GBFF outputs feed downstream annotation, but only when a clade match is found
+    # cladetyper GFF outputs feed downstream annotation, but only when a clade match is found
     if (cladetyper.annotated_reference_gff != "None") {
       File cauris_variant_gff = cladetyper.annotated_reference_gff
-    }
-    if (cladetyper.annotated_reference_gbff != "None") {
-      File cauris_variant_gbff = cladetyper.annotated_reference_gbff
     }
     # organism-specific gene coverage targets used when query_genes is not user-supplied
     String cauris_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,B9J08_005340,B9J08_000401,B9J08_003102,B9J08_003737,B9J08_005343"
@@ -118,8 +115,6 @@ workflow medea_magic {
   if (medea_tag == "Aspergillus fumigatus") {
     # hosted fasta (user-supplied fasta takes precedence downstream) feeds the variant-calling reference
     File afumigatus_variant_fasta = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.fasta"
-    # hosted GBFF (user-supplied reference_gbff takes precedence downstream) feeds gene coverage annotation
-    File afumigatus_variant_gbff = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff"
     # hosted GFF (user-supplied reference_gff takes precedence downstream) feeds gene coverage annotation
     File afumigatus_variant_gff = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gff"
     # organism-specific gene coverage targets used when query_genes is not user-supplied
@@ -128,8 +123,6 @@ workflow medea_magic {
   if (medea_tag == "Cryptococcus neoformans") {
     # hosted fasta (user-supplied fasta takes precedence downstream) feeds the variant-calling reference
     File cryptoneo_variant_fasta = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.fasta"
-    # hosted GBFF (user-supplied reference_gbff takes precedence downstream) feeds gene coverage annotation
-    File cryptoneo_variant_gbff = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff"
     # hosted GFF (user-supplied reference_gff takes precedence downstream) feeds gene coverage annotation
     File cryptoneo_variant_gff = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gff"
     # organism-specific gene coverage targets used when query_genes is not user-supplied
@@ -234,7 +227,7 @@ workflow medea_magic {
   if (length(query_genes_options) > 0) {
     String resolved_query_genes = query_genes_options[0]
   }
-  # Species-agnostic reference resolution. For each of fasta/gff/gbff a user-supplied input
+  # Species-agnostic reference resolution. For each of fasta/gff a user-supplied input
   # takes precedence, otherwise the organism-specific reference is used (cladetyper outputs for
   # C. auris when a clade matches, hosted references for A. fumigatus and C. neoformans).
   if (length(variant_calling_reference_fastas) > 0) {
@@ -243,11 +236,6 @@ workflow medea_magic {
   Array[File] reference_gff_options = select_all([reference_gff, cauris_variant_gff, afumigatus_variant_gff, cryptoneo_variant_gff])
   if (length(reference_gff_options) > 0) {
     File resolved_reference_gff = reference_gff_options[0]
-  }
-  # no user-supplied GBFF input; organism-specific GBFF only
-  Array[File] reference_gbff_options = select_all([cauris_variant_gbff, afumigatus_variant_gbff, cryptoneo_variant_gbff])
-  if (length(reference_gbff_options) > 0) {
-    File resolved_reference_gbff = reference_gbff_options[0]
   }
   # tracks are mutually exclusive (ont_data), so each select_all yields at most one element
   Array[File] gene_coverage_bams = select_all([bwa_variant_calling.sorted_bam, ont_bam_sorting.bam])
@@ -313,7 +301,6 @@ workflow medea_magic {
     # species-agnostic reference actually used (user-supplied or organism-derived)
     File? reference_fasta_used = resolved_reference_fasta
     File? reference_gff_used = resolved_reference_gff
-    File? reference_gbff_used = resolved_reference_gbff
     # variant calling - illumina (bwa alignment + gatk)
     String? bwa_version = bwa_variant_calling.bwa_version
     File? variant_calling_bam = bwa_variant_calling.sorted_bam
@@ -336,7 +323,9 @@ workflow medea_magic {
     File? gene_coverage_stats = gene_coverage.gene_coverage_stats
     Map[String, Float]? gene_coverage_depth_by_gene = gene_coverage.depth_by_gene
     Map[String, Float]? gene_coverage_breadth_by_gene = gene_coverage.breadth_by_gene
-    File? variant_annotation_gene_vcf = variant_annotate.gene_vcf
-    String? variant_annotations = variant_annotate.variant_annotations
+    File? variant_annotation_warnings = variant_annotate.variant_annotation_warnings
+    File? variant_annotation_summary = variant_annotate.variant_annotation_html
+    File? variant_annotation_gene_vcf = variant_annotate.variant_annotation_gene_vcf
+    String? variant_annotations = variant_annotate.variant_annotation
   }
 }
