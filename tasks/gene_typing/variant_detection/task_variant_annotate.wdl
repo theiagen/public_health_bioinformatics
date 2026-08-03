@@ -104,6 +104,7 @@ PYEOF
         > VARIANT_REPORT
     else
       echo "WARNING: no variants detected in VCF or extracted gene VCF" >&2
+      echo "" > VARIANT_REPORT
     fi
   >>>
   output {
@@ -111,7 +112,7 @@ PYEOF
     File? variant_annotation_warnings = "~{samplename}_variant_annotations_warnings.txt"
     File? variant_annotation_html = "~{samplename}_variant_annotations_summary.html"
     File? variant_annotation_gene_vcf = "~{samplename}.genes.vcf"
-    String? variant_annotation = read_string("VARIANT_REPORT")
+    String variant_annotation = read_string("VARIANT_REPORT")
   }
   runtime {
     docker: docker
