@@ -131,11 +131,14 @@ workflow medea_magic {
   # Reference-based variant calling.
   # a user-supplied fasta takes precedence, otherwise the organism-specific reference is used
   # (cladetyper fasta for C. auris, hosted fasta for A. fumigatus and C. neoformans).
-  Array[File] variant_calling_reference_fastas = select_all([reference_genome_fasta, cauris_variant_fasta, afumigatus_variant_fasta, cryptoneo_variant_fasta])
+  # resolve the reference once; visible below (and in outputs) as File?
+  if (defined(reference_genome_fasta) || defined(cauris_variant_fasta) || defined(afumigatus_variant_fasta) || defined(cryptoneo_variant_fasta)) {
+    File resolved_reference_fasta = select_first([reference_genome_fasta, cauris_variant_fasta, afumigatus_variant_fasta, cryptoneo_variant_fasta])
+  }
   # variant calling runs automatically whenever a reference fasta and read1 are available
-  if (length(variant_calling_reference_fastas) > 0 && defined(read1)) {
+  if (defined(resolved_reference_fasta) && defined(read1)) {
     # Illumina short-read track: BWA alignment + GATK variant calling
-    File variant_calling_reference_fasta = variant_calling_reference_fastas[0]
+    File variant_calling_reference_fasta = select_first([resolved_reference_fasta])
     if (!ont_data) {
       call bwa_task.bwa as bwa_variant_calling {
         input:
@@ -227,28 +230,22 @@ workflow medea_magic {
   if (length(query_genes_options) > 0) {
     String resolved_query_genes = query_genes_options[0]
   }
-  # Species-agnostic reference resolution. For each of fasta/gff a user-supplied input
-  # takes precedence, otherwise the organism-specific reference is used (cladetyper outputs for
+  # Species-agnostic GFF resolution. A user-supplied reference_gff takes precedence,
+  # otherwise the organism-specific reference is used (cladetyper outputs for
   # C. auris when a clade matches, hosted references for A. fumigatus and C. neoformans).
-  if (length(variant_calling_reference_fastas) > 0) {
-    File resolved_reference_fasta = variant_calling_reference_fastas[0]
-  }
   Array[File] reference_gff_options = select_all([reference_gff, cauris_variant_gff, afumigatus_variant_gff, cryptoneo_variant_gff])
   if (length(reference_gff_options) > 0) {
     File resolved_reference_gff = reference_gff_options[0]
   }
-  # tracks are mutually exclusive (ont_data), so each select_all yields at most one element
-  Array[File] gene_coverage_bams = select_all([bwa_variant_calling.sorted_bam, ont_bam_sorting.bam])
-  Array[File] gene_coverage_bais = select_all([bwa_variant_calling.sorted_bai, ont_bam_sorting.bai])
-  Array[File] gene_coverage_vcfs = select_all([gatk_filter.gatk_filtered_vcf, clair3_variant_calling.clair3_variants_vcf])
-  if (length(gene_coverage_vcfs) > 0) {
-    File gene_coverage_vcf = gene_coverage_vcfs[0]
+  # tracks are mutually exclusive (ont_data), so select_first yields the one track that ran
+  if (defined(gatk_filter.gatk_filtered_vcf) || defined(clair3_variant_calling.clair3_variants_vcf)) {
+    File gene_coverage_vcf = select_first([gatk_filter.gatk_filtered_vcf, clair3_variant_calling.clair3_variants_vcf])
   }
-  if (length(gene_coverage_bams) > 0) {
+  if (defined(bwa_variant_calling.sorted_bam) || defined(ont_bam_sorting.bam)) {
     call gene_coverage_task.gene_coverage {
       input:
-        bam = gene_coverage_bams[0],
-        bai = gene_coverage_bais[0],
+        bam = select_first([bwa_variant_calling.sorted_bam, ont_bam_sorting.bam]),
+        bai = select_first([bwa_variant_calling.sorted_bai, ont_bam_sorting.bai]),
         samplename = samplename,
         reference_gff = resolved_reference_gff,
         query_genes = resolved_query_genes
