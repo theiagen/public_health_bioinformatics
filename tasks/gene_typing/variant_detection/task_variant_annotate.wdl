@@ -75,6 +75,7 @@ PYEOF
       -i "${vep_vcf}" \
       --fasta ~{reference_fasta}.gz \
       --gff reference_sorted.gff.gz \
+      --species "na" \
       --tab \
       --hgvs \
       --hgvsg \
