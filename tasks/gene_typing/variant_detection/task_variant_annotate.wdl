@@ -71,33 +71,47 @@ PYEOF
     bgzip -c ~{reference_fasta} > ~{reference_fasta}.gz
     samtools faidx ~{reference_fasta}.gz
 
-    vep \
-      -i "${vep_vcf}" \
-      --fasta ~{reference_fasta}.gz \
-      --gff reference_sorted.gff.gz \
-      --species "na" \
-      --tab \
-      --hgvs \
-      --hgvsg \
-      --hgvsp_use_prediction \
-      --distance 0 \
-      -o ~{samplename}_variant_annotations
+    # count variant records (non-header, non-empty lines) in the VCF to annotate,
+    # transparently handling bgzipped input
+    if [[ "${vep_vcf}" == *.gz ]]; then
+      variant_count=$(zcat "${vep_vcf}" | grep -v "^#" | grep -c "[^[:space:]]" || true)
+    else
+      variant_count=$(grep -v "^#" "${vep_vcf}" | grep -c "[^[:space:]]" || true)
+    fi
 
-    mv ~{samplename}_variant_annotations ~{samplename}_variant_annotations.tsv
+    # only annotate and report when the VCF holds at least one variant; otherwise
+    # VEP has nothing to work on, so warn and skip
+    if [ "${variant_count}" -gt 0 ]; then
+      vep \
+        -i "${vep_vcf}" \
+        --fasta ~{reference_fasta}.gz \
+        --gff reference_sorted.gff.gz \
+        --species "na" \
+        --tab \
+        --hgvs \
+        --hgvsg \
+        --hgvsp_use_prediction \
+        --distance 0 \
+        -o ~{samplename}_variant_annotations
 
-    theiagene report_variants \
-      --vcf "${vep_vcf}" \
-      --vep_tsv ~{samplename}_variant_annotations.tsv \
-      --reference_gff reference_sorted.gff.gz \
-      --feature_qualifier ~{feature_qualifier} \
-      > VARIANT_REPORT
+      mv ~{samplename}_variant_annotations ~{samplename}_variant_annotations.tsv
+
+      theiagene report_variants \
+        --vcf "${vep_vcf}" \
+        --vep_tsv ~{samplename}_variant_annotations.tsv \
+        --reference_gff reference_sorted.gff.gz \
+        --feature_qualifier ~{feature_qualifier} \
+        > VARIANT_REPORT
+    else
+      echo "WARNING: no variants detected in VCF or extracted gene VCF" >&2
+    fi
   >>>
   output {
-    File variant_annotation_tsv = "~{samplename}_variant_annotations.tsv"
-    File variant_annotation_warnings = "~{samplename}_variant_annotations_warnings.txt"
-    File variant_annotation_html = "~{samplename}_variant_annotations_summary.html"
+    File? variant_annotation_tsv = "~{samplename}_variant_annotations.tsv"
+    File? variant_annotation_warnings = "~{samplename}_variant_annotations_warnings.txt"
+    File? variant_annotation_html = "~{samplename}_variant_annotations_summary.html"
     File? variant_annotation_gene_vcf = "~{samplename}.genes.vcf"
-    String variant_annotation = read_string("VARIANT_REPORT")
+    String? variant_annotation = read_string("VARIANT_REPORT")
   }
   runtime {
     docker: docker
