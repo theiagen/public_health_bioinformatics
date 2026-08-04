@@ -6,7 +6,7 @@ fragment: true
 ??? task "`Snippy_Variants`: Variant Calling"
     ##### Snippy_Variants
 <!-- if: snippy_streamline -->
-    Snippy_Variants uses Snippy to align the assemblies for each sample against the reference genome to call SNPs, MNPs and INDELs according to optional input parameters. 
+    Snippy_Variants uses Snippy to align the assemblies for each sample against the reference genome to call SNPs, MNPs and INDELs according to optional input parameters.
 <!-- endif -->
 <!-- if: snippy_variants -->
     Snippy_Variants uses Snippy to align reads to the reference and call SNPs, MNPs and INDELs according to optional input parameters.
@@ -16,7 +16,7 @@ fragment: true
 
     ??? toggle "QC Metrics from Snippy_Variants"
 <!-- if: snippy_streamline -->
-        !!! warning 
+        !!! warning
             The following QC metrics may not be applicable to your dataset as they are geared towards read data, not assemblies. Use these metrics with caution.
 <!-- endif -->
         This task also extracts QC metrics from the Snippy output for each sample and saves them in per-sample TSV files (`snippy_variants_qc_metrics`). These per-sample QC metrics include the following columns:
@@ -36,7 +36,7 @@ fragment: true
         - **meandepth**: Mean depth of coverage over the reference sequence.
         - **meanbaseq**: Mean base quality over the reference sequence.
         - **meanmapq**: Mean mapping quality over the reference sequence.
- 
+
         Note that the last set of columns (`#rname` to `meanmapq`) may repeat for each chromosome or contig in the reference genome.
 
 <!-- if: snippy_variants -->
@@ -50,7 +50,7 @@ fragment: true
 <!-- if: cauris|calbicans|afumigatus|cneoformans -->
 ??? task "`Snippy_Variants`: Antifungal Resistance Detection"
     To detect mutations that may confer antifungal resistance, Snippy is used to find all variants relative to the clade-specific reference, then these variants are queried for product names associated with resistance. It's important to note that unlike AMRSearch, this task reports all variants found in the searched targets.
-    
+
 <!-- if: cauris -->
     - FKS1
     - ERG11 (lanosterol 14-alpha demethylase)
@@ -83,7 +83,7 @@ fragment: true
     | B9J08_003737 | ERG3 |
     | lanosterol.14-alpha.demethylase | ERG11 |
     | uracil.phosphoribosyltransferase | FUR1 |
-    | FKS1 | FKS1 |    
+    | FKS1 | FKS1 |  
 
     ??? toggle "Known resistance-conferring mutations for _Candidozyma auris_"
         Mutations in these genes that are known to confer resistance are shown below

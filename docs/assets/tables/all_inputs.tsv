@@ -359,7 +359,7 @@ augur_tree	disk_size	Int	Amount of storage (in GB) to allocate to the task	750	O
 augur_tree	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0	Optional	Augur	docker	
 augur_tree	exclude_sites	File	File of one-based sites to exclude for raw tree building (BED format in .bed files, DRM format in tab-delimited files, or one position per line)		Optional	Augur	general	
 augur_tree	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Augur	runtime	
-augur_tree	method	String	The method used to build the tree. Options: "fasttree", "raxml", "iqtree" (default)	iqtree	Optional	Augur	general	
+augur_tree	method	String	The method used to build the tree. Options: "fasttree", "raxml", "IQ-TREE" (default)	iqtree	Optional	Augur	general	
 augur_tree	override_default_args	Boolean	If true, override default tree builder arguments instead of augmenting them	False	Optional	Augur	general	
 augur_tree	substitution_model	String	The substitution model to use; only available for IQ-TREE 2. Specify "auto" to run ModelTest; model options can be found here	GTR	Optional	Augur	general	
 augur_tree	tree_builder_args	String	Additional tree builder arguments either augmenting or overriding the default arguments. FastTree defaults: "-nt -nosupport". RAxML defaults: "-f d -m GTRCAT -c 25 -p 235813". IQ-TREE defaults: "-ninit 2 -n 2 -me 0.05 -nt AUTO -redo"		Optional	Augur	general	
@@ -917,8 +917,9 @@ freyja	bootstrap	Boolean	Perform bootstrapping	False	Optional	Freyja_FASTQ	gener
 freyja	confirmed_only	Boolean	Include only confirmed SARS-CoV-2 lineages	False	Optional	Freyja_FASTQ	general	
 freyja	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Freyja_FASTQ	runtime	
 freyja	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime	
-freyja	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.1	Optional	Freyja_FASTQ	docker	
+freyja	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.3	Optional	Freyja_FASTQ	docker	
 freyja	eps	Float	The minimum lineage abundance cut-off value	0.001	Optional	Freyja_FASTQ	general	
+freyja	freyja_lineage_yml	File	Lineage hierarchy file in yaml format used in conjunction with `depth_cutoff`		Optional	Freyja_FASTQ	general	
 freyja	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime	
 freyja	number_bootstraps	Int	The number of bootstraps to perform (only used if bootstrap = true)	100	Optional	Freyja_FASTQ	general	
 freyja	update_db	Boolean	Updates the Freyja reference files (the usher barcodes and lineage metadata files) but will not save them as output (use Freyja_Update for that purpose). If set to true, the freyja_lineage_metadata and freyja_barcodes files are not required.	False	Optional	Freyja_FASTQ	general	True
@@ -926,12 +927,13 @@ freyja_dashboard	dashboard_intro_text	File	A file containing the text to be cont
 freyja_dashboard_task	config	File	(found in the optional section, but is required) A yaml file that applies various configurations to the dashboard, such as grouping lineages together, applying colorings, etc. See also <https://github.com/andersen-lab/Freyja/blob/main/freyja/data/plot_config.yml>.		Optional, Required	Freyja_Dashboard	general	True
 freyja_dashboard_task	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Freyja_Dashboard	runtime	
 freyja_dashboard_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_Dashboard	runtime	
-freyja_dashboard_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.1	Optional	Freyja_Dashboard	docker	
+freyja_dashboard_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.3	Optional	Freyja_Dashboard	docker	
 freyja_dashboard_task	headerColor	String	A hex color code to change the color of the header		Optional	Freyja_Dashboard	general	
 freyja_dashboard_task	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Freyja_Dashboard	runtime	
 freyja_dashboard_task	mincov	Float	The minimum genome coverage used as a cut-off of data to include in the dashboard. Default is set to 60 by the freyja command-line tool (not a WDL task default, per se)		Optional	Freyja_Dashboard	general	
 freyja_dashboard_task	scale_by_viral_load	Boolean	If set to true, averages samples taken the same day while taking viral load into account	False	Optional	Freyja_Dashboard	general	
 freyja_dashboard_task	thresh	Float	The minimum lineage abundance cut-off value		Optional	Freyja_Dashboard	general	
+freyja_fastq	call_read_qc_trim	Boolean	When false QC steps will be skipped	True	Optional	Freyja_FASTQ	general	
 freyja_fastq	collection_date	String	Collection date of wastewater sample (YYYY-MM-DD)		Optional	Freyja_FASTQ	general	
 freyja_fastq	collection_site	String	Collection site of wastewater sample		Optional	Freyja_FASTQ	general	
 freyja_fastq	depth_cutoff	Int	The minimum coverage depth with which to exclude sites below this value and group identical barcodes -- THIS MAY NOT WORK FOR NON-SARS-COV-2 ORGANISMS!		Optional	Freyja_FASTQ	general	
@@ -970,7 +972,7 @@ freyja_plot	latitude	Array[Float]	An array containing the latitudes for the samp
 freyja_plot	longitude	Array[Float]	An array containing the longitudes for the sample collection sites		Optional	Freyja_Plot	general	
 freyja_plot_task	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Freyja_Plot	runtime	
 freyja_plot_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_Plot	runtime	
-freyja_plot_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.1	Optional	Freyja_Plot	docker	
+freyja_plot_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.3	Optional	Freyja_Plot	docker	
 freyja_plot_task	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Freyja_Plot	runtime	
 freyja_plot_task	plot_day_window	Int	The width of the rolling average window; only used if plot_time_interval is "D"	14	Optional	Freyja_Plot	general	
 freyja_plot_task	plot_lineages	Boolean	If true, will plot a lineage-specific breakdown	False	Optional	Freyja_Plot	general	
@@ -1016,11 +1018,11 @@ gisaid_upload	docker	String	The Docker container to use for the task	us-docker.p
 gisaid_upload	frameshift_notification	String	See top of inputs section for explanation; the notification preference regarding frameshifts in your submission	catch_novel	Optional	Terra_2_GISAID	general	
 gisaid_upload	gisaid_credentials	File	[EITHER] A tab-delimited file containing the submitter's GISAID username followed by their password, used to generate the GISAID authentication file.		Optional, Required	Terra_2_GISAID	general	True
 gisaid_upload	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Terra_2_GISAID	runtime	
-gubbins	filter_percent	Int	Maximum % gaps to include a sample in gubbins analysis and downstream analyses	25	Optional	Snippy_Tree	general	
+gubbins	filter_percent	Int	Maximum % gaps to include a sample in Gubbins analysis and downstream analyses	25	Optional	Snippy_Tree	general	
 gubbins	iterations	Int	Maximum number of trees to iteratively build to remove recombination	5	Optional	Snippy_Tree	general	
 gubbins	nuc_subst_model	String	Nucleotide substitution model to use with Gubbins: "JC", "K2P", "HKY", "GTR", "GTRGAMMA" or "GTRCAT" (see <https://github.com/nickjcroucher/gubbins/blob/v3.3/docs/gubbins_manual.md#nucleotide-substitution-model-options>)	GTRGAMMA	Optional	Snippy_Tree	general	
 gubbins	tree_args	String	Quoted string of further arguments passed to tree building algorithm		Optional	Snippy_Tree	general	
-gubbins	tree_builder	String	Application to use for Gubbins tree building algorithm: "raxml", "raxmlng", "iqtree", "iqtree-fast", "fasttree", "hybrid" (fasttree is used for the first tree, and raxml is used for later iterations), "rapidnj"	raxml	Optional	Snippy_Tree	general	
+gubbins	tree_builder	String	Application to use for Gubbins tree building algorithm: "raxml", "raxmlng", "iqtree", "iqtree-fast", "fasttree", "hybrid" (fasttree is used for the first tree, and raxml is used for later iterations), "rapidnj"	raxml	Optional	Snippy_Tree	general	
 host_decontaminate	complete_only	Boolean	Only download genomes labeled "complete"	False	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
 host_decontaminate	expected_sequences	String	Internal component, do not modify 		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
 host_decontaminate	is_accession	Boolean	Inputted "host" is an accession	False	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
@@ -1186,8 +1188,8 @@ ksnp3_workflow	data_summary_terra_table	String	The name of the sample-level Terr
 ksnp3_workflow	data_summary_terra_workspace	String	The name of the Terra workspace you are in. This can be found at the top of the webpage, or in the URL after the billing project.		Optional	kSNP3	general	
 ksnp3_workflow	midpoint_root_tree	Boolean	If true, midpoint root the final tree	True	Optional	kSNP3	general	
 ksnp3_workflow	phandango_coloring	Boolean	Boolean variable that tells the data summary task and the reorder matrix task to include a suffix that enables consistent coloring on Phandango; by default, this suffix is not added. To add this suffix set this variable to true.	False	Optional	kSNP3	general	
-ksnp4_task	cpu	Int	Number of CPUs to allocate to the task	2	Optional	kSNP4	runtime	
-ksnp4_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	kSNP4	runtime	
+ksnp4_task	cpu	Int	Number of CPUs to allocate to the task	8	Optional	kSNP4	runtime	
+ksnp4_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	500	Optional	kSNP4	runtime	
 ksnp4_task	docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ksnp4:4.1	Optional	kSNP4	docker	
 ksnp4_task	kmer_size	Int	The length of kmer containing the SNP you want ksnp4 to use	19	Optional	kSNP4	general	
 ksnp4_task	ksnp4_args	String	Additional arguments you want kSNP4 to use; e.g., "-ML" or "-NJ"		Optional	kSNP4	general	
@@ -1331,7 +1333,7 @@ mercury	state	String	Populate to overwrite state column		Optional	Mercury_Prep_N
 mercury	submitter_email	String	Populate to overwrite submitter_email column		Optional	Mercury_Prep_N_Batch	general	
 mercury	submitting_lab	String	Populate to overwrite submitting_lab column		Optional	Mercury_Prep_N_Batch	general	
 mercury	submitting_lab_address	String	Populate to overwrite submitting_lab_address column		Optional	Mercury_Prep_N_Batch	general	
-mercury	usa_territory	Boolean	If true, the "state" column will be used in place of the "country" column. For example, if "state" is Puerto Rico, then the GISAID virus name will be hCoV-19/Puerto Rico/<name>/<year>. The NCBI geo_loc_name will be "USA: Puerto Rico". This optional Boolean variable should only be used with clear understanding of what it does.	False	Optional	Mercury_Prep_N_Batch	general	
+mercury	usa_territory	Boolean	If true, the "state" column will be used in place of the "country" column. For example, if "state" is Puerto Rico, then the GISAID virus name will be hCoV-19/Puerto Rico/<name>/<year>. The NCBI geo_loc_name will be "USA: Puerto Rico". This optional Boolean variable should only be used with clear understanding of what it does.	False	Optional	Mercury_Prep_N_Batch	general	
 mercury	using_clearlabs_data	Boolean	When set to true will change read1_dehosted → clearlabs_fastq_gz; assembly_fasta → clearlabs_fasta; assembly_mean_coverage → clearlabs_sequencing_depth	False	Optional	Mercury_Prep_N_Batch	general	
 mercury	using_reads_dehosted	Boolean	When set to true will only change read1_dehosted → reads_dehosted. Takes priority over the replacement for read1_dehosted made with the using_clearlabs_data Boolean input	False	Optional	Mercury_Prep_N_Batch	general	
 mercury	vadr_alert_limit	Int	Only for "sars-cov-2" submissions; used to filter out any samples that contain more than the indicated number of vadr alerts	0	Optional	Mercury_Prep_N_Batch	general	
@@ -1356,7 +1358,7 @@ merlin_magic	call_poppunk	Boolean	If true, runs PopPUNK for GPSC cluster designa
 merlin_magic	call_shigeifinder_reads_input	Boolean	If set to "true", the ShigEiFinder task will run again but using read files as input instead of the assembly file. Input is shown but not used for TheiaProk_FASTA.	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	call_stxtyper	Boolean	If set to "true", the StxTyper task will run on all samples regardless of the gambit_predicted_taxon output. Useful if you suspect a non-E.coli or non-Shigella sample contains stx genes.	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	call_tbp_parser	Boolean	Internal component, do not modify	False	Optional	TheiaProk_FASTA	general	
-merlin_magic	call_tbp_parser	Boolean	If set to "true", activates the tbp_parser module and results in more outputs, including tbp_parser_looker_report_csv, tbp_parser_laboratorian_report_csv,  tbp_parser_lims_report_csv, tbp_parser_coverage_report, and tbp_parser_genome_percent_coverage	False	Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	call_tbp_parser	Boolean	If set to "true", activates the tbp_parser module and results in more outputs, including tbp_parser_looker_report_csv, tbp_parser_laboratorian_report_csv,  tbp_parser_lims_report_csv, tbp_parser_coverage_report, and tbp_parser_genome_percent_coverage	False	Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	clockwork_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/cdcgov/varpipe_wgs_with_refs:2bc7234074bd53d9e92a1048b0485763cd9bbf6f4d12d5a1cc82bfec8ca7d75e	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
 merlin_magic	ectyper_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ectyper:2.0.0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
 merlin_magic	ectyper_h_min_percent_coverage	Int	Minumum percent coverage required for an H antigen allele match	50	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
@@ -1375,7 +1377,7 @@ merlin_magic	emmtyper_min_good	Int	Minimum size where there must be 2 matches fo
 merlin_magic	emmtyper_min_percent_identity	Int	Minimal percent identity of sequence.	95	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	emmtyper_min_perfect	Int	Minimum size of perfect match at 3' primer end.	15	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	emmtyper_mismatch	Int	Threshold for number of mismatch to allow in BLAST hit.	4	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	emmtyper_wf	String	Choose workflow [blast|pcr]	blast	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	emmtyper_wf	String	Choose workflow (blast\|pcr)	blast	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	emmtypingtool_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/emmtypingtool:0.0.1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
 merlin_magic	genotyphi_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.11.0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
 merlin_magic	hicap_broken_gene_length	Int	Minimum length to consider a broken gene	60	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
@@ -1725,7 +1727,7 @@ organism_parameters	nextclade_dataset_name_input	String	NextClade organism datas
 organism_parameters	nextclade_dataset_name_input	String	Internal component, do not modify		Optional	VADR_Update	general	
 organism_parameters	nextclade_dataset_tag_input	String	NextClade organism dataset tag	Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>. For an organism without set defaults, the default is "NA".	Optional	Augur	general	True
 organism_parameters	nextclade_dataset_tag_input	String	Internal component, do not modify		Optional	VADR_Update	general	
-organism_parameters	pangolin_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.4-pdata-1.38	Optional	Augur, TheiaCoV_ClearLabs, TheiaCoV_FASTA	docker	True
+organism_parameters	pangolin_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.4-pdata-1.39	Optional	Augur, TheiaCoV_ClearLabs, TheiaCoV_FASTA	docker	True
 organism_parameters	pangolin_docker_image	String	Internal component, do not modify		Optional	VADR_Update	general	
 organism_parameters	pivot_interval	Int	Internal component, do not modify		Optional	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, VADR_Update	general	
 organism_parameters	primer_bed_file	File	The bed file containing the primers used when sequencing was performed	REQUIRED FOR SARS-CoV-2, MPOX, WNV, RSV-A & RSV-B. Provided by default only for HIV primer versions 1 ("gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed" and 2 ("gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed")	Optional	Augur, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch	general	True
@@ -2213,7 +2215,7 @@ snippy_tree_wf	snp_sites_cpu	Int	Number of CPUs to allocate to the task	1	Option
 snippy_tree_wf	snp_sites_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
 snippy_tree_wf	snp_sites_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/snp-sites:2.5.1	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	docker	
 snippy_tree_wf	snp_sites_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
-snippy_tree_wf	use_gubbins	Boolean	When "true", workflow removes recombination with gubbins tasks; when "false", gubbins is not used	True	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
+snippy_tree_wf	use_gubbins	Boolean	When "true", workflow removes recombination with Gubbins tasks; when "false", Gubbins is not used	True	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
 snippy_variants	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Snippy_Variants	runtime	
 snippy_variants_wf	assembly_fasta	File	The assembly file for your sample in FASTA format		Optional	Snippy_Streamline, Snippy_Variants	general	
 snippy_variants_wf	base_quality	Int	Minimum quality for a nucleotide to be used in variant calling	13	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Variants	general	
@@ -2354,7 +2356,7 @@ theiacov_fasta	vadr_skip_length	Int	Minimum assembly length (unambiguous) to run
 theiacov_fasta_batch	nextclade_dataset_name	String	Nextclade organism dataset name. Options: "nextstrain/sars-cov-2/wuhan-hu-1/orfs" However, if organism input is set correctly, this input will be automatically assigned the corresponding dataset name.	sars-cov-2	Optional	TheiaCoV_FASTA_Batch	general	True
 theiacov_fasta_batch	nextclade_dataset_tag	String	Nextclade dataset tag. Used for pulling up-to-date reference genomes and associated information specific to nextclade datasets (QC thresholds, organism-specific information like SARS-CoV-2 clade & lineage information, etc.) that is required for running the Nextclade tool.	2024-06-13--23-42-47Z	Optional	TheiaCoV_FASTA_Batch	general	True
 theiacov_fasta_batch	organism	String	The organism that is being analyzed. Options: "sars-cov-2"	sars-cov-2	Optional	TheiaCoV_FASTA_Batch	general	
-theiacov_fasta_batch	pangolin_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.4-pdata-1.38	Optional	TheiaCoV_FASTA_Batch	docker	True
+theiacov_fasta_batch	pangolin_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.4-pdata-1.39	Optional	TheiaCoV_FASTA_Batch	docker	True
 theiacov_illumina_pe	adapters	File	A FASTA file containing adapter sequences	/bbmap/resources/adapters.fa	Optional	TheiaCoV_Illumina_PE	general	True
 theiacov_illumina_pe	call_rasusa	Boolean	True/False variable that determines if the RASUSA task should be called.	False	Optional	TheiaCoV_Illumina_PE	general	
 theiacov_illumina_pe	consensus_min_freq	Float	The minimum frequency for a variant to be called a SNP in consensus genome	0.6	Optional	TheiaCoV_Illumina_PE	general	
@@ -2369,7 +2371,7 @@ theiacov_illumina_pe	min_reads	Int	Minimum number of reads to pass read screenin
 theiacov_illumina_pe	nextclade_dataset_name	String	Nextclade organism dataset names. However, if organism input is set correctly, this input will be automatically assigned the corresponding dataset name. See organism defaults for more information	Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments) here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>	Optional	TheiaCoV_Illumina_PE	general	True
 theiacov_illumina_pe	nextclade_dataset_tag	String	Nextclade dataset tag. Used for pulling up-to-date reference genomes and associated information specific to nextclade datasets (QC thresholds, organism-specific information like SARS-CoV-2 clade & lineage information, etc.) that is required for running the Nextclade tool.	Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments) here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>	Optional	TheiaCoV_Illumina_PE	general	True
 theiacov_illumina_pe	organism	String	The organism that is being analyzed. Options: "sars-cov-2", "MPXV", "WNV", "HIV", "flu", "rsv_a", "rsv_b". However, "flu" is not available for TheiaCoV_Illumina_SE	sars-cov-2	Optional	TheiaCoV_Illumina_PE	general	
-theiacov_illumina_pe	pangolin_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.4-pdata-1.38	Optional	TheiaCoV_Illumina_PE	docker	True
+theiacov_illumina_pe	pangolin_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.4-pdata-1.39	Optional	TheiaCoV_Illumina_PE	docker	True
 theiacov_illumina_pe	phix	File	File that contains the phix used	/bbmap/resources/phix174_ill.ref.fa.gz	Optional	TheiaCoV_Illumina_PE	general	True
 theiacov_illumina_pe	primer_bed	File	The bed file containing the primers used when sequencing was performed		Optional	TheiaCoV_Illumina_PE	general	
 theiacov_illumina_pe	qc_check_table	File	TSV value with taxons for rows and QC values for columns; internal cells represent user-determined QC thresholds; if provided, turns on the QC Check task. See below for an example QC Check table.		Optional	TheiaCoV_Illumina_PE	general	
@@ -2403,7 +2405,7 @@ theiacov_illumina_se	min_reads	Int	Minimum number of reads to pass read screenin
 theiacov_illumina_se	nextclade_dataset_name	String	Nextclade organism dataset names. However, if organism input is set correctly, this input will be automatically assigned the corresponding dataset name. See organism defaults for more information	Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments) here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>	Optional	TheiaCoV_Illumina_SE	general	True
 theiacov_illumina_se	nextclade_dataset_tag	String	Nextclade dataset tag. Used for pulling up-to-date reference genomes and associated information specific to nextclade datasets (QC thresholds, organism-specific information like SARS-CoV-2 clade & lineage information, etc.) that is required for running the Nextclade tool.	Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments) here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>	Optional	TheiaCoV_Illumina_SE	general	True
 theiacov_illumina_se	organism	String	The organism that is being analyzed. Options: "sars-cov-2", "MPXV", "WNV", "HIV", "flu", "rsv_a", "rsv_b". However, "flu" is not available for TheiaCoV_Illumina_SE	sars-cov-2	Optional	TheiaCoV_Illumina_SE	general	
-theiacov_illumina_se	pangolin_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.4-pdata-1.38	Optional	TheiaCoV_Illumina_SE	docker	True
+theiacov_illumina_se	pangolin_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.4-pdata-1.39	Optional	TheiaCoV_Illumina_SE	docker	True
 theiacov_illumina_se	phix	File	File that contains the phix used	/bbmap/resources/phix174_ill.ref.fa.gz	Optional	TheiaCoV_Illumina_SE	general	True
 theiacov_illumina_se	primer_bed	File	The bed file containing the primers used when sequencing was performed		Optional	TheiaCoV_Illumina_SE	general	
 theiacov_illumina_se	qc_check_table	File	TSV value with taxons for rows and QC values for columns; internal cells represent user-determined QC thresholds; if provided, turns on the QC Check task. See below for an example QC Check table.		Optional	TheiaCoV_Illumina_SE	general	
@@ -2437,7 +2439,7 @@ theiacov_ont	nextclade_dataset_name	String	Nextclade organism dataset names. How
 theiacov_ont	nextclade_dataset_tag	String	Nextclade dataset tag. Used for pulling up-to-date reference genomes and associated information specific to nextclade datasets (QC thresholds, organism-specific information like SARS-CoV-2 clade & lineage information, etc.) that is required for running the Nextclade tool.	Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments) here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>	Optional	TheiaCoV_ONT	general	True
 theiacov_ont	normalise	Int	Used to normalize the amount of reads to the indicated level before variant calling	200	Optional	TheiaCoV_ONT	general	
 theiacov_ont	organism	String	The organism that is being analyzed. Options: "sars-cov-2", "MPXV", "WNV", "HIV", "flu", "rsv_a", "rsv_b". However, "flu" is not available for TheiaCoV_Illumina_SE	sars-cov-2	Optional	TheiaCoV_ONT	general	
-theiacov_ont	pangolin_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.4-pdata-1.38	Optional	TheiaCoV_ONT	docker	True
+theiacov_ont	pangolin_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.4-pdata-1.39	Optional	TheiaCoV_ONT	docker	True
 theiacov_ont	primer_bed	File	The bed file containing the primers used when sequencing was performed		Optional	TheiaCoV_ONT	general	
 theiacov_ont	qc_check_table	File	TSV value with taxons for rows and QC values for columns; internal cells represent user-determined QC thresholds; if provided, turns on the QC Check task. See below for an example QC Check table.		Optional	TheiaCoV_ONT	general	
 theiacov_ont	reference_gene_locations_bed	File	Use to provide locations of interest where average coverage will be calculated		Optional	TheiaCoV_ONT	general	

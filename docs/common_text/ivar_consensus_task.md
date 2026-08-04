@@ -7,14 +7,14 @@ fragment: true
 
 <!-- if: theiacov -->
     For TheiaCoV, the following default parameters are used:
-    
+
     - minimum quality: 20
     - minimum depth: 100
     - minimum allele frequency: 0.6
 <!-- endif -->
 
 <!-- if: theiaviral -->
-    This task is functional for segmented viruses by iteratively executing iVar on a contig-by-contig basis and concantenating resulting consensus contigs.
+    This task is functional for segmented viruses by iteratively executing iVar on a contig-by-contig basis and concatenating resulting consensus contigs.
 
     ??? dna "`min_depth` input parameter"
         This parameter accepts an integer value to set the minimum read depth for variant calling and subsequent consensus sequence generation. The default value is `10`.
