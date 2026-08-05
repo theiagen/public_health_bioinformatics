@@ -241,7 +241,7 @@ workflow medea_magic {
   if (defined(gatk_filter.gatk_filtered_vcf) || defined(clair3_variant_calling.clair3_variants_vcf)) {
     File gene_coverage_vcf = select_first([gatk_filter.gatk_filtered_vcf, clair3_variant_calling.clair3_variants_vcf])
   }
-  if (resolved_reference_gff != "None" && defined resolved_reference_gff) { # cladetyper will yield "None" when no GFF is found
+  if (resolved_reference_gff != "None" && defined(resolved_reference_gff)) { # cladetyper will yield "None" when no GFF is found
     if (defined(bwa_variant_calling.sorted_bam) || defined(ont_bam_sorting.bam)) {
       call gene_coverage_task.gene_coverage {
         input:
