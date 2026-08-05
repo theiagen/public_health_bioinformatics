@@ -101,7 +101,7 @@ PYEOF
         --vep_tsv ~{samplename}_variant_annotations.tsv \
         --reference_gff reference_sorted.gff.gz \
         --feature_qualifier ~{feature_qualifier} \
-        > VARIANT_REPORT
+        | tr '\n' ',' | sed 's/,$//' > VARIANT_REPORT
     else
       echo "WARNING: no variants detected in VCF or extracted gene VCF" >&2
       echo "" > VARIANT_REPORT
