@@ -76,7 +76,8 @@ task gatk_filter {
     # call SelectVariants
     gatk --java-options "-Xmx~{memory}G" SelectVariants \
       -V ~{samplename}_filtered.g.vcf.gz \
-      -O ~{samplename}_selected.g.vcf.gz
+      -O ~{samplename}_selected.g.vcf.gz \
+      --exclude-filtered true
   >>>
   output {
     String gatk_version = read_string("VERSION")

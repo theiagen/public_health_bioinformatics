@@ -112,7 +112,7 @@ task cauris_cladetyper {
     String gambit_version = read_string("VERSION")
     String gambit_cladetype = read_string("CLADETYPE")
     String annotated_reference_gff = read_string("CLADEGFF")
-    File assembly_reference = read_string("CLADEFASTA")
+    File? assembly_reference = read_string("CLADEFASTA")
     String gambit_cladetyper_docker_image = docker
   }
   runtime {
