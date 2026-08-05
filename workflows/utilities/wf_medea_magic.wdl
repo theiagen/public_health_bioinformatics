@@ -111,12 +111,6 @@ workflow medea_magic {
         max_distance = cladetyper_max_distance,
         docker = cauris_cladetyper_docker_image
     }
-    # cladetyper fasta output feeds the variant-calling alignment reference for C. auris
-    File cauris_variant_fasta = cladetyper.assembly_reference
-    # cladetyper GFF outputs feed downstream annotation, but only when a clade match is found
-    if (cladetyper.annotated_reference_gff != "None") {
-      File cauris_variant_gff = cladetyper.annotated_reference_gff
-    }
     # organism-specific gene coverage targets used when query_genes is not user-supplied
     String cauris_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,B9J08_005340,B9J08_000401,B9J08_003102,B9J08_003737,B9J08_005343"
   }
@@ -140,8 +134,8 @@ workflow medea_magic {
   # a user-supplied fasta takes precedence, otherwise the organism-specific reference is used
   # (cladetyper fasta for C. auris, hosted fasta for A. fumigatus and C. neoformans).
   # resolve the reference once; visible below (and in outputs) as File?
-  if (defined(reference_genome_fasta) || defined(cauris_variant_fasta) || defined(afumigatus_variant_fasta) || defined(cryptoneo_variant_fasta)) {
-    File resolved_reference_fasta = select_first([reference_genome_fasta, cauris_variant_fasta, afumigatus_variant_fasta, cryptoneo_variant_fasta])
+  if (defined(reference_genome_fasta) || defined(cladetyper.assembly_reference) || defined(afumigatus_variant_fasta) || defined(cryptoneo_variant_fasta)) {
+    File resolved_reference_fasta = select_first([reference_genome_fasta, cladetyper.assembly_reference, afumigatus_variant_fasta, cryptoneo_variant_fasta])
   }
   # variant calling runs automatically whenever a reference fasta and read1 are available
   if (defined(resolved_reference_fasta) && defined(read1)) {
@@ -252,7 +246,7 @@ workflow medea_magic {
   # Species-agnostic GFF resolution. A user-supplied reference_gff takes precedence,
   # otherwise the organism-specific reference is used (cladetyper outputs for
   # C. auris when a clade matches, hosted references for A. fumigatus and C. neoformans).
-  Array[File] reference_gff_options = select_all([reference_gff, cauris_variant_gff, afumigatus_variant_gff, cryptoneo_variant_gff])
+  Array[File] reference_gff_options = select_all([reference_gff, cladetyper.annotated_reference_gff, afumigatus_variant_gff, cryptoneo_variant_gff])
   if (length(reference_gff_options) > 0) {
     File resolved_reference_gff = reference_gff_options[0]
   }
@@ -260,7 +254,7 @@ workflow medea_magic {
   if (defined(gatk_filter.gatk_filtered_vcf) || defined(clair3_variant_calling.clair3_variants_vcf)) {
     File gene_coverage_vcf = select_first([gatk_filter.gatk_filtered_vcf, clair3_variant_calling.clair3_variants_vcf])
   }
-  if (resolved_reference_gff != "None" && defined resolved_reference_gff) { # cladetyper will yield "None" when no GFF is found
+  if (defined(resolved_reference_gff)) {
     if (defined(bwa_variant_calling.sorted_bam) || defined(ont_bam_sorting.bam)) {
       call gene_coverage_task.gene_coverage {
         input:
