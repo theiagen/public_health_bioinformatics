@@ -86,7 +86,7 @@ task cauris_cladetyper {
                       "~{ref_clade4}": ["~{if defined(ref_clade4_gff) then ref_clade4_gff else 'None'}", "Clade4"],
                       "~{ref_clade5}": ["~{if defined(ref_clade5_gff) then ref_clade5_gff else 'None'}", "Clade5"],
                       "~{ref_clade6}": ["~{if defined(ref_clade6_gff) then ref_clade6_gff else 'None'}", "Clade6"]}
-    cladegff, cladetype = "None", ""
+    cladegff, cladetype, cladefa = "", "", ""
     for ref, annotation in ref2annotation.items():
         if ref.endswith('/'):
             ref = ref[:-1]  # remove trailing slash if present
@@ -111,7 +111,7 @@ task cauris_cladetyper {
   output {
     String gambit_version = read_string("VERSION")
     String gambit_cladetype = read_string("CLADETYPE")
-    String annotated_reference_gff = read_string("CLADEGFF")
+    File? annotated_reference_gff = read_string("CLADEGFF")
     File? assembly_reference = read_string("CLADEFASTA")
     String gambit_cladetyper_docker_image = docker
   }
