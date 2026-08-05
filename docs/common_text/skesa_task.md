@@ -13,4 +13,4 @@ fragment: true
         | Task | [task_skesa.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_skesa.wdl) |
         | Software Source Code | [SKESA on GitHub](https://github.com/ncbi/SKESA) |
         | Software Documentation | [SKESA on GitHub](https://github.com/ncbi/SKESA) |
-        | Original Publication(s) | [SKESA: strategic k-mer externsion for scrupulous assemblies](https://doi.org/10.1186/s13059-018-1540-z) |
+        | Original Publication(s) | [SKESA: strategic k-mer extension for scrupulous assemblies](https://doi.org/10.1186/s13059-018-1540-z) |

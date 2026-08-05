@@ -310,8 +310,9 @@ workflow theiaeuk_illumina_pe {
     String? cladetyper_clade = medea_magic.clade_type
     String? cladetyper_gambit_version = medea_magic.cladetyper_version
     String? cladetyper_docker_image = medea_magic.cladetyper_docker_image
-    String? cladetyper_annotated_reference = medea_magic.cladetype_annotated_ref
-    # Variant Calling Outputs (BWA alignment + freebayes + GATK post-call filtering)
+    # Variant Calling Outputs (BWA alignment + GATK)
+    String? theiaeuk_reference_gff = medea_magic.reference_gff_used
+    String? theiaeuk_reference_fasta = medea_magic.reference_fasta_used
     String? theiaeuk_bwa_version = medea_magic.bwa_version
     File? theiaeuk_variant_calling_bam = medea_magic.variant_calling_bam
     File? theiaeuk_variant_calling_bai = medea_magic.variant_calling_bai

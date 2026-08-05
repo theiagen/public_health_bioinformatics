@@ -1,0 +1,155 @@
+# TheiaValidate v2 preset: theiacov_ont
+# Auto-generated from validation-criteria-v4-2-0-theiacov-ont.tsv
+#
+# KEYLESS preset: the Terra entity-id column (entity:<table>_id) differs per
+# export, so pass the key at run time, e.g.:
+#   theiavalidate validate T1 T2 --preset theiacov_ont \
+#     --key1 entity:<table1>_id --key2 entity:<table2>_id
+# (or --key <col> when both tables share one key column).
+
+columns:
+  abricate_flu_subtype:
+    method: exact
+  abricate_flu_type:
+    method: exact
+  assembly_length_unambiguous:
+    method: percent_diff
+    threshold: 0.05
+    type: float
+  assembly_mean_coverage:
+    method: percent_diff
+    threshold: 0.05
+    type: float
+  flu_A_315675_resistance:
+    method: exact
+    type: set[str]
+    delimiter: ","
+  flu_amantadine_resistance:
+    method: exact
+    type: set[str]
+    delimiter: ","
+  flu_compound_367_resistance:
+    method: exact
+    type: set[str]
+    delimiter: ","
+  flu_favipiravir_resistance:
+    method: exact
+    type: set[str]
+    delimiter: ","
+  flu_fludase_resistance:
+    method: exact
+    type: set[str]
+    delimiter: ","
+  flu_L_742_001_resistance:
+    method: exact
+    type: set[str]
+    delimiter: ","
+  flu_laninamivir_resistance:
+    method: exact
+    type: set[str]
+    delimiter: ","
+  flu_oseltamivir_resistance:
+    method: exact
+    type: set[str]
+    delimiter: ","
+  flu_peramivir_resistance:
+    method: exact
+    type: set[str]
+    delimiter: ","
+  flu_pimodivir_resistance:
+    method: exact
+    type: set[str]
+    delimiter: ","
+  flu_rimantadine_resistance:
+    method: exact
+    type: set[str]
+    delimiter: ","
+  flu_xofluza_resistance:
+    method: exact
+    type: set[str]
+    delimiter: ","
+  flu_zanamivir_resistance:
+    method: exact
+    type: set[str]
+    delimiter: ","
+  genoflu_all_segments:
+    method: exact
+    type: set[str]
+    delimiter: ","
+  irma_subtype:
+    method: exact
+  irma_type:
+    method: exact
+  metabuli_human:
+    type: float
+    any_of:
+      - method: percent_diff
+        threshold: 0.01
+      - method: range
+        threshold: 3
+  metabuli_human_dehosted:
+    type: float
+    any_of:
+      - method: percent_diff
+        threshold: 0.01
+      - method: range
+        threshold: 3
+  metabuli_target_organism_dehosted:
+    type: float
+    any_of:
+      - method: percent_diff
+        threshold: 0.01
+      - method: range
+        threshold: 3
+  nanoplot_num_reads_clean1:
+    method: percent_diff
+    threshold: 0.01
+    type: float
+  nanoplot_r1_est_coverage_clean:
+    method: percent_diff
+    threshold: 0.01
+    type: float
+  nanoplot_r1_median_readlength_clean:
+    method: percent_diff
+    threshold: 0.01
+    type: float
+  nanoplot_r1_mean_q_clean:
+    method: percent_diff
+    threshold: 0.01
+    type: float
+  nextclade_aa_dels:
+    method: exact
+    type: set[str]
+    delimiter: ","
+  nextclade_aa_subs:
+    method: exact
+    type: set[str]
+    delimiter: ","
+  nextclade_aa_subs_flu_ha:
+    method: exact
+    type: set[str]
+    delimiter: ","
+  nextclade_aa_subs_flu_na:
+    method: exact
+    type: set[str]
+    delimiter: ","
+  nextclade_aa_subs_flu_h5n1:
+    method: exact
+    type: set[str]
+    delimiter: ","
+  nextclade_clade:
+    method: exact
+  nextclade_lineage:
+    method: exact
+  pango_lineage:
+    method: exact
+  percent_reference_coverage:
+    method: percent_diff
+    threshold: 0.01
+    type: float
+  percentage_mapped_reads:
+    method: percent_diff
+    threshold: 0.01
+    type: float
+  vadr_num_alerts:
+    method: exact

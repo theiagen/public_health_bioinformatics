@@ -7,7 +7,7 @@ fragment: true
 
     !!! techdetails "Concatenate Illumina Lanes Technical Details"
         The `concatenate_illumina_lanes` task is run before any downstream steps take place.
-        
+
         |  | Links |
         | --- | --- |
         | Subworkflow | [wf_concatenate_illumina_lanes.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/file_handling/wf_concatenate_illumina_lanes.wdl)

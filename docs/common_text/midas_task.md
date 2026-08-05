@@ -13,7 +13,7 @@ fragment: true
 
     ??? toggle "How are the MIDAS output columns determined?"
         Example MIDAS report in the `midas_report` column:
-        
+
         | species_id | count_reads | coverage | relative_abundance |
         | --- | --- | --- | --- |
         | Salmonella_enterica_58156 | 3309 | 89.88006645 | 0.855888033 |
@@ -21,14 +21,14 @@ fragment: true
         | Salmonella_enterica_53987 | 99 | 2.232896237 | 0.021262881 |
         | Citrobacter_youngae_61659 | 46 | 0.995216227 | 0.009477003 |
         | Escherichia_coli_58110 | 5 | 0.123668877 | 0.001177644 |
-        
+
         MIDAS report column descriptions:
-        
+
         - species_id: species identifier
         - count_reads: number of reads mapped to marker genes
         - coverage: estimated genome-coverage (i.e. read-depth) of species in metagenome
         - relative_abundance: estimated relative abundance of species in metagenome
-        
+
         The value in the `midas_primary_genus` column is derived by ordering the rows in order of "relative_abundance" and identifying the genus of top species in the "species_id" column (Salmonella). The value in the `midas_secondary_genus` column is derived from the genus of the second-most prevalent genus in the "species_id" column (Citrobacter). The `midas_secondary_genus_abundance` column is the "relative_abundance" of the second-most prevalent genus (0.009477003). The `midas_secondary_genus_coverage` is the "coverage" of the second-most prevalent genus (0.995216227).
 
     **MIDAS Reference Database Overview**
@@ -36,7 +36,7 @@ fragment: true
     The **MIDAS reference database** is a comprehensive tool for identifying bacterial species in metagenomic and bacterial isolate WGS data. It includes several layers of genomic data, helping detect species abundance and potential contaminants.
 
     !!! dna "Key Components of the MIDAS Database"
-        1. **Species Groups**: 
+        1. **Species Groups**:
             - MIDAS clusters bacterial genomes based on 96.5% sequence identity, forming over 5,950 species groups from 31,007 genomes. These groups align with the gold-standard species definition (95% ANI), ensuring highly accurate species identification.
 
         2. **Genomic Data Structure**:
@@ -44,7 +44,7 @@ fragment: true
             - _Representative Genome_: Each species group has a selected representative genome, which minimizes genetic variation and aids in accurate SNP identification.
             - _Pan-genome_: The database includes clusters of non-redundant genes, with options for multi-level clustering (e.g., 99%, 95%, 90% identity), enabling MIDAS to identify gene content within strains at various clustering thresholds.
 
-        3. **Taxonomic Annotation**: 
+        3. **Taxonomic Annotation**:
             - Genomes are annotated based on consensus Latin names. Discrepancies in name assignments may occur due to factors like unclassified genomes or genus-level ambiguities.
 
     ---
@@ -54,7 +54,7 @@ fragment: true
     TheiaProk and TheiaEuk use the pre-loaded MIDAS database in Terra (see input table for current version) by default for bacterial species detection in metagenomic data, requiring no additional setup.
 
     !!! tip "Create a Custom MIDAS Database"
-        Users can also build their own custom MIDAS database if they want to include specific genomes or configurations. This custom database can replace the default MIDAS database used in Terra. To build a custom MIDAS database, follow the [MIDAS GitHub guide on building a custom database](https://github.com/snayfach/MIDAS/blob/master/docs/build_db.md). Once the database is built, users can upload it to a Google Cloud Storage bucket or Terra workkspace and provide the link to the database in the `midas_db` input variable.
+        Users can also build their own custom MIDAS database if they want to include specific genomes or configurations. This custom database can replace the default MIDAS database used in Terra. To build a custom MIDAS database, follow the [MIDAS GitHub guide on building a custom database](https://github.com/snayfach/MIDAS/blob/master/docs/build_db.md). Once the database is built, users can upload it to a Google Cloud Storage bucket or Terra workspace and provide the link to the database in the `midas_db` input variable.
 
     ---
 

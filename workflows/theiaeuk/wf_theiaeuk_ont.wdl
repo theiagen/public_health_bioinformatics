@@ -14,7 +14,7 @@ workflow theiaeuk_ont {
   input {
     File read1
     String samplename
-    Int genome_length = 50000000
+    Int? genome_length
     String workflow_series = "theiaeuk"
     Int busco_memory = 24
     String busco_docker_image = "us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.3.2_cv1"
@@ -205,7 +205,6 @@ workflow theiaeuk_ont {
     String? cladetyper_clade = medea_magic.clade_type
     String? cladetyper_version = medea_magic.cladetyper_version
     String? cladetyper_docker_image = medea_magic.cladetyper_docker_image
-    String? cladetype_annotated_ref = medea_magic.cladetype_annotated_ref
     # AMR Search outputs
     File? amr_search_results = medea_magic.amr_search_results
     File? amr_search_csv = medea_magic.amr_results_csv
@@ -215,6 +214,8 @@ workflow theiaeuk_ont {
     String? amr_search_docker = medea_magic.amr_search_docker
     String? amr_search_version = medea_magic.amr_search_version
     # Variant Calling Outputs (minimap2 alignment + Clair3)
+    String? theiaeuk_reference_gff = medea_magic.reference_gff_used
+    String? theiaeuk_reference_fasta = medea_magic.reference_fasta_used
     String? theiaeuk_minimap2_version = medea_magic.minimap2_version
     File? theiaeuk_variant_calling_bam = medea_magic.ont_variant_calling_bam
     File? theiaeuk_variant_calling_bai = medea_magic.ont_variant_calling_bai

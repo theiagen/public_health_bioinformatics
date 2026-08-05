@@ -1,0 +1,66 @@
+# TheiaValidate v2 preset: theiameta_pe
+# Auto-generated from validation-criteria-v4-2-0-theiameta-illumina-pe.tsv
+#
+# KEYLESS preset: the Terra entity-id column (entity:<table>_id) differs per
+# export, so pass the key at run time, e.g.:
+#   theiavalidate validate T1 T2 --preset theiameta_pe \
+#     --key1 entity:<table1>_id --key2 entity:<table2>_id
+# (or --key <col> when both tables share one key column).
+
+columns:
+  assembly_length:
+    type: float
+    any_of:
+      - method: percent_diff
+        threshold: 0.01
+      - method: range
+        threshold: 500
+  assembly_mean_coverage:
+    method: percent_diff
+    threshold: 0.01
+    type: float
+  average_read_length:
+    method: percent_diff
+    threshold: 0.01
+    type: float
+  contig_number:
+    type: float
+    any_of:
+      - method: percent_diff
+        threshold: 0.01
+      - method: range
+        threshold: 2
+  fastqc_num_reads_clean1:
+    method: percent_diff
+    threshold: 0.01
+    type: float
+  fastqc_num_reads_clean2:
+    method: percent_diff
+    threshold: 0.01
+    type: float
+  kraken2_percent_human_clean:
+    method: percent_diff
+    threshold: 0.01
+    type: float
+  largest_contig:
+    method: percent_diff
+    threshold: 0.01
+    type: float
+  fastq_scan_num_reads_clean1:
+    method: percent_diff
+    threshold: 0.01
+    type: float
+  fastq_scan_num_reads_clean2:
+    method: percent_diff
+    threshold: 0.01
+    type: float
+  midas_primary_genus:
+    method: exact
+  percent_coverage:
+    method: percent_diff
+    threshold: 0.01
+    type: float
+  percentage_mapped_reads:
+    method: percent_diff
+    threshold: 0.01
+    type: float

@@ -9,7 +9,7 @@ fragment: true
 
     GAMMA utilizes a multifasta database of the coding sequences of genes specified by the user. This allows for GAMMA to search for AMR, hypervirulence, plasmid markers, or any prokaryotic database. The default for `task_gamma.wdl` is the GAMMA-provided [ResFinder Database](gs://theiagen-public-resources-rp/reference_data/databases/gamma/default_ResFinderDB_Combined_05-06-20.fsa). GAMMA will then return gene matches with mutation and truncation information as a `.gamma` file which can be accompanied with a GFF output utilizing the `--gff` flag.
 
-    GAMMA also allows for the usage of only nucleotide sequences rather than translated sequences. Using GAMMA-S, enabled with the boolean `run_gammas`, will find the best matches from a multifasta database without translating sequences. 
+    GAMMA also allows for the usage of only nucleotide sequences rather than translated sequences. Using GAMMA-S, enabled with the boolean `run_gammas`, will find the best matches from a multifasta database without translating sequences.
 
     !!! techdetails "GAMMA Technical Details"
         |  | Links |

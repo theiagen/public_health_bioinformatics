@@ -18,6 +18,7 @@ nav:
           - Available SOPs: guides/sops.md
           - All Tools: guides/all_tools.md
           - Database and Docker Versions: guides/versions.md
+          - Glossary: guides/glossary.md
       - Guides:
           - Guide to GAMBIT: guides/gambit.md
           - Guide to GAMBIT Database Creation: guides/gambit_database.md
@@ -36,11 +37,11 @@ nav:
               - Genomic Characterization:
                   - Freyja Workflow Series: workflows/genomic_characterization/freyja.md
                   - Pangolin_Update: workflows/genomic_characterization/pangolin_update.md
-                  - TheiaCoV Workflow Series: workflows/genomic_characterization/theiacov.md
-                  - TheiaEuk Workflow Series: workflows/genomic_characterization/theiaeuk.md
-                  - TheiaMeta: workflows/genomic_characterization/theiameta.md
-                  - TheiaProk Workflow Series: workflows/genomic_characterization/theiaprok.md
-                  - TheiaViral Workflow Series: workflows/genomic_characterization/theiaviral.md
+                  - TheiaCoV™ Workflow Series: workflows/genomic_characterization/theiacov.md
+                  - TheiaEuk™ Workflow Series: workflows/genomic_characterization/theiaeuk.md
+                  - TheiaMeta™: workflows/genomic_characterization/theiameta.md
+                  - TheiaProk™ Workflow Series: workflows/genomic_characterization/theiaprok.md
+                  - TheiaViral™ Workflow Series: workflows/genomic_characterization/theiaviral.md
                   - VADR_Update: workflows/genomic_characterization/vadr_update.md
               - Phylogenetic Construction:
                   - Augur: workflows/phylogenetic_construction/augur.md
@@ -82,7 +83,7 @@ nav:
                   - RASUSA: workflows/standalone/rasusa.md
                   - Rename_FASTQ: workflows/standalone/rename_fastq.md
                   - TBProfiler_tNGS: workflows/standalone/tbprofiler_tngs.md
-                  - TheiaValidate: workflows/standalone/theiavalidate.md
+                  - TheiaValidate™: workflows/standalone/theiavalidate.md
           - Workflows by Kingdom:
               - Overview Table: workflows_overview/workflows_kingdom.md
               - Any Taxa:
@@ -104,8 +105,8 @@ nav:
                   - RASUSA: workflows/standalone/rasusa.md
                   - Rename_FASTQ: workflows/standalone/rename_fastq.md
                   - SRA_Fetch: workflows/data_import/sra_fetch.md
-                  - TheiaMeta: workflows/genomic_characterization/theiameta.md
-                  - TheiaValidate: workflows/standalone/theiavalidate.md
+                  - TheiaMeta™: workflows/genomic_characterization/theiameta.md
+                  - TheiaValidate™: workflows/standalone/theiavalidate.md
                   - Transfer_Column_Content: workflows/data_export/transfer_column_content.md
                   - Zip_Column_Content: workflows/data_export/zip_column_content.md
               - Bacteria:
@@ -124,7 +125,7 @@ nav:
                   - TBProfiler_tNGS: workflows/standalone/tbprofiler_tngs.md
                   - Terra_2_ENA: workflows/public_data_sharing/terra_2_ena.md
                   - Terra_2_NCBI: workflows/public_data_sharing/terra_2_ncbi.md
-                  - TheiaProk Workflow Series: workflows/genomic_characterization/theiaprok.md
+                  - TheiaProk™ Workflow Series: workflows/genomic_characterization/theiaprok.md
               - Mycotics:
                   - Cauris_CladeTyper: workflows/standalone/cauris_cladetyper.md
                   - Find_Shared_Variants: workflows/phylogenetic_construction/find_shared_variants.md
@@ -132,10 +133,9 @@ nav:
                   - kSNP3: workflows/phylogenetic_construction/ksnp3.md
                   - kSNP4: workflows/phylogenetic_construction/ksnp4.md
                   - MashTree_FASTA: workflows/phylogenetic_construction/mashtree_fasta.md
-                  - NCBI-AMRFinderPlus: workflows/standalone/ncbi_amrfinderplus.md
                   - Snippy_Variants: workflows/phylogenetic_construction/snippy_variants.md
                   - Terra_2_NCBI: workflows/public_data_sharing/terra_2_ncbi.md
-                  - TheiaEuk Workflow Series: workflows/genomic_characterization/theiaeuk.md
+                  - TheiaEuk™ Workflow Series: workflows/genomic_characterization/theiaeuk.md
               - Viral:
                   - Augur: workflows/phylogenetic_construction/augur.md
                   - Freyja Workflow Series: workflows/genomic_characterization/freyja.md
@@ -149,8 +149,8 @@ nav:
                   - Terra_2_ENA: workflows/public_data_sharing/terra_2_ena.md
                   - Terra_2_GISAID: workflows/public_data_sharing/terra_2_gisaid.md
                   - Terra_2_NCBI: workflows/public_data_sharing/terra_2_ncbi.md
-                  - TheiaCoV Workflow Series: workflows/genomic_characterization/theiacov.md
-                  - TheiaViral Workflow Series: workflows/genomic_characterization/theiaviral.md
+                  - TheiaCoV™ Workflow Series: workflows/genomic_characterization/theiacov.md
+                  - TheiaViral™ Workflow Series: workflows/genomic_characterization/theiaviral.md
                   - Usher: workflows/phylogenetic_placement/usher.md
                   - VADR_Update: workflows/genomic_characterization/vadr_update.md
           - Workflows Alphabetically:
@@ -195,12 +195,12 @@ nav:
               - Terra_2_ENA: workflows/public_data_sharing/terra_2_ena.md
               - Terra_2_GISAID: workflows/public_data_sharing/terra_2_gisaid.md
               - Terra_2_NCBI: workflows/public_data_sharing/terra_2_ncbi.md
-              - TheiaCoV Workflow Series: workflows/genomic_characterization/theiacov.md
-              - TheiaEuk Workflow Series: workflows/genomic_characterization/theiaeuk.md
-              - TheiaMeta: workflows/genomic_characterization/theiameta.md
-              - TheiaProk Workflow Series: workflows/genomic_characterization/theiaprok.md
-              - TheiaValidate: workflows/standalone/theiavalidate.md
-              - TheiaViral Workflow Series: workflows/genomic_characterization/theiaviral.md
+              - TheiaCoV™ Workflow Series: workflows/genomic_characterization/theiacov.md
+              - TheiaEuk™ Workflow Series: workflows/genomic_characterization/theiaeuk.md
+              - TheiaMeta™: workflows/genomic_characterization/theiameta.md
+              - TheiaProk™ Workflow Series: workflows/genomic_characterization/theiaprok.md
+              - TheiaValidate™: workflows/standalone/theiavalidate.md
+              - TheiaViral™ Workflow Series: workflows/genomic_characterization/theiaviral.md
               - Transfer_Column_Content: workflows/data_export/transfer_column_content.md
               - Usher: workflows/phylogenetic_placement/usher.md
               - VADR_Update: workflows/genomic_characterization/vadr_update.md
@@ -212,6 +212,7 @@ nav:
 not_in_nav: |
   assets/*
   common_text/*
+  macros/*
 
 theme:
   variant: classic
@@ -254,6 +255,7 @@ markdown_extensions:
   - def_list
   - footnotes
   - md_in_html
+  - pymdownx.blocks.caption
   - pymdownx.blocks.html
   - pymdownx.caret
   - pymdownx.details
@@ -267,7 +269,11 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.keys
   - pymdownx.mark
-  - pymdownx.snippets
+  - pymdownx.snippets:
+      # Append the glossary abbreviations to every page so terms render as
+      # hover tooltips site-wide. See docs/assets/abbreviations.md.
+      auto_append:
+        - docs/assets/abbreviations.md
   - pymdownx.superfences
   - pymdownx.tabbed:
       alternate_style: true
@@ -279,7 +285,7 @@ markdown_extensions:
   - toc:
       permalink: true
   - zensical.extensions.macros:
-      module_name: macros/main
+      module_name: docs/macros/main
       on_error_fail: true
   - zensical.extensions.glightbox
 
@@ -291,9 +297,15 @@ plugins:
       canonical_version: null
 
 extra_javascript:
+  # table-utils.js defines window.mdTables and must load before the other
+  # table-*.js files (and toggle-spin.js, which uses mdTables.onPageLoad).
+  - javascripts/table-utils.js
   - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
-  - javascripts/tablesort.js
+  - javascripts/table-sort.js
   - javascripts/table-search.js
+  - javascripts/table-resize.js
+  - javascripts/table-scrolltop.js
+  - javascripts/toggle-spin.js
 
 extra_css:
   - stylesheets/extra.css

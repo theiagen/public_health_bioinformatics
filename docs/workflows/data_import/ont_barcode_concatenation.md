@@ -36,10 +36,10 @@ We recommend running this workflow with **"Run workflow with inputs defined by f
     └── ABC123_these_files_will_be_ignored_1.fastq.gz
     ```
 
-    The `input_bucket_path` in would point to `gs://input_bucket_path/`, and the workflow would automatically find and concatenate all reads within each subdirectory (both `barcode*/` and `random_name/`). [Learn how to upload your files in this structure below](#data-upload). Please note: _If there are reads located in the parent directory (e.g., `ABC123_these_files_will_be_ignored_0.fastq.gz` and `ABC123_these_files_will_be_ignored_1.fastq.gz`), they will be ignored._
+    The `input_bucket_path` would point to `gs://input_bucket_path/`, and the workflow would automatically find and concatenate all reads within each subdirectory (both `barcode*/` and `random_name/`). [Learn how to upload your files in this structure below](#data-upload). Please note: _If there are reads located in the parent directory (e.g., `ABC123_these_files_will_be_ignored_0.fastq.gz` and `ABC123_these_files_will_be_ignored_1.fastq.gz`), they will be ignored._
 
     After concatenation, the resulting reads will appear in the `gs://output_bucket_path` under the following names:
-    
+
     ```
     output_bucket_path/
     ├── previously_concatenated_sample.all.fastq.gz
@@ -52,7 +52,7 @@ We recommend running this workflow with **"Run workflow with inputs defined by f
 
     **All** data in the `output_bucket_path` will appear in the specified Terra table under the `read1` column. The sample name is taken from the text before the `.all.fastq.gz` suffix, which is the folder name the data was found in. If a file has already been uploaded but is in the `output_bucket_path`, it will be reuploaded.
 
-    | <terra_table_name\>_id | read1 | 
+    | <terra_table_name\>_id | read1 |
     | --- | --- |
     | previously_concatenated_sample | previously_concatenated_sample.all.fastq.gz |
     | barcode01 | barcode01.all.fastq.gz |
@@ -60,10 +60,10 @@ We recommend running this workflow with **"Run workflow with inputs defined by f
     | ... | ... |
     | barcodeXXX | barcodeXXX.all.fastq.gz |
     | random_name | random_name.all.fastq.gz |
-    
+
     If a `barcode_renaming_file` is used (see [relevant section](#barcode-renaming) below) that maps `random_name` to `my_special_sample`, the `random_name` sample will not appear in the table or in the `output_bucket_path`, and `my_special_sample` will appear instead.
 
-    | <terra_table_name\>_id | read1 | 
+    | <terra_table_name\>_id | read1 |
     | --- | --- |
     | my_special_sample | my_special_sample.all.fastq.gz |
 
@@ -76,34 +76,34 @@ Using the Terra data uploader is **not recommended**.
 ???+ dna "The following method is recommended for data upload:"
 
     1. Navigate to your Terra workspace's Dashboard page and click on "Open bucket in browser" under the "Cloud Information" toggle on the right hand side.
-      
+
         !!! caption narrow "Open bucket in browser"
-            ![Open the Google Bucket](../../assets/figures/ONT_Barcode_Concatenation_figure1.png)
+            ![Terra workspace Dashboard showing the Storage Details section, with the "Open bucket in browser" link highlighted to indicate where to click to access the Google Cloud bucket.](../../assets/figures/ONT_Barcode_Concatenation_figure1.png)
 
     2. Click on the `uploads` folder.
 
         !!! caption narrow "Open the `uploads` folder"
-            ![Enter the uploads folder](../../assets/figures/ONT_Barcode_Concatenation_figure2.png)
+            ![Google Cloud Storage bucket browser showing a folder tree with submissions/ and uploads/ directories and a file listing in the main panel.](../../assets/figures/ONT_Barcode_Concatenation_figure2.png)
 
     3. Click on "Create folder". Name the folder a unique name that can be used to identify your run or group of data. Click on "Create" once you have entered the new folder name.
 
         !!! caption narrow "Create a new folder"
-            ![Create a new folder](../../assets/figures/ONT_Barcode_Concatenation_figure3.png)
+            ![Google Cloud Storage "Create folder" dialog with the Name field filled in as "my-unique-folder-name", ready to create a new folder in the uploads bucket.](../../assets/figures/ONT_Barcode_Concatenation_figure3.png)
 
     4. Navigate into the newly created folder by clicking on it. You can now drag and drop entire barcode directories into the browser with your new Google bucket. This process uploads the data directly into your Terra workspace.
 
         !!! caption narrow "Drag your barcode folders onto the browser"
-            ![Upload your barcode directories](../../assets/figures/ONT_Barcode_Concatenation_figure4.png)
+            ![Windows File Explorer showing four barcode folders (barcode01–barcode04) all selected, being dragged to a drop zone labeled "Drop files here to upload them to: my-unique-folder-name".](../../assets/figures/ONT_Barcode_Concatenation_figure4.png)
 
         When your files are uploaded, you should see them appear.
 
         !!! caption narrow "Uploaded folders should look like this"
-            ![Uploaded files](../../assets/figures/ONT_Barcode_Concatenation_figure5.png)
+            ![Google Cloud Storage bucket view showing four barcode subfolders (barcode01/ through barcode04/) successfully uploaded inside the designated uploads folder.](../../assets/figures/ONT_Barcode_Concatenation_figure5.png)
 
     5. Once your files are uploaded, you can identify the `input_bucket_path` by clicking on the two squares next to the file path at the top of the screen, shown below. When pasting this into the workflow inputs, you will need to add the `gs://` prefix.
 
         !!! caption narrow "Copy the file path"
-            ![Copy the file path](../../assets/figures/ONT_Barcode_Concatenation_figure6.png)
+            ![Google Cloud Storage browser showing a folder path with a "Copy the path to the clipboard" tooltip highlighted next to the folder name.](../../assets/figures/ONT_Barcode_Concatenation_figure6.png)
 
 #### Finding the `output_bucket_path` {% raw %} {#file-paths} {% endraw %}
 
@@ -125,7 +125,7 @@ barcode02	sample02
 
 The first column is the **name of the folder** and the second column is the **desired sample name**.
 
-Upload this file to your Terra bucket using either the Data Uploader or by clicking on the file icon on the right sidebar. Copy the file path into the `barcode_renaming_file` variable, and your files will be appropriate renamed.
+Upload this file to your Terra bucket using either the Data Uploader or by clicking on the file icon on the right sidebar. Copy the file path into the `barcode_renaming_file` variable, and your files will be appropriately renamed.
 
 /// html | div[class="searchable-table"]
 

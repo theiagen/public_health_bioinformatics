@@ -1,0 +1,86 @@
+# Pre-commit hooks for PHB documentation.
+#
+# This file lives in .config/, so pre-commit needs an explicit -c flag:
+#   Install once:   pip install pre-commit && pre-commit install -c .config/.pre-commit-config.yaml
+#   Run manually:    pre-commit run --all-files -c .config/.pre-commit-config.yaml
+# `install -c ...` bakes the path into the generated git hook, so ordinary
+# `git commit` afterwards "just works" with no further flags needed.
+#
+# Vale must be installed separately (it is a Go binary, not a Python package):
+#   https://vale.sh/docs/vale-cli/installation/
+# CI installs it automatically (.github/workflows/lint-documentation.yml).
+
+minimum_pre_commit_version: "3.0.0"
+
+# Applies to every hook below unless a hook sets its own `exclude`.
+# docs/macros/ is the macro implementation (Python + its own README), not a
+# documentation page — none of these checks should run against it, even
+# though docs/macros/README.md would otherwise match `^docs/.*\.md$`.
+exclude: ^docs/macros/
+
+repos:
+  # -------------------------------------------------------------------------
+  # (3) Whitespace hygiene — these hooks AUTO-FIX in place.
+  # -------------------------------------------------------------------------
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+        name: trim trailing whitespace
+        # Preserve intentional Markdown hard line breaks (two trailing spaces).
+        args: [--markdown-linebreak-ext=md]
+        files: ^docs/.*\.md$
+      - id: end-of-file-fixer
+        name: ensure files end with a single newline
+        files: ^docs/.*\.md$
+      - id: mixed-line-ending
+        name: normalize line endings to LF
+        args: [--fix=lf]
+        files: ^docs/.*\.md$
+
+  # -------------------------------------------------------------------------
+  # (3) Whitespace/prose hygiene — pattern checks (report only, no auto-fix).
+  # -------------------------------------------------------------------------
+  - repo: local
+    hooks:
+      - id: no-space-before-percent
+        name: no space before a percent sign (write "95%" not "95 %")
+        language: pygrep
+        entry: '[0-9] +%'
+        files: ^docs/.*\.md$
+      - id: no-inputted
+        name: avoid "inputted" (use "input" or "provided")
+        language: pygrep
+        entry: '(?i)\binputted\b'
+        files: ^docs/.*\.md$
+
+  # -------------------------------------------------------------------------
+  # (4) markdownlint — structural/formatting rules (report only here; run with
+  #     `markdownlint -c .config/.markdownlint.yaml --fix "docs/**/*.md"`
+  #     locally to auto-correct).
+  # -------------------------------------------------------------------------
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.44.0
+    hooks:
+      - id: markdownlint
+        name: markdownlint
+        files: ^docs/.*\.md$
+        # docs/assets/abbreviations.md is a machine-consumed tooltip snippet,
+        # not a page — exclude it (markdownlint's -p/--ignore-path is broken
+        # in this CLI version, so the exclusion is inlined here instead).
+        args: ["-c", ".config/.markdownlint.yaml", "-i", "docs/assets/abbreviations.md"]
+
+  # -------------------------------------------------------------------------
+  # (1)+(2) Vale — tool-name consistency, American spelling, spelling, doubled
+  #         words. Uses .config/.vale.ini and docs/styles/. Requires the
+  #         `vale` binary.
+  # -------------------------------------------------------------------------
+  - repo: local
+    hooks:
+      - id: vale
+        name: vale (prose, tool names, American spelling)
+        language: system
+        entry: vale
+        files: ^docs/.*\.md$
+        # Fail the commit only on warnings and above; suggestions are advisory.
+        args: ["--config=.config/.vale.ini", "--minAlertLevel=warning"]
