@@ -241,23 +241,25 @@ workflow medea_magic {
   if (defined(gatk_filter.gatk_filtered_vcf) || defined(clair3_variant_calling.clair3_variants_vcf)) {
     File gene_coverage_vcf = select_first([gatk_filter.gatk_filtered_vcf, clair3_variant_calling.clair3_variants_vcf])
   }
-  if (defined(bwa_variant_calling.sorted_bam) || defined(ont_bam_sorting.bam)) {
-    call gene_coverage_task.gene_coverage {
-      input:
-        bam = select_first([bwa_variant_calling.sorted_bam, ont_bam_sorting.bam]),
-        bai = select_first([bwa_variant_calling.sorted_bai, ont_bam_sorting.bai]),
-        samplename = samplename,
-        reference_gff = resolved_reference_gff,
-        query_genes = resolved_query_genes
-    }
-    if (defined(resolved_query_genes)) {
-      call variant_annotate_task.variant_annotate {
+  if (resolved_reference_gff != "None" && defined resolved_reference_gff) { # cladetyper will yield "None" when no GFF is found
+    if (defined(bwa_variant_calling.sorted_bam) || defined(ont_bam_sorting.bam)) {
+      call gene_coverage_task.gene_coverage {
         input:
+          bam = select_first([bwa_variant_calling.sorted_bam, ont_bam_sorting.bam]),
+          bai = select_first([bwa_variant_calling.sorted_bai, ont_bam_sorting.bai]),
           samplename = samplename,
-          reference_fasta = select_first([resolved_reference_fasta]),
-          reference_gff = select_first([resolved_reference_gff]),
-          query_genes = resolved_query_genes,
-          vcf = select_first([gene_coverage_vcf])
+          reference_gff = resolved_reference_gff,
+          query_genes = resolved_query_genes
+      }
+      if (defined(resolved_query_genes) && defined(gene_coverage_vcf)) {
+        call variant_annotate_task.variant_annotate {
+          input:
+            samplename = samplename,
+            reference_fasta = select_first([resolved_reference_fasta]),
+            reference_gff = select_first([resolved_reference_gff]),
+            query_genes = resolved_query_genes,
+            vcf = select_first([gene_coverage_vcf])
+        }
       }
     }
   }
