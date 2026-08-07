@@ -168,7 +168,6 @@ workflow merlin_magic {
     Float? sieve_nmen_serogroup_min_identity
     Float? sieve_nmen_serogroup_min_coverage
     String? sieve_nmen_serogroup_parameters
-    String? sieve_nmen_serogroup_output_format
     # sistr options
     Boolean? sistr_use_full_cgmlst_db
     Int? sistr_cpu
@@ -436,7 +435,10 @@ workflow merlin_magic {
         min_identity = sieve_nmen_serogroup_min_identity,
         min_coverage = sieve_nmen_serogroup_min_coverage,
         parameters = sieve_nmen_serogroup_parameters,
-        output_format = sieve_nmen_serogroup_output_format
+        output_format = "json",
+        serogroup_key = "serogroup",
+        genes_key = "genes_present",
+        notes_key = "notes"
     }
   }
   if (merlin_tag == "Pseudomonas aeruginosa") {
@@ -857,6 +859,9 @@ workflow merlin_magic {
     String? meningotype_NadA = meningotype.meningotype_NadA
     String? meningotype_BAST = meningotype.meningotype_BAST
     File? sieve_nmen_serogroup_results = sieve_nmen_serogroup.sieve_results
+    String? sieve_nmen_serogroup_serogroup = sieve_nmen_serogroup.sieve_serogroup
+    String? sieve_nmen_serogroup_genes_present = sieve_nmen_serogroup.sieve_genes_present
+    String? sieve_nmen_serogroup_notes = sieve_nmen_serogroup.sieve_notes
     String? sieve_nmen_serogroup_version = sieve_nmen_serogroup.sieve_version
     String? sieve_nmen_serogroup_plugin = sieve_nmen_serogroup.sieve_plugin
     String? sieve_nmen_serogroup_docker = sieve_nmen_serogroup.sieve_docker
