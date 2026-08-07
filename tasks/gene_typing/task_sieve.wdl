@@ -10,7 +10,6 @@ task sieve {
 
     File? database # tar.gz compressed database
     String? engine # blast / kma
-    String output_format = "json" # text / json / tsv / csv
 
     String? serogroup_key # key for parsing serogrouping from json output
     String? genes_key # key for parsing genes present from json output
@@ -88,28 +87,20 @@ task sieve {
       "${input_args[@]}" \
       --plugin ~{plugin} \
       --name ~{samplename} \
-      --output ~{output_format} \
       "${engine_args[@]}" \
       ~{"--min-identity " + min_identity} \
       ~{"--min-coverage " + min_coverage} \
       "${db_args[@]}" \
       "${param_args[@]}" \
-      --out ~{samplename}_sieve.~{output_format}
+      --out-dir sieve/
 
     # always create the parsed outputs so read_string never fails
     : > SEROGROUP
     : > GENES_PRESENT
     : > NOTES
 
-    # only the JSON report is structured; every other format is left unparsed
-    output_format="~{output_format}"
-    if [[ "${output_format,,}" != "json" ]]; then
-      echo "INFO: output_format='~{output_format}' is not json; skipping key extraction." >&2
-      exit 0
-    fi
-
     # pass values through the environment so quotes/whitespace cannot break the python literal
-    export SIEVE_JSON="~{samplename}_sieve.~{output_format}"
+    export SIEVE_JSON="sieve/~{samplename}.json"
     export SIEVE_SAMPLENAME="~{samplename}"
     export SEROGROUP_KEY="~{default='' serogroup_key}"
     export GENES_KEY="~{default='' genes_key}"
@@ -158,7 +149,7 @@ task sieve {
     CODE
   >>>
   output {
-    File sieve_results = "~{samplename}_sieve.~{output_format}"
+    File sieve_results = "sieve/~{samplename}.tsv"
     String sieve_serogroup = read_string("SEROGROUP")
     String sieve_genes_present = read_string("GENES_PRESENT")
     String sieve_notes = read_string("NOTES")

@@ -435,7 +435,6 @@ workflow merlin_magic {
         min_identity = sieve_nmen_serogroup_min_identity,
         min_coverage = sieve_nmen_serogroup_min_coverage,
         parameters = sieve_nmen_serogroup_parameters,
-        output_format = "json",
         serogroup_key = "serogroup",
         genes_key = "genes_present",
         notes_key = "notes"
