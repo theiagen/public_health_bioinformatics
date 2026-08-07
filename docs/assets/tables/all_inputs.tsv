@@ -1820,7 +1820,7 @@ primer_trim	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Op
 prokka	compliant	Boolean	If true (default), forces Genbank/ENA/DDJB compliant headers in Prokka output files	True	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 prokka	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 prokka	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
-prokka	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/prokka:1.14.5	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
+prokka	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/prokka:1.15.6	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
 prokka	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 prokka	prodigal_tf	File	<https://github.com/tseemann/prokka#option---prodigaltf>		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 prokka	prokka_arguments	String	Any additional <https://github.com/tseemann/prokka#command-line-options>		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
