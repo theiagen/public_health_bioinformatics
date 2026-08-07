@@ -2,6 +2,7 @@ version 1.0
 
 import "../../tasks/gene_typing/drug_resistance/task_abricate.wdl" as abricate_task
 import "../../tasks/gene_typing/drug_resistance/task_amr_search.wdl" as amr_search_task
+import "../../tasks/gene_typing/task_sieve.wdl" as sieve_task
 import "../../tasks/species_typing/acinetobacter/task_kaptive.wdl" as kaptive_task
 import "../../tasks/species_typing/escherichia_shigella/task_ectyper.wdl" as ectyper_task
 import "../../tasks/species_typing/escherichia_shigella/task_serotypefinder.wdl" as serotypefinder_task
@@ -163,6 +164,11 @@ workflow merlin_magic {
     File? poppunk_gps_unword_clusters_csv
     File? poppunk_gps_refs_graph_gt
     File? poppunk_gps_external_clusters_csv
+    # sieve options - nmen_serogroup plugin
+    Float? sieve_nmen_serogroup_min_identity
+    Float? sieve_nmen_serogroup_min_coverage
+    String? sieve_nmen_serogroup_parameters
+    String? sieve_nmen_serogroup_output_format
     # sistr options
     Boolean? sistr_use_full_cgmlst_db
     Int? sistr_cpu
@@ -420,6 +426,17 @@ workflow merlin_magic {
         assembly = assembly,
         samplename = samplename,
         docker = meningotype_docker_image
+    }
+    call sieve_task.sieve as sieve_nmen_serogroup {
+      input:
+        assembly = assembly,
+        samplename = samplename,
+        plugin = "nmen_serogroup",
+        engine = "blast",
+        min_identity = sieve_nmen_serogroup_min_identity,
+        min_coverage = sieve_nmen_serogroup_min_coverage,
+        parameters = sieve_nmen_serogroup_parameters,
+        output_format = sieve_nmen_serogroup_output_format
     }
   }
   if (merlin_tag == "Pseudomonas aeruginosa") {
@@ -839,6 +856,10 @@ workflow merlin_magic {
     String? meningotype_NHBA = meningotype.meningotype_NHBA
     String? meningotype_NadA = meningotype.meningotype_NadA
     String? meningotype_BAST = meningotype.meningotype_BAST
+    File? sieve_nmen_serogroup_results = sieve_nmen_serogroup.sieve_results
+    String? sieve_nmen_serogroup_version = sieve_nmen_serogroup.sieve_version
+    String? sieve_nmen_serogroup_plugin = sieve_nmen_serogroup.sieve_plugin
+    String? sieve_nmen_serogroup_docker = sieve_nmen_serogroup.sieve_docker
     # Acinetobacter Typing
     File? kaptive_output_file_k = kaptive.kaptive_output_file_k
     File? kaptive_output_file_oc = kaptive.kaptive_output_file_oc
