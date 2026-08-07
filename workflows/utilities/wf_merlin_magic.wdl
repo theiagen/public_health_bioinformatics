@@ -208,6 +208,7 @@ workflow merlin_magic {
     String? tbp_parser_operator
     Map[String, String]? tbp_parser_find_and_replace
     Boolean? tbp_parser_debug
+    Int? tbp_parser_memory
     # Vibecheck options
     File? vibecheck_lineage_barcodes
     Float? vibecheck_subsampling_fraction
@@ -487,6 +488,7 @@ workflow merlin_magic {
             find_and_replace = tbp_parser_find_and_replace,
             tbp_parser_debug = tbp_parser_debug,
             docker = tbp_parser_docker_image,
+            memory = tbp_parser_memory,
         }
       }
     }
