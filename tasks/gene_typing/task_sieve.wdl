@@ -10,7 +10,11 @@ task sieve {
 
     File? database # tar.gz compressed database
     String? engine # blast / kma
-    String output_format = "text" # text / json / tsv / csv
+    String output_format = "json" # text / json / tsv / csv
+
+    String? serogroup_key # key for parsing serogrouping from json output
+    String? genes_key # key for parsing genes present from json output
+    String? notes_key # key for parsing notes from json
 
     Float? min_identity
     Float? min_coverage
@@ -91,9 +95,73 @@ task sieve {
       "${db_args[@]}" \
       "${param_args[@]}" \
       --out ~{samplename}_sieve.~{output_format}
+
+    # always create the parsed outputs so read_string never fails
+    : > SEROGROUP
+    : > GENES_PRESENT
+    : > NOTES
+
+    # only the JSON report is structured; every other format is left unparsed
+    output_format="~{output_format}"
+    if [[ "${output_format,,}" != "json" ]]; then
+      echo "INFO: output_format='~{output_format}' is not json; skipping key extraction." >&2
+      exit 0
+    fi
+
+    # pass values through the environment so quotes/whitespace cannot break the python literal
+    export SIEVE_JSON="~{samplename}_sieve.~{output_format}"
+    export SIEVE_SAMPLENAME="~{samplename}"
+    export SEROGROUP_KEY="~{default='' serogroup_key}"
+    export GENES_KEY="~{default='' genes_key}"
+    export NOTES_KEY="~{default='' notes_key}"
+
+    python3 <<'CODE'
+    import json
+    import os
+    import sys
+
+    with open(os.environ["SIEVE_JSON"]) as handle:
+        report = json.load(handle)
+
+    # all reportable fields live in the "result" object; fall back to the top level if a
+    # plugin ever emits a flat report
+    result = report.get("result")
+    if not isinstance(result, dict):
+        print("WARNING: no 'result' object in the sieve JSON; parsing top-level keys instead.", file=sys.stderr)
+        result = report
+
+    def format_value(value):
+        # lists (e.g. genes_present) are reported as a comma-delimited string
+        if value is None:
+            return ""
+        if isinstance(value, list):
+            return ",".join(str(item) for item in value)
+        if isinstance(value, dict):
+            return json.dumps(value)
+        return str(value)
+
+    for env_var, out_file in (
+        ("SEROGROUP_KEY", "SEROGROUP"),
+        ("GENES_KEY", "GENES_PRESENT"),
+        ("NOTES_KEY", "NOTES"),
+    ):
+        key = os.environ.get(env_var, "").strip()
+        if not key:
+            print(f"INFO: no {env_var} provided; leaving {out_file} empty.", file=sys.stderr)
+            continue
+        if key not in result:
+            print(f"WARNING: key '{key}' not found in the sieve result for "
+                  f"{os.environ['SIEVE_SAMPLENAME']}; leaving {out_file} empty.", file=sys.stderr)
+            continue
+        with open(out_file, "w") as out:
+            out.write(format_value(result[key]) + "\n")
+    CODE
   >>>
   output {
     File sieve_results = "~{samplename}_sieve.~{output_format}"
+    String sieve_serogroup = read_string("SEROGROUP")
+    String sieve_genes_present = read_string("GENES_PRESENT")
+    String sieve_notes = read_string("NOTES")
     String sieve_version = read_string("VERSION")
     String sieve_plugin = plugin
     String sieve_docker = docker
