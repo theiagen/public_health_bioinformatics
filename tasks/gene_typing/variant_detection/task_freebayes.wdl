@@ -11,8 +11,8 @@ task freebayes {
     File? targets_bed # BED file to limit analysis to specific regions (freebayes -t)
 
     # native freebayes input filters; left undefined to fall back on freebayes defaults
-    Int? min_mapping_quality # -m: exclude alignments with mapping quality below this (freebayes default: 1)
-    Int? min_base_quality # -q: exclude alleles with supporting base quality below this (freebayes default: 0)
+    Int? min_mapping_quality = 30 # -m: exclude alignments with mapping quality below this (freebayes default: 1)
+    Int? min_base_quality = 20 # -q: exclude alleles with supporting base quality below this (freebayes default: 0)
     Float? min_alternate_fraction # -F: min fraction of observations supporting an alternate allele (freebayes default: 0.05)
     Int? min_alternate_count # -C: min count of observations supporting an alternate allele (freebayes default: 2)
     Int? min_coverage # --min-coverage: min coverage required to process a site (freebayes default: 0)
