@@ -6,7 +6,7 @@ task prokka {
     String samplename
     Int cpu = 4
     Int memory = 16
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/prokka:1.14.5"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/prokka:1.15.6"
     Int disk_size = 100
     # Parameters 
     #  proteins recommended: when you have good quality reference genomes and want to ensure gene naming is consistent [false]
