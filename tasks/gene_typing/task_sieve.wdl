@@ -117,9 +117,6 @@ task sieve {
     # all reportable fields live in the "result" object; fall back to the top level if a
     # plugin ever emits a flat report
     result = report.get("result")
-    if not isinstance(result, dict):
-        print("WARNING: no 'result' object in the sieve JSON; parsing top-level keys instead.", file=sys.stderr)
-        result = report
 
     def format_value(value):
         # lists (e.g. genes_present) are reported as a comma-delimited string
@@ -163,7 +160,7 @@ task sieve {
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
-    preemptible: 1 # does not take long (usually <3 min) to run stxtyper on 1 genome, preemptible is fine
+    preemptible: 1
     maxRetries: 3
   }
 }
