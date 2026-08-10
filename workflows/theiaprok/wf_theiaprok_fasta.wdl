@@ -437,13 +437,13 @@ workflow theiaprok_fasta {
             "shigeifinder_report": merlin_magic.shigeifinder_report,
             "shigeifinder_serotype": merlin_magic.shigeifinder_serotype,
             "shigeifinder_version": merlin_magic.shigeifinder_version,
-            "sieve_nmen_serogroup_docker": merlin_magic.sieve_nmen_serogroup_docker,
-            "sieve_nmen_serogroup_genes_present": merlin_magic.sieve_nmen_serogroup_genes_present,
-            "sieve_nmen_serogroup_notes": merlin_magic.sieve_nmen_serogroup_notes,
-            "sieve_nmen_serogroup_plugin": merlin_magic.sieve_nmen_serogroup_plugin,
-            "sieve_nmen_serogroup_results": merlin_magic.sieve_nmen_serogroup_results,
-            "sieve_nmen_serogroup_serogroup": merlin_magic.sieve_nmen_serogroup_serogroup,
-            "sieve_nmen_serogroup_version": merlin_magic.sieve_nmen_serogroup_version,
+            "sieve_nmeningitidis_docker": merlin_magic.sieve_nmeningitidis_docker,
+            "sieve_nmeningitidis_genes_present": merlin_magic.sieve_nmeningitidis_genes_present,
+            "sieve_nmeningitidis_notes": merlin_magic.sieve_nmeningitidis_notes,
+            "sieve_nmeningitidis_plugin": merlin_magic.sieve_nmeningitidis_plugin,
+            "sieve_nmeningitidis_results": merlin_magic.sieve_nmeningitidis_results,
+            "sieve_nmeningitidis_serogroup": merlin_magic.sieve_nmeningitidis_serogroup,
+            "sieve_nmeningitidis_version": merlin_magic.sieve_nmeningitidis_version,
             "sistr_allele_fasta": merlin_magic.sistr_allele_fasta,
             "sistr_allele_json": merlin_magic.sistr_allele_json,
             "sistr_antigenic_formula": merlin_magic.sistr_antigenic_formula,
@@ -761,13 +761,13 @@ workflow theiaprok_fasta {
     String? meningotype_NHBA = merlin_magic.meningotype_NHBA
     String? meningotype_NadA = merlin_magic.meningotype_NadA
     String? meningotype_BAST = merlin_magic.meningotype_BAST
-    File? sieve_nmen_serogroup_results = merlin_magic.sieve_nmen_serogroup_results
-    String? sieve_nmen_serogroup_serogroup = merlin_magic.sieve_nmen_serogroup_serogroup
-    String? sieve_nmen_serogroup_genes_present = merlin_magic.sieve_nmen_serogroup_genes_present
-    String? sieve_nmen_serogroup_notes = merlin_magic.sieve_nmen_serogroup_notes
-    String? sieve_nmen_serogroup_version = merlin_magic.sieve_nmen_serogroup_version
-    String? sieve_nmen_serogroup_plugin = merlin_magic.sieve_nmen_serogroup_plugin
-    String? sieve_nmen_serogroup_docker = merlin_magic.sieve_nmen_serogroup_docker
+    File? sieve_nmeningitidis_results = merlin_magic.sieve_nmeningitidis_results
+    String? sieve_nmeningitidis_serogroup = merlin_magic.sieve_nmeningitidis_serogroup
+    String? sieve_nmeningitidis_genes_present = merlin_magic.sieve_nmeningitidis_genes_present
+    String? sieve_nmeningitidis_notes = merlin_magic.sieve_nmeningitidis_notes
+    String? sieve_nmeningitidis_version = merlin_magic.sieve_nmeningitidis_version
+    String? sieve_nmeningitidis_plugin = merlin_magic.sieve_nmeningitidis_plugin
+    String? sieve_nmeningitidis_docker = merlin_magic.sieve_nmeningitidis_docker
     # Acinetobacter Typing
     File? kaptive_output_file_k = merlin_magic.kaptive_output_file_k
     File? kaptive_output_file_oc = merlin_magic.kaptive_output_file_oc

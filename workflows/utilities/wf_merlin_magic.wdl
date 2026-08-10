@@ -165,9 +165,9 @@ workflow merlin_magic {
     File? poppunk_gps_refs_graph_gt
     File? poppunk_gps_external_clusters_csv
     # sieve options - nmen_serogroup plugin
-    Float? sieve_nmen_serogroup_min_identity
-    Float? sieve_nmen_serogroup_min_coverage
-    String? sieve_nmen_serogroup_parameters
+    Float? sieve_nmeningitidis_min_identity
+    Float? sieve_nmeningitidis_min_coverage
+    String? sieve_nmeningitidis_parameters
     # sistr options
     Boolean? sistr_use_full_cgmlst_db
     Int? sistr_cpu
@@ -426,15 +426,15 @@ workflow merlin_magic {
         samplename = samplename,
         docker = meningotype_docker_image
     }
-    call sieve_task.sieve as sieve_nmen_serogroup {
+    call sieve_task.sieve as sieve_nmeningitidis {
       input:
         assembly = assembly,
         samplename = samplename,
         plugin = "nmen_serogroup",
         engine = "blast",
-        min_identity = sieve_nmen_serogroup_min_identity,
-        min_coverage = sieve_nmen_serogroup_min_coverage,
-        parameters = sieve_nmen_serogroup_parameters,
+        min_identity = sieve_nmeningitidis_min_identity,
+        min_coverage = sieve_nmeningitidis_min_coverage,
+        parameters = sieve_nmeningitidis_parameters,
         serogroup_key = "serogroup",
         genes_key = "genes_present",
         notes_key = "notes"
@@ -857,13 +857,13 @@ workflow merlin_magic {
     String? meningotype_NHBA = meningotype.meningotype_NHBA
     String? meningotype_NadA = meningotype.meningotype_NadA
     String? meningotype_BAST = meningotype.meningotype_BAST
-    File? sieve_nmen_serogroup_results = sieve_nmen_serogroup.sieve_results
-    String? sieve_nmen_serogroup_serogroup = sieve_nmen_serogroup.sieve_serogroup
-    String? sieve_nmen_serogroup_genes_present = sieve_nmen_serogroup.sieve_genes_present
-    String? sieve_nmen_serogroup_notes = sieve_nmen_serogroup.sieve_notes
-    String? sieve_nmen_serogroup_version = sieve_nmen_serogroup.sieve_version
-    String? sieve_nmen_serogroup_plugin = sieve_nmen_serogroup.sieve_plugin
-    String? sieve_nmen_serogroup_docker = sieve_nmen_serogroup.sieve_docker
+    File? sieve_nmeningitidis_results = sieve_nmeningitidis.sieve_results
+    String? sieve_nmeningitidis_serogroup = sieve_nmeningitidis.sieve_serogroup
+    String? sieve_nmeningitidis_genes_present = sieve_nmeningitidis.sieve_genes_present
+    String? sieve_nmeningitidis_notes = sieve_nmeningitidis.sieve_notes
+    String? sieve_nmeningitidis_version = sieve_nmeningitidis.sieve_version
+    String? sieve_nmeningitidis_plugin = sieve_nmeningitidis.sieve_plugin
+    String? sieve_nmeningitidis_docker = sieve_nmeningitidis.sieve_docker
     # Acinetobacter Typing
     File? kaptive_output_file_k = kaptive.kaptive_output_file_k
     File? kaptive_output_file_oc = kaptive.kaptive_output_file_oc
