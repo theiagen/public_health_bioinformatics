@@ -31,7 +31,7 @@ _Use the following macro call to generate the inputs table. Adjust the fields ma
 
 _Feel free to separate this section into subsections, like "Read QC" and "Alignment" if there are multiple tasks per subsection for easier navigation and readability. See [the page for TheiaMeta](../workflows/genomic_characterization/theiameta.md#workflow-tasks) for an example._
 
-_If your workflow uses a task that is modular and can be used in other contexts, please add that information to the `docs/common_text` directory in a new page (see a template in the `/common_text/template_task.md` file) and use the following macro call to include it here. Adjust the fields marked with `<>` with the appropriate values. Please note that the macro_ **result** _is seen on the web browser, not the macro call itself._
+_If your workflow uses a task that is modular and can be used in other contexts, please add that information to the `docs/common_text` directory in a new page (see a template in the `docs/common_text/template_task.md` file) and use the following macro call to include it here. Adjust the fields marked with `<>` with the appropriate values. Please note that the macro_ **result** _is seen on the web browser, not the macro call itself._
 
 {{ include_md("common_text/template_task.md", condition="condition") }}
 
