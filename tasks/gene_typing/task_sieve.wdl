@@ -11,9 +11,9 @@ task sieve {
     File? database # tar.gz compressed database
     String? engine # blast / kma
 
-    String? serogroup_key # key for parsing serogrouping from json output
-    String? genes_key # key for parsing genes present from json output
-    String? notes_key # key for parsing notes from json
+    String? serogroup_key # key for parsing serogrouping from results json output
+    String? genes_key # key for parsing genes present from results json output
+    String? notes_key # key for parsing notes from results json
 
     Float? min_identity
     Float? min_coverage
