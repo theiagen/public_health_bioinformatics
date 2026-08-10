@@ -862,7 +862,6 @@ workflow merlin_magic {
     String? sieve_nmeningitidis_genes_present = sieve_nmeningitidis.sieve_genes_present
     String? sieve_nmeningitidis_notes = sieve_nmeningitidis.sieve_notes
     String? sieve_nmeningitidis_version = sieve_nmeningitidis.sieve_version
-    String? sieve_nmeningitidis_plugin = sieve_nmeningitidis.sieve_plugin
     String? sieve_nmeningitidis_docker = sieve_nmeningitidis.sieve_docker
     # Acinetobacter Typing
     File? kaptive_output_file_k = kaptive.kaptive_output_file_k

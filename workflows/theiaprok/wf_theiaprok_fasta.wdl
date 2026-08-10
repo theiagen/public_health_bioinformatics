@@ -440,7 +440,6 @@ workflow theiaprok_fasta {
             "sieve_nmeningitidis_docker": merlin_magic.sieve_nmeningitidis_docker,
             "sieve_nmeningitidis_genes_present": merlin_magic.sieve_nmeningitidis_genes_present,
             "sieve_nmeningitidis_notes": merlin_magic.sieve_nmeningitidis_notes,
-            "sieve_nmeningitidis_plugin": merlin_magic.sieve_nmeningitidis_plugin,
             "sieve_nmeningitidis_results": merlin_magic.sieve_nmeningitidis_results,
             "sieve_nmeningitidis_serogroup": merlin_magic.sieve_nmeningitidis_serogroup,
             "sieve_nmeningitidis_version": merlin_magic.sieve_nmeningitidis_version,
@@ -766,7 +765,6 @@ workflow theiaprok_fasta {
     String? sieve_nmeningitidis_genes_present = merlin_magic.sieve_nmeningitidis_genes_present
     String? sieve_nmeningitidis_notes = merlin_magic.sieve_nmeningitidis_notes
     String? sieve_nmeningitidis_version = merlin_magic.sieve_nmeningitidis_version
-    String? sieve_nmeningitidis_plugin = merlin_magic.sieve_nmeningitidis_plugin
     String? sieve_nmeningitidis_docker = merlin_magic.sieve_nmeningitidis_docker
     # Acinetobacter Typing
     File? kaptive_output_file_k = merlin_magic.kaptive_output_file_k
