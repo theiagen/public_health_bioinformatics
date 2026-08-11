@@ -31,6 +31,30 @@ task ts_mlst {
 
     echo $(mlst --version 2>&1) | sed 's/mlst //' | tee VERSION
 
+    # Function for choosing scheme name for reporting
+    select_reporting_scheme() {  # $1 = allelic profile string, e.g. "adk(12),fumC(12),..."
+      local profile
+      # This assignment removes the locus assignment, (#), and removes any "prefix_" appended to
+      # the allele as there are "Pas" and "Oxf" appended to some alleles. 
+      profile="$(sed -E -e 's/\([^)]*\)//g' -e 's/(^|,)[A-Za-z0-9]+_/\1/g' <<< "$1")"
+      case "$profile" in
+        # PubMLST: Escherichia coli (Achtman)
+        adk,fumC,gyrB,icd,mdh,purA,recA)
+          echo "Achtman" ;;
+        # PubMLST: Escherichia coli (Pasteur)
+        dinB,icdA,pabB,polB,putP,trpA,trpB,uidA)
+          echo "Pasteur" ;;
+        # PubMLST: Acinetobacter baumannii (Pasteur)
+        cpn60,fusA,gltA,pyrG,recA,rplB,rpoB)
+          echo "Pasteur" ;;
+        # PubMLST: Acinetobacter baumannii (Oxford)
+        gltA,gyrB,gdhB,recA,cpn60,gpi,rpoD)      
+          echo "Oxford"  ;;
+        *) [ -n "$profile" ] && echo "DEBUG: unrecognized locus signature: $profile" >&2
+          echo "NA" ;;
+      esac
+    }
+
     #create output header
     echo -e "Filename\tPubMLST_Scheme_name\tSequence_Type_(ST)\tAllele_IDs" > ~{samplename}_ts_mlst.tsv
     # If taxon is E. coli and scheme_override is true, common mis-characterizations will be excluded from the scheme list
@@ -119,9 +143,15 @@ task ts_mlst {
               predicted_mlst_secondary="No ST predicted"
               secondary_combined_format="NA_${pubmlst_scheme_secondary}"
             else
-              secondary_combined_format="${predicted_mlst_secondary}_${pubmlst_scheme_secondary}"
+              secondary_combined_format="ML${predicted_mlst_secondary}_${pubmlst_scheme_secondary}"
             fi
           fi
+        fi
+
+        reporting_scheme="$(select_reporting_scheme "$allelic_profile_secondary")"
+        echo "$reporting_scheme"
+        if [ "$reporting_scheme" != "NA" ]; then
+          secondary_combined_format="$secondary_combined_format($reporting_scheme)"
         fi
 
         echo "$predicted_mlst_secondary" | tee PREDICTED_SECONDARY_MLST
@@ -166,14 +196,20 @@ task ts_mlst {
           combined_format="NA_${pubmlst_scheme}"
         else
           # Once presence of both are checked combined will be formated
-          combined_format="${predicted_mlst}_${pubmlst_scheme}"
+          combined_format="ML${predicted_mlst}_${pubmlst_scheme}"
         fi
       fi
     fi
 
+    reporting_scheme="$(select_reporting_scheme "$allelic_profile")"
+    echo "$reporting_scheme"
+    if [ "$reporting_scheme" != "NA" ]; then
+      combined_format="$combined_format($reporting_scheme)"
+    fi
+
     echo "$predicted_mlst" | tee PREDICTED_MLST
     echo "$pubmlst_scheme" | tee PUBMLST_SCHEME
-    echo "$combined_format" | tee COMBINED_FORMAT
+    echo "$combined_format$(awk '$0!="NA"{print ","$0}' SECONDARY_COMBINED_FORMAT)" | tee COMBINED_FORMAT
     echo "$allelic_profile" | tee ALLELIC_PROFILE.txt
 
     # Concatenates the secondary scheme results if it exists
@@ -192,7 +228,6 @@ task ts_mlst {
     # Only present if secondary scheme was run
     String? ts_mlst_predicted_secondary_st = read_string("PREDICTED_SECONDARY_MLST")
     String? ts_mlst_pubmlst_secondary_scheme = read_string("PUBMLST_SECONDARY_SCHEME")
-    String? ts_mlst_secondary_combined = read_string("SECONDARY_COMBINED_FORMAT")
     String? ts_mlst_secondary_allelic_profile = read_string("SECONDARY_ALLELIC_PROFILE.txt")
     File? ts_mlst_secondary_novel_alleles = "~{samplename}_novel_mlst_alleles_secondary_scheme.fasta"
     String ts_mlst_version = read_string("VERSION")
