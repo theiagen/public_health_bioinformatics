@@ -222,7 +222,7 @@ task ts_mlst {
     File ts_mlst_results = "~{samplename}_ts_mlst.tsv"
     String ts_mlst_predicted_st = read_string("PREDICTED_MLST")
     String ts_mlst_pubmlst_scheme = read_string("PUBMLST_SCHEME")
-    String ts_mlst_combined_format = read_string("COMBINED_FORMAT")
+    String ts_mlst_combined = read_string("COMBINED_FORMAT")
     String ts_mlst_allelic_profile = read_string("ALLELIC_PROFILE.txt")
     File? ts_mlst_novel_alleles = "~{samplename}_novel_mlst_alleles.fasta"
     # Only present if secondary scheme was run

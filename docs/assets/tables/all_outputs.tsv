@@ -1322,7 +1322,7 @@ trimmomatic_read2_trimmed	File	The read2 file post trimming	TBProfiler_tNGS
 trimmomatic_stats	File	The read trimming statistics	TBProfiler_tNGS
 trimmomatic_version	String	The version of Trimmomatic used	Freyja_FASTQ, TBProfiler_tNGS, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 ts_mlst_allelic_profile	String	Profile of MLST loci and allele numbers predicted by MLST	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-ts_mlst_combined_format	String	Combined reporting format of ST type and scheme from MLST, ST#_scheme	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+ts_mlst_combined	String	Combined reporting format of ST type and scheme from MLST, ST#_scheme	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ts_mlst_docker	String	Docker image used for MLST	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ts_mlst_novel_alleles	File	FASTA file containing nucleotide sequence of any alleles that are not in the MLST database used by TheiaProk	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ts_mlst_predicted_secondary_st	String	ST predicted by secondary MLST run	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
@@ -1331,7 +1331,6 @@ ts_mlst_pubmlst_scheme	String	PubMLST scheme used byMLST	TheiaProk_FASTA, TheiaP
 ts_mlst_pubmlst_secondary_scheme	String	PubMLST secondary scheme used by MLST	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ts_mlst_results	File	TSV report with detailed MLST profile, including <https://github.com/tseemann/mlst#missing-data>	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ts_mlst_secondary_allelic_profile	String	Profile of alleles predicted by secondary MLST run	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-ts_mlst_secondary_combined	String	Combined reporting format of ST type and scheme from MLST, ST#_scheme	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ts_mlst_secondary_novel_alleles	File	FASTA file containing nucleotide sequence of any alleles that are not in the MLST database used by TheiaProk, from the secondary scheme run	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ts_mlst_version	String	Version of Torsten Seeman’s MLST tool used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 usher_clades	File	The clades predicted for the samples	Usher
