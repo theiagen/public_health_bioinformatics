@@ -745,7 +745,7 @@ workflow theiaprok_illumina_pe {
                 "ts_mlst_predicted_st": ts_mlst.ts_mlst_predicted_st,
                 "ts_mlst_pubmlst_scheme": ts_mlst.ts_mlst_pubmlst_scheme,
                 "ts_mlst_combined_format": ts_mlst.ts_mlst_combined_format,
-                "ts_mlst_secondary_combined_format": ts_mlst.ts_mlst_secondary_combined_format,
+                "ts_mlst_secondary_combined": ts_mlst.ts_mlst_secondary_combined,
                 "ts_mlst_predicted_secondary_st": ts_mlst.ts_mlst_predicted_secondary_st,
                 "ts_mlst_pubmlst_secondary_scheme": ts_mlst.ts_mlst_pubmlst_secondary_scheme,
                 "ts_mlst_secondary_allelic_profile": ts_mlst.ts_mlst_secondary_allelic_profile,
@@ -1002,7 +1002,7 @@ workflow theiaprok_illumina_pe {
     String? ts_mlst_predicted_st = ts_mlst.ts_mlst_predicted_st
     String? ts_mlst_pubmlst_scheme = ts_mlst.ts_mlst_pubmlst_scheme
     String? ts_mlst_combined_format = ts_mlst.ts_mlst_combined_format
-    String? ts_mlst_secondary_combined_format = ts_mlst.ts_mlst_secondary_combined_format
+    String? ts_mlst_secondary_combined = ts_mlst.ts_mlst_secondary_combined
     String? ts_mlst_allelic_profile = ts_mlst.ts_mlst_allelic_profile
     File? ts_mlst_novel_alleles = ts_mlst.ts_mlst_novel_alleles
     String? ts_mlst_predicted_secondary_st = ts_mlst.ts_mlst_predicted_secondary_st

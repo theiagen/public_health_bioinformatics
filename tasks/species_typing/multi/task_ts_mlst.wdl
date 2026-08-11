@@ -192,7 +192,7 @@ task ts_mlst {
     # Only present if secondary scheme was run
     String? ts_mlst_predicted_secondary_st = read_string("PREDICTED_SECONDARY_MLST")
     String? ts_mlst_pubmlst_secondary_scheme = read_string("PUBMLST_SECONDARY_SCHEME")
-    String? ts_mlst_secondary_combined_format = read_string("SECONDARY_COMBINED_FORMAT")
+    String? ts_mlst_secondary_combined = read_string("SECONDARY_COMBINED_FORMAT")
     String? ts_mlst_secondary_allelic_profile = read_string("SECONDARY_ALLELIC_PROFILE.txt")
     File? ts_mlst_secondary_novel_alleles = "~{samplename}_novel_mlst_alleles_secondary_scheme.fasta"
     String ts_mlst_version = read_string("VERSION")
