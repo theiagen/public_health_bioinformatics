@@ -113,7 +113,7 @@ task sieve {
 
     # catch if the file does not exist and do not raise a hard error
     if not os.path.isfile(os.environ["SIEVE_JSON"]):
-      echo f"ERROR: Sieve did not generate report JSON {os.environ['SIEVE_JSON']}"
+      print(f"ERROR: Sieve did not generate report JSON {os.environ['SIEVE_JSON']}")
       sys.exit(0)
     else:
       with open(os.environ["SIEVE_JSON"]) as handle:
