@@ -36,6 +36,9 @@ fragment: true
 
         For _E. coli_, the user may set `ts_mlst scheme_override` to be `true` to prevent running _E. coli_ samples through the "aeromonas", "cfreundii", and "senterica" schemes, which can be common mischaracterizations.
 
+    ??? toggle "MLST Reporting Format"
+        The `ts_mlst` task provides a combined scheme and ST output that follows a standardized format for reporting and submission under `ts_mlst_combined`. This output follows the format of `MLST#_scheme`. `MLST#_scheme,MLST#_scheme2` is returned if there are multiple schemes present. For organisms with multiple scheme types present, Achtman, Pasteur, or Oxford, these will be reported alongside the ST and scheme in the format of `MLST#_scheme(Achtman)`. When no ST is available but a scheme is present this output will be `NA_scheme` and will be `NA` if no scheme is identified.
+
     !!! techdetails "TS_MLST Technical Details"
         |  | Links |
         | --- | --- |
