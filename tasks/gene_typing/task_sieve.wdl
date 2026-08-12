@@ -111,8 +111,13 @@ task sieve {
     import os
     import sys
 
-    with open(os.environ["SIEVE_JSON"]) as handle:
-        report = json.load(handle)
+    # catch if the file does not exist and do not raise a hard error
+    if not os.path.isfile(os.environ["SIEVE_JSON"]):
+      echo f"ERROR: Sieve did not generate report JSON {os.environ['SIEVE_JSON']}"
+      sys.exit(0)
+    else:
+      with open(os.environ["SIEVE_JSON"]) as handle:
+          report = json.load(handle)
 
     # all reportable fields live in the "result" object; fall back to the top level if a
     # plugin ever emits a flat report
@@ -146,7 +151,7 @@ task sieve {
     CODE
   >>>
   output {
-    File sieve_results = "sieve/~{samplename}.tsv"
+    File? sieve_results = "sieve/~{samplename}.tsv"
     String sieve_serogroup = read_string("SEROGROUP")
     String sieve_genes_present = read_string("GENES_PRESENT")
     String sieve_notes = read_string("NOTES")

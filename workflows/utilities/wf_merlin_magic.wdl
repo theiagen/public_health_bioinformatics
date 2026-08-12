@@ -82,6 +82,7 @@ workflow merlin_magic {
     String? shigapass_docker_image
     String? shigatyper_docker_image
     String? shigeifinder_docker_image
+    String? sieve_nmeningitidis_docker_image
     String? sistr_docker_image
     String? sonneityping_docker_image
     String? spatyper_docker_image
@@ -437,7 +438,8 @@ workflow merlin_magic {
         parameters = sieve_nmeningitidis_parameters,
         serogroup_key = "serogroup",
         genes_key = "genes_present",
-        notes_key = "notes"
+        notes_key = "notes",
+        docker = sieve_nmeningitidis_docker_image
     }
   }
   if (merlin_tag == "Pseudomonas aeruginosa") {
