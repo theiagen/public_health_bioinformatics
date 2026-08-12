@@ -7542,28 +7542,29 @@
 </span><span id="__span-1-460"><a id="__codelineno-1-460" name="__codelineno-1-460" href="#__codelineno-1-460"></a>    | trimmomatic_docker | String | The docker image used for the trimmomatic module in this workflow |
 </span><span id="__span-1-461"><a id="__codelineno-1-461" name="__codelineno-1-461" href="#__codelineno-1-461"></a>    | trimmomatic_version | String | The version of Trimmomatic used |
 </span><span id="__span-1-462"><a id="__codelineno-1-462" name="__codelineno-1-462" href="#__codelineno-1-462"></a>    | ts_mlst_allelic_profile | String | Profile of MLST loci and allele numbers predicted by MLST |
-</span><span id="__span-1-463"><a id="__codelineno-1-463" name="__codelineno-1-463" href="#__codelineno-1-463"></a>    | ts_mlst_docker | String | Docker image used for MLST |
-</span><span id="__span-1-464"><a id="__codelineno-1-464" name="__codelineno-1-464" href="#__codelineno-1-464"></a>    | ts_mlst_novel_alleles | File | FASTA file containing nucleotide sequence of any alleles that are not in the MLST database used by TheiaProk |
-</span><span id="__span-1-465"><a id="__codelineno-1-465" name="__codelineno-1-465" href="#__codelineno-1-465"></a>    | ts_mlst_predicted_secondary_st | String | ST predicted by secondary MLST run |
-</span><span id="__span-1-466"><a id="__codelineno-1-466" name="__codelineno-1-466" href="#__codelineno-1-466"></a>    | ts_mlst_predicted_st | String | ST predicted by MLST |
-</span><span id="__span-1-467"><a id="__codelineno-1-467" name="__codelineno-1-467" href="#__codelineno-1-467"></a>    | ts_mlst_pubmlst_scheme | String | PubMLST scheme used byMLST |
-</span><span id="__span-1-468"><a id="__codelineno-1-468" name="__codelineno-1-468" href="#__codelineno-1-468"></a>    | ts_mlst_pubmlst_secondary_scheme | String | PubMLST secondary scheme used by MLST |
-</span><span id="__span-1-469"><a id="__codelineno-1-469" name="__codelineno-1-469" href="#__codelineno-1-469"></a>    | ts_mlst_results | File | TSV report with detailed MLST profile, including &lt;https://github.com/tseemann/mlst#missing-data&gt; |
-</span><span id="__span-1-470"><a id="__codelineno-1-470" name="__codelineno-1-470" href="#__codelineno-1-470"></a>    | ts_mlst_secondary_allelic_profile | String | Profile of alleles predicted by secondary MLST run |
-</span><span id="__span-1-471"><a id="__codelineno-1-471" name="__codelineno-1-471" href="#__codelineno-1-471"></a>    | ts_mlst_secondary_novel_alleles | File | FASTA file containing nucleotide sequence of any alleles that are not in the MLST database used by TheiaProk, from the secondary scheme run |
-</span><span id="__span-1-472"><a id="__codelineno-1-472" name="__codelineno-1-472" href="#__codelineno-1-472"></a>    | ts_mlst_version | String | Version of Torsten Seeman’s MLST tool used |
-</span><span id="__span-1-473"><a id="__codelineno-1-473" name="__codelineno-1-473" href="#__codelineno-1-473"></a>    | vibecheck_classification_notes | String | Additional information provided by Vibecheck during classification |
-</span><span id="__span-1-474"><a id="__codelineno-1-474" name="__codelineno-1-474" href="#__codelineno-1-474"></a>    | vibecheck_confidence | Float | How confidence lineage assignment is. 0 - uncertain; 100 - Very certain |
-</span><span id="__span-1-475"><a id="__codelineno-1-475" name="__codelineno-1-475" href="#__codelineno-1-475"></a>    | vibecheck_docker | String | Docker image used by Vibecheck task |
-</span><span id="__span-1-476"><a id="__codelineno-1-476" name="__codelineno-1-476" href="#__codelineno-1-476"></a>    | vibecheck_lineage_report | File | Output CSV file created by Vibecheck |
-</span><span id="__span-1-477"><a id="__codelineno-1-477" name="__codelineno-1-477" href="#__codelineno-1-477"></a>    | vibecheck_top_lineage | String | Most likely lineage assigned by Vibecheck |
-</span><span id="__span-1-478"><a id="__codelineno-1-478" name="__codelineno-1-478" href="#__codelineno-1-478"></a>    | vibecheck_version | String | Version of Vibecheck used |
-</span><span id="__span-1-479"><a id="__codelineno-1-479" name="__codelineno-1-479" href="#__codelineno-1-479"></a>    | virulencefinder_docker | String | VirulenceFinder docker image used |
-</span><span id="__span-1-480"><a id="__codelineno-1-480" name="__codelineno-1-480" href="#__codelineno-1-480"></a>    | virulencefinder_hits | String | Virulence genes detected by VirulenceFinder |
-</span><span id="__span-1-481"><a id="__codelineno-1-481" name="__codelineno-1-481" href="#__codelineno-1-481"></a>    | virulencefinder_report_tsv | File | Output TSV file created by VirulenceFinder |
-</span><span id="__span-1-482"><a id="__codelineno-1-482" name="__codelineno-1-482" href="#__codelineno-1-482"></a>
+</span><span id="__span-1-463"><a id="__codelineno-1-463" name="__codelineno-1-463" href="#__codelineno-1-463"></a>    | ts_mlst_combined | String | Combined reporting format of ST type and scheme from MLST, ST#_scheme |
+</span><span id="__span-1-464"><a id="__codelineno-1-464" name="__codelineno-1-464" href="#__codelineno-1-464"></a>    | ts_mlst_docker | String | Docker image used for MLST |
+</span><span id="__span-1-465"><a id="__codelineno-1-465" name="__codelineno-1-465" href="#__codelineno-1-465"></a>    | ts_mlst_novel_alleles | File | FASTA file containing nucleotide sequence of any alleles that are not in the MLST database used by TheiaProk |
+</span><span id="__span-1-466"><a id="__codelineno-1-466" name="__codelineno-1-466" href="#__codelineno-1-466"></a>    | ts_mlst_predicted_secondary_st | String | ST predicted by secondary MLST run |
+</span><span id="__span-1-467"><a id="__codelineno-1-467" name="__codelineno-1-467" href="#__codelineno-1-467"></a>    | ts_mlst_predicted_st | String | ST predicted by MLST |
+</span><span id="__span-1-468"><a id="__codelineno-1-468" name="__codelineno-1-468" href="#__codelineno-1-468"></a>    | ts_mlst_pubmlst_scheme | String | PubMLST scheme used byMLST |
+</span><span id="__span-1-469"><a id="__codelineno-1-469" name="__codelineno-1-469" href="#__codelineno-1-469"></a>    | ts_mlst_pubmlst_secondary_scheme | String | PubMLST secondary scheme used by MLST |
+</span><span id="__span-1-470"><a id="__codelineno-1-470" name="__codelineno-1-470" href="#__codelineno-1-470"></a>    | ts_mlst_results | File | TSV report with detailed MLST profile, including &lt;https://github.com/tseemann/mlst#missing-data&gt; |
+</span><span id="__span-1-471"><a id="__codelineno-1-471" name="__codelineno-1-471" href="#__codelineno-1-471"></a>    | ts_mlst_secondary_allelic_profile | String | Profile of alleles predicted by secondary MLST run |
+</span><span id="__span-1-472"><a id="__codelineno-1-472" name="__codelineno-1-472" href="#__codelineno-1-472"></a>    | ts_mlst_secondary_novel_alleles | File | FASTA file containing nucleotide sequence of any alleles that are not in the MLST database used by TheiaProk, from the secondary scheme run |
+</span><span id="__span-1-473"><a id="__codelineno-1-473" name="__codelineno-1-473" href="#__codelineno-1-473"></a>    | ts_mlst_version | String | Version of Torsten Seeman’s MLST tool used |
+</span><span id="__span-1-474"><a id="__codelineno-1-474" name="__codelineno-1-474" href="#__codelineno-1-474"></a>    | vibecheck_classification_notes | String | Additional information provided by Vibecheck during classification |
+</span><span id="__span-1-475"><a id="__codelineno-1-475" name="__codelineno-1-475" href="#__codelineno-1-475"></a>    | vibecheck_confidence | Float | How confidence lineage assignment is. 0 - uncertain; 100 - Very certain |
+</span><span id="__span-1-476"><a id="__codelineno-1-476" name="__codelineno-1-476" href="#__codelineno-1-476"></a>    | vibecheck_docker | String | Docker image used by Vibecheck task |
+</span><span id="__span-1-477"><a id="__codelineno-1-477" name="__codelineno-1-477" href="#__codelineno-1-477"></a>    | vibecheck_lineage_report | File | Output CSV file created by Vibecheck |
+</span><span id="__span-1-478"><a id="__codelineno-1-478" name="__codelineno-1-478" href="#__codelineno-1-478"></a>    | vibecheck_top_lineage | String | Most likely lineage assigned by Vibecheck |
+</span><span id="__span-1-479"><a id="__codelineno-1-479" name="__codelineno-1-479" href="#__codelineno-1-479"></a>    | vibecheck_version | String | Version of Vibecheck used |
+</span><span id="__span-1-480"><a id="__codelineno-1-480" name="__codelineno-1-480" href="#__codelineno-1-480"></a>    | virulencefinder_docker | String | VirulenceFinder docker image used |
+</span><span id="__span-1-481"><a id="__codelineno-1-481" name="__codelineno-1-481" href="#__codelineno-1-481"></a>    | virulencefinder_hits | String | Virulence genes detected by VirulenceFinder |
+</span><span id="__span-1-482"><a id="__codelineno-1-482" name="__codelineno-1-482" href="#__codelineno-1-482"></a>    | virulencefinder_report_tsv | File | Output TSV file created by VirulenceFinder |
 </span><span id="__span-1-483"><a id="__codelineno-1-483" name="__codelineno-1-483" href="#__codelineno-1-483"></a>
-</span><span id="__span-1-484"><a id="__codelineno-1-484" name="__codelineno-1-484" href="#__codelineno-1-484"></a>///
+</span><span id="__span-1-484"><a id="__codelineno-1-484" name="__codelineno-1-484" href="#__codelineno-1-484"></a>
+</span><span id="__span-1-485"><a id="__codelineno-1-485" name="__codelineno-1-485" href="#__codelineno-1-485"></a>///
 </span></code></pre></div>
 <hr />
 <h3 id="2-include_md">2. <code>include_md(...)</code><a class="headerlink" href="#2-include_md" title="Permanent link">&para;</a></h3>

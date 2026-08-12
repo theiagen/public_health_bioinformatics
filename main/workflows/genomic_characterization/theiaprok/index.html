@@ -22838,6 +22838,10 @@
 <p>Some taxa have multiple MLST schemes, e.g. the <em>Escherichia</em> and <em>Leptospira</em> genera,  <em>Acinetobacter baumannii</em>, <em>Clostridium difficile</em>, and <em>Streptococcus thermophilus</em>. Only one scheme will be used by default. This can be changed for <em>Escherichia</em> and <em>A. baumannii</em> by setting the <code>ts_mlst run_secondary_scheme</code> variable to <code>true</code>. This will cause MLST to run the other scheme associated with those organisms and output those results in addition to the default scheme.</p>
 <p>For <em>E. coli</em>, the user may set <code>ts_mlst scheme_override</code> to be <code>true</code> to prevent running <em>E. coli</em> samples through the "aeromonas", "cfreundii", and "senterica" schemes, which can be common mischaracterizations.</p>
 </details>
+<details class="toggle">
+<summary>MLST Reporting Format</summary>
+<p>The <code>ts_mlst</code> task provides a combined scheme and ST output that follows a standardized format for reporting and submission under <code>ts_mlst_combined</code>. This output follows the format of <code>MLST#_scheme</code>. <code>MLST#_scheme,MLST#_scheme2</code> is returned if there are multiple schemes present. For organisms with multiple scheme types present, Achtman, Pasteur, or Oxford, these will be reported alongside the ST and scheme in the format of <code>MLST#_scheme(Achtman)</code>. When no ST is available but a scheme is present this output will be <code>NA_scheme</code> and will be <code>NA</code> if no scheme is identified.</p>
+</details>
 <div class="admonition techdetails">
 <p class="admonition-title">TS_MLST Technical Details</p>
 <table>
@@ -26764,6 +26768,11 @@
 <td>Profile of MLST loci and allele numbers predicted by MLST</td>
 </tr>
 <tr>
+<td>ts_mlst_combined</td>
+<td>String</td>
+<td>Combined reporting format of ST type and scheme from MLST, ST#_scheme</td>
+</tr>
+<tr>
 <td>ts_mlst_docker</td>
 <td>String</td>
 <td>Docker image used for MLST</td>
@@ -28879,6 +28888,11 @@
 <td>Profile of MLST loci and allele numbers predicted by MLST</td>
 </tr>
 <tr>
+<td>ts_mlst_combined</td>
+<td>String</td>
+<td>Combined reporting format of ST type and scheme from MLST, ST#_scheme</td>
+</tr>
+<tr>
 <td>ts_mlst_docker</td>
 <td>String</td>
 <td>Docker image used for MLST</td>
@@ -30854,6 +30868,11 @@
 <td>Profile of MLST loci and allele numbers predicted by MLST</td>
 </tr>
 <tr>
+<td>ts_mlst_combined</td>
+<td>String</td>
+<td>Combined reporting format of ST type and scheme from MLST, ST#_scheme</td>
+</tr>
+<tr>
 <td>ts_mlst_docker</td>
 <td>String</td>
 <td>Docker image used for MLST</td>
@@ -32337,6 +32356,11 @@
 <td>ts_mlst_allelic_profile</td>
 <td>String</td>
 <td>Profile of MLST loci and allele numbers predicted by MLST</td>
+</tr>
+<tr>
+<td>ts_mlst_combined</td>
+<td>String</td>
+<td>Combined reporting format of ST type and scheme from MLST, ST#_scheme</td>
 </tr>
 <tr>
 <td>ts_mlst_docker</td>
