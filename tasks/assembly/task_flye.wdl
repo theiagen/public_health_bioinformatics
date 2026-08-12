@@ -21,7 +21,7 @@ task flye {
 
     Int cpu = 4
     Int disk_size = 100
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/flye:2.9.4"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/flye:2.9.6"
     Int memory = 32
   }
   command <<<
