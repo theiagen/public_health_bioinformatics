@@ -51,7 +51,7 @@ task tsv_join {
       fi
     done
 
-    if (head -n1 merged.tsv | grep -q "date"); then
+    if (head -n1 metadata-merged.tsv | grep -q "date"); then
       echo true | tee HAS_TIME
     else
       echo false | tee HAS_TIME
