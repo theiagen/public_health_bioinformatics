@@ -9005,6 +9005,30 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>sieve_nmeningitidis_min_coverage</strong></td>
+<td>Float</td>
+<td>Minimum percent breadth of coverage for serotype prediction and gene recovery</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>sieve_nmeningitidis_min_identity</strong></td>
+<td>Float</td>
+<td>Minimum nucleotide percent identity for serotype prediction and gene recovery</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>sieve_nmeningitidis_parameters</strong></td>
+<td>String</td>
+<td>Comma-delimited list of key, value pairs (KEY=VALUE) of additional parameters for alignment software, e.g. "KEY1=VALUE1,KEY2=VALUE2"</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>sistr_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -12335,6 +12359,30 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>sieve_nmeningitidis_min_coverage</strong></td>
+<td>Float</td>
+<td>Minimum percent breadth of coverage for serotype prediction and gene recovery</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>sieve_nmeningitidis_min_identity</strong></td>
+<td>Float</td>
+<td>Minimum nucleotide percent identity for serotype prediction and gene recovery</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>sieve_nmeningitidis_parameters</strong></td>
+<td>String</td>
+<td>Comma-delimited list of key, value pairs (KEY=VALUE) of additional parameters for alignment software, e.g. "KEY1=VALUE1,KEY2=VALUE2"</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>sistr_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -15545,6 +15593,30 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>sieve_nmeningitidis_min_coverage</strong></td>
+<td>Float</td>
+<td>Minimum percent breadth of coverage for serotype prediction and gene recovery</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>sieve_nmeningitidis_min_identity</strong></td>
+<td>Float</td>
+<td>Minimum nucleotide percent identity for serotype prediction and gene recovery</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>sieve_nmeningitidis_parameters</strong></td>
+<td>String</td>
+<td>Comma-delimited list of key, value pairs (KEY=VALUE) of additional parameters for alignment software, e.g. "KEY1=VALUE1,KEY2=VALUE2"</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>sistr_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -16812,7 +16884,7 @@
 <td><strong>genome_length</strong></td>
 <td>Int</td>
 <td>User-specified expected genome length to be used in genome statistics calculations</td>
-<td>5000000</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -18399,6 +18471,30 @@
 <td>String</td>
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/shigeifinder:1.3.5</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>sieve_nmeningitidis_min_coverage</strong></td>
+<td>Float</td>
+<td>Minimum percent breadth of coverage for serotype prediction and gene recovery</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>sieve_nmeningitidis_min_identity</strong></td>
+<td>Float</td>
+<td>Minimum nucleotide percent identity for serotype prediction and gene recovery</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>sieve_nmeningitidis_parameters</strong></td>
+<td>String</td>
+<td>Comma-delimited list of key, value pairs (KEY=VALUE) of additional parameters for alignment software, e.g. "KEY1=VALUE1,KEY2=VALUE2"</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -23808,6 +23904,72 @@
 </table>
 </div>
 </details>
+<details class="task">
+<summary><code>sieve_nmeningitidis</code>: <strong><em>Neisseria meningitidis</em> serogrouping</strong></summary>
+<p>When GAMBIT identifies a sample as <em>Neisseria meningitidis</em>, TheiaProk automatically runs Sieve with the <code>nmen_serogroup</code> plugin, which BLASTs a database of <em>N. meningitidis</em> genes against the assembly to predict the capsule serogroup.</p>
+<p>The assembly is screened against a database of <em>N. meningitidis</em> capsule locus alleles, built from AllTheBacteria annotations of publicly available genomes and named according to the standard NEIS capsule locus nomenclature. The default thresholds are permissive (50% identity, 70% coverage) because capsule alleles are diverse and a capsule gene can be split across two contigs. Hits from the same gene broken across a contig boundary are stitched back together before the gene is judged present or absent.</p>
+<p>The genes found are passed through a decision cascade ported from the PubMLST/<a href="https://github.com/CDCgov/BMGAP">BMGAP (PMGA)</a> serogrouping logic. The cascade identifies which serogroup's capsule "backbone" is present, then confirms that every gene essential to that serogroup is present and intact — a gene that recovered below full length (fragmented), or carrying a premature stop codon will prevent a positive call. The near-identical W and Y capsule polymerase genes (<em>csw</em> and <em>csy</em>) are distinguished before the cascade runs: the gene is translated and the single amino acid that distinguishes W from Y is read (W = proline, Y = glycine); if the distinguishing amino acid is serine the codon uninformative and the better-matching allele is used instead; and if neither rule resolves the pair, both genes are kept and the sample is reported as <code>Contaminated</code>.</p>
+<details class="toggle">
+<summary>Interpreting the <code>sieve_nmeningitidis_serogroup</code> output</summary>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>A</code>, <code>B</code>, <code>C</code>, <code>E</code>, <code>H</code>, <code>I</code>, <code>K</code>, <code>L</code>, <code>W</code>, <code>X</code>, <code>Y</code>, <code>Z</code></td>
+<td>A confident serogroup call: the capsule backbone for that serogroup was found and all of its essential genes are present and intact.</td>
+</tr>
+<tr>
+<td><code>NG</code></td>
+<td>Non-groupable. No capsule genes were found, an essential backbone gene is missing entirely, no backbone can be assigned because the present capsule genes are shared across serogroups (noted as <code>Unclear</code>), or the sample carries the capsule-null locus (<code>cnl</code>).</td>
+</tr>
+<tr>
+<td><code>Inconclusive</code></td>
+<td>A capsule backbone was identified, but at least one essential gene is damaged (recovered below full length, or truncated by an internal stop codon), so a serogroup cannot be confirmed.</td>
+</tr>
+<tr>
+<td><code>Contaminated</code></td>
+<td>Capsule genes unique to more than one serogroup were detected, suggesting a mixed or contaminated sample.</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>sieve_nmeningitidis_notes</code> output explains the reasoning behind every call (for example, <code>"W backbone: All essential capsule genes intact and present"</code> or <code>"C backbone: ctrA fragmented (61.4% cov)"</code>), and <code>sieve_nmeningitidis_genes_present</code> lists the essential capsule genes of the called backbone that were recovered. When a call is <code>NG</code>, <code>Inconclusive</code>, or <code>Contaminated</code>, the notes should always be consulted before interpreting the result.</p>
+</details>
+<p>The default thresholds can be adjusted with the optional <code>sieve_nmeningitidis_min_identity</code> and <code>sieve_nmeningitidis_min_coverage</code> inputs, and additional BLAST settings can be supplied with <code>sieve_nmeningitidis_parameters</code>.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">sieve Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/task_sieve.wdl">task_sieve.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/theiagen/sieve">sieve on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/theiagen/sieve">sieve on GitHub</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.3201/eid1904.111799">Description and Nomenclature of <em>Neisseria meningitidis</em> Capsule Locus</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
 </details>
 <details class="toggle">
 <summary><em>Pseudomonas aeruginosa</em></summary>
@@ -26368,6 +26530,36 @@
 <td>ShigEiFinder version used using read files as inputs</td>
 </tr>
 <tr>
+<td>sieve_nmeningitidis_docker</td>
+<td>String</td>
+<td>Sieve docker image used</td>
+</tr>
+<tr>
+<td>sieve_nmeningitidis_genes_present</td>
+<td>String</td>
+<td>Comma-delimited list of recovered genes passing alignment thresholds</td>
+</tr>
+<tr>
+<td>sieve_nmeningitidis_notes</td>
+<td>String</td>
+<td>Notes depicting results of serotyping</td>
+</tr>
+<tr>
+<td>sieve_nmeningitidis_results</td>
+<td>File</td>
+<td>Tab-delimited spreadsheet depciting results of serotype prediction</td>
+</tr>
+<tr>
+<td>sieve_nmeningitidis_serogroup</td>
+<td>String</td>
+<td>Serogroup determined by Sieve</td>
+</tr>
+<tr>
+<td>sieve_nmeningitidis_version</td>
+<td>String</td>
+<td>Version of Sieve used</td>
+</tr>
+<tr>
 <td>sistr_allele_fasta</td>
 <td>File</td>
 <td>FASTA file of novel cgMLST alleles from SISTR</td>
@@ -28498,6 +28690,36 @@
 <td>ShigEiFinder version used using read files as inputs</td>
 </tr>
 <tr>
+<td>sieve_nmeningitidis_docker</td>
+<td>String</td>
+<td>Sieve docker image used</td>
+</tr>
+<tr>
+<td>sieve_nmeningitidis_genes_present</td>
+<td>String</td>
+<td>Comma-delimited list of recovered genes passing alignment thresholds</td>
+</tr>
+<tr>
+<td>sieve_nmeningitidis_notes</td>
+<td>String</td>
+<td>Notes depicting results of serotyping</td>
+</tr>
+<tr>
+<td>sieve_nmeningitidis_results</td>
+<td>File</td>
+<td>Tab-delimited spreadsheet depciting results of serotype prediction</td>
+</tr>
+<tr>
+<td>sieve_nmeningitidis_serogroup</td>
+<td>String</td>
+<td>Serogroup determined by Sieve</td>
+</tr>
+<tr>
+<td>sieve_nmeningitidis_version</td>
+<td>String</td>
+<td>Version of Sieve used</td>
+</tr>
+<tr>
 <td>sistr_allele_fasta</td>
 <td>File</td>
 <td>FASTA file of novel cgMLST alleles from SISTR</td>
@@ -30523,6 +30745,36 @@
 <td>ShigEiFinder version used</td>
 </tr>
 <tr>
+<td>sieve_nmeningitidis_docker</td>
+<td>String</td>
+<td>Sieve docker image used</td>
+</tr>
+<tr>
+<td>sieve_nmeningitidis_genes_present</td>
+<td>String</td>
+<td>Comma-delimited list of recovered genes passing alignment thresholds</td>
+</tr>
+<tr>
+<td>sieve_nmeningitidis_notes</td>
+<td>String</td>
+<td>Notes depicting results of serotyping</td>
+</tr>
+<tr>
+<td>sieve_nmeningitidis_results</td>
+<td>File</td>
+<td>Tab-delimited spreadsheet depciting results of serotype prediction</td>
+</tr>
+<tr>
+<td>sieve_nmeningitidis_serogroup</td>
+<td>String</td>
+<td>Serogroup determined by Sieve</td>
+</tr>
+<tr>
+<td>sieve_nmeningitidis_version</td>
+<td>String</td>
+<td>Version of Sieve used</td>
+</tr>
+<tr>
 <td>sistr_allele_fasta</td>
 <td>File</td>
 <td>FASTA file of novel cgMLST alleles from SISTR</td>
@@ -32171,6 +32423,36 @@
 <td>shigeifinder_version</td>
 <td>String</td>
 <td>ShigEiFinder version used</td>
+</tr>
+<tr>
+<td>sieve_nmeningitidis_docker</td>
+<td>String</td>
+<td>Sieve docker image used</td>
+</tr>
+<tr>
+<td>sieve_nmeningitidis_genes_present</td>
+<td>String</td>
+<td>Comma-delimited list of recovered genes passing alignment thresholds</td>
+</tr>
+<tr>
+<td>sieve_nmeningitidis_notes</td>
+<td>String</td>
+<td>Notes depicting results of serotyping</td>
+</tr>
+<tr>
+<td>sieve_nmeningitidis_results</td>
+<td>File</td>
+<td>Tab-delimited spreadsheet depciting results of serotype prediction</td>
+</tr>
+<tr>
+<td>sieve_nmeningitidis_serogroup</td>
+<td>String</td>
+<td>Serogroup determined by Sieve</td>
+</tr>
+<tr>
+<td>sieve_nmeningitidis_version</td>
+<td>String</td>
+<td>Version of Sieve used</td>
 </tr>
 <tr>
 <td>sistr_allele_fasta</td>

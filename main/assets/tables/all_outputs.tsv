@@ -959,9 +959,11 @@ raven_denovo_version	String	Version of Raven used	TheiaViral_ONT
 read1	File	File containing the forward reads	BaseSpace_Fetch, SRA_Fetch
 read1_aligned	String	Forward read file of only aligned reads	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 read1_aligned	File	Forward read file of only aligned reads	TheiaCoV_ClearLabs, TheiaCoV_Illumina_SE
-read1_clean	File	Forward read file after quality trimming and adapter removal	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Panel
+read1_clean	File	Forward read file after quality trimming and adapter removal	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Panel
+read1_clean	String	Forward read file after quality trimming and adapter removal	Freyja_FASTQ
 read1_concatenated	File	Concatenated forward reads	Concatenate_Illumina_Lanes, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-read1_dehosted	File	The dehosted forward reads file; suggested read file for SRA submission 	Freyja_FASTQ, NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaMeta_Illumina_PE
+read1_dehosted	File	The dehosted forward reads file; suggested read file for SRA submission 	NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaMeta_Illumina_PE
+read1_dehosted	String	The dehosted forward reads file; suggested read file for SRA submission 	Freyja_FASTQ
 read1_mapped	File	The mapped forward reads to the assembly	TheiaMeta_Illumina_PE
 read1_renamed	File	New read1 FASTQ file renamed to desired filename	Rename_FASTQ
 read1_subsampled	File	Read1 FASTQ files downsampled to desired coverage	RASUSA
@@ -970,9 +972,11 @@ read1_unaligned	File	Forward read file of unaligned reads	TheiaCoV_Illumina_PE, 
 read1_unmapped	File	The unmapped forwards reads to the assembly	TheiaMeta_Illumina_PE
 read2	File	File containing the reverse reads (not available for single-end or ONT data)	BaseSpace_Fetch, SRA_Fetch
 read2_aligned	String	Reverse read file of only aligned reads	TheiaCoV_Illumina_PE
-read2_clean	File	Reverse read file after quality trimming and adapter removal	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Panel
+read2_clean	File	Reverse read file after quality trimming and adapter removal	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Panel
+read2_clean	String	Reverse read file after quality trimming and adapter removal	Freyja_FASTQ
 read2_concatenated	File	Concatenated reverse reads	Concatenate_Illumina_Lanes, TheiaProk_Illumina_PE
-read2_dehosted	File	The dehosted reverse reads file; suggested read file for SRA submission 	Freyja_FASTQ, NCBI_Scrub_PE, TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE
+read2_dehosted	File	The dehosted reverse reads file; suggested read file for SRA submission 	NCBI_Scrub_PE, TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE
+read2_dehosted	String	The dehosted reverse reads file; suggested read file for SRA submission 	Freyja_FASTQ
 read2_mapped	File	The mapped reverse reads to the assembly	TheiaMeta_Illumina_PE
 read2_renamed	File	New read2 FASTQ file renamed to desired filename	Rename_FASTQ
 read2_subsampled	File	Read2 FASTQ files downsampled to desired coverage	RASUSA
@@ -1079,6 +1083,12 @@ shigeifinder_serotype	String	Serotype predicted by ShigEiFinder	TheiaProk_FASTA,
 shigeifinder_serotype_reads	String	Serotype predicted by ShigEiFinder using read files as inputs	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 shigeifinder_version	String	ShigEiFinder version used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 shigeifinder_version_reads	String	ShigEiFinder version used using read files as inputs	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+sieve_nmeningitidis_docker	String	Sieve docker image used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+sieve_nmeningitidis_genes_present	String	Comma-delimited list of recovered genes passing alignment thresholds	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+sieve_nmeningitidis_notes	String	Notes depicting results of serotyping	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+sieve_nmeningitidis_results	File	Tab-delimited spreadsheet depciting results of serotype prediction	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+sieve_nmeningitidis_serogroup	String	Serogroup determined by Sieve	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+sieve_nmeningitidis_version	String	Version of Sieve used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 sistr_allele_fasta	File	FASTA file of novel cgMLST alleles from SISTR	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 sistr_allele_json	File	JSON file of cgMLST allele sequences and information (see <https://github.com/phac-nml/sistr_cmd#cgmlst-allele-search-results>)	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 sistr_antigenic_formula	String	A field that aggregates the O, H1, and H2, antigen values in a single location for convenience	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
