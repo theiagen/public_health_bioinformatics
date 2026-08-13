@@ -24,7 +24,7 @@
         
       
       
-      <link rel="icon" href="../../assets/logos/Theiagen-Symbol-Standard-01.png">
+      <link rel="icon" href="../../theme/logos/Theiagen-Symbol-Standard-01.png">
       <meta name="generator" content="zensical-0.0.42">
     
     
@@ -60,7 +60,7 @@
       
     
     
-      <link rel="stylesheet" href="../../stylesheets/extra.css">
+      <link rel="stylesheet" href="../../theme/stylesheets/extra.css">
     
     <script>__md_scope=new URL("../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
     
@@ -119,7 +119,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="https://www.theiagen.com" title="Public Health Bioinformatics" class="md-header__button md-logo" aria-label="Public Health Bioinformatics" data-md-component="logo">
       
-  <img src="../../assets/logos/Theiagen-Logo-White.png" alt="Public Health Bioinformatics">
+  <img src="../../theme/logos/Theiagen-Logo-White.png" alt="Public Health Bioinformatics">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer" aria-label="Navigation">
@@ -262,7 +262,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="https://www.theiagen.com" title="Public Health Bioinformatics" class="md-nav__button md-logo" aria-label="Public Health Bioinformatics" data-md-component="logo">
       
-  <img src="../../assets/logos/Theiagen-Logo-White.png" alt="Public Health Bioinformatics">
+  <img src="../../theme/logos/Theiagen-Logo-White.png" alt="Public Health Bioinformatics">
 
     </a>
     Public Health Bioinformatics
@@ -6896,7 +6896,7 @@
 <p>PHB documentation serves a public health audience that may not be familiar with bioinformatics jargon. To keep terminology consistent and approachable, we maintain a single glossary and surface it automatically across the site.</p>
 <p>There are two files, with a clear division of labor:</p>
 <ul>
-<li><strong><code>docs/assets/abbreviations.md</code></strong> (repository root) — the machine-readable source of hover tooltips. It holds <strong>only organization abbreviations</strong> (repositories, databases, and networks, e.g. <code>ENA</code>, <code>GISAID</code>, <code>INSDC</code>). Each line is an <a href="https://zensical.org/docs/authoring/tooltips/#adding-a-glossary">abbreviation definition</a> in the form <code>*[ABBR]: short definition</code>. This file is <strong>automatically appended to every page</strong> (via the <code>pymdownx.snippets</code> <code>auto_append</code> setting in <code>mkdocs.yml</code>), so wherever an organization abbreviation appears in the rendered docs it becomes a hover tooltip — no per-page work is required.</li>
+<li><strong><code>docs/assets/abbreviations.md</code></strong> — the machine-readable source of hover tooltips. It holds <strong>only organization abbreviations</strong> (repositories, databases, and networks, e.g. <code>ENA</code>, <code>GISAID</code>, <code>INSDC</code>). Each line is an <a href="https://zensical.org/docs/authoring/tooltips/#adding-a-glossary">abbreviation definition</a> in the form <code>*[ABBR]: short definition</code>. This file is <strong>automatically appended to every page</strong> (via the <code>pymdownx.snippets</code> <code>auto_append</code> setting in <code>mkdocs.yml</code>), so wherever an organization abbreviation appears in the rendered docs it becomes a hover tooltip — no per-page work is required.</li>
 <li><strong><code>docs/guides/glossary.md</code></strong> — the human-readable <a href="../../guides/glossary/">Glossary</a> page and the complete reference for <strong>every</strong> term. It is organized into these sections: "Sequencing and analysis terms"; "File formats"; "Genomic characterization terms"; "Platforms and tools"; "Databases, repositories, and organizations"; "Pathogens and organisms"; and "Acronyms and abbreviations".</li>
 </ul>
 <p>To add or change an entry:</p>
@@ -6926,19 +6926,19 @@
 <tr>
 <td>Tool-name consistency</td>
 <td><a href="https://vale.sh/">Vale</a></td>
-<td><code>docs/styles/PHB/ToolNames.yml</code></td>
+<td><code>docs/theme/styles/PHB/ToolNames.yml</code></td>
 <td>Inconsistent capitalization/spelling of tools (e.g. <code>IQTree</code> → <code>IQ-TREE</code>, <code>Github</code> → <code>GitHub</code>)</td>
 </tr>
 <tr>
 <td>American spelling</td>
 <td>Vale</td>
-<td><code>docs/styles/PHB/AmericanSpelling.yml</code></td>
+<td><code>docs/theme/styles/PHB/AmericanSpelling.yml</code></td>
 <td>British spellings (e.g. <code>characterise</code> → <code>characterize</code>, <code>colour</code> → <code>color</code>)</td>
 </tr>
 <tr>
 <td>Spelling &amp; doubled words</td>
 <td>Vale</td>
-<td><code>.config/.vale.ini</code> + <code>docs/styles/config/vocabularies/PHB/</code></td>
+<td><code>.config/.vale.ini</code> + <code>docs/theme/styles/config/vocabularies/PHB/</code></td>
 <td>Typos and repeated words; domain terms are whitelisted in <code>accept.txt</code></td>
 </tr>
 <tr>
@@ -6973,36 +6973,45 @@
 <div class="admonition dna">
 <p class="admonition-title">Adding an accepted term or tool name</p>
 <ul>
-<li>If Vale flags a valid domain term as a misspelling, add it to <code>docs/styles/config/vocabularies/PHB/accept.txt</code>.</li>
-<li>To standardize a new tool name, add the incorrect → correct mapping to <code>docs/styles/PHB/ToolNames.yml</code>.</li>
+<li>If Vale flags a valid domain term as a misspelling, add it to <code>docs/theme/styles/config/vocabularies/PHB/accept.txt</code>.</li>
+<li>To standardize a new tool name, add the incorrect → correct mapping to <code>docs/theme/styles/PHB/ToolNames.yml</code>.</li>
 </ul>
 </div>
 <h2 id="documentation-structure">Documentation Structure<a class="headerlink" href="#documentation-structure" title="Permanent link">&para;</a></h2>
+<p>Everything under <code>docs/</code> that a reader can navigate to (workflow pages, guides, task fragments, their supporting data/images) lives directly under <code>docs/</code>, matching the site's URL structure page-for-page. <code>docs/theme/</code> is the one exception: it holds the site mechanics — styling, scripts, macro logic, and lint configuration — that render that content into pages, but is never itself a page. If you're writing or editing a workflow page, guide, or task description, you want the top level of <code>docs/</code>. If you're touching styling, scripts, macros, or lint rules, you want <code>docs/theme/</code>.</p>
 <p>A brief description of the documentation structure is as follows:</p>
 <ul>
 <li><code>docs/</code> - Contains the Markdown files for the documentation.<ul>
 <li><code>assets/</code> - Contains images and other files used in the documentation.<ul>
 <li><code>figures/</code> - Contains images, figures, and workflow diagrams used in the documentation. For workflows that contain many images (such as BaseSpace_Fetch), it is recommended to create a subdirectory for the workflow.</li>
 <li><code>files/</code> - Contains files that are used in the documentation. This may include example outputs or templates. For workflows that contain many files (such as TheiaValidate), it is recommended to create a subdirectory for the workflow.</li>
-<li><code>logos/</code> - Contains Theiagen logos and symbols used in the documentation.</li>
 <li><code>metadata_formatters/</code> - Contains the most up-to-date metadata formatters for our submission workflows.</li>
 <li><code>sops/</code> - Contains any Standard Operating Procedures (SOPs) that correspond to workflows in the documentation.</li>
 <li><code>tables/</code> - Contains TSV files used to generate tables in the documentation. These are used to generate the overview tables for workflows, as well as the input and output tables for workflows.</li>
+<li><code>abbreviations.md</code> - Machine-consumed hover-tooltip source for organization abbreviations (auto-appended to every page). Not part of the human-readable Glossary — see below.</li>
 <li><code>new_workflow_template.md</code> - <a href="../../assets/new_workflow_template/">A template for adding a new workflow page to the documentation</a>.</li>
 </ul>
 </li>
 <li><code>common_text/</code> - Contains the Markdown files for common text used in the documentation. This includes task descriptions, workflow descriptions, and other common text. This is where you will put any new task descriptions or workflow descriptions that are not specific to a single workflow. This enables modular and reusable documentation.</li>
 <li><code>contributing/</code> - Contains the Markdown files for our contribution guides, such as this file</li>
+<li><code>getting_started/</code> - Contains the Markdown files for the "Getting Started" narrative guides (command-line, Terra.bio, failure philosophy).</li>
+<li><code>guides/</code> - Contains the Markdown files for per-tool/task guides, the Glossary, and other reference pages.</li>
+<li><code>theme/</code> - Contains the site mechanics: styling, scripting, macro logic, logos, and lint configuration. Nothing here is authored documentation prose, and none of it is reachable as a page.<ul>
 <li><code>javascripts/</code> - Contains JavaScript files used in the documentation.<ul>
 <li><code>tablesort.js</code> - A JavaScript file used to enable table sorting in the documentation.</li>
 </ul>
 </li>
+<li><code>logos/</code> - Contains Theiagen logos and symbols used by the theme (site logo/favicon).</li>
+<li><code>macros/</code> - Contains the Python macro implementation (<code>main.py</code>) that powers <code>render_tsv_table()</code> and <code>include_md()</code>. See its own <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/docs/theme/macros/README.md">README</a> for details.</li>
 <li><code>overrides/</code> - Contains HTMLs used to override theme defaults<ul>
 <li><code>main.html</code> - Contains the HTML used to display a warning when the latest version is not selected</li>
 </ul>
 </li>
+<li><code>styles/</code> - Contains the Vale linting configuration (<code>PHB/</code> custom style rules and <code>config/vocabularies/PHB/</code> accepted-spelling lists) used to lint the rendered content.</li>
 <li><code>stylesheets/</code> - Contains CSS files used in the documentation.<ul>
 <li><code>extra.css</code> - A custom CSS file used to style the documentation; contains all custom theme elements (scrollable tables, resizable columns, Theiagen colors), and custom admonitions.</li>
+</ul>
+</li>
 </ul>
 </li>
 <li><code>workflows/</code> - Contains the Markdown files for each workflow, organized into subdirectories by workflow category</li>
@@ -7030,16 +7039,16 @@
 <li>Link to the workflow on Dockstore - Link the workflow name to the information tab on Dockstore.</li>
 </ul>
 </li>
-<li>Format this information in the <code>assets/tables/all_workflows.tsv</code> file.</li>
+<li>Format this information in the <code>docs/assets/tables/all_workflows.tsv</code> file.</li>
 <li>Copy the path to the workflow documentation page to <mark><strong>ALL</strong></mark> of the appropriate locations in the <code>mkdocs.yml</code> file (under the <code>nav:</code> section) in the main directory of this repository. This ensures the workflow can be accessed from the navigation sidebar.</li>
 </ol>
 <h3 id="macros">Macros<a class="headerlink" href="#macros" title="Permanent link">&para;</a></h3>
-<p>The documentation uses a few macros to help with the formatting of the documentation. These macros are defined in <code>macros/main.py</code> and are used in the documentation files. The following macros are available:</p>
+<p>The documentation uses a few macros to help with the formatting of the documentation. These macros are defined in <code>docs/theme/macros/main.py</code> and are used in the documentation files. The following macros are available:</p>
 <ul>
 <li><code>render_tsv_table()</code> - This macro is used to create a table from a TSV file. The TSV file should be in the <code>docs/assets/tables</code> directory and should be formatted as a TAB-DELIMITED table. The macro will automatically create a table from the TSV file and insert it into the documentation.</li>
 <li><code>include_md()</code> - This macro is used to include a Markdown file in the documentation. The macro will automatically adjust the heading levels, resolve relative links, and support conditional and nested includes.</li>
 </ul>
-<p>Please see the <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/macros/README.md">macros README</a> for more information.</p>
+<p>Please see the <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/docs/theme/macros/README.md">macros README</a> for more information.</p>
 <!--
   PHB organization tooltips.
 
@@ -7169,19 +7178,19 @@
     
       <script src="../../assets/javascripts/bundle.6e5f0216.min.js"></script>
       
-        <script src="../../javascripts/table-utils.js"></script>
+        <script src="../../theme/javascripts/table-utils.js"></script>
       
         <script src="https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js"></script>
       
-        <script src="../../javascripts/table-sort.js"></script>
+        <script src="../../theme/javascripts/table-sort.js"></script>
       
-        <script src="../../javascripts/table-search.js"></script>
+        <script src="../../theme/javascripts/table-search.js"></script>
       
-        <script src="../../javascripts/table-resize.js"></script>
+        <script src="../../theme/javascripts/table-resize.js"></script>
       
-        <script src="../../javascripts/table-scrolltop.js"></script>
+        <script src="../../theme/javascripts/table-scrolltop.js"></script>
       
-        <script src="../../javascripts/toggle-spin.js"></script>
+        <script src="../../theme/javascripts/toggle-spin.js"></script>
       
     
   </body>
