@@ -28,9 +28,8 @@ task sieve {
   command <<<
     set -euo pipefail
 
-    # capture version and available plugins for provenance/logs
+    # capture version
     sieve version | tee VERSION
-    sieve list-plugins
 
     # select input(s): assembly OR reads (single- or paired-end)
     # --input is the assembly or R1; --input2 is the R2 mate
