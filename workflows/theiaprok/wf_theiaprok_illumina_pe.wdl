@@ -835,7 +835,6 @@ workflow theiaprok_illumina_pe {
           }
         }
       }
-
     }
   }
   output {
