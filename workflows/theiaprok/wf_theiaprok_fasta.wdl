@@ -437,6 +437,12 @@ workflow theiaprok_fasta {
             "shigeifinder_report": merlin_magic.shigeifinder_report,
             "shigeifinder_serotype": merlin_magic.shigeifinder_serotype,
             "shigeifinder_version": merlin_magic.shigeifinder_version,
+            "sieve_nmeningitidis_docker": merlin_magic.sieve_nmeningitidis_docker,
+            "sieve_nmeningitidis_genes_present": merlin_magic.sieve_nmeningitidis_genes_present,
+            "sieve_nmeningitidis_notes": merlin_magic.sieve_nmeningitidis_notes,
+            "sieve_nmeningitidis_results": merlin_magic.sieve_nmeningitidis_results,
+            "sieve_nmeningitidis_serogroup": merlin_magic.sieve_nmeningitidis_serogroup,
+            "sieve_nmeningitidis_version": merlin_magic.sieve_nmeningitidis_version,
             "sistr_allele_fasta": merlin_magic.sistr_allele_fasta,
             "sistr_allele_json": merlin_magic.sistr_allele_json,
             "sistr_antigenic_formula": merlin_magic.sistr_antigenic_formula,
@@ -477,6 +483,7 @@ workflow theiaprok_fasta {
             "ts_mlst_novel_alleles": ts_mlst.ts_mlst_novel_alleles,
             "ts_mlst_predicted_st": ts_mlst.ts_mlst_predicted_st,
             "ts_mlst_pubmlst_scheme": ts_mlst.ts_mlst_pubmlst_scheme,
+            "ts_mlst_combined": ts_mlst.ts_mlst_combined,
             "ts_mlst_predicted_secondary_st": ts_mlst.ts_mlst_predicted_secondary_st,
             "ts_mlst_pubmlst_secondary_scheme": ts_mlst.ts_mlst_pubmlst_secondary_scheme,
             "ts_mlst_secondary_allelic_profile": ts_mlst.ts_mlst_secondary_allelic_profile,
@@ -599,6 +606,7 @@ workflow theiaprok_fasta {
     # MLST Typing
     File? ts_mlst_results = ts_mlst.ts_mlst_results
     String? ts_mlst_predicted_st = ts_mlst.ts_mlst_predicted_st
+    String? ts_mlst_combined = ts_mlst.ts_mlst_combined
     String? ts_mlst_pubmlst_scheme = ts_mlst.ts_mlst_pubmlst_scheme
     String? ts_mlst_allelic_profile = ts_mlst.ts_mlst_allelic_profile
     File? ts_mlst_novel_alleles = ts_mlst.ts_mlst_novel_alleles
@@ -754,6 +762,12 @@ workflow theiaprok_fasta {
     String? meningotype_NHBA = merlin_magic.meningotype_NHBA
     String? meningotype_NadA = merlin_magic.meningotype_NadA
     String? meningotype_BAST = merlin_magic.meningotype_BAST
+    File? sieve_nmeningitidis_results = merlin_magic.sieve_nmeningitidis_results
+    String? sieve_nmeningitidis_serogroup = merlin_magic.sieve_nmeningitidis_serogroup
+    String? sieve_nmeningitidis_genes_present = merlin_magic.sieve_nmeningitidis_genes_present
+    String? sieve_nmeningitidis_notes = merlin_magic.sieve_nmeningitidis_notes
+    String? sieve_nmeningitidis_version = merlin_magic.sieve_nmeningitidis_version
+    String? sieve_nmeningitidis_docker = merlin_magic.sieve_nmeningitidis_docker
     # Acinetobacter Typing
     File? kaptive_output_file_k = merlin_magic.kaptive_output_file_k
     File? kaptive_output_file_oc = merlin_magic.kaptive_output_file_oc
