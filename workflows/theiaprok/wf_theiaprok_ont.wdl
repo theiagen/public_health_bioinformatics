@@ -263,6 +263,18 @@ workflow theiaprok_ont {
             read1 = read_QC_trim.read1_clean,
             ont_data = true
         }
+        if (call_arln_stats) {
+          call arln_stats.arln_stats {
+            input:
+              samplename = samplename,
+              taxon = select_first([gambit.gambit_predicted_taxon, expected_taxon]),
+              workflow_type = "ont",
+              genome_length = quast.genome_length,
+              gc_percent = quast.gc_percent,
+              read1_raw = read1,
+              read1_clean = read_QC_trim.read1_clean
+          }
+        }
         if (defined(taxon_tables)) {
           call export_taxon_table_task.export_taxon_table {
             input:
@@ -678,18 +690,6 @@ workflow theiaprok_ont {
                 "virulencefinder_report_tsv": merlin_magic.virulencefinder_report_tsv,
                 "zip": zip
             }
-          }
-        }
-        if (call_arln_stats) {
-          call arln_stats.arln_stats {
-            input:
-              samplename = samplename,
-              taxon = select_first([gambit.gambit_predicted_taxon, expected_taxon]),
-              workflow_type = "ont",
-              genome_length = quast.genome_length,
-              gc_percent = quast.gc_percent,
-              read1_raw = read1,
-              read1_clean = read_QC_trim.read1_clean
           }
         }
       }
