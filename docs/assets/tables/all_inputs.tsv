@@ -367,7 +367,7 @@ bakta	bakta_opts	String	Parameters to pass to bakta from <https://github.com/osc
 bakta	compliant	Boolean	If true, forces Genbank/ENA/DDJB compliant headers in Bakta output files	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 bakta	cpu	Int	Number of CPUs to allocate to the task	8	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 bakta	disk_size	Int	Amount of storage (in GB) to allocate to the task	200	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
-bakta	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/bakta:1.10.3	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
+bakta	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/bakta:1.12.0-2.1.24	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
 bakta	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	24	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 bakta	prodigal_tf	File	Prodigal training file to use for CDS prediction by bakta		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 bakta	proteins	File	Fasta file of trusted protein sequences for CDS annotation		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
