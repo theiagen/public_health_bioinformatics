@@ -68,6 +68,7 @@ columns:
     threshold: 0.01
     type: float
   variant_annotations:
+    mappings: ["theiaeuk_snippy_variants_hits"]
     method: exact
     type: set[str]
     delimiter: ","
