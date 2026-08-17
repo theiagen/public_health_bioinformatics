@@ -107,9 +107,6 @@ workflow medea_magic {
     }
     # organism-specific gene coverage targets used when query_genes is not user-supplied
     String cauris_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,B9J08_005340,B9J08_000401,B9J08_003102,B9J08_003737,B9J08_005343"
-    if (select_first([cladetyper.annotated_reference_gff, "None"]) != "None") {
-      File cauris_reference_gff = select_first([cladetyper.annotated_reference_gff])
-    }
   }
   if (medea_tag == "Aspergillus fumigatus") {
     # hosted fasta (user-supplied fasta takes precedence downstream) feeds the variant-calling reference
@@ -165,7 +162,7 @@ workflow medea_magic {
       call gatk_filter_task.gatk_filter as gatk_filter {
         input:
           samplename = samplename,
-          reference_genome =   select_first([resolved_reference_fasta]),
+          reference_genome = select_first([resolved_reference_fasta]),
           gvcf = gatk_variants.gatk_genotype_gvcf,
           gvcf_index = gatk_variants.gatk_genotype_gvcf_index,
           min_variant_quality = gatk_filter_min_variant_quality,
@@ -231,7 +228,7 @@ workflow medea_magic {
   # Species-agnostic GFF resolution. A user-supplied reference_gff takes precedence,
   # otherwise the organism-specific reference is used (cladetyper outputs for
   # C. auris when a clade matches, hosted references for A. fumigatus and C. neoformans).
-  Array[File] reference_gff_options = select_all([reference_gff, cauris_reference_gff, afumigatus_reference_gff, cryptoneo_reference_gff])
+  Array[File] reference_gff_options = select_all([reference_gff, cladetyper.annotated_reference_gff, afumigatus_reference_gff, cryptoneo_reference_gff])
   if (length(reference_gff_options) > 0) {
     File resolved_reference_gff = reference_gff_options[0]
   }
@@ -322,7 +319,7 @@ workflow medea_magic {
     String? clair3_model_used = clair3_variant_calling.clair3_model_used
     # gene coverage
     File? gene_coverage_stats = gene_coverage.gene_coverage_stats
-    String? gene_coverage_mean_reads_mapped = gene_coverage.mean_reads
+    String? gene_coverage_reads_mapped = gene_coverage.reads_aligned
     String? gene_coverage_mean_breadth = gene_coverage.mean_breadth
     String? gene_coverage_mean_depth = gene_coverage.mean_depth
     Map[String, Float]? gene_coverage_depth_by_gene = gene_coverage.depth_by_gene
