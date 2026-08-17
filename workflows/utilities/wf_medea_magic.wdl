@@ -81,6 +81,7 @@ workflow medea_magic {
     Int? clair3_disk_size
     # gene coverage options; user-supplied inputs take priority
     String? query_genes
+    Boolean query_exact_match = false
   }
   if (medea_tag == "Candidozyma auris" || medea_tag == "Candida auris") {
     call cauris_cladetyper.cauris_cladetyper as cladetyper {
@@ -245,7 +246,8 @@ workflow medea_magic {
           bai = select_first([bwa_variant_calling.sorted_bai, ont_bam_sorting.bai]),
           samplename = samplename,
           reference_gff = resolved_reference_gff,
-          query_genes = resolved_query_genes
+          query_genes = resolved_query_genes,
+          exact_match = query_exact_match
       }
       if (defined(resolved_query_genes) && defined(gene_coverage_vcf)) {
         call variant_annotate_task.variant_annotate {
@@ -254,6 +256,7 @@ workflow medea_magic {
             reference_fasta = select_first([resolved_reference_fasta]),
             reference_gff = select_first([resolved_reference_gff]),
             query_genes = resolved_query_genes,
+            exact_match = query_exact_match,
             vcf = select_first([gene_coverage_vcf])
         }
       }
