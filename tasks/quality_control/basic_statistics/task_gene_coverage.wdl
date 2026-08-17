@@ -53,10 +53,14 @@ task gene_coverage {
 
       try:
         mean_data = sum(data_dict.values())/len(data_dict)
+        total_data = sum(data_dict.values())
       except ZeroDivisionError:
         mean_data = ""
+        total_data = ""
 
       with open(f"MEAN_{key}", "w") as f:
+        f.write(mean_data)
+      with open(f"TOTAL_{key}", "w") as f:
         f.write(mean_data)
 
       # deprecated outputs v4.2.0
@@ -73,7 +77,7 @@ task gene_coverage {
     File gene_coverage_stats = "~{samplename}.coverage_stats.tsv"
     String mean_depth = read_string("MEAN_DEPTH")
     String mean_breadth = read_string("MEAN_COVERAGE")
-    String mean_reads = read_string("MEAN_READS")
+    String reads_aligned = read_string("TOTAL_READS")
     Map[String, Float] depth_by_gene = read_json("DEPTH_DICT.json")
     Map[String, Float] breadth_by_gene = read_json("COVERAGE_DICT.json")
     Map[String, Float] reads_by_gene = read_json("READS_DICT.json")

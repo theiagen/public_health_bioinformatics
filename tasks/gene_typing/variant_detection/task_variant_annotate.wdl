@@ -100,6 +100,9 @@ PYEOF
         --vcf "${vep_vcf}" \
         --vep_tsv ~{samplename}_variant_annotations.tsv \
         --reference_gff reference_sorted.gff.gz \
+        ~{if defined(query_genes) then "--query_genes ~{query_genes}" else ""} \
+        ~{if defined(bedfile) then "--bedfile ~{bedfile}" else ""} \
+        ~{if exact_match then "--exact_match" else ""} \
         --feature_qualifier ~{feature_qualifier} \
         | tr '\n' ',' | sed 's/,$//' > VARIANT_REPORT
     else

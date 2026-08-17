@@ -25,20 +25,13 @@ task cauris_cladetyper {
     String ref_clade6 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade6_GCA_032714025.1_ASM3271402v1_genomic.fasta"
     String? ref_clade6_gff
     }
-    # localize actual files
-    File ref_clade1_file = ref_clade1
-    File ref_clade2_file = ref_clade2
-    File ref_clade3_file = ref_clade3
-    File ref_clade4_file = ref_clade4
-    File ref_clade5_file = ref_clade5
-    File ref_clade6_file = ref_clade6
   command <<<
     set -euo pipefail
 
     gambit --version | tee VERSION
 
     # create gambit signature file for six clades + input assembly
-    gambit signatures create -o my-signatures.h5 -k ~{kmer_size} -p ATGAC ~{ref_clade1_file} ~{ref_clade2_file} ~{ref_clade3_file} ~{ref_clade4_file} ~{ref_clade5_file} ~{ref_clade6_file} ~{assembly_fasta}
+    gambit signatures create -o my-signatures.h5 -k ~{kmer_size} -p ATGAC ~{ref_clade1} ~{ref_clade2} ~{ref_clade3} ~{ref_clade4} ~{ref_clade5} ~{ref_clade6} ~{assembly_fasta}
     # calculate distance matrix for all seven signatures
     gambit dist --qs my-signatures.h5 --square -o ~{samplename}_matrix.csv
 
@@ -51,12 +44,12 @@ task cauris_cladetyper {
     sort -k8 -t ',' "~{samplename}_matrix.csv" | head -2 | tail -n-1 | awk -F',' '{print$8}' > MIN_DISTANCE
 
     # create empty files for clade reference and clade type
-    echo "None" > CLADEGFF
     echo "" > CLADETYPE
 
     python3 <<CODE
     import os
     import sys
+    import shutil
     # strip extensions in accord with gambit's approach and acquire the best matching reference
     def strip_extensions(filename, extensions):
         for ext in extensions:
@@ -100,19 +93,19 @@ task cauris_cladetyper {
             break
 
     # report top clade
-    with open("CLADEGFF", 'w') as cladegff_file:
-        cladegff_file.write(cladegff)
+    if cladegff:
+        shutil.copy(cladegff, "CAURIS_REFERENCE.gff") 
+    if cladefa:
+        shutil.copy(cladefa, "CAURIS_REFERENCE.fasta")
     with open("CLADETYPE", 'w') as cladetype_file:
         cladetype_file.write(cladetype)
-    with open("CLADEFASTA", 'w') as cladefasta_file:
-        cladefasta_file.write(cladefa)
     CODE
   >>>
   output {
     String gambit_version = read_string("VERSION")
     String gambit_cladetype = read_string("CLADETYPE")
-    File? annotated_reference_gff = read_string("CLADEGFF")
-    File? assembly_reference = read_string("CLADEFASTA")
+    File? annotated_reference_gff = "CAURIS_REFERENCE.gff"
+    File? assembly_reference = "CAURIS_REFERENCE.fasta"
     String gambit_cladetyper_docker_image = docker
   }
   runtime {
