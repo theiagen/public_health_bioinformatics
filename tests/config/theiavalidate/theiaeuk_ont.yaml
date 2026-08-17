@@ -57,11 +57,11 @@ columns:
     method: percent_diff
     threshold: 0.01
     type: float
-  theiaeuk_snippy_variants_num_reads_aligned:
+  gene_coverage_reads_mapped:
     method: percent_diff
     threshold: 0.05
     type: float
-  theiaeuk_snippy_variants_percent_ref_coverage:
+  gene_coverage_mean_percent_coverage:
     method: percent_diff
     threshold: 0.05
     type: float
