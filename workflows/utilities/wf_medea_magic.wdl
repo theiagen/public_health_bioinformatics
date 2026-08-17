@@ -105,8 +105,8 @@ workflow medea_magic {
     }
     # organism-specific gene coverage targets used when query_genes is not user-supplied
     String cauris_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,B9J08_005340,B9J08_000401,B9J08_003102,B9J08_003737,B9J08_005343"
-    if (cladetyper.annotated_reference_gff != "None") {
-      File cauris_reference_gff = cladetyper.annotated_reference_gff
+    if (select_first([cladetyper.annotated_reference_gff, "None"]) != "None") {
+      File cauris_reference_gff = select_first([cladetyper.annotated_reference_gff])
     }
   }
   if (medea_tag == "Aspergillus fumigatus") {
