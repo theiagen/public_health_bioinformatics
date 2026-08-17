@@ -105,20 +105,23 @@ workflow medea_magic {
     }
     # organism-specific gene coverage targets used when query_genes is not user-supplied
     String cauris_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,B9J08_005340,B9J08_000401,B9J08_003102,B9J08_003737,B9J08_005343"
+    if (cladetyper.annotated_reference_gff != "None") {
+      File cauris_reference_gff = cladetyper.annotated_reference_gff
+    }
   }
   if (medea_tag == "Aspergillus fumigatus") {
     # hosted fasta (user-supplied fasta takes precedence downstream) feeds the variant-calling reference
     File afumigatus_variant_fasta = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.fasta"
     # hosted GFF (user-supplied reference_gff takes precedence downstream) feeds gene coverage annotation
-    File afumigatus_variant_gff = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gff"
+    File afumigatus_reference_gff = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gff"
     # organism-specific gene coverage targets used when query_genes is not user-supplied
     String afumigatus_query_genes = "Cyp51A,HapE,AFUA_4G08340"
   }
   if (medea_tag == "Cryptococcus neoformans") {
     # hosted fasta (user-supplied fasta takes precedence downstream) feeds the variant-calling reference
-    File cryptoneo_variant_fasta = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.fasta"
+    File cryptoneo_reference_fasta = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.fasta"
     # hosted GFF (user-supplied reference_gff takes precedence downstream) feeds gene coverage annotation
-    File cryptoneo_variant_gff = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gff"
+    File cryptoneo_reference_gff = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gff"
     # organism-specific gene coverage targets used when query_genes is not user-supplied
     String cryptoneo_query_genes = "CNA00300"
   }
@@ -126,20 +129,19 @@ workflow medea_magic {
   # a user-supplied fasta takes precedence, otherwise the organism-specific reference is used
   # (cladetyper fasta for C. auris, hosted fasta for A. fumigatus and C. neoformans).
   # resolve the reference once; visible below (and in outputs) as File?
-  if (defined(reference_genome_fasta) || defined(cladetyper.assembly_reference) || defined(afumigatus_variant_fasta) || defined(cryptoneo_variant_fasta)) {
-    File resolved_reference_fasta = select_first([reference_genome_fasta, cladetyper.assembly_reference, afumigatus_variant_fasta, cryptoneo_variant_fasta])
+  if (defined(reference_genome_fasta) || defined(cladetyper.assembly_reference) || defined(afumigatus_variant_fasta) || defined(cryptoneo_reference_fasta)) {
+    File resolved_reference_fasta = select_first([reference_genome_fasta, cladetyper.assembly_reference, afumigatus_variant_fasta, cryptoneo_reference_fasta])
   }
   # variant calling runs automatically whenever a reference fasta and read1 are available
   if (defined(resolved_reference_fasta) && defined(read1)) {
     # Illumina short-read track: BWA alignment + GATK variant calling
-    File variant_calling_reference_fasta = select_first([resolved_reference_fasta])
     if (!ont_data) {
       call bwa_task.bwa as bwa_variant_calling {
         input:
           read1 = select_first([read1]),
           read2 = read2,
           samplename = samplename,
-          reference_genome = variant_calling_reference_fasta,
+          reference_genome = select_first([resolved_reference_fasta]),
           cpu = read_aligner_cpu,
           memory = read_aligner_memory,
           disk_size = read_aligner_disk_size,
@@ -150,7 +152,7 @@ workflow medea_magic {
           samplename = samplename,
           bam = bwa_variant_calling.sorted_bam,
           bai = bwa_variant_calling.sorted_bai,
-          reference_genome = variant_calling_reference_fasta,
+          reference_genome = select_first([resolved_reference_fasta]),
           ploidy = gatk_ploidy,
           intervals_file = gatk_intervals_file,
           docker = gatk_docker,
@@ -161,7 +163,7 @@ workflow medea_magic {
       call gatk_filter_task.gatk_filter as gatk_filter {
         input:
           samplename = samplename,
-          reference_genome = variant_calling_reference_fasta,
+          reference_genome =   select_first([resolved_reference_fasta]),
           gvcf = gatk_variants.gatk_genotype_gvcf,
           gvcf_index = gatk_variants.gatk_genotype_gvcf_index,
           min_variant_quality = gatk_filter_min_variant_quality,
@@ -180,7 +182,7 @@ workflow medea_magic {
       call minimap2_task.minimap2 as minimap2_variant_calling {
         input:
           query1 = select_first([read1]),
-          reference = variant_calling_reference_fasta,
+          reference = select_first([resolved_reference_fasta]),
           samplename = samplename,
           mode = "map-ont",
           output_sam = true,
@@ -201,7 +203,7 @@ workflow medea_magic {
         input:
           alignment_bam_file = ont_bam_sorting.bam,
           alignment_bam_file_index = ont_bam_sorting.bai,
-          reference_genome_file = variant_calling_reference_fasta,
+          reference_genome_file = select_first([resolved_reference_fasta]),
           sequencing_platform = "ont",
           samplename = samplename,
           clair3_model = clair3_model,
@@ -227,7 +229,7 @@ workflow medea_magic {
   # Species-agnostic GFF resolution. A user-supplied reference_gff takes precedence,
   # otherwise the organism-specific reference is used (cladetyper outputs for
   # C. auris when a clade matches, hosted references for A. fumigatus and C. neoformans).
-  Array[File] reference_gff_options = select_all([reference_gff, cladetyper.annotated_reference_gff, afumigatus_variant_gff, cryptoneo_variant_gff])
+  Array[File] reference_gff_options = select_all([reference_gff, cauris_reference_gff, afumigatus_reference_gff, cryptoneo_reference_gff])
   if (length(reference_gff_options) > 0) {
     File resolved_reference_gff = reference_gff_options[0]
   }
