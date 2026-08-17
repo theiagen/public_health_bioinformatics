@@ -81,6 +81,7 @@ workflow medea_magic {
     Int? clair3_disk_size
     # gene coverage options; user-supplied inputs take priority
     String? query_genes
+    File? query_genes_bed
     Boolean query_exact_match = false
   }
   if (medea_tag == "Candidozyma auris" || medea_tag == "Candida auris") {
@@ -238,7 +239,7 @@ workflow medea_magic {
   if (defined(gatk_filter.gatk_filtered_vcf) || defined(clair3_variant_calling.clair3_variants_vcf)) {
     File gene_coverage_vcf = select_first([gatk_filter.gatk_filtered_vcf, clair3_variant_calling.clair3_variants_vcf])
   }
-  if (defined(resolved_reference_gff)) {
+  if (defined(resolved_reference_gff) || defined(query_genes_bed)) {
     if (defined(bwa_variant_calling.sorted_bam) || defined(ont_bam_sorting.bam)) {
       call gene_coverage_task.gene_coverage {
         input:
@@ -246,10 +247,11 @@ workflow medea_magic {
           bai = select_first([bwa_variant_calling.sorted_bai, ont_bam_sorting.bai]),
           samplename = samplename,
           reference_gff = resolved_reference_gff,
+          bedfile = query_genes_bed,
           query_genes = resolved_query_genes,
           exact_match = query_exact_match
       }
-      if (defined(resolved_query_genes) && defined(gene_coverage_vcf)) {
+      if (defined(resolved_query_genes) && defined(gene_coverage_vcf) && defined(resolved_reference_gff)) {
         call variant_annotate_task.variant_annotate {
           input:
             samplename = samplename,
@@ -319,8 +321,12 @@ workflow medea_magic {
     String? clair3_model_used = clair3_variant_calling.clair3_model_used
     # gene coverage
     File? gene_coverage_stats = gene_coverage.gene_coverage_stats
+    String? gene_coverage_mean_reads_mapped = gene_coverage.mean_reads
+    String? gene_coverage_mean_breadth = gene_coverage.mean_breadth
+    String? gene_coverage_mean_depth = gene_coverage.mean_depth
     Map[String, Float]? gene_coverage_depth_by_gene = gene_coverage.depth_by_gene
     Map[String, Float]? gene_coverage_breadth_by_gene = gene_coverage.breadth_by_gene
+    Map[String, Float]? gene_coverage_reads_by_gene = gene_coverage.reads_by_gene
     File? variant_annotation_warnings = variant_annotate.variant_annotation_warnings
     File? variant_annotation_summary = variant_annotate.variant_annotation_html
     File? variant_annotation_gene_vcf = variant_annotate.variant_annotation_gene_vcf

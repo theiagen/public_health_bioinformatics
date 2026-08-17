@@ -226,9 +226,15 @@ workflow theiaeuk_ont {
     String? theiaeuk_clair3_model_used = medea_magic.clair3_model_used
     # Gene Coverage Outputs
     File? gene_coverage_stats = medea_magic.gene_coverage_stats
+    String? gene_coverage_mean_reads_mapped = medea_magic.gene_coverage_mean_reads_mapped
+    String? gene_coverage_mean_breadth = medea_magic.gene_coverage_mean_breadth
+    String? gene_coverage_mean_depth = medea_magic.gene_coverage_mean_depth
     Map[String, Float]? gene_coverage_depth_by_gene = medea_magic.gene_coverage_depth_by_gene
     Map[String, Float]? gene_coverage_breadth_by_gene = medea_magic.gene_coverage_breadth_by_gene
+    Map[String, Float]? gene_coverage_reads_by_gene = medea_magic.gene_coverage_reads_by_gene
     File? variant_annotation_gene_vcf = medea_magic.variant_annotation_gene_vcf
+    File? variant_annotation_warnings = medea_magic.variant_annotation_warnings
+    File? variant_annotation_summary = medea_magic.variant_annotation_summary
     String? variant_annotations = medea_magic.variant_annotations
   }
 }
