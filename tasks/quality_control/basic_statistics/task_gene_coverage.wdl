@@ -45,13 +45,21 @@ task gene_coverage {
     # rename files
     mv COVERAGE_STATS.tsv ~{samplename}.coverage_stats.tsv
 
-    # deprecated outputs v4.2.0
     python3 <<CODE
     import json
-    for key in ["COVERAGE", "DEPTH"]:
+    for key in ["COVERAGE", "DEPTH", "READS"]:
       with open(f"{key}_DICT.json", "r") as f:
         data_dict = {k.upper(): v for k, v in json.load(f).items()}
 
+      try:
+        mean_data = sum(data_dict.values())/len(data_dict)
+      except ZeroDivisionError:
+        mean_data = ""
+
+      with open(f"MEAN_{key}", "w") as f:
+        f.write(mean_data)
+
+      # deprecated outputs v4.2.0
       if "S" in data_dict and "~{organism}".lower() == "sars-cov-2":
         sc2_s_gene_data = data_dict["S"]
       else:
@@ -63,8 +71,12 @@ task gene_coverage {
   >>>
   output {
     File gene_coverage_stats = "~{samplename}.coverage_stats.tsv"
+    String mean_depth = read_string("MEAN_DEPTH")
+    String mean_breadth = read_string("MEAN_COVERAGE")
+    String mean_reads = read_string("MEAN_READS")
     Map[String, Float] depth_by_gene = read_json("DEPTH_DICT.json")
     Map[String, Float] breadth_by_gene = read_json("COVERAGE_DICT.json")
+    Map[String, Float] reads_by_gene = read_json("READS_DICT.json")
     # deprecated v4.2.0
     Float sc2_s_gene_depth = read_string("SC2_S_GENE_DEPTH")
     Float sc2_s_gene_coverage = read_string("SC2_S_GENE_COVERAGE")
