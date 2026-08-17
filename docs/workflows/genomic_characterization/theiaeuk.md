@@ -99,7 +99,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
     The TheiaEuk workflow automatically activates taxa-specific tasks after identification of the relevant taxa using `GAMBIT`. Default taxa (*Candidozyma auris*, *Cryptococcus neoformans*, or *Aspergillus fumigatus*) do not require user input to run characterization modules, and non-default taxa can be incorporated by populating specific inputs.
 
 ??? toggle "Reference-based variant calling"
-    After taxonomic identification, TheiaEuk performs reference-based variant calling whenever a `reference_genome_fasta` is inputted or a default organism is selected (user input takes precedence). The resulting variants are summarized with respect to target genes by the `gene_coverage` task if `reference_genome_gff` and `query_genes` are populated with a comma-delimited list of query genes corresponding to the inputted reference GFF.
+    After taxonomic identification, TheiaEuk performs reference-based variant calling whenever a `reference_genome_fasta` is inputted or a default organism is selected (user input takes precedence). The resulting variants are summarized with respect to target genes by the `gene_coverage` task if a `reference_genome_gff` and `query_genes`/`query_genes_bed` are populated. `query_genes` is a comma-delimited list of query genes corresponding to the inputted reference GFF whereas `query_genes_bed` is a BED file with gene coordinates that relate to the `reference_genome_fasta`. Both are used if both are supplied.
 
     Two data-type-specific tracks are supported:
 
@@ -125,7 +125,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
         !!! warning "Keep the FASTA and GFF matched"
             The GFF should describe the same assembly as the reference FASTA, so that extracted gene coordinates align to the variant-calling reference. If you provide a custom `reference_genome_fasta`, provide the matching `reference_genome_gff` as well (and vice versa); otherwise the gene coordinates may not correspond to the aligned reference.
 
-    ??? dna "`query_genes` input parameter"
+    ??? dna "`query_genes`/`query_genes_bed` input parameter"
        `query_genes` is a comma-delimited list of query genes to extract from the `reference_genome_gff` supplied by default/the user. These `query_genes`   _must_ correspond to the associated "product" field of CDS entries within the `reference_genome_gff`. By default, "FKS1" will match "1,3-beta-D-glucan synthase_complex_FKS1", though exact product matching can be enforced by setting `query_exact_match` to "true".
 
        The following query genes are used by default:
@@ -148,6 +148,8 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 {{ include_md("common_text/clair3_task.md", indent=8) }}
 
 {{ include_md("common_text/gene_coverage_task.md", indent=4, condition="theiaeuk") }}
+
+{{ include_md("common_text/variant_annotate_task.md", indent=4) }}
 
 ??? toggle "_Candidozyma auris_ (also known as _Candida auris_)"
     Two additional tools are deployed when _Candidozyma auris_/_Candida auris_ is identified: clade typing (which also selects the variant-calling reference and annotation) and AMR detection.
