@@ -259,7 +259,8 @@ workflow medea_magic {
             reference_gff = select_first([resolved_reference_gff]),
             query_genes = resolved_query_genes,
             exact_match = query_exact_match,
-            vcf = select_first([gene_coverage_vcf])
+            vcf = select_first([gene_coverage_vcf]),
+            bedfile = query_genes_bed
         }
       }
     }
