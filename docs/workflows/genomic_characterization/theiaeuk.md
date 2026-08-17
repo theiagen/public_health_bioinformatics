@@ -99,7 +99,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
     The TheiaEuk workflow automatically activates taxa-specific tasks after identification of the relevant taxa using `GAMBIT`. Default taxa (*Candidozyma auris*, *Cryptococcus neoformans*, or *Aspergillus fumigatus*) do not require user input to run characterization modules, and non-default taxa can be incorporated by populating specific inputs.
 
 ??? toggle "Reference-based variant calling"
-    After taxonomic identification, TheiaEuk performs reference-based variant calling whenever a `reference_genome_fasta` is inputted or a default organism is selected (user input takes precedence). The resulting variants are summarized with respect to target genes by the `gene_coverage` task if: 1. `gene_coordinates_bed` is populated with a BED file depicting gene coordinates relative to the `reference_genome_fasta`, or 2. `reference_genome_gbff` and `query_genes` are populated with a comma-delimited list of query genes corresponding to the inputted reference GBFF.
+    After taxonomic identification, TheiaEuk performs reference-based variant calling whenever a `reference_genome_fasta` is inputted or a default organism is selected (user input takes precedence). The resulting variants are summarized with respect to target genes by the `gene_coverage` task if `reference_genome_gff` and `query_genes` are populated with a comma-delimited list of query genes corresponding to the inputted reference GFF.
 
     Two data-type-specific tracks are supported:
 
@@ -115,15 +115,28 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 
         For any other identified organism (e.g. _Candida albicans_), variant calling only runs if `reference_genome_fasta` is supplied by the user.
 
-    ??? dna "`reference_genome_gbff` input parameter"
-        The annotated reference (GenBank flat file, GBFF) used by the `gene_coverage` task to translate the `query_genes` list into genomic coordinates. A user-supplied `reference_genome_gbff` always takes precedence over the defaults below. When it is not provided, an organism-specific default is selected automatically:
+    ??? dna "`reference_genome_gff` input parameter"
+        The annotated reference (General Features Format, GFF) used by the `gene_coverage` task to translate the `query_genes` list into genomic coordinates. A user-supplied `reference_genome_gff` always takes precedence over the defaults below. When it is not provided, an organism-specific default is selected automatically:
 
         - _Candidozyma auris_ / _Candida auris_: the `cladetyper` clade annotation, used only when the assembly matches a clade that has an available annotation (e.g. Clade VI currently has no annotation).
         - _Aspergillus fumigatus_: a hosted reference (`GCF_000002655.1`, ASM265v1).
         _Cryptococcus neoformans_: a hosted reference (`GCF_000091045.1`, ASM9104v1).
 
-        !!! warning "Keep the FASTA and GBFF matched"
-            The GBFF should describe the same assembly as the reference FASTA, so that extracted gene coordinates align to the variant-calling reference. If you provide a custom `reference_genome_fasta`, provide the matching `reference_genome_gbff` as well (and vice versa); otherwise the gene coordinates may not correspond to the aligned reference.
+        !!! warning "Keep the FASTA and GFF matched"
+            The GFF should describe the same assembly as the reference FASTA, so that extracted gene coordinates align to the variant-calling reference. If you provide a custom `reference_genome_fasta`, provide the matching `reference_genome_gff` as well (and vice versa); otherwise the gene coordinates may not correspond to the aligned reference.
+
+    ??? dna "`query_genes` input parameter"
+       `query_genes` is a comma-delimited list of query genes to extract from the `reference_genome_gff` supplied by default/the user. These `query_genes`   _must_ correspond to the associated "product" field of CDS entries within the `reference_genome_gff`. By default, "FKS1" will match "1,3-beta-D-glucan synthase_complex_FKS1", though exact product matching can be enforced by setting `query_exact_match` to "true".
+
+       The following query genes are used by default:
+
+        - _Aspergillus fumigatus_: `Cyp51A`, `HapE`, `AFUA_4G08340` (COX10 in the default reference)
+        - _Candidozyma auris_: `FKS1`, `lanosterol.14-alpha.demethylase`, `uracil.phosphoribosyltransferase`, `B9J08_005340`, `B9J08_000401`, `B9J08_003102`, `B9J08_003737`, `B9J08_005343`
+        - _Cryptococcus neoformans_: `CNA00300` (ERG11 in the default reference)
+
+       !!! warning "`query_exact_match` input parameter"
+       `query_exact_match` is set to "false" by default, which enables gene shorthand names to be used when they correspond to entries within the `reference_genome_gff`. However, this can lead to substring matching, where "ERG11" can match entries with the name "ERG112". To prevent this, completely enter the exact product name of desired genes by referencing the GFF.
+
 
     === "TheiaEuk_Illumina_PE"
 {{ include_md("common_text/bwa_task.md", indent=8, condition="theiaeuk") }}
