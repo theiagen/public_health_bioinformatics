@@ -7,10 +7,13 @@ task gatk_filter {
     File gvcf
     File gvcf_index
 
-    Int? min_variant_quality
-    Int? min_depth
-    Float? min_map_quality
-    Int? min_quality_by_depth
+    # defaults informed by here: https://gatk.broadinstitute.org/hc/en-us/articles/360035890471-Hard-filtering-germline-short-variants
+    Float min_variant_quality = 30
+    Int min_depth = 10
+    Float min_map_quality = 40
+    Float min_quality_by_depth = 2.0
+    Float max_fisher_strand_bias = 60
+    Float max_strand_odd_ratio = 3
     String? filter_expression
 
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/gatk:4.6.2.0-dev"
@@ -47,6 +50,8 @@ task gatk_filter {
     ~{if defined(min_depth) then "filters.append(('depth_filter', 'DP<~{min_depth}'))" else ""}
     ~{if defined(min_map_quality) then "filters.append(('mapping_quality_filter', 'MQ<~{min_map_quality}'))" else ""}
     ~{if defined(min_quality_by_depth) then "filters.append(('quality_by_depth_filter', 'QD<~{min_quality_by_depth}'))" else ""}
+    ~{if defined(max_fisher_strand_bias) then "filters.append(('fisher_strand_bias_filter', 'FS>~{max_fisher_strand_bias}'))" else ""}
+    ~{if defined(max_strand_odds_ratio) then "filters.append(('strand_odds_ratio_filter', 'SOR>~{max_strand_odds_ratio}'))" else ""}
 
     # build the flat argument list; an empty list yields an empty file so no
     # filters are applied
@@ -66,12 +71,13 @@ task gatk_filter {
     CODE
 
     # call VariantFiltration with optional filter expression(s)
+    mapfile -t FILTER_ARGS < FILTER_EXPRESSION.txt
     gatk --java-options "-Xmx~{memory}G" VariantFiltration \
       -R ${local_ref} \
       -V ~{gvcf} \
       -O ~{samplename}_filtered.g.vcf.gz \
       ~{if defined(filter_expression) then '--filter-name "user_filter" --filter-expression "~{filter_expression}"' else ""} \
-      $(cat FILTER_EXPRESSION.txt)
+      ${FILTER_ARGS[@]}
 
     # call SelectVariants and drop those without PASS flags
     gatk --java-options "-Xmx~{memory}G" SelectVariants \
@@ -82,7 +88,9 @@ task gatk_filter {
   output {
     String gatk_version = read_string("VERSION")
     File gatk_filtered_vcf = "~{samplename}_filtered.g.vcf.gz"
+    File gatk_filtered_vcf_index = "~{samplename}_filtered.g.vcf.gz.tbi"
     File gatk_selected_vcf = "~{samplename}_selected.g.vcf.gz"
+    File gatk_selected_vcf_index = "~{samplename}_selected.g.vcf.gz.tbi"
   }
   runtime {
       docker: "~{docker}"

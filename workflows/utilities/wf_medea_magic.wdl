@@ -61,10 +61,12 @@ workflow medea_magic {
     # gatk-specific variant-calling options (illumina)
     Int? gatk_ploidy
     # gatk-specific filtering options (illumina)
-    Int? gatk_filter_min_variant_quality
+    Float? gatk_filter_min_variant_quality
     Int? gatk_filter_min_depth
     Float? gatk_filter_min_map_quality
-    Int? gatk_filter_min_quality_by_depth
+    Float? gatk_filter_min_quality_by_depth
+    Float? gatk_filter_max_fisher_strand_bias
+    Float? gatk_filter_max_strand_odd_ratio
     String? gatk_filter_expression
     # clair3 variant-calling & filtering options (ont)
     String? clair3_model
@@ -169,6 +171,8 @@ workflow medea_magic {
           min_depth = gatk_filter_min_depth,
           min_map_quality = gatk_filter_min_map_quality,
           min_quality_by_depth = gatk_filter_min_quality_by_depth,
+          max_fisher_strand_bias = gatk_filter_max_fisher_strand_bias,
+          max_strand_odd_ratio = gatk_filter_max_strand_odd_ratio,
           filter_expression = gatk_filter_expression,
           docker = gatk_docker,
           cpu = gatk_cpu,
@@ -239,7 +243,7 @@ workflow medea_magic {
   }
   # tracks are mutually exclusive (ont_data), so select_first yields the one track that ran
   if (defined(gatk_filter.gatk_filtered_vcf) || defined(clair3_variant_calling.clair3_variants_vcf)) {
-    File gene_coverage_vcf = select_first([gatk_filter.gatk_filtered_vcf, clair3_variant_calling.clair3_variants_vcf])
+    File variant_annotation_vcf = select_first([gatk_filter.gatk_selected_vcf, clair3_variant_calling.clair3_variants_vcf])
   }
   if (defined(resolved_reference_gff) || defined(query_genes_bed)) {
     if (defined(bwa_variant_calling.sorted_bam) || defined(ont_bam_sorting.bam)) {
@@ -253,7 +257,7 @@ workflow medea_magic {
           query_genes = resolved_query_genes,
           exact_match = query_exact_match
       }
-      if (defined(resolved_query_genes) && defined(gene_coverage_vcf) && defined(resolved_reference_gff)) {
+      if (defined(resolved_query_genes) && defined(variant_annotation_vcf) && defined(resolved_reference_gff)) {
         call variant_annotate_task.variant_annotate {
           input:
             samplename = samplename,
@@ -261,7 +265,7 @@ workflow medea_magic {
             reference_gff = select_first([resolved_reference_gff]),
             query_genes = resolved_query_genes,
             exact_match = query_exact_match,
-            vcf = select_first([gene_coverage_vcf]),
+            vcf = select_first([variant_annotation_vcf]),
             bedfile = query_genes_bed
         }
       }
@@ -313,7 +317,9 @@ workflow medea_magic {
     File? gatk_genotype_gvcf = gatk_variants.gatk_genotype_gvcf
     File? gatk_genotype_gvcf_index = gatk_variants.gatk_genotype_gvcf_index
     File? gatk_filtered_vcf = gatk_filter.gatk_filtered_vcf
+    File? gatk_filtered_vcf_index = gatk_filter.gatk_filtered_vcf_index
     File? gatk_selected_vcf = gatk_filter.gatk_selected_vcf
+    File? gatk_selected_vcf_index = gatk_filter.gatk_selected_vcf_index
     # variant calling - ont (minimap2 alignment + clair3)
     String? minimap2_version = minimap2_variant_calling.minimap2_version
     File? ont_variant_calling_bam = ont_bam_sorting.bam
