@@ -8,7 +8,6 @@ import "../../tasks/gene_typing/variant_detection/task_gatk_filter.wdl" as gatk_
 import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/gene_typing/variant_detection/task_clair3_variants.wdl" as clair3_task
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
-import "../../tasks/utilities/data_handling/task_fasta_utilities.wdl" as fasta_utilities_task
 import "../../tasks/quality_control/basic_statistics/task_gene_coverage.wdl" as gene_coverage_task
 import "../../tasks/gene_typing/variant_detection/task_variant_annotate.wdl" as variant_annotate_task
 
@@ -19,7 +18,7 @@ workflow medea_magic {
   input {
     String samplename
     String medea_tag
-    File assembly
+    File? assembly
     File? read1
     File? read2
     Boolean ont_data = false
@@ -236,7 +235,7 @@ workflow medea_magic {
   # C. auris when a clade matches, hosted references for A. fumigatus and C. neoformans).
   Array[File] reference_gff_options = select_all([reference_gff, cladetyper.annotated_reference_gff, afumigatus_reference_gff, cryptoneo_reference_gff])
   if (length(reference_gff_options) > 0) {
-    # user cannot supply one of the reference files and not the otehr for downstream to be functional
+    # user cannot supply one of the reference files and not the other for downstream to be functional
     if ((defined(reference_gff) && defined(reference_genome_fasta)) || (! defined(reference_gff) && ! defined(reference_genome_fasta))) {
       File resolved_reference_gff = reference_gff_options[0]
     }
