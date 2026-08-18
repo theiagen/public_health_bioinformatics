@@ -7,14 +7,11 @@ fragment: true
 
     Variant calling consists of two GATK steps:
 
-    - `HaplotypeCaller` performs local de-novo assembly of haplotypes in active (variable) regions to identify single-nucleotide polymorphisms (SNPs) and indels, emitting an intermediate per-sample GVCF.
-    - `GenotypeGVCFs` converts genoetype likelihoods produced by the previous step into the final genotyped GVCF used for filtering.
+    - `HaplotypeCaller` performs local _de novo_ assembly of haplotypes in active (variable) regions to identify single-nucleotide polymorphisms (SNPs) and indels, emitting an intermediate per-sample GVCF.
+    - `GenotypeGVCFs` converts genotype likelihoods produced by the previous step into the final genotyped GVCF used for filtering.
 
     ??? dna "`gatk_ploidy` input parameter"
         Sample ploidy (N) passed to `HaplotypeCaller`. The default is `1` (haploid), which is appropriate for most default TheiaEuk use-cases. However, results can suffer if it is incorrectly called. Rerunning may be appropriate if a diploid or polyploid genome is assembled via TheiaEuk.
-
-    ??? dna "`gatk_intervals_file` input parameter"
-        Optional intervals file (e.g. a BED or Picard-style interval list) restricting both `HaplotypeCaller` and `GenotypeGVCFs` to specific genomic regions. When omitted, the whole genome is analyzed.
 
     !!! warning "Multiple read groups are treated as one"
         If a FASTQ file of reads includes multiple sequencing sources, these reads will be uniformly assigned to one group and treated similarly during variant calling.

@@ -3,12 +3,12 @@ title: Task Fragment `variant_annotate`
 fragment: true
 ---
 ??? task "`variant_annotate`: Variant Effect Annotation"
-    This task annotates the variants called against the reference genome with the Ensembl Variant Effect Predictor (VEP), reporting the predicted consequence of each variant (e.g. `missense_variant`, `frameshift_variant`) alongside its HGVS coding (`c.`) and protein (`p.`) notation.
+    This task annotates variants in regions-of-interest using Ensembl Variant Effect Predictor (VEP) by reporting the predicted consequence of each variant (e.g. `missense_variant`, `frameshift_variant`) alongside its HGVS coding (`c.`) and protein (`p.`) notation.
 
     The task proceeds in three steps:
 
     1. **Variant extraction** - when `query_genes` and/or `query_genes_bed` are supplied, the variants overlapping the CDS coordinates of those genes are extracted into a sub-VCF, and each retained record is tagged with the overlapping gene name(s) in a `GENE` INFO field. Without either input, the full VCF is annotated.
-    2. **Annotation** - the reference GFF is sorted, compressed, and indexed, and VEP annotates the VCF against the reference FASTA and GFF.
+    2. **Annotation** - VEP annotates the VCF against the reference FASTA and GFF by translating genes' CDS coordinates coordinates.
     3. **Reporting** - the VEP output is condensed into a comma-delimited list of human-readable annotations, where each transcript/protein identifier is replaced by the queried gene name, followed by the gene product name taken from the reference GFF.
 
     Each entry of the `variant_annotations` output takes the form:
@@ -23,7 +23,7 @@ fragment: true
     ERG11: "lanosterol 14-alpha demethylase" (missense_variant c.428A>G p.Lys143Arg; T:0 C:562)
     ```
 
-    `<query>` is the `query_genes`/`query_genes_bed` term that selected the gene, so an entry is labelled by the name that was asked for rather than by the full product it resolved to. When no query was supplied (the whole VCF is annotated) or no query matches the annotated feature, the product name is normalized into the label instead (`lanosterol.14-alpha.demethylase`). The product is quoted because product names frequently contain commas, which would otherwise be indistinguishable from the delimiter separating entries.
+    `<query>` is the `query_genes`/`query_genes_bed` term that selected the gene. When no query was supplied (the whole VCF is annotated) or no query matches the annotated feature, the product name is normalized into the label instead (`lanosterol.14-alpha.demethylase`). The product is quoted because product names frequently contain commas, which would otherwise be indistinguishable from the delimiter separating entries.
 
     Variants that resolve to neither a coding nor a protein change, and variants whose feature cannot be traced back to a gene product in the reference GFF, are omitted from `variant_annotations`. The full VEP run is preserved in `variant_annotation_summary` (VEP's HTML summary), while the extracted variants themselves are retained in `variant_annotation_gene_vcf`.
 
@@ -33,9 +33,6 @@ fragment: true
         - `query_genes` extracts gene coordinates from the reference GFF by matching the `product` qualifier of CDS entries. Matching is substring-based and case-insensitive unless `query_exact_match` is set to `true`
         - `query_genes_bed` supplies coordinates directly; gene names are taken from the fourth column of the BED file
         - If neither is supplied, the entire VCF is annotated
-
-    !!! warning "The reference FASTA and GFF must be matched"
-        VEP derives the coding and protein consequences from the GFF annotation overlaid on the reference FASTA. If the GFF does not describe the same assembly used for read alignment and variant calling, the reported consequences will be incorrect. When supplying a custom reference, supply the matching annotation as well.
 
     !!! techdetails "Variant Annotation Technical Details"
         |  | Links |
