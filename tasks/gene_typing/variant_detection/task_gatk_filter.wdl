@@ -73,7 +73,7 @@ task gatk_filter {
       ~{if defined(filter_expression) then '--filter-name "user_filter" --filter-expression "~{filter_expression}"' else ""} \
       $(cat FILTER_EXPRESSION.txt)
 
-    # call SelectVariants
+    # call SelectVariants and drop those without PASS flags
     gatk --java-options "-Xmx~{memory}G" SelectVariants \
       -V ~{samplename}_filtered.g.vcf.gz \
       -O ~{samplename}_selected.g.vcf.gz \
