@@ -58,12 +58,12 @@ columns:
     threshold: 0.01
     type: float
   gene_coverage_reads_mapped:
-    mappings: ["theiaeuk_snippy_variants_num_reads_aligned"]
+    mappings: ["theiaeuk_snippy_variants_num_reads_aligned"] # <= 4.3.0 compatibility
     method: percent_diff
     threshold: 0.05
     type: float
   gene_coverage_mean_percent_coverage:
-    mappings: ["theiaeuk_snippy_variants_percent_ref_coverage"]
+    mappings: ["theiaeuk_snippy_variants_percent_ref_coverage"] # <= 4.3.0 compatibility
     method: percent_diff
     threshold: 0.05
     type: float
