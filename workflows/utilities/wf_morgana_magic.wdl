@@ -76,7 +76,7 @@ workflow morgana_magic {
     File? reference_gene_locations_bed
     File? gene_coverage_bam
     Int? gene_coverage_min_depth
-    Int? gene_coverage_min_quality
+    Int? gene_coverage_min_base_quality
     Int? gene_coverage_cpu
     Int? gene_coverage_disk_size
     Int? gene_coverage_memory
@@ -179,7 +179,7 @@ workflow morgana_magic {
           samplename = samplename,
           organism = organism_parameters.standardized_organism,
           min_depth = gene_coverage_min_depth,
-          min_quality = gene_coverage_min_quality,
+          min_base_quality = gene_coverage_min_base_quality,
           ambiguous_contig = true, # this allows BED files to work for coordinates w/o direct tie to the reference
           cpu = gene_coverage_cpu,
           disk_size = gene_coverage_disk_size,
