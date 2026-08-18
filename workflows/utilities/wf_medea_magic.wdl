@@ -230,7 +230,10 @@ workflow medea_magic {
   # C. auris when a clade matches, hosted references for A. fumigatus and C. neoformans).
   Array[File] reference_gff_options = select_all([reference_gff, cladetyper.annotated_reference_gff, afumigatus_reference_gff, cryptoneo_reference_gff])
   if (length(reference_gff_options) > 0) {
-    File resolved_reference_gff = reference_gff_options[0]
+    # user cannot supply one of the reference files and not the otehr for downstream to be functional
+    if ((defined(reference_gff) && defined(reference_genome_fasta)) || (! defined(reference_gff) && ! defined(reference_genome_fasta))) {
+      File resolved_reference_gff = reference_gff_options[0]
+    }
   }
   # tracks are mutually exclusive (ont_data), so select_first yields the one track that ran
   if (defined(gatk_filter.gatk_filtered_vcf) || defined(clair3_variant_calling.clair3_variants_vcf)) {

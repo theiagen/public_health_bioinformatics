@@ -59,9 +59,9 @@ task gene_coverage {
         total_data = ""
 
       with open(f"MEAN_{key}", "w") as f:
-        f.write(mean_data)
+        f.write(str(mean_data))
       with open(f"TOTAL_{key}", "w") as f:
-        f.write(mean_data)
+        f.write(str(mean_data))
 
       # deprecated outputs v4.2.0
       if "S" in data_dict and "~{organism}".lower() == "sars-cov-2":
