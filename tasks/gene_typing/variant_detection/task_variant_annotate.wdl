@@ -23,24 +23,6 @@ task variant_annotate {
     # fail hard
     set -euo pipefail
 
-    # extract a sub-VCF only when a subset of genes/regions is requested, then
-    # annotate that extracted subset instead of the full VCF
-    if ~{if (defined(query_genes) || defined(bedfile)) then "true" else "false"}; then
-      theiagene extract_variants \
-        --vcf ~{vcf} \
-        ~{if defined(query_genes) then "--query_genes ~{query_genes}" else ""} \
-        ~{if defined(reference_gff) then "--reference_gff ~{reference_gff}" else ""} \
-        ~{if defined(bedfile) then "--bedfile ~{bedfile}" else ""} \
-        ~{if exact_match then "--exact_match" else ""} \
-        ~{if ambiguous_contig then "--ambiguous_contig" else ""} \
-        --feature_qualifier ~{feature_qualifier} \
-        --output ~{samplename}.genes.vcf
-      vep_vcf="~{samplename}.genes.vcf"
-    else
-      # by default, annotate the VCF passed directly to the task
-      vep_vcf="~{vcf}"
-    fi
-
 # VEP requires the GFF sorted by contig then start coordinate; sort while
 # keeping comment/header lines (leading '#') at the top of the file
 python3 <<'PYEOF'
@@ -59,6 +41,24 @@ with open("reference_sorted.gff", "w") as out:
     out.writelines(records)
 PYEOF
 
+    # extract a sub-VCF only when a subset of genes/regions is requested, then
+    # annotate that extracted subset instead of the full VCF
+    if ~{if (defined(query_genes) || defined(bedfile)) then "true" else "false"}; then
+      theiagene extract_variants \
+        --vcf ~{vcf} \
+        --reference_gff reference_sorted.gff \
+        ~{if defined(query_genes) then "--query_genes ~{query_genes}" else ""} \
+        ~{if defined(bedfile) then "--bedfile ~{bedfile}" else ""} \
+        ~{if exact_match then "--exact_match" else ""} \
+        ~{if ambiguous_contig then "--ambiguous_contig" else ""} \
+        --feature_qualifier ~{feature_qualifier} \
+        --output ~{samplename}.genes.vcf
+      vep_vcf="~{samplename}.genes.vcf"
+    else
+      # by default, annotate the VCF passed directly to the task
+      vep_vcf="~{vcf}"
+    fi
+
     # bgzip the sorted GFF (force overwrite if a stale .gz exists)
     bgzip -f reference_sorted.gff
 
@@ -68,8 +68,9 @@ PYEOF
     # bgzip the reference FASTA (to a local copy; inputs may be read-only) and
     # index with samtools faidx, which creates the .fai and .gzi indexes VEP needs
     # (FASTA files are indexed with faidx, not tabix)
-    bgzip -c ~{reference_fasta} > ~{reference_fasta}.gz
-    samtools faidx ~{reference_fasta}.gz
+    local_ref=$(basename ~{reference_fasta})
+    bgzip -c ~{reference_fasta} > "${local_ref}.gz"
+    samtools faidx "${local_ref}.gz"
 
     # count variant records (non-header, non-empty lines) in the VCF to annotate,
     # transparently handling bgzipped input
@@ -84,14 +85,15 @@ PYEOF
     if [ "${variant_count}" -gt 0 ]; then
       vep \
         -i "${vep_vcf}" \
-        --fasta ~{reference_fasta}.gz \
+        --fasta "${local_ref}.gz" \
         --gff reference_sorted.gff.gz \
-        --species "na" \
+        --species "~{samplename}" \
         --tab \
         --hgvs \
         --hgvsg \
         --hgvsp_use_prediction \
         --distance 0 \
+        --fork ~{cpu} \
         -o ~{samplename}_variant_annotations
 
       mv ~{samplename}_variant_annotations ~{samplename}_variant_annotations.tsv
@@ -103,7 +105,7 @@ PYEOF
         ~{if defined(query_genes) then "--query_genes ~{query_genes}" else ""} \
         ~{if defined(bedfile) then "--bedfile ~{bedfile}" else ""} \
         ~{if exact_match then "--exact_match" else ""} \
-        --feature_qualifier ~{feature_qualifier} \
+        --feature_qualifier "~{feature_qualifier}" \
         | tr '\n' ',' | sed 's/,$//' > VARIANT_REPORT
     else
       echo "WARNING: no variants detected in VCF or extracted gene VCF" >&2
