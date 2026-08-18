@@ -60,7 +60,6 @@ workflow medea_magic {
     Int? gatk_disk_size
     # gatk-specific variant-calling options (illumina)
     Int? gatk_ploidy
-    File? gatk_intervals_file
     # gatk-specific filtering options (illumina)
     Int? gatk_filter_min_variant_quality
     Int? gatk_filter_min_depth
@@ -155,7 +154,6 @@ workflow medea_magic {
           bai = bwa_variant_calling.sorted_bai,
           reference_genome = select_first([resolved_reference_fasta]),
           ploidy = gatk_ploidy,
-          intervals_file = gatk_intervals_file,
           docker = gatk_docker,
           cpu = gatk_cpu,
           memory = gatk_memory,
