@@ -84,6 +84,7 @@ workflow medea_magic {
     File? query_genes_bed
     Boolean query_exact_match = false
   }
+  # ORGANISM-SPECIFIC PARAMETER SETTING AND TASK CALLS
   if (medea_tag == "Candidozyma auris" || medea_tag == "Candida auris") {
     call cauris_cladetyper.cauris_cladetyper as cladetyper {
       input:
@@ -124,7 +125,8 @@ workflow medea_magic {
     # organism-specific gene coverage targets used when query_genes is not user-supplied
     String cryptoneo_query_genes = "CNA00300"
   }
-  # Reference-based variant calling.
+
+  # REFERENCE-BASED VARIANT CALLING
   # a user-supplied fasta takes precedence, otherwise the organism-specific reference is used
   # (cladetyper fasta for C. auris, hosted fasta for A. fumigatus and C. neoformans).
   # resolve the reference once; visible below (and in outputs) as File?
@@ -219,7 +221,9 @@ workflow medea_magic {
       }
     }
   }
-  # Gene coverage. The user-supplied query_genes takes priority; otherwise the
+
+  # GENE-CENTRIC COVERAGE CALCULATIONS AND VARIANT ANNOTATIONS
+  # The user-supplied query_genes takes priority; otherwise the
   # organism-specific default set (if any) is used. Inherently depends on variant calling
   Array[String] query_genes_options = select_all([query_genes, cauris_query_genes, afumigatus_query_genes, cryptoneo_query_genes])
   if (length(query_genes_options) > 0) {
@@ -265,7 +269,8 @@ workflow medea_magic {
       }
     }
   }
-  # Running AMR Search
+
+  # ANTIMICROBIAL RESISTANCE ANNOTATION
   if (run_amr_search) {
     # Map containing the taxon tag reported by typing paired with it's taxon code for AMR search.
     Map[String, String] taxon_code = {
