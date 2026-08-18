@@ -222,7 +222,7 @@ workflow medea_magic {
     }
   }
 
-  # GENE-CENTRIC COVERAGE CALCULATIONS AND VARIANT ANNOTATIONS
+  # GENE-CENTRIC COVERAGE CALCULATIONS AND VARIANT ANNOTATION
   # The user-supplied query_genes takes priority; otherwise the
   # organism-specific default set (if any) is used. Inherently depends on variant calling
   Array[String] query_genes_options = select_all([query_genes, cauris_query_genes, afumigatus_query_genes, cryptoneo_query_genes])
