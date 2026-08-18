@@ -486,17 +486,17 @@ cladetyper	kmer_size	Int	The kmer size to use for generating the GAMBIT signatur
 cladetyper	max_distance	Float	The maximum GAMBIT distance to report a clade hit	0.1	Optional	Cauris_CladeTyper	general	
 cladetyper	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	Cauris_CladeTyper	runtime	
 cladetyper	ref_clade1	File	The reference assembly for clade 1	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.fasta	Optional	Cauris_CladeTyper	reference	
-cladetyper	ref_clade1_annotated	String	The path to the annotated reference for clade 1	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.gbff	Optional	Cauris_CladeTyper	reference	
+cladetyper	ref_clade1_gff	File	The reference GFF for clade 1	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.gff	Optional	Cauris_CladeTyper	reference	
 cladetyper	ref_clade2	File	The reference assembly for clade 2	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.fasta	Optional	Cauris_CladeTyper	reference	
-cladetyper	ref_clade2_annotated	String	The path to the annotated reference for clade 2	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.gbff	Optional	Cauris_CladeTyper	reference	
-cladetyper	ref_clade3	File	The reference assembly for clade 3	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.fasta	Optional	Cauris_CladeTyper	reference	
-cladetyper	ref_clade3_annotated	String	The path to the annotated reference for clade 3	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.gbff	Optional	Cauris_CladeTyper	reference	
+cladetyper	ref_clade2_gff	File	The reference GFF for clade 2	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.gff	Optional	Cauris_CladeTyper	reference	
+cladetyper	ref_clade3	File	The reference assembly for clade 3	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCA_002775015.1_Cand_auris_B11221_V1_genomic.fasta	Optional	Cauris_CladeTyper	reference	
+cladetyper	ref_clade3_gff	File	The reference GFF for clade 3	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCA_002775015.1_Cand_auris_B11221_V1_genomic.gff	Optional	Cauris_CladeTyper	reference	
 cladetyper	ref_clade4	File	The reference assembly for clade 4	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.fasta	Optional	Cauris_CladeTyper	reference	
-cladetyper	ref_clade4_annotated	String	The path to the annotated reference for clade 4	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.gbff	Optional	Cauris_CladeTyper	reference	
+cladetyper	ref_clade4_gff	File	The reference GFF for clade 4	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.gff	Optional	Cauris_CladeTyper	reference	
 cladetyper	ref_clade5	File	The reference assembly for clade 5	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.fasta	Optional	Cauris_CladeTyper	reference	
-cladetyper	ref_clade5_annotated	String	The path to the annotated reference for clade 5	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.gbff	Optional	Cauris_CladeTyper	reference	
+cladetyper	ref_clade5_gff	File	The reference GFF for clade 5	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.gff	Optional	Cauris_CladeTyper	reference	
 cladetyper	ref_clade6	File	The reference assembly for clade 6	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade6_GCA_032714025.1_ASM3271402v1_genomic.fasta	Optional	Cauris_CladeTyper	reference	
-cladetyper	ref_clade6_annotated	String	The path to the annotated reference for clade 6		Optional	Cauris_CladeTyper	general	
+cladetyper	ref_clade6_gff	File	The reference GFF for clade 6		Optional	Cauris_CladeTyper	general	
 clair3	clair3_model	String	Model to be used by Clair3	r1041_e82_400bps_sup_v500	Optional	TheiaViral_ONT	general	
 clair3	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_ONT	runtime	
 clair3	disable_phasing	Boolean	True/False that determines if variants should be called without whatshap phasing in full alignment calling	True	Optional	TheiaViral_ONT	general	
@@ -997,7 +997,7 @@ gamma	output_gff	Boolean	Allows GAMMA to output gene matches in GFF format	True	
 gamma	run_gammas	Boolean	Turns on GAMMA-S which runs GAMMA on nucleotide sequences rather than translating input sequences and matches	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 gene_coverage	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Freyja_FASTQ	runtime	
 gene_coverage	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime	
-gene_coverage	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23.2-dev	Optional	Freyja_FASTQ	docker	
+gene_coverage	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/ensembl-vep:116.0-dev	Optional	Freyja_FASTQ	docker	
 gene_coverage	exact_match	Boolean	Search for exact matches to query_genes / BED file gene queries	False	Optional	Freyja_FASTQ	general	
 gene_coverage	feature_qualifier	String	Feature qualifier to use in parsing GBFF for coverage calculations	product	Optional	Freyja_FASTQ	general	
 gene_coverage	feature_type	String	Feature type to use in parsing GBFF for coverage calculations	CDS	Optional	Freyja_FASTQ	general	
@@ -1005,8 +1005,7 @@ gene_coverage	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	
 gene_coverage	min_depth	Int	Minimum depth to call a base covered	10	Optional	Freyja_FASTQ	general	
 gene_coverage	min_quality	Int	Minimum base quality to call a base covered	0	Optional	Freyja_FASTQ	general	
 gene_coverage	query_genes	String	Comma-separated list of query genes to parse GBFF/BED file for region coordinates		Optional	Freyja_FASTQ	general	
-gene_coverage	reference_gbff	File	GenBank flat file depicting the reference genome		Optional	Freyja_FASTQ	general	
-gene_coverage	vcf	File	Optional VCF file; variant calls overlapping the queried gene regions are extracted into a per-gene VCF output		Optional	Freyja_FASTQ	general	
+gene_coverage	reference_gff	File	Internal component, do not modify		Optional	Freyja_FASTQ	general	
 get_fasta_genome_size	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Freyja_FASTQ	runtime	
 get_fasta_genome_size	disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	Freyja_FASTQ	runtime	
 get_fasta_genome_size	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/seqkit:2.4.0--h9ee0642_0	Optional	Freyja_FASTQ	docker	
@@ -1255,17 +1254,17 @@ medea_magic	cauris_cladetyper_docker_image	String	The Docker container to use fo
 medea_magic	cladetyper_kmer_size	Int	Kmer size for GAMBIT classification	11	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	cladetyper_max_distance	Float	The maximum GAMBIT distance to report a clade hit	0.1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	cladetyper_ref_clade1	File	Reference genome FASTA for *Candidozyma auris* clade1	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.fasta	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
-medea_magic	cladetyper_ref_clade1_annotated	File	Reference GBFF annotation for *Candidozyma auris* clade1	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.gbff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
+medea_magic	cladetyper_ref_clade1_gff	File	Reference GFF annotation for *Candidozyma auris* clade1	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.gff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
 medea_magic	cladetyper_ref_clade2	File	Reference genome FASTA for *Candidozyma auris* clade2	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.fasta	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
-medea_magic	cladetyper_ref_clade2_annotated	File	Reference GBFF annotation for *Candidozyma auris* clade2	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.gbff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
-medea_magic	cladetyper_ref_clade3	File	Reference genome FASTA for *Candidozyma auris* clade3	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.fasta	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
-medea_magic	cladetyper_ref_clade3_annotated	File	Reference GBFF annotation for *Candidozyma auris* clade3	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.gbff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
+medea_magic	cladetyper_ref_clade2_gff	File	Reference GFF annotation for *Candidozyma auris* clade2	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.gff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
+medea_magic	cladetyper_ref_clade3	File	Reference genome FASTA for *Candidozyma auris* clade3	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCA_002775015.1_Cand_auris_B11221_V1_genomic.fasta	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
+medea_magic	cladetyper_ref_clade3_gff	File	Reference GFF annotation for *Candidozyma auris* clade3	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCA_002775015.1_Cand_auris_B11221_V1_genomic.gff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
 medea_magic	cladetyper_ref_clade4	File	Reference genome FASTA for *Candidozyma auris* clade4	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.fasta	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
-medea_magic	cladetyper_ref_clade4_annotated	File	Reference GBFF annotation for *Candidozyma auris* clade4	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.gbff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
+medea_magic	cladetyper_ref_clade4_gff	File	Reference GFF annotation for *Candidozyma auris* clade4	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.gff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
 medea_magic	cladetyper_ref_clade5	File	Reference genome FASTA for *Candidozyma auris* clade5	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.fasta	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
-medea_magic	cladetyper_ref_clade5_annotated	File	Reference GBFF annotation for *Candidozyma auris* clade5	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.gbff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
+medea_magic	cladetyper_ref_clade5_gff	File	Reference GFF annotation for *Candidozyma auris* clade5	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.gff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
 medea_magic	cladetyper_ref_clade6	File	Reference genome FASTA for *Candidozyma auris* clade6	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade6_GCA_032714025.1_ASM3271402v1_genomic.fasta	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
-medea_magic	cladetyper_ref_clade6_annotated	File	Reference GBFF annotation for *Candidozyma auris* clade6		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	cladetyper_ref_clade6_gff	File	Reference GFF annotation for *Candidozyma auris* clade6		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	clair3_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	runtime	
 medea_magic	clair3_disable_phasing	Boolean	Disable whatshap phasing	True	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	clair3_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	runtime	
@@ -1288,15 +1287,16 @@ medea_magic	gatk_filter_min_variant_quality	Int	Minimum variant quality (QUAL); 
 medea_magic	gatk_intervals_file	File	Optional intervals file restricting GATK HaplotypeCaller and GenotypeGVCFs to specific genomic regions		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	gatk_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	runtime	
 medea_magic	gatk_ploidy	Int	Sample ploidy (N) used by GATK HaplotypeCaller; defaults to 1 (haploid)	1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-medea_magic	gene_coordinates_bed	File	BED file of gene coordinates (relative to the reference genome) used by the gene coverage task to define query regions		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	query_exact_match	Boolean	Only reference query genes that exactly match the query genes and exclude partial matches	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	query_genes	String	Comma-separated list of query genes to parse GBFF/BED file for region coordinates		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	query_genes_bed	File	A BED file depicting query genes and their coordinates		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	read2	File	Internal component, do not modify		Optional	TheiaEuk_ONT	general	
 medea_magic	read_aligner_cpu	Int	Number of CPUs to allocate to the task		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	read_aligner_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	runtime	
 medea_magic	read_aligner_docker	String	The Docker container to use for the task		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	read_aligner_memory	Int	Amount of memory/RAM (in GB) to allocate to the task		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	reference_genome_fasta	File	Reference FASTA used for read alignment and variant calling; overrides the organism-specific default reference when provided		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-medea_magic	reference_genome_gbff	File	Annotated reference (GenBank flat file) used by the gene coverage task to translate query genes into coordinates; overrides the organism-specific default when provided		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	reference_gff	File	Reference GFF annotation used for gene coordinate extraction and variant annotation		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	run_amr_search	Boolean	Set to true to run AMR_Search workflow for support taxa. See AMR_Search documentation	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 megahit	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_Illumina_PE	runtime	
 megahit	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE	runtime	
@@ -1592,7 +1592,7 @@ morgana_magic	flu_track_antiviral_aa_subs	String	Additional list of antiviral re
 morgana_magic	gene_coverage_bam	File	Bam file used for calculating gene coverage		Optional	TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaViral_Illumina_PE, TheiaViral_ONT	general	
 morgana_magic	gene_coverage_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 morgana_magic	gene_coverage_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
-morgana_magic	gene_coverage_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23.2-dev	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	docker	
+morgana_magic	gene_coverage_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/ensembl-vep:116.0-dev	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	docker	
 morgana_magic	gene_coverage_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 morgana_magic	gene_coverage_min_depth	Int	The minimum depth to determine if a position was covered	10	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general	
 morgana_magic	gene_coverage_min_quality	Int	The minimum alignment quality to determine if a position was covered	0	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general	
@@ -1904,7 +1904,7 @@ raw_check_reads	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	
 raw_check_reads	workflow_series	String	Internal component, do not modify	theiaviral	Optional	TheiaEuk_ONT	general	
 read_mapping_stats	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 read_mapping_stats	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
-read_mapping_stats	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker	
+read_mapping_stats	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23.2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker	
 read_mapping_stats	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 read_mapping_stats	read2	File	Internal component, do not modify		Optional	TheiaViral_ONT	general	
 read_QC_trim	adapters	File	File with adapter sequences to be removed		Optional	TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
