@@ -59,7 +59,7 @@ task gatk_variants {
       -I ${bam} \
       -O gvcfs/~{samplename}_haplotypecall.g.vcf.gz \
       -ploidy ~{ploidy} \
-      --sample-name ${read_group} \
+      --sample-name ${samplename} \
       ~{if defined(intervals_file) then "-L ~{intervals_file}" else ""} \
       --tmp-dir . \
       -ERC GVCF
