@@ -13,7 +13,7 @@ task gatk_filter {
     Float min_map_quality = 40
     Float min_quality_by_depth = 2.0
     Float max_fisher_strand_bias = 60
-    Float max_strand_odd_ratio = 3
+    Float max_strand_odds_ratio = 3
     String? filter_expression
 
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/gatk:4.6.2.0-dev"
