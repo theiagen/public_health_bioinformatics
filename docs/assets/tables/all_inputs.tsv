@@ -997,7 +997,7 @@ gamma	output_gff	Boolean	Allows GAMMA to output gene matches in GFF format	True	
 gamma	run_gammas	Boolean	Turns on GAMMA-S which runs GAMMA on nucleotide sequences rather than translating input sequences and matches	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 gene_coverage	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Freyja_FASTQ	runtime	
 gene_coverage	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime	
-gene_coverage	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/ensembl-vep:116.0-dev	Optional	Freyja_FASTQ	docker	
+gene_coverage	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/ensembl-vep:116.0	Optional	Freyja_FASTQ	docker	
 gene_coverage	exact_match	Boolean	Search for exact matches to query_genes / BED file gene queries	False	Optional	Freyja_FASTQ	general	
 gene_coverage	feature_qualifier	String	Feature qualifier to use in parsing GBFF for coverage calculations	product	Optional	Freyja_FASTQ	general	
 gene_coverage	feature_type	String	Feature type to use in parsing GBFF for coverage calculations	CDS	Optional	Freyja_FASTQ	general	
@@ -1279,7 +1279,7 @@ medea_magic	clair3_model	String	Model name for Clair3 variant calling (see suppo
 medea_magic	clair3_variant_quality	Int	Minimum variant quality score for Clair3	2	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	gatk_cpu	Int	Number of CPUs to allocate to the task	8	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	runtime	
 medea_magic	gatk_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	runtime	
-medea_magic	gatk_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/gatk:4.6.2.0-dev	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	docker	
+medea_magic	gatk_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/gatk:4.6.2.0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	docker	
 medea_magic	gatk_filter_expression	String	Custom JEXL filter expression applied by GATK VariantFiltration (annotated with the filter name 'user_filter')		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	gatk_filter_max_fisher_strand_bias	Float	Maximum Phred-scaled p-value for strand bias derived from Fisher's Exact Test	60	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	gatk_filter_max_strand_odds_ratio	Float	Maximum strand odds ratio for strand bias	3	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
@@ -1594,7 +1594,7 @@ morgana_magic	flu_track_antiviral_aa_subs	String	Additional list of antiviral re
 morgana_magic	gene_coverage_bam	File	Bam file used for calculating gene coverage		Optional	TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaViral_Illumina_PE, TheiaViral_ONT	general	
 morgana_magic	gene_coverage_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 morgana_magic	gene_coverage_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
-morgana_magic	gene_coverage_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/ensembl-vep:116.0-dev	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	docker	
+morgana_magic	gene_coverage_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/ensembl-vep:116.0	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	docker	
 morgana_magic	gene_coverage_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 morgana_magic	gene_coverage_min_base_quality	Int	Minimum base quality to consider a base in gene coverage calculations	0	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general	
 morgana_magic	gene_coverage_min_depth	Int	The minimum depth to determine if a position was covered	10	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general	
