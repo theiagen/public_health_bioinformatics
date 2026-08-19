@@ -229,9 +229,9 @@ workflow theiaeuk_ont {
     String? gene_coverage_reads_mapped = medea_magic.gene_coverage_reads_mapped
     String? gene_coverage_mean_percent_coverage = medea_magic.gene_coverage_mean_breadth
     String? gene_coverage_mean_depth = medea_magic.gene_coverage_mean_depth
-    Map[String, Float]? gene_coverage_depth_by_gene = medea_magic.gene_coverage_depth_by_gene
-    Map[String, Float]? gene_coverage_breadth_by_gene = medea_magic.gene_coverage_breadth_by_gene
-    Map[String, Float]? gene_coverage_reads_by_gene = medea_magic.gene_coverage_reads_by_gene
+    Map[String, String]? gene_coverage_depth_by_gene = medea_magic.gene_coverage_depth_by_gene
+    Map[String, String]? gene_coverage_breadth_by_gene = medea_magic.gene_coverage_breadth_by_gene
+    Map[String, String]? gene_coverage_reads_by_gene = medea_magic.gene_coverage_reads_by_gene
     File? variant_annotation_gene_vcf = medea_magic.variant_annotation_gene_vcf
     File? variant_annotation_warnings = medea_magic.variant_annotation_warnings
     File? variant_annotation_summary = medea_magic.variant_annotation_summary

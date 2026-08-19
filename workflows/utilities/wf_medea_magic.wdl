@@ -330,12 +330,12 @@ workflow medea_magic {
     String? clair3_model_used = clair3_variant_calling.clair3_model_used
     # gene coverage
     File? gene_coverage_stats = gene_coverage.gene_coverage_stats
-    String? gene_coverage_reads_mapped = gene_coverage.reads_aligned
+    String? gene_coverage_reads_mapped = gene_coverage.gene_reads_aligned
     String? gene_coverage_mean_breadth = gene_coverage.mean_breadth
     String? gene_coverage_mean_depth = gene_coverage.mean_depth
-    Map[String, Float]? gene_coverage_depth_by_gene = gene_coverage.depth_by_gene
-    Map[String, Float]? gene_coverage_breadth_by_gene = gene_coverage.breadth_by_gene
-    Map[String, Float]? gene_coverage_reads_by_gene = gene_coverage.reads_by_gene
+    Map[String, String]? gene_coverage_depth_by_gene = gene_coverage.depth_by_gene
+    Map[String, String]? gene_coverage_breadth_by_gene = gene_coverage.breadth_by_gene
+    Map[String, String]? gene_coverage_reads_by_gene = gene_coverage.reads_by_gene
     File? variant_annotation_warnings = variant_annotate.variant_annotation_warnings
     File? variant_annotation_summary = variant_annotate.variant_annotation_html
     File? variant_annotation_gene_vcf = variant_annotate.variant_annotation_gene_vcf
