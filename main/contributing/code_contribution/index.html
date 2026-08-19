@@ -6739,7 +6739,7 @@
 <ul>
 <li>
 <p>Use a specific Docker container version instead of 'latest' to ensure reproducibility and prevent unexpected changes in container behavior.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>String<span class="w"> </span><span class="nv">docker</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;us-docker.pkg.dev/docker_image:version&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>String<span class="w"> </span><span class="nv">docker</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"us-docker.pkg.dev/docker_image:version"</span>
 </span></code></pre></div>
 </li>
 <li>
@@ -6813,7 +6813,7 @@
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>input<span class="w"> </span><span class="o">{</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span>Int<span class="w"> </span><span class="nv">cpu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="c1"># Number of CPUs</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span>Int<span class="w"> </span><span class="nv">disk_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="c1"># Disk space in GB</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span>String<span class="w"> </span><span class="nv">docker</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;us-docker.pkg.dev/example:1.0.0&quot;</span><span class="w"> </span><span class="c1"># Docker container for the task</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span>String<span class="w"> </span><span class="nv">docker</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"us-docker.pkg.dev/example:1.0.0"</span><span class="w"> </span><span class="c1"># Docker container for the task</span>
 </span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span>Int<span class="w"> </span><span class="nv">memory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="c1"># Memory in GB</span>
 </span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="o">}</span>
 </span></code></pre></div>
@@ -6822,20 +6822,20 @@
 <p>Include optional tool parameters as inputs to the task</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>input<span class="w"> </span><span class="o">{</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span>Int?<span class="w"> </span>optional_tool_parameter1
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span>String<span class="w"> </span><span class="nv">optional_tool_parameter2_with_default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;default_value&quot;</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span>String<span class="w"> </span><span class="nv">optional_tool_parameter2_with_default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"default_value"</span>
 </span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="o">}</span>
 </span></code></pre></div>
 </li>
 <li>
 <p>Input and output lists should <strong>not</strong> be formatted to have the equal sign aligned, but instead <strong>use a single space</strong> before and after the <code>=</code></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nv">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;output_file&quot;</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nv">long_variable_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;long_file_name&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nv">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"output_file"</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nv">long_variable_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"long_file_name"</span>
 </span></code></pre></div>
 </li>
 <li>
 <p>Expose Docker as an input, an output (if versioning information not available), and runtime variable:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>input<span class="w"> </span><span class="o">{</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span>String<span class="w"> </span><span class="nv">docker</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;us-docker.pkg.dev/example:1.0.0&quot;</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span>String<span class="w"> </span><span class="nv">docker</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"us-docker.pkg.dev/example:1.0.0"</span>
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="o">}</span>
 </span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>...
 </span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>output<span class="w"> </span><span class="o">{</span>
@@ -6883,7 +6883,7 @@
 <li>
 <p>Explain what non-intuitive bash/python text wrangling actions do, e.g.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1">## awk for gene column ($6) to grab subtype ($15)</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>cat<span class="w"> </span>~<span class="o">{</span>file<span class="o">}</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span>-F<span class="w"> </span><span class="s1">&#39;\t&#39;</span><span class="w"> </span><span class="s1">&#39;{if ($6==&quot;M1&quot;) print $15}&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>FLU_TYPE
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>cat<span class="w"> </span>~<span class="o">{</span>file<span class="o">}</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span>-F<span class="w"> </span><span class="s1">'\t'</span><span class="w"> </span><span class="s1">'{if ($6=="M1") print $15}'</span><span class="w"> </span>&gt;<span class="w"> </span>FLU_TYPE
 </span></code></pre></div>
 </li>
 </ul>
@@ -6894,15 +6894,15 @@
 <li>The output block specifies the files or variables produced by the task. Follow these conventions:</li>
 </ul>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>output<span class="w"> </span><span class="o">{</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span>File<span class="w"> </span><span class="nv">result_csv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;output.csv&quot;</span><span class="w"> </span><span class="c1"># CSV file generated</span>
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span>File<span class="w"> </span><span class="nv">result_log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;log.txt&quot;</span><span class="w"> </span><span class="c1"># Log file</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span>File<span class="w"> </span><span class="nv">result_csv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"output.csv"</span><span class="w"> </span><span class="c1"># CSV file generated</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span>File<span class="w"> </span><span class="nv">result_log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"log.txt"</span><span class="w"> </span><span class="c1"># Log file</span>
 </span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="o">}</span>
 </span></code></pre></div>
 <ul>
 <li>
 <p>Ensure the docker container is exposed as an output string, e.g.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>input<span class="w"> </span><span class="o">{</span>
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span>String<span class="w"> </span><span class="nv">docker</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;us-docker.pkg.dev/general-theiagen/tool:version&quot;</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span>String<span class="w"> </span><span class="nv">docker</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"us-docker.pkg.dev/general-theiagen/tool:version"</span>
 </span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="o">}</span>
 </span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>...
 </span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>output<span class="w"> </span><span class="o">{</span>
@@ -6924,8 +6924,8 @@
 </span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span>docker:<span class="w"> </span>docker
 </span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span>cpu:<span class="w"> </span>cpu
 </span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">  </span>memory:<span class="w"> </span>memory
-</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">  </span>disks:<span class="w"> </span><span class="s2">&quot;local-disk &quot;</span><span class="w"> </span>+<span class="w"> </span>disk_size<span class="w"> </span>+<span class="w"> </span><span class="s2">&quot; SSD&quot;</span>
-</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">  </span>disk:<span class="w"> </span>disk_size<span class="w"> </span>+<span class="w"> </span><span class="s2">&quot; GB&quot;</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">  </span>disks:<span class="w"> </span><span class="s2">"local-disk "</span><span class="w"> </span>+<span class="w"> </span>disk_size<span class="w"> </span>+<span class="w"> </span><span class="s2">" SSD"</span>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">  </span>disk:<span class="w"> </span>disk_size<span class="w"> </span>+<span class="w"> </span><span class="s2">" GB"</span>
 </span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="o">}</span>
 </span></code></pre></div>
 </li>
@@ -6939,8 +6939,8 @@
 <ul>
 <li>When a workflow imports a task, ensure it is imported under a unique name to avoid conflicts.</li>
 </ul>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>import<span class="w"> </span><span class="s2">&quot;../tasks/task_task1.wdl&quot;</span><span class="w"> </span>as<span class="w"> </span>task1_task
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>import<span class="w"> </span><span class="s2">&quot;../tasks/task_task2.wdl&quot;</span><span class="w"> </span>as<span class="w"> </span>task2_task
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>import<span class="w"> </span><span class="s2">"../tasks/task_task1.wdl"</span><span class="w"> </span>as<span class="w"> </span>task1_task
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>import<span class="w"> </span><span class="s2">"../tasks/task_task2.wdl"</span><span class="w"> </span>as<span class="w"> </span>task2_task
 </span></code></pre></div>
 </li>
 <li>
@@ -6954,7 +6954,7 @@
 </ul>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>input<span class="w"> </span><span class="o">{</span>
 </span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span>String<span class="w"> </span>input
-</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">  </span>String<span class="w"> </span><span class="nv">task1_docker</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;us-docker.pkg.dev/general-theiagen/tool:version&quot;</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">  </span>String<span class="w"> </span><span class="nv">task1_docker</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"us-docker.pkg.dev/general-theiagen/tool:version"</span>
 </span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">  </span>String?<span class="w"> </span>task1_optional_argument
 </span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="o">}</span>
 </span></code></pre></div>
@@ -6987,16 +6987,16 @@
 <h2 id="example-workflow-formats">Example Workflow formats<a class="headerlink" href="#example-workflow-formats" title="Permanent link">&para;</a></h2>
 <details class="toggle">
 <summary>wf_example_wf.wdl</summary>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>import<span class="w"> </span><span class="s2">&quot;../tasks/task_task1.wdl&quot;</span><span class="w"> </span>as<span class="w"> </span>task1_task
-</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>import<span class="w"> </span><span class="s2">&quot;../tasks/task_task2.wdl&quot;</span><span class="w"> </span>as<span class="w"> </span>task2_task
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>import<span class="w"> </span><span class="s2">"../tasks/task_task1.wdl"</span><span class="w"> </span>as<span class="w"> </span>task1_task
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>import<span class="w"> </span><span class="s2">"../tasks/task_task2.wdl"</span><span class="w"> </span>as<span class="w"> </span>task2_task
 </span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>
-</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>import<span class="w"> </span><span class="s2">&quot;../workflows/wf_subworkflow.wdl&quot;</span><span class="w"> </span>as<span class="w"> </span>subworkflow
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>import<span class="w"> </span><span class="s2">"../workflows/wf_subworkflow.wdl"</span><span class="w"> </span>as<span class="w"> </span>subworkflow
 </span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>
 </span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>workflow<span class="w"> </span>example_wf<span class="w"> </span><span class="o">{</span>
 </span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="w">  </span>input<span class="w"> </span><span class="o">{</span>
 </span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="w">    </span>String<span class="w"> </span>input
-</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="w">    </span>String<span class="w"> </span><span class="nv">task1_docker</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;us-docker.pkg.dev/general-theiagen/task_1:version&quot;</span>
-</span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a><span class="w">    </span>String<span class="w"> </span><span class="nv">task2_docker</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;us-docker.pkg.dev/general-theiagen/task_2:version&quot;</span>
+</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="w">    </span>String<span class="w"> </span><span class="nv">task1_docker</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"us-docker.pkg.dev/general-theiagen/task_1:version"</span>
+</span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a><span class="w">    </span>String<span class="w"> </span><span class="nv">task2_docker</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"us-docker.pkg.dev/general-theiagen/task_2:version"</span>
 </span><span id="__span-19-11"><a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a><span class="w">    </span>String?<span class="w"> </span>hidden_task3_argument
 </span><span id="__span-19-12"><a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a><span class="w">    </span>String?<span class="w"> </span>hidden_task3_docker
 </span><span id="__span-19-13"><a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a><span class="w">    </span>String?<span class="w"> </span>hidden_task4_docker
@@ -7040,8 +7040,8 @@
 </details>
 <details class="toggle">
 <summary>wf_subworkflow.wdl</summary>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>import<span class="w"> </span><span class="s2">&quot;../tasks/task_task3.wdl&quot;</span><span class="w"> </span>as<span class="w"> </span>task3_task
-</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>import<span class="w"> </span><span class="s2">&quot;../tasks/task_task4.wdl&quot;</span><span class="w"> </span>as<span class="w"> </span>task4_task
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>import<span class="w"> </span><span class="s2">"../tasks/task_task3.wdl"</span><span class="w"> </span>as<span class="w"> </span>task3_task
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>import<span class="w"> </span><span class="s2">"../tasks/task_task4.wdl"</span><span class="w"> </span>as<span class="w"> </span>task4_task
 </span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>
 </span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>workflow<span class="w"> </span>subworkflow<span class="w"> </span><span class="o">{</span>
 </span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="w">  </span>input<span class="w"> </span><span class="o">{</span>

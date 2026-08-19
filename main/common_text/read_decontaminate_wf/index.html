@@ -6405,9 +6405,9 @@
 </details>
 <!-- endif -->
 
-<div class="language-text highlight"><pre><span></span><code>??? task &quot;`Minimap2`: Read Alignment&quot;
+<div class="language-text highlight"><pre><span></span><code>??? task "`Minimap2`: Read Alignment"
 
-    Minimap2 is a popular aligner that is used to align reads (or assemblies) to an assembly file. In Minimap2, &quot;modes&quot; are a group of preset options.
+    Minimap2 is a popular aligner that is used to align reads (or assemblies) to an assembly file. In Minimap2, "modes" are a group of preset options.
 
 
     The mode used in this task is `map-ont` which is the default mode for long reads and indicates that long reads of ~10% error rates should be aligned to the reference genome. The output file is in SAM format.
@@ -6416,7 +6416,7 @@
 
     For more information regarding modes and the available options for Minimap2, please see the [Minimap2 manpage](https://lh3.github.io/minimap2/minimap2.html).
 
-    !!! techdetails &quot;Minimap2 Technical Details&quot;
+    !!! techdetails "Minimap2 Technical Details"
         | | Links |
         |---|---|
         | Task | [task_minimap2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_minimap2.wdl) |
@@ -6424,13 +6424,13 @@
         | Software Documentation | [Minimap2](https://lh3.github.io/minimap2) |
         | Original Publication(s) | [Minimap2: pairwise alignment for nucleotide sequences](https://academic.oup.com/bioinformatics/article/34/18/3094/4994778) |
 
-??? task &quot;`parse_mapping`: Extract Unaligned Reads&quot;
+??? task "`parse_mapping`: Extract Unaligned Reads"
 
 
     The `bam_to_unaligned_fastq` sub-task will extract a FASTQ file of reads that failed to align, while removing unpaired reads.
 
 
-    !!! techdetails &quot;Parse Mapping Technical Details&quot;
+    !!! techdetails "Parse Mapping Technical Details"
         | | Links |
         |---|---|
         | Task | [task_parse_mapping.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl) |
@@ -6438,10 +6438,10 @@
         | Software Documentation | [samtools](https://www.htslib.org/doc/samtools.html) |
         | Original Publication(s) | [The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)&lt;br&gt;[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |
 
-??? task &quot;`mapping_stats`: Read Mapping Statistics&quot;
+??? task "`mapping_stats`: Read Mapping Statistics"
     The Read Mapping Statistics task generates mapping statistics from a BAM file. It uses samtools to generate a summary of the mapping statistics, which includes coverage, depth, average base quality, average mapping quality, and other relevant metrics. These statistics are also reported on a per sequence basis.
 
-    !!! techdetails &quot;Read Mapping Statistics Technical Details&quot;
+    !!! techdetails "Read Mapping Statistics Technical Details"
         |  | Links |
         | --- | --- |
         | Task | [task_mapping_stats.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_mapping_stats.wdl) |
@@ -6449,19 +6449,19 @@
         | Software Documentation | [samtools](https://www.htslib.org/doc/samtools.html) |
         | Original Publication(s) | [The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)&lt;br&gt;[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |
 
-??? task &quot;`Contaminant_Check`: Contaminant Sequence Status Check&quot;
+??? task "`Contaminant_Check`: Contaminant Sequence Status Check"
     The Contaminant Check task outputs a pass/fail status based on if contaminant/host sequences pass thresholds for breadth of coverage, depth of coverage, and number of reads mapped. This task is activated by inputting a comma-delimited string of `expected_sequences`, which match sequence headers in the provided contaminant/host FASTA. Each sequence from the previously provided contaminant/host FASTA is checked for sufficient read mapping statistics.
 
-    The composite status, `contaminant_check_status`, will report `&quot;PASS&quot;` if expected and unexpected sequences are identified within the `min_expected_seq` and `max_unexpected_seq` thresholds; if not, `&quot;FAIL ...&quot;` is reported depicting which `expected_sequences` failed and why, along with which unexpected sequences were identified.
+    The composite status, `contaminant_check_status`, will report `"PASS"` if expected and unexpected sequences are identified within the `min_expected_seq` and `max_unexpected_seq` thresholds; if not, `"FAIL ..."` is reported depicting which `expected_sequences` failed and why, along with which unexpected sequences were identified.
 
     Additionally, the coverage, depth, and number of reads mapped are reported in JSON mappings for the sets of expected and unexpected sequences.
 
-    !!! techdetails &quot;Contaminant Check Technical Details&quot;
+    !!! techdetails "Contaminant Check Technical Details"
         |  | Links |
         | --- | --- |
         | Task | [task_contaminant_check.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_contaminant_check.wdl) |
 
-!!! techdetails &quot;Read Decontaminate Technical Details&quot;
+!!! techdetails "Read Decontaminate Technical Details"
     |  | Links |
     | --- | --- |
     | Subworkflow | [wf_read_decontaminate.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_decontaminate.wdl) |

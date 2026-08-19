@@ -6323,7 +6323,7 @@
 </details>
 <!-- endif -->
 
-<div class="language-text highlight"><pre><span></span><code>Minimap2 is a popular aligner that is used to align reads (or assemblies) to an assembly file. In Minimap2, &quot;modes&quot; are a group of preset options.
+<div class="language-text highlight"><pre><span></span><code>Minimap2 is a popular aligner that is used to align reads (or assemblies) to an assembly file. In Minimap2, "modes" are a group of preset options.
 </code></pre></div>
 <!-- if: long_read_flags -->
 <div class="language-text highlight"><pre><span></span><code>The mode used in this task is `map-ont` with additional long-read-specific parameters (the `-L --cs --MD` flags) to align ONT reads to the reference genome. These specialized parameters are essential for proper handling of long read error profiles, generation of detailed alignment information, and improved mapping accuracy for long reads.
@@ -6338,18 +6338,18 @@
 <!-- endif -->
 
 <!-- if: asm20_mode -->
-<div class="language-text highlight"><pre><span></span><code>The mode used in this task is `asm20` which is intended for &quot;long assembly to reference mapping&quot;. The `asm20` mode indicates the following parameters should be used: `-k19 -w10 -U50,500 --rmq -r100k -g10k -A1 -B4 -O6,26 -E2,1 -s200 -z200 -N50`. The output file is in PAF format.
+<div class="language-text highlight"><pre><span></span><code>The mode used in this task is `asm20` which is intended for "long assembly to reference mapping". The `asm20` mode indicates the following parameters should be used: `-k19 -w10 -U50,500 --rmq -r100k -g10k -A1 -B4 -O6,26 -E2,1 -s200 -z200 -N50`. The output file is in PAF format.
 </code></pre></div>
 <!-- endif -->
 
 <!-- if: sr_mode -->
-<div class="language-text highlight"><pre><span></span><code>The mode used in this task is `sr` which is intended for &quot;short single-end reads without splicing&quot;. The `sr` mode indicates the following parameters should be used: `-k21 -w11 --sr --frag=yes -A2 -B8 -O12,32 -E2,1 -b0 -r100 -p.5 -N20 -f1000,5000 -n2 -m20 -s40 -g100 -2K50m --heap-sort=yes --secondary=no`. The output file is in SAM format.
+<div class="language-text highlight"><pre><span></span><code>The mode used in this task is `sr` which is intended for "short single-end reads without splicing". The `sr` mode indicates the following parameters should be used: `-k21 -w11 --sr --frag=yes -A2 -B8 -O12,32 -E2,1 -b0 -r100 -p.5 -N20 -f1000,5000 -n2 -m20 -s40 -g100 -2K50m --heap-sort=yes --secondary=no`. The output file is in SAM format.
 </code></pre></div>
 <!-- endif -->
 
 <div class="language-text highlight"><pre><span></span><code>For more information regarding modes and the available options for Minimap2, please see the [Minimap2 manpage](https://lh3.github.io/minimap2/minimap2.html).
 
-!!! techdetails &quot;Minimap2 Technical Details&quot;
+!!! techdetails "Minimap2 Technical Details"
     | | Links |
     |---|---|
     | Task | [task_minimap2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_minimap2.wdl) |

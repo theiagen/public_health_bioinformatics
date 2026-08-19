@@ -6533,12 +6533,12 @@
 </details>
 </details>
 <!-- if: theiacov|theiameta -->
-<div class="language-text highlight"><pre><span></span><code>??? task &quot;`HRRT`: Human Host Sequence Removal&quot;
-    All reads of human origin **are removed**, including their mates, by using NCBI&#39;s [**human read removal tool (HRRT)**](https://github.com/ncbi/sra-human-scrubber).
+<div class="language-text highlight"><pre><span></span><code>??? task "`HRRT`: Human Host Sequence Removal"
+    All reads of human origin **are removed**, including their mates, by using NCBI's [**human read removal tool (HRRT)**](https://github.com/ncbi/sra-human-scrubber).
 
     HRRT is based on the [SRA Taxonomy Analysis Tool](https://doi.org/10.1186/s13059-021-02490-0) and employs a k-mer database constructed of k-mers from Eukaryota derived from all human RefSeq records with any k-mers found in non-Eukaryota RefSeq records subtracted from the database.
 
-    !!! techdetails &quot;HRRT Technical Details&quot;
+    !!! techdetails "HRRT Technical Details"
         |  | Links |
         | --- | --- |
         | Task | [task_ncbi_scrub.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_ncbi_scrub.wdl) |
@@ -6547,7 +6547,7 @@
 </code></pre></div>
 <!-- endif -->
 
-<div class="language-text highlight"><pre><span></span><code>??? task &quot;`Rasusa`: Read Subsampling (optional)&quot;
+<div class="language-text highlight"><pre><span></span><code>??? task "`Rasusa`: Read Subsampling (optional)"
     Rasusa is a tool to randomly subsample sequencing reads to a specified coverage without assuming that all reads are of equal length, making it especially suitable for long-read data while still being applicable to short-read data.
 
     The Rasusa task supports four mutually exclusive subsampling modes:
@@ -6573,14 +6573,14 @@
 
     Rasusa executes after host-read removal (HRRT, if applicable) and before read trimming (Trimmomatic or fastp). Classification tasks (Kraken2, MIDAS) always run on the original/raw reads regardless of whether `call_rasusa` is enabled. The downsampled (but un-trimmed) reads are output to the Terra data table as `read1_subsampled_raw` and `read2_subsampled_raw`.
 
-    When running in coverage mode, it&#39;s strongly recommended to manually set the `rasusa_genome_length` input parameter in order to ensure accurate downsampling. If not provided, `rasusa_genome_length` falls back to `raw_check_reads.est_genome_length` from the `read_screen` task. Oftentimes, this value can overestimate the true genome length, particularly for large, high-coverage FASTQ files. If `skip_screen` is set to `true`, you must supply `genome_length` explicitly or use one of the override modes above.
+    When running in coverage mode, it's strongly recommended to manually set the `rasusa_genome_length` input parameter in order to ensure accurate downsampling. If not provided, `rasusa_genome_length` falls back to `raw_check_reads.est_genome_length` from the `read_screen` task. Oftentimes, this value can overestimate the true genome length, particularly for large, high-coverage FASTQ files. If `skip_screen` is set to `true`, you must supply `genome_length` explicitly or use one of the override modes above.
 
 
 
-    ???+ warning &quot;Non-deterministic output(s)&quot;
+    ???+ warning "Non-deterministic output(s)"
         This task may yield non-deterministic outputs since it performs _random_ subsampling. To ensure reproducibility, set a value for the `rasusa_seed` optional input variable.
 
-    !!! techdetails &quot;Rasusa Technical Details&quot;
+    !!! techdetails "Rasusa Technical Details"
         |  | Links |
         | --- | --- |
         | Task | [task_rasusa.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/task_rasusa.wdl) |
@@ -6588,10 +6588,10 @@
         | Software Documentation | [Rasusa on GitHub](https://github.com/mbhall88/rasusa) |
         | Original Publication(s) | [Rasusa: Randomly subsample sequencing reads to a specified coverage](https://doi.org/10.21105/joss.03941) |
 
-!!! dna &quot;&quot;
-    By default, `read_processing` is set to `&quot;trimmomatic&quot;`. To use fastp instead, set `read_processing` to `&quot;fastp&quot;`. These tasks are mutually exclusive.
+!!! dna ""
+    By default, `read_processing` is set to `"trimmomatic"`. To use fastp instead, set `read_processing` to `"fastp"`. These tasks are mutually exclusive.
 
-    ??? task &quot;`Trimmomatic`: Read Trimming (default)&quot;
+    ??? task "`Trimmomatic`: Read Trimming (default)"
         Read processing is available via Trimmomatic by default.
 
         Trimmomatic trims low-quality regions of Illumina paired-end or single-end reads with a sliding window (with a default window size of 4, specified with `trim_window_size`), cutting once the average quality within the window falls below the `trimmomatic_window_quality` (default of 30 for both paired-end and single-end). The read is discarded if it is trimmed below `trimmomatic_min_length` (default of 75 for paired-end, 25 for single-end).
@@ -6609,32 +6609,32 @@
         Users can optionally provide a custom adapter file or modify adapter trimming parameters using the `trimmomatic_adapter_fasta` and `trimmomatic_adapter_trim_args` respectively. See the [Trimmomatic adapter documentation](https://github.com/usadellab/Trimmomatic?tab=readme-ov-file#the-adapter-fasta-files) for more details. The `trimmomatic_adapter_fasta` parameter should just include the path to your fasta file. The `trimmomatic_adapter_trim_args` parameter should only contain the colon-delimited values that come after the adapter fasta file in the `ILLUMINACLIP` argument. Example usage:
 
         ```
-        trimmomatic_adapter_fasta=&quot;path/to/my_custom_adapters.fa&quot;
-        trimmomatic_adapter_trim_args=&quot;2:30:10&quot;
+        trimmomatic_adapter_fasta="path/to/my_custom_adapters.fa"
+        trimmomatic_adapter_trim_args="2:30:10"
         ```
 
         For more advanced configurations, there are options to override the default trimming parameters via `trimmomatic_override_args`. Note that when using `trimmomatic_override_args`, the user is responsible for specifying all desired trimming steps and their order, as the default trimming steps will be ignored. See the [Trimmomatic documentation](https://github.com/usadellab/Trimmomatic?tab=readme-ov-file#step-options) for more details on available trimming steps and their parameters.
 
         Advanced Configuration Example Usage:
         ```
-        trimmomatic_override_args=&quot;LEADING:30 TRAILING:30 AVGQUAL:36 SLIDINGWINDOW:4:33 MINLEN:75&quot;
+        trimmomatic_override_args="LEADING:30 TRAILING:30 AVGQUAL:36 SLIDINGWINDOW:4:33 MINLEN:75"
         ```
 
-        !!! techdetails &quot;Trimmomatic Technical Details&quot;
+        !!! techdetails "Trimmomatic Technical Details"
             |  | Links |
             | --- | --- |
             | Task | [task_trimmomatic.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_trimmomatic.wdl) |
             | Software Source Code | [Trimmomatic on GitHub](https://github.com/usadellab/Trimmomatic) |
             | Software Documentation | [Trimmomatic Website](http://www.usadellab.org/cms/?page=trimmomatic) |
             | Original Publication(s) | [Trimmomatic: a flexible trimmer for Illumina sequence data](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/) |
-    ??? task &quot;`fastp`: Read Trimming (alternative)&quot;
-        To activate this task, set `read_processing` to `&quot;fastp&quot;`.
+    ??? task "`fastp`: Read Trimming (alternative)"
+        To activate this task, set `read_processing` to `"fastp"`.
 
         fastp trims low-quality regions of Illumina paired-end or single-end reads with a sliding window (with a default window size of 4 (10 for TheiaEuk), specified with `trim_window_size`), cutting once the average quality within the window falls below the `trim_quality_trim_score` (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below `trim_minlen` (default of 75 bases for paired-end, 25 for single-end).
 
-        fastp also has additional default parameters and features that are not a part of Trimmomatic&#39;s default configuration. Please note `--disable_adapter_trimming` is explicitly needed in `fastp_args` to disable adapter trimming via fastp.
+        fastp also has additional default parameters and features that are not a part of Trimmomatic's default configuration. Please note `--disable_adapter_trimming` is explicitly needed in `fastp_args` to disable adapter trimming via fastp.
 
-        ??? toggle &quot;Default read-trimming parameters&quot;
+        ??? toggle "Default read-trimming parameters"
             | Parameter | Explanation |
             | --- | --- |
             | -g | enables polyG tail trimming |
@@ -6645,7 +6645,7 @@
 
         Additional arguments can be passed using the `fastp_args` optional parameter. Please reference the [fastp GitHub](https://github.com/OpenGene/fastp) for a comprehensive list of arguments.
 
-        !!! techdetails &quot;fastp Technical Details&quot;
+        !!! techdetails "fastp Technical Details"
             |  | Links |
             | --- | --- |
             | Task | [task_fastp.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastp.wdl) |
@@ -6653,19 +6653,19 @@
             | Software Documentation | [fastp on GitHub](https://github.com/OpenGene/fastp) |
             | Original Publication(s) | [fastp: an ultra-fast all-in-one FASTQ preprocessor](https://doi.org/10.1093/bioinformatics/bty560) |
 
-??? task &quot;`BBDuk`: Adapter Trimming and PhiX Removal&quot;
-    Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about [Illumina&#39;s adapter-sequence reference](https://knowledge.illumina.com/software/general/software-general-reference_material-list/000002905). For genome analysis, it&#39;s important to remove these sequences since they&#39;re not actually from your sample. If you don&#39;t remove them, the downstream analysis may be affected.
+??? task "`BBDuk`: Adapter Trimming and PhiX Removal"
+    Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about [Illumina's adapter-sequence reference](https://knowledge.illumina.com/software/general/software-general-reference_material-list/000002905). For genome analysis, it's important to remove these sequences since they're not actually from your sample. If you don't remove them, the downstream analysis may be affected.
 
     By default, the BBDuk task will:
 
     - **Repair disordered read pairs** (if they exist) so that the first read in `read1` is the same mate of the first read in `read2`. See the [`Repair Guide`](https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/repair-guide/) from the [BBTools](https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/) package.
 
-    - **Remove PhiX contamination** by filtering out all reads that have a 31-mer match to [PhiX](https://emea.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html). PhiX is a viral genome that is often used as a control in Illumina sequencing runs. Removing PhiX sequences helps to ensure that the data reflects only the target organism&#39;s genome. By default this task uses the built-in PhiX reference fasta provided with BBTools (see [the PhiX reference sequence](https://github.com/bbushnell/BBTools/blob/master/resources/phix174_ill.ref.fa.gz)), but a custom PhiX reference can be provided via the `phix_fasta` input parameter.
+    - **Remove PhiX contamination** by filtering out all reads that have a 31-mer match to [PhiX](https://emea.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html). PhiX is a viral genome that is often used as a control in Illumina sequencing runs. Removing PhiX sequences helps to ensure that the data reflects only the target organism's genome. By default this task uses the built-in PhiX reference fasta provided with BBTools (see [the PhiX reference sequence](https://github.com/bbushnell/BBTools/blob/master/resources/phix174_ill.ref.fa.gz)), but a custom PhiX reference can be provided via the `phix_fasta` input parameter.
 
-    - **Trim adapters** with [BBDuk](https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/) (_&quot;Bestus Bioinformaticus&quot; Decontamination Using Kmers_). By default this uses the built-in adapter sequences provided with BBTools (see [the BBTools adapter reference (`adapters.fa`)](https://github.com/bbushnell/BBTools/blob/master/resources/adapters.fa)). If you have custom adapter sequences specific to your library preparation, you can provide them via the `adapters_fasta` input parameter.
+    - **Trim adapters** with [BBDuk](https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/) (_"Bestus Bioinformaticus" Decontamination Using Kmers_). By default this uses the built-in adapter sequences provided with BBTools (see [the BBTools adapter reference (`adapters.fa`)](https://github.com/bbushnell/BBTools/blob/master/resources/adapters.fa)). If you have custom adapter sequences specific to your library preparation, you can provide them via the `adapters_fasta` input parameter.
 
 
-    !!! techdetails &quot;BBDuk Technical Details&quot;
+    !!! techdetails "BBDuk Technical Details"
         |  | Links |
         | --- | --- |
         | Task | [task_bbduk.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_bbduk.wdl) |
@@ -6673,7 +6673,7 @@
         | Software Documentation | [BBDuk Guide (archived)](https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/) |
 </code></pre></div>
 <!-- if: theiaprok|theiameta -->
-<div class="language-text highlight"><pre><span></span><code>??? task &quot;`MIDAS`: Read Identification (optional)&quot;
+<div class="language-text highlight"><pre><span></span><code>??? task "`MIDAS`: Read Identification (optional)"
     To activate this task, set `call_midas` to `true`.
 
     MIDAS is used to detect contamination with non-target taxa.
@@ -6682,7 +6682,7 @@
 
     This task is similar to those used in commercial software, BioNumerics, for estimating secondary species abundance.
 
-    ??? toggle &quot;How are the MIDAS output columns determined?&quot;
+    ??? toggle "How are the MIDAS output columns determined?"
         Example MIDAS report in the `midas_report` column:
 
         | species_id | count_reads | coverage | relative_abundance |
@@ -6700,13 +6700,13 @@
         - coverage: estimated genome-coverage (i.e. read-depth) of species in metagenome
         - relative_abundance: estimated relative abundance of species in metagenome
 
-        The value in the `midas_primary_genus` column is derived by ordering the rows in order of &quot;relative_abundance&quot; and identifying the genus of top species in the &quot;species_id&quot; column (Salmonella). The value in the `midas_secondary_genus` column is derived from the genus of the second-most prevalent genus in the &quot;species_id&quot; column (Citrobacter). The `midas_secondary_genus_abundance` column is the &quot;relative_abundance&quot; of the second-most prevalent genus (0.009477003). The `midas_secondary_genus_coverage` is the &quot;coverage&quot; of the second-most prevalent genus (0.995216227).
+        The value in the `midas_primary_genus` column is derived by ordering the rows in order of "relative_abundance" and identifying the genus of top species in the "species_id" column (Salmonella). The value in the `midas_secondary_genus` column is derived from the genus of the second-most prevalent genus in the "species_id" column (Citrobacter). The `midas_secondary_genus_abundance` column is the "relative_abundance" of the second-most prevalent genus (0.009477003). The `midas_secondary_genus_coverage` is the "coverage" of the second-most prevalent genus (0.995216227).
 
     **MIDAS Reference Database Overview**
 
     The **MIDAS reference database** is a comprehensive tool for identifying bacterial species in metagenomic and bacterial isolate WGS data. It includes several layers of genomic data, helping detect species abundance and potential contaminants.
 
-    !!! dna &quot;Key Components of the MIDAS Database&quot;
+    !!! dna "Key Components of the MIDAS Database"
         1. **Species Groups**:
             - MIDAS clusters bacterial genomes based on 96.5% sequence identity, forming over 5,950 species groups from 31,007 genomes. These groups align with the gold-standard species definition (95% ANI), ensuring highly accurate species identification.
 
@@ -6724,12 +6724,12 @@
 
     TheiaProk and TheiaEuk use the pre-loaded MIDAS database in Terra (see input table for current version) by default for bacterial species detection in metagenomic data, requiring no additional setup.
 
-    !!! tip &quot;Create a Custom MIDAS Database&quot;
+    !!! tip "Create a Custom MIDAS Database"
         Users can also build their own custom MIDAS database if they want to include specific genomes or configurations. This custom database can replace the default MIDAS database used in Terra. To build a custom MIDAS database, follow the [MIDAS GitHub guide on building a custom database](https://github.com/snayfach/MIDAS/blob/master/docs/build_db.md). Once the database is built, users can upload it to a Google Cloud Storage bucket or Terra workspace and provide the link to the database in the `midas_db` input variable.
 
     ---
 
-    !!! techdetails &quot;MIDAS Technical Details&quot;
+    !!! techdetails "MIDAS Technical Details"
         |  | Links |
         | --- | --- |
         | Task | [task_midas.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_midas.wdl) |
@@ -6740,7 +6740,7 @@
 <!-- endif -->
 
 <!-- if: theiaprok|theiaeuk -->
-<div class="language-text highlight"><pre><span></span><code>??? task &quot;`Kraken2` + `Bracken`: Read Classification (optional)&quot;
+<div class="language-text highlight"><pre><span></span><code>??? task "`Kraken2` + `Bracken`: Read Classification (optional)"
     To activate this task, provide a file for `kraken_db` under the `read_QC_trim` subworkflow. A list of suggested databases can be found on the [Kraken2 standalone documentation](../standalone/kraken2.md#databases).
 
 
@@ -6753,8 +6753,8 @@
 
 
 
-    !!! info &quot;Bracken report refinement&quot;
-        Bracken refines the Kraken2 taxon classification report when `call_bracken` is set to &quot;true&quot; (default). Bracken uses a Bayesian model to probabilistically estimate read abundances at the species/genus-level. Bracken will output a `bracken_report` that:
+    !!! info "Bracken report refinement"
+        Bracken refines the Kraken2 taxon classification report when `call_bracken` is set to "true" (default). Bracken uses a Bayesian model to probabilistically estimate read abundances at the species/genus-level. Bracken will output a `bracken_report` that:
 
         - increases report-level classification resolution _up to_ the species level
         - decreases resolution of sub-species report-level classifications, e.g. Severe acute respiratory syndrome coronavirus 2 will be grouped into _Betacoronavirus pandemicum_
@@ -6765,7 +6765,7 @@
 
          By default, Bracken will reference the k-mer database that is closest to the mean read length of the input. This reference k-mer database size can be directly set using the `bracken_kmer_length` input, though it MUST correspond to an available k-mer database within the Kraken2 database (named `database&lt;KMER_LENGTH&gt;mers.kmer_distrib`). Bracken will be skipped if there are no k-mer libraries in the Kraken2 database.
 
-    !!! techdetails &quot;Kraken2 Technical Details&quot;
+    !!! techdetails "Kraken2 Technical Details"
         |  | Links |
         | --- | --- |
         | Task | [task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl) |
@@ -6777,7 +6777,7 @@
 
 <!-- if: theiacov -->
 
-<div class="language-text highlight"><pre><span></span><code>??? task &quot;`Kraken2` + `Bracken`: Read Classification&quot;
+<div class="language-text highlight"><pre><span></span><code>??? task "`Kraken2` + `Bracken`: Read Classification"
 
     Kraken2 is a bioinformatics tool originally designed for metagenomic applications that is **database dependent**. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.
 
@@ -6786,13 +6786,13 @@
     Kraken2 is run on both the raw and clean reads.
 
 
-    !!! info &quot;Database-dependent&quot;
-        This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq&#39;s viral sequence collection and human genome GRCh38. It&#39;s available at `gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz`.
+    !!! info "Database-dependent"
+        This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at `gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz`.
 
 
 
-    !!! info &quot;Bracken report refinement&quot;
-        Bracken refines the Kraken2 taxon classification report when `call_bracken` is set to &quot;true&quot; (default). Bracken uses a Bayesian model to probabilistically estimate read abundances at the species/genus-level. Bracken will output a `bracken_report` that:
+    !!! info "Bracken report refinement"
+        Bracken refines the Kraken2 taxon classification report when `call_bracken` is set to "true" (default). Bracken uses a Bayesian model to probabilistically estimate read abundances at the species/genus-level. Bracken will output a `bracken_report` that:
 
         - increases report-level classification resolution _up to_ the species level
         - decreases resolution of sub-species report-level classifications, e.g. Severe acute respiratory syndrome coronavirus 2 will be grouped into _Betacoronavirus pandemicum_
@@ -6803,7 +6803,7 @@
 
          By default, Bracken will reference the k-mer database that is closest to the mean read length of the input. This reference k-mer database size can be directly set using the `bracken_kmer_length` input, though it MUST correspond to an available k-mer database within the Kraken2 database (named `database&lt;KMER_LENGTH&gt;mers.kmer_distrib`). Bracken will be skipped if there are no k-mer libraries in the Kraken2 database.
 
-    !!! techdetails &quot;Kraken2 Technical Details&quot;
+    !!! techdetails "Kraken2 Technical Details"
         |  | Links |
         | --- | --- |
         | Task | [task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl) |
@@ -6813,7 +6813,7 @@
 </code></pre></div>
 <!-- endif -->
 
-<div class="language-text highlight"><pre><span></span><code>!!! techdetails &quot;read_QC_trim Technical Details&quot;
+<div class="language-text highlight"><pre><span></span><code>!!! techdetails "read_QC_trim Technical Details"
     |  | Links |
     | --- | --- |
     | Subworkflow | [wf_read_QC_trim_pe.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_pe.wdl)&lt;br&gt;[wf_read_QC_trim_se.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_se.wdl) |

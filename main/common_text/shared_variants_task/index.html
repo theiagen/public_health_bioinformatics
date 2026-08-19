@@ -6362,7 +6362,7 @@
 </details>
 <!-- endif -->
 
-<div class="language-text highlight"><pre><span></span><code>The Shared Variants task takes in the `concatenated_variants` output from the Concatenate Variants task and reshapes the data so that variants are rows and samples are columns. For each variant, samples where the variant was detected are populated with a &quot;1&quot; and samples where **either the variant was not detected or there was insufficient coverage to call variants** are populated with a &quot;0&quot;. The resulting table is available as the `shared_variants_table` output.
+<div class="language-text highlight"><pre><span></span><code>The Shared Variants task takes in the `concatenated_variants` output from the Concatenate Variants task and reshapes the data so that variants are rows and samples are columns. For each variant, samples where the variant was detected are populated with a "1" and samples where **either the variant was not detected or there was insufficient coverage to call variants** are populated with a "0". The resulting table is available as the `shared_variants_table` output.
 
 The `shared_variants_table` file will be in the following format:
 
@@ -6372,7 +6372,7 @@ The `shared_variants_table` file will be in the following format:
 | PEKT02000007 | 2529234 | snp | G | C | CDS | + | 282/336 | 94/111 | missense_variant c.282G&gt;C p.Lys94Asn | B9J08_003804 | NA | cytochrome c | 1 | 1 | 1 |
 | PEKT02000002 | 1043926 | snp | A | G | CDS | - | 542/1464 | 181/487 | missense_variant c.542T&gt;C p.Ile181Thr | B9J08_000976 | NA | dihydrolipoyl dehydrogenase | 1 | 1 | 0 |
 
-!!! techdetails &quot;Shared Variants Technical Details&quot;
+!!! techdetails "Shared Variants Technical Details"
     |  | Links |
     | --- | --- |
     | Task | [task_shared_variants.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_shared_variants.wdl) |

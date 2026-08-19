@@ -6338,7 +6338,7 @@ Default values vary between the PE, SE, and ONT workflows. The rationale for the
 <!-- if: theiaviral -->
 <div class="language-text highlight"><pre><span></span><code>Read screening is performed only on the cleaned reads. The task may be skipped by setting the `skip_screen` variable to `true`. Default values vary between the ONT and PE workflow. The rationale for these default values can be found below:
 
-??? toggle &quot;Default Thresholds and Rationales&quot;
+??? toggle "Default Thresholds and Rationales"
     | Variable  | Description | Default Value | Rationale |
     | --- | --- | --- | --- |
     | `estimated_genome_length` | | 12500 | This is an approximate of the median RNA virus length |
@@ -6403,7 +6403,7 @@ Default values vary between the PE, SE, and ONT workflows. The rationale for the
 </code></pre></div>
 <!-- endif -->
 
-<div class="language-text highlight"><pre><span></span><code>!!! techdetails &quot;Screen Technical Details&quot;
+<div class="language-text highlight"><pre><span></span><code>!!! techdetails "Screen Technical Details"
 </code></pre></div>
 <!-- if: theiacov|theiaprok|theiaeuk|theiaeukont -->
 <div class="language-text highlight"><pre><span></span><code>    There is a single task for read screening. The screen task is run twice, once for raw reads and once for clean reads.

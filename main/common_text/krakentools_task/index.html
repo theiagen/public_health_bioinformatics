@@ -6322,15 +6322,15 @@
 <p>The <code>task_krakentools.wdl</code> task extracts reads from the Kraken2 output file. It uses the <a href="https://github.com/jenniferlu717/KrakenTools">KrakenTools</a> package to extract reads classified at any user-specified taxon ID.</p>
 </details>
 <!-- if: theiaviral -->
-<div class="language-text highlight"><pre><span></span><code>??? dna &quot;`extract_unclassified` input parameter&quot;
+<div class="language-text highlight"><pre><span></span><code>??? dna "`extract_unclassified` input parameter"
     This parameter determines whether unclassified reads should also be extracted and combined with the `taxon`-specific extracted reads. By default, this is set to `false`, meaning that only reads classified to the specified input `taxon` will be extracted.
 
-???+ warning &quot;Important&quot;
+???+ warning "Important"
     This task will extract reads classified to the input `taxon` and **all of its descendant taxa**. The `rank` input parameter controls the extraction of reads classified at the specified `rank` and all subordinate taxonomic levels. See task `ncbi_identify` under the **Taxonomic Identification** section for more details on the `rank` input parameter.
 </code></pre></div>
 <!-- endif -->
 
-<div class="language-text highlight"><pre><span></span><code>!!! techdetails &quot;KrakenTools Technical Details&quot;
+<div class="language-text highlight"><pre><span></span><code>!!! techdetails "KrakenTools Technical Details"
     |  | Links |
     | --- | --- |
     | Task | [task_krakentools.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_krakentools.wdl) |

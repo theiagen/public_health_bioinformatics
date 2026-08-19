@@ -6353,7 +6353,7 @@
 
 <div class="language-text highlight"><pre><span></span><code>Optionally, if the user provides a value for `query_gene`, the variant file will be searched for any mutations in the specified regions or annotations. The query string MUST match the gene name or annotation as specified in the GenBank file and provided in the output variant file in the `snippy_results` column.
 
-??? toggle &quot;QC Metrics from Snippy_Variants&quot;
+??? toggle "QC Metrics from Snippy_Variants"
 </code></pre></div>
 <!-- if: snippy_streamline -->
 <div class="language-text highlight"><pre><span></span><code>    !!! warning
@@ -6381,7 +6381,7 @@
     Note that the last set of columns (`#rname` to `meanmapq`) may repeat for each chromosome or contig in the reference genome.
 </code></pre></div>
 <!-- if: snippy_variants -->
-<div class="language-text highlight"><pre><span></span><code>!!! tip &quot;QC Metrics for Phylogenetic Analysis&quot;
+<div class="language-text highlight"><pre><span></span><code>!!! tip "QC Metrics for Phylogenetic Analysis"
     These QC metrics provide valuable insights into the quality and coverage of your sequencing data relative to the reference genome. Monitoring these metrics can help identify samples with low coverage, poor alignment, or potential issues that may affect downstream analyses, and we recommend examining them before proceeding with phylogenetic analysis if performing Snippy_Variants and Snippy_Tree separately.
 
     These per-sample QC metrics can also be combined into a single file (`snippy_combined_qc_metrics`) in downstream workflows, such as `snippy_tree`, providing an overview of QC metrics across all samples.
@@ -6432,7 +6432,7 @@
 | uracil.phosphoribosyltransferase | FUR1 |
 | FKS1 | FKS1 |
 
-??? toggle &quot;Known resistance-conferring mutations for _Candidozyma auris_&quot;
+??? toggle "Known resistance-conferring mutations for _Candidozyma auris_"
     Mutations in these genes that are known to confer resistance are shown below
 
     | **Organism** | **Found in** | **Gene name** | **Gene locus** | **AA mutation** | **Drug** | **Reference** |
@@ -6473,7 +6473,7 @@
 </code></pre></div>
 <!-- endif -->
 
-<div class="language-text highlight"><pre><span></span><code>??? toggle &quot;Example Output Interpretation&quot;
+<div class="language-text highlight"><pre><span></span><code>??? toggle "Example Output Interpretation"
     For example, one sample may have the following output for the `theiaeuk_snippy_variants_hits` column:
 
     ```plaintext
@@ -6484,7 +6484,7 @@
 </code></pre></div>
 <!-- endif -->
 
-<div class="language-text highlight"><pre><span></span><code>!!! techdetails &quot;Snippy Variants Technical Details&quot;
+<div class="language-text highlight"><pre><span></span><code>!!! techdetails "Snippy Variants Technical Details"
     |  | Links |
     | --- | --- |
     | Task | [task_snippy_variants.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_variants.wdl)&lt;br&gt;[task_snippy_gene_query.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl) |

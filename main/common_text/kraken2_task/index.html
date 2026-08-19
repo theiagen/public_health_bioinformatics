@@ -6340,13 +6340,13 @@ Bracken is a refinement module that improves the resolution of Kraken2 reports.
 <!-- endif -->
 
 <!-- if: theiaviral -->
-<div class="language-text highlight"><pre><span></span><code>This task runs on cleaned reads and outputs a Kraken2 report detailing taxonomic classifications. It also separates classified reads from unclassified ones. If `call_bracken` is set to &quot;true&quot; a Bracken report is generated.
+<div class="language-text highlight"><pre><span></span><code>This task runs on cleaned reads and outputs a Kraken2 report detailing taxonomic classifications. It also separates classified reads from unclassified ones. If `call_bracken` is set to "true" a Bracken report is generated.
 </code></pre></div>
 <!-- endif -->
 
 <!-- if: theiacov|theiaviral -->
-<div class="language-text highlight"><pre><span></span><code>!!! info &quot;Database-dependent&quot;
-    This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq&#39;s viral sequence collection and human genome GRCh38. It&#39;s available at `gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz`.
+<div class="language-text highlight"><pre><span></span><code>!!! info "Database-dependent"
+    This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at `gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz`.
 </code></pre></div>
 <!-- endif -->
 
@@ -6360,8 +6360,8 @@ Bracken is a refinement module that improves the resolution of Kraken2 reports.
 </code></pre></div>
 <!-- endif -->
 
-<div class="language-text highlight"><pre><span></span><code>!!! info &quot;Bracken report refinement&quot;
-    Bracken refines the Kraken2 taxon classification report when `call_bracken` is set to &quot;true&quot; (default). Bracken uses a Bayesian model to probabilistically estimate read abundances at the species/genus-level. Bracken will output a `bracken_report` that:
+<div class="language-text highlight"><pre><span></span><code>!!! info "Bracken report refinement"
+    Bracken refines the Kraken2 taxon classification report when `call_bracken` is set to "true" (default). Bracken uses a Bayesian model to probabilistically estimate read abundances at the species/genus-level. Bracken will output a `bracken_report` that:
 
     - increases report-level classification resolution _up to_ the species level
     - decreases resolution of sub-species report-level classifications, e.g. Severe acute respiratory syndrome coronavirus 2 will be grouped into _Betacoronavirus pandemicum_
@@ -6372,7 +6372,7 @@ Bracken is a refinement module that improves the resolution of Kraken2 reports.
 
      By default, Bracken will reference the k-mer database that is closest to the mean read length of the input. This reference k-mer database size can be directly set using the `bracken_kmer_length` input, though it MUST correspond to an available k-mer database within the Kraken2 database (named `database&lt;KMER_LENGTH&gt;mers.kmer_distrib`). Bracken will be skipped if there are no k-mer libraries in the Kraken2 database.
 
-!!! techdetails &quot;Kraken2 Technical Details&quot;
+!!! techdetails "Kraken2 Technical Details"
     |  | Links |
     | --- | --- |
     | Task | [task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl) |

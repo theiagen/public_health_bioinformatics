@@ -6322,46 +6322,46 @@
 <p><code>read_QC_trim_ont</code> is a sub-workflow that filters low-quality reads and trims low-quality regions of reads. It uses several tasks, described below.</p>
 </details>
 <!-- if: theiacov|freyja -->
-<div class="language-text highlight"><pre><span></span><code>??? task &quot;`HRRT`: Human Host Sequence Removal&quot;
-    All reads of human origin **are removed**, including their mates, by using NCBI&#39;s [**human read removal tool (HRRT)**](https://github.com/ncbi/sra-human-scrubber).
+<div class="language-text highlight"><pre><span></span><code>??? task "`HRRT`: Human Host Sequence Removal"
+    All reads of human origin **are removed**, including their mates, by using NCBI's [**human read removal tool (HRRT)**](https://github.com/ncbi/sra-human-scrubber).
 
     HRRT is based on the [SRA Taxonomy Analysis Tool](https://doi.org/10.1186/s13059-021-02490-0) and employs a k-mer database constructed of k-mers from Eukaryota derived from all human RefSeq records with any k-mers found in non-Eukaryota RefSeq records subtracted from the database.
 
-    !!! techdetails &quot;HRRT Technical Details&quot;
+    !!! techdetails "HRRT Technical Details"
         |  | Links |
         | --- | --- |
         | Task | [task_ncbi_scrub.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_ncbi_scrub.wdl) |
         | Software Source Code | [HRRT on GitHub](https://github.com/ncbi/sra-human-scrubber) |
         | Software Documentation | [HRRT on NCBI](https://ncbiinsights.ncbi.nlm.nih.gov/2023/02/02/scrubbing-human-sequences-sra-submissions/) |
 
-??? task &quot;`artic guppyplex`: Read Filtering&quot;
+??? task "`artic guppyplex`: Read Filtering"
     Reads are filtered by length with the `artic guppyplex` command, which is a part of the [ARTIC protocol](https://artic.network/fieldbioinformatics/fieldbioinformatics-sop.html). Since TheiaCoV was developed primarily for amplicon-based viral sequencing, this task is included to remove chimeric reads that are either too short or too long.
 
-    !!! techdetails &quot;ARTIC `guppyplex` Technical Details&quot;
+    !!! techdetails "ARTIC `guppyplex` Technical Details"
         |  | Links |
         | --- | --- |
         | Task | [task_artic_guppyplex.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_artic_guppyplex.wdl) |
         | Software Source Code | [ARTIC on GitHub](https://github.com/artic-network/fieldbioinformatics/) |
         | Software Documentation | [ARTIC Documentation](https://artic.readthedocs.io/en/latest/?badge=latest) |
 
-??? task &quot;`Metabuli`: Read Classification&quot;
+??? task "`Metabuli`: Read Classification"
     Metabuli is used to classify and optionally extract reads against a reference database. Metabuli uses a novel k-mer structure, called metamer, to analyze both amino acid (AA) and DNA sequences. It leverages AA conservation for sensitive homology detection and DNA mutations for specific differentiation between closely related taxa.
 
 
     Metabuli is run on both raw and human dehosted reads.
 
 
-    ??? dna &quot;`taxdump_path` input parameter&quot;
+    ??? dna "`taxdump_path` input parameter"
         The `taxdump_path` directs the task toward a taxonkit-generated taxdump file, e.g. [from NCBI](https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/new_taxdump/) or [from GTDB](https://github.com/shenwei356/gtdb-taxdump/releases). This is not necessary to edit unless users want a more recent taxdump than what Theiagen hosts, or if users want to reference a different taxonomy. By default, Theiagen uses the NCBI taxonomy hierarchy.
 
-    ??? dna &quot;`cpu` / `memory` input parameters&quot;
+    ??? dna "`cpu` / `memory` input parameters"
         Increasing the memory and cpus allocated to Metabuli can substantially increase throughput.
 
-    ??? dna &quot;`extract_unclassified` input parameter&quot;
+    ??? dna "`extract_unclassified` input parameter"
         This parameter determines whether unclassified reads should also be extracted and combined with the `taxon`-specific extracted reads. By default, this is set to `false`, meaning that only reads classified to the specified input `taxon` will be extracted.
 
 
-    !!! techdetails &quot;Metabuli Technical Details&quot;
+    !!! techdetails "Metabuli Technical Details"
         |  | Links |
         | --- | --- |
         | Task | [task_metabuli.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_metabuli.wdl) |
@@ -6372,11 +6372,11 @@
 <!-- endif -->
 
 <!-- if: theiaprok -->
-<div class="language-text highlight"><pre><span></span><code>!!! dna &quot;A note on estimated genome length and Rasusa&quot;
+<div class="language-text highlight"><pre><span></span><code>!!! dna "A note on estimated genome length and Rasusa"
 
     Rasusa is now skipped unless the user explicitly requests downsampling by setting one of the following: `genome_length`, `rasusa_num_bases`, `rasusa_fraction_of_reads`, or `rasusa_num_reads`. To downsample by coverage, please provide the genome length of your expected taxa. Downsampling is beneficial when coverage exceeds ~150x as this can increase assembly time, computational costs, and can introduce errors.
 
-??? task &quot;`Rasusa`: Read Subsampling&quot;
+??? task "`Rasusa`: Read Subsampling"
     Rasusa is a tool to randomly subsample sequencing reads to a specified coverage without assuming that all reads are of equal length, making it especially suitable for long-read data while still being applicable to short-read data.
 
     The Rasusa task supports four mutually exclusive subsampling modes:
@@ -6394,10 +6394,10 @@
 
     The Rasusa task performs subsampling on the input raw reads. By default, this task will subsample TheiaProk_ONT reads to a depth of 150X using an estimated genome length of 5 million basepairs (0.7 Mb higher than the average bacterial genome length), and TheiaEuk_ONT reads using an estimated genome length of 50 million basepairs. The estimated genome length can be changed by the user by providing a different value for the `genome_length` input parameter. The target subsampling depth can also be adjusted by modifying the `rasusa_downsampling_coverage` variable.
 
-    ???+ warning &quot;Non-deterministic output(s)&quot;
+    ???+ warning "Non-deterministic output(s)"
         This task may yield non-deterministic outputs since it performs _random_ subsampling. To ensure reproducibility, set a value for the `rasusa_seed` optional input variable.
 
-    !!! techdetails &quot;Rasusa Technical Details&quot;
+    !!! techdetails "Rasusa Technical Details"
         |  | Links |
         | --- | --- |
         | Task | [task_rasusa.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/task_rasusa.wdl) |
@@ -6405,10 +6405,10 @@
         | Software Documentation | [Rasusa on GitHub](https://github.com/mbhall88/rasusa) |
         | Original Publication(s) | [Rasusa: Randomly subsample sequencing reads to a specified coverage](https://doi.org/10.21105/joss.03941) |
 
-??? task &quot;`Nanoq`: Read Filtering&quot;
+??? task "`Nanoq`: Read Filtering"
     Reads are filtered by length and quality using Nanoq. By default, sequences with less than 500 basepairs and quality scores lower than 10 are filtered out to improve assembly accuracy. These defaults are able to be modified by the user.
 
-    !!! techdetails &quot;Nanoq Technical Details&quot;
+    !!! techdetails "Nanoq Technical Details"
         |  | Links |
         | --- | --- |
         | Task | [task_nanoq.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_nanoq.wdl) |
@@ -6416,24 +6416,24 @@
         | Software Documentation | [Nanoq Documentation](https://github.com/esteinig/nanoq/blob/master/README.md) |
         | Original Publication(s) | [Nanoq: ultra-fast quality control for nanopore reads](https://doi.org/10.21105/joss.02991) |
 
-??? task &quot;`Metabuli`: Read Classification&quot;
+??? task "`Metabuli`: Read Classification"
     Metabuli is used to classify and optionally extract reads against a reference database. Metabuli uses a novel k-mer structure, called metamer, to analyze both amino acid (AA) and DNA sequences. It leverages AA conservation for sensitive homology detection and DNA mutations for specific differentiation between closely related taxa.
 
 
 
     `metabuli_db` must be set to activate Metabuli read classification for TheiaProk.
 
-    ??? dna &quot;`taxdump_path` input parameter&quot;
+    ??? dna "`taxdump_path` input parameter"
         The `taxdump_path` directs the task toward a taxonkit-generated taxdump file, e.g. [from NCBI](https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/new_taxdump/) or [from GTDB](https://github.com/shenwei356/gtdb-taxdump/releases). This is not necessary to edit unless users want a more recent taxdump than what Theiagen hosts, or if users want to reference a different taxonomy. By default, Theiagen uses the NCBI taxonomy hierarchy.
 
-    ??? dna &quot;`cpu` / `memory` input parameters&quot;
+    ??? dna "`cpu` / `memory` input parameters"
         Increasing the memory and cpus allocated to Metabuli can substantially increase throughput.
 
-    ??? dna &quot;`extract_unclassified` input parameter&quot;
+    ??? dna "`extract_unclassified` input parameter"
         This parameter determines whether unclassified reads should also be extracted and combined with the `taxon`-specific extracted reads. By default, this is set to `false`, meaning that only reads classified to the specified input `taxon` will be extracted.
 
 
-    !!! techdetails &quot;Metabuli Technical Details&quot;
+    !!! techdetails "Metabuli Technical Details"
         |  | Links |
         | --- | --- |
         | Task | [task_metabuli.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_metabuli.wdl) |

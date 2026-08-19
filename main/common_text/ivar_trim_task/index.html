@@ -6342,7 +6342,7 @@ iVar will trim any reads that start or end within the (0-based index) coordinate
 
 Following the trimming of primer sequences, iVar then trims the reads based on a quality threshold of 20 using a sliding window approach (default: 4). If the average base quality drops below the threshold, the remainder of the read is soft-clipped. Reads exceeding the minimum length (default: 30) after trimming are retained in the output BAM file.
 
-!!! techdetails &quot;iVar Technical Details&quot;
+!!! techdetails "iVar Technical Details"
     |  | Links |
     | --- | --- |
     | Task | [task_ivar_primer_trim.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_ivar_primer_trim.wdl) |

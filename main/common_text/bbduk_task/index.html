@@ -6336,18 +6336,18 @@
 <!-- if: theiaviral -->
 <div class="language-text highlight"><pre><span></span><code>Optionally, primers can be trimmed using an alignment-based approach implemented in BBDuk. To activate this functionality, primers must be provided via a standard format FASTA file (`primers_fasta`), with each entry depicting a separate primer, or can be input as a comma-delimited string of primers (`primers_literal`).
 
-By default, the kmer size used for primer trimming will automatically be set based on the individual lengths of each primer sequence provided. Additionally primers will be trimmed from both the 5&#39; and 3&#39; ends of reads.
+By default, the kmer size used for primer trimming will automatically be set based on the individual lengths of each primer sequence provided. Additionally primers will be trimmed from both the 5' and 3' ends of reads.
 
 The sensitivity of alignment-based primer trimming can be tuned via several parameters:
 
 - `primers_hamming_distance`: This variable indicates the number of allowed mismatched bases during the alignment of primers to reads. Default is `1`.
-- `primers_max_start_offset`: This allows the trimming of primers to start &quot;X&quot; number of bases into the read. Default is `10`.
-- `primers_mask_middle`: This is a boolean input that, when set to &quot;true&quot;, will mask the middle base of a primer sequence during alignment, which can be useful for handling degenerate primers. Default is `&quot;false&quot;`.
-- `primers_reverse_complement`: This is a boolean input that, when set to &quot;true&quot;, enables the trimming of reverse complement sequences of the provided primers. Default is `&quot;true&quot;`.
+- `primers_max_start_offset`: This allows the trimming of primers to start "X" number of bases into the read. Default is `10`.
+- `primers_mask_middle`: This is a boolean input that, when set to "true", will mask the middle base of a primer sequence during alignment, which can be useful for handling degenerate primers. Default is `"false"`.
+- `primers_reverse_complement`: This is a boolean input that, when set to "true", enables the trimming of reverse complement sequences of the provided primers. Default is `"true"`.
 </code></pre></div>
 <!-- endif -->
 
-<div class="language-text highlight"><pre><span></span><code>!!! techdetails &quot;BBDuk Technical Details&quot;
+<div class="language-text highlight"><pre><span></span><code>!!! techdetails "BBDuk Technical Details"
     |  | Links |
     | --- | --- |
     | Task | [task_bbduk.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_bbduk.wdl) |

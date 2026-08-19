@@ -6804,7 +6804,7 @@
 </li>
 <li>
 <p>Callouts/Admonitions - These features are called "call-outs" in Notion, but are "Admonitions" in Zensical. <a href="https://zensical.org/docs/authoring/admonitions/">I highly recommend referring to the Zensical documentation page on Admonitions to learn how best to use this feature</a>. Use the following syntax to create a callout:</p>
-<div class="language-markdown highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>!!! note &quot;Title&quot;
+<div class="language-markdown highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>!!! note "Title"
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    This is a note. Observe I am indented with four spaces.
 </span></code></pre></div>
 <p>Please see the <a href="https://zensical.org/docs/authoring/admonitions/">Admonition documentation</a> for more information on how to change the title, enable toggles, and more.</p>
@@ -6864,7 +6864,7 @@
 </li>
 <li>
 <p>Images - Use the following syntax to insert an image:</p>
-<div class="language-markdown highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>!!! caption &quot;Image Title&quot;
+<div class="language-markdown highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>!!! caption "Image Title"
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    ![<span class="nt">Alt Text</span>](<span class="na">/path/to/image.png</span>)
 </span></code></pre></div>
 </li>
@@ -6966,7 +6966,7 @@
 </span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
 </span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="c1"># or run an individual tool directly</span>
 </span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>vale<span class="w"> </span>--config<span class="o">=</span>.config/.vale.ini<span class="w"> </span>docs/
-</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>markdownlint<span class="w"> </span>-c<span class="w"> </span>.config/.markdownlint.yaml<span class="w"> </span><span class="s2">&quot;docs/**/*.md&quot;</span><span class="w">   </span><span class="c1"># add --fix to auto-correct</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>markdownlint<span class="w"> </span>-c<span class="w"> </span>.config/.markdownlint.yaml<span class="w"> </span><span class="s2">"docs/**/*.md"</span><span class="w">   </span><span class="c1"># add --fix to auto-correct</span>
 </span></code></pre></div>
 <p>Once installed with <code>-c .config/.pre-commit-config.yaml</code>, the git hook remembers that path — ordinary <code>git commit</code> afterwards runs the checks with no extra flags needed.</p>
 <p>The whitespace hooks and <code>markdownlint --fix</code> correct issues automatically; Vale reports each issue with the suggested replacement so you can apply it.</p>
