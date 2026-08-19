@@ -8,7 +8,7 @@ fragment: true
     The task proceeds in three steps:
 
     1. **Variant extraction** - when `query_genes` and/or `query_genes_bed` are supplied, the variants overlapping the CDS coordinates of those genes are extracted into a sub-VCF, and each retained record is tagged with the overlapping gene name(s) in a `GENE` INFO field. Without either input, the full VCF is annotated.
-    2. **Annotation** - VEP annotates the VCF against the reference FASTA and GFF by translating genes' CDS coordinates coordinates.
+    2. **Annotation** - VEP annotates the VCF against the reference FASTA and GFF by translating genes' CDS coordinates.
     3. **Reporting** - the VEP output is condensed into a comma-delimited list of human-readable annotations, where each transcript/protein identifier is replaced by the queried gene name, followed by the gene product name taken from the reference GFF.
 
     Each entry of the `variant_annotations` output takes the form:
