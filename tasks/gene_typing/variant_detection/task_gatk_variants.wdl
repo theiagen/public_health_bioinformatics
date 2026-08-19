@@ -57,7 +57,7 @@ task gatk_variants {
       HaplotypeCaller \
       -R ${local_ref} \
       -I ${bam} \
-      -O gvcfs/~{samplename}_haplotypecall.g.vcf.gz \
+      -O ~{samplename}_haplotypecall.g.vcf.gz \
       -ploidy ~{ploidy} \
       --sample-name ~{samplename} \
       ~{if defined(intervals_file) then "-L ~{intervals_file}" else ""} \
