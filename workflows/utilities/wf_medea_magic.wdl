@@ -18,7 +18,7 @@ workflow medea_magic {
   input {
     String samplename
     String medea_tag
-    File? assembly
+    File assembly
     File? read1
     File? read2
     Boolean ont_data = false
@@ -65,7 +65,7 @@ workflow medea_magic {
     Float? gatk_filter_min_map_quality
     Float? gatk_filter_min_quality_by_depth
     Float? gatk_filter_max_fisher_strand_bias
-    Float? gatk_filter_max_strand_odd_ratio
+    Float? gatk_filter_max_strand_odds_ratio
     String? gatk_filter_expression
     # clair3 variant-calling & filtering options (ont)
     String? clair3_model
@@ -171,7 +171,7 @@ workflow medea_magic {
           min_map_quality = gatk_filter_min_map_quality,
           min_quality_by_depth = gatk_filter_min_quality_by_depth,
           max_fisher_strand_bias = gatk_filter_max_fisher_strand_bias,
-          max_strand_odd_ratio = gatk_filter_max_strand_odd_ratio,
+          max_strand_odds_ratio = gatk_filter_max_strand_odds_ratio,
           filter_expression = gatk_filter_expression,
           docker = gatk_docker,
           cpu = gatk_cpu,
