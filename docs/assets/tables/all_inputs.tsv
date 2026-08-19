@@ -1004,7 +1004,7 @@ gene_coverage	feature_type	String	Feature type to use in parsing GBFF for covera
 gene_coverage	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime	
 gene_coverage	min_base_quality	Int	Minimum base quality to consider a base in coverage calculations	0	Optional	Freyja_FASTQ	general	
 gene_coverage	min_depth	Int	Minimum depth to call a base covered	10	Optional	Freyja_FASTQ	general	
-gene_coverage	min_map_quality	Int	Minimum mapping quality to consider a base in coverage calculations	0	Optional	Freyja_FASTQ	general	
+gene_coverage	min_map_quality	Int	Minimum mapping quality to consider a base in coverage calculations	40	Optional	Freyja_FASTQ	general	
 gene_coverage	query_genes	String	Comma-separated list of query genes to parse GBFF/BED file for region coordinates		Optional	Freyja_FASTQ	general	
 gene_coverage	reference_gff	File	Internal component, do not modify		Optional	Freyja_FASTQ	general	
 get_fasta_genome_size	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Freyja_FASTQ	runtime	
@@ -1281,10 +1281,12 @@ medea_magic	gatk_cpu	Int	Number of CPUs to allocate to the task	8	Optional	Theia
 medea_magic	gatk_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	runtime	
 medea_magic	gatk_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/gatk:4.6.2.0-dev	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	docker	
 medea_magic	gatk_filter_expression	String	Custom JEXL filter expression applied by GATK VariantFiltration (annotated with the filter name 'user_filter')		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-medea_magic	gatk_filter_min_depth	Int	Minimum read depth (DP); variants below this threshold are flagged by GATK VariantFiltration		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-medea_magic	gatk_filter_min_map_quality	Float	Minimum RMS mapping quality (MQ); variants below this threshold are flagged by GATK VariantFiltration		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-medea_magic	gatk_filter_min_quality_by_depth	Int	Minimum quality-by-depth (QD); variants below this threshold are flagged by GATK VariantFiltration		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-medea_magic	gatk_filter_min_variant_quality	Int	Minimum variant quality (QUAL); variants below this threshold are flagged by GATK VariantFiltration		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	gatk_filter_max_fisher_strand_bias	Float	Maximum Phred-scaled p-value for strand bias derived from Fisher's Exact Test	60	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	gatk_filter_max_strand_odds_ratio	Float	Maximum strand odds ratio for strand bias	3	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	gatk_filter_min_depth	Int	Minimum read depth (DP); variants below this threshold are flagged by GATK VariantFiltration	10	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	gatk_filter_min_map_quality	Float	Minimum RMS mapping quality (MQ); variants below this threshold are flagged by GATK VariantFiltration	40	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	gatk_filter_min_quality_by_depth	Float	Minimum quality-by-depth (QD); variants below this threshold are flagged by GATK VariantFiltration	2.0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	gatk_filter_min_variant_quality	Float	Minimum variant quality (QUAL); variants below this threshold are flagged by GATK VariantFiltration	30	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	gatk_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	runtime	
 medea_magic	gatk_ploidy	Int	Sample ploidy (N) used by GATK HaplotypeCaller; defaults to 1 (haploid)	1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	query_exact_match	Boolean	Only reference query genes that exactly match the query genes and exclude partial matches	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	

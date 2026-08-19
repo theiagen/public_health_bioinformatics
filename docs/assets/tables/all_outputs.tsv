@@ -489,12 +489,13 @@ gamma_results	File	The .gamma file reporting gene matches	TheiaProk_FASTA, Theia
 gamma_version	String	The version of GAMMA used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 genbank_fasta	File	**Only for SARS-CoV-2 submission**: GenBank fasta file for upload	Mercury_Prep_N_Batch
 genbank_metadata	File	**Only for SARS-CoV-2 submission**: GenBank metadata for upload	Mercury_Prep_N_Batch
-gene_coverage_breadth_by_gene	Map[String,Float]	A JSON map relating gene queries to their percent breadth of coverage	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-gene_coverage_depth_by_gene	Map[String,Float]	A JSON map relating gene queries to their depth of coverage	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+gene_coverage_breadth_by_gene	Map[String,String]	A JSON map relating gene queries to their percent breadth of coverage	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+gene_coverage_depth_by_gene	Map[String,Float]	A JSON map relating gene queries to their depth of coverage	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+gene_coverage_depth_by_gene	Map[String,String]	A JSON map relating gene queries to their depth of coverage	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 gene_coverage_mean_depth	String	Mean depth of coverage across the query genes	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 gene_coverage_mean_percent_coverage	String	Mean breadth of coverage across the query genes	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 gene_coverage_percent_coverage_by_gene	Map[String,Float]	A JSON map relating gene queries to their percent breadth of coverage	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
-gene_coverage_reads_by_gene	Map[String,Float]	A JSON map relating gene queries to the number of reads mapped	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+gene_coverage_reads_by_gene	Map[String,String]	A JSON map relating gene queries to the number of reads mapped	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 gene_coverage_reads_mapped	String	Number of reads mapped to query genes	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 gene_coverage_stats	File	A tab-delimited table depicting gene coverage depth and breadth on a gene-by-gene basis	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 generated_accessions	File	Text file mapping the BioSample accession with its sample name.	Terra_2_NCBI
