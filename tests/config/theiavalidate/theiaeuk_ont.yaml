@@ -66,8 +66,3 @@ columns:
     method: exact
     type: set[str]
     delimiter: ","
-  gene_coverage_mean_percent_coverage:
-    mappings: ["theiaeuk_snippy_variants_percent_ref_coverage"] # <= 4.3.0 compatibility
-    method: percent_diff
-    threshold: 0.05
-    type: float
