@@ -9,7 +9,7 @@ task gatk_variants {
     Int ploidy = 1 # integer indicating ploidy (N); default to haploid
     File? intervals_file
 
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/gatk:4.6.2.0-dev"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/gatk:4.6.2.0"
     Int cpu = 8
     Int memory = 32
     Int disk_size = 100

@@ -16,7 +16,7 @@ task gatk_filter {
     Float max_strand_odds_ratio = 3
     String? filter_expression
 
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/gatk:4.6.2.0-dev"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/gatk:4.6.2.0"
     Int cpu = 8
     Int memory = 32
     Int disk_size = 100
