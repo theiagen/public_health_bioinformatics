@@ -96,10 +96,10 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 #### Organism-specific characterization
 
 !!! tip ""
-    The TheiaEuk workflow automatically activates taxa-specific tasks after identification of the relevant taxa using `GAMBIT`. Default taxa (*Candidozyma auris*, *Cryptococcus neoformans*, or *Aspergillus fumigatus*) do not require user input to run characterization modules, and other taxa can undergo reference-based variant calling and gene characterization by inputting a `reference_genome_fasta` and `reference_gff`.
+    The TheiaEuk workflow automatically activates taxa-specific tasks after identification of the relevant taxa using `GAMBIT`. Default taxa (_Candidozyma auris_, _Cryptococcus neoformans_, or _Aspergillus fumigatus_) do not require user input to run characterization modules, and other taxa can undergo reference-based variant calling and gene characterization by inputting a `reference_genome_fasta` and `reference_gff`.
 
 ??? toggle "Reference-based variant calling"
-    After taxonomic identification, TheiaEuk performs reference-based variant calling whenever a `reference_genome_fasta` is inputted or a default organism is selected (user input takes precedence). The resulting variants are summarized with respect to target if a `reference_gff` and `query_genes`/`query_genes_bed` are populated. 
+    After taxonomic identification, TheiaEuk performs reference-based variant calling whenever a `reference_genome_fasta` is provided or a default organism is selected (user input takes precedence). The resulting variants are summarized with respect to target if a `reference_gff` and `query_genes`/`query_genes_bed` are populated. 
 
     Two data-type-specific tracks are supported:
 
@@ -125,7 +125,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
         !!! warning "Keep the FASTA and GFF matched"
             The GFF must reference the same assembly as the reference FASTA. If a custom `reference_genome_fasta` is provided, the accompanying annotation `reference_gff` must be as well (and vice versa); otherwise errors will be experienced, or the gene coordinates may silently not correspond to the aligned reference.
 
-            If a `reference_genome_fasta` is supplied but not a `reference_gff`, or vice versa, then gene coverage calculations and gene-centric variant reporting will not run even if a default organism is identified because it is assumed that the default file is discrepant with user input. Therefore, to run `gene_coverage` and `variant_annotate`, both files need to be explicitly inputted by the user, or explicitly omitted to use defaults.
+            If a `reference_genome_fasta` is supplied but not a `reference_gff`, or vice versa, then gene coverage calculations and gene-centric variant reporting will not run even if a default organism is identified because it is assumed that the default file is discrepant with user input. Therefore, to run `gene_coverage` and `variant_annotate`, both files need to be explicitly provided by the user, or explicitly omitted to use defaults.
 
     ??? dna "`query_genes` and `query_genes_bed` input parameter"
         `query_genes` is a comma-delimited list of query genes to extract from the `reference_gff` supplied by default/the user. These `query_genes` _must_ correspond to the associated "product" field of CDS entries within the `reference_gff`. By default, "FKS1" will match "1,3-beta-D-glucan synthase_complex_FKS1", though exact product matching can be enforced by setting `query_exact_match` to "true".
