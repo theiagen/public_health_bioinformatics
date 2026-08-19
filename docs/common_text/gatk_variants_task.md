@@ -3,7 +3,7 @@ title: Task Fragment `gatk_variants`
 fragment: true
 ---
 ??? task "`gatk_variants`: Variant Calling (Illumina)"
-    This task calls variants from an Illumina alignment (BAM) against the resolved reference genome using [GATK](https://gatk.broadinstitute.org/). 
+    This task calls variants from an Illumina alignment (BAM) against the resolved reference genome using [GATK](https://gatk.broadinstitute.org/).
 
     Variant calling consists of two GATK steps:
 

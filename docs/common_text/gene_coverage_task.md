@@ -38,7 +38,7 @@ fragment: true
 <!-- endif -->
 
     ??? dna "How is coverage quantified?"
-        Depth is quantified as the per-base average number of reads that primarily align to a given region and meet minimum quality thresholds. Breadth of coverage (percent reference coverage) is quantified as the percent of a region with bases that are covered with a depth that meets or exceeds the minimum (10 by default). 
+        Depth is quantified as the per-base average number of reads that primarily align to a given region and meet minimum quality thresholds. Breadth of coverage (percent reference coverage) is quantified as the percent of a region with bases that are covered with a depth that meets or exceeds the minimum (10 by default).
 
     !!! techdetails "Gene Coverage Technical Details"
         |  | Links |
