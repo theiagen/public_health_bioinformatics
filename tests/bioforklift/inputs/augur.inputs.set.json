@@ -19,7 +19,7 @@
         "augur.organism": "this.phylogenetics_viral_set_id",
         "augur.assembly_fastas": "this.phylogenetics_virals.assembly_fasta",
         "augur.sample_metadata_tsvs": "this.phylogenetics_virals.augur_metadata",
-        "augur.build_name": "v4.2.0 test",
+        "augur.build_name": "test",
         "augur.augur_export.include_root_sequence": "true"
       },
       "samples": ["Sample_01", "Sample_02", "Sample_03", "Sample_04", "Sample_05", "Sample_06", "Sample_07", "Sample_08", "Sample_09", "Sample_10", "Sample_11", "Sample_12", "Sample_13", "Sample_14", "Sample_15", "Sample_16", "Sample_17", "Sample_18", "Sample_19", "Sample_20", "Sample_21", "Sample_22", "Sample_23", "Sample_24", "Sample_25"],
