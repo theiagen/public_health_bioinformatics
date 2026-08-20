@@ -1,0 +1,5 @@
+{
+    "clair3_variants_ont.read1":"this.read1",
+    "clair3_variants_ont.reference_genome_file":"this.reference_genome_input",
+    "clair3_variants_ont.samplename":"this.theiacov_ont_id"
+}
