@@ -21,7 +21,7 @@ task fastp {
     String? fastp_args
 
     # runtime options
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/fastp:1.1.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/fastp:1.3.6"
     Int disk_size = 100
     Int cpu = 4
     Int memory = 8
