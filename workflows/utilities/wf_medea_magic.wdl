@@ -31,18 +31,6 @@ workflow medea_magic {
     # cladetyper options - primarily files we host
     String? cauris_cladetyper_docker_image
     Int? cladetyper_kmer_size
-    File? cladetyper_ref_clade1
-    File? cladetyper_ref_clade1_gff
-    File? cladetyper_ref_clade2
-    File? cladetyper_ref_clade2_gff
-    File? cladetyper_ref_clade3
-    File? cladetyper_ref_clade3_gff
-    File? cladetyper_ref_clade4
-    File? cladetyper_ref_clade4_gff
-    File? cladetyper_ref_clade5
-    File? cladetyper_ref_clade5_gff
-    File? cladetyper_ref_clade6
-    File? cladetyper_ref_clade6_gff
     Float? cladetyper_max_distance
     # user-supplied reference fasta; when provided, overrides the hosted/organism reference
     File? reference_genome_fasta
