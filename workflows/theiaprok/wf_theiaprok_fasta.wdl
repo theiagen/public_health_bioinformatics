@@ -628,6 +628,7 @@ workflow theiaprok_fasta {
     File? prokka_gff = prokka.prokka_gff
     File? prokka_gbk = prokka.prokka_gbk
     File? prokka_sqn = prokka.prokka_sqn
+    String? prokka_version = prokka.prokka_version
     # Bakta Results
     File? bakta_gbff = bakta.bakta_gbff
     File? bakta_gff3 = bakta.bakta_gff3
