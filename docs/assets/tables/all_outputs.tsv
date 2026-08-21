@@ -913,6 +913,7 @@ primer_trimmed_read_percent	Float	Percentage of read data with primers trimmed a
 prokka_gbk	File	GenBank file produced from Prokka annotation of input FASTA	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 prokka_gff	File	Prokka output GFF3 file containing sequence and annotation (you can view this in IGV)	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 prokka_sqn	File	A Sequin file for GenBank submission	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+prokka_version	String	Version of Prokka used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 qc_check	String	A string that indicates whether or not the sample passes a set of pre-determined and user-provided QC thresholds	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 qc_standard	File	The file used in the QC Check task containing the QC thresholds.	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 qualimap_coverage_plots_html	File	Interactive HTML Plots of Coverage Across the Genome	Freyja_FASTQ
