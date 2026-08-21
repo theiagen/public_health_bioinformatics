@@ -65,6 +65,7 @@ Dorado
 ECtyper
 ENA
 EcOH
+Ensembl
 Enterobacter
 Entrez
 Escherichia

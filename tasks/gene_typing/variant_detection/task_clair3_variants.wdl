@@ -5,7 +5,7 @@ task clair3_variants {
     File alignment_bam_file
     File alignment_bam_file_index
     File reference_genome_file
-    File reference_genome_file_index
+    File? reference_genome_file_index
     String sequencing_platform
     String samplename
     String clair3_model = "r1041_e82_400bps_sup_v500"
@@ -40,7 +40,13 @@ task clair3_variants {
     # in working directory, but fai not set explicitly, bam and bai coming from same task
     # so we can assume they are in the same directory
     cp ~{reference_genome_file} ~{ref_basename}
-    cp ~{reference_genome_file_index} ~{ref_basename}.fai
+
+    # index reference FASTA (fast enough to rerun w/o importing)
+    if [ -z ~{reference_genome_file_index} ]; then
+      samtools faidx ~{ref_basename}
+    else
+      cp ~{reference_genome_file_index} ~{ref_basename}.fai
+    fi
 
     run_clair3.sh \
         --bam_fn=~{alignment_bam_file} \

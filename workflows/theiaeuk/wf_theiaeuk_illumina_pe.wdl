@@ -182,7 +182,8 @@ workflow theiaeuk_illumina_pe {
           assembly = digger_denovo.assembly_fasta,
           samplename = samplename,
           read1 = read_QC_trim.read1_clean,
-          read2 = read_QC_trim.read2_clean
+          read2 = read_QC_trim.read2_clean,
+          ont_data = false
       }
     }
   }
@@ -309,27 +310,28 @@ workflow theiaeuk_illumina_pe {
     String? cladetyper_clade = medea_magic.clade_type
     String? cladetyper_gambit_version = medea_magic.cladetyper_version
     String? cladetyper_docker_image = medea_magic.cladetyper_docker_image
-    String? cladetyper_annotated_reference = medea_magic.cladetype_annotated_ref
-    # Snippy Outputs
-    String? theiaeuk_snippy_variants_version = medea_magic.snippy_variants_version
-    String? theiaeuk_snippy_variants_query = medea_magic.snippy_variants_query
-    String? theiaeuk_snippy_variants_query_check = medea_magic.snippy_variants_query_check
-    String? theiaeuk_snippy_variants_hits = medea_magic.snippy_variants_hits
-    String? theiaeuk_snippy_variants_reference_genome = medea_magic.snippy_variants_reference_genome
-    String? theiaeuk_snippy_variants_gene_query_results = medea_magic.snippy_variants_gene_query_results
-    # Array[File]? snippy_outputs = medea_magic.snippy_outputs
-    String? theiaeuk_snippy_variants_results = medea_magic.snippy_variants_results
-    String? theiaeuk_snippy_variants_bam = medea_magic.snippy_variants_bam
-    String? theiaeuk_snippy_variants_bai = medea_magic.snippy_variants_bai
-    String? theiaeuk_snippy_variants_outdir_tarball = medea_magic.snippy_variants_outdir_tarball
-    String? theiaeuk_snippy_variants_summary = medea_magic.snippy_variants_summary
-    String? theiaeuk_snippy_variants_num_reads_aligned = medea_magic.snippy_variants_num_reads_aligned
-    String? theiaeuk_snippy_variants_coverage_tsv = medea_magic.snippy_variants_coverage_tsv
-    String? theiaeuk_snippy_variants_num_variants = medea_magic.snippy_variants_num_variants
-    String? theiaeuk_snippy_variants_percent_ref_coverage = medea_magic.snippy_variants_percent_ref_coverage
+    # Variant Calling Outputs (BWA alignment + GATK)
+    String? theiaeuk_reference_gff = medea_magic.reference_gff_used
+    String? theiaeuk_reference_fasta = medea_magic.reference_fasta_used
+    String? theiaeuk_bwa_version = medea_magic.bwa_version
+    File? theiaeuk_variant_calling_bam = medea_magic.variant_calling_bam
+    File? theiaeuk_variant_calling_bai = medea_magic.variant_calling_bai
+    String? theiaeuk_gatk_version = medea_magic.gatk_version
+    File? theiaeuk_gatk_genotype_gvcf = medea_magic.gatk_genotype_gvcf
+    File? theiaeuk_gatk_genotype_gvcf_index = medea_magic.gatk_genotype_gvcf_index
+    File? theiaeuk_gatk_filtered_vcf = medea_magic.gatk_filtered_vcf
+    File? theiaeuk_gatk_selected_vcf = medea_magic.gatk_selected_vcf
     # Gene Coverage Outputs
     File? gene_coverage_stats = medea_magic.gene_coverage_stats
-    Map[String, Float]? gene_coverage_depth_by_gene = medea_magic.depth_by_gene
-    Map[String, Float]? gene_coverage_percent_coverage_by_gene = medea_magic.percent_coverage_by_gene
+    String? gene_coverage_reads_mapped = medea_magic.gene_coverage_reads_mapped
+    String? gene_coverage_mean_percent_coverage = medea_magic.gene_coverage_mean_breadth
+    String? gene_coverage_mean_depth = medea_magic.gene_coverage_mean_depth
+    Map[String, String]? gene_coverage_depth_by_gene = medea_magic.gene_coverage_depth_by_gene
+    Map[String, String]? gene_coverage_breadth_by_gene = medea_magic.gene_coverage_breadth_by_gene
+    Map[String, String]? gene_coverage_reads_by_gene = medea_magic.gene_coverage_reads_by_gene
+    File? variant_annotation_gene_vcf = medea_magic.variant_annotation_gene_vcf
+    File? variant_annotation_warnings = medea_magic.variant_annotation_warnings
+    File? variant_annotation_summary = medea_magic.variant_annotation_summary
+    String? variant_annotations = medea_magic.variant_annotations
   }
 }
