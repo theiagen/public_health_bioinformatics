@@ -19,8 +19,8 @@ task prokka {
   }
   command <<<
   date | tee DATE
-  prokka --version | tee PROKKA_VERSION
-    
+  prokka --version 2>&1 | tail -n1 | tee PROKKA_VERSION
+
   prokka \
     ~{prokka_arguments} \
     --cpus 0 \
