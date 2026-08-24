@@ -847,7 +847,7 @@ flye	additional_parameters	String	Additional parameters for Flye assembler		Opti
 flye	asm_coverage	Int	Reduced coverage for initial disjointig assembly		Optional	TheiaViral_ONT	general	
 flye	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_ONT	runtime	
 flye	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_ONT	runtime	
-flye	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/flye:2.9.4	Optional	TheiaViral_ONT	docker	
+flye	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/flye:2.9.6	Optional	TheiaViral_ONT	docker	
 flye	flye_polishing_iterations	Int	Number of polishing iterations	1	Optional	TheiaViral_ONT	general	
 flye	genome_length	Int	Expected genome length for assembly - requires asm_coverage		Optional	TheiaViral_ONT	general	
 flye	keep_haplotypes	Boolean	True/False to prevent collapsing alternative haplotypes	False	Optional	TheiaViral_ONT	general	
