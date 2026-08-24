@@ -13,10 +13,10 @@
 minimum_pre_commit_version: "3.0.0"
 
 # Applies to every hook below unless a hook sets its own `exclude`.
-# docs/macros/ is the macro implementation (Python + its own README), not a
+# docs/theme/macros/ is the macro implementation (Python + its own README), not a
 # documentation page — none of these checks should run against it, even
-# though docs/macros/README.md would otherwise match `^docs/.*\.md$`.
-exclude: ^docs/macros/
+# though docs/theme/macros/README.md would otherwise match `^docs/.*\.md$`.
+exclude: ^docs/theme/macros/
 
 repos:
   # -------------------------------------------------------------------------
@@ -72,7 +72,7 @@ repos:
 
   # -------------------------------------------------------------------------
   # (1)+(2) Vale — tool-name consistency, American spelling, spelling, doubled
-  #         words. Uses .config/.vale.ini and docs/styles/. Requires the
+  #         words. Uses .config/.vale.ini and docs/theme/styles/. Requires the
   #         `vale` binary.
   # -------------------------------------------------------------------------
   - repo: local

@@ -23,3 +23,4 @@ fragment: true
         | Task | [task_stxtyper.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/escherichia_shigella/task_stxtyper.wdl) |
         | Software Source Code | [ncbi/stxtyper GitHub repository](https://github.com/ncbi/stxtyper) |
         | Software Documentation | [ncbi/stxtyper GitHub repository](https://github.com/ncbi/stxtyper) |
+        | Original Publication(s) | [Algorithm and Software to Type Stx Operons Accurately from Assembled Genomic Sequence](https://doi.org/10.3390/microorganisms14081607) |

@@ -216,7 +216,7 @@ Options:
 
         The following curation steps were followed:
 
-        - *Eschrichia* and *Shigella*
+        - *Escherichia* and *Shigella*
             - A new database for just genomes classified as either *Escherichia* or *Shigella* in the `ncbi_taxonomy`column was created though the following steps:
 
                 1. The metadata spreadsheet for GTDB r232 was filtered to contain only non-MAG genomes for these two genuses based on NCBI taxonomy call
