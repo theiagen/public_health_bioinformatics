@@ -139,6 +139,8 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
         !!! warning "`query_exact_match` input parameter"
             `query_exact_match` is set to "false" by default, which enables gene shorthand names to be used when they correspond to entries within the `reference_gff`. However, this can lead to substring matching, where "ERG11" can match entries with the name "ERG112". To prevent this, completely enter the exact product name of desired genes by referencing the GFF.
 
+            Commas within `query_genes` inputs can be replaced with "." to properly resolve the query name.
+
 
     === "TheiaEuk_Illumina_PE"
 {{ include_md("common_text/bwa_task.md", indent=8, condition="theiaeuk") }}
