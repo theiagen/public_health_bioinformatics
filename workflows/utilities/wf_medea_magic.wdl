@@ -79,18 +79,6 @@ workflow medea_magic {
         assembly_fasta = assembly,
         samplename = samplename,
         kmer_size = cladetyper_kmer_size,
-        ref_clade1 = cladetyper_ref_clade1,
-        ref_clade1_gff = cladetyper_ref_clade1_gff,
-        ref_clade2 = cladetyper_ref_clade2,
-        ref_clade2_gff = cladetyper_ref_clade2_gff,
-        ref_clade3 = cladetyper_ref_clade3,
-        ref_clade3_gff = cladetyper_ref_clade3_gff,
-        ref_clade4 = cladetyper_ref_clade4,
-        ref_clade4_gff = cladetyper_ref_clade4_gff,
-        ref_clade5 = cladetyper_ref_clade5,
-        ref_clade5_gff = cladetyper_ref_clade5_gff,
-        ref_clade6 = cladetyper_ref_clade6,
-        ref_clade6_gff = cladetyper_ref_clade6_gff,
         max_distance = cladetyper_max_distance,
         docker = cauris_cladetyper_docker_image
     }
