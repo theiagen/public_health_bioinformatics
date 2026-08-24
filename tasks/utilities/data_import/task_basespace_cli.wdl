@@ -79,13 +79,18 @@ task fetch_bs {
       echo "Checking Basespace file: $elm"
       filename=$(basename "$elm")
 
+      # "break" is used to exit the surrounding for loop after the first match, since we only need to rename once per sample, each FASTQ file of the pair will be originally named (from Illumina) AND will be renamed the same way
       if [[ "$filename" =~ [-] && "$sample_identifier" =~ [_] ]]; then
         echo "Basespace sample name for $filename contains dashes, input sample identifier $sample_identifier contains underscores, renaming identifier..."
         SAMPLENAME_RENAMED=$(echo "$sample_identifier" | sed 's|_|-|g' | sed 's|\.|-|g')
+        echo "SAMPLENAME_RENAMED set to: $SAMPLENAME_RENAMED"
+        break
       fi
       if [[ "$filename" =~ [_] && "$sample_identifier" =~ [-] ]]; then
         echo "Basespace sample name for $filename contains underscores, input sample identifier $sample_identifier contains dashes, renaming identifier..."
         SAMPLENAME_RENAMED=$(echo "$sample_identifier" | sed 's|-|_|g')
+        echo "SAMPLENAME_RENAMED set to: $SAMPLENAME_RENAMED"
+        break
       fi
       if [[ ("$filename" =~ [_] && "$sample_identifier" =~ [_]) || ("$filename" =~ [-] && "$sample_identifier" =~ [-]) ]]; then
         echo "Both Basespace sample name and input sample identifier for $filename contain matching separators..."
@@ -98,6 +103,9 @@ task fetch_bs {
     done
 
     echo "Renamed identifier: $SAMPLENAME_RENAMED"
+    echo "Listing out FASTQS using variable SAMPLENAME_RENAMED within: ./dataset_*/${SAMPLENAME_RENAMED}_*R1_*.fastq.gz and ./dataset_*/${SAMPLENAME_RENAMED}_*R2_*.fastq.gz"
+    ls ./dataset_*/${SAMPLENAME_RENAMED}_*R1_*.fastq.gz
+    ls ./dataset_*/${SAMPLENAME_RENAMED}_*R2_*.fastq.gz 
 
     #Combine non-empty read files into single file without BaseSpace filename cruft
     ##FWD Read
