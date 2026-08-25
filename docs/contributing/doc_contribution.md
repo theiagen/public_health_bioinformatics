@@ -145,7 +145,7 @@ PHB documentation serves a public health audience that may not be familiar with 
 
 There are two files, with a clear division of labor:
 
-- **`docs/assets/abbreviations.md`** (repository root) — the machine-readable source of hover tooltips. It holds **only organization abbreviations** (repositories, databases, and networks, e.g. `ENA`, `GISAID`, `INSDC`). Each line is an [abbreviation definition](https://zensical.org/docs/authoring/tooltips/#adding-a-glossary) in the form `*[ABBR]: short definition`. This file is **automatically appended to every page** (via the `pymdownx.snippets` `auto_append` setting in `mkdocs.yml`), so wherever an organization abbreviation appears in the rendered docs it becomes a hover tooltip — no per-page work is required.
+- **`docs/assets/abbreviations.md`** — the machine-readable source of hover tooltips. It holds **only organization abbreviations** (repositories, databases, and networks, e.g. `ENA`, `GISAID`, `INSDC`). Each line is an [abbreviation definition](https://zensical.org/docs/authoring/tooltips/#adding-a-glossary) in the form `*[ABBR]: short definition`. This file is **automatically appended to every page** (via the `pymdownx.snippets` `auto_append` setting in `mkdocs.yml`), so wherever an organization abbreviation appears in the rendered docs it becomes a hover tooltip — no per-page work is required.
 - **`docs/guides/glossary.md`** — the human-readable [Glossary](../guides/glossary.md) page and the complete reference for **every** term. It is organized into these sections: "Sequencing and analysis terms"; "File formats"; "Genomic characterization terms"; "Platforms and tools"; "Databases, repositories, and organizations"; "Pathogens and organisms"; and "Acronyms and abbreviations".
 
 To add or change an entry:
@@ -168,9 +168,9 @@ Four categories of checks are enforced:
 
 | Check | Tool | Config | What it catches |
 | --- | --- | --- | --- |
-| Tool-name consistency | [Vale](https://vale.sh/) | `docs/styles/PHB/ToolNames.yml` | Inconsistent capitalization/spelling of tools (e.g. `IQTree` → `IQ-TREE`, `Github` → `GitHub`) |
-| American spelling | Vale | `docs/styles/PHB/AmericanSpelling.yml` | British spellings (e.g. `characterise` → `characterize`, `colour` → `color`) |
-| Spelling & doubled words | Vale | `.config/.vale.ini` + `docs/styles/config/vocabularies/PHB/` | Typos and repeated words; domain terms are whitelisted in `accept.txt` |
+| Tool-name consistency | [Vale](https://vale.sh/) | `docs/theme/styles/PHB/ToolNames.yml` | Inconsistent capitalization/spelling of tools (e.g. `IQTree` → `IQ-TREE`, `Github` → `GitHub`) |
+| American spelling | Vale | `docs/theme/styles/PHB/AmericanSpelling.yml` | British spellings (e.g. `characterise` → `characterize`, `colour` → `color`) |
+| Spelling & doubled words | Vale | `.config/.vale.ini` + `docs/theme/styles/config/vocabularies/PHB/` | Typos and repeated words; domain terms are whitelisted in `accept.txt` |
 | Whitespace hygiene | pre-commit hooks | `.config/.pre-commit-config.yaml` | Trailing whitespace, missing final newline, space before `%` |
 | Markdown formatting | [markdownlint](https://github.com/DavidAnson/markdownlint) | `.config/.markdownlint.yaml` | Skipped heading levels, bare URLs, list/heading spacing, etc. |
 
@@ -196,10 +196,12 @@ Once installed with `-c .config/.pre-commit-config.yaml`, the git hook remembers
 The whitespace hooks and `markdownlint --fix` correct issues automatically; Vale reports each issue with the suggested replacement so you can apply it.
 
 !!! dna "Adding an accepted term or tool name"
-    - If Vale flags a valid domain term as a misspelling, add it to `docs/styles/config/vocabularies/PHB/accept.txt`.
-    - To standardize a new tool name, add the incorrect → correct mapping to `docs/styles/PHB/ToolNames.yml`.
+    - If Vale flags a valid domain term as a misspelling, add it to `docs/theme/styles/config/vocabularies/PHB/accept.txt`.
+    - To standardize a new tool name, add the incorrect → correct mapping to `docs/theme/styles/PHB/ToolNames.yml`.
 
 ## Documentation Structure
+
+Everything under `docs/` that a reader can navigate to (workflow pages, guides, task fragments, their supporting data/images) lives directly under `docs/`, matching the site's URL structure page-for-page. `docs/theme/` is the one exception: it holds the site mechanics — styling, scripts, macro logic, and lint configuration — that render that content into pages, but is never itself a page. If you're writing or editing a workflow page, guide, or task description, you want the top level of `docs/`. If you're touching styling, scripts, macros, or lint rules, you want `docs/theme/`.
 
 A brief description of the documentation structure is as follows:
 
@@ -207,19 +209,25 @@ A brief description of the documentation structure is as follows:
     - `assets/` - Contains images and other files used in the documentation.
         - `figures/` - Contains images, figures, and workflow diagrams used in the documentation. For workflows that contain many images (such as BaseSpace_Fetch), it is recommended to create a subdirectory for the workflow.
         - `files/` - Contains files that are used in the documentation. This may include example outputs or templates. For workflows that contain many files (such as TheiaValidate), it is recommended to create a subdirectory for the workflow.
-        - `logos/` - Contains Theiagen logos and symbols used in the documentation.
         - `metadata_formatters/` - Contains the most up-to-date metadata formatters for our submission workflows.
         - `sops/` - Contains any Standard Operating Procedures (SOPs) that correspond to workflows in the documentation.
         - `tables/` - Contains TSV files used to generate tables in the documentation. These are used to generate the overview tables for workflows, as well as the input and output tables for workflows.
+        - `abbreviations.md` - Machine-consumed hover-tooltip source for organization abbreviations (auto-appended to every page). Not part of the human-readable Glossary — see below.
         - `new_workflow_template.md` - [A template for adding a new workflow page to the documentation](../assets/new_workflow_template.md).
     - `common_text/` - Contains the Markdown files for common text used in the documentation. This includes task descriptions, workflow descriptions, and other common text. This is where you will put any new task descriptions or workflow descriptions that are not specific to a single workflow. This enables modular and reusable documentation.
     - `contributing/` - Contains the Markdown files for our contribution guides, such as this file
-    - `javascripts/` - Contains JavaScript files used in the documentation.
-        - `tablesort.js` - A JavaScript file used to enable table sorting in the documentation.
-    - `overrides/` - Contains HTMLs used to override theme defaults
-        - `main.html` - Contains the HTML used to display a warning when the latest version is not selected
-    - `stylesheets/` - Contains CSS files used in the documentation.
-        - `extra.css` - A custom CSS file used to style the documentation; contains all custom theme elements (scrollable tables, resizable columns, Theiagen colors), and custom admonitions.
+    - `getting_started/` - Contains the Markdown files for the "Getting Started" narrative guides (command-line, Terra.bio, failure philosophy).
+    - `guides/` - Contains the Markdown files for per-tool/task guides, the Glossary, and other reference pages.
+    - `theme/` - Contains the site mechanics: styling, scripting, macro logic, logos, and lint configuration. Nothing here is authored documentation prose, and none of it is reachable as a page.
+        - `javascripts/` - Contains JavaScript files used in the documentation.
+            - `tablesort.js` - A JavaScript file used to enable table sorting in the documentation.
+        - `logos/` - Contains Theiagen logos and symbols used by the theme (site logo/favicon).
+        - `macros/` - Contains the Python macro implementation (`main.py`) that powers `render_tsv_table()` and `include_md()`. See its own [README](https://github.com/theiagen/public_health_bioinformatics/blob/main/docs/theme/macros/README.md) for details.
+        - `overrides/` - Contains HTMLs used to override theme defaults
+            - `main.html` - Contains the HTML used to display a warning when the latest version is not selected
+        - `styles/` - Contains the Vale linting configuration (`PHB/` custom style rules and `config/vocabularies/PHB/` accepted-spelling lists) used to lint the rendered content.
+        - `stylesheets/` - Contains CSS files used in the documentation.
+            - `extra.css` - A custom CSS file used to style the documentation; contains all custom theme elements (scrollable tables, resizable columns, Theiagen colors), and custom admonitions.
     - `workflows/` - Contains the Markdown files for each workflow, organized into subdirectories by workflow category
     - `workflows_overview/` - Contains the Markdown files for the overview tables for each display type: alphabetically, by applicable kingdom, and by workflow type.
     - `index.md` - The home/landing page for our documentation.
@@ -241,14 +249,14 @@ If you are adding a new workflow, there are a number of things to do in order to
      - Command-line compatibility - Options: "Yes", "No", and/or "Some optional features incompatible"
      - The version where the last known changes occurred (likely the upcoming version if it is a new workflow -- if the upcoming version number is currently unknown, please use `vX.X.X`)
      - Link to the workflow on Dockstore - Link the workflow name to the information tab on Dockstore.
-3. Format this information in the `assets/tables/all_workflows.tsv` file.
+3. Format this information in the `docs/assets/tables/all_workflows.tsv` file.
 4. Copy the path to the workflow documentation page to ==**ALL**== of the appropriate locations in the `mkdocs.yml` file (under the `nav:` section) in the main directory of this repository. This ensures the workflow can be accessed from the navigation sidebar.
 
 ### Macros
 
-The documentation uses a few macros to help with the formatting of the documentation. These macros are defined in `macros/main.py` and are used in the documentation files. The following macros are available:
+The documentation uses a few macros to help with the formatting of the documentation. These macros are defined in `docs/theme/macros/main.py` and are used in the documentation files. The following macros are available:
 
 - `render_tsv_table()` - This macro is used to create a table from a TSV file. The TSV file should be in the `docs/assets/tables` directory and should be formatted as a TAB-DELIMITED table. The macro will automatically create a table from the TSV file and insert it into the documentation.
 - `include_md()` - This macro is used to include a Markdown file in the documentation. The macro will automatically adjust the heading levels, resolve relative links, and support conditional and nested includes.
 
-Please see the [macros README](https://github.com/theiagen/public_health_bioinformatics/blob/main/macros/README.md) for more information.
+Please see the [macros README](https://github.com/theiagen/public_health_bioinformatics/blob/main/docs/theme/macros/README.md) for more information.
