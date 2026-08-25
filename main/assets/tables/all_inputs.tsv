@@ -668,7 +668,7 @@ digger_denovo	skesa_docker	String	The Docker container to use for the task	us-do
 digger_denovo	skesa_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime	
 digger_denovo	spades_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime	
 digger_denovo	spades_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime	
-digger_denovo	spades_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/spades:4.1.0	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	docker	
+digger_denovo	spades_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/spades:4.3.0	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	docker	
 digger_denovo	spades_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime	
 digger_denovo	spades_timeout	Int	Timeout, in minutes, to kill SPAdes runs - 0 disables this function	0	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 digger_denovo	spades_type	String	SPAdes assembly mode (isolate, meta, rna, etc.), more can be found [here](https://ablab.github.io/spades/running.html)	isolate	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
@@ -2233,7 +2233,7 @@ sort_bam_assembly_correction	memory	Int	Amount of memory/RAM (in GB) to allocate
 sort_bam_assembly_correction	min_qual	Int	Minimum quality score for reads to be included in the analysis		Optional	TheiaMeta_Illumina_PE	general	
 spades	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_Illumina_PE	runtime	
 spades	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE	runtime	
-spades	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/spades:4.1.0	Optional	TheiaViral_Illumina_PE	docker	
+spades	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/spades:4.3.0	Optional	TheiaViral_Illumina_PE	docker	
 spades	kmers	String	list of k-mer sizes (must be odd and less than 128)	auto	Optional	TheiaViral_Illumina_PE	general	True
 spades	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaViral_Illumina_PE	runtime	
 spades	phred_offset	Int	PHRED quality offset in the input reads (33 or 64)	33	Optional	TheiaViral_Illumina_PE	general	
