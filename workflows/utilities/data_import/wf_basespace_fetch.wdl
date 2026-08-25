@@ -6,7 +6,7 @@ import "../../../tasks/utilities/data_import/task_basespace_api.wdl" as basespac
 workflow basespace_fetch {
   input {
     String sample_name
-    String basespace_sample_name
+    String basespace_sample_id
     String basespace_collection_id
     String basespace_access_token
 
@@ -17,7 +17,7 @@ workflow basespace_fetch {
   call basespace.fetch_bs {
     input:
       sample_name = sample_name,
-      basespace_sample_name = basespace_sample_name,
+      basespace_sample_id = basespace_sample_id,
       basespace_collection_id = basespace_collection_id,
       basespace_access_token = basespace_access_token,
       basespace_api_url = basespace_api_url,

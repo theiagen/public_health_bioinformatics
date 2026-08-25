@@ -3,7 +3,7 @@ version 1.0
 task fetch_bs {
   input {
     String sample_name
-    String basespace_sample_name
+    String basespace_sample_id
     String basespace_collection_id
     String basespace_access_token
     String basespace_api_url = "https://api.basespace.illumina.com"
@@ -38,16 +38,16 @@ task fetch_bs {
 
     bs.fetch_sample_fastqs(
         collection_id="~{basespace_collection_id}",
-        samples=["~{basespace_sample_name}"],
+        samples=["~{basespace_sample_id}"],
         validate_paired_end=validate_paired_end,
         group_by_lane=group_by_lane,
     )
     CODE
 
     # Cannot rename the concatenated FASTQs if they have the same name
-    if [[ "~{basespace_sample_name}" != "~{sample_name}" ]]; then
-        mv "~{basespace_sample_name}_R1.fastq.gz" "~{sample_name}_R1.fastq.gz"
-        mv "~{basespace_sample_name}_R2.fastq.gz" "~{sample_name}_R2.fastq.gz"
+    if [[ "~{basespace_sample_id}" != "~{sample_name}" ]]; then
+        mv "~{basespace_sample_id}_R1.fastq.gz" "~{sample_name}_R1.fastq.gz"
+        mv "~{basespace_sample_id}_R2.fastq.gz" "~{sample_name}_R2.fastq.gz"
     fi
   >>>
   output {
