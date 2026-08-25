@@ -15,7 +15,7 @@ task fetch_bs {
     Int cpu = 2
     Int disk_size = 250
 
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/bioforklift:0.5.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/bioforklift:0.5.2-dev"
   }
   meta {
     # added so that call caching is always turned off
