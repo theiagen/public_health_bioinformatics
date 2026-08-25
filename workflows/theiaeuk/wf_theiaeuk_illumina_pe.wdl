@@ -23,7 +23,7 @@ workflow theiaeuk_illumina_pe {
     Boolean call_rasusa = true
     Float rasusa_downsampling_coverage = 150
     Int min_reads = 30000
-    # Edited default values
+    # edited default values
     Int min_basepairs = 45000000
     Int min_genome_length = 9000000
     Int max_genome_length = 178000000
@@ -32,6 +32,12 @@ workflow theiaeuk_illumina_pe {
     Int trim_min_length = 75
     Int trim_quality_min_score = 20
     Int trim_window_size = 10
+    # assembler default values
+    Int assembler_memory = 32
+    String assembler = "skesa"
+    Int assembler_cpu = 4
+    Int assembler_disk_size = 100
+    String? assembler_docker
     Int min_contig_length = 1000
     Int busco_memory = 24
     String busco_docker_image = "us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.3.2_cv1"
@@ -99,7 +105,20 @@ workflow theiaeuk_illumina_pe {
           read1 = read_QC_trim.read1_clean,
           read2 = read_QC_trim.read2_clean,
           min_contig_length = min_contig_length,
-          filter_contigs_min_length = min_contig_length
+          filter_contigs_min_length = min_contig_length,
+          assembler = assembler,
+          skesa_memory = assembler_memory,
+          skesa_cpu = assembler_cpu,
+          skesa_disk_size = assembler_disk_size,
+          skesa_docker = assembler_docker,
+          spades_memory = assembler_memory,
+          spades_cpu = assembler_cpu,
+          spades_disk_size = assembler_disk_size,
+          spades_docker = assembler_docker,
+          megahit_memory = assembler_memory,
+          megahit_cpu = assembler_cpu,
+          megahit_disk_size = assembler_disk_size,
+          megahit_docker = assembler_docker
       }
       call quast_task.quast {
         input:
