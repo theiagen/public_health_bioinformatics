@@ -1,0 +1,10 @@
+{
+  "augur_prep.prep_augur_metadata.organism": "this.organism",
+  "augur_prep.pango_lineage": "this.pango_lineage",
+  "augur_prep.country": "this.country",
+  "augur_prep.collection_date": "this.collection_date",
+  "augur_prep.assembly": "this.assembly_fasta",
+  "augur_prep.clade": "this.nextclade_clade",
+  "augur_prep.region": "this.continent",
+  "augur_prep.division": "this.state"
+}
