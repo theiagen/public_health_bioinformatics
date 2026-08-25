@@ -220,7 +220,7 @@ workflow medea_magic {
   if (defined(gatk_filter.gatk_filtered_vcf) || defined(clair3_variant_calling.clair3_variants_vcf)) {
     File variant_annotation_vcf = select_first([gatk_filter.gatk_selected_vcf, clair3_variant_calling.clair3_variants_vcf])
   }
-  if (defined(resolved_reference_gff) || defined(query_genes_bed)) {
+  if ((defined(resolved_reference_gff) && defined(query_genes)) || defined(query_genes_bed)) {
     if (defined(bwa_variant_calling.sorted_bam) || defined(ont_bam_sorting.bam)) {
       call gene_coverage_task.gene_coverage {
         input:
