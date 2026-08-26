@@ -6,7 +6,7 @@
 
 ## TheiaEuk Workflows
 
-**The TheiaEuk workflows are for the assembly, quality assessment, and characterization of fungal genomes.** It is designed to accept Illumina paired-end sequencing data or base-called ONT reads as the primary input. **It is currently intended only for ==haploid== fungal genomes like _Candidozyma auris_.** Analyzing diploid genomes using TheiaEuk should be attempted only with expert attention to the resulting genome quality.
+**The TheiaEuk workflows are for the assembly, quality assessment, and characterization of fungal genomes.** It is designed to accept Illumina paired-end sequencing data or base-called ONT reads as the primary input. **It is currently intended only for ==haploid== fungal genomes like _Candidozyma auris_.** Variant calling can be account for diploid and polyploidy, but assembling diploid genomes using TheiaEuk should be attempted only with expert attention to the resulting genome quality.
 
 All input reads are processed through "core tasks" in each workflow. The core tasks include raw read quality assessment, read cleaning (quality trimming and adapter removal), de novo assembly, assembly quality assessment, species taxon identification, and antimicrobial resistance (AMR) _in silico_ prediction. For some taxa identified, taxa-specific sub-workflows will be automatically activated, undertaking additional taxa-specific characterization steps, including clade-typing and/or antifungal resistance detection.
 
@@ -137,7 +137,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
          - _Cryptococcus neoformans_: `CNA00300` (ERG11 in the default reference)
 
         !!! warning "Replace ',' and ' ' with '.'"
-            Commas and spaces within `query_genes` inputs can be replaced with "." to properly resolve the query name.
+            Commas and spaces within `query_genes` inputs can be replaced with "." to properly resolve the query name(s).
 
         !!! warning "`query_exact_match` input parameter"
             `query_exact_match` is set to "false" by default, which enables gene shorthand names to be used when they correspond to entries within the `reference_gff`. However, this can lead to substring matching, where "ERG11" can match entries with the name "ERG112". To prevent this, completely enter the exact product name of desired genes by referencing the GFF.
