@@ -107,18 +107,10 @@ workflow theiaeuk_illumina_pe {
           min_contig_length = min_contig_length,
           filter_contigs_min_length = min_contig_length,
           assembler = assembler,
-          skesa_memory = assembler_memory,
-          skesa_cpu = assembler_cpu,
-          skesa_disk_size = assembler_disk_size,
-          skesa_docker = assembler_docker,
-          spades_memory = assembler_memory,
-          spades_cpu = assembler_cpu,
-          spades_disk_size = assembler_disk_size,
-          spades_docker = assembler_docker,
-          megahit_memory = assembler_memory,
-          megahit_cpu = assembler_cpu,
-          megahit_disk_size = assembler_disk_size,
-          megahit_docker = assembler_docker
+          assembler_docker = assembler_docker,
+          assembler_memory = assembler_memory,
+          assembler_cpu = assembler_cpu,
+          assembler_disk_size = assembler_disk_size
       }
       call quast_task.quast {
         input:
