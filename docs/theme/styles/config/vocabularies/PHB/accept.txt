@@ -488,6 +488,7 @@ plasmid
 plasmids
 pneumoniae
 pneumophila
+polyploid
 polytomy
 prefilter
 prokaryote
