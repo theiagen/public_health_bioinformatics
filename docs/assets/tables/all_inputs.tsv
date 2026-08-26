@@ -723,7 +723,7 @@ fasta_utilities	docker	String	The Docker container to use for the task	us-docker
 fasta_utilities	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaViral_ONT	runtime	
 fastp	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Metabuli, TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
 fastp	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Metabuli, TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
-fastp	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/fastp:1.1.0	Optional	Metabuli, TheiaViral_Illumina_PE, TheiaViral_Panel	docker	
+fastp	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/fastp:1.3.6	Optional	Metabuli, TheiaViral_Illumina_PE, TheiaViral_Panel	docker	
 fastp	fastp_adapter_fasta	File	FASTA of adapters to replace Fastp's default adapter search		Optional	Metabuli, TheiaViral_Illumina_PE, TheiaViral_Panel	general	
 fastp	fastp_args	String	Additional arguments to use with fastp		Optional	Metabuli, TheiaViral_Illumina_PE, TheiaViral_Panel	general	
 fastp	fastp_min_length	Int	Minimum read length	15	Optional	Metabuli, TheiaViral_Illumina_PE, TheiaViral_Panel	general	
