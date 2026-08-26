@@ -89,7 +89,8 @@ artic_pipeline_docker	String	Docker image used for the ARTIC pipeline	TheiaCoV_C
 artic_pipeline_reference	String	Reference genome used for the ARTIC pipeline	TheiaCoV_ClearLabs, TheiaCoV_ONT
 artic_version	String	Version of the Artic software used for read trimming and conesnsus genome assembly	TheiaCoV_ClearLabs, TheiaCoV_ONT
 assembled_viruses	Int	Number of viruses assembled from sample	TheiaViral_Panel
-assembler	String	Assembler used in digger_denovo subworkflow	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+assembler	String	Assembler used in digger_denovo subworkflow	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+assembler_used	String	Assembler used in digger_denovo subworkflow	TheiaEuk_Illumina_PE
 assembler_version	String	Version of the assembler used in digger_denovo	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 assemblies	Array[File]	Assembly files generated during the workflow	TheiaViral_Panel
 assembly_consensus_fasta	File	Final consensus assembly in FASTA format	TheiaViral_Illumina_PE, TheiaViral_ONT
