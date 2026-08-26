@@ -32,8 +32,11 @@ with open("~{reference_gff}") as fh:
     for line in fh:
         if line.startswith("#"):
             header.append(line)
+        elif line.strip().lower() in {'##fasta', '## fasta'}:
+            break
         elif line.strip():
             records.append(line)
+
 # sort by contig_id (col 1) then integer start coordinate (col 4)
 records.sort(key=lambda l: (l.split("\t")[0], int(l.split("\t")[3])))
 with open("reference_sorted.gff", "w") as out:
