@@ -34,6 +34,9 @@ fragment: true
         - `query_genes_bed` supplies coordinates directly; gene names are taken from the fourth column of the BED file
         - If neither is supplied, the entire VCF is annotated
 
+    ??? dna "Depth annotation with complementary nucleotides"
+        Depths may be annotated with the complementary nucleotides that are associated with the single-nucleotide variant when the query region are annotated as the negative-strand.
+
     !!! techdetails "Variant Annotation Technical Details"
         |  | Links |
         | --- | --- |
