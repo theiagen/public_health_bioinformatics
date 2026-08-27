@@ -48,11 +48,11 @@ task tbp_parser {
     gene_database_yml="~{gene_database_yml}"
     if [[ ! -s "${gene_database_yml}" ]]; then
       if [[ ! -s "~{tbprofiler_db_mutations}" ]]; then
-        echo "ERROR: no `--gene_database_yml` provided and no tbprofiler_db_mutations (mutations.json) to build one from; supply one of the two"
+        echo "ERROR: no '--gene_database_yml' provided and no tbprofiler_db_mutations (mutations.json) to build one from; supply one of the two"
         exit 1
       fi
 
-      echo "No `--gene_database_yml` provided; building one from the TBProfiler mutations database"
+      echo "No '--gene_database_yml' provided; building one from the TBProfiler mutations database"
       tbp-parser build_gene_db \
         --db "~{tbprofiler_db_mutations}" \
         --input_json "~{tbprofiler_json}" \
@@ -66,7 +66,7 @@ task tbp_parser {
     # Build one from the gene database resolved above if one was not provided.
     lims_report_format_yml="~{lims_report_format_yml}"
     if [[ ! -s "${lims_report_format_yml}" ]]; then
-      echo "No `--lims_report_format_yml` provided; deriving one from ${gene_database_yml}"
+      echo "No '--lims_report_format_yml' provided; deriving one from ${gene_database_yml}"
       tbp-parser build_lims_fmt \
         --gene_database_yml "${gene_database_yml}" \
         --output lims_report_fmt.yml \
