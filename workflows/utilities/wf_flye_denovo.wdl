@@ -101,7 +101,7 @@ workflow flye_denovo {
   }
   # Optional Porechop trimming before Flye
   if (run_porechop) {
-    call task_porechop.porechop {
+    call porechop_task.porechop {
       input:
         read1 = read1,
         samplename = samplename,
@@ -212,9 +212,10 @@ workflow flye_denovo {
             disk_size = dorado_disk_size,
             docker = dorado_docker
         }
+      }
     }
     # Contig Filtering and Final Assembly orientation
-    call filter_configs_task.filter_contigs {
+    call filter_contigs_task.filter_contigs {
       input:
         samplename = samplename,
         assembly_fasta = select_first([polypolish.polished_assembly, dorado.polished_fasta, medaka.medaka_fasta, racon.polished_fasta, flye.assembly_fasta]), # Use Flye assembly if no polishing
