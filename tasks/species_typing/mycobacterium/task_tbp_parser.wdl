@@ -3,13 +3,14 @@ version 1.0
 task tbp_parser {
   input {
     String samplename
-    # required/positional arguments
+    # required arguments
     File tbprofiler_json
     File tbprofiler_bam
     File tbprofiler_bai
+    File coverage_bed
     # file arguments
+    File? tbprofiler_db_mutations
     File? config
-    File? coverage_bed
     File? err_coverage_bed
     File? lims_report_format_yml
     File? gene_database_yml
@@ -19,6 +20,7 @@ task tbp_parser {
     Int? min_read_support # default 10
     Float? min_frequency # default 0.1
     Float? min_percent_loci_covered # default 0.7
+    Boolean skip_input_validation = false # skip checking that every gene/drug pair in the BED and LIMS files is present in the gene database
     # tNGS-specific arguments
     Boolean tngs_data = false
     Boolean use_err_for_qc = false
@@ -34,32 +36,60 @@ task tbp_parser {
     # WDL runtime arguments
     Int cpu = 1
     Int disk_size = 100
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:v3.0.3"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:3.1.0-dev"
     Int memory = 16
   }
   command <<<
-    # NOTE must explicity set this default in order to determine GENOME_PC and AVERAGE_DEPTH
-    if [[ -z "~{coverage_bed}" ]]; then
-      coverage_bed="/tbp-parser/tbp_parser/data/tbdb.bed"
-    else
-      coverage_bed="~{coverage_bed}"
-    fi
-
     # get version
     tbp-parser --version | tee VERSION
 
+    # tbp-parser v3.1.0 requires `--gene_database_yml`
+    # Build one from the TBProfiler mutations database if one was not provided.
+    gene_database_yml="~{gene_database_yml}"
+    if [[ ! -s "${gene_database_yml}" ]]; then
+      if [[ ! -s "~{tbprofiler_db_mutations}" ]]; then
+        echo "ERROR: no `--gene_database_yml` provided and no tbprofiler_db_mutations (mutations.json) to build one from; supply one of the two"
+        exit 1
+      fi
+
+      echo "No `--gene_database_yml` provided; building one from the TBProfiler mutations database"
+      tbp-parser build_gene_db \
+        --db "~{tbprofiler_db_mutations}" \
+        --input_json "~{tbprofiler_json}" \
+        --output gene_db.yml \
+        ~{true="--debug" false="" tbp_parser_debug}
+
+      gene_database_yml="gene_db.yml"
+    fi
+
+    # tbp-parser v3.1.0 requires `--lims_report_format_yml`
+    # Build one from the gene database resolved above if one was not provided.
+    lims_report_format_yml="~{lims_report_format_yml}"
+    if [[ ! -s "${lims_report_format_yml}" ]]; then
+      echo "No `--lims_report_format_yml` provided; deriving one from ${gene_database_yml}"
+      tbp-parser build_lims_fmt \
+        --gene_database_yml "${gene_database_yml}" \
+        --output lims_report_fmt.yml \
+        ~{true="--debug" false="" tbp_parser_debug}
+
+      lims_report_format_yml="lims_report_fmt.yml"
+    fi
+
     # run tbp-parser
-    tbp-parser ~{tbprofiler_json} ~{tbprofiler_bam} \
+    tbp-parser parse \
+      --input_json ~{tbprofiler_json} \
+      --input_bam ~{tbprofiler_bam} \
+      --coverage_bed ~{coverage_bed} \
+      --gene_database_yml "${gene_database_yml}" \
+      --lims_report_format_yml "${lims_report_format_yml}" \
       ~{"--config " + config} \
-      ~{"--coverage_bed " + coverage_bed} \
       ~{"--err_coverage_bed " + err_coverage_bed} \
-      ~{"--lims_report_format_yml " + lims_report_format_yml} \
-      ~{"--gene_database_yml " + gene_database_yml} \
       ~{"--min_depth " + min_depth} \
       ~{"--min_percent_coverage " + min_percent_coverage} \
       ~{"--min_read_support " + min_read_support} \
       ~{"--min_frequency " + min_frequency} \
       ~{"--min_percent_loci_covered " + min_percent_loci_covered} \
+      ~{true="--skip_input_validation" false="" skip_input_validation} \
       ~{true="--tngs" false="" tngs_data} \
       ~{true="--use_err_for_qc" false="" use_err_for_qc} \
       ~{true="--resolve_overlapping_regions" false="" resolve_overlapping_regions} \
@@ -68,14 +98,14 @@ task tbp_parser {
       ~{"--sequencing_method " + sequencing_method} \
       ~{"--operator " + operator} \
       ~{if defined(find_and_replace) then "--find_and_replace '~{find_and_replace}'" else ""} \
-      ~{true="--debug" false="--verbose" tbp_parser_debug} \
+      ~{true="--debug" false="" tbp_parser_debug} \
       --output_prefix ~{samplename}
 
     python <<CODE
     import pysam
-    import sys
 
     tbprofiler_bam = "~{tbprofiler_bam}"
+    coverage_bed = "~{coverage_bed}"
     min_depth = int("~{min_depth}")
     is_tngs = "~{tngs_data}" == "true"
 
@@ -104,7 +134,7 @@ task tbp_parser {
         bam.close()
 
         # iterate BED file regions (1-based coordinates) and run mpileup for each region, accumulating coverage metrics
-        with open("${coverage_bed}") as bed:
+        with open(coverage_bed) as bed:
             for line in bed:
                 line = line.strip()
                 if not line:
@@ -165,6 +195,8 @@ task tbp_parser {
     File tbp_parser_lims_report_transposed_csv = "~{samplename}.lims_report.transposed.csv"
     File tbp_parser_locus_coverage_report_csv = "~{samplename}.locus_coverage_report.csv"
     File? tbp_parser_target_coverage_report_csv = "~{samplename}.target_coverage_report.csv"
+    File? tbp_parser_generated_gene_database_yml = "gene_db.yml"
+    File? tbp_parser_generated_lims_report_format_yml = "lims_report_fmt.yml"
     File tbp_parser_log = "~{samplename}.log"
     Float tbp_parser_genome_percent_coverage = read_float("GENOME_PC")
     Float tbp_parser_average_genome_depth = read_float("AVG_DEPTH")
