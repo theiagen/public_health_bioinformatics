@@ -17,12 +17,12 @@ task tbprofiler {
     Float min_af = 0.1
 
     File? tbprofiler_custom_db
-    String? tbdb_branch
+    String tbdb_branch = "who_v2+"
     String? tbdb_branch_commit_hash
 
     Int cpu = 8
     Int disk_size = 100
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:6.6.3"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:6.7.0"
     Int memory = 16
   }
   command <<<
@@ -111,6 +111,10 @@ task tbprofiler {
     # decompress the final merged vcf file for output
     gunzip ./vcf/~{samplename}.targets.csq.merged.vcf.gz
 
+    # copy and output the tbprofiler mutations database (mutations.json) used to call variants
+    cp "/opt/conda/share/tbprofiler/~{tbdb_branch}/mutations.json" "mutations.json"
+    cp "/opt/conda/share/tbprofiler/~{tbdb_branch}/genes.bed" "genes.bed"
+
     python3 <<CODE
     import csv
     import json
@@ -164,6 +168,8 @@ task tbprofiler {
     String tbprofiler_resistance_genes = read_string("RESISTANCE_GENES")
     Float tbprofiler_median_depth = read_float("MEDIAN_DEPTH")
     Float tbprofiler_pct_reads_mapped = read_float("PCT_READS_MAPPED")
+    File? tbprofiler_db_mutations = "mutations.json"
+    File? tbprofiler_db_bed = "genes.bed"
   }
   runtime {
     docker: "~{docker}"
