@@ -2,6 +2,7 @@ version 1.0
 
 import "../../tasks/gene_typing/drug_resistance/task_abricate.wdl" as abricate_task
 import "../../tasks/gene_typing/drug_resistance/task_amr_search.wdl" as amr_search_task
+import "../../tasks/gene_typing/task_sieve.wdl" as sieve_task
 import "../../tasks/species_typing/acinetobacter/task_kaptive.wdl" as kaptive_task
 import "../../tasks/species_typing/escherichia_shigella/task_ectyper.wdl" as ectyper_task
 import "../../tasks/species_typing/escherichia_shigella/task_serotypefinder.wdl" as serotypefinder_task
@@ -81,6 +82,7 @@ workflow merlin_magic {
     String? shigapass_docker_image
     String? shigatyper_docker_image
     String? shigeifinder_docker_image
+    String? sieve_nmeningitidis_docker_image
     String? sistr_docker_image
     String? sonneityping_docker_image
     String? spatyper_docker_image
@@ -163,6 +165,10 @@ workflow merlin_magic {
     File? poppunk_gps_unword_clusters_csv
     File? poppunk_gps_refs_graph_gt
     File? poppunk_gps_external_clusters_csv
+    # sieve options - nmen_serogroup plugin
+    Float? sieve_nmeningitidis_min_identity
+    Float? sieve_nmeningitidis_min_coverage
+    String? sieve_nmeningitidis_parameters
     # sistr options
     Boolean? sistr_use_full_cgmlst_db
     Int? sistr_cpu
@@ -422,6 +428,20 @@ workflow merlin_magic {
         assembly = assembly,
         samplename = samplename,
         docker = meningotype_docker_image
+    }
+    call sieve_task.sieve as sieve_nmeningitidis {
+      input:
+        assembly = assembly,
+        samplename = samplename,
+        plugin = "nmen_serogroup",
+        engine = "blast",
+        min_identity = sieve_nmeningitidis_min_identity,
+        min_coverage = sieve_nmeningitidis_min_coverage,
+        parameters = sieve_nmeningitidis_parameters,
+        serogroup_key = "serogroup",
+        genes_key = "genes_present",
+        notes_key = "notes",
+        docker = sieve_nmeningitidis_docker_image
     }
   }
   if (merlin_tag == "Pseudomonas aeruginosa") {
@@ -844,6 +864,12 @@ workflow merlin_magic {
     String? meningotype_NHBA = meningotype.meningotype_NHBA
     String? meningotype_NadA = meningotype.meningotype_NadA
     String? meningotype_BAST = meningotype.meningotype_BAST
+    File? sieve_nmeningitidis_results = sieve_nmeningitidis.sieve_results
+    String? sieve_nmeningitidis_serogroup = sieve_nmeningitidis.sieve_serogroup
+    String? sieve_nmeningitidis_genes_present = sieve_nmeningitidis.sieve_genes_present
+    String? sieve_nmeningitidis_notes = sieve_nmeningitidis.sieve_notes
+    String? sieve_nmeningitidis_version = sieve_nmeningitidis.sieve_version
+    String? sieve_nmeningitidis_docker = sieve_nmeningitidis.sieve_docker
     # Acinetobacter Typing
     File? kaptive_output_file_k = kaptive.kaptive_output_file_k
     File? kaptive_output_file_oc = kaptive.kaptive_output_file_oc
