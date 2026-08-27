@@ -1,14 +1,15 @@
 version 1.0
 
-import "../../tasks/quality_control/read_filtering/task_porechop.wdl" as task_porechop
-import "../../tasks/assembly/task_flye.wdl" as task_flye
-import "../../tasks/assembly/task_bandage_plot.wdl" as task_bandage
-import "../../tasks/polishing/task_medaka.wdl" as task_medaka
-import "../../tasks/polishing/task_racon.wdl" as task_racon
-import "../../tasks/assembly/task_dnaapler.wdl" as task_dnaapler
-import "../../tasks/quality_control/read_filtering/task_filter_contigs.wdl" as task_filter_contigs
-import "../../tasks/alignment/task_bwa.wdl" as task_bwa_all
-import "../../tasks/polishing/task_polypolish.wdl" as task_polypolish
+import "../../tasks/quality_control/read_filtering/task_porechop.wdl" as porechop_task
+import "../../tasks/assembly/task_flye.wdl" as flye_task
+import "../../tasks/assembly/task_bandage_plot.wdl" as bandage_task
+import "../../tasks/polishing/task_dorado.wdl" as dorado_task
+import "../../tasks/polishing/task_medaka.wdl" as medaka_task
+import "../../tasks/polishing/task_racon.wdl" as racon_task
+import "../../tasks/assembly/task_dnaapler.wdl" as dnaapler_task
+import "../../tasks/quality_control/read_filtering/task_filter_contigs.wdl" as filter_contigs_task
+import "../../tasks/alignment/task_bwa.wdl" as bwa_all_task
+import "../../tasks/polishing/task_polypolish.wdl" as polypolish_task
 
 workflow flye_denovo {
   meta {
@@ -19,7 +20,7 @@ workflow flye_denovo {
     File? illumina_read1
     File? illumina_read2
     String samplename
-    String polisher = "medaka"
+    String polisher = "dorado"
     Int polish_rounds = 1
     Boolean run_porechop = false # Default: Run Porechop
     Boolean skip_polishing = false # Default: Polishing enabled
@@ -64,7 +65,17 @@ workflow flye_denovo {
     Int? polypolish_memory
     Int? polypolish_disk_size
 
+    # dorado inputs
+    String? dorado_model
+    Boolean? dorado_ignore_read_groups
+    Boolean? dorado_auto_detect_model
+    Int? dorado_cpu
+    Int? dorado_memory
+    Int? dorado_disk_size
+    String? dorado_docker
+
     # Medaka inputs
+    Boolean? medaka_use_bacteria
     Boolean? auto_medaka_model
     String? medaka_model # Optional user-specified Medaka model
     Int? medaka_cpu
@@ -101,7 +112,7 @@ workflow flye_denovo {
     }
   }
   # Call Flye using either trimmed reads or raw reads
-  call task_flye.flye {
+  call flye_task.flye {
     input:
       read1 = select_first([porechop.trimmed_reads, read1]), # Use trimmed reads if available
       samplename = samplename,
@@ -122,7 +133,7 @@ workflow flye_denovo {
   }
   if (flye.flye_status == "PASS") {}
     # Bandage plot generation
-    call task_bandage.bandage_plot as bandage {
+    call bandage_task.bandage_plot as bandage {
       input:
         assembly_graph_gfa = select_first([flye.assembly_graph_gfa]),
         samplename = samplename,
@@ -132,14 +143,14 @@ workflow flye_denovo {
     }
     # Polypolish for hybrid assembly
     if (defined(illumina_read1) && defined(illumina_read2)) {
-     call task_bwa_all.bwa_all as bwa {
+     call bwa_all_task.bwa_all as bwa {
        input:
          draft_assembly_fasta = select_first([flye.assembly_fasta]),
          read1 = select_first([illumina_read1]),
          read2 = select_first([illumina_read2]),
          samplename = samplename
       }
-      call task_polypolish.polypolish {
+      call polypolish_task.polypolish {
         input:
           assembly_fasta = select_first([flye.assembly_fasta]),
           read1_sam = bwa.read1_sam,
@@ -162,11 +173,12 @@ workflow flye_denovo {
     # ONT-only Polishing Path: Medaka or Racon
     if (!skip_polishing) {
       if (polisher == "medaka") {
-        call task_medaka.medaka {
+        call medaka_task.medaka {
           input:
             unpolished_fasta = select_first([flye.assembly_fasta]),
             samplename = samplename,
             read1 = select_first([porechop.trimmed_reads, read1]),
+            use_bacteria = medaka_use_bacteria,
             medaka_model = medaka_model,
             auto_model = auto_medaka_model,
             cpu = medaka_cpu,
@@ -175,7 +187,7 @@ workflow flye_denovo {
         }
       }
       if (polisher == "racon") {
-        call task_racon.racon {
+        call racon_task.racon {
           input:
             unpolished_fasta = select_first([flye.assembly_fasta]),
             read1 = select_first([porechop.trimmed_reads, read1]),
@@ -186,19 +198,33 @@ workflow flye_denovo {
             disk_size = racon_disk_size
         }
       }
+      if (polisher == "dorado") {
+        call dorado_task.dorado {
+          input:
+            unpolished_fasta = select_first([flye.assembly_fasta]),
+            read1 = select_first([porechop.trimmed_reads, read1]),
+            samplename = samplename,
+            dorado_model = dorado_model,
+            ignore_read_groups = dorado_ignore_read_groups,
+            auto_detect_model = dorado_auto_detect_model,
+            cpu = dorado_cpu,
+            memory = dorado_memory,
+            disk_size = dorado_disk_size,
+            docker = dorado_docker
+        }
     }
     # Contig Filtering and Final Assembly orientation
-    call task_filter_contigs.filter_contigs {
+    call filter_configs_task.filter_contigs {
       input:
         samplename = samplename,
-        assembly_fasta = select_first([polypolish.polished_assembly, medaka.medaka_fasta, racon.polished_fasta, flye.assembly_fasta]), # Use Flye assembly if no polishing
+        assembly_fasta = select_first([polypolish.polished_assembly, dorado.polished_fasta, medaka.medaka_fasta, racon.polished_fasta, flye.assembly_fasta]), # Use Flye assembly if no polishing
         min_length = filter_contigs_min_length,
         skip_coverage_filter = true,
         cpu = filter_contigs_cpu,
         memory = filter_contigs_memory,
         disk_size = filter_contigs_disk_size
     }
-    call task_dnaapler.dnaapler {
+    call dnaapler_task.dnaapler {
       input:
         input_fasta = filter_contigs.filtered_fasta,
         samplename = samplename,
@@ -218,6 +244,7 @@ workflow flye_denovo {
     String? porechop_version = porechop.porechop_version
     String flye_version = flye.flye_version
     String bandage_version = bandage.bandage_version
+    String? dorado_version = dorado.dorado_version
     String? medaka_version = medaka.medaka_version
     String? racon_version = racon.racon_version
     String? bwa_version = bwa.bwa_version

@@ -7,6 +7,7 @@ task medaka {
     String samplename
 
     Boolean auto_model = true
+    Boolean use_bacteria = true
     String medaka_model = "r1041_e82_400bps_sup_v5.0.0"
 
     Int cpu = 4
@@ -37,7 +38,7 @@ task medaka {
       -o . \
       -m ${resolved_model} \
       -t ~{cpu} \
-      --bacteria
+      ~{true="--bacteria" false = "" use_bacteria}
 
     mv consensus.fasta ~{samplename}.polished.fasta
   >>>

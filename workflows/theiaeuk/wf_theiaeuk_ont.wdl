@@ -70,7 +70,8 @@ workflow theiaeuk_ont {
       call flye_workflow.flye_denovo {
         input:
           read1 = read_QC_trim.read1_clean,
-          samplename = samplename
+          samplename = samplename,
+          medaka_use_bacteria = false
       }
       #call quast on the assembly
       call quast_task.quast {
@@ -138,6 +139,7 @@ workflow theiaeuk_ont {
     File? bandage_plot = flye_denovo.bandage_plot
     File? filtered_contigs_metrics = flye_denovo.filtered_contigs_metrics
     String? flye_assembly_info = flye_denovo.flye_assembly_info
+    String? dorado_version = flye_denovo.dorado_version
     String? medaka_model = flye_denovo.medaka_model_used
     String? porechop_version = flye_denovo.porechop_version
     String? flye_version = flye_denovo.flye_version

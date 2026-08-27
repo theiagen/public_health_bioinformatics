@@ -660,6 +660,7 @@ workflow theiaprok_ont {
                 "bandage_plot": flye_denovo.bandage_plot,
                 "bandage_version": flye_denovo.bandage_version,
                 "bwa_version": flye_denovo.bwa_version,
+                "dorado_version": flye_denovo.dorado_version,
                 "dnaapler_version": flye_denovo.dnaapler_version,
                 "filtered_contigs_metrics": flye_denovo.filtered_contigs_metrics,
                 "flye_assembly_info": flye_denovo.flye_assembly_info,
@@ -755,6 +756,7 @@ workflow theiaprok_ont {
     String? porechop_version = flye_denovo.porechop_version
     String? flye_version = flye_denovo.flye_version
     String? bandage_version = flye_denovo.bandage_version
+    String? dorado_version = flye_denovo.dorado_version
     String? medaka_version = flye_denovo.medaka_version
     String? racon_version = flye_denovo.racon_version
     String? bwa_version = flye_denovo.bwa_version
