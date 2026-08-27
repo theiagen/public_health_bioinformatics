@@ -111,6 +111,8 @@ workflow tbprofiler_tngs {
     String tbprofiler_resistance_genes = tbprofiler.tbprofiler_resistance_genes
     Float tbprofiler_median_depth = tbprofiler.tbprofiler_median_depth
     Float tbprofiler_pct_reads_mapped = tbprofiler.tbprofiler_pct_reads_mapped
+    File? tbprofiler_db_mutations = tbprofiler.tbprofiler_db_mutations
+    File? tbprofiler_db_bed = tbprofiler.tbprofiler_db_bed
     # tbp_parser outputs
     File tbp_parser_looker_report_csv = tbp_parser.tbp_parser_looker_report_csv
     File tbp_parser_laboratorian_report_csv = tbp_parser.tbp_parser_laboratorian_report_csv

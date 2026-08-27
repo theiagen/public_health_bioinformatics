@@ -899,6 +899,8 @@ workflow merlin_magic {
     String? tbprofiler_resistance_genes = tbprofiler.tbprofiler_resistance_genes
     Float? tbprofiler_median_depth = tbprofiler.tbprofiler_median_depth
     Float? tbprofiler_pct_reads_mapped = tbprofiler.tbprofiler_pct_reads_mapped
+    File? tbprofiler_db_mutations = tbprofiler.tbprofiler_db_mutations
+    File? tbprofiler_db_bed = tbprofiler.tbprofiler_db_bed
     String? tbp_parser_version = tbp_parser.tbp_parser_version
     String? tbp_parser_docker = tbp_parser.tbp_parser_docker
     File? tbp_parser_looker_report_csv = tbp_parser.tbp_parser_looker_report_csv
