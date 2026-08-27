@@ -1236,6 +1236,8 @@ workflow theiaprok_illumina_pe {
     File? tbp_parser_log = merlin_magic.tbp_parser_log
     Float? tbp_parser_genome_percent_coverage = merlin_magic.tbp_parser_genome_percent_coverage
     Float? tbp_parser_average_genome_depth = merlin_magic.tbp_parser_average_genome_depth
+    File? tbp_parser_generated_gene_database_yml = merlin_magic.tbp_parser_generated_gene_database_yml
+    File? tbp_parser_generated_lims_report_format_yml = merlin_magic.tbp_parser_generated_lims_report_format_yml
     File? clockwork_decontaminated_read1 = merlin_magic.clockwork_cleaned_read1
     File? clockwork_decontaminated_read2 = merlin_magic.clockwork_cleaned_read2
     # Legionella pneumophila typing

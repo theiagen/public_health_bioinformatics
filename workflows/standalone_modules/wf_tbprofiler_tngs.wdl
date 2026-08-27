@@ -20,6 +20,8 @@ workflow tbprofiler_tngs {
 
     Boolean run_trimmomatic = true
     Boolean run_clockwork = false
+
+    File? tbp_parser_coverage_bed
   }
   call versioning.version_capture {
     input:
@@ -65,7 +67,9 @@ workflow tbprofiler_tngs {
       tbprofiler_bam = tbprofiler.tbprofiler_output_bam,
       tbprofiler_bai = tbprofiler.tbprofiler_output_bai,
       samplename = samplename,
-      tngs_data = true
+      tngs_data = true,
+      tbprofiler_db_mutations = tbprofiler.tbprofiler_db_mutations,
+      coverage_bed = select_first([tbp_parser_coverage_bed, tbprofiler.tbprofiler_db_bed, "gs://theiagen-public-resources-rp/empty_files/empty.bed"]),
   }
   output {
     # fastq_scan raw (per read stats)
@@ -114,6 +118,8 @@ workflow tbprofiler_tngs {
     File tbp_parser_lims_report_transposed_csv = tbp_parser.tbp_parser_lims_report_transposed_csv
     File tbp_parser_locus_coverage_report_csv = tbp_parser.tbp_parser_locus_coverage_report_csv
     File? tbp_parser_target_coverage_report_csv = tbp_parser.tbp_parser_target_coverage_report_csv
+    File? tbp_parser_generated_gene_database_yml = tbp_parser.tbp_parser_generated_gene_database_yml
+    File? tbp_parser_generated_lims_report_format_yml = tbp_parser.tbp_parser_generated_lims_report_format_yml
     File tbp_parser_log = tbp_parser.tbp_parser_log
     Float tbp_parser_genome_percent_coverage = tbp_parser.tbp_parser_genome_percent_coverage
     Float tbp_parser_average_genome_depth = tbp_parser.tbp_parser_average_genome_depth
