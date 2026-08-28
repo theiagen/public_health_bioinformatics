@@ -9,6 +9,7 @@ task dorado {
     String dorado_model = "dna_r10.4.1_e8.2_400bps_sup@v5.0.0"
     Boolean ignore_read_groups = true
     Boolean auto_detect_model = true
+    Boolean use_bacteria = true
 
     Int cpu = 4
     Int memory = 16
@@ -26,10 +27,11 @@ task dorado {
 
     echo "DEBUG: aligning the reads to the unpolished fasta" > ~{samplename}.log
     dorado aligner \
+      unpolished.fasta \
+      ~{read1} \
       -t ~{cpu} \
       --no-sort \
-      unpolished.fasta \
-      ~{read1} > ~{samplename}.bam
+      > ~{samplename}.bam
 
     echo "DEBUG: sorting and indexing the alignment" >> ~{samplename}.dorado_log
     samtools sort \
@@ -56,14 +58,15 @@ task dorado {
     fi
 
     dorado polish \
-      -t ~{cpu} \
+      ~{samplename}_sorted.bam \
+      unpolished.fasta \
+      -v -t ~{cpu} \
       --models-directory /models \
       ${model} \
       ~{true="--ignore-read-groups" false="" ignore_read_groups} \
-      --bacteria -v \
-      ~{samplename}_sorted.bam \
-       unpolished.fasta > ~{samplename}_polished.fasta
-        2> >(tee ~{samplename}.log)
+      ~{true="--bacteria" false="" use_bacteria} \
+      > ~{samplename}_polished.fasta \
+      2> >(tee ~{samplename}.log)
 
   >>>
   output {

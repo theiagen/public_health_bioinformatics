@@ -6,7 +6,7 @@ task medaka {
     File unpolished_fasta
     String samplename
 
-    Boolean auto_model = true
+    Boolean auto_detect_model = true
     Boolean use_bacteria = true
     String medaka_model = "r1041_e82_400bps_sup_v5.0.0"
 
@@ -21,7 +21,7 @@ task medaka {
     medaka --version | tee MEDAKA_VERSION
 
     # attempt automatic model resolution if enabled
-    if ~{auto_model}; then
+    if ~{auto_detect_model}; then
       resolved_model=$(medaka tools resolve_model --auto_model consensus ~{read1} 2>/dev/null || echo ~{medaka_model})
       echo "Using model: $resolved_model"
     else

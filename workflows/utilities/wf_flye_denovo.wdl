@@ -69,15 +69,16 @@ workflow flye_denovo {
     String? dorado_model
     Boolean? dorado_ignore_read_groups
     Boolean? dorado_auto_detect_model
+    Boolean? dorado_use_bacteria
     Int? dorado_cpu
     Int? dorado_memory
     Int? dorado_disk_size
     String? dorado_docker
 
     # Medaka inputs
+    String? medaka_model
+    Boolean? medaka_auto_detect_model
     Boolean? medaka_use_bacteria
-    Boolean? auto_medaka_model
-    String? medaka_model # Optional user-specified Medaka model
     Int? medaka_cpu
     Int? medaka_memory
     Int? medaka_disk_size
@@ -180,7 +181,7 @@ workflow flye_denovo {
             read1 = select_first([porechop.trimmed_reads, read1]),
             use_bacteria = medaka_use_bacteria,
             medaka_model = medaka_model,
-            auto_model = auto_medaka_model,
+            auto_detect_model = medaka_auto_detect_model,
             cpu = medaka_cpu,
             memory = medaka_memory,
             disk_size = medaka_disk_size
@@ -207,6 +208,7 @@ workflow flye_denovo {
             dorado_model = dorado_model,
             ignore_read_groups = dorado_ignore_read_groups,
             auto_detect_model = dorado_auto_detect_model,
+            use_bacteria = dorado_use_bacteria,
             cpu = dorado_cpu,
             memory = dorado_memory,
             disk_size = dorado_disk_size,

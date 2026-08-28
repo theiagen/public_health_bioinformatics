@@ -71,7 +71,8 @@ workflow theiaeuk_ont {
         input:
           read1 = read_QC_trim.read1_clean,
           samplename = samplename,
-          medaka_use_bacteria = false
+          medaka_use_bacteria = false,
+          dorado_use_bacteria = false
       }
       #call quast on the assembly
       call quast_task.quast {
