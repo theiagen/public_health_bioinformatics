@@ -6,7 +6,7 @@ task dorado {
     File unpolished_fasta
     String samplename
 
-    String dorado_model = "dna_r10.4.1_e8.2_400bps_sup@v5.0.0"
+    String? dorado_model = "dna_r10.4.1_e8.2_400bps_sup@v5.0.0_polish_rl"
     Boolean ignore_read_groups = true
     Boolean auto_detect_model = true
     Boolean use_bacteria = true
