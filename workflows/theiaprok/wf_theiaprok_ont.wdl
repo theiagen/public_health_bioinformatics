@@ -383,6 +383,7 @@ workflow theiaprok_ont {
                 "contigs_gfa": flye_denovo.contigs_gfa,
                 "county": county,
                 "dnaapler_version": flye_denovo.dnaapler_version,
+                "dorado_version": flye_denovo.dorado_version,
                 "ectyper_database_version": merlin_magic.ectyper_database_version,
                 "ectyper_docker": merlin_magic.ectyper_docker,
                 "ectyper_pathodb_version": merlin_magic.ectyper_pathodb_version,

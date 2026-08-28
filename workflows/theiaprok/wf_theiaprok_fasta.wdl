@@ -297,6 +297,7 @@ workflow theiaprok_fasta {
             "city": city,
             "collection_date": collection_date,
             "county": county,
+            "dorado_version": flye_denovo.dorado_version,
             "ectyper_database_version": merlin_magic.ectyper_database_version,
             "ectyper_docker": merlin_magic.ectyper_docker,
             "ectyper_pathodb_version": merlin_magic.ectyper_pathodb_version,
