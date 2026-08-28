@@ -20,7 +20,7 @@ workflow flye_denovo {
     File? illumina_read1
     File? illumina_read2
     String samplename
-    String polisher = "dorado"
+    String polisher = "medaka"
     Int polish_rounds = 1
     Boolean run_porechop = false # Default: Run Porechop
     Boolean skip_polishing = false # Default: Polishing enabled
