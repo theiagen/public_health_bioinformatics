@@ -835,7 +835,7 @@ flu_track	irma_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	1
 flu_track	irma_min_ambiguous_threshold	Float	Internal component, do not modify	0.25	Optional	TheiaCoV_FASTA	general	
 flu_track	irma_min_ambiguous_threshold	Float	Minimum called Single Nucleotide Variant (SNV) frequency for mixed based calls in the output consensus assembly (AKA amended consensus).	0.25	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
 flu_track	irma_min_avg_consensus_allele_quality	Int	Internal component, do not modify	10	Optional	TheiaCoV_FASTA	general	
-flu_track	irma_min_avg_consensus_allele_quality	Int	Minimum allele coverage depth to call plurality consensus, otherwise calls "N". Setting this value too high can negatively impact final amended consensus.	10	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
+flu_track	irma_min_avg_consensus_allele_quality	Int	Minimum allele coverage depth to call plurality consensus, otherwise calls 'N'. Setting this value too high can negatively impact final amended consensus.	10	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
 flu_track	irma_min_consensus_support	Int	Internal component, do not modify	50	Optional	TheiaCoV_FASTA	general	
 flu_track	irma_min_read_length	Int	Internal component, do not modify	75	Optional	TheiaCoV_FASTA	general	
 flu_track	irma_min_read_length	Int	Minimum read length to include reads in read gathering step in IRMA. This value should not be greater than the typical read length.	75	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
@@ -865,7 +865,6 @@ flye	no_alt_contigs	Boolean	True/False to disable alternative contig generation	
 flye	read_error_rate	Float	Expected error rate in reads		Optional	TheiaViral_ONT	general	
 flye	read_type	String	Type of read data for Flye	--nano-hq	Optional	TheiaViral_ONT	general	
 flye	scaffold	Boolean	True/False to enable scaffolding using graph	False	Optional	TheiaViral_ONT	general	
-flye_denovo	auto_medaka_model	Boolean	If true, medaka will automatically select the best Medaka model for assembly	True	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 flye_denovo	bandage_cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaEuk_ONT, TheiaProk_ONT	runtime	
 flye_denovo	bandage_disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	TheiaEuk_ONT, TheiaProk_ONT	runtime	
 flye_denovo	bandage_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaEuk_ONT, TheiaProk_ONT	runtime	
@@ -873,6 +872,14 @@ flye_denovo	dnaapler_cpu	Int	Number of CPUs to allocate to the task	4	Optional	T
 flye_denovo	dnaapler_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_ONT, TheiaProk_ONT	runtime	
 flye_denovo	dnaapler_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaEuk_ONT, TheiaProk_ONT	runtime	
 flye_denovo	dnaapler_mode	String	Dnaapler-specific inputs	all	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
+flye_denovo	dorado_auto_detect_model	Boolean	Dorado will auto detect the most appropriate model to use for polishing; set to false to turn off 	True	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
+flye_denovo	dorado_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaEuk_ONT, TheiaProk_ONT	runtime	
+flye_denovo	dorado_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_ONT, TheiaProk_ONT	runtime	
+flye_denovo	dorado_docker	String	The Docker container to use for the task	nanoporetech/dorado:sha9809639e07a927bcc0f584dadd5e59674cf59f3f	Optional	TheiaEuk_ONT, TheiaProk_ONT	docker	
+flye_denovo	dorado_ignore_read_groups	Boolean	Multiple read groups in a BAM file will be treated like one read group. Set to false to turn off	True	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
+flye_denovo	dorado_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaEuk_ONT, TheiaProk_ONT	runtime	
+flye_denovo	dorado_model	String	The Dorado model to use 	dna_r10.4.1_e8.2_400bps_sup@v5.0.0	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
+flye_denovo	dorado_use_bacteria	Boolean	Optimizes polishing for bacteria 	True	Optional	TheiaProk_ONT	general	
 flye_denovo	filter_contigs_cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaEuk_ONT, TheiaProk_ONT	runtime	
 flye_denovo	filter_contigs_disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaEuk_ONT, TheiaProk_ONT	runtime	
 flye_denovo	filter_contigs_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaEuk_ONT, TheiaProk_ONT	runtime	
@@ -893,10 +900,12 @@ flye_denovo	flye_scaffold	Boolean	If true, scaffolding is enabled using graph	Fa
 flye_denovo	flye_uneven_coverage_mode	Boolean	sets the --meta option in the case of uneven coverage (or metagenomics)	False	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 flye_denovo	illumina_read1	File	If Illumina reads are provided, flye_denovo subworkflow will perform Illumina polishing		Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 flye_denovo	illumina_read2	File	If Illumina reads are provided, flye_denovo subworkflow will perform Illumina polishing		Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
+flye_denovo	medaka_auto_detect_model	Boolean	DESCRIPTION	True	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 flye_denovo	medaka_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaEuk_ONT, TheiaProk_ONT	runtime	
 flye_denovo	medaka_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_ONT, TheiaProk_ONT	runtime	
 flye_denovo	medaka_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaEuk_ONT, TheiaProk_ONT	runtime	
 flye_denovo	medaka_model	String	In order to obtain the best results, the appropriate model must be set to match the sequencer's basecaller model; this string takes the format of {pore}{device}{caller variant}_{caller_version}. See also <https://github.com/nanoporetech/medaka?tab=readme-ov-file#models>. If this is being run on legacy data it is likely to be r941_min_hac_g507.	r1041_e82_400bps_sup_v5.0.0	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
+flye_denovo	medaka_use_bacteria	Boolean	DESCRIPTION	True	Optional	TheiaProk_ONT	general	
 flye_denovo	polish_rounds	Int	The number of polishing rounds to conduct for medaka or racon (without Illumina)	1	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 flye_denovo	polisher	String	The polishing tool to use for assembly	medaka	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 flye_denovo	polypolish_careful	Boolean	Polypolish-specific inputs	False	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
@@ -1343,7 +1352,7 @@ merlin_magic	abricate_vibrio_min_percent_coverage	Int	Minimum DNA percent covera
 merlin_magic	abricate_vibrio_min_percent_identity	Int	Minimum DNA percent identity	80	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	agrvate_agr_typing_only	Boolean	Set to true to skip agr operon extraction and frameshift detection	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	agrvate_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/agrvate:1.0.2--hdfd78af_0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	allele_calling_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/allele_calling:1.0.1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	allele_calling_docker_image	String	The Docker container to use for the task		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	amr_search_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 merlin_magic	amr_search_disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 merlin_magic	amr_search_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/amrsearch:0.2.1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	

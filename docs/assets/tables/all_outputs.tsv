@@ -319,6 +319,7 @@ dorado_basecalling_phb_version	String	Version of PHB used for the analysis	Dorad
 dorado_demux_version	String	Version of Dorado used in the `dorado_demux` task	Dorado_Basecalling
 dorado_model_used	String	Model used for basecalling	Dorado_Basecalling
 dorado_trim_version	String	Version of Dorado used in the `dorado_trim` task	Dorado_Basecalling
+dorado_version	String	Version of Dorado used in the `dorado` task	TheiaEuk_ONT, TheiaProk_ONT
 downsampled_read1	File	RASUSA downsampled reads derived from read1 input	TheiaViral_Illumina_PE
 downsampled_read2	File	RASUSA downsampled reads derived from read2 input	TheiaViral_Illumina_PE
 ectyper_database_version	String	Version of the ECTyper database used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
