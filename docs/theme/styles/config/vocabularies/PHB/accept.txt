@@ -486,6 +486,7 @@ phylogenies
 phylogeny
 plasmid
 plasmids
+ploidy
 pneumoniae
 pneumophila
 polyploid
