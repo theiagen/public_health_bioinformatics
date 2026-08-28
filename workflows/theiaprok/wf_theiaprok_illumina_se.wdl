@@ -294,6 +294,18 @@ workflow theiaprok_illumina_se {
             read1 = read_QC_trim.read1_clean,
             paired_end = false
         }
+        if (call_arln_stats) {
+          call arln_stats.arln_stats {
+            input:
+              samplename = samplename,
+              taxon = select_first([gambit.gambit_predicted_taxon, expected_taxon]),
+              workflow_type = "se",
+              genome_length = quast.genome_length,
+              gc_percent = quast.gc_percent,
+              read1_raw = select_first([concatenate_illumina_lanes.read1_concatenated, read1]),
+              read1_clean = read_QC_trim.read1_clean
+          }
+        }
         if (defined(taxon_tables)) {
           call export_taxon_table_task.export_taxon_table {
             input:
@@ -366,12 +378,22 @@ workflow theiaprok_illumina_se {
                 "amrfinderplus_version": amrfinderplus_task.amrfinderplus_version,
                 "amrfinderplus_virulence_genes": amrfinderplus_task.amrfinderplus_virulence_genes,
                 "amrfinderplus_virulence_report": amrfinderplus_task.amrfinderplus_virulence_report,
-                "ani_highest_percent_bases_aligned": ani.ani_highest_percent_bases_aligned,
                 "ani_highest_percent": ani.ani_highest_percent,
+                "ani_highest_percent_bases_aligned": ani.ani_highest_percent_bases_aligned,
                 "ani_mummer_docker": ani.ani_docker,
                 "ani_mummer_version": ani.ani_mummer_version,
                 "ani_output_tsv": ani.ani_output_tsv,
                 "ani_top_species_match": ani.ani_top_species_match,
+                "arln_assembly_ratio": arln_stats.assembly_ratio,
+                "arln_assembly_zscore": arln_stats.assembly_zscore,
+                "arln_r1_q30_clean": arln_stats.read1_clean_q30,
+                "arln_r1_q30_raw": arln_stats.read1_raw_q30,
+                "arln_stats_docker_version": arln_stats.docker_version,
+                "arln_taxon_assembly_ratio_stdev": arln_stats.taxon_assembly_ratio_stdev,
+                "arln_taxon_gc_mean": arln_stats.taxon_gc_mean,
+                "arln_taxon_gc_percent_stdev": arln_stats.taxon_gc_percent_stdev,
+                "assembler": digger_denovo.assembler_used,
+                "assembler_version": digger_denovo.assembler_version,
                 "assembly_fasta": digger_denovo.assembly_fasta,
                 "assembly_length": quast.genome_length,
                 "bakta_gbff": bakta.bakta_gbff,
@@ -401,8 +423,8 @@ workflow theiaprok_illumina_se {
                 "ectyper_pathotype": merlin_magic.ectyper_pathotype,
                 "ectyper_pathotype_count": merlin_magic.ectyper_pathotype_count,
                 "ectyper_pathotype_genes": merlin_magic.ectyper_pathotype_genes,
-                "ectyper_qc_result": merlin_magic.ectyper_qc_result,
                 "ectyper_predicted_serotype": merlin_magic.ectyper_predicted_serotype,
+                "ectyper_qc_result": merlin_magic.ectyper_qc_result,
                 "ectyper_results": merlin_magic.ectyper_results,
                 "ectyper_stx_subtypes": merlin_magic.ectyper_stx_subtypes,
                 "ectyper_version": merlin_magic.ectyper_version,
@@ -413,9 +435,9 @@ workflow theiaprok_illumina_se {
                 "emmtyper_version": merlin_magic.emmtyper_version,
                 "est_coverage_clean": cg_pipeline_clean.est_coverage,
                 "est_coverage_raw": cg_pipeline_raw.est_coverage,
+                "fastp_docker": read_QC_trim.fastp_docker,
                 "fastp_html_report": read_QC_trim.fastp_html_report,
                 "fastp_json_report": read_QC_trim.fastp_json_report,
-                "fastp_docker": read_QC_trim.fastp_docker,
                 "fastp_version": read_QC_trim.fastp_version,
                 "fastq_scan_clean1_json": read_QC_trim.fastq_scan_clean1_json,
                 "fastq_scan_num_reads_clean1": read_QC_trim.fastq_scan_clean1,
@@ -428,13 +450,19 @@ workflow theiaprok_illumina_se {
                 "fastqc_num_reads_raw1": read_QC_trim.fastqc_raw1,
                 "fastqc_raw1_html": read_QC_trim.fastqc_raw1_html,
                 "fastqc_version": read_QC_trim.fastqc_version,
+                "filtered_contigs_metrics": digger_denovo.filtered_contigs_metrics,
                 "gambit_closest_genomes": gambit.gambit_closest_genomes_file,
                 "gambit_db_version": gambit.gambit_db_version,
                 "gambit_docker": gambit.gambit_docker,
-                "gambit_predicted_taxon_rank": gambit.gambit_predicted_taxon_rank,
                 "gambit_predicted_taxon": gambit.gambit_predicted_taxon,
+                "gambit_predicted_taxon_rank": gambit.gambit_predicted_taxon_rank,
                 "gambit_report": gambit.gambit_report_file,
                 "gambit_version": gambit.gambit_version,
+                "gamma_docker": gamma.gamma_docker,
+                "gamma_fasta": gamma.gamma_fasta,
+                "gamma_gff": gamma.gamma_gff,
+                "gamma_results": gamma.gamma_results,
+                "gamma_version": gamma.gamma_version,
                 "genotyphi_final_genotype": merlin_magic.genotyphi_final_genotype,
                 "genotyphi_genotype_confidence": merlin_magic.genotyphi_genotype_confidence,
                 "genotyphi_mykrobe_json": merlin_magic.genotyphi_mykrobe_json,
@@ -458,12 +486,12 @@ workflow theiaprok_illumina_se {
                 "kleborate_docker": merlin_magic.kleborate_docker,
                 "kleborate_genomic_resistance_mutations": merlin_magic.kleborate_genomic_resistance_mutations,
                 "kleborate_key_resistance_genes": merlin_magic.kleborate_key_resistance_genes,
-                "kleborate_klocus_confidence": merlin_magic.kleborate_klocus_confidence,
                 "kleborate_klocus": merlin_magic.kleborate_klocus,
+                "kleborate_klocus_confidence": merlin_magic.kleborate_klocus_confidence,
                 "kleborate_ktype": merlin_magic.kleborate_ktype,
                 "kleborate_mlst_sequence_type": merlin_magic.kleborate_mlst_sequence_type,
-                "kleborate_olocus_confidence": merlin_magic.kleborate_olocus_confidence,
                 "kleborate_olocus": merlin_magic.kleborate_olocus,
+                "kleborate_olocus_confidence": merlin_magic.kleborate_olocus_confidence,
                 "kleborate_otype": merlin_magic.kleborate_otype,
                 "kleborate_output_file": merlin_magic.kleborate_output_file,
                 "kleborate_resistance_score": merlin_magic.kleborate_resistance_score,
@@ -487,20 +515,20 @@ workflow theiaprok_illumina_se {
                 "lissero_version": merlin_magic.lissero_version,
                 "meningotype_BAST": merlin_magic.meningotype_BAST,
                 "meningotype_FetA": merlin_magic.meningotype_FetA,
-                "meningotype_fHbp": merlin_magic.meningotype_fHbp,
-                "meningotype_NadA": merlin_magic.meningotype_NadA,
                 "meningotype_NHBA": merlin_magic.meningotype_NHBA,
+                "meningotype_NadA": merlin_magic.meningotype_NadA,
                 "meningotype_PorA": merlin_magic.meningotype_PorA,
                 "meningotype_PorB": merlin_magic.meningotype_PorB,
+                "meningotype_fHbp": merlin_magic.meningotype_fHbp,
                 "meningotype_serogroup": merlin_magic.meningotype_serogroup,
                 "meningotype_tsv": merlin_magic.meningotype_tsv,
                 "meningotype_version": merlin_magic.meningotype_version,
                 "midas_docker": read_QC_trim.midas_docker,
                 "midas_primary_genus": read_QC_trim.midas_primary_genus,
                 "midas_report": read_QC_trim.midas_report,
+                "midas_secondary_genus": read_QC_trim.midas_secondary_genus,
                 "midas_secondary_genus_abundance": read_QC_trim.midas_secondary_genus_abundance,
                 "midas_secondary_genus_coverage": read_QC_trim.midas_secondary_genus_coverage,
-                "midas_secondary_genus": read_QC_trim.midas_secondary_genus,
                 "n50_value": quast.n50_value,
                 "ngmaster_ngmast_porB_allele": merlin_magic.ngmaster_ngmast_porB_allele,
                 "ngmaster_ngmast_sequence_type": merlin_magic.ngmaster_ngmast_sequence_type,
@@ -521,9 +549,9 @@ workflow theiaprok_illumina_se {
                 "pasty_blast_hits": merlin_magic.pasty_blast_hits,
                 "pasty_comment": merlin_magic.pasty_comment,
                 "pasty_docker": merlin_magic.pasty_docker,
+                "pasty_serogroup": merlin_magic.pasty_serogroup,
                 "pasty_serogroup_coverage": merlin_magic.pasty_serogroup_coverage,
                 "pasty_serogroup_fragments": merlin_magic.pasty_serogroup_fragments,
-                "pasty_serogroup": merlin_magic.pasty_serogroup,
                 "pasty_summary_tsv": merlin_magic.pasty_summary_tsv,
                 "pasty_version": merlin_magic.pasty_version,
                 "pbptyper_docker": merlin_magic.pbptyper_docker,
@@ -536,9 +564,9 @@ workflow theiaprok_illumina_se {
                 "plasmidfinder_plasmids": plasmidfinder.plasmidfinder_plasmids,
                 "plasmidfinder_results": plasmidfinder.plasmidfinder_results,
                 "plasmidfinder_seqs": plasmidfinder.plasmidfinder_seqs,
+                "poppunk_GPS_db_version": merlin_magic.poppunk_GPS_db_version,
                 "poppunk_docker": merlin_magic.poppunk_docker,
                 "poppunk_gps_cluster": merlin_magic.poppunk_gps_cluster,
-                "poppunk_GPS_db_version": merlin_magic.poppunk_GPS_db_version,
                 "poppunk_gps_external_cluster_csv": merlin_magic.poppunk_gps_external_cluster_csv,
                 "poppunk_version": merlin_magic.poppunk_version,
                 "prokka_gbk": prokka.prokka_gbk,
@@ -555,18 +583,18 @@ workflow theiaprok_illumina_se {
                 "r1_mean_readlength_raw": cg_pipeline_raw.r1_mean_readlength,
                 "rasusa_log": read_QC_trim.rasusa_log,
                 "rasusa_version": read_QC_trim.rasusa_version,
-                "read_screen_clean_tsv": clean_check_reads.read_screen_tsv,
-                "read_screen_clean": clean_check_reads.read_screen,
-                "read_screen_raw_tsv": raw_check_reads.read_screen_tsv,
-                "read_screen_raw": raw_check_reads.read_screen,
+                "read1": select_first([concatenate_illumina_lanes.read1_concatenated, read1]),
                 "read1_clean": read_QC_trim.read1_clean,
                 "read1_concatenated": concatenate_illumina_lanes.read1_concatenated,
                 "read1_subsampled_raw": read_QC_trim.read1_subsampled_raw,
-                "read1": select_first([concatenate_illumina_lanes.read1_concatenated, read1]),
+                "read_screen_clean": clean_check_reads.read_screen,
+                "read_screen_clean_tsv": clean_check_reads.read_screen_tsv,
+                "read_screen_raw": raw_check_reads.read_screen,
+                "read_screen_raw_tsv": raw_check_reads.read_screen_tsv,
                 "resfinder_db_version": resfinder_task.resfinder_db_version,
                 "resfinder_docker": resfinder_task.resfinder_docker,
-                "resfinder_pheno_table_species": resfinder_task.resfinder_pheno_table_species,
                 "resfinder_pheno_table": resfinder_task.resfinder_pheno_table,
+                "resfinder_pheno_table_species": resfinder_task.resfinder_pheno_table_species,
                 "resfinder_pointfinder_pheno_table": resfinder_task.pointfinder_pheno_table,
                 "resfinder_pointfinder_results": resfinder_task.pointfinder_results,
                 "resfinder_predicted_pheno_resistance": resfinder_task.resfinder_predicted_pheno_resistance,
@@ -606,27 +634,32 @@ workflow theiaprok_illumina_se {
                 "shigatyper_predicted_serotype": merlin_magic.shigatyper_predicted_serotype,
                 "shigatyper_summary_tsv": merlin_magic.shigatyper_summary_tsv,
                 "shigatyper_version": merlin_magic.shigatyper_version,
-                "shigeifinder_cluster_reads": merlin_magic.shigeifinder_cluster_reads,
-                "shigeifinder_cluster": merlin_magic.shigeifinder_cluster,
-                "shigeifinder_docker_reads": merlin_magic.shigeifinder_docker_reads,
-                "shigeifinder_docker": merlin_magic.shigeifinder_docker,
-                "shigeifinder_H_antigen_reads": merlin_magic.shigeifinder_H_antigen_reads,
                 "shigeifinder_H_antigen": merlin_magic.shigeifinder_H_antigen,
-                "shigeifinder_ipaH_presence_absence_reads": merlin_magic.shigeifinder_ipaH_presence_absence_reads,
-                "shigeifinder_ipaH_presence_absence": merlin_magic.shigeifinder_ipaH_presence_absence,
-                "shigeifinder_notes_reads": merlin_magic.shigeifinder_notes_reads,
-                "shigeifinder_notes": merlin_magic.shigeifinder_notes,
-                "shigeifinder_num_virulence_plasmid_genes_reads": merlin_magic.shigeifinder_num_virulence_plasmid_genes_reads,
-                "shigeifinder_num_virulence_plasmid_genes": merlin_magic.shigeifinder_num_virulence_plasmid_genes,
-                "shigeifinder_O_antigen_reads": merlin_magic.shigeifinder_O_antigen_reads,
+                "shigeifinder_H_antigen_reads": merlin_magic.shigeifinder_H_antigen_reads,
                 "shigeifinder_O_antigen": merlin_magic.shigeifinder_O_antigen,
-                "shigeifinder_report_reads": merlin_magic.shigeifinder_report_reads,
+                "shigeifinder_O_antigen_reads": merlin_magic.shigeifinder_O_antigen_reads,
+                "shigeifinder_cluster": merlin_magic.shigeifinder_cluster,
+                "shigeifinder_cluster_reads": merlin_magic.shigeifinder_cluster_reads,
+                "shigeifinder_docker": merlin_magic.shigeifinder_docker,
+                "shigeifinder_docker_reads": merlin_magic.shigeifinder_docker_reads,
+                "shigeifinder_ipaH_presence_absence": merlin_magic.shigeifinder_ipaH_presence_absence,
+                "shigeifinder_ipaH_presence_absence_reads": merlin_magic.shigeifinder_ipaH_presence_absence_reads,
+                "shigeifinder_notes": merlin_magic.shigeifinder_notes,
+                "shigeifinder_notes_reads": merlin_magic.shigeifinder_notes_reads,
+                "shigeifinder_num_virulence_plasmid_genes": merlin_magic.shigeifinder_num_virulence_plasmid_genes,
+                "shigeifinder_num_virulence_plasmid_genes_reads": merlin_magic.shigeifinder_num_virulence_plasmid_genes_reads,
                 "shigeifinder_report": merlin_magic.shigeifinder_report,
-                "shigeifinder_serotype_reads": merlin_magic.shigeifinder_serotype_reads,
+                "shigeifinder_report_reads": merlin_magic.shigeifinder_report_reads,
                 "shigeifinder_serotype": merlin_magic.shigeifinder_serotype,
-                "shigeifinder_version_reads": merlin_magic.shigeifinder_version_reads,
+                "shigeifinder_serotype_reads": merlin_magic.shigeifinder_serotype_reads,
                 "shigeifinder_version": merlin_magic.shigeifinder_version,
-                "assembler_version": digger_denovo.assembler_version,
+                "shigeifinder_version_reads": merlin_magic.shigeifinder_version_reads,
+                "sieve_nmeningitidis_docker": merlin_magic.sieve_nmeningitidis_docker,
+                "sieve_nmeningitidis_genes_present": merlin_magic.sieve_nmeningitidis_genes_present,
+                "sieve_nmeningitidis_notes": merlin_magic.sieve_nmeningitidis_notes,
+                "sieve_nmeningitidis_results": merlin_magic.sieve_nmeningitidis_results,
+                "sieve_nmeningitidis_serogroup": merlin_magic.sieve_nmeningitidis_serogroup,
+                "sieve_nmeningitidis_version": merlin_magic.sieve_nmeningitidis_version,
                 "sistr_allele_fasta": merlin_magic.sistr_allele_fasta,
                 "sistr_allele_json": merlin_magic.sistr_allele_json,
                 "sistr_antigenic_formula": merlin_magic.sistr_antigenic_formula,
@@ -678,17 +711,17 @@ workflow theiaprok_illumina_se {
                 "stxtyper_report": merlin_magic.stxtyper_report,
                 "stxtyper_stx_frameshifts_or_internal_stop_hits": merlin_magic.stxtyper_stx_frameshifts_or_internal_stop_hits,
                 "stxtyper_version": merlin_magic.stxtyper_version,
-                "tbp_parser_version": merlin_magic.tbp_parser_version,
+                "tbp_parser_average_genome_depth": merlin_magic.tbp_parser_average_genome_depth,
                 "tbp_parser_docker": merlin_magic.tbp_parser_docker,
-                "tbp_parser_looker_report_csv": merlin_magic.tbp_parser_looker_report_csv,
+                "tbp_parser_genome_percent_coverage": merlin_magic.tbp_parser_genome_percent_coverage,
                 "tbp_parser_laboratorian_report_csv": merlin_magic.tbp_parser_laboratorian_report_csv,
                 "tbp_parser_lims_report_csv": merlin_magic.tbp_parser_lims_report_csv,
                 "tbp_parser_lims_report_transposed_csv": merlin_magic.tbp_parser_lims_report_transposed_csv,
                 "tbp_parser_locus_coverage_report_csv": merlin_magic.tbp_parser_locus_coverage_report_csv,
-                "tbp_parser_target_coverage_report_csv": merlin_magic.tbp_parser_target_coverage_report_csv,
                 "tbp_parser_log": merlin_magic.tbp_parser_log,
-                "tbp_parser_genome_percent_coverage": merlin_magic.tbp_parser_genome_percent_coverage,
-                "tbp_parser_average_genome_depth": merlin_magic.tbp_parser_average_genome_depth,
+                "tbp_parser_looker_report_csv": merlin_magic.tbp_parser_looker_report_csv,
+                "tbp_parser_target_coverage_report_csv": merlin_magic.tbp_parser_target_coverage_report_csv,
+                "tbp_parser_version": merlin_magic.tbp_parser_version,
                 "tbprofiler_dr_type": merlin_magic.tbprofiler_dr_type,
                 "tbprofiler_main_lineage": merlin_magic.tbprofiler_main_lineage,
                 "tbprofiler_output_bai": merlin_magic.tbprofiler_output_bai,
@@ -704,48 +737,22 @@ workflow theiaprok_illumina_se {
                 "trimmomatic_docker": read_QC_trim.trimmomatic_docker,
                 "trimmomatic_version": read_QC_trim.trimmomatic_version,
                 "ts_mlst_allelic_profile": ts_mlst.ts_mlst_allelic_profile,
+                "ts_mlst_combined": ts_mlst.ts_mlst_combined,
                 "ts_mlst_docker": ts_mlst.ts_mlst_docker,
                 "ts_mlst_novel_alleles": ts_mlst.ts_mlst_novel_alleles,
+                "ts_mlst_predicted_secondary_st": ts_mlst.ts_mlst_predicted_secondary_st,
                 "ts_mlst_predicted_st": ts_mlst.ts_mlst_predicted_st,
                 "ts_mlst_pubmlst_scheme": ts_mlst.ts_mlst_pubmlst_scheme,
-                "ts_mlst_predicted_secondary_st": ts_mlst.ts_mlst_predicted_secondary_st,
                 "ts_mlst_pubmlst_secondary_scheme": ts_mlst.ts_mlst_pubmlst_secondary_scheme,
+                "ts_mlst_results": ts_mlst.ts_mlst_results,
                 "ts_mlst_secondary_allelic_profile": ts_mlst.ts_mlst_secondary_allelic_profile,
                 "ts_mlst_secondary_novel_alleles": ts_mlst.ts_mlst_secondary_novel_alleles,
-                "ts_mlst_results": ts_mlst.ts_mlst_results,
                 "ts_mlst_version": ts_mlst.ts_mlst_version,
                 "virulencefinder_docker": merlin_magic.virulencefinder_docker,
                 "virulencefinder_hits": merlin_magic.virulencefinder_hits,
                 "virulencefinder_report_tsv": merlin_magic.virulencefinder_report_tsv,
-                "zip": zip,
-                "arln_assembly_ratio": arln_stats.assembly_ratio,
-                "arln_assembly_zscore": arln_stats.assembly_zscore,
-                "arln_r1_q30_clean": arln_stats.read1_clean_q30,
-                "arln_r1_q30_raw": arln_stats.read1_raw_q30,
-                "arln_stats_docker_version": arln_stats.docker_version,
-                "arln_taxon_assembly_ratio_stdev": arln_stats.taxon_assembly_ratio_stdev,
-                "arln_taxon_gc_mean": arln_stats.taxon_gc_mean,
-                "arln_taxon_gc_percent_stdev": arln_stats.taxon_gc_percent_stdev,
-                "assembler": digger_denovo.assembler_used,
-                "filtered_contigs_metrics": digger_denovo.filtered_contigs_metrics,
-                "gamma_docker": gamma.gamma_docker,
-                "gamma_fasta": gamma.gamma_fasta,
-                "gamma_gff": gamma.gamma_gff,
-                "gamma_results": gamma.gamma_results,
-                "gamma_version": gamma.gamma_version
+                "zip": zip
             }
-          }
-        }
-        if (call_arln_stats) {
-          call arln_stats.arln_stats {
-            input:
-              samplename = samplename,
-              taxon = select_first([gambit.gambit_predicted_taxon, expected_taxon]),
-              workflow_type = "se",
-              genome_length = quast.genome_length,
-              gc_percent = quast.gc_percent,
-              read1_raw = select_first([concatenate_illumina_lanes.read1_concatenated, read1]),
-              read1_clean = read_QC_trim.read1_clean
           }
         }
       }
@@ -917,6 +924,7 @@ workflow theiaprok_illumina_se {
     File? ts_mlst_results = ts_mlst.ts_mlst_results
     String? ts_mlst_predicted_st = ts_mlst.ts_mlst_predicted_st
     String? ts_mlst_pubmlst_scheme = ts_mlst.ts_mlst_pubmlst_scheme
+    String? ts_mlst_combined = ts_mlst.ts_mlst_combined
     String? ts_mlst_allelic_profile = ts_mlst.ts_mlst_allelic_profile
     File? ts_mlst_novel_alleles = ts_mlst.ts_mlst_novel_alleles
     String? ts_mlst_predicted_secondary_st = ts_mlst.ts_mlst_predicted_secondary_st
@@ -929,6 +937,7 @@ workflow theiaprok_illumina_se {
     File? prokka_gff = prokka.prokka_gff
     File? prokka_gbk = prokka.prokka_gbk
     File? prokka_sqn = prokka.prokka_sqn
+    String? prokka_version = prokka.prokka_version
     # Bakta Results
     File? bakta_gbff = bakta.bakta_gbff
     File? bakta_gff3 = bakta.bakta_gff3
@@ -1108,6 +1117,12 @@ workflow theiaprok_illumina_se {
     String? meningotype_NHBA = merlin_magic.meningotype_NHBA
     String? meningotype_NadA = merlin_magic.meningotype_NadA
     String? meningotype_BAST = merlin_magic.meningotype_BAST
+    File? sieve_nmeningitidis_results = merlin_magic.sieve_nmeningitidis_results
+    String? sieve_nmeningitidis_serogroup = merlin_magic.sieve_nmeningitidis_serogroup
+    String? sieve_nmeningitidis_genes_present = merlin_magic.sieve_nmeningitidis_genes_present
+    String? sieve_nmeningitidis_notes = merlin_magic.sieve_nmeningitidis_notes
+    String? sieve_nmeningitidis_version = merlin_magic.sieve_nmeningitidis_version
+    String? sieve_nmeningitidis_docker = merlin_magic.sieve_nmeningitidis_docker
     # Acinetobacter Typing
     File? kaptive_output_file_k = merlin_magic.kaptive_output_file_k
     File? kaptive_output_file_oc = merlin_magic.kaptive_output_file_oc

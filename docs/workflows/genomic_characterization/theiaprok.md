@@ -283,6 +283,8 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 
 {{ include_md("common_text/meningotype_task.md", indent=4) }}
 
+{{ include_md("common_text/sieve_task.md", indent=4, condition="nmen") }}
+
 ??? toggle "_Pseudomonas aeruginosa_"
     ##### _Pseudomonas aeruginosa_ {% raw %} {#pseudomonas-aeruginosa} {% endraw %}
 

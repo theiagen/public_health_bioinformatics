@@ -9,6 +9,7 @@ task freyja_one_sample {
     String? freyja_pathogen
     File? freyja_barcodes
     File? freyja_lineage_metadata
+    File? freyja_lineage_yml
     Boolean auto_adapt = false
     Float eps = 0.001 # set to mirror v2.0.1 default
     Float adapt = 0.0 # set to mirror v2.0.1 default
@@ -19,7 +20,7 @@ task freyja_one_sample {
     Int? depth_cutoff
     Int memory = 8
     Int cpu = 2
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.1"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.3"
     Int disk_size = 100
   }
   command <<<
@@ -53,7 +54,7 @@ task freyja_one_sample {
     fi
     # configure lineage metadata
     if [[ ! -z "~{freyja_lineage_metadata}" ]]; then
-      echo "User lineage metadata; ~{freyja_lineage_metadata} will be utilized fre freyja demixing"
+      echo "User lineage metadata; ~{freyja_lineage_metadata} will be utilized freyja demixing"
       freyja_metadata_version=$(basename -- "~{freyja_lineage_metadata}")
     else
       freyja_metadata_version="unmodified from freyja container: ~{docker}"
@@ -79,6 +80,7 @@ task freyja_one_sample {
     ~{"--pathogen " + freyja_pathogen} \
     ~{"--eps " + eps} \
     ~{"--meta " + freyja_lineage_metadata} \
+    ~{'--lineageyml ' + freyja_lineage_yml} \
     ~{"--barcodes " + freyja_barcodes} \
     ~{"--depthcutoff " + depth_cutoff} \
     ~{"--nb " + number_bootstraps } \
@@ -96,6 +98,7 @@ task freyja_one_sample {
     ~{"--pathogen " + freyja_pathogen} \
     ~{'--eps ' + eps} \
     ~{'--meta ' + freyja_lineage_metadata} \
+    ~{'--lineageyml ' + freyja_lineage_yml} \
     ~{'--barcodes ' + freyja_barcodes} \
     ~{'--depthcutoff ' + depth_cutoff} \
     ~{true='--confirmedonly' false='' confirmed_only} \

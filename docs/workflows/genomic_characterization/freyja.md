@@ -172,21 +172,21 @@ The main output file used in subsequent Freyja workflows is found under the `fre
 === "Illumina paired-end output data"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=True, filters={"Workflow": ["Freyja_FASTQ", "Freyja_FASTQ (PE)"]}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": ["Freyja_FASTQ", "Freyja_FASTQ (PE)"]}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
 
     ///
 
 === "Illumina single-end output data"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=True, filters={"Workflow": ["Freyja_FASTQ", "Freyja_FASTQ (SE)"]}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": ["Freyja_FASTQ", "Freyja_FASTQ (SE)"]}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
 
     ///
 
 === "ONT output data"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=True, filters={"Workflow": ["Freyja_FASTQ", "Freyja_FASTQ (ONT)"]}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": ["Freyja_FASTQ", "Freyja_FASTQ (ONT)"]}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
 
     ///
 
@@ -308,17 +308,21 @@ This workflow runs on the set level.
 
 The main requirement to run Freyja on other pathogens is **the existence of a barcode file for your pathogen of interest**. Currently, barcodes exist for the following organisms:
 
-- SARS-CoV-2 (default)
+- DENV1
+- DENV2
+- DENV3
+- DENV4
 - FLU-B-VIC
 - H1N1
 - H3N2
+- H5Nx
 - H5Nx-cattle
-- H5NX
-- MEASLESN450
 - MEASLESgenome
 - MPX
+- MTB
 - RSVa
 - RSVb
+- SARS-CoV-2 (default)
 
 !!! dna "Freyja barcodes for other pathogens"
 
@@ -341,19 +345,38 @@ When using the `freyja_pathogen` flag, the user must set the optional `update_db
 
 Allowed options:
 
-- SARS-CoV-2 (default)
-- MPXV
-- H1N1pdm
-- H5NX
+- DENV1
+- DENV2
+- DENV3
+- DENV4
 - FLU-B-VIC
-- MEASLESN450
-- MEASLES
+- H1N1
+- H3N2
+- H5Nx
+- H5Nx-cattle
+- MEASLESgenome
+- MPX
+- MTB
 - RSVa
 - RSVb
+- SARS-CoV-2 (default)
 
 !!! warning
 
     The `freyja_pathogen` flag is not used if a barcodes file is provided. This means that this option is ignored if a barcode file is provided through `freyja_barcodes`.
+
+### Using the `freyja_pathogen` flag with `depth_cutoff`
+
+When using `depth_cutoff` on pathogens other than SARS-CoV-2, Freyja requires the existence of a lineage hierarchy file, `lineages.yml`, within the [Freyja-barcodes repository](https://github.com/andersen-lab/Freyja-barcodes). This file is present for the following pathogens, as listed in the [pathogen config file](https://github.com/andersen-lab/Freyja/blob/v2.0.3/freyja/data/pathogen_config.yml).
+
+Pathogens compatible with `depth_cutoff`:
+
+- H5Nx-cattle
+- MEASLESgenome
+- MPX
+
+!!! warning "v2.0.3 and MPX"
+    If you wish to run `depth_cutoff` with MPX, you must include its lineage hierarchy file via `freyja_lineage_yml`, as Freyja is unable to download the YAML present in the repository due to issues with the link. The lineage hierarchy file can be obtained [here](https://github.com/andersen-lab/Freyja-barcodes/blob/main/MPX/latest/lineages.yml).
 
 ### Providing the appropriate barcode file
 

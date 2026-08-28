@@ -188,6 +188,16 @@ workflow theiaprok_fasta {
           }
       }
     }
+    if (call_arln_stats) {
+      call arln_stats.arln_stats {
+        input:
+          samplename = samplename,
+          taxon = select_first([gambit.gambit_predicted_taxon, expected_taxon]),
+          genome_length = quast.genome_length,
+          gc_percent = quast.gc_percent,
+          workflow_type = "fasta"
+      }
+    }
     if (defined(taxon_tables)) {
       call export_taxon_table_task.export_taxon_table {
         input:
@@ -197,17 +207,6 @@ workflow theiaprok_fasta {
           taxon_table = taxon_tables,
           samplename = samplename,
           columns_to_export = {
-            "arln_assembly_ratio": arln_stats.assembly_ratio,
-            "arln_assembly_zscore": arln_stats.assembly_zscore,
-            "arln_stats_docker_version": arln_stats.docker_version,
-            "arln_taxon_assembly_ratio_stdev": arln_stats.taxon_assembly_ratio_stdev,
-            "arln_taxon_gc_mean": arln_stats.taxon_gc_mean,
-            "arln_taxon_gc_percent_stdev": arln_stats.taxon_gc_percent_stdev,
-            "gamma_docker": gamma.gamma_docker,
-            "gamma_fasta": gamma.gamma_fasta,
-            "gamma_gff": gamma.gamma_gff,
-            "gamma_results": gamma.gamma_results,
-            "gamma_version": gamma.gamma_version,
             "abricate_abaum_database": merlin_magic.abricate_abaum_database,
             "abricate_abaum_docker": merlin_magic.abricate_abaum_docker,
             "abricate_abaum_plasmid_tsv": merlin_magic.abricate_abaum_results,
@@ -277,6 +276,12 @@ workflow theiaprok_fasta {
             "ani_mummer_version": ani.ani_mummer_version,
             "ani_output_tsv": ani.ani_output_tsv,
             "ani_top_species_match": ani.ani_top_species_match,
+            "arln_assembly_ratio": arln_stats.assembly_ratio,
+            "arln_assembly_zscore": arln_stats.assembly_zscore,
+            "arln_stats_docker_version": arln_stats.docker_version,
+            "arln_taxon_assembly_ratio_stdev": arln_stats.taxon_assembly_ratio_stdev,
+            "arln_taxon_gc_mean": arln_stats.taxon_gc_mean,
+            "arln_taxon_gc_percent_stdev": arln_stats.taxon_gc_percent_stdev,
             "assembly_length": quast.genome_length,
             "bakta_gbff": bakta.bakta_gbff,
             "bakta_gff3": bakta.bakta_gff3,
@@ -298,8 +303,8 @@ workflow theiaprok_fasta {
             "ectyper_pathotype": merlin_magic.ectyper_pathotype,
             "ectyper_pathotype_count": merlin_magic.ectyper_pathotype_count,
             "ectyper_pathotype_genes": merlin_magic.ectyper_pathotype_genes,
-            "ectyper_qc_result": merlin_magic.ectyper_qc_result,
             "ectyper_predicted_serotype": merlin_magic.ectyper_predicted_serotype,
+            "ectyper_qc_result": merlin_magic.ectyper_qc_result,
             "ectyper_results": merlin_magic.ectyper_results,
             "ectyper_stx_subtypes": merlin_magic.ectyper_stx_subtypes,
             "ectyper_version": merlin_magic.ectyper_version,
@@ -315,6 +320,11 @@ workflow theiaprok_fasta {
             "gambit_predicted_taxon_rank": gambit.gambit_predicted_taxon_rank,
             "gambit_report": gambit.gambit_report_file,
             "gambit_version": gambit.gambit_version,
+            "gamma_docker": gamma.gamma_docker,
+            "gamma_fasta": gamma.gamma_fasta,
+            "gamma_gff": gamma.gamma_gff,
+            "gamma_results": gamma.gamma_results,
+            "gamma_version": gamma.gamma_version,
             "hicap_docker": merlin_magic.hicap_docker,
             "hicap_genes": merlin_magic.hicap_genes,
             "hicap_results_tsv": merlin_magic.hicap_results_tsv,
@@ -456,6 +466,12 @@ workflow theiaprok_fasta {
             "shigeifinder_report": merlin_magic.shigeifinder_report,
             "shigeifinder_serotype": merlin_magic.shigeifinder_serotype,
             "shigeifinder_version": merlin_magic.shigeifinder_version,
+            "sieve_nmeningitidis_docker": merlin_magic.sieve_nmeningitidis_docker,
+            "sieve_nmeningitidis_genes_present": merlin_magic.sieve_nmeningitidis_genes_present,
+            "sieve_nmeningitidis_notes": merlin_magic.sieve_nmeningitidis_notes,
+            "sieve_nmeningitidis_results": merlin_magic.sieve_nmeningitidis_results,
+            "sieve_nmeningitidis_serogroup": merlin_magic.sieve_nmeningitidis_serogroup,
+            "sieve_nmeningitidis_version": merlin_magic.sieve_nmeningitidis_version,
             "sistr_allele_fasta": merlin_magic.sistr_allele_fasta,
             "sistr_allele_json": merlin_magic.sistr_allele_json,
             "sistr_antigenic_formula": merlin_magic.sistr_antigenic_formula,
@@ -492,31 +508,22 @@ workflow theiaprok_fasta {
             "theiaprok_fasta_analysis_date": version_capture.date,
             "theiaprok_fasta_version": version_capture.phb_version,
             "ts_mlst_allelic_profile": ts_mlst.ts_mlst_allelic_profile,
+            "ts_mlst_combined": ts_mlst.ts_mlst_combined,
             "ts_mlst_docker": ts_mlst.ts_mlst_docker,
             "ts_mlst_novel_alleles": ts_mlst.ts_mlst_novel_alleles,
+            "ts_mlst_predicted_secondary_st": ts_mlst.ts_mlst_predicted_secondary_st,
             "ts_mlst_predicted_st": ts_mlst.ts_mlst_predicted_st,
             "ts_mlst_pubmlst_scheme": ts_mlst.ts_mlst_pubmlst_scheme,
-            "ts_mlst_predicted_secondary_st": ts_mlst.ts_mlst_predicted_secondary_st,
             "ts_mlst_pubmlst_secondary_scheme": ts_mlst.ts_mlst_pubmlst_secondary_scheme,
+            "ts_mlst_results": ts_mlst.ts_mlst_results,
             "ts_mlst_secondary_allelic_profile": ts_mlst.ts_mlst_secondary_allelic_profile,
             "ts_mlst_secondary_novel_alleles": ts_mlst.ts_mlst_secondary_novel_alleles,
-            "ts_mlst_results": ts_mlst.ts_mlst_results,
             "ts_mlst_version": ts_mlst.ts_mlst_version,
             "virulencefinder_docker": merlin_magic.virulencefinder_docker,
             "virulencefinder_hits": merlin_magic.virulencefinder_hits,
             "virulencefinder_report_tsv": merlin_magic.virulencefinder_report_tsv,
             "zip": zip
         }
-      }
-    }
-    if (call_arln_stats) {
-      call arln_stats.arln_stats {
-        input:
-          samplename = samplename,
-          taxon = select_first([gambit.gambit_predicted_taxon, expected_taxon]),
-          genome_length = quast.genome_length,
-          gc_percent = quast.gc_percent,
-          workflow_type = "fasta"
       }
     }
   }
@@ -618,6 +625,7 @@ workflow theiaprok_fasta {
     # MLST Typing
     File? ts_mlst_results = ts_mlst.ts_mlst_results
     String? ts_mlst_predicted_st = ts_mlst.ts_mlst_predicted_st
+    String? ts_mlst_combined = ts_mlst.ts_mlst_combined
     String? ts_mlst_pubmlst_scheme = ts_mlst.ts_mlst_pubmlst_scheme
     String? ts_mlst_allelic_profile = ts_mlst.ts_mlst_allelic_profile
     File? ts_mlst_novel_alleles = ts_mlst.ts_mlst_novel_alleles
@@ -631,6 +639,7 @@ workflow theiaprok_fasta {
     File? prokka_gff = prokka.prokka_gff
     File? prokka_gbk = prokka.prokka_gbk
     File? prokka_sqn = prokka.prokka_sqn
+    String? prokka_version = prokka.prokka_version
     # Bakta Results
     File? bakta_gbff = bakta.bakta_gbff
     File? bakta_gff3 = bakta.bakta_gff3
@@ -773,6 +782,12 @@ workflow theiaprok_fasta {
     String? meningotype_NHBA = merlin_magic.meningotype_NHBA
     String? meningotype_NadA = merlin_magic.meningotype_NadA
     String? meningotype_BAST = merlin_magic.meningotype_BAST
+    File? sieve_nmeningitidis_results = merlin_magic.sieve_nmeningitidis_results
+    String? sieve_nmeningitidis_serogroup = merlin_magic.sieve_nmeningitidis_serogroup
+    String? sieve_nmeningitidis_genes_present = merlin_magic.sieve_nmeningitidis_genes_present
+    String? sieve_nmeningitidis_notes = merlin_magic.sieve_nmeningitidis_notes
+    String? sieve_nmeningitidis_version = merlin_magic.sieve_nmeningitidis_version
+    String? sieve_nmeningitidis_docker = merlin_magic.sieve_nmeningitidis_docker
     # Acinetobacter Typing
     File? kaptive_output_file_k = merlin_magic.kaptive_output_file_k
     File? kaptive_output_file_oc = merlin_magic.kaptive_output_file_oc
