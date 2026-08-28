@@ -55,7 +55,7 @@ workflow merlin_magic {
     Boolean assembly_only = false
     Boolean ont_data = false
     Boolean paired_end = true
-    File? blast_db
+    File? allele_calling_blast_db
     # activating tool logic
     Boolean call_poppunk = true
     Boolean call_shigeifinder_reads_input = false
@@ -710,7 +710,7 @@ workflow merlin_magic {
         input:
           samplename = samplename,
           assembly = assembly,
-          blast_db = select_first([blast_db, allele_calling_parameters.db]),
+          blast_db = select_first([allele_calling_blast_db, allele_calling_parameters.db]),
           similarity_threshold = allele_calling_parameters.similarity,
           qc_genus = allele_calling_parameters.qc_genus,
           scheme = allele_calling_parameters.scheme,
