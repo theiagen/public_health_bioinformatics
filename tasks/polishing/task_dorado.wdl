@@ -13,18 +13,23 @@ task dorado {
     Int cpu = 4
     Int memory = 16
     Int disk_size = 100
-    String docker = "nanoporetech/dorado:sha9809639e07a927bcc0f584dadd5e59674cf59f3f"
+    String docker = "nanoporetech/dorado:sha38b4ce849afa13eac8075f0b41cecd30799f169b"
   }
   command <<<
     set -euo pipefail
 
     dorado --version 2&> VERSION
 
+    echo "DEBUG: moving the unpolished_fasta to the local dir and building the index locally"
+    cp ~{unpolished_fasta} unpolished.fasta
+    samtools faidx unpolished.fasta
+
+
     echo "DEBUG: aligning the reads to the unpolished fasta" > ~{samplename}.log
     dorado aligner \
       -t ~{cpu} \
       --no-sort \
-      ~{unpolished_fasta} \
+      unpolished.fasta \
       ~{read1} > ~{samplename}.bam
 
     echo "DEBUG: sorting and indexing the alignment" >> ~{samplename}.dorado_log
@@ -58,7 +63,7 @@ task dorado {
       ~{true="--ignore-read-groups" false="" ignore_read_groups} \
       --bacteria -v \
       ~{samplename}_sorted.bam \
-      ~{unpolished_fasta} > ~{samplename}_polished.fasta
+       unpolished.fasta > ~{samplename}_polished.fasta
         2> >(tee ~{samplename}.log)
 
   >>>
