@@ -228,7 +228,7 @@ add_biosample_accessions	docker	String	The Docker container to use for the task	
 add_biosample_accessions	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Terra_2_NCBI	runtime	
 allele_clustering_task	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Allele_Clustering	runtime	
 allele_clustering_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Allele_Clustering	runtime	
-allele_clustering_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/allele-clustering:1.0.0-dev	Optional	Allele_Clustering	docker	
+allele_clustering_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/allele-clustering:1.0.0	Optional	Allele_Clustering	docker	
 allele_clustering_task	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Allele_Clustering	runtime	
 amr_search	cpu	Int	Number of CPUs to allocate to the task	2	Optional	AMR_Search	runtime	
 amr_search	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	AMR_Search	runtime	
@@ -875,7 +875,7 @@ flye_denovo	dnaapler_mode	String	Dnaapler-specific inputs	all	Optional	TheiaEuk_
 flye_denovo	dorado_auto_detect_model	Boolean	Dorado will auto detect the most appropriate model to use for polishing; set to false to turn off 	True	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 flye_denovo	dorado_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaEuk_ONT, TheiaProk_ONT	runtime	
 flye_denovo	dorado_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_ONT, TheiaProk_ONT	runtime	
-flye_denovo	dorado_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/dorado:2.1.2-dev	Optional	TheiaEuk_ONT, TheiaProk_ONT	docker	
+flye_denovo	dorado_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/dorado:2.1.2	Optional	TheiaEuk_ONT, TheiaProk_ONT	docker	
 flye_denovo	dorado_ignore_read_groups	Boolean	Multiple read groups in a BAM file will be treated like one read group. Set to false to turn off	True	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 flye_denovo	dorado_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaEuk_ONT, TheiaProk_ONT	runtime	
 flye_denovo	dorado_model	String	The Dorado model to use for polishing 	dna_r10.4.1_e8.2_400bps_sup@v5.0.0_polish_rl	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
@@ -1353,7 +1353,7 @@ merlin_magic	abricate_vibrio_min_percent_identity	Int	Minimum DNA percent identi
 merlin_magic	agrvate_agr_typing_only	Boolean	Set to true to skip agr operon extraction and frameshift detection	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	agrvate_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/agrvate:1.0.2--hdfd78af_0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
 merlin_magic	allele_calling_blast_db	File	The BLAST database to use		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	allele_calling_docker_image	String	The Docker container to use for the task		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	allele_calling_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/allele_calling:1.0.0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	amr_search_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 merlin_magic	amr_search_disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 merlin_magic	amr_search_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/amrsearch:0.2.1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
