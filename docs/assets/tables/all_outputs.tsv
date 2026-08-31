@@ -40,7 +40,7 @@ alignment_method	String	The method used to generate the alignment	Freyja_FASTQ
 allele_calling_accessory_count	Int	The number of accessory loci detected	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 allele_calling_accessory_percentage	Float	The percentage of accessory loci detected	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 allele_calling_core_count	Int	The number of core loci detected	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-allele_calling_core_json	File	A JSON listing the allele hashes for only core loci	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_ONT
+allele_calling_core_json	File	A JSON listing the allele hashes for only core loci	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 allele_calling_core_percentage	Float	The percentage of core loci detected	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 allele_calling_docker	String	The Docker contained used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 allele_calling_result	String	Either PASS or FAIL, this describes if the results passed QC 	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
