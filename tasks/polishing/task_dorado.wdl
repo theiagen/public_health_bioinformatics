@@ -14,7 +14,7 @@ task dorado {
     Int cpu = 4
     Int memory = 16
     Int disk_size = 100
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/dorado:2.1.2
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/dorado:2.1.2"
   }
   command <<<
     set -euo pipefail
