@@ -1237,6 +1237,7 @@ workflow theiaprok_illumina_se {
     # allele caller outputs
     String? allele_calling_scheme = merlin_magic.allele_calling_scheme
     String? allele_calling_result = merlin_magic.allele_calling_result
+    File? allele_calling_core_json = merlin_magic.allele_calling_core_json
     File? allele_calling_standard_json = merlin_magic.allele_calling_standard_json
     Int? allele_calling_core_count = merlin_magic.allele_calling_core_count
     Float? allele_calling_core_percentage = merlin_magic.allele_calling_core_percentage
