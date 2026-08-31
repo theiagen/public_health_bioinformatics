@@ -17,7 +17,7 @@ task allele_calling {
 
     Int cpu = 8
     Int disk_size = 100
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/allele_calling:1.0.1"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/allele_calling:1.0.0-dev"
     Int memory = 32
   }
   command <<<
