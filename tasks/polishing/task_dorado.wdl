@@ -66,7 +66,7 @@ task dorado {
       ~{true="--ignore-read-groups" false="" ignore_read_groups} \
       ~{true="--bacteria" false="" use_bacteria} \
       > ~{samplename}_polished.fasta \
-      2> >(tee ~{samplename}.log)
+      2> >(tee ~{samplename}.log >&2)
 
   >>>
   output {
