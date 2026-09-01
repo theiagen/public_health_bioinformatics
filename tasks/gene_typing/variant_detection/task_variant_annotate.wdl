@@ -14,7 +14,7 @@ task variant_annotate {
     Boolean exact_match = false # use an exact match for qualifier mapping (always case-sensitive)
     Boolean ambiguous_contig = false # relate bedfile to GFF and FASTA ambiguous
 
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/ensembl-vep:116.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/ensembl-vep:116.0-dev"
     Int disk_size = 100
     Int memory = 8
     Int cpu = 2
