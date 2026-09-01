@@ -1381,6 +1381,7 @@ vadr_update_analysis_date	String	Date of analysis	VADR_Update
 vadr_update_version	String	Version of the Public Health Bioinformatics (PHB) repository used	VADR_Update
 variant_annotation_gene_vcf	File	VCF of variant calls overlapping the query gene regions	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 variant_annotation_summary	File	An HTML report summarizing the annotated variants in the query gene regions	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+variant_annotation_tsv	File	A TSV file depicting VEP variant reporting	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 variant_annotation_warnings	File	Warnings emitted by VEP during variant annotation	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 variant_annotations	String	A comma-delimited list of variant annotations detected in the query gene regions	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 variants_from_ref_vcf	File	Number of variants relative to the reference genome	TheiaCoV_ClearLabs

@@ -1269,6 +1269,8 @@ medea_magic	gatk_filter_min_quality_by_depth	Float	Minimum quality-by-depth (QD)
 medea_magic	gatk_filter_min_variant_quality	Float	Minimum variant quality (QUAL); variants below this threshold are flagged by GATK VariantFiltration	30	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	gatk_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	runtime	
 medea_magic	gatk_ploidy	Int	Sample ploidy (N) used by GATK HaplotypeCaller; defaults to 1 (haploid)	1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	min_gene_coverage_depth	Int	Minimum depth of coverage to consider a base in gene coverage statistics	10	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	min_gene_coverage_map_quality	Int	Minimum mapping quality to consider a base in gene coverage statistics	40	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	query_exact_match	Boolean	Only reference query genes that exactly match the query genes and exclude partial matches	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	query_genes	String	Comma-separated list of query genes to parse GBFF/BED file for region coordinates		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	query_genes_bed	File	A BED file depicting query genes and their coordinates		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
