@@ -50,11 +50,11 @@ PYEOF
       theiagene extract_variants \
         --vcf ~{vcf} \
         --reference_gff reference_sorted.gff \
-        ~{if defined(query_genes) then "--query_genes ~{query_genes}" else ""} \
-        ~{if defined(bedfile) then "--bedfile ~{bedfile}" else ""} \
+        ~{'--query_genes "' + query_genes + '"'} \
+        ~{"--bedfile " + bedfile} \
         ~{if exact_match then "--exact_match" else ""} \
         ~{if ambiguous_contig then "--ambiguous_contig" else ""} \
-        --feature_qualifier ~{feature_qualifier} \
+        --feature_qualifier "~{feature_qualifier}" \
         --output ~{samplename}.genes.vcf
       vep_vcf="~{samplename}.genes.vcf"
     else
@@ -105,8 +105,8 @@ PYEOF
         --vcf "${vep_vcf}" \
         --vep_tsv ~{samplename}_variant_annotations.tsv \
         --reference_gff reference_sorted.gff.gz \
-        ~{if defined(query_genes) then "--query_genes ~{query_genes}" else ""} \
-        ~{if defined(bedfile) then "--bedfile ~{bedfile}" else ""} \
+        ~{'--query_genes "' + query_genes + '"'} \
+        ~{"--bedfile " + bedfile} \
         ~{if exact_match then "--exact_match" else ""} \
         --feature_qualifier "~{feature_qualifier}" \
         | tr '\n' ',' | sed 's/,$//' > VARIANT_REPORT

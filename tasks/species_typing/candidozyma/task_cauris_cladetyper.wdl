@@ -73,12 +73,13 @@ task cauris_cladetyper {
         top_clade = raw.read().strip()
     gzip_exts = ('.gz')
     fa_exts = ('.fasta', '.fna', '.ffn', '.faa', '.frn', '.fa')
-    ref2annotation = {"~{ref_clade1}": ["~{if defined(ref_clade1_gff) then ref_clade1_gff else ''}", "Clade1"],
-                      "~{ref_clade2}": ["~{if defined(ref_clade2_gff) then ref_clade2_gff else ''}", "Clade2"],
-                      "~{ref_clade3}": ["~{if defined(ref_clade3_gff) then ref_clade3_gff else ''}", "Clade3"],
-                      "~{ref_clade4}": ["~{if defined(ref_clade4_gff) then ref_clade4_gff else ''}", "Clade4"],
-                      "~{ref_clade5}": ["~{if defined(ref_clade5_gff) then ref_clade5_gff else ''}", "Clade5"],
-                      "~{ref_clade6}": ["~{if defined(ref_clade6_gff) then ref_clade6_gff else ''}", "Clade6"]}
+    # clades 1-5 always carry a GFF default; only clade 6's is optional
+    ref2annotation = {"~{ref_clade1}": ["~{ref_clade1_gff}", "Clade1"],
+                      "~{ref_clade2}": ["~{ref_clade2_gff}", "Clade2"],
+                      "~{ref_clade3}": ["~{ref_clade3_gff}", "Clade3"],
+                      "~{ref_clade4}": ["~{ref_clade4_gff}", "Clade4"],
+                      "~{ref_clade5}": ["~{ref_clade5_gff}", "Clade5"],
+                      "~{ref_clade6}": ["~{default='' ref_clade6_gff}", "Clade6"]}
     cladegff, cladetype, cladefa = "", "", ""
     for ref, annotation in ref2annotation.items():
         if ref.endswith('/'):

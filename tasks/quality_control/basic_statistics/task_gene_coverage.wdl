@@ -33,20 +33,22 @@ task gene_coverage {
     # run calculations
     theiagene gene_coverage \
       --bam ~{bam} \
-      --feature_type ~{feature_type} \
-      --feature_qualifier ~{feature_qualifier} \
+      --feature_type "~{feature_type}" \
+      --feature_qualifier "~{feature_qualifier}" \
       --min_depth ~{min_depth} \
       --min_base_quality ~{min_base_quality} \
       --min_mapping_quality ~{min_map_quality} \
-      ~{if defined(query_genes) then "--query_genes ~{query_genes}" else ""} \
+      ~{'--query_genes "' + query_genes + '"'} \
       ~{if exact_match then "--exact_match" else ""} \
-      ~{if defined(bedfile) then "--bedfile ~{bedfile}" else ""} \
-      ~{if defined(reference_gff) then "--reference_gff ~{reference_gff}" else ""} \
+      ~{"--bedfile " + bedfile} \
+      ~{"--reference_gff " + reference_gff} \
       ~{if ambiguous_contig then "--ambiguous_contig" else ""}
 
     # rename files
     mv COVERAGE_STATS.tsv ~{samplename}.coverage_stats.tsv
 
+    # deprecated outputs v4.2.0; theiagene quantifies every gene, so the S gene
+    # figures are read back out of its per-gene files rather than recomputed
     python3 <<CODE
     import json
 
@@ -54,59 +56,13 @@ task gene_coverage {
       with open(path, "r") as f:
         return {k.upper(): v for k, v in json.load(f).items()}
 
-    def render_total(value):
-      # every value is summed as a float, but a whole total -- a read count,
-      # above all -- should read as 140 rather than 140.0
-      if value != "" and float(value).is_integer():
-        return str(int(value))
-      return str(value)
-
-    # bases quantified per gene -- the denominator its depth and breadth were
-    # taken over, and the weight that turns a per-gene mean into a per-base one
-    gene2lengths = load("LENGTHS_DICT.json")
-
-    # a gene averaged on a "base" basis is weighted by its quantified length, so
-    # the result is the mean over every base rather than the mean of per-gene
-    # values; on a "query" basis every gene counts once no matter how long it is.
-    # Depth and breadth are per-base quantities, so they average per base; reads
-    # are counted per gene, so they average per query.
-    for key, av_val in {"COVERAGE": "base", "DEPTH": "base", "READS": "query"}.items():
-      data_dict = load(f"{key}_DICT.json")
-
-      # theiagene reports a gene that resolved no coordinates as "NA": it was
-      # never measured, which is not a measured zero, so it contributes to
-      # neither the mean nor the total
-      measured = {
-        gene: float(value) for gene, value in data_dict.items()
-        if value != "NA" and gene2lengths.get(gene, "NA") != "NA"
-      }
-
-      if av_val == "base":
-        weights = {gene: float(gene2lengths[gene]) for gene in measured}
-      elif av_val == "query":
-        weights = {gene: 1.0 for gene in measured}
-      else:
-        raise ValueError(f"averaging basis for {key} must be 'base' or 'query', got {av_val}")
-
-      # an empty weight total means nothing was measured; report that as blank
-      # rather than as a number, matching how a gene with no coordinates reports
-      denominator = sum(weights.values())
-      if denominator:
-        mean_data = sum(measured[g] * weights[g] for g in measured) / denominator
-        total_data = sum(measured.values())
-      else:
-        mean_data = ""
-        total_data = ""
-
-      with open(f"MEAN_{key}", "w") as f:
-        f.write(str(mean_data))
-      with open(f"TOTAL_{key}", "w") as f:
-        f.write(render_total(total_data))
-
-      # deprecated outputs v4.2.0; typed Float, so an unmeasured S gene falls
-      # back to 0.0 rather than emitting "NA"
-      if "~{organism}".lower() == "sars-cov-2":
-        sc2_s_gene_data = measured.get("S", 0.0)
+    # a gene theiagene reports as "NA" resolved to no coordinates and was never
+    # measured; these outputs are typed Float, so an unmeasured or absent S gene
+    # falls back to 0.0 rather than emitting "NA"
+    for key in ("DEPTH", "COVERAGE"):
+      s_gene_value = load(f"{key}_DICT.json").get("S", "NA")
+      if "~{organism}".lower() == "sars-cov-2" and s_gene_value != "NA":
+        sc2_s_gene_data = float(s_gene_value)
       else:
         sc2_s_gene_data = 0.0
 

@@ -60,7 +60,7 @@ task gatk_variants {
       -O ~{samplename}_haplotypecall.g.vcf.gz \
       -ploidy ~{ploidy} \
       --sample-name ~{samplename} \
-      ~{if defined(intervals_file) then "-L ~{intervals_file}" else ""} \
+      ~{"-L " + intervals_file} \
       --tmp-dir . \
       -ERC GVCF
 
@@ -73,7 +73,7 @@ task gatk_variants {
       GenotypeGVCFs \
       -R ${local_ref} \
       -V ~{samplename}_haplotypecall.g.vcf.gz \
-      ~{if defined(intervals_file) then "-L ~{intervals_file}" else ""} \
+      ~{"-L " + intervals_file} \
       -O ~{samplename}_genotype.g.vcf.gz
   >>>
   output {

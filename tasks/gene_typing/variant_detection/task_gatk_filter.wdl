@@ -42,19 +42,18 @@ task gatk_filter {
     # variant with filter_name when its expression evaluates to true. these
     # threshold expressions are written without spaces so bash word-splitting
     # keeps each token intact. the user-supplied filter_expression may contain
-    # spaces, so it is handled separately as a quoted argument in the gatk call
-    filters = []
+    # spaces, so it is handled separately as a quoted argument in the gatk call.
+    # every threshold below has a task-level default, so all six always apply
+    filters = [
+        ('variant_quality_filter', 'QUAL<~{min_variant_quality}'),
+        ('depth_filter', 'DP<~{min_depth}'),
+        ('mapping_quality_filter', 'MQ<~{min_map_quality}'),
+        ('quality_by_depth_filter', 'QD<~{min_quality_by_depth}'),
+        ('fisher_strand_bias_filter', 'FS>~{max_fisher_strand_bias}'),
+        ('strand_odds_ratio_filter', 'SOR>~{max_strand_odds_ratio}'),
+    ]
 
-    # optional threshold-based filters, each with a name matching its function
-    ~{if defined(min_variant_quality) then "filters.append(('variant_quality_filter', 'QUAL<~{min_variant_quality}'))" else ""}
-    ~{if defined(min_depth) then "filters.append(('depth_filter', 'DP<~{min_depth}'))" else ""}
-    ~{if defined(min_map_quality) then "filters.append(('mapping_quality_filter', 'MQ<~{min_map_quality}'))" else ""}
-    ~{if defined(min_quality_by_depth) then "filters.append(('quality_by_depth_filter', 'QD<~{min_quality_by_depth}'))" else ""}
-    ~{if defined(max_fisher_strand_bias) then "filters.append(('fisher_strand_bias_filter', 'FS>~{max_fisher_strand_bias}'))" else ""}
-    ~{if defined(max_strand_odds_ratio) then "filters.append(('strand_odds_ratio_filter', 'SOR>~{max_strand_odds_ratio}'))" else ""}
-
-    # build the flat argument list; an empty list yields an empty file so no
-    # filters are applied
+    # build the flat argument list
     args = []
     for filter_name, filter_expr in filters:
         args += ["--filter-name", filter_name, "--filter-expression", filter_expr]
@@ -62,12 +61,9 @@ task gatk_filter {
     with open("FILTER_EXPRESSION.txt", "w") as outfile:
         outfile.write(" ".join(args))
 
-    if filters:
-        print("Applying the following VariantFiltration filters:")
-        for filter_name, filter_expr in filters:
-            print('  {}: "{}"'.format(filter_name, filter_expr))
-    else:
-        print("No filter expression provided; running VariantFiltration without filters.")
+    print("Applying the following VariantFiltration filters:")
+    for filter_name, filter_expr in filters:
+        print('  {}: "{}"'.format(filter_name, filter_expr))
     CODE
 
     # call VariantFiltration with optional filter expression(s)
@@ -76,7 +72,7 @@ task gatk_filter {
       -R ${local_ref} \
       -V ~{gvcf} \
       -O ~{samplename}_filtered.g.vcf.gz \
-      ~{if defined(filter_expression) then '--filter-name "user_filter" --filter-expression "~{filter_expression}"' else ""} \
+      ~{'--filter-name "user_filter" --filter-expression "' + filter_expression + '"'} \
       ${FILTER_ARGS[@]}
 
     # call SelectVariants and drop those without PASS flags
