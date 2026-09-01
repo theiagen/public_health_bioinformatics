@@ -4,6 +4,7 @@ task augur_export {
   input {
     File tree
     File? metadata
+    String? metadata_id_columns
     Array[File] node_data_jsons
     String build_name
 
@@ -51,6 +52,7 @@ task augur_export {
       ~{"--description " + description_md} \
       ~{"--colors " + colors_tsv} \
       ~{"--lat-longs " + lat_longs_tsv} \
+      ~{"--metadata-id-columns " + metadata_id_columns} \
       ~{true="--include-root-sequence " false=""  include_root_sequence}
   >>>
   output {

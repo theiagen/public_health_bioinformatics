@@ -6,6 +6,7 @@ task augur_refine {
     File aligned_fasta
     File draft_augur_tree
     File? metadata
+    String? metadata_id_columns 
     String build_name
 
     # phylogeny parameters
@@ -38,6 +39,7 @@ task augur_refine {
       --tree "~{draft_augur_tree}" \
       --alignment "~{aligned_fasta}" \
       ~{'--metadata ' + metadata} \
+      ~{'--metadata-id-columns ' + metadata_id_columns} \
       --output-tree "~{build_name}_refined.nwk" \
       --output-node-data "~{build_name}_branch_lengths.json" \
       ~{true="--timetree" false="" build_time_tree} \
