@@ -6,6 +6,7 @@ task augur_refine {
     File aligned_fasta
     File draft_augur_tree
     File? metadata
+    String? metadata_id_columns 
     String build_name
 
     # phylogeny parameters
@@ -31,13 +32,14 @@ task augur_refine {
     Int disk_size = 100
     Int memory = 50
     Int cpu = 2
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/augur:34.1.3"
   }
   command <<<
     AUGUR_RECURSION_LIMIT=10000 augur refine \
       --tree "~{draft_augur_tree}" \
       --alignment "~{aligned_fasta}" \
       ~{'--metadata ' + metadata} \
+      ~{'--metadata-id-columns ' + metadata_id_columns} \
       --output-tree "~{build_name}_refined.nwk" \
       --output-node-data "~{build_name}_branch_lengths.json" \
       ~{true="--timetree" false="" build_time_tree} \

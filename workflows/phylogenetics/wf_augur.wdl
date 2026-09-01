@@ -155,6 +155,7 @@ workflow augur {
       aligned_fasta = select_first([augur_align.aligned_fasta, filter_sequences_by_length.filtered_fasta]),
       draft_augur_tree = reorder_matrix.tree,
       metadata = tsv_join.out_tsv,
+      metadata_id_columns = augur_id_column,
       build_name = build_name_updated,
       build_time_tree = tsv_join.has_time
   }
@@ -189,6 +190,7 @@ workflow augur {
       input:
         refined_tree = augur_refine.refined_tree,
         metadata = tsv_join.out_tsv,
+        metadata_id_columns = augur_id_column,
         columns = select_first([augur_trait_columns, "pango_lineage,clade_membership"]), # default to these columns if none are specified
         build_name = build_name_updated
     }
@@ -220,6 +222,7 @@ workflow augur {
     input:
       tree = select_first([augur_refine.refined_tree, augur_tree.tree]),
       metadata = select_first([tsv_join.out_tsv, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"]),
+      metadata_id_columns = augur_id_column,
       node_data_jsons = select_all([
                           augur_refine.branch_lengths,
                           augur_ancestral.ancestral_nt_muts_json,
