@@ -44,6 +44,6 @@ fragment: true
         |  | Links |
         | --- | --- |
         | Task | [task_gene_coverage.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_gene_coverage.wdl) |
-        | Software Source Code | [Theiagene on GitHub](https://github.com/theiagen/theiagene) |
+        | Software Source Code | [theiagene on GitHub](https://github.com/theiagen/theiagene) |
         | Software Documentation | [samtools Manual](https://www.htslib.org/doc/samtools.html) |
         | Original Publication(s) | [Twelve years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |

@@ -22,7 +22,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 
 !!! warning "Before running TheiaEuk"
 
-    For some taxa, TheiaEuk performs reference-based variant calling on the cleaned read dataset and then summarizes coverage and variants across genes associated with antifungal resistance (see the [Organism-specific characterization](#organism-specific-characterization) section). TheiaEuk_Illumina_PE aligns reads with `BWA` and calls/filters variants with `GATK` (`gatk_variants` + `gatk_filter`), while TheiaEuk_ONT aligns with `minimap2` and calls variants with `Clair3`. Variant calling requires reads; assembly-only submissions are not variant-called.
+    For some taxa, TheiaEuk performs reference-based variant calling on the cleaned read dataset and then summarizes coverage and variants across genes associated with antifungal resistance (see the [Organism-specific characterization](#organism-specific-characterization) section). TheiaEuk_Illumina_PE aligns reads with `BWA` and calls/filters variants with `GATK` (`gatk_variants` + `gatk_filter`), while TheiaEuk_ONT aligns with `minimap2` and calls variants with `Clair3`.
 
 ### Inputs
 
@@ -123,12 +123,13 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
         - _Cryptococcus neoformans_: a hosted reference (`GCF_000091045.1`, ASM9104v1).
 
         !!! warning "Keep the FASTA and GFF matched"
-            The GFF must reference the same assembly as the reference FASTA. If a custom `reference_genome_fasta` is provided, the accompanying annotation `reference_gff` must be as well (and vice versa); otherwise errors will be experienced, or the gene coordinates may silently not correspond to the aligned reference.
+            The reference FASTA and GFF must use the same assembly. If a custom `reference_genome_fasta` is provided, an associated `reference_gff` must also be provided (and vice versa). 
 
-            If a `reference_genome_fasta` is supplied but not a `reference_gff`, or vice versa, then gene coverage calculations and gene-centric variant reporting will not run even if a default organism is identified because it is assumed that the default file is discrepant with user input. Therefore, to run `gene_coverage` and `variant_annotate`, both files need to be explicitly provided by the user, or explicitly omitted to use defaults.
+            If only one of these inputs is provided, gene coverage calculations and gene-centric variant reporting will not run under the assumption there is a discrepancy.
+
 
     ??? dna "`query_genes` and `query_genes_bed` input parameter"
-        `query_genes` is a comma/space-delimited list of query genes to extract from the `reference_gff` supplied by default/the user. These `query_genes` _must_ correspond to the associated "product" field of CDS entries within the `reference_gff`. By default, "FKS1" will match "1,3-beta-D-glucan synthase_complex_FKS1", though exact product matching can be enforced by setting `query_exact_match` to "true".
+        `query_genes` is a comma-delimited list of query genes to extract from the `reference_gff` supplied by default/the user. These `query_genes` _must_ correspond to the associated "product" field of CDS entries within the `reference_gff`. By default, "FKS1" will match "1,3-beta-D-glucan synthase_complex_FKS1", though exact product matching can be enforced by setting `query_exact_match` to "true".
 
         The following query genes are used by default:
 
@@ -136,8 +137,8 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
          - _Candidozyma auris_: `FKS1`, `lanosterol.14-alpha.demethylase`, `uracil.phosphoribosyltransferase`, `B9J08_005340`, `B9J08_000401`, `B9J08_003102`, `B9J08_003737`, `B9J08_005343`
          - _Cryptococcus neoformans_: `CNA00300` (ERG11 in the default reference)
 
-        !!! warning "Replace ',' and ' ' with '.'"
-            Commas and spaces within `query_genes` inputs can be replaced with "." to properly resolve the query name(s).
+        !!! warning "Replace ',' in query names with '.'"
+            Commas within `query_genes` inputs can be replaced with "." to properly resolve the query name(s).
 
         !!! warning "`query_exact_match` input parameter"
             `query_exact_match` is set to "false" by default, which enables gene shorthand names to be used when they correspond to entries within the `reference_gff`. However, this can lead to substring matching, where "ERG11" can match entries with the name "ERG112". To prevent this, completely enter the exact product name of desired genes by referencing the GFF.
@@ -156,16 +157,16 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 {{ include_md("common_text/variant_annotate_task.md", indent=4) }}
 
 ??? toggle "_Candidozyma auris_ (also known as _Candida auris_)"
-    When _Candidozyma auris_/_Candida auris_ is identified clade typing determines the clade the genome belongs to (which also selects the reference and annotation), reference-based variant calling is performed against the clade-specific reference, and AMR detection is conducted.
+    When this species is detected by GAMBIT, clade typing determines the clade the genome belongs to. Reference-based variant calling is performed against the clade-specific reference, and AMR detection is conducted.
 
 {{ include_md("common_text/cauris_cladetyper.md", indent=4) }}
 {{ include_md("common_text/amr_search_task.md", indent=4, condition="theiaeuk") }}
 
 ??? toggle "_Aspergillus fumigatus_"
-    When this species is detected by the taxon ID tool, reference-based variant calling is performed against the hosted _A. fumigatus_ reference (see the **Reference-based variant calling** section above).
+    When this species is detected by GAMBIT, reference-based variant calling is performed against the hosted _A. fumigatus_ reference (see the **Reference-based variant calling** section above).
 
 ??? toggle "_Cryptococcus neoformans_"
-    When this species is detected by the taxon ID tool, reference-based variant calling is performed against the hosted _C. neoformans_ reference (see the **Reference-based variant calling** section above).
+    When this species is detected by GAMBIT, reference-based variant calling is performed against the hosted _C. neoformans_ reference (see the **Reference-based variant calling** section above).
 
 ### Outputs
 

@@ -17,7 +17,7 @@ fragment: true
     Any threshold left unset is simply not applied. If none of the above are provided, `VariantFiltration` runs without threshold filters.
 
     ??? dna "`gatk_filter_expression` input parameter"
-        A free-form JEXL expression for custom filtering (annotated with the filter name `user_filter`. Use this for compound or non-standard criteria not covered by the named threshold inputs.
+        A free-form [JEXL expression](https://gatk.broadinstitute.org/hc/en-us/articles/360035891011-JEXL-filtering-expressions) for custom filtering (annotated with the filter name `user_filter`. Use this for compound or non-standard criteria not covered by the named threshold inputs).
 
     !!! info "Outputs"
         - `gatk_filtered_vcf` — the GVCF with `FILTER`-column annotations applied by `VariantFiltration`.
