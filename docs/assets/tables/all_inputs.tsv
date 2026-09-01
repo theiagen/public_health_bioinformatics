@@ -1644,12 +1644,12 @@ mutation_context	docker	String	The Docker container to use for the task	us-docke
 mutation_context	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Augur	runtime	
 nanoplot_clean	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ, TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT	runtime	
 nanoplot_clean	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ, TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT	runtime	
-nanoplot_clean	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/nanoplot:1.40.0	Optional	Freyja_FASTQ, TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT	docker	
+nanoplot_clean	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/nanoplot:1.46.2	Optional	Freyja_FASTQ, TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT	docker	
 nanoplot_clean	max_length	Int	The maximum length of clean reads, for which reads longer than the length specified will be hidden.	100000	Optional	Freyja_FASTQ, TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT	general	
 nanoplot_clean	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	Freyja_FASTQ, TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT	runtime	
 nanoplot_raw	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ, TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT	runtime	
 nanoplot_raw	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ, TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT	runtime	
-nanoplot_raw	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/nanoplot:1.40.0	Optional	Freyja_FASTQ, TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT	docker	
+nanoplot_raw	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/nanoplot:1.46.2	Optional	Freyja_FASTQ, TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT	docker	
 nanoplot_raw	max_length	Int	The maximum length of clean reads, for which reads longer than the length specified will be hidden.	100000	Optional	Freyja_FASTQ, TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT	general	
 nanoplot_raw	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	Freyja_FASTQ, TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT	runtime	
 nanoq	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_ONT	runtime	
