@@ -21,7 +21,7 @@ task gene_coverage {
 
     String? organism # used to determine if S gene coverage should be reported for SARS-CoV-2
 
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/ensembl-vep:116.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/ensembl-vep:116.0-dev"
     Int disk_size = 100
     Int memory = 8
     Int cpu = 2
@@ -74,7 +74,7 @@ task gene_coverage {
     File gene_coverage_stats = "~{samplename}.coverage_stats.tsv"
     String mean_depth = read_string("MEAN_DEPTH")
     String mean_breadth = read_string("MEAN_COVERAGE")
-    String gene_reads_aligned = read_string("TOTAL_READS")
+    String num_reads_aligned_to_genes = read_string("TOTAL_READS")
     Map[String, String] depth_by_gene = read_json("DEPTH_DICT.json")
     Map[String, String] breadth_by_gene = read_json("COVERAGE_DICT.json")
     Map[String, String] reads_by_gene = read_json("READS_DICT.json")

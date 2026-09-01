@@ -310,7 +310,7 @@ workflow medea_magic {
     String? clair3_model_used = clair3_variant_calling.clair3_model_used
     # gene coverage
     File? gene_coverage_stats = gene_coverage.gene_coverage_stats
-    String? gene_coverage_reads_mapped = gene_coverage.gene_reads_aligned
+    String? gene_coverage_reads_mapped = gene_coverage.num_reads_aligned_to_genes
     String? gene_coverage_mean_breadth = gene_coverage.mean_breadth
     String? gene_coverage_mean_depth = gene_coverage.mean_depth
     Map[String, String]? gene_coverage_depth_by_gene = gene_coverage.depth_by_gene
