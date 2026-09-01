@@ -217,8 +217,8 @@ workflow theiaeuk_ont {
     String? theiaeuk_reference_gff = medea_magic.reference_gff_used
     String? theiaeuk_reference_fasta = medea_magic.reference_fasta_used
     String? theiaeuk_minimap2_version = medea_magic.minimap2_version
-    File? theiaeuk_variant_calling_bam = medea_magic.ont_variant_calling_bam
-    File? theiaeuk_variant_calling_bai = medea_magic.ont_variant_calling_bai
+    File? theiaeuk_variant_calling_bam = medea_magic.variant_calling_bam
+    File? theiaeuk_variant_calling_bai = medea_magic.variant_calling_bai
     String? theiaeuk_clair3_version = medea_magic.clair3_version
     File? theiaeuk_clair3_variants_vcf = medea_magic.clair3_variants_vcf
     File? theiaeuk_clair3_variants_gvcf = medea_magic.clair3_variants_gvcf
@@ -235,6 +235,7 @@ workflow theiaeuk_ont {
     File? variant_annotation_gene_vcf = medea_magic.variant_annotation_gene_vcf
     File? variant_annotation_warnings = medea_magic.variant_annotation_warnings
     File? variant_annotation_summary = medea_magic.variant_annotation_summary
+    File? variant_annotation_tsv = medea_magic.variant_annotation_tsv
     String? variant_annotations = medea_magic.variant_annotations
   }
 }

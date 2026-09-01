@@ -343,6 +343,7 @@ workflow theiaeuk_illumina_pe {
     File? variant_annotation_gene_vcf = medea_magic.variant_annotation_gene_vcf
     File? variant_annotation_warnings = medea_magic.variant_annotation_warnings
     File? variant_annotation_summary = medea_magic.variant_annotation_summary
+    File? variant_annotation_tsv = medea_magic.variant_annotation_tsv
     String? variant_annotations = medea_magic.variant_annotations
   }
 }

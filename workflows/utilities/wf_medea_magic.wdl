@@ -71,6 +71,8 @@ workflow medea_magic {
     String? query_genes
     File? query_genes_bed
     Boolean query_exact_match = false
+    Int? min_gene_coverage_depth
+    Int min_gene_coverage_map_quality = 40
   }
   # ORGANISM-SPECIFIC PARAMETER SETTING AND TASK CALLS
   if (medea_tag == "Candidozyma auris" || medea_tag == "Candida auris") {
@@ -232,7 +234,9 @@ workflow medea_magic {
           reference_gff = resolved_reference_gff,
           bedfile = query_genes_bed,
           query_genes = resolved_query_genes,
-          exact_match = query_exact_match
+          exact_match = query_exact_match,
+          min_map_quality = min_gene_coverage_map_quality,
+          min_depth = min_gene_coverage_depth
       }
       if (defined(resolved_query_genes) && defined(variant_annotation_vcf) && defined(resolved_reference_gff)) {
         call variant_annotate_task.variant_annotate {
@@ -315,6 +319,7 @@ workflow medea_magic {
     File? variant_annotation_warnings = variant_annotate.variant_annotation_warnings
     File? variant_annotation_summary = variant_annotate.variant_annotation_html
     File? variant_annotation_gene_vcf = variant_annotate.variant_annotation_gene_vcf
+    File? variant_annotation_tsv = variant_annotate.variant_annotation_tsv
     String? variant_annotations = variant_annotate.variant_annotation
   }
 }

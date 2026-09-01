@@ -30,10 +30,10 @@ with open("~{reference_gff}") as fh:
     header = []
     records = []
     for line in fh:
-        if line.startswith("#"):
-            header.append(line)
-        elif line.strip().lower() in {'##fasta', '## fasta'}:
+        if line.strip().lower() in {'##fasta', '## fasta'}:
             break
+        elif line.startswith("#"):
+            header.append(line)
         elif line.strip():
             records.append(line)
 

@@ -42,7 +42,7 @@ task clair3_variants {
     cp ~{reference_genome_file} ~{ref_basename}
 
     # index reference FASTA (fast enough to rerun w/o importing)
-    if [ -z ~{reference_genome_file_index} ]; then
+    if [ -z "~{reference_genome_file_index}" ]; then
       samtools faidx ~{ref_basename}
     else
       cp ~{reference_genome_file_index} ~{ref_basename}.fai
