@@ -106,8 +106,9 @@ workflow medea_magic {
   # a user-supplied fasta takes precedence, otherwise the organism-specific reference is used
   # (cladetyper fasta for C. auris, hosted fasta for A. fumigatus and C. neoformans).
   # resolve the reference once; visible below (and in outputs) as File?
-  if (defined(reference_genome_fasta) || defined(cladetyper.assembly_reference) || defined(afumigatus_variant_fasta) || defined(cryptoneo_reference_fasta)) {
-    File resolved_reference_fasta = select_first([reference_genome_fasta, cladetyper.assembly_reference, afumigatus_variant_fasta, cryptoneo_reference_fasta])
+  Array[String] reference_fasta_options = select_all([reference_genome_fasta, cladetyper.assembly_reference, afumigatus_variant_fasta, cryptoneo_reference_fasta])
+  if (length(reference_fasta_options) > 0) {
+    File resolved_reference_fasta = reference_fasta_options[0]
   }
   # variant calling runs automatically whenever a reference fasta and read1 are available
   if (defined(resolved_reference_fasta) && defined(read1)) {
@@ -287,8 +288,6 @@ workflow medea_magic {
     File? reference_gff_used = resolved_reference_gff
     # variant calling - illumina (bwa alignment + gatk)
     String? bwa_version = bwa_variant_calling.bwa_version
-    File? variant_calling_bam = bwa_variant_calling.sorted_bam
-    File? variant_calling_bai = bwa_variant_calling.sorted_bai
     String? gatk_version = gatk_variants.gatk_version
     File? gatk_genotype_gvcf = gatk_variants.gatk_genotype_gvcf
     File? gatk_genotype_gvcf_index = gatk_variants.gatk_genotype_gvcf_index
@@ -298,8 +297,8 @@ workflow medea_magic {
     File? gatk_selected_vcf_index = gatk_filter.gatk_selected_vcf_index
     # variant calling - ont (minimap2 alignment + clair3)
     String? minimap2_version = minimap2_variant_calling.minimap2_version
-    File? ont_variant_calling_bam = ont_bam_sorting.bam
-    File? ont_variant_calling_bai = ont_bam_sorting.bai
+    File? variant_calling_bam = select_first([bwa_variant_calling.sorted_bam, ont_bam_sorting.bam])
+    File? variant_calling_bai = select_first([bwa_variant_calling.sorted_bai, ont_bam_sorting.bai])
     String? clair3_version = clair3_variant_calling.clair3_version
     File? clair3_variants_vcf = clair3_variant_calling.clair3_variants_vcf
     File? clair3_variants_gvcf = clair3_variant_calling.clair3_variants_gvcf
