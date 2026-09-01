@@ -13,7 +13,7 @@ task augur_tree {
     Int cpu = 64
     Int memory = 32
     Int disk_size = 750
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/augur:33.4.1"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/augur:34.1.3"
   }
   command <<<
     set -euo pipefail

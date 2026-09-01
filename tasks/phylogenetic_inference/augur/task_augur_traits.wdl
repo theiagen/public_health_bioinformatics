@@ -13,7 +13,7 @@ task augur_traits {
     Int memory = 30
     Int cpu = 4
     Int disk_size = 100
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/augur:33.4.1"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/augur:34.1.3"
   }
   command <<<
     AUGUR_RECURSION_LIMIT=10000 augur traits \

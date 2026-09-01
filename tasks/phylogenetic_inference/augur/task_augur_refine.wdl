@@ -31,7 +31,7 @@ task augur_refine {
     Int disk_size = 100
     Int memory = 50
     Int cpu = 2
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/augur:33.4.1"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/augur:34.1.3"
   }
   command <<<
     AUGUR_RECURSION_LIMIT=10000 augur refine \
