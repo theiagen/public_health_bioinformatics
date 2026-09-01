@@ -39,6 +39,7 @@ task fetch_bs {
     bs.fetch_sample_fastqs(
         collection_id="~{basespace_collection_id}",
         samples=["~{basespace_sample_id}"],
+        priority="runs",
         validate_paired_end=validate_paired_end,
         group_by_lane=group_by_lane,
     )
