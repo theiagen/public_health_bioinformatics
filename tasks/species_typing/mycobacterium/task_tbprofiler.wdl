@@ -36,32 +36,52 @@ task tbprofiler {
       INPUT_READS="-1 ~{read1} -2 ~{read2}"
     fi
 
+    mkdir "current_db"
+    CURRENT_DB=$(realpath "current_db")
+    DB_NAME="~{tbdb_branch}"
+
     # check if new database file is provided and not empty - if so, use that database preferentially
     if [ -s "~{tbprofiler_custom_db}" ]; then
       echo "Found new database file ~{tbprofiler_custom_db}"
-      prefix=$(basename "~{tbprofiler_custom_db}" | sed 's/\.tar\.gz$//')
-      tar xfv ~{tbprofiler_custom_db}
-
-      tb-profiler load_library ./"$prefix"/"$prefix"
-      TBDB="--db $prefix"
+      tar xfv ~{tbprofiler_custom_db} -C "$CURRENT_DB"
+      DB_VARIABLES=$(find "$CURRENT_DB" -maxdepth 3 -name "variables.json" | head -n 1)
+      if [ -z "$DB_VARIABLES" ]; then
+        echo "ERROR: no variables.json in ~{tbprofiler_custom_db}; expected a built TBProfiler database directory"
+        exit 1
+      fi
+      DB_NAME=$(basename $(dirname "$DB_VARIABLES"))
 
     # check if specific branch is provided for tbdb
     elif [ -n "~{tbdb_branch}" ]; then
-      echo "Using tbdb branch ~{tbdb_branch}"
-      TBDB="--db ~{tbdb_branch}"
 
-      UPDATE_TBDB="--branch '~{tbdb_branch}'"
-      # check if specific commit hash is provided for tbdb branch, otherwise will pull latest
+      # NOTE: `tb-profiler update_tbdb` hardcodes `mutations.csv`, so who_v2+'s `additional_mutations.csv`
+      # gets dropped from the DB (masked until now because the who_v2+ DB comes preloaded).
+      # This mirrors `update_tbdb` logic but globs all *mutations.csv files instead.
+      # https://github.com/jodyphelan/TBProfiler/blob/47e6c639c342eeda9791e5c700c1802fc5e8cb86/tb-profiler#L287
+      echo "Cloning tbdb branch ~{tbdb_branch}"
+
+      git clone https://github.com/jodyphelan/tbdb.git
+      cd tbdb
+      git checkout ~{tbdb_branch}
+
       if [ -n "~{tbdb_branch_commit_hash}" ]; then
-        echo "Checking out commit hash ~{tbdb_branch_commit_hash} for tbdb branch"
-        UPDATE_TBDB+=" --commit '~{tbdb_branch_commit_hash}'"
+        git checkout ~{tbdb_branch_commit_hash}
+      else
+        git pull
       fi
 
-      # update tbdb to specified branch
-      tb-profiler update_tbdb ${UPDATE_TBDB} --debug
-    else
-      echo "Using default tbdb database"
-      TBDB=""
+      echo "Creating tbdb database: $CURRENT_DB"
+      tb-profiler create_db \
+        --create_index \
+        --force \
+        --db_dir "$CURRENT_DB" \
+        --dir "$CURRENT_DB" \
+        --prefix "~{tbdb_branch}" \
+        --csv *mutations.csv \
+        --watchlist watchlist.csv \
+        --load
+      cd ..
+      echo "Database created: $CURRENT_DB"
     fi
 
     # Run tb-profiler on the input reads with samplename prefix
@@ -77,10 +97,17 @@ task tbprofiler {
       --csv --txt \
       ~{true="--platform nanopore" false="" ont_data} \
       ~{additional_parameters} \
-      ${TBDB}
+      --db_dir "$CURRENT_DB" \
+      --db "$DB_NAME" \
+      --debug
 
     # Collate results
-    tb-profiler collate --prefix ~{samplename}
+    echo "Now collating tbprofiler results"
+    tb-profiler collate \
+      --prefix ~{samplename} \
+      --db_dir "$CURRENT_DB" \
+      --db "$DB_NAME" \
+      --debug
 
     # convert any bcf files to vcf
     for bcf_file in ./vcf/*.bcf; do
