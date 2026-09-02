@@ -206,13 +206,13 @@ workflow medea_magic {
   # Species-agnostic GFF resolution. A user-supplied reference_gff takes precedence,
   # otherwise the organism-specific reference is used (cladetyper outputs for
   # C. auris when a clade matches, hosted references for A. fumigatus and C. neoformans).
-  # user cannot supply one of the reference files and not the other for downstream to be functional
+  # user cannot supply one reference file and not the other for GFF tasks to be functional
   if ((defined(reference_gff) && defined(reference_genome_fasta)) || (! defined(reference_gff) && ! defined(reference_genome_fasta))) {
     String resolved_reference_gff = select_first([reference_gff, cladetyper.annotated_reference_gff, afumigatus_reference_gff, cryptoneo_reference_gff, ""])
   }
   String variant_annotation_vcf = select_first([gatk_filter.gatk_selected_vcf, clair3_variant_calling.clair3_variants_vcf, ""])
   # Terra can pass empty strings, so check for empty strings as well
-  if ((resolved_reference_gff != "" && resolved_query_genes != "") || defined(query_genes_bed)) {
+  if ((select_first([resolved_reference_gff, ""]) != "" && resolved_query_genes != "") || defined(query_genes_bed)) {
     if (defined(bwa_variant_calling.sorted_bam) || defined(ont_bam_sorting.bam)) {
       call gene_coverage_task.gene_coverage {
         input:
@@ -226,7 +226,7 @@ workflow medea_magic {
           min_map_quality = min_gene_coverage_map_quality,
           min_depth = min_gene_coverage_depth
       }
-      if (resolved_query_genes != "" && variant_annotation_vcf != "" && resolved_reference_gff != "") {
+      if (resolved_query_genes != "" && variant_annotation_vcf != "" && select_first([resolved_reference_gff, ""]) != "") {
         call variant_annotate_task.variant_annotate {
           input:
             samplename = samplename,
