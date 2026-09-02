@@ -31,7 +31,7 @@ task augur_clades {
     memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " HDD"
-    disk: disk_size + " GB" 
+    disk: disk_size + " GB"
     dx_instance_type: "mem1_ssd1_v2_x2"
     preemptible: 0
     maxRetries: 3

@@ -207,7 +207,7 @@ workflow flu_antiviral_substitutions {
     String flu_oseltamivir_resistance = serialization.flu_oseltamivir_resistance
     String flu_xofluza_resistance = serialization.flu_xofluza_resistance
     String flu_zanamivir_resistance = serialization.flu_zanamivir_resistance
-   
+
     # AA sunstitutions for various flu segments
     File? flu_h1_ha_aa_subs = aa_subs_h1_ha.aa_changes_tsv
     File? flu_h3_ha_aa_subs = aa_subs_h3_ha.aa_changes_tsv

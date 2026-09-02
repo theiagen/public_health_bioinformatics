@@ -61,3 +61,43 @@ jobs:
       # Run MiniWDL check on each of the changed WDLs
       - name: MiniWDL Check ${{ matrix.wf }}
         run: miniwdl check ${{ matrix.wf }}
+
+  # PHB WDL style + registry checks, via the `wdl` hook group in
+  # .config/.pre-commit-config.yaml — the same hooks contributors get locally
+  # from `prek install`. Separate from the matrix above, which stays as the
+  # per-file miniwdl check (prek also runs miniwdl, so that one check is
+  # duplicated; the matrix gives nicer per-file job names, so it is kept).
+  lint:
+    runs-on: ubuntu-latest
+    name: prek (wdl group)
+    env:
+      PREK_VERSION: "0.5.2"
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
+
+      # shellcheck is not optional: miniwdl SILENTLY SKIPS linting of command
+      # blocks when it is missing, so without it this job checks less than it
+      # appears to. Keep the miniwdl version in step with the matrix job above.
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install shellcheck
+          pip3 -q install miniwdl 'importlib-metadata==4.13.0' "prek==${PREK_VERSION}"
+
+      # --all-files, not a PR diff: tasks/ and workflows/ are clean repo-wide,
+      # so there is no pre-existing debt to trip a contributor on, and running
+      # everything means a push straight to main cannot bypass these checks.
+      #
+      # Caveat: this includes wdl-docker-exists, the one hook that depends on
+      # external state — if an upstream image is deleted, every PR goes red
+      # until it is replaced. If that becomes a nuisance, add
+      # `--no-group docker-registry` here and run it on a schedule instead.
+      - name: Run WDL hooks
+        run: |
+          prek run --all-files --show-diff-on-failure \
+            -c .config/.pre-commit-config.yaml --group wdl

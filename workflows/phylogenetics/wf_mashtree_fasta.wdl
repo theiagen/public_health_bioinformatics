@@ -42,7 +42,7 @@ workflow mashtree_fasta {
         output_prefix = cluster_name_updated,
         phandango_coloring = phandango_coloring
     }
-  } 
+  }
   call versioning.version_capture {
     input:
   }

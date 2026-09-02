@@ -17,6 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       VALE_VERSION: "3.9.1"
+      PREK_VERSION: "0.5.2"
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -38,11 +39,16 @@ jobs:
             | sudo tar -xz -C /usr/local/bin vale
           vale --version
 
-      - name: Install pre-commit
-        run: pip install pre-commit
+      # prek is a drop-in reimplementation of pre-commit; it reads the same
+      # config but can select one hook group, which is what keeps the WDL hooks
+      # in .config/.pre-commit-config.yaml from running in this docs-only job.
+      - name: Install prek
+        run: pip install "prek==${{ env.PREK_VERSION }}"
 
-      # Runs every hook (whitespace, markdownlint, vale) against all files.
-      # The whitespace auto-fixers fail the job if they would change anything,
-      # printing the diff so contributors can see exactly what to fix.
+      # Runs every `docs` hook (whitespace, markdownlint, vale) against all
+      # files. The whitespace auto-fixers fail the job if they would change
+      # anything, printing the diff so contributors can see exactly what to fix.
       - name: Run linters
-        run: pre-commit run --all-files --show-diff-on-failure -c .config/.pre-commit-config.yaml
+        run: |
+          prek run --all-files --show-diff-on-failure \
+            -c .config/.pre-commit-config.yaml --group docs

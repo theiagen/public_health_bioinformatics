@@ -35,7 +35,7 @@ task ts_mlst {
     select_reporting_scheme() {  # $1 = allelic profile string, e.g. "adk(12),fumC(12),..."
       local profile
       # This assignment removes the locus assignment, (#), and removes any "prefix_" appended to
-      # the allele as there are "Pas" and "Oxf" appended to some alleles. 
+      # the allele as there are "Pas" and "Oxf" appended to some alleles.
       profile="$(sed -E -e 's/\([^)]*\)//g' -e 's/(^|,)[A-Za-z0-9]+_/\1/g' <<< "$1")"
       case "$profile" in
         # PubMLST: Escherichia coli (Achtman)
@@ -48,7 +48,7 @@ task ts_mlst {
         cpn60,fusA,gltA,pyrG,recA,rplB,rpoB)
           echo "Pasteur" ;;
         # PubMLST: Acinetobacter baumannii (Oxford)
-        gltA,gyrB,gdhB,recA,cpn60,gpi,rpoD)      
+        gltA,gyrB,gdhB,recA,cpn60,gpi,rpoD)
           echo "Oxford"  ;;
         *) [ -n "$profile" ] && echo "DEBUG: unrecognized locus signature: $profile" >&2
           echo "NA" ;;

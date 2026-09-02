@@ -5,20 +5,20 @@ task gisaid_upload {
     # output from Mercury workflows
     File concatenated_fastas
     File concatenated_metadata
-    
+
     # provided by GISAID
     String client_id
 
     # authentication token will either be generated or must be provided
     File? gisaid_credentials
     File? authentication_file
-    
-    String frameshift_notification = "catch_novel" 
-    # options: 
+
+    String frameshift_notification = "catch_novel"
+    # options:
     # "catch_all" = Notify me about ALL DETECTED FRAMESHIFTS in this submission for reconfirmation of affected sequences
     # "catch_novel" = Notify me only about NOT PREVIOUSLY REPORTED FRAMESHIFTS in this submission for reconfirmation of affected sequences
     # "catch_none" = I confirm ANY FRAMESHIFTS in this submission and request their release without confirmation by a curator
-    
+
     Int disk_size = 100
     Int cpu = 1
     Int memory = 2
@@ -32,7 +32,7 @@ task gisaid_upload {
     if [[ -e "~{gisaid_credentials}" ]]; then
       username=$(cut -f1 "~{gisaid_credentials}")
       password=$(cut -f2 "~{gisaid_credentials}")
-      
+
       cli3 authenticate --username "${username}" \
         --token gisaid.authtoken \
         --password "${password}" \
