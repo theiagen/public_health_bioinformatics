@@ -197,6 +197,8 @@ workflow medea_magic {
           disk_size = clair3_disk_size
       }
     }
+    File resolved_bam = select_first([bwa_variant_calling.sorted_bam, ont_bam_sorting.bam])
+    File resolved_bai = select_first([bwa_variant_calling.sorted_bai, ont_bam_sorting.bai])
   }
 
   # GENE-CENTRIC COVERAGE CALCULATIONS AND VARIANT ANNOTATION
@@ -213,11 +215,11 @@ workflow medea_magic {
   String variant_annotation_vcf = select_first([gatk_filter.gatk_selected_vcf, clair3_variant_calling.clair3_variants_vcf, ""])
   # Terra can pass empty strings, so check for empty strings as well
   if ((select_first([resolved_reference_gff, ""]) != "" && resolved_query_genes != "") || defined(query_genes_bed)) {
-    if (defined(bwa_variant_calling.sorted_bam) || defined(ont_bam_sorting.bam)) {
+    if (defined(resolved_bam)) {
       call gene_coverage_task.gene_coverage {
         input:
-          bam = select_first([bwa_variant_calling.sorted_bam, ont_bam_sorting.bam]),
-          bai = select_first([bwa_variant_calling.sorted_bai, ont_bam_sorting.bai]),
+          bam = select_first([resolved_bam]),
+          bai = select_first([resolved_bai]),
           samplename = samplename,
           reference_gff = resolved_reference_gff,
           bedfile = query_genes_bed,
@@ -296,8 +298,8 @@ workflow medea_magic {
     File? gatk_selected_vcf_index = gatk_filter.gatk_selected_vcf_index
     # variant calling - ont (minimap2 alignment + clair3)
     String? minimap2_version = minimap2_variant_calling.minimap2_version
-    File? variant_calling_bam = select_first([bwa_variant_calling.sorted_bam, ont_bam_sorting.bam])
-    File? variant_calling_bai = select_first([bwa_variant_calling.sorted_bai, ont_bam_sorting.bai])
+    File? variant_calling_bam = resolved_bam
+    File? variant_calling_bai = resolved_bai
     String? clair3_version = clair3_variant_calling.clair3_version
     File? clair3_variants_vcf = clair3_variant_calling.clair3_variants_vcf
     File? clair3_variants_gvcf = clair3_variant_calling.clair3_variants_gvcf
