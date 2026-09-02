@@ -267,7 +267,7 @@ workflow medea_magic {
     File used_reference_fasta = resolved_reference_fasta
   }
   if (resolved_reference_gff != "") {
-    File used_reference_gff = resolved_reference_gff
+    File used_reference_gff = select_first([resolved_reference_gff])
   }
   output {
     # AMR_Search
