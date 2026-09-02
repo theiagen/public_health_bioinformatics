@@ -59,17 +59,15 @@ task tbprofiler {
       # This mirrors `update_tbdb` logic but globs all *mutations.csv files instead.
       # https://github.com/jodyphelan/TBProfiler/blob/47e6c639c342eeda9791e5c700c1802fc5e8cb86/tb-profiler#L287
       echo "Cloning tbdb branch '$DB_NAME' into $CURRENT_DB"
-
       git clone --quiet --branch "$DB_NAME" https://github.com/jodyphelan/tbdb.git
       cd tbdb
 
       if [ -n "~{tbdb_branch_commit_hash}" ]; then
         git -c advice.detachedHead=false checkout --quiet ~{tbdb_branch_commit_hash}
       fi
-
-      echo "Creating tbdb database: $CURRENT_DB/$DB_NAME"
       echo "Using tbdb branch '$DB_NAME' at commit $(git rev-parse --short HEAD)"
 
+      echo "Creating tbdb database: $CURRENT_DB/$DB_NAME"
       tb-profiler create_db \
         --create_index \
         --force \
