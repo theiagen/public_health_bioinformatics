@@ -1,4 +1,4 @@
-version 1.0
+eersion 1.0
 
 import "../../tasks/species_typing/candidozyma/task_cauris_cladetyper.wdl" as cauris_cladetyper
 import "../../tasks/gene_typing/drug_resistance/task_amr_search.wdl" as amr_search_task
@@ -289,8 +289,8 @@ workflow medea_magic {
     File? gatk_selected_vcf_index = gatk_filter.gatk_selected_vcf_index
     # variant calling - ont (minimap2 alignment + clair3)
     String? minimap2_version = minimap2_variant_calling.minimap2_version
-    File? variant_calling_bam = select_first([bwa_variant_calling.sorted_bam, ont_bam_sorting.bam])
-    File? variant_calling_bai = select_first([bwa_variant_calling.sorted_bai, ont_bam_sorting.bai])
+    File? variant_calling_bam = select_first([bwa_variant_calling.sorted_bam, ont_bam_sorting.bam, ""])
+    File? variant_calling_bai = select_first([bwa_variant_calling.sorted_bai, ont_bam_sorting.bai, ""])
     String? clair3_version = clair3_variant_calling.clair3_version
     File? clair3_variants_vcf = clair3_variant_calling.clair3_variants_vcf
     File? clair3_variants_gvcf = clair3_variant_calling.clair3_variants_gvcf
