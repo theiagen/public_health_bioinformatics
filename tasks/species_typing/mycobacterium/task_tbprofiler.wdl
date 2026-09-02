@@ -52,17 +52,17 @@ task tbprofiler {
       DB_NAME=$(basename $(dirname "$DB_VARIABLES"))
 
     # check if specific branch is provided for tbdb
-    elif [ -n "~{tbdb_branch}" ]; then
+    elif [ -n "$DB_NAME" ]; then
 
       # NOTE: `tb-profiler update_tbdb` hardcodes `mutations.csv`, so who_v2+'s `additional_mutations.csv`
       # gets dropped from the DB (masked until now because the who_v2+ DB comes preloaded).
       # This mirrors `update_tbdb` logic but globs all *mutations.csv files instead.
       # https://github.com/jodyphelan/TBProfiler/blob/47e6c639c342eeda9791e5c700c1802fc5e8cb86/tb-profiler#L287
-      echo "Cloning tbdb branch ~{tbdb_branch}"
+      echo "Cloning tbdb branch '$DB_NAME' into $CURRENT_DB"
 
       git clone https://github.com/jodyphelan/tbdb.git
       cd tbdb
-      git checkout ~{tbdb_branch}
+      git checkout $DB_NAME
 
       if [ -n "~{tbdb_branch_commit_hash}" ]; then
         git checkout ~{tbdb_branch_commit_hash}
@@ -70,18 +70,18 @@ task tbprofiler {
         git pull
       fi
 
-      echo "Creating tbdb database: $CURRENT_DB"
+      echo "Creating tbdb database: $CURRENT_DB/$DB_NAME"
       tb-profiler create_db \
         --create_index \
         --force \
         --db_dir "$CURRENT_DB" \
         --dir "$CURRENT_DB" \
-        --prefix "~{tbdb_branch}" \
+        --prefix "$DB_NAME" \
         --csv *mutations.csv \
         --watchlist watchlist.csv \
         --load
       cd ..
-      echo "Database created: $CURRENT_DB"
+      echo "Database created: $CURRENT_DB/$DB_NAME"
     fi
 
     # Run tb-profiler on the input reads with samplename prefix
@@ -144,13 +144,13 @@ task tbprofiler {
     import yaml
 
     # --- build the gene/drug association truth set used to validate results.json ---
-    # NOTE: The `genes.bed` from the TBProfiler database directory lists the reportable gene/drug associations,
-    # but CrossResistanceRule entries in `rules.yml` add drugs at runtime that appear nowhere else in the
-    # database directory. So depending on the database, `genes.bed` alone can under report the truth set.
+    # NOTE: The 'genes.bed' from the TBProfiler database directory lists the reportable gene/drug associations,
+    # but CrossResistanceRule entries in 'rules.yml' add drugs at runtime that appear nowhere else in the
+    # database directory. So depending on the database, 'genes.bed' alone can under report the truth set.
     # Combining both here for downstream input validation.
     # See https://github.com/jodyphelan/TBProfiler/blob/47e6c639c342eeda9791e5c700c1802fc5e8cb86/tbprofiler/rules.py#L179
 
-    print("Preparing `genes.xres.bed` representing the truth set of gene/drug associations.")
+    print("Preparing 'genes.xres.bed' representing the truth set of gene/drug associations.")
     db_dir = "${CURRENT_DB}/${DB_NAME}"
     db_variables = json.load(open(f"{db_dir}/variables.json"))
     db_files = db_variables["files"]
