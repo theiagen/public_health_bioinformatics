@@ -203,7 +203,7 @@ task tbprofiler {
         num_other_variants.write(tsv_dict['num_other_variants'])
 
       with open ("RESISTANCE_GENES", 'wt') as resistance_genes:
-        res_genes_list=['rifampicin', 'isoniazid', 'ethambutol', 'pyrazinamide', 'moxifloxacin', 'levofloxacin', 'bedaquiline', 'delamanid', 'pretomanid', 'linezolid', 'streptomycin', 'amikacin', 'kanamycin', 'capreomycin', 'clofazimine', 'ethionamide', 'para-aminosalicylic_acid', 'cycloserine']
+        res_genes_list=tsv_data[0][tsv_data[0].index('num_other_variants') + 1:]
         res_genes=[]
         for i in res_genes_list:
           if tsv_dict[i] != '-':
