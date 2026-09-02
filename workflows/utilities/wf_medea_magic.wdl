@@ -262,6 +262,13 @@ workflow medea_magic {
       }
     }
   }
+  # Output formatting
+  if (resolved_reference_fasta != "") {
+    File used_reference_fasta = resolved_reference_fasta
+  }
+  if (resolved_reference_gff != "") {
+    File used_reference_gff = resolved_reference_gff
+  }
   output {
     # AMR_Search
     File? amr_search_results = amr_search.amr_search_json_output
@@ -276,8 +283,8 @@ workflow medea_magic {
     String? cladetyper_version = cladetyper.gambit_version
     String? cladetyper_docker_image = cladetyper.gambit_cladetyper_docker_image
     # species-agnostic reference actually used (user-supplied or organism-derived)
-    File? reference_fasta_used = resolved_reference_fasta
-    File? reference_gff_used = resolved_reference_gff
+    File? reference_fasta_used = used_reference_fasta
+    File? reference_gff_used = used_reference_gff
     # variant calling - illumina (bwa alignment + gatk)
     String? bwa_version = bwa_variant_calling.bwa_version
     String? gatk_version = gatk_variants.gatk_version
