@@ -9,7 +9,7 @@ task tbp_parser {
     File tbprofiler_bai
     File coverage_bed
     # file arguments
-    File? tbprofiler_db_mutations
+    File? tbprofiler_db_bed # the BED file describing the TBProfiler database the variants were called against
     File? config
     File? err_coverage_bed
     File? lims_report_format_yml
@@ -44,19 +44,18 @@ task tbp_parser {
     tbp-parser --version | tee VERSION
 
     # tbp-parser v3.1.0 requires `--gene_database_yml`
-    # Build one from the TBProfiler mutations database if one was not provided.
+    # Build one from the TBProfiler database BED if one was not provided.
     gene_database_yml="~{gene_database_yml}"
     if [[ ! -s "${gene_database_yml}" ]]; then
-      if [[ ! -s "~{tbprofiler_db_mutations}" ]]; then
-        echo "ERROR: no '--gene_database_yml' provided and no tbprofiler_db_mutations (mutations.json) to build one from; supply one of the two"
+      if [[ ! -s "~{tbprofiler_db_bed}" ]]; then
+        echo "ERROR: no '--gene_database_yml' provided and no 'tbprofiler_db_bed' to build one from; supply one of the two"
         exit 1
       fi
 
-      echo "No '--gene_database_yml' provided; building one from the TBProfiler mutations database"
+      echo "No '--gene_database_yml' provided; building one from the TBProfiler database BED"
       tbp-parser build_gene_db \
-        --db "~{tbprofiler_db_mutations}" \
-        --input_json "~{tbprofiler_json}" \
-        --output gene_db.yml \
+        --db_bed "~{tbprofiler_db_bed}" \
+        --output "gene_db.yml" \
         ~{true="--debug" false="" tbp_parser_debug}
 
       gene_database_yml="gene_db.yml"

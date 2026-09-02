@@ -488,7 +488,7 @@ workflow merlin_magic {
             tbprofiler_json = tbprofiler.tbprofiler_output_json,
             tbprofiler_bam = tbprofiler.tbprofiler_output_bam,
             tbprofiler_bai = tbprofiler.tbprofiler_output_bai,
-            tbprofiler_db_mutations = tbprofiler.tbprofiler_db_mutations,
+            tbprofiler_db_bed = tbprofiler.tbprofiler_db_bed,
             samplename = samplename,
             config = tbp_parser_config,
             coverage_bed = select_first([tbp_parser_coverage_bed, tbprofiler.tbprofiler_db_bed, "gs://theiagen-public-resources-rp/empty_files/empty.bed"]),
@@ -899,7 +899,6 @@ workflow merlin_magic {
     String? tbprofiler_resistance_genes = tbprofiler.tbprofiler_resistance_genes
     Float? tbprofiler_median_depth = tbprofiler.tbprofiler_median_depth
     Float? tbprofiler_pct_reads_mapped = tbprofiler.tbprofiler_pct_reads_mapped
-    File? tbprofiler_db_mutations = tbprofiler.tbprofiler_db_mutations
     File? tbprofiler_db_bed = tbprofiler.tbprofiler_db_bed
     String? tbp_parser_version = tbp_parser.tbp_parser_version
     String? tbp_parser_docker = tbp_parser.tbp_parser_docker

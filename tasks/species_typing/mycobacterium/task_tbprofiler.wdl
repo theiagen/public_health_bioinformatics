@@ -111,15 +111,53 @@ task tbprofiler {
     # decompress the final merged vcf file for output
     gunzip ./vcf/~{samplename}.targets.csq.merged.vcf.gz
 
-    # copy and output the tbprofiler mutations database (mutations.json) used to call variants
-    cp "/opt/conda/share/tbprofiler/~{tbdb_branch}/mutations.json" "mutations.json"
-    cp "/opt/conda/share/tbprofiler/~{tbdb_branch}/genes.bed" "genes.bed"
-
     python3 <<CODE
     import csv
     import json
-    import os
+    import yaml
 
+    # --- build the gene/drug association truth set used to validate results.json ---
+    # NOTE: The `genes.bed` from the TBProfiler database directory lists the reportable gene/drug associations,
+    # but CrossResistanceRule entries in `rules.yml` add drugs at runtime that appear nowhere else in the
+    # database directory. So depending on the database, `genes.bed` alone can under report the truth set.
+    # Combining both here for downstream input validation.
+    # See https://github.com/jodyphelan/TBProfiler/blob/47e6c639c342eeda9791e5c700c1802fc5e8cb86/tbprofiler/rules.py#L179
+
+    print("Preparing `genes.xres.bed` representing the truth set of gene/drug associations.")
+    db_dir = "${CURRENT_DB}/${DB_NAME}"
+    db_variables = json.load(open(f"{db_dir}/variables.json"))
+    db_files = db_variables["files"]
+
+    rules = yaml.safe_load(open(f"{db_dir}/{db_files['rules']}")) if db_files.get("rules") else {}
+
+    cross_resistance = [
+      (rule["source_drug"], rule["target_drug"])
+      for rule in rules.values() if rule.get("type") == "CrossResistanceRule"
+    ]
+
+    genes_bed = f"{db_dir}/{db_files['bed']}"
+    genes_xres_bed = "genes.xres.bed"
+    with open(genes_bed, "r") as infile, open(genes_xres_bed, "w") as outfile:
+      reader = csv.reader(infile, delimiter="\t")
+      writer = csv.writer(outfile, delimiter="\t", lineterminator="\n")
+
+      for row in reader:
+        if not row:
+          continue
+
+        # genes.bed: chrom, start, end, locus_tag, gene_name, drugs
+        drugs = {drug for drug in row[5].split(",") if drug}
+        for source_drug, target_drug in cross_resistance:
+          if source_drug in drugs:
+            drugs.add(target_drug)
+            print(f"{row[4]}: adding {target_drug} (cross-resistance with {source_drug})")
+
+        writer.writerow(row[:5] + [",".join(sorted(drugs))])
+
+    if not cross_resistance:
+      print(f"No cross resistance rules specified in database: {db_dir}.")
+
+    # ---- parse the collated results table into per-value output files ----
     with open("./~{samplename}.txt",'r') as tsv_file:
       tsv_reader=csv.reader(tsv_file, delimiter="\t")
       tsv_data=list(tsv_reader)
@@ -168,8 +206,7 @@ task tbprofiler {
     String tbprofiler_resistance_genes = read_string("RESISTANCE_GENES")
     Float tbprofiler_median_depth = read_float("MEDIAN_DEPTH")
     Float tbprofiler_pct_reads_mapped = read_float("PCT_READS_MAPPED")
-    File? tbprofiler_db_mutations = "mutations.json"
-    File? tbprofiler_db_bed = "genes.bed"
+    File? tbprofiler_db_bed = "genes.xres.bed"
   }
   runtime {
     docker: "~{docker}"

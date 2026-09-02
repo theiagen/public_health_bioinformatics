@@ -68,7 +68,7 @@ workflow tbprofiler_tngs {
       tbprofiler_bai = tbprofiler.tbprofiler_output_bai,
       samplename = samplename,
       tngs_data = true,
-      tbprofiler_db_mutations = tbprofiler.tbprofiler_db_mutations,
+      tbprofiler_db_bed = tbprofiler.tbprofiler_db_bed,
       coverage_bed = select_first([tbp_parser_coverage_bed, tbprofiler.tbprofiler_db_bed, "gs://theiagen-public-resources-rp/empty_files/empty.bed"]),
   }
   output {
@@ -111,7 +111,6 @@ workflow tbprofiler_tngs {
     String tbprofiler_resistance_genes = tbprofiler.tbprofiler_resistance_genes
     Float tbprofiler_median_depth = tbprofiler.tbprofiler_median_depth
     Float tbprofiler_pct_reads_mapped = tbprofiler.tbprofiler_pct_reads_mapped
-    File? tbprofiler_db_mutations = tbprofiler.tbprofiler_db_mutations
     File? tbprofiler_db_bed = tbprofiler.tbprofiler_db_bed
     # tbp_parser outputs
     File tbp_parser_looker_report_csv = tbp_parser.tbp_parser_looker_report_csv
