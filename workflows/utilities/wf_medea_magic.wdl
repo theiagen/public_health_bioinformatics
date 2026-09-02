@@ -1,4 +1,4 @@
-eersion 1.0
+version 1.0
 
 import "../../tasks/species_typing/candidozyma/task_cauris_cladetyper.wdl" as cauris_cladetyper
 import "../../tasks/gene_typing/drug_resistance/task_amr_search.wdl" as amr_search_task
