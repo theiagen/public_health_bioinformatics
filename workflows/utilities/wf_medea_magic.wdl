@@ -266,7 +266,7 @@ workflow medea_magic {
   if (resolved_reference_fasta != "") {
     File used_reference_fasta = resolved_reference_fasta
   }
-  if (resolved_reference_gff != "") {
+  if (select_first([resolved_reference_gff]) != "") {
     File used_reference_gff = select_first([resolved_reference_gff])
   }
   output {
