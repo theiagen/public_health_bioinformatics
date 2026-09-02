@@ -108,12 +108,9 @@ workflow medea_magic {
   # a user-supplied fasta takes precedence, otherwise the organism-specific reference is used
   # (cladetyper fasta for C. auris, hosted fasta for A. fumigatus and C. neoformans).
   # resolve the reference once; visible below (and in outputs) as File?
-  Array[String] reference_fasta_options = select_all([reference_genome_fasta, cladetyper.assembly_reference, afumigatus_variant_fasta, cryptoneo_reference_fasta])
-  if (length(reference_fasta_options) > 0) {
-    File resolved_reference_fasta = reference_fasta_options[0]
-  }
+  String resolved_reference_fasta = select_first([reference_genome_fasta, cladetyper.assembly_reference, afumigatus_variant_fasta, cryptoneo_reference_fasta, ""])
   # variant calling runs automatically whenever a reference fasta and read1 are available
-  if (defined(resolved_reference_fasta) && defined(read1)) {
+  if (resolved_reference_fasta != "" && defined(read1)) {
     # Illumina short-read track: BWA alignment + GATK variant calling
     if (!ont_data) {
       call bwa_task.bwa as bwa_variant_calling {
@@ -121,7 +118,7 @@ workflow medea_magic {
           read1 = select_first([read1]),
           read2 = read2,
           samplename = samplename,
-          reference_genome = select_first([resolved_reference_fasta]),
+          reference_genome = resolved_reference_fasta,
           cpu = read_aligner_cpu,
           memory = read_aligner_memory,
           disk_size = read_aligner_disk_size,
@@ -132,7 +129,7 @@ workflow medea_magic {
           samplename = samplename,
           bam = bwa_variant_calling.sorted_bam,
           bai = bwa_variant_calling.sorted_bai,
-          reference_genome = select_first([resolved_reference_fasta]),
+          reference_genome = resolved_reference_fasta,
           ploidy = gatk_ploidy,
           docker = gatk_docker,
           cpu = gatk_cpu,
@@ -142,7 +139,7 @@ workflow medea_magic {
       call gatk_filter_task.gatk_filter as gatk_filter {
         input:
           samplename = samplename,
-          reference_genome = select_first([resolved_reference_fasta]),
+          reference_genome = resolved_reference_fasta,
           gvcf = gatk_variants.gatk_genotype_gvcf,
           gvcf_index = gatk_variants.gatk_genotype_gvcf_index,
           min_variant_quality = gatk_filter_min_variant_quality,
@@ -163,7 +160,7 @@ workflow medea_magic {
       call minimap2_task.minimap2 as minimap2_variant_calling {
         input:
           query1 = select_first([read1]),
-          reference = select_first([resolved_reference_fasta]),
+          reference = resolved_reference_fasta,
           samplename = samplename,
           mode = "map-ont",
           output_sam = true,
@@ -184,7 +181,7 @@ workflow medea_magic {
         input:
           alignment_bam_file = ont_bam_sorting.bam,
           alignment_bam_file_index = ont_bam_sorting.bai,
-          reference_genome_file = select_first([resolved_reference_fasta]),
+          reference_genome_file = resolved_reference_fasta,
           sequencing_platform = "ont",
           samplename = samplename,
           clair3_model = clair3_model,
@@ -205,26 +202,17 @@ workflow medea_magic {
   # GENE-CENTRIC COVERAGE CALCULATIONS AND VARIANT ANNOTATION
   # The user-supplied query_genes takes priority; otherwise the
   # organism-specific default set (if any) is used. Inherently depends on variant calling
-  Array[String] query_genes_options = select_all([query_genes, cauris_query_genes, afumigatus_query_genes, cryptoneo_query_genes])
-  if (length(query_genes_options) > 0) {
-    String resolved_query_genes = query_genes_options[0]
-  }
+  String resolved_query_genes = select_first([query_genes, cauris_query_genes, afumigatus_query_genes, cryptoneo_query_genes, ""])
   # Species-agnostic GFF resolution. A user-supplied reference_gff takes precedence,
   # otherwise the organism-specific reference is used (cladetyper outputs for
   # C. auris when a clade matches, hosted references for A. fumigatus and C. neoformans).
-  Array[File] reference_gff_options = select_all([reference_gff, cladetyper.annotated_reference_gff, afumigatus_reference_gff, cryptoneo_reference_gff])
-  if (length(reference_gff_options) > 0) {
-    # user cannot supply one of the reference files and not the other for downstream to be functional
-    if ((defined(reference_gff) && defined(reference_genome_fasta)) || (! defined(reference_gff) && ! defined(reference_genome_fasta))) {
-      File resolved_reference_gff = reference_gff_options[0]
-    }
+  # user cannot supply one of the reference files and not the other for downstream to be functional
+  if ((defined(reference_gff) && defined(reference_genome_fasta)) || (! defined(reference_gff) && ! defined(reference_genome_fasta))) {
+    String resolved_reference_gff = select_first([reference_gff, cladetyper.annotated_reference_gff, afumigatus_reference_gff, cryptoneo_reference_gff, ""])
   }
-  # tracks are mutually exclusive (ont_data), so select_first yields the one track that ran
-  if (defined(gatk_filter.gatk_filtered_vcf) || defined(clair3_variant_calling.clair3_variants_vcf)) {
-    File variant_annotation_vcf = select_first([gatk_filter.gatk_selected_vcf, clair3_variant_calling.clair3_variants_vcf])
-  }
+  String variant_annotation_vcf = select_first([gatk_filter.gatk_selected_vcf, clair3_variant_calling.clair3_variants_vcf, ""])
   # Terra can pass empty strings, so check for empty strings as well
-  if ((defined(resolved_reference_gff) && select_first([resolved_query_genes, ""]) != "") || defined(query_genes_bed)) {
+  if ((resolved_reference_gff != "" && resolved_query_genes != "") || defined(query_genes_bed)) {
     if (defined(bwa_variant_calling.sorted_bam) || defined(ont_bam_sorting.bam)) {
       call gene_coverage_task.gene_coverage {
         input:
@@ -238,15 +226,15 @@ workflow medea_magic {
           min_map_quality = min_gene_coverage_map_quality,
           min_depth = min_gene_coverage_depth
       }
-      if (defined(resolved_query_genes) && defined(variant_annotation_vcf) && defined(resolved_reference_gff)) {
+      if (resolved_query_genes != "" && variant_annotation_vcf != "" && resolved_reference_gff != "") {
         call variant_annotate_task.variant_annotate {
           input:
             samplename = samplename,
-            reference_fasta = select_first([resolved_reference_fasta]),
+            reference_fasta = resolved_reference_fasta,
             reference_gff = select_first([resolved_reference_gff]),
             query_genes = resolved_query_genes,
             exact_match = query_exact_match,
-            vcf = select_first([variant_annotation_vcf]),
+            vcf = variant_annotation_vcf,
             bedfile = query_genes_bed
         }
       }
