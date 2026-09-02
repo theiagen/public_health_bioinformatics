@@ -123,7 +123,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
         - _Cryptococcus neoformans_: a hosted reference (`GCF_000091045.1`, ASM9104v1).
 
         !!! warning "Keep the FASTA and GFF matched"
-            The reference FASTA and GFF must use the same assembly. If a custom `reference_genome_fasta` is provided, an associated `reference_gff` must also be provided (and vice versa). 
+            The reference FASTA and GFF must use the same assembly. If a custom `reference_genome_fasta` is provided, an associated `reference_gff` must also be provided (and vice versa).
 
             If only one of these inputs is provided, gene coverage calculations and gene-centric variant reporting will not run under the assumption there is a discrepancy.
 
