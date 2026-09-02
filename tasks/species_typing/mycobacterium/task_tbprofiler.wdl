@@ -60,17 +60,16 @@ task tbprofiler {
       # https://github.com/jodyphelan/TBProfiler/blob/47e6c639c342eeda9791e5c700c1802fc5e8cb86/tb-profiler#L287
       echo "Cloning tbdb branch '$DB_NAME' into $CURRENT_DB"
 
-      git clone https://github.com/jodyphelan/tbdb.git
+      git clone --quiet --branch "$DB_NAME" https://github.com/jodyphelan/tbdb.git
       cd tbdb
-      git checkout $DB_NAME
 
       if [ -n "~{tbdb_branch_commit_hash}" ]; then
-        git checkout ~{tbdb_branch_commit_hash}
-      else
-        git pull
+        git -c advice.detachedHead=false checkout --quiet ~{tbdb_branch_commit_hash}
       fi
 
       echo "Creating tbdb database: $CURRENT_DB/$DB_NAME"
+      echo "Using tbdb branch '$DB_NAME' at commit $(git rev-parse --short HEAD)"
+
       tb-profiler create_db \
         --create_index \
         --force \
