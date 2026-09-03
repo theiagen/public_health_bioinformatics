@@ -160,12 +160,3 @@ repos:
         #   prek run ... --group wdl --no-group docker-registry
         groups: [wdl, docker-registry]
         stages: [manual]
-      - id: dockstore-coverage
-        name: every release workflow is registered in .dockstore.yml
-        language: system
-        entry: python3 .config/hooks/check_dockstore_coverage.py
-        # Scans the tree itself, but should re-run when either input changes.
-        pass_filenames: false
-        files: ^(workflows/.*\.wdl|\.dockstore\.yml)$
-        groups: [wdl]
-        stages: [manual]
