@@ -1087,7 +1087,7 @@ shigeifinder_version_reads	String	ShigEiFinder version used using read files as 
 sieve_nmeningitidis_docker	String	Sieve docker image used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 sieve_nmeningitidis_genes_present	String	Comma-delimited list of recovered genes passing alignment thresholds	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 sieve_nmeningitidis_notes	String	Notes depicting results of serotyping	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-sieve_nmeningitidis_results	File	Tab-delimited spreadsheet depciting results of serotype prediction	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+sieve_nmeningitidis_results	File	Tab-delimited spreadsheet depicting results of serotype prediction	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 sieve_nmeningitidis_serogroup	String	Serogroup determined by Sieve	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 sieve_nmeningitidis_version	String	Version of Sieve used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 sistr_allele_fasta	File	FASTA file of novel cgMLST alleles from SISTR	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
