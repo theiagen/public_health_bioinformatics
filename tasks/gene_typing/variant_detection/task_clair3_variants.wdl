@@ -1,7 +1,7 @@
 version 1.0
 
 task clair3_variants {
-    input {
+  input {
     File alignment_bam_file
     File alignment_bam_file_index
     File reference_genome_file

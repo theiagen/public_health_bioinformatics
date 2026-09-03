@@ -5,14 +5,14 @@ import "../../tasks/task_versioning.wdl" as versioning
 
 workflow amrfinderplus_wf {
   input {
-      File assembly
-      String samplename
-    }
+    File assembly
+    String samplename
+  }
   call amrfindertask.amrfinderplus_nuc {
     input:
       assembly = assembly,
       samplename = samplename
-    }
+  }
   call versioning.version_capture {
     input:
   }
@@ -31,5 +31,5 @@ workflow amrfinderplus_wf {
     String amrfinderplus_virulence_genes = amrfinderplus_nuc.amrfinderplus_virulence_genes
     String amrfinderplus_amr_classes = amrfinderplus_nuc.amrfinderplus_amr_classes
     String amrfinderplus_amr_subclasses = amrfinderplus_nuc.amrfinderplus_amr_subclasses
-    }
- }
+  }
+}

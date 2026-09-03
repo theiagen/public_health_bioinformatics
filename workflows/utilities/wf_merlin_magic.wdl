@@ -254,15 +254,15 @@ workflow merlin_magic {
   }
   # stxtyper is special & in it's own conditional block because it should automatically be run on Escherichia and Shigella species; but optionally run on ANY bacterial sample if the user wants to screen for Shiga toxin genes
   if (merlin_tag == "Escherichia" || merlin_tag == "Shigella sonnei" || call_stxtyper == true ) {
-      call stxtyper_task.stxtyper {
-        input:
-          assembly = assembly,
-          samplename = samplename,
-          docker = stxtyper_docker_image,
-          disk_size = stxtyper_disk_size,
-          cpu = stxtyper_cpu,
-          memory = stxtyper_memory,
-          enable_debugging = stxtyper_enable_debug
+    call stxtyper_task.stxtyper {
+      input:
+        assembly = assembly,
+        samplename = samplename,
+        docker = stxtyper_docker_image,
+        disk_size = stxtyper_disk_size,
+        cpu = stxtyper_cpu,
+        memory = stxtyper_memory,
+        enable_debugging = stxtyper_enable_debug
     }
   }
   if (merlin_tag == "Escherichia" || merlin_tag == "Shigella sonnei" ) {

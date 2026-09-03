@@ -248,7 +248,7 @@ workflow theiaprok_illumina_pe {
             File bakta_db_full = "gs://theiagen-public-resources-rp/reference_data/databases/bakta/bakta_db_full_2024-01-23.tar.gz"
           }
           if (!(bakta_db == "light" || bakta_db == "full")) {
-              File bakta_custom_db = bakta_db
+            File bakta_custom_db = bakta_db
           }
           call bakta_task.bakta {
             input:
@@ -822,7 +822,7 @@ workflow theiaprok_illumina_pe {
                 "virulencefinder_hits": merlin_magic.virulencefinder_hits,
                 "virulencefinder_report_tsv": merlin_magic.virulencefinder_report_tsv,
                 "zip": zip
-            }
+              }
           }
         }
       }

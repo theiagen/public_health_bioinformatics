@@ -42,19 +42,19 @@ workflow theiameta_illumina_pe {
       samplename = samplename
   }
   call read_qc_wf.read_QC_trim_pe as read_QC_trim {
-      input:
-        samplename = samplename,
-        read1 = read1,
-        read2 = read2,
-        workflow_series = "theiameta",
-        # mask the kraken inputs because they aren't used
-        kraken_disk_size = 0,
-        kraken_memory = 0,
-        kraken_cpu = 0,
-        kraken_db = kraken2_db,
-        call_bracken = false,
-        call_kraken = false
-    }
+    input:
+      samplename = samplename,
+      read1 = read1,
+      read2 = read2,
+      workflow_series = "theiameta",
+      # mask the kraken inputs because they aren't used
+      kraken_disk_size = 0,
+      kraken_memory = 0,
+      kraken_cpu = 0,
+      kraken_db = kraken2_db,
+      call_bracken = false,
+      call_kraken = false
+  }
   call kraken_task.kraken2 as kraken2_clean {
     input:
       samplename = samplename,
@@ -98,93 +98,93 @@ workflow theiameta_illumina_pe {
       bai = sort_bam_assembly_correction.bai,
       samplename = samplename
   }
-    # if reference is provided, perform mapping of assembled contigs to
-    # reference with minimap2, and extract those as final assembly
-    if (defined(reference)) {
-      call minimap2_task.minimap2 as minimap2_assembly {
-        input:
-          query1 = pilon.assembly_fasta,
-          reference = select_first([reference]),
-          samplename = samplename,
-          mode = "asm20",
-          output_sam = false,
-          long_read_flags = false
-      }
-      call parse_mapping_task.retrieve_aligned_contig_paf {
-        input:
-          paf = minimap2_assembly.minimap2_out,
-          assembly = pilon.assembly_fasta,
-          samplename = samplename
-      }
-      call parse_mapping_task.calculate_coverage_paf {
-        input:
-          paf = minimap2_assembly.minimap2_out
-      }
-    }
-    call quast_task.quast {
+  # if reference is provided, perform mapping of assembled contigs to
+  # reference with minimap2, and extract those as final assembly
+  if (defined(reference)) {
+    call minimap2_task.minimap2 as minimap2_assembly {
       input:
-        assembly = select_first([retrieve_aligned_contig_paf.final_assembly, pilon.assembly_fasta]),
+        query1 = pilon.assembly_fasta,
+        reference = select_first([reference]),
         samplename = samplename,
-        min_contig_length = 1
-      }
-    if (output_additional_files) {
-      call minimap2_task.minimap2 as minimap2_reads {
-        input:
-          query1 = read_QC_trim.read1_clean,
-          query2 = read_QC_trim.read2_clean,
-          reference = select_first([retrieve_aligned_contig_paf.final_assembly, pilon.assembly_fasta]),
-          samplename = samplename,
-          mode = "sr",
-          output_sam = true,
-          long_read_flags = false
-      }
-      call parse_mapping_task.sam_to_sorted_bam {
-        input:
-          sam = minimap2_reads.minimap2_out,
-          samplename = samplename
-      }
-      call parse_mapping_task.calculate_coverage {
-        input:
-          bam = sam_to_sorted_bam.bam,
-          bai = sam_to_sorted_bam.bai
-      }
-      call parse_mapping_task.retrieve_pe_reads_bam as retrieve_unaligned_pe_reads_sam {
-        input:
-          bam = sam_to_sorted_bam.bam,
-          samplename = samplename,
-          prefix = "unassembled",
-          sam_flag = 4
-      }
-      call parse_mapping_task.retrieve_pe_reads_bam as retrieve_aligned_pe_reads_sam {
-        input:
-          bam = sam_to_sorted_bam.bam,
-          samplename = samplename,
-          sam_flag = 2,
-          prefix = "assembled"
-      }
-      call parse_mapping_task.assembled_reads_percent {
-        input:
-          bam = sam_to_sorted_bam.bam,
-      }
+        mode = "asm20",
+        output_sam = false,
+        long_read_flags = false
     }
-    if (! defined(reference)) {
-      call bwa_task.bwa as bwa {
-        input:
-          read1 = read_QC_trim.read1_clean,
-          read2 = read_QC_trim.read2_clean,
-          reference_genome = pilon.assembly_fasta,
-          samplename = samplename
-      }
-      call semibin_task.semibin as semibin {
-        input:
-          sorted_bam = bwa.sorted_bam,
-          sorted_bai = bwa.sorted_bai,
-          assembly_fasta = pilon.assembly_fasta,
-          samplename = samplename
-      }
-    }
-    call versioning.version_capture {
+    call parse_mapping_task.retrieve_aligned_contig_paf {
       input:
+        paf = minimap2_assembly.minimap2_out,
+        assembly = pilon.assembly_fasta,
+        samplename = samplename
+    }
+    call parse_mapping_task.calculate_coverage_paf {
+      input:
+        paf = minimap2_assembly.minimap2_out
+    }
+  }
+  call quast_task.quast {
+    input:
+      assembly = select_first([retrieve_aligned_contig_paf.final_assembly, pilon.assembly_fasta]),
+      samplename = samplename,
+      min_contig_length = 1
+  }
+  if (output_additional_files) {
+    call minimap2_task.minimap2 as minimap2_reads {
+      input:
+        query1 = read_QC_trim.read1_clean,
+        query2 = read_QC_trim.read2_clean,
+        reference = select_first([retrieve_aligned_contig_paf.final_assembly, pilon.assembly_fasta]),
+        samplename = samplename,
+        mode = "sr",
+        output_sam = true,
+        long_read_flags = false
+    }
+    call parse_mapping_task.sam_to_sorted_bam {
+      input:
+        sam = minimap2_reads.minimap2_out,
+        samplename = samplename
+    }
+    call parse_mapping_task.calculate_coverage {
+      input:
+        bam = sam_to_sorted_bam.bam,
+        bai = sam_to_sorted_bam.bai
+    }
+    call parse_mapping_task.retrieve_pe_reads_bam as retrieve_unaligned_pe_reads_sam {
+      input:
+        bam = sam_to_sorted_bam.bam,
+        samplename = samplename,
+        prefix = "unassembled",
+        sam_flag = 4
+    }
+    call parse_mapping_task.retrieve_pe_reads_bam as retrieve_aligned_pe_reads_sam {
+      input:
+        bam = sam_to_sorted_bam.bam,
+        samplename = samplename,
+        sam_flag = 2,
+        prefix = "assembled"
+    }
+    call parse_mapping_task.assembled_reads_percent {
+      input:
+        bam = sam_to_sorted_bam.bam,
+    }
+  }
+  if (! defined(reference)) {
+    call bwa_task.bwa as bwa {
+      input:
+        read1 = read_QC_trim.read1_clean,
+        read2 = read_QC_trim.read2_clean,
+        reference_genome = pilon.assembly_fasta,
+        samplename = samplename
+    }
+    call semibin_task.semibin as semibin {
+      input:
+        sorted_bam = bwa.sorted_bam,
+        sorted_bai = bwa.sorted_bai,
+        assembly_fasta = pilon.assembly_fasta,
+        samplename = samplename
+    }
+  }
+  call versioning.version_capture {
+    input:
   }
   output {
     # Version capture
@@ -298,5 +298,5 @@ workflow theiameta_illumina_pe {
     String? semibin_version = semibin.semibin_version
     String? semibin_docker = semibin.semibin_docker
     Array[File]? semibin_bins = semibin.semibin_bins
-    }
+  }
 }

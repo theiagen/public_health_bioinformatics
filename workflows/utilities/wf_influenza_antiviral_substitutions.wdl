@@ -13,7 +13,7 @@ workflow flu_antiviral_substitutions {
     File? mp_segment_assembly
     String abricate_flu_subtype
     String irma_flu_subtype
-     # Amino acid sunstitutions
+    # Amino acid sunstitutions
     File flu_h1_ha_ref = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1_ha.fasta"
     File flu_h3_ha_ref = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3_ha.fasta"
     File flu_n1_na_ref = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_n1_na.fasta"
@@ -25,7 +25,7 @@ workflow flu_antiviral_substitutions {
     File flu_h3n2_m2_ref = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_m2.fasta"
     String? antiviral_aa_subs #user input for antiviral aa subs to be reported
   }
-# Identify AA changes for Influenza NA, PA, PB1 and PB2 segments, and associated antiviral mutations
+  # Identify AA changes for Influenza NA, PA, PB1 and PB2 segments, and associated antiviral mutations
   if (defined(ha_segment_assembly) && ((abricate_flu_subtype == "H1N1") || (irma_flu_subtype == "H1N1"))) {
     call mafft_task.mafft as mafft_h1_ha {
       input:

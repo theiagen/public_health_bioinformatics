@@ -1,6 +1,6 @@
 name: lint-documentation
 
-# Lints documentation on pull requests that touch docs or the lint config.
+# lints documentation on pull requests that touch docs or the lint config.
 on:
   pull_request:
     paths:
@@ -39,15 +39,11 @@ jobs:
             | sudo tar -xz -C /usr/local/bin vale
           vale --version
 
-      # prek is a drop-in reimplementation of pre-commit; it reads the same
-      # config but can select one hook group, which is what keeps the WDL hooks
-      # in .config/.pre-commit-config.yaml from running in this docs-only job.
       - name: Install prek
         run: pip install "prek==${{ env.PREK_VERSION }}"
 
-      # Runs every `docs` hook (whitespace, markdownlint, vale) against all
-      # files. The whitespace auto-fixers fail the job if they would change
-      # anything, printing the diff so contributors can see exactly what to fix.
+      # Auto-fixers fail the job if they would change anything, printing the
+      # diff so you can see exactly what to fix (or run prek locally to do it yourself)
       - name: Run linters
         run: |
           prek run --all-files --show-diff-on-failure \

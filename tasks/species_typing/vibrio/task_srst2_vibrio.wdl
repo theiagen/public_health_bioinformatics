@@ -140,15 +140,15 @@ task srst2_vibrio {
     CODE
   >>>
   output {
-      File srst2_detailed_tsv = "~{samplename}.detailed.tsv"
-      String srst2_docker = docker
-      String srst2_database = "vibrio_230224"
-      String srst2_version = read_string("VERSION")
-      String srst2_vibrio_ctxA = read_string("ctxA")
-      String srst2_vibrio_ompW = read_string("ompW")
-      String srst2_vibrio_toxR = read_string("toxR")
-      String srst2_vibrio_biotype = read_string("BIOTYPE")
-      String srst2_vibrio_serogroup = read_string("SEROGROUP")
+    File srst2_detailed_tsv = "~{samplename}.detailed.tsv"
+    String srst2_docker = docker
+    String srst2_database = "vibrio_230224"
+    String srst2_version = read_string("VERSION")
+    String srst2_vibrio_ctxA = read_string("ctxA")
+    String srst2_vibrio_ompW = read_string("ompW")
+    String srst2_vibrio_toxR = read_string("toxR")
+    String srst2_vibrio_biotype = read_string("BIOTYPE")
+    String srst2_vibrio_serogroup = read_string("SEROGROUP")
   }
   runtime {
     docker: "~{docker}"

@@ -179,12 +179,12 @@ task prep_augur_metadata {
     File augur_metadata = "augur_metadata.tsv"
   }
   runtime {
-      docker: docker
-      memory: memory + " GB"
-      cpu: cpu
-      disks: "local-disk ~{disk_size} SSD"
-      disk: disk_size + " GB"
-      preemptible: 0
-      maxRetries: 3
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
+    disks: "local-disk ~{disk_size} SSD"
+    disk: disk_size + " GB"
+    preemptible: 0
+    maxRetries: 3
   }
 }

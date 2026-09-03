@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """Every release workflow must be registered in .dockstore.yml.
 
-`workflows/utilities/` is excluded: those files are subworkflows imported by
-other workflows, not independently runnable entrypoints, so they are
-deliberately unregistered. If that ever stops being true, edit EXCLUDE_PREFIXES.
+`workflows/utilities/` is excluded: those are subworkflows imported by other
+workflows, not runnable entrypoints.
 """
 import re
 import sys
@@ -17,8 +16,7 @@ def main() -> int:
     print("error: .dockstore.yml not found", file=sys.stderr)
     return 1
 
-  # Paths in .dockstore.yml are absolute-from-repo-root ("/workflows/..."),
-  # so strip the leading slash to compare against on-disk relative paths.
+  # .dockstore.yml paths are rooted ("/workflows/..."); strip the slash.
   registered = {
     p.lstrip("/")
     for p in re.findall(r"primaryDescriptorPath:\s*(\S+)", dockstore.read_text())

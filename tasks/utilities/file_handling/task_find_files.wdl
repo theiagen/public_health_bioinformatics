@@ -24,7 +24,7 @@ task find_files {
   output {
     Array[String] file_paths = read_lines("file_list.txt")
   }
-   runtime {
+  runtime {
     docker: docker
     cpu: cpu
     memory: "~{memory} GB"

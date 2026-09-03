@@ -18,7 +18,7 @@ task create_table_from_array {
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21"
     Int memory = 2
   }
-    File columns_to_export_json = write_json(columns_to_export)
+  File columns_to_export_json = write_json(columns_to_export)
   meta {
     volatile: true
   }

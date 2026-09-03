@@ -1,47 +1,29 @@
-# Pre-commit hooks for PHB. Two independent domains live in this one file,
-# separated by the prek-only `groups:` key:
+# Lint hooks for PHB, split into two groups by the prek-only `groups:` key:
+#   docs -> docs/**/*.md          wdl -> tasks|workflows/**/*.wdl
 #
-#   docs  -> docs/**/*.md      (vale, markdownlint, prose/whitespace hygiene)
-#   wdl   -> tasks|workflows/**/*.wdl  (miniwdl, PHB style + registry checks)
+#   pip install prek && prek install -c .config/.pre-commit-config.yaml
+#   prek run --all-files -c .config/.pre-commit-config.yaml --group wdl
 #
-# Every hook is ALSO scoped by a `files:` regex, so a plain `pre-commit` run
-# still routes files correctly — it just warns about the unknown `groups` key
-# and cannot select one domain at a time. Prefer prek (https://prek.j178.dev),
-# a drop-in Rust reimplementation:
+# The -c flag is required because this file is not at the repo root.
 #
-#   Install once:  pip install prek && prek install -c .config/.pre-commit-config.yaml
-#   Run one domain: prek run --all-files -c .config/.pre-commit-config.yaml --group wdl
-#   Run everything: prek run --all-files -c .config/.pre-commit-config.yaml
+# `prek run` defaults to the manual stage; use `--stage pre-commit` to see
+# exactly what a commit executes.
 #
-# This file lives in .config/, so both runners need the explicit -c flag.
-# `install -c ...` bakes the path into the generated git hook, so ordinary
-# `git commit` afterwards "just works" with no further flags needed.
-#
-# Two tools must be installed separately (they are not Python packages):
-#   vale       https://vale.sh/docs/vale-cli/installation/   (docs group)
-#   shellcheck apt-get install shellcheck                    (wdl group)
-# miniwdl SILENTLY SKIPS shell linting if shellcheck is missing, so without it
-# the local run checks strictly less than CI does.
-# CI installs both (.github/workflows/lint-documentation.yml, miniwdl-check.yml).
+# vale must be installed separately: https://vale.sh/docs/vale-cli/installation/
 
 minimum_pre_commit_version: "3.0.0"
 
-# Applies to every hook below unless a hook sets its own `exclude`.
-# docs/theme/macros/ is the macro implementation (Python + its own README), not a
-# documentation page — none of these checks should run against it, even
-# though docs/theme/macros/README.md would otherwise match `^docs/.*\.md$`.
+# docs/theme/macros/ is macro implementation, not a documentation page.
 exclude: ^docs/theme/macros/
 
 repos:
-  # -------------------------------------------------------------------------
-  # (3) Whitespace hygiene — these hooks AUTO-FIX in place.
-  # -------------------------------------------------------------------------
+  # --- docs: whitespace (auto-fix) ---
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
     hooks:
       - id: trailing-whitespace
         name: trim trailing whitespace
-        # Preserve intentional Markdown hard line breaks (two trailing spaces).
+        # Preserve Markdown hard line breaks (two trailing spaces).
         args: [--markdown-linebreak-ext=md]
         files: ^docs/.*\.md$
         groups: [docs]
@@ -55,9 +37,7 @@ repos:
         files: ^docs/.*\.md$
         groups: [docs]
 
-  # -------------------------------------------------------------------------
-  # (3) Whitespace/prose hygiene — pattern checks (report only, no auto-fix).
-  # -------------------------------------------------------------------------
+  # --- docs: prose patterns (report) ---
   - repo: local
     hooks:
       - id: no-space-before-percent
@@ -79,28 +59,19 @@ repos:
         files: ^docs/.*\.md$
         groups: [docs]
 
-  # -------------------------------------------------------------------------
-  # (4) markdownlint — structural/formatting rules (report only here; run with
-  #     `markdownlint -c .config/.markdownlint.yaml --fix "docs/**/*.md"`
-  #     locally to auto-correct).
-  # -------------------------------------------------------------------------
+  # --- docs: markdownlint (report; add --fix when running by hand) ---
   - repo: https://github.com/igorshubovych/markdownlint-cli
     rev: v0.44.0
     hooks:
       - id: markdownlint
         name: markdownlint
         files: ^docs/.*\.md$
-        # docs/assets/abbreviations.md is a machine-consumed tooltip snippet,
-        # not a page — exclude it (markdownlint's -p/--ignore-path is broken
-        # in this CLI version, so the exclusion is inlined here instead).
+        # abbreviations.md is a tooltip snippet, not a page. Excluded inline
+        # because -p/--ignore-path is broken in this CLI version.
         args: ["-c", ".config/.markdownlint.yaml", "-i", "docs/assets/abbreviations.md"]
         groups: [docs]
 
-  # -------------------------------------------------------------------------
-  # (1)+(2) Vale — tool-name consistency, American spelling, spelling, doubled
-  #         words. Uses .config/.vale.ini and docs/theme/styles/. Requires the
-  #         `vale` binary.
-  # -------------------------------------------------------------------------
+  # --- docs: vale (needs the vale binary) ---
   - repo: local
     hooks:
       - id: vale
@@ -108,18 +79,11 @@ repos:
         language: system
         entry: vale
         files: ^docs/.*\.md$
-        # Fail the commit only on warnings and above; suggestions are advisory.
+        # Warnings and above fail; suggestions are advisory.
         args: ["--config=.config/.vale.ini", "--minAlertLevel=warning"]
         groups: [docs]
 
-  # =========================================================================
-  # WDL hooks — group `wdl`. Scoped to tasks/ and workflows/; nothing below
-  # this line touches docs/.
-  # =========================================================================
-
-  # -------------------------------------------------------------------------
-  # (5) Whitespace hygiene — these hooks AUTO-FIX in place.
-  # -------------------------------------------------------------------------
+  # --- wdl: whitespace (auto-fix) ---
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
     hooks:
@@ -141,11 +105,7 @@ repos:
         files: ^\.dockstore\.yml$
         groups: [wdl]
 
-  # -------------------------------------------------------------------------
-  # (6) Style rules from docs/contributing/code_contribution.md that are
-  #     expressible as a single-line pattern. All are at zero violations today
-  #     except no-tabs — these lock the conventions in rather than clean up.
-  # -------------------------------------------------------------------------
+  # --- wdl: style rules from docs/contributing/code_contribution.md (report) ---
   - repo: local
     hooks:
       - id: wdl-no-tabs
@@ -173,57 +133,39 @@ repos:
         entry: ':latest"'
         files: ^(tasks|workflows)/.*\.wdl$
         groups: [wdl]
+        stages: [manual]
 
-  # -------------------------------------------------------------------------
-  # (7) Cross-file invariants that need more than a line-oriented regex.
-  #     Stdlib-only scripts, so `language: system` (not `language: python`,
-  #     which would build a throwaway virtualenv for them).
-  # -------------------------------------------------------------------------
+  # --- wdl: rules needing more than a line-oriented regex ---
   - repo: local
     hooks:
-      - id: wdl-conventions
-        name: runtime sets both disks/disk; docker images carry a tag
+      - id: wdl-indent
+        name: fix 2-space indentation
         language: system
-        entry: python3 .config/hooks/check_wdl_conventions.py
+        entry: python3 .config/hooks/check_wdl_conventions.py --fix
         files: ^(tasks|workflows)/.*\.wdl$
         groups: [wdl]
+      - id: wdl-conventions
+        name: report runtime disks/disk + docker tag/GAR
+        language: system
+        entry: python3 .config/hooks/check_wdl_conventions.py --report
+        files: ^(tasks|workflows)/.*\.wdl$
+        groups: [wdl]
+        stages: [manual]
       - id: wdl-docker-exists
-        name: pinned docker images exist in their registry
+        name: pinned docker images exist in GAR
         language: system
         entry: python3 .config/hooks/check_docker_images_exist.py
         files: ^(tasks|workflows)/.*\.wdl$
-        # Second group so this one hook can be dropped without losing the rest
-        # of the WDL checks:  prek run ... --group wdl --no-group docker-registry
-        # (exclusion wins over inclusion). It is the only hook here that hits
-        # the network; it fails ONLY on a 404, and warns-and-passes when
-        # offline or when a registry will not answer anonymously.
+        # Second group so this hook alone can be dropped when offline:
+        #   prek run ... --group wdl --no-group docker-registry
         groups: [wdl, docker-registry]
+        stages: [manual]
       - id: dockstore-coverage
         name: every release workflow is registered in .dockstore.yml
         language: system
         entry: python3 .config/hooks/check_dockstore_coverage.py
-        # Scans the tree itself, so it needs no filenames — but it should re-run
-        # whenever a workflow file or the registry changes.
+        # Scans the tree itself, but should re-run when either input changes.
         pass_filenames: false
         files: ^(workflows/.*\.wdl|\.dockstore\.yml)$
         groups: [wdl]
-
-  # -------------------------------------------------------------------------
-  # (8) miniwdl — syntax/type checking, plus shellcheck over command blocks.
-  #     Mirrors .github/workflows/miniwdl-check.yml. Non-strict, matching CI:
-  #     lint warnings (FileCoercion, UnnecessaryQuantifier, ...) are advisory
-  #     and do not block. This hook is faster feedback, not extra coverage.
-  #
-  #     Requires both binaries on PATH (CI installs them; do the same locally):
-  #       pip install miniwdl && sudo apt-get install shellcheck
-  #     miniwdl SILENTLY SKIPS shell linting when shellcheck is absent, so
-  #     without it the hook checks strictly less than CI does.
-  # -------------------------------------------------------------------------
-  - repo: local
-    hooks:
-      - id: miniwdl-check
-        name: miniwdl check (WDL syntax + shellcheck on command blocks)
-        language: system
-        entry: miniwdl check
-        files: ^(tasks|workflows)/.*\.wdl$
-        groups: [wdl]
+        stages: [manual]
