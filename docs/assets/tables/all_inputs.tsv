@@ -10,7 +10,7 @@ augur	build_name	String	Name to give to the Augur build		Required	Augur	general
 augur_prep	assembly	File	The assembly file for your sample in FASTA format		Required	Augur_Prep	general	
 basespace_fetch	basespace_access_token	String	The access token is used in place of a username and password to allow the workflow to access the user account in BaseSpace from which the data is to be transferred. It is an alphanumeric string that is 32 characters in length. Example: 9e08a96471df44579b72abf277e113b7		Required	BaseSpace_Fetch	general	
 basespace_fetch	basespace_collection_id	String	The collection ID is the BaseSpace Run or Project where the data to be transferred is stored.		Required	BaseSpace_Fetch	general	
-basespace_fetch	basespace_sample_name	String	The BaseSpace sample name is the sample identifier used in BaseSpace. This identifier is set on the sample sheet at the onset of an Illumina sequencing run.		Required	BaseSpace_Fetch	general	
+basespace_fetch	basespace_sample_id	String	The BaseSpace sample ID is the sample identifier used in BaseSpace. This identifier is set on the sample sheet at the onset of an Illumina sequencing run.		Required	BaseSpace_Fetch	general	
 basespace_fetch	sample_name	String	The sample name is the sample identifier used in the Terra.bio data table corresponding to the metadata associated with the sample to be transferred from BaseSpace		Required	BaseSpace_Fetch	general	
 cauris_cladetyper	assembly_fasta	File	The assembly file for your sample in FASTA format		Required	Cauris_CladeTyper	general	
 cauris_cladetyper	samplename	String	The name of the sample being analyzed		Required	Cauris_CladeTyper	general	
@@ -764,7 +764,7 @@ fastq_scan_raw_reads	docker	String	The Docker container to use for the task	us-d
 fastq_scan_raw_reads	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaCoV_ClearLabs	runtime	
 fetch_bs	cpu	Int	Number of CPUs to allocate to the task	2	Optional	BaseSpace_Fetch	runtime	
 fetch_bs	disk_size	Int	Amount of storage (in GB) to allocate to the task	250	Optional	BaseSpace_Fetch	runtime	
-fetch_bs	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/bioforklift:0.5.0	Optional	BaseSpace_Fetch	docker	
+fetch_bs	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/bioforklift:0.5.2	Optional	BaseSpace_Fetch	docker	
 fetch_bs	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	BaseSpace_Fetch	runtime	
 fetch_sra_to_fastq	cpu	Int	Number of CPUs to allocate to the task	2	Optional	SRA_Fetch	runtime	
 fetch_sra_to_fastq	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	SRA_Fetch	runtime	

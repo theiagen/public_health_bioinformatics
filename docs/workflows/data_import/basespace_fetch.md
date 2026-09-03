@@ -138,6 +138,7 @@ In this guide, a "collection" refers to the name of the BaseSpace **Run** or **P
 ```
 Runs → {run} → Files → SampleSheet.csv
 ```
+
 If you have the Run's sample sheet, its `Sample_ID` column is a good starting point, however keep in mind that they may not always provide an exact match. Per Illumina's [BaseSpace data model](https://knowledge.illumina.com/software/cloud-software/software-cloud-software-reference_material-list/000007009), `Sample_ID` becomes the **biosample** name and `Sample_Name` becomes the **library** name. A **_FastQ Dataset_** is a separate object produced downstream by demultiplexing, so while the `Sample_ID` often matches the resulting dataset name, it is not guaranteed to. In practice, if the **_FastQ Dataset_** name differs from the `Sample_ID`, it's usually because a lane suffix was added.
 
 ### 3.2 How your `basespace_sample_id` name is matched
