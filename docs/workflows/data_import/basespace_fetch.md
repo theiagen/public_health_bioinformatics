@@ -151,7 +151,6 @@ The workflow searches for each `basespace_sample_id` in the following order, sto
     !!! info "Note"
         A dataset is considered a lane-suffixed dataset if removing its lane suffix (for example, `_L1` or `_L001`) leaves a name that **exactly** matches the value you provided. See examples below.
 
-
 ### 3.3 Worked examples
 
 Each example below lists the datasets that exist in a collection, then shows what a given `basespace_sample_id` resolves to with `group_by_lane` on (the default) and off.
