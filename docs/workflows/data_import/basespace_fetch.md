@@ -108,68 +108,52 @@ _Already have a command-line environment available?_ You can skip ahead to [1.2 
 
 ## Step 2 — Find your `basespace_collection_id` {% raw %} {#step-2-collection-id} {% endraw %}
 
-In this guide, a "collection" refers to the BaseSpace **Run** or **Project** that contains your FASTQ files. The examples below show where to find the **Run** or **Project** name/numeric ID to enter as your `basespace_collection_id`. Either the collection name or its numeric ID can be used.
+In this guide, a "collection" refers to the name of the BaseSpace **Run** or **Project** that contains your FASTQ files. The examples below show where to find the **Run** or **Project** name to enter as your `basespace_collection_id`.
 
 ??? toggle "If your collection is a **Run**"
-    !!! caption "BaseSpace Run - Collection IDs"
+    !!! caption "BaseSpace Run - Collection ID"
         ![visually showing which BaseSpace Run values can be used as a collection_id.](../../assets/figures/basespace_fetch/collection_id_run.gif)
 
 ??? toggle "If your collection is a **Project**"
-    !!! caption "BaseSpace Project - Collection IDs"
+    !!! caption "BaseSpace Project - Collection ID"
         ![visually showing which BaseSpace Project values can be used as a collection_id.](../../assets/figures/basespace_fetch/collection_id_project.gif)
-
-**Recommendation: use the numeric ID from the URL.** It is unambiguous, it never changes, and it avoids every problem below:
 
 ??? warning "Warnings for `basespace_collection_id`"
     - **Matching is exact and case-sensitive.** BaseSpace's own search box is forgiving about case and partial words; this workflow is not.
     - **Only Runs and Projects are supported.** A biosample, an app result, or an analysis cannot be used as a `basespace_collection_id`.
     - **If nothing matches `basespace_collection_id`**, you'll get the error:
       ```
-      Could not resolve input collection ID `X`: no project or run exactly matches it by id or name.
+      Could not resolve input collection ID `X`: no project or run exactly matches it.
       ```
-    - **If more than one thing matches `basespace_collection_id`** - for example a Run and a Project sharing the same name, you'll get the error:
-      ```
-      Input collection ID `X` is ambiguous; it matches: [...]. Provide a more specific id or name.
-      ```
+    - **If more than one thing matches `basespace_collection_id`** - for example a Run and a Project sharing the same name, the Run will always be prioritized first.
 
 ---
 
-## Step 3 — Find your `basespace_sample_name` {% raw %} {#step-3-sample-name} {% endraw %}
+## Step 3 — Find your `basespace_sample_id` {% raw %} {#step-3-sample-id} {% endraw %}
 
-`basespace_sample_name` is matched against the **_datasets_** inside your "collection". These **_datasets_** are shown under the **_FastQ Dataset_** column for a Run, or the **_Dataset Name_** column for a Project.
+`basespace_sample_id` is matched against the **_datasets_** inside your "collection". These **_datasets_** are shown under the **_FastQ Dataset_** column for a Run, or the **_Dataset Name_** column for a Project.
 
-### 3.1 Finding **_datasets_** in BaseSpace {% raw %} {#step-3-1-finding-datasets} {% endraw %}
+### 3.1 Starting from a SampleSheet.csv
 
-??? toggle "If your collection is a **Run**"
+```
+Runs → {run} → Files → SampleSheet.csv
+```
+If you have the Run's sample sheet, its `Sample_ID` column is a good starting point, however keep in mind that they may not always provide an exact match. Per Illumina's [BaseSpace data model](https://knowledge.illumina.com/software/cloud-software/software-cloud-software-reference_material-list/000007009), `Sample_ID` becomes the **biosample** name and `Sample_Name` becomes the **library** name. A **_FastQ Dataset_** is a separate object produced downstream by demultiplexing, so while the `Sample_ID` often matches the resulting dataset name, it is not guaranteed to. In practice, if the **_FastQ Dataset_** name differs from the `Sample_ID`, it's usually because a lane suffix was added.
 
-    Open the **Run** tab and go to the **Biosamples** tab. The values in the **_FastQ Dataset_** column are the dataset names.
+### 3.2 How your `basespace_sample_id` name is matched
 
-    !!! caption "BaseSpace Run - **_FastQ Dataset_**"
-        ![visually showing which BaseSpace Run values can be used as a `basespace_sample_name`.](../../assets/figures/basespace_fetch/basespace_sample_name_run_pt1.gif)
-
-??? toggle "If your collection is a **Project**"
-
-    Open the project and go to the **FASTQs** tab. The values in the **_Dataset Name_** column are the dataset names.
-
-    !!! caption "BaseSpace Project - **_Dataset Name_**"
-        ![visually showing which BaseSpace Project values can be used as a `basespace_sample_name`.](../../assets/figures/basespace_fetch/basespace_sample_name_project.gif)
-
-### 3.2 How your `basespace_sample_name` name is matched
-
-The workflow searches for each `basespace_sample_name` in the following order, stopping after the first successful match:
+The workflow searches for each `basespace_sample_id` in the following order, stopping after the first successful match:
 
 1. **Exact dataset name.** If a dataset name **exactly** matches the value you provided, that dataset is used to retrieve the associated FASTQ files.
 2. **Lane-suffixed datasets.** If no dataset name **exactly** matches the value you provided, and `group_by_lane` is `true` (the default), the workflow searches for datasets with that value followed by a lane suffix. FASTQ files from matching datasets are then merged into a single R1/R2 pair.
 
     !!! info "Note"
-        A dataset is considered a lane-suffixed dataset if removing its lane suffix (for example, `_L001` or `-L001`) leaves a name that **exactly** matches the value you provided. See examples below.
+        A dataset is considered a lane-suffixed dataset if removing its lane suffix (for example, `_L1` or `_L001`) leaves a name that **exactly** matches the value you provided. See examples below.
 
-!!! info "Note"
-    All output FASTQ files are written as `{TABLENAME_id}_R1.fastq.gz` / `{TABLENAME_id}_R2.fastq.gz` using the first column of your Terra table, not from `basespace_sample_name`. See [Step 4](#step-4-data-table).
 
 ### 3.3 Worked examples
 
-Each example below lists the datasets that exist in a collection, then shows what a given `basespace_sample_name` resolves to with `group_by_lane` on (the default) and off.
+Each example below lists the datasets that exist in a collection, then shows what a given `basespace_sample_id` resolves to with `group_by_lane` on (the default) and off.
 
 ??? toggle "A sample split across lanes (most common)"
 
@@ -183,7 +167,7 @@ Each example below lists the datasets that exist in a collection, then shows wha
     Sample-2026-0010_L001
     ```
 
-    | `basespace_sample_name` | `group_by_lane = true` (default) | `group_by_lane = false` |
+    | `basespace_sample_id` | `group_by_lane = true` (default) | `group_by_lane = false` |
     | --- | --- | --- |
     | `Sample-2026` | ❌ Fails — `No exact dataset match` | ❌ Fails — `No exact dataset match` |
     | `sample-2026-001` | ❌ Fails — `No exact dataset match` | ❌ Fails — `No exact dataset match` |
@@ -206,26 +190,13 @@ Each example below lists the datasets that exist in a collection, then shows wha
     Sample-2026-002_L002
     ```
 
-    | `basespace_sample_name` | `group_by_lane = true` (default) | `group_by_lane = false` |
+    | `basespace_sample_id` | `group_by_lane = true` (default) | `group_by_lane = false` |
     | --- | --- | --- |
     | `Sample-2026-002` | ⚠️ Only the `Sample-2026-002` dataset (PASSES with warning) | ⚠️ Only the `Sample-2026-002` dataset (PASSES with warning) |
     | `Sample-2026-002_L001` | ✅ Lane 1 only, on its own | ✅ Lane 1 only, on its own |
 
     !!! warning "Note"
         An exact dataset name always wins, so `group_by_lane` changes nothing here. Although rare, this is the one case where you can quietly end up with a different result than you expected.
-
-### 3.4 Starting from a SampleSheet.csv
-
-If you have the Run's sample sheet, its `Sample_ID` column is a good starting point:
-
-```
-Runs → {run} → Files → SampleSheet.csv
-```
-
-Treat those values as a strong starting point rather than the authoritative answer. Per Illumina's [BaseSpace data model](https://knowledge.illumina.com/software/cloud-software/software-cloud-software-reference_material-list/000007009), `Sample_ID` becomes the **biosample** name and `Sample_Name` becomes the **library** name. A FASTQ dataset is a separate object produced downstream by demultiplexing, so while the `Sample_ID` often matches the resulting dataset name, it is not guaranteed to. In practice, if the FASTQ dataset name differs from the `Sample_ID`, it's usually because a lane suffix was added.
-
-!!! warning "Note"
-    Always verify the `Sample_ID` value against the dataset sources shown in [Step 3.1](#step-3-1-finding-datasets) before using it. The SampleSheet.csv column names do not necessarily correspond directly to this workflow's inputs.
 
 ---
 
@@ -234,16 +205,16 @@ Treat those values as a strong starting point rather than the authoritative answ
 In Excel or an alternative spreadsheet software, set up a data table for Terra, with a row for each sample. Please feel free to use our [BaseSpace_Fetch Template](https://storage.cloud.google.com/theiagen-public-resources-rp/reference_data/family_agnostic/bs_fetch_template_20231103.tsv) to help ensure the file is formatted correctly.
 
 1. In the first column's **header**, enter the data table name with the format `entity:TABLENAME_id`.
-2. Populate the first column with a unique identifier for each sample. This value can be the same as the corresponding `basespace_sample_name` or any other name you choose, as long as no two rows have the same value.
+2. Populate the first column with a unique identifier for each sample. This value can be the same as the corresponding `basespace_sample_id` or any other name you choose, as long as no two rows have the same value.
 
     !!! warning "This column determines your final FASTQ filenames"
-        The FASTQ files downloaded from your BaseSpace **Run** or **Project** are renamed to `{TABLENAME_id}_R1.fastq.gz` / `{TABLENAME_id}_R2.fastq.gz` using the value in the first column, **not** `basespace_sample_name`.
+        The FASTQ files downloaded from your BaseSpace **Run** or **Project** are renamed to `{TABLENAME_id}_R1.fastq.gz` / `{TABLENAME_id}_R2.fastq.gz` using the value in the first column, **not** `basespace_sample_id`.
 
-3. Create a `basespace_sample_name` column and populate it with the samples found in [Step 3](#step-3-sample-name).
+3. Create a `basespace_sample_id` column and populate it with the samples found in [Step 3](#step-3-sample-id).
 4. Create a `basespace_collection_id` column and populate it with the BaseSpace Project or Run identifier from [Step 2](#step-2-collection-id).
 
 ??? toggle "Example Terra data table"
-    ![A spreadsheet with columns for bs_fetch_sample_id, basespace_sample_name, and basespace_collection_id, populated with six example sample rows all belonging to Run_01.](../../assets/figures/basespace_fetch/step7-metadata-sheet.png)
+    ![A spreadsheet with columns for bs_fetch_sample_id, basespace_sample_id, and basespace_collection_id, populated with six example sample rows all belonging to Run_01.](../../assets/figures/basespace_fetch/step7-metadata-sheet.png)
 
 ---
 
