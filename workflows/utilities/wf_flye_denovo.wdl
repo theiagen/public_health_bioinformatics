@@ -120,7 +120,7 @@ workflow flye_denovo {
       memory = flye_memory,
       disk_size = flye_disk_size
   }
-  if (flye.flye_status == "PASS") {}
+  if (flye.flye_status == "PASS") {
     # Bandage plot generation
     call task_bandage.bandage_plot as bandage {
       input:
@@ -207,21 +207,22 @@ workflow flye_denovo {
         memory = dnaapler_memory,
         disk_size = dnaapler_disk_size
     }
+  }
   output {
-    File assembly_fasta = dnaapler.reoriented_fasta
-    File bandage_plot = bandage.plot
+    File? assembly_fasta = dnaapler.reoriented_fasta
+    File? bandage_plot = bandage.plot
     File? contigs_gfa = flye.assembly_graph_gfa
-    File filtered_contigs_metrics = filter_contigs.assembly_filtering_metrics
+    File? filtered_contigs_metrics = filter_contigs.assembly_filtering_metrics
     File? flye_assembly_info = flye.assembly_info
     String? flye_assembly_status = flye.flye_status
     String? medaka_model_used = medaka.resolved_medaka_model
     String? porechop_version = porechop.porechop_version
     String flye_version = flye.flye_version
-    String bandage_version = bandage.bandage_version
+    String? bandage_version = bandage.bandage_version
     String? medaka_version = medaka.medaka_version
     String? racon_version = racon.racon_version
     String? bwa_version = bwa.bwa_version
     String? polypolish_version = polypolish.polypolish_version
-    String dnaapler_version = dnaapler.dnaapler_version
+    String? dnaapler_version = dnaapler.dnaapler_version
   }
 }
