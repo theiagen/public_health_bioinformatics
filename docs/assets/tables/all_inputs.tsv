@@ -8,9 +8,9 @@ assembly_fetch	samplename	String	The name of the sample being analyzed		Required
 augur	assembly_fastas	Array[File]+	The assembly files for your samples in FASTA format		Required	Augur	general	
 augur	build_name	String	Name to give to the Augur build		Required	Augur	general	
 augur_prep	assembly	File	The assembly file for your sample in FASTA format		Required	Augur_Prep	general	
-basespace_fetch	access_token	String	The access token is used in place of a username and password to allow the workflow to access the user account in BaseSpace from which the data is to be transferred. It is an alphanumeric string that is 32 characters in length. Example: 9e08a96471df44579b72abf277e113b7		Required	BaseSpace_Fetch	general	
+basespace_fetch	basespace_access_token	String	The access token is used in place of a username and password to allow the workflow to access the user account in BaseSpace from which the data is to be transferred. It is an alphanumeric string that is 32 characters in length. Example: 9e08a96471df44579b72abf277e113b7		Required	BaseSpace_Fetch	general	
 basespace_fetch	basespace_collection_id	String	The collection ID is the BaseSpace Run or Project where the data to be transferred is stored.		Required	BaseSpace_Fetch	general	
-basespace_fetch	basespace_sample_name	String	The BaseSpace sample name is the sample identifier used in BaseSpace. This identifier is set on the sample sheet at the onset of an Illumina sequencing run.		Required	BaseSpace_Fetch	general	
+basespace_fetch	basespace_sample_id	String	The BaseSpace sample ID is the sample identifier used in BaseSpace. This identifier is set on the sample sheet at the onset of an Illumina sequencing run.		Required	BaseSpace_Fetch	general	
 basespace_fetch	sample_name	String	The sample name is the sample identifier used in the Terra.bio data table corresponding to the metadata associated with the sample to be transferred from BaseSpace		Required	BaseSpace_Fetch	general	
 cauris_cladetyper	assembly_fasta	File	The assembly file for your sample in FASTA format		Required	Cauris_CladeTyper	general	
 cauris_cladetyper	samplename	String	The name of the sample being analyzed		Required	Cauris_CladeTyper	general	
@@ -371,8 +371,9 @@ bakta	docker	String	The Docker container to use for the task	us-docker.pkg.dev/g
 bakta	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	24	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 bakta	prodigal_tf	File	Prodigal training file to use for CDS prediction by bakta		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 bakta	proteins	File	Fasta file of trusted protein sequences for CDS annotation		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-basespace_fetch	api_server	String	The API server is the web address to which data transfer requests can be sent by the workflow.	https://api.basespace.illumina.com	Optional	BaseSpace_Fetch	general	
-basespace_fetch	basespace_sample_id	String	The BaseSpace sample ID is an optional additional identifier used in BaseSpace. If a sample has a BaseSpace sample ID it should be available on the sample sheet and must be included in the metadata sheet upload prior to running BaseSpace_Fetch.		Optional	BaseSpace_Fetch	general	
+basespace_fetch	basespace_api_url	String	The web address to which data transfer requests can be sent by the workflow.	https://api.basespace.illumina.com	Optional	BaseSpace_Fetch	general	
+basespace_fetch	group_by_lane	Boolean	If True, expands sample name matching to `{sample}_L###` and groups together multi laned datasets so they concatenate together. Set False to require an exact match.	True	Optional	BaseSpace_Fetch	general	
+basespace_fetch	validate_paired_end	Boolean	If True, require each output to be a balanced paired-end dataset group before downloading.	True	Optional	BaseSpace_Fetch	general	
 bbduk	adapters_fasta	File	FASTA with adapter sequences to be removed		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
 bbduk	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
 bbduk	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
@@ -762,8 +763,8 @@ fastq_scan_raw_reads	disk_size	Int	Amount of storage (in GB) to allocate to the 
 fastq_scan_raw_reads	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3	Optional	TheiaCoV_ClearLabs	docker	
 fastq_scan_raw_reads	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaCoV_ClearLabs	runtime	
 fetch_bs	cpu	Int	Number of CPUs to allocate to the task	2	Optional	BaseSpace_Fetch	runtime	
-fetch_bs	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	BaseSpace_Fetch	runtime	
-fetch_bs	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/basespace_cli:1.2.1	Optional	BaseSpace_Fetch	docker	
+fetch_bs	disk_size	Int	Amount of storage (in GB) to allocate to the task	250	Optional	BaseSpace_Fetch	runtime	
+fetch_bs	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/bioforklift:0.5.2	Optional	BaseSpace_Fetch	docker	
 fetch_bs	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	BaseSpace_Fetch	runtime	
 fetch_sra_to_fastq	cpu	Int	Number of CPUs to allocate to the task	2	Optional	SRA_Fetch	runtime	
 fetch_sra_to_fastq	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	SRA_Fetch	runtime	
