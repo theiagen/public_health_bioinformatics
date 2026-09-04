@@ -104,6 +104,7 @@ workflow medea_magic {
     String cryptoneo_query_genes = "CNA00300"
   }
 
+  # RESOLVE MULTI-SOURCE DOWNSTREAM INPUTS
   # a user-supplied fasta takes precedence, otherwise the organism-specific reference is used
   # (cladetyper fasta for C. auris, hosted fasta for A. fumigatus and C. neoformans).
   # resolve the reference once; visible below (and in outputs) as File?
