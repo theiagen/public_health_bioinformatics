@@ -111,7 +111,7 @@ workflow theiaeuk_ont {
       }
       # call medea magic for cladetyper, AMR search, and read-based variant calling
       # (minimap2 + Clair3) and gene coverage, feeding the cleaned long reads
-       call medea_magic_workflow.medea_magic {
+      call medea_magic_workflow.medea_magic {
         input:
           samplename = samplename,
           medea_tag = gambit.merlin_tag,

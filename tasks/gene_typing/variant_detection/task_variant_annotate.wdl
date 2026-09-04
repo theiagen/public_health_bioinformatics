@@ -4,12 +4,12 @@ task variant_annotate {
   input {
     String samplename
 
-    File reference_fasta 
-    File reference_gff # Reference GFF depicting annotated regions 
+    File reference_fasta
+    File reference_gff # Reference GFF depicting annotated regions
     String? query_genes # comma-delimited list of strings
     File? bedfile
     File vcf
-    
+
     String feature_qualifier = "product" # GFF feature qualifier to use for comparison to query gene
     Boolean exact_match = false # use an exact match for qualifier mapping (always case-sensitive)
     Boolean ambiguous_contig = false # relate bedfile to GFF and FASTA ambiguous
@@ -36,14 +36,14 @@ task variant_annotate {
                 header.append(line)
             elif line.strip():
                 records.append(line)
-    
+
     # sort by contig_id (col 1) then integer start coordinate (col 4)
     records.sort(key=lambda l: (l.split("\t")[0], int(l.split("\t")[3])))
     with open("reference_sorted.gff", "w") as out:
         out.writelines(header)
         out.writelines(records)
     CODE
-    
+
     # extract a sub-VCF only when a subset of genes/regions is requested, then
     # annotate that extracted subset instead of the full VCF
     if ~{if (defined(query_genes) || defined(bedfile)) then "true" else "false"}; then

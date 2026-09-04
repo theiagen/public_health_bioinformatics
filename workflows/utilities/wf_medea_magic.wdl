@@ -263,7 +263,7 @@ workflow medea_magic {
       }
     }
   }
-  
+
   # OUTPUT FORMATTING
   if (resolved_reference_fasta != "") {
     File used_reference_fasta = resolved_reference_fasta

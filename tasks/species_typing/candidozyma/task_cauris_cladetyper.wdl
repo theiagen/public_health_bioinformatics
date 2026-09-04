@@ -24,7 +24,7 @@ task cauris_cladetyper {
     File ref_clade5_gff = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.gff"
     File ref_clade6 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade6_GCA_032714025.1_ASM3271402v1_genomic.fasta"
     File? ref_clade6_gff
-    }
+  }
   command <<<
     set -euo pipefail
 
@@ -95,7 +95,7 @@ task cauris_cladetyper {
 
     # report top clade
     if cladegff:
-        shutil.copy(cladegff, "CAURIS_REFERENCE.gff") 
+        shutil.copy(cladegff, "CAURIS_REFERENCE.gff")
     if cladefa:
         shutil.copy(cladefa, "CAURIS_REFERENCE.fasta")
     with open("CLADETYPE", 'w') as cladetype_file:

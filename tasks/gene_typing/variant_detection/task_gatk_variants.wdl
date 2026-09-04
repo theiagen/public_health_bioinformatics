@@ -64,10 +64,10 @@ task gatk_variants {
       --tmp-dir . \
       -ERC GVCF
 
-    # CombineGVCF here if multiple read group support is enabled, then feed downstream 
+    # CombineGVCF here if multiple read group support is enabled, then feed downstream
 
     # call GenotypeGVCFs
-    # "This tool is able to handle any ploidy (or mix of ploidies) intelligently; 
+    # "This tool is able to handle any ploidy (or mix of ploidies) intelligently;
     # there is no need to specify ploidy for non-diploid organisms."
     gatk --java-options "-Xmx~{memory}G" \
       GenotypeGVCFs \
@@ -82,11 +82,11 @@ task gatk_variants {
     File gatk_genotype_gvcf_index = "~{samplename}_genotype.g.vcf.gz.tbi"
   }
   runtime {
-      docker: "~{docker}"
-      memory: "~{memory} GB"
-      cpu: cpu
-      disks: "local-disk " + disk_size + " SSD"
-      preemptible: 0
-      maxRetries: 3
+    docker: "~{docker}"
+    memory: "~{memory} GB"
+    cpu: cpu
+    disks: "local-disk " + disk_size + " SSD"
+    preemptible: 0
+    maxRetries: 3
   }
 }

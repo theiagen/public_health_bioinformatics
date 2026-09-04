@@ -103,11 +103,11 @@ task gatk_filter {
     Float gatk_percent_passing = read_float("PERCENT_PASS.txt")
   }
   runtime {
-      docker: "~{docker}"
-      memory: "~{memory} GB"
-      cpu: cpu
-      disks: "local-disk " + disk_size + " SSD"
-      preemptible: 0
-      maxRetries: 3
+    docker: "~{docker}"
+    memory: "~{memory} GB"
+    cpu: cpu
+    disks: "local-disk " + disk_size + " SSD"
+    preemptible: 0
+    maxRetries: 3
   }
 }
