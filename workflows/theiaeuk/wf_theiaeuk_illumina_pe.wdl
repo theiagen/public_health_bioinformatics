@@ -194,7 +194,19 @@ workflow theiaeuk_illumina_pe {
           samplename = samplename,
           read1 = read_QC_trim.read1_clean,
           read2 = read_QC_trim.read2_clean,
-          ont_data = false
+          ont_data = false,
+          # mask ONT-specific inputs from the user
+          clair3_model = "",
+          clair3_variant_quality = 0,
+          clair3_include_all_contigs = false,
+          clair3_enable_haploid_precise = false,
+          clair3_disable_phasing = false,
+          clair3_enable_gvcf = false,
+          clair3_enable_long_indel = false,
+          clair3_docker = "",
+          clair3_cpu = 0,
+          clair3_memory = 0,
+          clair3_disk_size = 0
       }
     }
   }

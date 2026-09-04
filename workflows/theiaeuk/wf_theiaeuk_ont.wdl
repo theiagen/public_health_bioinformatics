@@ -117,7 +117,20 @@ workflow theiaeuk_ont {
           medea_tag = gambit.merlin_tag,
           assembly = flye_denovo.assembly_fasta,
           read1 = read_QC_trim.read1_clean,
-          ont_data = true
+          ont_data = true,
+          # mask Illumina inputs
+          gatk_docker = "",
+          gatk_cpu = 0,
+          gatk_memory = 0,
+          gatk_disk_size = 0,
+          gatk_ploidy = 0,
+          gatk_filter_min_variant_quality = 0.0,
+          gatk_filter_min_depth = 0,
+          gatk_filter_min_map_quality = 0.0,
+          gatk_filter_min_quality_by_depth = 0.0,
+          gatk_filter_max_fisher_strand_bias = 0.0,
+          gatk_filter_max_strand_odds_ratio = 0.0,
+          gatk_filter_expression = ""
       }
     }
   }
