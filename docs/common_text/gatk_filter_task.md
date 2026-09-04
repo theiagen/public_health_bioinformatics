@@ -8,6 +8,7 @@ fragment: true
     !!! info "Outputs"
         - `gatk_filtered_vcf` — the GVCF with `FILTER`-column annotations applied by `VariantFiltration`. All records are reported.
         - `gatk_selected_vcf` — the records annotated with `PASS` extracted by `SelectVariants`.
+        - `gatk_percent_pass` — the percentage of records in `gatk_filtered_vcf` annotated with `PASS`.
 
     `VariantFiltration` annotates the `FILTER` column of each record with the name of any filter it fails (records passing all filters are marked `PASS`). Optional threshold inputs, depicted below, are automatically converted to filter expressions, though users can also input their own [JEXL-formatted expression](https://gatk.broadinstitute.org/hc/en-us/articles/360035891011-JEXL-filtering-expressions) via the `gatk_filter_expression` input:
 
