@@ -212,7 +212,7 @@ workflow theiaprok_ont {
             call bakta_task.bakta {
               input:
                 assembly = select_first([flye_denovo.assembly_fasta]),
-                samplename = samplename,f
+                samplename = samplename,
                 bakta_db_selected = select_first([bakta_custom_db, bakta_db_light, bakta_db_full])
             }
           }
