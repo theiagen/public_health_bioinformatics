@@ -1,6 +1,6 @@
 version 1.0
 
-import "../../../tasks/utilities/data_import/task_create_terra_table.wdl" as make_table_task
+import "../../tasks/utilities/data_import/task_create_terra_table.wdl" as make_table_task
 
 workflow create_terra_table {
   input {

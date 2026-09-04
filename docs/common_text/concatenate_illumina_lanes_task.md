@@ -10,4 +10,4 @@ fragment: true
 
         |  | Links |
         | --- | --- |
-        | Subworkflow | [wf_concatenate_illumina_lanes.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/file_handling/wf_concatenate_illumina_lanes.wdl)
+        | Subworkflow | [wf_concatenate_illumina_lanes.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/file_handling/wf_concatenate_illumina_lanes.wdl)

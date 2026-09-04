@@ -177,22 +177,22 @@ workflows:
     - /tests/inputs/empty.json
  - name: BaseSpace_Fetch_PHB
    subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/data_import/wf_basespace_fetch.wdl
+   primaryDescriptorPath: /workflows/data_import/wf_basespace_fetch.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
  - name: SRA_Fetch_PHB
    subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/data_import/wf_sra_fetch.wdl
+   primaryDescriptorPath: /workflows/data_import/wf_sra_fetch.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
  - name: Fetch_SRR_Accession_PHB
    subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/data_import/wf_fetch_srr_accession.wdl
+   primaryDescriptorPath: /workflows/data_import/wf_fetch_srr_accession.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
  - name: Concatenate_Column_Content_PHB
    subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/file_handling/wf_concatenate_column.wdl
+   primaryDescriptorPath: /workflows/file_handling/wf_concatenate_column.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
  - name: Find_Shared_Variants_PHB
@@ -202,12 +202,12 @@ workflows:
     - /tests/inputs/empty.json
  - name: Transfer_Column_Content_PHB
    subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/file_handling/wf_transfer_column.wdl
+   primaryDescriptorPath: /workflows/file_handling/wf_transfer_column.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
  - name: Zip_Column_Content_PHB
    subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/file_handling/wf_zip_column.wdl
+   primaryDescriptorPath: /workflows/file_handling/wf_zip_column.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
  - name: Lyve_SET_PHB
@@ -227,12 +227,12 @@ workflows:
     - /tests/inputs/empty.json
  - name: Assembly_Fetch_PHB
    subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/data_import/wf_assembly_fetch.wdl
+   primaryDescriptorPath: /workflows/data_import/wf_assembly_fetch.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
  - name: TheiaValidate_PHB
    subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/wf_theiavalidate.wdl
+   primaryDescriptorPath: /workflows/standalone_modules/wf_theiavalidate.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
  - name: PhyloCompare_PHB
@@ -267,17 +267,12 @@ workflows:
     - /tests/inputs/empty.json
  - name: Rename_FASTQ_PHB
    subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/file_handling/wf_rename_fastq_files.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Gambit_Core_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/standalone_modules/wf_gambitcore.wdl
+   primaryDescriptorPath: /workflows/file_handling/wf_rename_fastq_files.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
  - name: Create_Terra_Table_PHB
    subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/data_import/wf_create_terra_table.wdl
+   primaryDescriptorPath: /workflows/data_import/wf_create_terra_table.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
  - name: Snippy_Streamline_FASTA_PHB
@@ -292,7 +287,7 @@ workflows:
     - /tests/inputs/empty.json
  - name: Concatenate_Illumina_Lanes_PHB
    subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/file_handling/wf_concatenate_illumina_lanes.wdl
+   primaryDescriptorPath: /workflows/file_handling/wf_concatenate_illumina_lanes.wdl
    testParameterFiles:
      - /tests/inputs/empty.json
  - name: Clair3_Variants_ONT_PHB
@@ -327,11 +322,11 @@ workflows:
      - /tests/inputs/empty.json
  - name: ONT_Barcode_Concatenation_PHB
    subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/data_import/wf_ont_barcode_concatenation.wdl
+   primaryDescriptorPath: /workflows/data_import/wf_ont_barcode_concatenation.wdl
    testParameterFiles:
      - /tests/inputs/empty.json
  - name: Microreact_Export_PHB
    subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/wf_microreact_export.wdl
+   primaryDescriptorPath: /workflows/file_handling/wf_microreact_export.wdl
    testParameterFiles:
      - /tests/inputs/empty.json

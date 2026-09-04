@@ -1,7 +1,7 @@
 version 1.0
 
-import "../../../tasks/utilities/data_import/task_sra_fetch.wdl" as sra_fetch
-import "../../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/utilities/data_import/task_sra_fetch.wdl" as sra_fetch
+import "../../tasks/task_versioning.wdl" as versioning
 
 workflow fetch_sra_to_fastq {
   input {

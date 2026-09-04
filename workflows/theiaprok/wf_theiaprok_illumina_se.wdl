@@ -20,7 +20,7 @@ import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
 import "../../tasks/gene_typing/drug_resistance/task_gamma.wdl" as gamma_task
 import "../../tasks/utilities/data_export/task_export_taxon_table.wdl" as export_taxon_table_task
 import "../../tasks/utilities/data_handling/task_arln_stats.wdl" as arln_stats
-import "../utilities/file_handling/wf_concatenate_illumina_lanes.wdl" as concatenate_lanes_workflow
+import "../file_handling/wf_concatenate_illumina_lanes.wdl" as concatenate_lanes_workflow
 import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
 import "../utilities/wf_read_QC_trim_se.wdl" as read_qc
 

@@ -1,7 +1,7 @@
 version 1.0
 
-import "../../../tasks/utilities/file_handling/task_cat_ont_barcodes.wdl" as cat_ont_barcodes_task
-import "../../../tasks/utilities/data_import/task_create_terra_table.wdl" as create_terra_table_task
+import "../../tasks/utilities/file_handling/task_cat_ont_barcodes.wdl" as cat_ont_barcodes_task
+import "../../tasks/utilities/data_import/task_create_terra_table.wdl" as create_terra_table_task
 
 workflow ont_barcode_concatenation {
   input {

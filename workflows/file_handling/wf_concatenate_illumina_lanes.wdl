@@ -1,7 +1,7 @@
 version 1.0
 
-import "../../../tasks/utilities/file_handling/task_cat_lanes.wdl" as concatenate_lanes
-import "../../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/utilities/file_handling/task_cat_lanes.wdl" as concatenate_lanes
+import "../../tasks/task_versioning.wdl" as versioning
 
 workflow concatenate_illumina_lanes {
   input {

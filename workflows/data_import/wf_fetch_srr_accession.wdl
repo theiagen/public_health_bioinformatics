@@ -1,7 +1,7 @@
 version 1.0
 
-import "../../../tasks/utilities/data_handling/task_fetch_srr_accession.wdl" as srr_task
-import "../../../tasks/task_versioning.wdl" as versioning_task
+import "../../tasks/utilities/data_handling/task_fetch_srr_accession.wdl" as srr_task
+import "../../tasks/task_versioning.wdl" as versioning_task
 
 workflow fetch_srr_accession {
   meta {
