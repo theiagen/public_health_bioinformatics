@@ -23,27 +23,27 @@ task variant_annotate {
     # fail hard
     set -euo pipefail
 
-# VEP requires the GFF sorted by contig then start coordinate; sort while
-# keeping comment/header lines (leading '#') at the top of the file
-python3 <<'PYEOF'
-with open("~{reference_gff}") as fh:
-    header = []
-    records = []
-    for line in fh:
-        if line.strip().lower() in {'##fasta', '## fasta'}:
-            break
-        elif line.startswith("#"):
-            header.append(line)
-        elif line.strip():
-            records.append(line)
-
-# sort by contig_id (col 1) then integer start coordinate (col 4)
-records.sort(key=lambda l: (l.split("\t")[0], int(l.split("\t")[3])))
-with open("reference_sorted.gff", "w") as out:
-    out.writelines(header)
-    out.writelines(records)
-PYEOF
-
+    # VEP requires the GFF sorted by contig then start coordinate; sort while
+    # keeping comment/header lines (leading '#') at the top of the file
+    python3 <<CODE
+    with open("~{reference_gff}") as fh:
+        header = []
+        records = []
+        for line in fh:
+            if line.strip().lower() in {'##fasta', '## fasta'}:
+                break
+            elif line.startswith("#"):
+                header.append(line)
+            elif line.strip():
+                records.append(line)
+    
+    # sort by contig_id (col 1) then integer start coordinate (col 4)
+    records.sort(key=lambda l: (l.split("\t")[0], int(l.split("\t")[3])))
+    with open("reference_sorted.gff", "w") as out:
+        out.writelines(header)
+        out.writelines(records)
+    CODE
+    
     # extract a sub-VCF only when a subset of genes/regions is requested, then
     # annotate that extracted subset instead of the full VCF
     if ~{if (defined(query_genes) || defined(bedfile)) then "true" else "false"}; then
