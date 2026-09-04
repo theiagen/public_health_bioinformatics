@@ -206,7 +206,7 @@ workflow theiaprok_ont {
             File bakta_db_full = "gs://theiagen-public-resources-rp/reference_data/databases/bakta/bakta_db_full_2024-01-23.tar.gz"
           }
           if (!(bakta_db == "light" || bakta_db == "full")) {
-              File bakta_custom_db = bakta_db
+            File bakta_custom_db = bakta_db
           }
           call bakta_task.bakta {
             input:
@@ -252,7 +252,7 @@ workflow theiaprok_ont {
                 "busco_completeness": busco.busco_results,
                 "ani_highest_percent": ani.ani_highest_percent,
                 "ani_highest_percent_bases_aligned": ani.ani_highest_percent_bases_aligned
-            }
+              }
           }
         }
         call merlin_magic_workflow.merlin_magic {
@@ -689,7 +689,7 @@ workflow theiaprok_ont {
                 "virulencefinder_hits": merlin_magic.virulencefinder_hits,
                 "virulencefinder_report_tsv": merlin_magic.virulencefinder_report_tsv,
                 "zip": zip
-            }
+              }
           }
         }
       }

@@ -13,8 +13,8 @@ workflow zip_column_content {
     input:
       files_to_zip = files_to_zip,
       zipped_file_name = zipped_file_name_updated
-	}
-	call versioning.version_capture {
+  }
+  call versioning.version_capture {
     input:
   }
   output {

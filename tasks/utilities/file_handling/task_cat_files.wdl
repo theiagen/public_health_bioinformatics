@@ -93,6 +93,7 @@ task cat_variants {
     memory: "8 GB"
     cpu: 2
     disks: "local-disk 100 SSD"
+    disk: "100 GB"
     preemptible: 0
   }
 }

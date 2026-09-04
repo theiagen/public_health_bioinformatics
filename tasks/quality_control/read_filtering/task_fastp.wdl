@@ -8,7 +8,7 @@ task fastp {
     String samplename
 
     # quality trimming options
-    Int fastp_window_size = 4 # set to mirror v1.1.0 default 
+    Int fastp_window_size = 4 # set to mirror v1.1.0 default
     Int fastp_quality_trim_score = 20 # set to mirror v1.1.0 default
     Int fastp_min_length = 15 # set to mirror v1.1.0 default
 
@@ -30,7 +30,7 @@ task fastp {
     # fail hard
     set -euo pipefail
 
-    # date 
+    # date
     date | tee DATE
 
     # version

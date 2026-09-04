@@ -7,9 +7,9 @@ task gene_coverage {
 
     File? bai
     File? bedfile # BEDfile including region names and/or coordinates
-    File? reference_gbff # GBFF including annotated regions 
+    File? reference_gbff # GBFF including annotated regions
     String? query_genes # comma-delimited list of strings
-    
+
     String feature_type = "CDS" # GBFF feature type to use for coordinate extraction
     String feature_qualifier = "product" # GBFF feature qualifier to use for comparison to query gene
     Boolean exact_match = false # use an exact match for qualifier mapping (always case-sensitive)

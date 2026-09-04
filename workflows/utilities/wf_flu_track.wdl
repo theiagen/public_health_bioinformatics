@@ -333,7 +333,7 @@ workflow flu_track {
     File? irma_ha_bam = irma.seg_ha_bam
     File? irma_na_bam = irma.seg_na_bam
     String? ha_na_assembly_coverage = ha_na_assembly_coverage_string
-     # calulate mapped reads percentage for flu samples
+    # calulate mapped reads percentage for flu samples
     String? percentage_mapped_reads = ha_na_percentage_mapped_reads
     # GenoFLU outputs
     String? genoflu_version = genoflu.genoflu_version

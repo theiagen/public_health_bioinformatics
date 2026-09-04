@@ -229,7 +229,7 @@ workflow theiacov_illumina_pe {
                 "number_Degenerate":  consensus_qc.number_Degenerate,
                 "percent_reference_coverage":  consensus_qc.percent_reference_coverage,
                 "vadr_num_alerts": morgana_magic.vadr_num_alerts
-            }
+              }
           }
         }
       }

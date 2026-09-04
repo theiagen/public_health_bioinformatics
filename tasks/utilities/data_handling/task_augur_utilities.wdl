@@ -9,7 +9,7 @@ task fasta_to_ids {
     Int disk_size = 375
     Int memory = 1
     Int cpu = 1
-    String docker = "ubuntu"
+    String docker = "us-docker.pkg.dev/general-theiagen/ubuntu/ubuntu:jammy-20230816"
   }
   String basename = basename(sequences_fasta, ".fasta")
   command <<<
@@ -179,12 +179,12 @@ task prep_augur_metadata {
     File augur_metadata = "augur_metadata.tsv"
   }
   runtime {
-      docker: docker
-      memory: memory + " GB"
-      cpu: cpu
-      disks: "local-disk ~{disk_size} SSD"
-      disk: disk_size + " GB"
-      preemptible: 0
-      maxRetries: 3
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
+    disks: "local-disk ~{disk_size} SSD"
+    disk: disk_size + " GB"
+    preemptible: 0
+    maxRetries: 3
   }
 }

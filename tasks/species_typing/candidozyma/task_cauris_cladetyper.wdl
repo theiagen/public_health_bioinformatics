@@ -24,7 +24,7 @@ task cauris_cladetyper {
     String ref_clade5_annotated = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.gbff"
     File ref_clade6 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade6_GCA_032714025.1_ASM3271402v1_genomic.fasta"
     String? ref_clade6_annotated
-    }
+  }
   command <<<
     set -euo pipefail
 
