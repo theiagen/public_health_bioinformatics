@@ -85,6 +85,14 @@ task gatk_filter {
       -V ~{samplename}_filtered.g.vcf.gz \
       -O ~{samplename}_selected.g.vcf.gz \
       --exclude-filtered true
+
+    # quantify the proportion of records that survived filtering; the FILTER
+    # column (7) of every non-header record is either PASS or the name(s) of the
+    # filter(s) it failed. records with no annotation (".") count toward the
+    # denominator only. an empty VCF reports 0
+    zcat ~{samplename}_filtered.g.vcf.gz \
+      | awk -F'\t' '!/^#/ {total++; if ($7 == "PASS") pass++} END {printf "%.2f\n", (total > 0) ? (pass / total) * 100 : 0}' \
+      | tee PERCENT_PASS.txt
   >>>
   output {
     String gatk_version = read_string("VERSION")
@@ -92,6 +100,7 @@ task gatk_filter {
     File gatk_filtered_vcf_index = "~{samplename}_filtered.g.vcf.gz.tbi"
     File gatk_selected_vcf = "~{samplename}_selected.g.vcf.gz"
     File gatk_selected_vcf_index = "~{samplename}_selected.g.vcf.gz.tbi"
+    Float gatk_percent_passing = read_float("PERCENT_PASS.txt")
   }
   runtime {
       docker: "~{docker}"

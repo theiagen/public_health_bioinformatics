@@ -294,6 +294,7 @@ workflow medea_magic {
     File? gatk_filtered_vcf_index = gatk_filter.gatk_filtered_vcf_index
     File? gatk_selected_vcf = gatk_filter.gatk_selected_vcf
     File? gatk_selected_vcf_index = gatk_filter.gatk_selected_vcf_index
+    Float? gatk_percent_passing_variants = gatk_filter.gatk_percent_passing
     # variant calling - ont (minimap2 alignment + clair3)
     String? minimap2_version = minimap2_variant_calling.minimap2_version
     File? variant_calling_bam = resolved_bam
