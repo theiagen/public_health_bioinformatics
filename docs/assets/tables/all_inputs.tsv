@@ -1246,29 +1246,29 @@ medea_magic	amr_search_memory	Int	Amount of memory/RAM (in GB) to allocate to th
 medea_magic	cauris_cladetyper_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	docker	
 medea_magic	cladetyper_kmer_size	Int	Kmer size for GAMBIT classification	11	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	cladetyper_max_distance	Float	The maximum GAMBIT distance to report a clade hit	0.1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-medea_magic	clair3_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	runtime	
-medea_magic	clair3_disable_phasing	Boolean	Disable whatshap phasing	True	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-medea_magic	clair3_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	runtime	
-medea_magic	clair3_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/clair3-extra-models:1.0.10	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	docker	
-medea_magic	clair3_enable_gvcf	Boolean	Output gVCF format	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-medea_magic	clair3_enable_haploid_precise	Boolean	Enable haploid precise calling, only 1/1 is considered as a variant	True	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-medea_magic	clair3_enable_long_indel	Boolean	Enable long indel calling	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-medea_magic	clair3_include_all_contigs	Boolean	Call variants on all contigs, should always be true for non-human samples	True	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-medea_magic	clair3_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	runtime	
-medea_magic	clair3_model	String	Model name for Clair3 variant calling (see supported models for available options)	r1041_e82_400bps_sup_v500	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-medea_magic	clair3_variant_quality	Int	Minimum variant quality score for Clair3	2	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-medea_magic	gatk_cpu	Int	Number of CPUs to allocate to the task	8	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	runtime	
-medea_magic	gatk_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	runtime	
-medea_magic	gatk_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/gatk:4.6.2.0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	docker	
-medea_magic	gatk_filter_expression	String	Custom JEXL filter expression applied by GATK VariantFiltration (annotated with the filter name 'user_filter')		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-medea_magic	gatk_filter_max_fisher_strand_bias	Float	Maximum Phred-scaled p-value for strand bias derived from Fisher's Exact Test	60	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-medea_magic	gatk_filter_max_strand_odds_ratio	Float	Maximum strand odds ratio for strand bias	3	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-medea_magic	gatk_filter_min_depth	Int	Minimum read depth (DP); variants below this threshold are flagged by GATK VariantFiltration	10	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-medea_magic	gatk_filter_min_map_quality	Float	Minimum RMS mapping quality (MQ); variants below this threshold are flagged by GATK VariantFiltration	40	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-medea_magic	gatk_filter_min_quality_by_depth	Float	Minimum quality-by-depth (QD); variants below this threshold are flagged by GATK VariantFiltration	2.0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-medea_magic	gatk_filter_min_variant_quality	Float	Minimum variant quality (QUAL); variants below this threshold are flagged by GATK VariantFiltration	30	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-medea_magic	gatk_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	runtime	
-medea_magic	gatk_ploidy	Int	Sample ploidy (N) used by GATK HaplotypeCaller; defaults to 1 (haploid)	1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	clair3_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaEuk_ONT	runtime	
+medea_magic	clair3_disable_phasing	Boolean	Disable whatshap phasing	True	Optional	TheiaEuk_ONT	general	
+medea_magic	clair3_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_ONT	runtime	
+medea_magic	clair3_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/clair3-extra-models:1.0.10	Optional	TheiaEuk_ONT	docker	
+medea_magic	clair3_enable_gvcf	Boolean	Output gVCF format	False	Optional	TheiaEuk_ONT	general	
+medea_magic	clair3_enable_haploid_precise	Boolean	Enable haploid precise calling, only 1/1 is considered as a variant	True	Optional	TheiaEuk_ONT	general	
+medea_magic	clair3_enable_long_indel	Boolean	Enable long indel calling	False	Optional	TheiaEuk_ONT	general	
+medea_magic	clair3_include_all_contigs	Boolean	Call variants on all contigs, should always be true for non-human samples	True	Optional	TheiaEuk_ONT	general	
+medea_magic	clair3_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaEuk_ONT	runtime	
+medea_magic	clair3_model	String	Model name for Clair3 variant calling (see supported models for available options)	r1041_e82_400bps_sup_v500	Optional	TheiaEuk_ONT	general	
+medea_magic	clair3_variant_quality	Int	Minimum variant quality score for Clair3	2	Optional	TheiaEuk_ONT	general	
+medea_magic	gatk_cpu	Int	Number of CPUs to allocate to the task	8	Optional	TheiaEuk_Illumina_PE	runtime	
+medea_magic	gatk_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_Illumina_PE	runtime	
+medea_magic	gatk_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/gatk:4.6.2.0	Optional	TheiaEuk_Illumina_PE	docker	
+medea_magic	gatk_filter_expression	String	Custom JEXL filter expression applied by GATK VariantFiltration (annotated with the filter name 'user_filter')		Optional	TheiaEuk_Illumina_PE	general	
+medea_magic	gatk_filter_max_fisher_strand_bias	Float	Maximum Phred-scaled p-value for strand bias derived from Fisher's Exact Test	60	Optional	TheiaEuk_Illumina_PE	general	
+medea_magic	gatk_filter_max_strand_odds_ratio	Float	Maximum strand odds ratio for strand bias	3	Optional	TheiaEuk_Illumina_PE	general	
+medea_magic	gatk_filter_min_depth	Int	Minimum read depth (DP); variants below this threshold are flagged by GATK VariantFiltration	10	Optional	TheiaEuk_Illumina_PE	general	
+medea_magic	gatk_filter_min_map_quality	Float	Minimum RMS mapping quality (MQ); variants below this threshold are flagged by GATK VariantFiltration	40	Optional	TheiaEuk_Illumina_PE	general	
+medea_magic	gatk_filter_min_quality_by_depth	Float	Minimum quality-by-depth (QD); variants below this threshold are flagged by GATK VariantFiltration	2.0	Optional	TheiaEuk_Illumina_PE	general	
+medea_magic	gatk_filter_min_variant_quality	Float	Minimum variant quality (QUAL); variants below this threshold are flagged by GATK VariantFiltration	30	Optional	TheiaEuk_Illumina_PE	general	
+medea_magic	gatk_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaEuk_Illumina_PE	runtime	
+medea_magic	gatk_ploidy	Int	Sample ploidy (N) used by GATK HaplotypeCaller; defaults to 1 (haploid)	1	Optional	TheiaEuk_Illumina_PE	general	
 medea_magic	min_gene_coverage_base_quality	Int	Minimum basecalling quality to consider a base in gene coverage statistics	13	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	min_gene_coverage_depth	Int	Minimum depth of coverage to consider a base in gene coverage statistics	10	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	min_gene_coverage_map_quality	Int	Minimum mapping quality to consider a base in gene coverage statistics	60	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
