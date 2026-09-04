@@ -104,11 +104,23 @@ workflow medea_magic {
     String cryptoneo_query_genes = "CNA00300"
   }
 
-  # REFERENCE-BASED VARIANT CALLING
   # a user-supplied fasta takes precedence, otherwise the organism-specific reference is used
   # (cladetyper fasta for C. auris, hosted fasta for A. fumigatus and C. neoformans).
   # resolve the reference once; visible below (and in outputs) as File?
   String resolved_reference_fasta = select_first([reference_genome_fasta, cladetyper.assembly_reference, afumigatus_variant_fasta, cryptoneo_reference_fasta, ""])
+  # Species-agnostic GFF resolution. A user-supplied reference_gff takes precedence,
+  # otherwise the organism-specific reference is used (cladetyper outputs for
+  # C. auris when a clade matches, hosted references for A. fumigatus and C. neoformans).
+  # user cannot supply one reference file and not the other for GFF tasks to be functional
+  if ((defined(reference_gff) && defined(reference_genome_fasta)) || (! defined(reference_gff) && ! defined(reference_genome_fasta))) {
+    String resolved_reference_gff = select_first([reference_gff, cladetyper.annotated_reference_gff, afumigatus_reference_gff, cryptoneo_reference_gff, ""])
+  }
+  # The user-supplied query_genes takes priority; otherwise the
+  # organism-specific default set (if any) is used. Inherently depends on variant calling
+  String resolved_query_genes = select_first([query_genes, cauris_query_genes, afumigatus_query_genes, cryptoneo_query_genes, ""])
+
+
+  # REFERENCE-BASED VARIANT CALLING
   # variant calling runs automatically whenever a reference fasta and read1 are available
   if (resolved_reference_fasta != "" && defined(read1)) {
     # Illumina short-read track: BWA alignment + GATK variant calling
@@ -197,22 +209,13 @@ workflow medea_magic {
           disk_size = clair3_disk_size
       }
     }
+    # Resolve newly-generated alignment files for downstream use
     File resolved_bam = select_first([bwa_variant_calling.sorted_bam, ont_bam_sorting.bam])
     File resolved_bai = select_first([bwa_variant_calling.sorted_bai, ont_bam_sorting.bai])
+    File resolved_vcf = select_first([gatk_filter.gatk_selected_vcf, clair3_variant_calling.clair3_variants_vcf])
   }
 
   # GENE-CENTRIC COVERAGE CALCULATIONS AND VARIANT ANNOTATION
-  # The user-supplied query_genes takes priority; otherwise the
-  # organism-specific default set (if any) is used. Inherently depends on variant calling
-  String resolved_query_genes = select_first([query_genes, cauris_query_genes, afumigatus_query_genes, cryptoneo_query_genes, ""])
-  # Species-agnostic GFF resolution. A user-supplied reference_gff takes precedence,
-  # otherwise the organism-specific reference is used (cladetyper outputs for
-  # C. auris when a clade matches, hosted references for A. fumigatus and C. neoformans).
-  # user cannot supply one reference file and not the other for GFF tasks to be functional
-  if ((defined(reference_gff) && defined(reference_genome_fasta)) || (! defined(reference_gff) && ! defined(reference_genome_fasta))) {
-    String resolved_reference_gff = select_first([reference_gff, cladetyper.annotated_reference_gff, afumigatus_reference_gff, cryptoneo_reference_gff, ""])
-  }
-  String variant_annotation_vcf = select_first([gatk_filter.gatk_selected_vcf, clair3_variant_calling.clair3_variants_vcf, ""])
   # Terra can pass empty strings, so check for empty strings as well
   if ((select_first([resolved_reference_gff, ""]) != "" && resolved_query_genes != "") || defined(query_genes_bed)) {
     if (defined(resolved_bam)) {
@@ -228,7 +231,7 @@ workflow medea_magic {
           min_map_quality = min_gene_coverage_map_quality,
           min_depth = min_gene_coverage_depth
       }
-      if (resolved_query_genes != "" && variant_annotation_vcf != "" && select_first([resolved_reference_gff, ""]) != "") {
+      if (resolved_query_genes != "" && defined(resolved_vcf) && select_first([resolved_reference_gff, ""]) != "") {
         call variant_annotate_task.variant_annotate {
           input:
             samplename = samplename,
@@ -236,7 +239,7 @@ workflow medea_magic {
             reference_gff = select_first([resolved_reference_gff]),
             query_genes = resolved_query_genes,
             exact_match = query_exact_match,
-            vcf = variant_annotation_vcf,
+            vcf = select_first([resolved_vcf]),
             bedfile = query_genes_bed
         }
       }
