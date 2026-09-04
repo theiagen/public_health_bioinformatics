@@ -71,8 +71,9 @@ workflow medea_magic {
     String? query_genes
     File? query_genes_bed
     Boolean query_exact_match = false
-    Int? min_gene_coverage_depth
-    Int min_gene_coverage_map_quality = 40
+    Int min_gene_coverage_depth = 10 # mirror Snippy variants v4.6.0
+    Int min_gene_coverage_map_quality = 60 # mirror Snippy variants v4.6.0
+    Int min_gene_coverage_base_quality = 13 # mirror Snippy variants v4.6.0
   }
   # ORGANISM-SPECIFIC PARAMETER SETTING AND TASK CALLS
   if (medea_tag == "Candidozyma auris" || medea_tag == "Candida auris") {
@@ -223,6 +224,7 @@ workflow medea_magic {
           query_genes = resolved_query_genes,
           exact_match = query_exact_match,
           min_map_quality = min_gene_coverage_map_quality,
+          min_base_quality = min_gene_coverage_base_quality,
           min_depth = min_gene_coverage_depth
       }
       if (resolved_query_genes != "" && defined(resolved_vcf) && select_first([resolved_reference_gff, ""]) != "") {

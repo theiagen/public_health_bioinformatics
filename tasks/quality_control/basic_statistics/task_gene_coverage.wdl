@@ -16,7 +16,7 @@ task gene_coverage {
     Boolean ambiguous_contig = false # apply coordinates from BED to first identified contig in BAM
 
     Int min_depth = 10 # minimum depth to count a base
-    Int min_map_quality = 40 # minimum mapping quality to count a base
+    Int min_map_quality = 0 # minimum mapping quality to count a base
     Int min_base_quality = 0 # minimum base quality to count a base
 
     String? organism # used to determine if S gene coverage should be reported for SARS-CoV-2
