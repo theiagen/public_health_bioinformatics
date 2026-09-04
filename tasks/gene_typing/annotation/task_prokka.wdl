@@ -8,7 +8,7 @@ task prokka {
     Int memory = 16
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/prokka:1.15.6"
     Int disk_size = 100
-    # Parameters 
+    # Parameters
     #  proteins recommended: when you have good quality reference genomes and want to ensure gene naming is consistent [false]
     #  prodigal_tf: prodigal training file
     # prokka_arguments: free string to add any other additional prokka arguments
@@ -29,7 +29,7 @@ task prokka {
     ~{true='--proteins' false='' proteins} \
     ~{'--prodigaltf ' + prodigal_tf} \
     ~{assembly}
-    
+
   >>>
   output {
     File prokka_gff = "~{samplename}/~{samplename}.gff"

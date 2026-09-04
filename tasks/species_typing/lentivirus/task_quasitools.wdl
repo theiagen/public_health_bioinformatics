@@ -62,11 +62,11 @@ task quasitools {
   >>>
   runtime {
     docker: "~{docker}"
-      memory: memory + " GB"
-      cpu: cpu    
-      disks: "local-disk " + disk_size + " SSD"
-      disk: disk_size + " GB"
-      maxRetries: 3
+    memory: memory + " GB"
+    cpu: cpu
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    maxRetries: 3
   }
   output {
     String quasitools_version = read_string("QUASITOOLS_VERSION")

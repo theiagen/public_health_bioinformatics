@@ -15,9 +15,9 @@ task filter_contigs {
     # Found in theiagen-docker-builds/assembly-filter
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/shovilter:0.2"
   }
-  command <<< 
+  command <<<
     set -euo pipefail
-    
+
     echo "Filtering contigs from ~{assembly_fasta}" >&2
 
     python /scripts/assembly_shovilter.py \
@@ -40,6 +40,7 @@ task filter_contigs {
     cpu: cpu
     memory: "~{memory} GB"
     disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
     maxRetries: 3
     preemptible: 0
   }

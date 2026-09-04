@@ -35,7 +35,7 @@ task gamma {
         ~{true="--fasta" false="" output_fasta} \
         ~{true="-e" false="" extended_output} \
         -i ~{min_percent_identity} \
-        --name 
+        --name
     fi
   >>>
   output {

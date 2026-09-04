@@ -298,6 +298,7 @@ task terra_to_bigquery {
     memory: "~{memory} GB"
     cpu: cpu
     disks: "local-disk ~{disk_size} SSD"
+    disk: disk_size + " GB"
   }
   output {
     ## add outputs for all intermediate files

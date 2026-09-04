@@ -22,7 +22,7 @@ workflow mashtree_fasta {
     input:
       assembly_fasta = assembly_fasta,
       cluster_name = cluster_name_updated
-    }
+  }
   call reorder_matrix_task.reorder_matrix {
     input:
       input_tree = mashtree_task.mashtree_tree,
@@ -42,7 +42,7 @@ workflow mashtree_fasta {
         output_prefix = cluster_name_updated,
         phandango_coloring = phandango_coloring
     }
-  } 
+  }
   call versioning.version_capture {
     input:
   }

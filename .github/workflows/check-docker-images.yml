@@ -1,0 +1,35 @@
+name: check-docker-images-exist
+
+on:
+  schedule:
+    # Mondays, 13:00 UTC. GitHub runs cron only on the default branch, and may
+    # delay a run when the queue is busy.
+    - cron: "0 13 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  images:
+    runs-on: ubuntu-latest
+    name: images still in GAR
+    env:
+      PREK_VERSION: "0.5.2"
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
+
+      - name: Install prek
+        run: pip3 -q install "prek==${PREK_VERSION}"
+
+      # Fails on a 404 and warns-but-passes on a network error
+      # registry outages will not raise a false alarm
+      - name: Check images
+        run: |
+          prek run --all-files --stage manual \
+            -c .config/.pre-commit-config.yaml --group docker-registry

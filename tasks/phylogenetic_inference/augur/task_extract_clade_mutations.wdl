@@ -37,7 +37,7 @@ task extract_clade_mutations{
     File clades_tsv = "~{clades_file_path}"
   }
   runtime {
-    docker: docker 
+    docker: docker
     memory: memory + " GB"
     cpu: cpu
     disks:  "local-disk " + disk_size + " HDD"
