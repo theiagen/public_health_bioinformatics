@@ -72,11 +72,11 @@ workflow theiaeuk_ont {
           read1 = read_QC_trim.read1_clean,
           samplename = samplename
       }
-      if (flye_denovo.flye_status == "PASS") {
+      if (flye_denovo.flye_assembly_status == "PASS") {
         #call quast on the assembly
         call quast_task.quast {
           input:
-            assembly = flye_denovo.assembly_fasta,
+            assembly = select_first([flye_denovo.assembly_fasta]),
             samplename = samplename
         }
         # nanoplot for raw reads
@@ -96,7 +96,7 @@ workflow theiaeuk_ont {
         # busco on the assembly
         call busco_task.busco {
           input:
-            assembly = flye_denovo.assembly_fasta,
+            assembly = select_first([flye_denovo.assembly_fasta]),
             samplename = samplename,
             eukaryote = true,
             memory = busco_memory,
@@ -105,7 +105,7 @@ workflow theiaeuk_ont {
         # call gambit to predict taxon
         call gambit.gambit {
           input:
-            assembly = flye_denovo.assembly_fasta,
+            assembly = select_first([flye_denovo.assembly_fasta]),
             samplename = samplename,
             gambit_db_genomes = gambit_db_genomes,
             gambit_db_signatures = gambit_db_signatures
@@ -115,7 +115,7 @@ workflow theiaeuk_ont {
           input:
             samplename = samplename,
             medea_tag = gambit.merlin_tag,
-            assembly = flye_denovo.assembly_fasta,
+            assembly = select_first([flye_denovo.assembly_fasta]),
             assembly_only = true # can only run assembly mode on Snippy variants for long reads
         }
       }

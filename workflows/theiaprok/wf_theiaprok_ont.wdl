@@ -114,10 +114,10 @@ workflow theiaprok_ont {
           read1 = read_QC_trim.read1_clean,
           samplename = samplename
       }
-      if ( flye_denovo.flye_status == "PASS") {
+      if ( flye_denovo.flye_assembly_status == "PASS") {
         call quast_task.quast {
           input:
-            assembly = flye_denovo.assembly_fasta,
+            assembly = select_first([flye_denovo.assembly_fasta]),
             samplename = samplename
         }
         # nanoplot for basic QC metrics
@@ -135,32 +135,32 @@ workflow theiaprok_ont {
         }
         call busco_task.busco {
           input:
-            assembly = flye_denovo.assembly_fasta,
+            assembly = select_first([flye_denovo.assembly_fasta]),
             samplename = samplename
         }
         if (perform_characterization) {
           call gambit_task.gambit {
             input:
-              assembly = flye_denovo.assembly_fasta,
+              assembly = select_first([flye_denovo.assembly_fasta]),
               samplename = samplename
           }
           if (call_ani) {
             call ani_task.animummer as ani {
               input:
-                assembly = flye_denovo.assembly_fasta,
+                assembly = select_first([flye_denovo.assembly_fasta]),
                 samplename = samplename
             }
           }
           if (call_kmerfinder) {
             call kmerfinder_task.kmerfinder_bacteria as kmerfinder {
               input:
-                assembly = flye_denovo.assembly_fasta,
+                assembly = select_first([flye_denovo.assembly_fasta]),
                 samplename = samplename
             }
           }
           call amrfinderplus.amrfinderplus_nuc as amrfinderplus_task {
             input:
-              assembly = flye_denovo.assembly_fasta,
+              assembly = select_first([flye_denovo.assembly_fasta]),
               annotation_assembly = select_first([prokka.prokka_fna,bakta.bakta_fna]),
               samplename = samplename,
               protein_fasta = select_first([prokka.prokka_faa,bakta.bakta_faa]),
@@ -172,21 +172,21 @@ workflow theiaprok_ont {
           if (call_gamma){
             call gamma_task.gamma{
               input:
-                assembly = flye_denovo.assembly_fasta,
+                assembly = select_first([flye_denovo.assembly_fasta]),
                 samplename = samplename
             }
           }
           if (call_resfinder) {
             call resfinder_task.resfinder as resfinder_task {
               input:
-                assembly = flye_denovo.assembly_fasta,
+                assembly = select_first([flye_denovo.assembly_fasta]),
                 samplename = samplename,
                 organism = select_first([expected_taxon, gambit.gambit_predicted_taxon])
             }
           }
           call ts_mlst_task.ts_mlst {
             input:
-              assembly = flye_denovo.assembly_fasta,
+              assembly = select_first([flye_denovo.assembly_fasta]),
               samplename = samplename,
               taxonomy = select_first([expected_taxon, gambit.gambit_predicted_taxon]),
               run_secondary_scheme = mlst_run_secondary_scheme,
@@ -195,7 +195,7 @@ workflow theiaprok_ont {
           if (genome_annotation == "prokka") {
             call prokka_task.prokka {
               input:
-                assembly = flye_denovo.assembly_fasta,
+                assembly = select_first([flye_denovo.assembly_fasta]),
                 samplename = samplename
             }
           }
@@ -211,22 +211,22 @@ workflow theiaprok_ont {
             }
             call bakta_task.bakta {
               input:
-                assembly = flye_denovo.assembly_fasta,
-                samplename = samplename,
+                assembly = select_first([flye_denovo.assembly_fasta]),
+                samplename = samplename,f
                 bakta_db_selected = select_first([bakta_custom_db, bakta_db_light, bakta_db_full])
             }
           }
           if (call_plasmidfinder) {
             call plasmidfinder_task.plasmidfinder {
               input:
-                assembly = flye_denovo.assembly_fasta,
+                assembly = select_first([flye_denovo.assembly_fasta]),
                 samplename = samplename
             }
           }
           if (call_abricate) {
             call abricate_task.abricate {
               input:
-                assembly = flye_denovo.assembly_fasta,
+                assembly = select_first([flye_denovo.assembly_fasta]),
                 samplename = samplename,
                 database = abricate_db
             }
@@ -259,7 +259,7 @@ workflow theiaprok_ont {
           call merlin_magic_workflow.merlin_magic {
             input:
               merlin_tag = select_first([expected_taxon, gambit.merlin_tag]),
-              assembly = flye_denovo.assembly_fasta,
+              assembly = select_first([flye_denovo.assembly_fasta]),
               samplename = samplename,
               read1 = read_QC_trim.read1_clean,
               ont_data = true
