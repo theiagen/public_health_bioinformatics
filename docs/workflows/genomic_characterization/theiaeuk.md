@@ -6,7 +6,7 @@
 
 ## TheiaEuk Workflows
 
-**The TheiaEuk workflows are for the assembly, quality assessment, and characterization of fungal genomes.** It is designed to accept Illumina paired-end sequencing data or base-called ONT reads as the primary input. **It is currently intended only for ==haploid== fungal genomes like _Candidozyma auris_.** Analyzing diploid genomes using TheiaEuk should be attempted only with expert attention to the resulting genome quality.
+**The TheiaEuk workflows are for the assembly, quality assessment, and characterization of fungal genomes.** It is designed to accept Illumina paired-end sequencing data or base-called ONT reads as the primary input. It is currently intended only for ==haploid== fungal genomes, like _Candidozyma auris_, due to technical limitations of short-read _de novo_ assembly. Variant calling in TheiaEuk accounts for variable ploidy, but assembling diploid/polyploid genomes using TheiaEuk should be attempted only with expert attention to the resulting genome quality.
 
 All input reads are processed through "core tasks" in each workflow. The core tasks include raw read quality assessment, read cleaning (quality trimming and adapter removal), de novo assembly, assembly quality assessment, species taxon identification, and antimicrobial resistance (AMR) _in silico_ prediction. For some taxa identified, taxa-specific sub-workflows will be automatically activated, undertaking additional taxa-specific characterization steps, including clade-typing and/or antifungal resistance detection.
 
@@ -22,7 +22,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 
 !!! warning "Before running TheiaEuk"
 
-    For some taxa, TheiaEuk_Illumina_PE relies on [Snippy](#organism-specific-characterization) to perform variant calling on the cleaned read dataset and then queries the resulting file for specific mutations that are known to confirm antifungal resistance (see [Organism-specific characterization](#organism-specific-characterization) section). This behavior has been replicated in TheiaEuk_ONT but the variant calling is performed directly on the resulting assemblies. Therefore, the read support reported is, at the moment, non-reliable. Future improvements will include improvements on this module.
+    For some taxa, TheiaEuk performs reference-based variant calling on the cleaned read dataset and then summarizes coverage and variants across genes associated with antifungal resistance (see the [Organism-specific characterization](#organism-specific-characterization) section). TheiaEuk_Illumina_PE aligns reads with `BWA` and calls/filters variants with `GATK` (`gatk_variants` + `gatk_filter`), while TheiaEuk_ONT aligns with `minimap2` and calls variants with `Clair3`.
 
 ### Inputs
 
@@ -96,31 +96,77 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 #### Organism-specific characterization
 
 !!! tip ""
-    The TheiaEuk workflow automatically activates taxa-specific tasks after identification of the relevant taxa using `GAMBIT`. Many of these taxa-specific tasks do not require any additional inputs from the user.
+    The TheiaEuk workflow automatically activates taxa-specific tasks after identification of the relevant taxa using `GAMBIT`. Default taxa (_Candidozyma auris_, _Cryptococcus neoformans_, or _Aspergillus fumigatus_) do not require user input to run characterization modules, and other taxa can undergo reference-based variant calling and gene characterization by inputting a `reference_genome_fasta` and `reference_gff`.
+
+??? toggle "Reference-based variant calling"
+    After taxonomic identification, TheiaEuk performs reference-based variant calling whenever a `reference_genome_fasta` is provided or a default organism is selected (user input takes precedence). The resulting variants are summarized with respect to target if a `reference_gff` and `query_genes`/`query_genes_bed` are populated.
+
+    Two data-type-specific tracks are supported:
+
+    - **Illumina (paired-end):** reads are aligned to the reference with `BWA`, variants are called with `gatk_variants`, and the genotyped GVCF is filtered with `gatk_filter`.
+    - **ONT:** reads are aligned with `minimap2` and variants are called and filtered with `Clair3`.
+
+    ??? dna "`reference_genome_fasta` input parameter"
+        The reference FASTA used for read alignment and variant calling. A user-supplied `reference_genome_fasta` always takes precedence over the defaults below. When it is not provided, an organism-specific default reference is selected automatically:
+
+        - _Candidozyma auris_ / _Candida auris_: the clade-specific reference selected by `cladetyper`.
+        - _Aspergillus fumigatus_: a hosted reference (`GCF_000002655.1`, ASM265v1).
+        - _Cryptococcus neoformans_: a hosted reference (`GCF_000091045.1`, ASM9104v1).
+
+        For any other identified organism (e.g. _Candida albicans_), variant calling only runs if `reference_genome_fasta` is supplied by the user.
+
+    ??? dna "`reference_gff` input parameter"
+        The annotated reference (General Features Format, GFF) used by the `gene_coverage` and `variant_annotate` tasks to extract query genes list into genomic coordinates. A user-supplied `reference_gff` always takes precedence over the defaults below. When it is not provided, an organism-specific default is selected automatically:
+
+        - _Candidozyma auris_ / _Candida auris_: the `cladetyper` clade annotation, used only when the assembly matches a clade that has an available annotation (e.g. Clade VI currently has no annotation).
+        - _Aspergillus fumigatus_: a hosted reference (`GCF_000002655.1`, ASM265v1).
+        - _Cryptococcus neoformans_: a hosted reference (`GCF_000091045.1`, ASM9104v1).
+
+        !!! warning "Keep the FASTA and GFF matched"
+            The reference FASTA and GFF must use the same assembly. If a custom `reference_genome_fasta` is provided, an associated `reference_gff` must also be provided (and vice versa).
+
+            If only one of these inputs is provided, gene coverage calculations and gene-centric variant reporting will not run under the assumption there is a discrepancy.
+
+
+    ??? dna "`query_genes` and `query_genes_bed` input parameter"
+        `query_genes` is a comma-delimited list of query genes to extract from the `reference_gff` supplied by default/the user. These `query_genes` _must_ correspond to the associated "product" field of CDS entries within the `reference_gff`. By default, "FKS1" will match "1,3-beta-D-glucan synthase_complex_FKS1", though exact product matching can be enforced by setting `query_exact_match` to "true".
+
+        The following query genes are used by default:
+
+         - _Aspergillus fumigatus_: `Cyp51A`, `HapE`, `AFUA_4G08340` (COX10 in the default reference)
+         - _Candidozyma auris_: `FKS1`, `lanosterol.14-alpha.demethylase`, `uracil.phosphoribosyltransferase`, `B9J08_005340`, `B9J08_000401`, `B9J08_003102`, `B9J08_003737`, `B9J08_005343`
+         - _Cryptococcus neoformans_: `CNA00300` (ERG11 in the default reference)
+
+        !!! warning "Replace ',' in query names with '.'"
+            Commas within `query_genes` inputs can be replaced with "." to properly resolve the query name(s).
+
+        !!! warning "`query_exact_match` input parameter"
+            `query_exact_match` is set to "false" by default, which enables gene shorthand names to be used when they correspond to entries within the `reference_gff`. However, this can lead to substring matching, where "ERG11" can match entries with the name "ERG112". To prevent this, completely enter the exact product name of desired genes by referencing the GFF.
+
+
+    === "TheiaEuk_Illumina_PE"
+{{ include_md("common_text/bwa_task.md", indent=8, condition="theiaeuk") }}
+{{ include_md("common_text/gatk_variants_task.md", indent=8) }}
+{{ include_md("common_text/gatk_filter_task.md", indent=8) }}
+
+    === "TheiaEuk_ONT"
+{{ include_md("common_text/minimap2_task.md", indent=8, condition="long_read_flags") }}
+{{ include_md("common_text/clair3_task.md", indent=8) }}
 
 {{ include_md("common_text/gene_coverage_task.md", indent=4, condition="theiaeuk") }}
+{{ include_md("common_text/variant_annotate_task.md", indent=4) }}
 
 ??? toggle "_Candidozyma auris_ (also known as _Candida auris_)"
-    Three tools can be deployed when _Candidozyma auris_/_Candida auris_ is identified.
+    When this species is detected by GAMBIT, clade typing determines the clade the genome belongs to. Reference-based variant calling is performed against the clade-specific reference, and AMR detection is conducted.
 
 {{ include_md("common_text/cauris_cladetyper.md", indent=4) }}
 {{ include_md("common_text/amr_search_task.md", indent=4, condition="theiaeuk") }}
-{{ include_md("common_text/snippy_variants_task.md", indent=4, condition="cauris") }}
-
-??? toggle "_Candida albicans_"
-    When this species is detected by the taxon ID tool, an antifungal resistance detection task is deployed.
-
-{{ include_md("common_text/snippy_variants_task.md", indent=4, condition="calbicans") }}
 
 ??? toggle "_Aspergillus fumigatus_"
-    When this species is detected by the taxon ID tool, an antifungal resistance detection task is deployed.
-
-{{ include_md("common_text/snippy_variants_task.md", indent=4, condition="afumigatus") }}
+    When this species is detected by GAMBIT, reference-based variant calling is performed against the hosted _A. fumigatus_ reference (see the **Reference-based variant calling** section above).
 
 ??? toggle "_Cryptococcus neoformans_"
-    When this species is detected by the taxon ID tool, an antifungal resistance detection task is deployed.
-
-{{ include_md("common_text/snippy_variants_task.md", indent=4, condition="cneoformans") }}
+    When this species is detected by GAMBIT, reference-based variant calling is performed against the hosted _C. neoformans_ reference (see the **Reference-based variant calling** section above).
 
 ### Outputs
 

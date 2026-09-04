@@ -89,7 +89,8 @@ artic_pipeline_docker	String	Docker image used for the ARTIC pipeline	TheiaCoV_C
 artic_pipeline_reference	String	Reference genome used for the ARTIC pipeline	TheiaCoV_ClearLabs, TheiaCoV_ONT
 artic_version	String	Version of the Artic software used for read trimming and conesnsus genome assembly	TheiaCoV_ClearLabs, TheiaCoV_ONT
 assembled_viruses	Int	Number of viruses assembled from sample	TheiaViral_Panel
-assembler	String	Assembler used in digger_denovo subworkflow	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+assembler	String	Assembler used in digger_denovo subworkflow	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+assembler_used	String	Assembler used in digger_denovo subworkflow	TheiaEuk_Illumina_PE
 assembler_version	String	Version of the assembler used in digger_denovo	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 assemblies	Array[File]	Assembly files generated during the workflow	TheiaViral_Panel
 assembly_consensus_fasta	File	Final consensus assembly in FASTA format	TheiaViral_Illumina_PE, TheiaViral_ONT
@@ -213,8 +214,8 @@ checkv_denovo_total_genes	String	Number of genes detected in de novo assembly by
 checkv_denovo_version	String	Version of CheckV used for de novo assembly	TheiaViral_Illumina_PE, TheiaViral_ONT
 checkv_denovo_weighted_completeness	String	Weighted completeness score for de novo assembly from CheckV	TheiaViral_Illumina_PE, TheiaViral_ONT
 checkv_denovo_weighted_contamination	String	Weighted contamination score for de novo assembly from CheckV	TheiaViral_Illumina_PE, TheiaViral_ONT
-cladetype_annotated_ref	String	The annotated reference file for the identified clade, "None" if no clade was identified/no annotation is inputted	TheiaEuk_ONT
-cladetyper_annotated_reference	String	The annotated reference file for the identified clade, "None" if no clade was identified/no annotation is inputted	Cauris_CladeTyper, TheiaEuk_Illumina_PE
+cladetyper_annotated_reference_gff	File	Path to the clade-specific reference GFF selected by cladetyper for downstream variant calling	Cauris_CladeTyper
+cladetyper_assembly_reference	File	Path to the clade-specific reference FASTA selected by cladetyper for downstream variant calling	Cauris_CladeTyper
 cladetyper_clade	String	The clade assigned to the input assembly	Cauris_CladeTyper, TheiaEuk_Illumina_PE, TheiaEuk_ONT
 cladetyper_docker_image	String	The Docker container used for the task	Cauris_CladeTyper, TheiaEuk_Illumina_PE, TheiaEuk_ONT
 cladetyper_gambit_version	String	The version of GAMBIT used for the analysis	Cauris_CladeTyper, TheiaEuk_Illumina_PE
@@ -489,8 +490,14 @@ gamma_results	File	The .gamma file reporting gene matches	TheiaProk_FASTA, Theia
 gamma_version	String	The version of GAMMA used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 genbank_fasta	File	**Only for SARS-CoV-2 submission**: GenBank fasta file for upload	Mercury_Prep_N_Batch
 genbank_metadata	File	**Only for SARS-CoV-2 submission**: GenBank metadata for upload	Mercury_Prep_N_Batch
-gene_coverage_depth_by_gene	Map[String,Float]	A JSON map relating gene queries to their depth of coverage	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
-gene_coverage_percent_coverage_by_gene	Map[String,Float]	A JSON map relating gene queries to their percent breadth of coverage	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+gene_coverage_breadth_by_gene	Map[String,String]	A JSON map relating gene queries to their percent breadth of coverage	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+gene_coverage_depth_by_gene	Map[String,Float]	A JSON map relating gene queries to their depth of coverage	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+gene_coverage_depth_by_gene	Map[String,String]	A JSON map relating gene queries to their depth of coverage	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+gene_coverage_mean_depth	String	Mean depth of coverage across the query genes	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+gene_coverage_mean_percent_coverage	String	Mean breadth of coverage across the query genes	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+gene_coverage_percent_coverage_by_gene	Map[String,Float]	A JSON map relating gene queries to their percent breadth of coverage	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+gene_coverage_reads_by_gene	Map[String,String]	A JSON map relating gene queries to the number of reads mapped	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+gene_coverage_reads_mapped	String	Number of reads mapped to query genes	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 gene_coverage_stats	File	A tab-delimited table depicting gene coverage depth and breadth on a gene-by-gene basis	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 generated_accessions	File	Text file mapping the BioSample accession with its sample name.	Terra_2_NCBI
 genoflu_all_segments	String	The genotypes for each individual flu segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
@@ -1279,25 +1286,27 @@ theiacov_illumina_se_analysis_date	String	Date of analysis	TheiaCoV_Illumina_SE
 theiacov_illumina_se_version	String	Version of PHB used for running the workflow	TheiaCoV_Illumina_SE
 theiacov_ont_analysis_date	String	Date of analysis	TheiaCoV_ONT
 theiacov_ont_version	String	Version of PHB used for running the workflow	TheiaCoV_ONT
+theiaeuk_bwa_version	String	Version of BWA used for read alignment	TheiaEuk_Illumina_PE
+theiaeuk_clair3_docker	String	Docker container used for Clair3 variant calling	TheiaEuk_ONT
+theiaeuk_clair3_model_used	String	Clair3 model used for variant calling	TheiaEuk_ONT
+theiaeuk_clair3_variants_gvcf	File	Clair3 variant calls in gVCF format	TheiaEuk_ONT
+theiaeuk_clair3_variants_vcf	File	Clair3 variant calls in VCF format	TheiaEuk_ONT
+theiaeuk_clair3_version	String	Version of Clair3 used for variant calling	TheiaEuk_ONT
+theiaeuk_gatk_filtered_vcf	File	VCF annotated by GATK VariantFiltration with the applied filter flags	TheiaEuk_Illumina_PE
+theiaeuk_gatk_genotype_gvcf	File	Genotyped GVCF produced by GATK GenotypeGVCFs	TheiaEuk_Illumina_PE
+theiaeuk_gatk_genotype_gvcf_index	File	Index for the GATK genotyped GVCF	TheiaEuk_Illumina_PE
+theiaeuk_gatk_percent_passing_variants	Float	Percent of variant records that passed filtering	TheiaEuk_Illumina_PE
+theiaeuk_gatk_selected_vcf	File	Records extracted from the filtered VCF by GATK SelectVariants	TheiaEuk_Illumina_PE
+theiaeuk_gatk_version	String	Version of GATK used for variant calling and filtering	TheiaEuk_Illumina_PE
 theiaeuk_illumina_pe_analysis_date	String	Date of TheiaEuk PE workflow execution	TheiaEuk_Illumina_PE
 theiaeuk_illumina_pe_version	String	TheiaEuk PE workflow version used	TheiaEuk_Illumina_PE
+theiaeuk_minimap2_version	String	Version of minimap2 used for read alignment	TheiaEuk_ONT
 theiaeuk_ont_analysis_date	String	Date of TheiaEuk_ONT workflow execution	TheiaEuk_ONT
 theiaeuk_ont_version	String	TheiaEuk_ONT workflow version used	TheiaEuk_ONT
-theiaeuk_snippy_variants_bai	String	Indexed bam file of the reads aligned to the reference	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-theiaeuk_snippy_variants_bam	String	BAM file of reads aligned to the reference	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-theiaeuk_snippy_variants_coverage_tsv	String	Coverage statistics TSV file output by the `samtools coverage` command, providing genome-wide metrics such as the proportion of bases covered (depth â‰¥ 1), mean depth, and other related statistics.	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-theiaeuk_snippy_variants_gene_query_results	String	CSV file detailing results for mutations associated with the query strings specified by the user	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-theiaeuk_snippy_variants_hits	String	A summary of mutations associated with the query strings specified by the user	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-theiaeuk_snippy_variants_num_reads_aligned	String	Number of reads that aligned to the reference genome as calculated by `samtools view -c` command	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-theiaeuk_snippy_variants_num_variants	String	Number of variants detected between sample and reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-theiaeuk_snippy_variants_outdir_tarball	String	A compressed file containing the whole directory of snippy output files. This is used when running Snippy_Tree	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-theiaeuk_snippy_variants_percent_ref_coverage	String	Proportion of the reference genome covered by reads with a depth greater than or equal to the `min_coverage` threshold (default is 10).	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-theiaeuk_snippy_variants_query	String	Gene query strings specified by the user when running the workflow	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-theiaeuk_snippy_variants_query_check	String	Verification that query strings are found in the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-theiaeuk_snippy_variants_reference_genome	String	The reference genome used in the alignment and variant calling	TheiaEuk_Illumina_PE
-theiaeuk_snippy_variants_results	String	CSV file detailing results for all mutations identified relative to the reference	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-theiaeuk_snippy_variants_summary	String	A summary TXT fie showing the number of mutations identified for each mutation type	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-theiaeuk_snippy_variants_version	String	Version of Snippy used	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+theiaeuk_reference_fasta	String	Reference genome FASTA used in characterization	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+theiaeuk_reference_gff	String	Reference GFF annotation used in characterization	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+theiaeuk_variant_calling_bai	File	Index for the sorted alignment BAM used for variant calling	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+theiaeuk_variant_calling_bam	File	Sorted alignment BAM used for variant calling	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 theiameta_illumina_pe_analysis_date	String	The date of analysis	TheiaMeta_Illumina_PE
 theiameta_illumina_pe_version	String	The version of TheiaMeta used during execution	TheiaMeta_Illumina_PE
 theiaprok_fasta_analysis_date	String	Date of TheiaProk FASTA workflow execution	TheiaProk_FASTA
@@ -1371,6 +1380,11 @@ vadr_flu_segment_concatenated_fasta	File	Assembly FASTA file of all Influenza ge
 vadr_num_alerts	String	Number of fatal alerts as determined by VADR	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, VADR_Update
 vadr_update_analysis_date	String	Date of analysis	VADR_Update
 vadr_update_version	String	Version of the Public Health Bioinformatics (PHB) repository used	VADR_Update
+variant_annotation_gene_vcf	File	VCF of variant calls overlapping the query gene regions	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+variant_annotation_summary	File	An HTML report summarizing the annotated variants in the query gene regions	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+variant_annotation_tsv	File	A TSV file depicting VEP variant reporting	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+variant_annotation_warnings	File	Warnings emitted by VEP during variant annotation	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+variant_annotations	String	A comma-delimited list of variant annotations detected in the query gene regions	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 variants_from_ref_vcf	File	Number of variants relative to the reference genome	TheiaCoV_ClearLabs
 vibecheck_classification_notes	String	Additional information provided by Vibecheck during classification	TheiaProk_Illumina_PE
 vibecheck_confidence	Float	How confidence lineage assignment is. 0 - uncertain; 100 - Very certain	TheiaProk_Illumina_PE

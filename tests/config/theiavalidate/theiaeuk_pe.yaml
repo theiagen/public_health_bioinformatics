@@ -67,7 +67,8 @@ columns:
     method: percent_diff
     threshold: 0.01
     type: float
-  theiaeuk_snippy_variants_hits:
+  variant_annotations:
+    mappings: ["theiaeuk_snippy_variants_hits"] # <= 4.3.0 compatibility
     method: exact
     type: set[str]
     delimiter: ","
