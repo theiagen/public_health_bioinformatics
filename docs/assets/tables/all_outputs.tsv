@@ -1295,6 +1295,7 @@ theiaeuk_clair3_version	String	Version of Clair3 used for variant calling	TheiaE
 theiaeuk_gatk_filtered_vcf	File	VCF annotated by GATK VariantFiltration with the applied filter flags	TheiaEuk_Illumina_PE
 theiaeuk_gatk_genotype_gvcf	File	Genotyped GVCF produced by GATK GenotypeGVCFs	TheiaEuk_Illumina_PE
 theiaeuk_gatk_genotype_gvcf_index	File	Index for the GATK genotyped GVCF	TheiaEuk_Illumina_PE
+theiaeuk_gatk_percent_passing_variants	Float	Percent of variant records that passed filtering	TheiaEuk_Illumina_PE
 theiaeuk_gatk_selected_vcf	File	Records extracted from the filtered VCF by GATK SelectVariants	TheiaEuk_Illumina_PE
 theiaeuk_gatk_version	String	Version of GATK used for variant calling and filtering	TheiaEuk_Illumina_PE
 theiaeuk_illumina_pe_analysis_date	String	Date of TheiaEuk PE workflow execution	TheiaEuk_Illumina_PE
