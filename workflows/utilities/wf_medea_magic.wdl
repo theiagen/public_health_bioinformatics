@@ -76,6 +76,7 @@ workflow medea_magic {
   }
   # ORGANISM-SPECIFIC PARAMETER SETTING AND TASK CALLS
   if (medea_tag == "Candidozyma auris" || medea_tag == "Candida auris") {
+    # C. auris reference selection is conducted via cladetyper
     call cauris_cladetyper.cauris_cladetyper as cladetyper {
       input:
         assembly_fasta = assembly,
@@ -84,23 +85,16 @@ workflow medea_magic {
         max_distance = cladetyper_max_distance,
         docker = cauris_cladetyper_docker_image
     }
-    # organism-specific gene coverage targets used when query_genes is not user-supplied
     String cauris_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,B9J08_005340,B9J08_000401,B9J08_003102,B9J08_003737,B9J08_005343"
   }
   if (medea_tag == "Aspergillus fumigatus") {
-    # hosted fasta (user-supplied fasta takes precedence downstream) feeds the variant-calling reference
     File afumigatus_variant_fasta = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.fasta"
-    # hosted GFF (user-supplied reference_gff takes precedence downstream) feeds gene coverage annotation
     File afumigatus_reference_gff = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gff"
-    # organism-specific gene coverage targets used when query_genes is not user-supplied
     String afumigatus_query_genes = "Cyp51A,HapE,AFUA_4G08340"
   }
   if (medea_tag == "Cryptococcus neoformans") {
-    # hosted fasta (user-supplied fasta takes precedence downstream) feeds the variant-calling reference
     File cryptoneo_reference_fasta = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.fasta"
-    # hosted GFF (user-supplied reference_gff takes precedence downstream) feeds gene coverage annotation
     File cryptoneo_reference_gff = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gff"
-    # organism-specific gene coverage targets used when query_genes is not user-supplied
     String cryptoneo_query_genes = "CNA00300"
   }
 
@@ -119,7 +113,6 @@ workflow medea_magic {
   # The user-supplied query_genes takes priority; otherwise the
   # organism-specific default set (if any) is used. Inherently depends on variant calling
   String resolved_query_genes = select_first([query_genes, cauris_query_genes, afumigatus_query_genes, cryptoneo_query_genes, ""])
-
 
   # REFERENCE-BASED VARIANT CALLING
   # variant calling runs automatically whenever a reference fasta and read1 are available
@@ -268,7 +261,8 @@ workflow medea_magic {
       }
     }
   }
-  # Output formatting
+  
+  # OUTPUT FORMATTING
   if (resolved_reference_fasta != "") {
     File used_reference_fasta = resolved_reference_fasta
   }
