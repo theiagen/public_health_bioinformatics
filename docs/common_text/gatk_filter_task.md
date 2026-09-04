@@ -17,6 +17,8 @@ fragment: true
     | `gatk_filter_min_depth` | `depth_filter` | `DP < value` | read depth is below the threshold |
     | `gatk_filter_min_map_quality` | `mapping_quality_filter` | `MQ < value` | RMS mapping quality is below the threshold |
     | `gatk_filter_min_quality_by_depth` | `quality_by_depth_filter` | `QD < value` | quality-by-depth is below the threshold |
+    | `gatk_filter_max_fisher_strand_bias` | `fisher_strand_bias_filter` | `FS > value` | Fisher's strand bias exceeds the threshold |
+    | `gatk_filter_max_strand_odds_ratio` | `strand_odds_ratio_filter` | `SOR > value` | the strand odds ratio exceeds the threshold |
 
     ??? dna "`gatk_filter_expression` input parameter"
         A free-form [JEXL expression](https://gatk.broadinstitute.org/hc/en-us/articles/360035891011-JEXL-filtering-expressions) for custom filtering (annotated with the filter name `user_filter`. Use this for compound or non-standard criteria not covered by the named threshold inputs).
