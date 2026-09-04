@@ -18,7 +18,7 @@ task skesa {
 
     # Get skesa version
     skesa --version 2>&1 | grep "SKESA" | sed -E 's/^.*SKESA ([0-9.]+).*/\1/' | tee VERSION
-    
+
     # Use paired-end mode if read2 is provided, otherwise single-end
     if [ -n "~{read2}" ]; then
         skesa --gz \

@@ -12,7 +12,7 @@ task ncbi_datasets_download_genome_accession {
     Boolean use_ncbi_virus = false
   }
   meta {
-    # added so that call caching is always turned off 
+    # added so that call caching is always turned off
     volatile: true
   }
   command <<<
@@ -28,13 +28,13 @@ task ncbi_datasets_download_genome_accession {
       datasets download virus genome accession \
         ~{ncbi_accession} \
         --filename ~{ncbi_accession}.zip \
-        --include genome 
+        --include genome
 
-      # unfortunately have duplicate code blocks for renaming files because of the differences in 
+      # unfortunately have duplicate code blocks for renaming files because of the differences in
       # output directory structure and output filenames between virus and non-virus downloads
-      # :( 
+      # :(
 
-      # unzip the archive and copy FASTA and JSON to PWD, rename in the process so output filenames are predictable 
+      # unzip the archive and copy FASTA and JSON to PWD, rename in the process so output filenames are predictable
       unzip ~{ncbi_accession}.zip
       cp -v ncbi_dataset/data/genomic.fna ./~{ncbi_accession}.fasta
       cp -v ncbi_dataset/data/data_report.jsonl ./~{ncbi_accession}.data_report.jsonl
@@ -65,7 +65,7 @@ task ncbi_datasets_download_genome_accession {
         ~{true="--include gbff" false="" include_gbff} \
         ~{true="--include gff3" false="" include_gff3}
 
-      # unzip the archive and copy FASTA and JSON to PWD, rename in the process so output filenames are predictable 
+      # unzip the archive and copy FASTA and JSON to PWD, rename in the process so output filenames are predictable
       unzip ~{ncbi_accession}.zip
       cp -v ncbi_dataset/data/~{ncbi_accession}*/~{ncbi_accession}*.fna ./~{ncbi_accession}.fasta
       cp -v ncbi_dataset/data/assembly_data_report.jsonl ./~{ncbi_accession}.data_report.jsonl

@@ -1,7 +1,7 @@
 version 1.0
 
 task clair3_variants {
-    input {
+  input {
     File alignment_bam_file
     File alignment_bam_file_index
     File reference_genome_file
@@ -86,6 +86,7 @@ task clair3_variants {
     memory: "~{memory} GB"
     cpu: cpu
     disks: "local-disk ~{disk_size} SSD"
+    disk: disk_size + " GB"
     preemptible: 0
     maxRetries: 3
   }

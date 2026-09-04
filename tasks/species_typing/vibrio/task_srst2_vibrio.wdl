@@ -37,7 +37,7 @@ task srst2_vibrio {
       --min_depth ~{min_depth} \
       --min_edge_depth ~{min_edge_depth} \
       --gene_max_mismatch ~{gene_max_mismatch}
-    
+
     # capture output TSV
     mv ~{samplename}__genes__*__results.txt ~{samplename}.tsv
 
@@ -62,14 +62,14 @@ task srst2_vibrio {
     # Converting None to empty string
     conv = lambda i : i or '-'
 
-    # Make characters human-readable 
+    # Make characters human-readable
     def translate_chars(string):
       translation = []
       if '?' in string:
         translation.append("low depth/uncertain")
       if '-' in string:
         translation.append("not detected")
-      
+
       # in case we want to retrieve the allele information
       string = re.sub("\*|\?|-", "", string)
 
@@ -77,9 +77,9 @@ task srst2_vibrio {
         return '(' + ';'.join(translation) + ')'
       return ""
 
-    # load output TSV as dict 
+    # load output TSV as dict
     row = tsv_to_dict('~{samplename}.tsv')
-  
+
     # presence or absence genes - ctxA, ompW and toxR
     with open("ctxA", "wb") as ctxA_fh:
       value = row.get("ctxA")
@@ -89,7 +89,7 @@ task srst2_vibrio {
       else:
         result = "present" + ' ' + presence
         ctxA_fh.write(result.strip())
-    
+
     with open("ompW", "wb") as ompW_fh:
       value = row.get("ompW")
       presence = translate_chars(conv(value))
@@ -98,7 +98,7 @@ task srst2_vibrio {
       else:
         result = "present" + ' ' + presence
         ompW_fh.write(result.strip())
-    
+
     with open("toxR", "wb") as toxR_fh:
       value = row.get("toxR")
       presence = translate_chars(conv(value))
@@ -107,7 +107,7 @@ task srst2_vibrio {
       else:
         result = "present" + ' ' + presence
         toxR_fh.write(result.strip())
-    
+
     # biotype - tcpA classical or tcpA ElTor
     with open("BIOTYPE", "wb") as biotype_fh:
       value_ElTor = translate_chars(conv(row.get("tcpA_ElTor")))
@@ -122,7 +122,7 @@ task srst2_vibrio {
         else:
           result = "tcpA_ElTor" + ' ' + value_ElTor
           biotype_fh.write(result.strip())
-        
+
     # serogroup - O1 or O139
     with open("SEROGROUP", "wb") as serotype_fh:
       value_O1 = translate_chars(conv(row.get("wbeN_O1")))
@@ -140,15 +140,15 @@ task srst2_vibrio {
     CODE
   >>>
   output {
-      File srst2_detailed_tsv = "~{samplename}.detailed.tsv"
-      String srst2_docker = docker
-      String srst2_database = "vibrio_230224"
-      String srst2_version = read_string("VERSION")
-      String srst2_vibrio_ctxA = read_string("ctxA")
-      String srst2_vibrio_ompW = read_string("ompW")
-      String srst2_vibrio_toxR = read_string("toxR")
-      String srst2_vibrio_biotype = read_string("BIOTYPE")
-      String srst2_vibrio_serogroup = read_string("SEROGROUP")
+    File srst2_detailed_tsv = "~{samplename}.detailed.tsv"
+    String srst2_docker = docker
+    String srst2_database = "vibrio_230224"
+    String srst2_version = read_string("VERSION")
+    String srst2_vibrio_ctxA = read_string("ctxA")
+    String srst2_vibrio_ompW = read_string("ompW")
+    String srst2_vibrio_toxR = read_string("toxR")
+    String srst2_vibrio_biotype = read_string("BIOTYPE")
+    String srst2_vibrio_serogroup = read_string("SEROGROUP")
   }
   runtime {
     docker: "~{docker}"

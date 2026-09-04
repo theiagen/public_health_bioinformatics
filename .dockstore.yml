@@ -245,7 +245,7 @@ workflows:
    primaryDescriptorPath: /workflows/standalone_modules/wf_metabuli.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
- - name: Nextclade_Batch_PHB 
+ - name: Nextclade_Batch_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/phylogenetics/wf_nextclade_batch.wdl
    testParameterFiles:
@@ -268,11 +268,6 @@ workflows:
  - name: Rename_FASTQ_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/utilities/file_handling/wf_rename_fastq_files.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Gambit_Core_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/standalone_modules/wf_gambitcore.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
  - name: Create_Terra_Table_PHB
@@ -300,7 +295,7 @@ workflows:
    primaryDescriptorPath: /workflows/standalone_modules/wf_clair3_variants_ont.wdl
    testParameterFiles:
      - /tests/inputs/empty.json
- - name: AMR_Search_PHB 
+ - name: AMR_Search_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/standalone_modules/wf_amr_search.wdl
    testParameterFiles:
