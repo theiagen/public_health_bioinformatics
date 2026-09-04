@@ -124,56 +124,67 @@ workflow flye_denovo {
     # Bandage plot generation
     call task_bandage.bandage_plot as bandage {
       input:
-        draft_assembly_fasta = select_first([flye.assembly_fasta]),
-        read1 = select_first([illumina_read1]),
-        read2 = select_first([illumina_read2]),
-        samplename = samplename
-    }
-    call task_polypolish.polypolish {
-      input:
-        assembly_fasta = select_first([flye.assembly_fasta]),
-        read1_sam = bwa.read1_sam,
-        read2_sam = bwa.read2_sam,
+        assembly_graph_gfa = select_first([flye.assembly_graph_gfa]),
         samplename = samplename,
-        illumina_polishing_rounds = polish_rounds,
-        pair_orientation = polypolish_pair_orientation,
-        low_percentile_threshold = polypolish_low_percentile_threshold,
-        high_percentile_threshold = polypolish_high_percentile_threshold,
-        fraction_invalid = polypolish_fraction_invalid,
-        fraction_valid = polypolish_fraction_valid,
-        maximum_errors = polypolish_maximum_errors,
-        minimum_depth = polypolish_minimum_depth,
-        careful = polypolish_careful,
-        cpu = polypolish_cpu,
-        memory = polypolish_memory,
-        disk_size = polypolish_disk_size
+        cpu = bandage_cpu,
+        memory = bandage_memory,
+        disk_size = bandage_disk_size
     }
-  }
-  # ONT-only Polishing Path: Medaka or Racon
-  if (!skip_polishing) {
-    if (polisher == "medaka") {
-      call task_medaka.medaka {
+    # Polypolish for hybrid assembly
+    if (defined(illumina_read1) && defined(illumina_read2)) {
+      call task_bwa_all.bwa_all as bwa {
         input:
-          unpolished_fasta = select_first([flye.assembly_fasta]),
+          draft_assembly_fasta = select_first([flye.assembly_fasta]),
+          read1 = select_first([illumina_read1]),
+          read2 = select_first([illumina_read2]),
+          samplename = samplename
+      }
+      call task_polypolish.polypolish {
+        input:
+          assembly_fasta = select_first([flye.assembly_fasta]),
+          read1_sam = bwa.read1_sam,
+          read2_sam = bwa.read2_sam,
           samplename = samplename,
-          read1 = select_first([porechop.trimmed_reads, read1]),
-          medaka_model = medaka_model,
-          auto_model = auto_medaka_model,
-          cpu = medaka_cpu,
-          memory = medaka_memory,
-          disk_size = medaka_disk_size
+          illumina_polishing_rounds = polish_rounds,
+          pair_orientation = polypolish_pair_orientation,
+          low_percentile_threshold = polypolish_low_percentile_threshold,
+          high_percentile_threshold = polypolish_high_percentile_threshold,
+          fraction_invalid = polypolish_fraction_invalid,
+          fraction_valid = polypolish_fraction_valid,
+          maximum_errors = polypolish_maximum_errors,
+          minimum_depth = polypolish_minimum_depth,
+          careful = polypolish_careful,
+          cpu = polypolish_cpu,
+          memory = polypolish_memory,
+          disk_size = polypolish_disk_size
       }
     }
-    if (polisher == "racon") {
-      call task_racon.racon {
-        input:
-          unpolished_fasta = select_first([flye.assembly_fasta]),
-          read1 = select_first([porechop.trimmed_reads, read1]),
-          samplename = samplename,
-          polishing_rounds = polish_rounds,
-          cpu = racon_cpu,
-          memory = racon_memory,
-          disk_size = racon_disk_size
+    # ONT-only Polishing Path: Medaka or Racon
+    if (!skip_polishing) {
+      if (polisher == "medaka") {
+        call task_medaka.medaka {
+          input:
+            unpolished_fasta = select_first([flye.assembly_fasta]),
+            samplename = samplename,
+            read1 = select_first([porechop.trimmed_reads, read1]),
+            medaka_model = medaka_model,
+            auto_model = auto_medaka_model,
+            cpu = medaka_cpu,
+            memory = medaka_memory,
+            disk_size = medaka_disk_size
+        }
+      }
+      if (polisher == "racon") {
+        call task_racon.racon {
+          input:
+            unpolished_fasta = select_first([flye.assembly_fasta]),
+            read1 = select_first([porechop.trimmed_reads, read1]),
+            samplename = samplename,
+            polishing_rounds = polish_rounds,
+            cpu = racon_cpu,
+            memory = racon_memory,
+            disk_size = racon_disk_size
+        }
       }
     }
     # Contig Filtering and Final Assembly orientation
