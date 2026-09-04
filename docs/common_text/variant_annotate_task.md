@@ -3,7 +3,7 @@ title: Task Fragment `variant_annotate`
 fragment: true
 ---
 ??? task "`variant_annotate`: Variant Effect Annotation"
-    This task annotates variants in regions-of-interest using Ensembl Variant Effect Predictor (VEP) by reporting the predicted consequence of each variant (e.g. `missense_variant`, `frameshift_variant`) alongside its pseudo-[HGVS](https://hgvs-nomenclature.org/stable/) coding (`c.`) and protein (`p.`) notation.
+    This task annotates variants in regions-of-interest using Ensembl Variant Effect Predictor (VEP) by reporting the predicted consequence of each variant (e.g. `missense_variant`, `frameshift_variant`) alongside its pseudo-[HGVS](https://hgvs-nomenclature.org/stable/) coding (`c.`) and protein (`p.`) notation. Reference GFFs should be formatted in accord with [VEP's requirements](https://jun2026.archive.ensembl.org/info/docs/tools/vep/script/vep_cache.html#gff).
 
     The task proceeds in three steps:
 
