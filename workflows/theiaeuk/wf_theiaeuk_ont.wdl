@@ -72,50 +72,52 @@ workflow theiaeuk_ont {
           read1 = read_QC_trim.read1_clean,
           samplename = samplename
       }
-      #call quast on the assembly
-      call quast_task.quast {
-        input:
-          assembly = flye_denovo.assembly_fasta,
-          samplename = samplename
-      }
-      # nanoplot for raw reads
-      call nanoplot_task.nanoplot as nanoplot_raw {
-        input:
-          read1 = read1,
-          samplename = samplename,
-          est_genome_length = select_first([genome_length, quast.genome_length])
-      }
-      # nanoplot for cleaned reads
-      call nanoplot_task.nanoplot as nanoplot_clean {
-        input:
-          read1 = read_QC_trim.read1_clean,
-          samplename = samplename,
-          est_genome_length = select_first([genome_length, quast.genome_length])
-      }
-      # busco on the assembly
-      call busco_task.busco {
-        input:
-          assembly = flye_denovo.assembly_fasta,
-          samplename = samplename,
-          eukaryote = true,
-          memory = busco_memory,
-          docker = busco_docker_image
-      }
-      # call gambit to predict taxon
-      call gambit.gambit {
-        input:
-          assembly = flye_denovo.assembly_fasta,
-          samplename = samplename,
-          gambit_db_genomes = gambit_db_genomes,
-          gambit_db_signatures = gambit_db_signatures
-      }
-      # call medea magic for cladetyper and AMR search, snippy variants
-      call medea_magic_workflow.medea_magic {
-        input:
-          samplename = samplename,
-          medea_tag = gambit.merlin_tag,
-          assembly = flye_denovo.assembly_fasta,
-          assembly_only = true # can only run assembly mode on Snippy variants for long reads
+      if (flye_denovo.flye_status == "PASS") {
+        #call quast on the assembly
+        call quast_task.quast {
+          input:
+            assembly = flye_denovo.assembly_fasta,
+            samplename = samplename
+        }
+        # nanoplot for raw reads
+        call nanoplot_task.nanoplot as nanoplot_raw {
+          input:
+            read1 = read1,
+            samplename = samplename,
+            est_genome_length = select_first([genome_length, quast.genome_length])
+        }
+        # nanoplot for cleaned reads
+        call nanoplot_task.nanoplot as nanoplot_clean {
+          input:
+            read1 = read_QC_trim.read1_clean,
+            samplename = samplename,
+            est_genome_length = select_first([genome_length, quast.genome_length])
+        }
+        # busco on the assembly
+        call busco_task.busco {
+          input:
+            assembly = flye_denovo.assembly_fasta,
+            samplename = samplename,
+            eukaryote = true,
+            memory = busco_memory,
+            docker = busco_docker_image
+        }
+        # call gambit to predict taxon
+        call gambit.gambit {
+          input:
+            assembly = flye_denovo.assembly_fasta,
+            samplename = samplename,
+            gambit_db_genomes = gambit_db_genomes,
+            gambit_db_signatures = gambit_db_signatures
+        }
+        # call medea magic for cladetyper and AMR search, snippy variants
+        call medea_magic_workflow.medea_magic {
+          input:
+            samplename = samplename,
+            medea_tag = gambit.merlin_tag,
+            assembly = flye_denovo.assembly_fasta,
+            assembly_only = true # can only run assembly mode on Snippy variants for long reads
+        }
       }
     }
   }
@@ -138,6 +140,7 @@ workflow theiaeuk_ont {
     File? bandage_plot = flye_denovo.bandage_plot
     File? filtered_contigs_metrics = flye_denovo.filtered_contigs_metrics
     String? flye_assembly_info = flye_denovo.flye_assembly_info
+    String? flye_assembly_status = flye_denovo.flye_assembly_status
     String? medaka_model = flye_denovo.medaka_model_used
     String? porechop_version = flye_denovo.porechop_version
     String? flye_version = flye_denovo.flye_version
