@@ -64,6 +64,11 @@ task gatk_filter {
     print("Applying the following VariantFiltration filters:")
     for filter_name, filter_expr in filters:
         print('  {}: "{}"'.format(filter_name, filter_expr))
+
+    # the user-supplied expression bypasses FILTER_EXPRESSION.txt, so report it here
+    user_filter = '''~{default="" filter_expression}'''
+    if user_filter:
+        print('  user_filter: "{}"'.format(user_filter))
     CODE
 
     # call VariantFiltration with optional filter expression(s)
