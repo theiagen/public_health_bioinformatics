@@ -290,6 +290,7 @@ VADR
 VADR_Update
 VCF
 VCFs
+VEP
 VFDB
 VSCode
 Varghese
