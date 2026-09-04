@@ -1,4 +1,8 @@
 Terra Task Name	Variable	Type	Description	Default Value	Terra Status	Workflow	Classification	Manual Override
+allele_clustering	allele_jsons	Array[File]	The array of input WGMLST allele calls from the Allele Calling module of TheiaProk		Required	Allele_Clustering	general	
+allele_clustering	distance_algorithm	String	The distance metric algorithm for calculating distances between samples; see above for options		Required	Allele_Clustering	general	
+allele_clustering	tree_building_algorithm	String	The tree building algorithm for constructing the tree; see above for options		Required	Allele_Clustering	general	
+allele_clustering	tree_name	String	The name for the output NWK file		Required	Allele_Clustering	general	
 amr_search_workflow	amr_search_database	String	NCBI taxon code of samples known taxonomy, see above supported species		Required	AMR_Search	general	
 amr_search_workflow	input_fasta	File	A microbial assembly file		Required	AMR_Search	general	
 amr_search_workflow	samplename	String	The name of the sample being analyzed		Required	AMR_Search	general	
@@ -222,6 +226,10 @@ add_biosample_accessions	cpu	Int	Number of CPUs to allocate to the task	4	Option
 add_biosample_accessions	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Terra_2_NCBI	runtime	
 add_biosample_accessions	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16	Optional	Terra_2_NCBI	docker	
 add_biosample_accessions	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Terra_2_NCBI	runtime	
+allele_clustering_task	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Allele_Clustering	runtime	
+allele_clustering_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Allele_Clustering	runtime	
+allele_clustering_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/allele-clustering:1.0.0	Optional	Allele_Clustering	docker	
+allele_clustering_task	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Allele_Clustering	runtime	
 amr_search	cpu	Int	Number of CPUs to allocate to the task	2	Optional	AMR_Search	runtime	
 amr_search	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	AMR_Search	runtime	
 amr_search	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/amrsearch:0.2.1	Optional	AMR_Search	docker	
@@ -827,7 +835,7 @@ flu_track	irma_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	1
 flu_track	irma_min_ambiguous_threshold	Float	Internal component, do not modify	0.25	Optional	TheiaCoV_FASTA	general	
 flu_track	irma_min_ambiguous_threshold	Float	Minimum called Single Nucleotide Variant (SNV) frequency for mixed based calls in the output consensus assembly (AKA amended consensus).	0.25	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
 flu_track	irma_min_avg_consensus_allele_quality	Int	Internal component, do not modify	10	Optional	TheiaCoV_FASTA	general	
-flu_track	irma_min_avg_consensus_allele_quality	Int	Minimum allele coverage depth to call plurality consensus, otherwise calls "N". Setting this value too high can negatively impact final amended consensus.	10	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
+flu_track	irma_min_avg_consensus_allele_quality	Int	Minimum allele coverage depth to call plurality consensus, otherwise calls 'N'. Setting this value too high can negatively impact final amended consensus.	10	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
 flu_track	irma_min_consensus_support	Int	Internal component, do not modify	50	Optional	TheiaCoV_FASTA	general	
 flu_track	irma_min_read_length	Int	Internal component, do not modify	75	Optional	TheiaCoV_FASTA	general	
 flu_track	irma_min_read_length	Int	Minimum read length to include reads in read gathering step in IRMA. This value should not be greater than the typical read length.	75	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
@@ -857,7 +865,6 @@ flye	no_alt_contigs	Boolean	True/False to disable alternative contig generation	
 flye	read_error_rate	Float	Expected error rate in reads		Optional	TheiaViral_ONT	general	
 flye	read_type	String	Type of read data for Flye	--nano-hq	Optional	TheiaViral_ONT	general	
 flye	scaffold	Boolean	True/False to enable scaffolding using graph	False	Optional	TheiaViral_ONT	general	
-flye_denovo	auto_medaka_model	Boolean	If true, medaka will automatically select the best Medaka model for assembly	True	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 flye_denovo	bandage_cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaEuk_ONT, TheiaProk_ONT	runtime	
 flye_denovo	bandage_disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	TheiaEuk_ONT, TheiaProk_ONT	runtime	
 flye_denovo	bandage_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaEuk_ONT, TheiaProk_ONT	runtime	
@@ -865,6 +872,14 @@ flye_denovo	dnaapler_cpu	Int	Number of CPUs to allocate to the task	4	Optional	T
 flye_denovo	dnaapler_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_ONT, TheiaProk_ONT	runtime	
 flye_denovo	dnaapler_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaEuk_ONT, TheiaProk_ONT	runtime	
 flye_denovo	dnaapler_mode	String	Dnaapler-specific inputs	all	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
+flye_denovo	dorado_auto_detect_model	Boolean	Dorado will auto detect the most appropriate model to use for polishing; set to false to turn off 	True	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
+flye_denovo	dorado_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaEuk_ONT, TheiaProk_ONT	runtime	
+flye_denovo	dorado_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_ONT, TheiaProk_ONT	runtime	
+flye_denovo	dorado_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/dorado:2.1.2	Optional	TheiaEuk_ONT, TheiaProk_ONT	docker	
+flye_denovo	dorado_ignore_read_groups	Boolean	Multiple read groups in a BAM file will be treated like one read group. Set to false to turn off	True	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
+flye_denovo	dorado_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaEuk_ONT, TheiaProk_ONT	runtime	
+flye_denovo	dorado_model	String	The Dorado model to use for polishing 	dna_r10.4.1_e8.2_400bps_sup@v5.0.0_polish_rl	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
+flye_denovo	dorado_use_bacteria	Boolean	Optimizes polishing for bacteria 	True	Optional	TheiaProk_ONT	general	
 flye_denovo	filter_contigs_cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaEuk_ONT, TheiaProk_ONT	runtime	
 flye_denovo	filter_contigs_disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaEuk_ONT, TheiaProk_ONT	runtime	
 flye_denovo	filter_contigs_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaEuk_ONT, TheiaProk_ONT	runtime	
@@ -885,10 +900,12 @@ flye_denovo	flye_scaffold	Boolean	If true, scaffolding is enabled using graph	Fa
 flye_denovo	flye_uneven_coverage_mode	Boolean	sets the --meta option in the case of uneven coverage (or metagenomics)	False	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 flye_denovo	illumina_read1	File	If Illumina reads are provided, flye_denovo subworkflow will perform Illumina polishing		Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 flye_denovo	illumina_read2	File	If Illumina reads are provided, flye_denovo subworkflow will perform Illumina polishing		Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
+flye_denovo	medaka_auto_detect_model	Boolean	Set to true to have Medaka auto-detect the model	True	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 flye_denovo	medaka_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaEuk_ONT, TheiaProk_ONT	runtime	
 flye_denovo	medaka_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_ONT, TheiaProk_ONT	runtime	
 flye_denovo	medaka_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaEuk_ONT, TheiaProk_ONT	runtime	
 flye_denovo	medaka_model	String	In order to obtain the best results, the appropriate model must be set to match the sequencer's basecaller model; this string takes the format of {pore}{device}{caller variant}_{caller_version}. See also <https://github.com/nanoporetech/medaka?tab=readme-ov-file#models>. If this is being run on legacy data it is likely to be r941_min_hac_g507.	r1041_e82_400bps_sup_v5.0.0	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
+flye_denovo	medaka_use_bacteria	Boolean	Optimizes polishing for bacteria	True	Optional	TheiaProk_ONT	general	
 flye_denovo	polish_rounds	Int	The number of polishing rounds to conduct for medaka or racon (without Illumina)	1	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 flye_denovo	polisher	String	The polishing tool to use for assembly	medaka	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 flye_denovo	polypolish_careful	Boolean	Polypolish-specific inputs	False	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
@@ -1335,6 +1352,8 @@ merlin_magic	abricate_vibrio_min_percent_coverage	Int	Minimum DNA percent covera
 merlin_magic	abricate_vibrio_min_percent_identity	Int	Minimum DNA percent identity	80	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	agrvate_agr_typing_only	Boolean	Set to true to skip agr operon extraction and frameshift detection	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	agrvate_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/agrvate:1.0.2--hdfd78af_0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
+merlin_magic	allele_calling_blast_db	File	The BLAST database to use		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	allele_calling_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/allele_calling:1.0.0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	amr_search_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 merlin_magic	amr_search_disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 merlin_magic	amr_search_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/amrsearch:0.2.1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
@@ -1416,6 +1435,7 @@ merlin_magic	poppunk_gps_refs_h5	File	Poppunk database file *Provide an empty or
 merlin_magic	poppunk_gps_unword_clusters_csv	File	Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line	gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_unword_clusters.csv	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	True
 merlin_magic	read1	File	Internal component, do not modify		Optional	TheiaProk_FASTA	general	
 merlin_magic	read2	File	Internal component, do not modify		Optional	TheiaProk_FASTA, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	run_allele_calling	Boolean	Set to true to run the PulseNet 2.0 allele_calling module	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	run_amr_search	Boolean	If set to true AMR_Search workflow will be run if species is part of supported taxon, see AMR_Search docs.	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	seqsero2s_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/seqsero2s:1.1.4	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
 merlin_magic	seroba_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/seroba:1.0.2	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
@@ -2724,8 +2744,8 @@ vadr_update	vadr_memory	Int	Amount of memory/RAM (in GB) to allocate to the task
 vadr_update	vadr_model_file	File	Path to the a tar + gzipped VADR model file	gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-sarscov2-1.6.3-1.tar.gz	Optional	VADR_Update	database	True
 vadr_update	vadr_opts	String	Options for the v-annotate.pl VADR script	--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta	Optional	VADR_Update	general	True
 vadr_update	vadr_skip_length	Int	Minimum assembly length (unambiguous) to run VADR	10000	Optional	VADR_Update	general	True
-version_capture	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0	Optional	AMRFinderPlus, AMR_Search, Assembly_Fetch, Augur, Augur_Prep, BaseSpace_Fetch, Cauris_CladeTyper, Clair3_Variants_ONT, Concatenate_Column_Content, Concatenate_Illumina_Lanes, Core_Gene_SNP, Dorado_Basecalling, Fetch_SRR_Accession, Find_Shared_Variants, Freyja_Dashboard, Freyja_FASTQ, Freyja_Plot, Gambit_Query, Kraken_PE, Kraken_SE, Lyve_SET, MashTree_FASTA, Mercury_Prep_N_Batch, Metabuli, NCBI_Scrub_PE, NCBI_Scrub_SE, Nextclade_Batch, Pangolin_Update, PhyloCompare, RASUSA, Rename_FASTQ, SRA_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree, Snippy_Variants, TBProfiler_tNGS, Terra_2_ENA, Terra_2_GISAID, Terra_2_NCBI, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaValidate, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel, Transfer_Column_Content, Usher, VADR_Update, Zip_Column_Content, kSNP3, kSNP4	docker	
-version_capture	timezone	String	Set the time zone to get an accurate date of analysis (uses UTC by default)		Optional	AMRFinderPlus, AMR_Search, Assembly_Fetch, Augur, Augur_Prep, BaseSpace_Fetch, Cauris_CladeTyper, Clair3_Variants_ONT, Concatenate_Column_Content, Concatenate_Illumina_Lanes, Core_Gene_SNP, Dorado_Basecalling, Fetch_SRR_Accession, Find_Shared_Variants, Freyja_Dashboard, Freyja_FASTQ, Freyja_Plot, Gambit_Query, Kraken_PE, Kraken_SE, Lyve_SET, MashTree_FASTA, Mercury_Prep_N_Batch, Metabuli, NCBI_Scrub_PE, NCBI_Scrub_SE, Nextclade_Batch, Pangolin_Update, PhyloCompare, RASUSA, Rename_FASTQ, SRA_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree, Snippy_Variants, TBProfiler_tNGS, Terra_2_ENA, Terra_2_GISAID, Terra_2_NCBI, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaValidate, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel, Transfer_Column_Content, Usher, VADR_Update, Zip_Column_Content, kSNP3, kSNP4	general	
+version_capture	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0	Optional	AMRFinderPlus, AMR_Search, Allele_Clustering, Assembly_Fetch, Augur, Augur_Prep, BaseSpace_Fetch, Cauris_CladeTyper, Clair3_Variants_ONT, Concatenate_Column_Content, Concatenate_Illumina_Lanes, Core_Gene_SNP, Dorado_Basecalling, Fetch_SRR_Accession, Find_Shared_Variants, Freyja_Dashboard, Freyja_FASTQ, Freyja_Plot, Gambit_Query, Kraken_PE, Kraken_SE, Lyve_SET, MashTree_FASTA, Mercury_Prep_N_Batch, Metabuli, NCBI_Scrub_PE, NCBI_Scrub_SE, Nextclade_Batch, Pangolin_Update, PhyloCompare, RASUSA, Rename_FASTQ, SRA_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree, Snippy_Variants, TBProfiler_tNGS, Terra_2_ENA, Terra_2_GISAID, Terra_2_NCBI, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaValidate, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel, Transfer_Column_Content, Usher, VADR_Update, Zip_Column_Content, kSNP3, kSNP4	docker	
+version_capture	timezone	String	Set the time zone to get an accurate date of analysis (uses UTC by default)		Optional	AMRFinderPlus, AMR_Search, Allele_Clustering, Assembly_Fetch, Augur, Augur_Prep, BaseSpace_Fetch, Cauris_CladeTyper, Clair3_Variants_ONT, Concatenate_Column_Content, Concatenate_Illumina_Lanes, Core_Gene_SNP, Dorado_Basecalling, Fetch_SRR_Accession, Find_Shared_Variants, Freyja_Dashboard, Freyja_FASTQ, Freyja_Plot, Gambit_Query, Kraken_PE, Kraken_SE, Lyve_SET, MashTree_FASTA, Mercury_Prep_N_Batch, Metabuli, NCBI_Scrub_PE, NCBI_Scrub_SE, Nextclade_Batch, Pangolin_Update, PhyloCompare, RASUSA, Rename_FASTQ, SRA_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree, Snippy_Variants, TBProfiler_tNGS, Terra_2_ENA, Terra_2_GISAID, Terra_2_NCBI, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaValidate, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel, Transfer_Column_Content, Usher, VADR_Update, Zip_Column_Content, kSNP3, kSNP4	general	
 wf_microreact_export	access_token	String	Users token used to upload projects to their Microreact account		Optional	Microreact_Export	general	
 wf_microreact_export	date_column	String	Column within the input Terra table to be used as the date designation		Optional	Microreact_Export	general	
 wf_microreact_export	download_table	Boolean	When true, will download th specified Terra table	True	Optional	Microreact_Export	general	

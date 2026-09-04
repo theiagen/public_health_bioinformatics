@@ -194,10 +194,22 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 
 {{ include_md("common_text/abricate_abaum_task.md", indent=4) }}
 
+??? toggle "_Cronobacter_ spp."
+    ##### _Cronobacter_ spp. {% raw %} {#cronobacter} {% endraw %}
+
+{{ include_md("common_text/allele_calling_task.md", indent=4, condition="crono") }}
+
+??? toggle "_Clostridium botulinum_"
+    ##### _Clostridium botulinum_ {% raw %} {#clostridium-botulinum} {% endraw %}
+
+{{ include_md("common_text/allele_calling_task.md", indent=4, condition="cbot") }}
+
 ??? toggle "_Escherichia_ or _Shigella_ spp."
     ##### _Escherichia_ or _Shigella_ spp. {% raw %} {#escherichia-or-shigella} {% endraw %}
 
-    The _Escherichia_ and _Shigella_ genera are [difficult to differentiate as they do not comply with genomic definitions of genera and species](https://www.sciencedirect.com/science/article/abs/pii/S1286457902016374). Consequently, when either _Escherichia_ or _Shigella_ are identified by GAMBIT, all tools intended for these taxa are used.
+    The *Escherichia* and *Shigella* genera are [difficult to differentiate as they do not comply with genomic definitions of genera and species](https://www.sciencedirect.com/science/article/abs/pii/S1286457902016374). Consequently, when either _Escherichia_ or _Shigella_ are identified by GAMBIT, all tools intended for these taxa are used.
+
+{{ include_md("common_text/allele_calling_task.md", indent=4, condition="stec") }}
 
     !!! tip ""
         `SerotypeFinder` and `ECTyper` are intended for analysis of _E. coli_. Both tools are used as there are occasional discrepancies between the serotypes predicted. This primarily arises due to differences in the databases used by each tool.
@@ -207,7 +219,7 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 {{ include_md("common_text/ectyper_task.md", indent=4)}}
 
     !!! tip ""
-        `VirulenceFinder` identifies virulence genes in total or partial sequenced isolates of bacteria. Currently, only _E. coli_ is supported in TheiaProk workflows.
+        `VirulenceFinder` identifies virulence genes in total or partial sequenced isolates of bacteria. Currently, only *E. coli* is supported in TheiaProk workflows.
 
 {{ include_md("common_text/virulencefinder_task.md", indent=4) }}
 
@@ -245,8 +257,13 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 
 {{ include_md("common_text/legsta_task.md", indent=4) }}
 
-??? toggle "_Listeria monocytogenes_"
-    ##### _Listeria monocytogenes_ {% raw %} {#listeria-monocytogenes} {% endraw %}
+??? toggle "_Listeria_ spp."
+    ##### _Listeria_ spp. {% raw %} {#listeria} {% endraw %}
+
+{{ include_md("common_text/allele_calling_task.md", indent=4, condition="listeria") }}
+
+    !!! tip ""
+        The following task only runs when GAMBIT predicts the _Listeria monocytogenes_ species.
 
 {{ include_md("common_text/lissero_task.md", indent=4) }}
 
@@ -275,6 +292,8 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 
 ??? toggle "_Salmonella_ spp."
     ##### _Salmonella_ spp. {% raw %} {#salmonella} {% endraw %}
+
+{{ include_md("common_text/allele_calling_task.md", indent=4, condition="salm") }}
 
     !!! tip ""
         Both SISTR and SeqSero2 are used for serotyping all _Salmonella_ spp. Occasionally, the predicted serotypes may differ between SISTR and SeqSero2. When this occurs, differences are typically small and analogous, and are likely as a result of differing source databases. For more information, see [this guide to _Salmonella_ serovar nomenclature](https://www.happykhan.com/posts/binfie-guide-serovar/).
@@ -313,11 +332,18 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 ??? toggle "_Vibrio_ spp."
     ##### _Vibrio_ spp. {% raw %} {#vibrio} {% endraw %}
 
+{{ include_md("common_text/allele_calling_task.md", indent=4, condition="vibrio") }}
+
 {{ include_md("common_text/abricate_vibrio_task.md", indent=4) }}
 
 {{ include_md("common_text/srst2_task.md", indent=4) }}
 
 {{ include_md("common_text/vibecheck_task.md", indent=4) }}
+
+??? toggle "_Yersinia_ spp."
+    ##### _Yersinia_ spp. {% raw %} {#yersinia} {% endraw %}
+
+{{ include_md("common_text/allele_calling_task.md", indent=4, condition="yersinia") }}
 
 ### Outputs
 

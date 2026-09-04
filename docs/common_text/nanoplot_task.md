@@ -9,6 +9,9 @@ fragment: true
     While this task currently is run _outside_ of the `read_QC_trim_ont` workflow, it is being included here as it calculates statistics on the read data. This is done so that the actual assembly genome lengths can be used (if an estimated genome length is not provided by the user) to ensure the estimated coverage statistics are accurate.
 <!-- endif -->
 
+    !!! dna "Estimated coverage calculations depend on `genome_length` or `quast`"
+        If the user does not provide a `genome_length`, Nanoplot will use the Quast assembly length to calculate the estimated coverage.
+
     !!! techdetails "NanoPlot Technical Details"
         |  | Links |
         | --- | --- |

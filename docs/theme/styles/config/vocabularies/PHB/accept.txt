@@ -55,6 +55,7 @@ Clair3
 Clockwork
 Concatenate_Column_Content
 Conda
+Cronobacter
 Create_Terra_Table
 Cryptococcus
 Cython

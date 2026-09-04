@@ -314,6 +314,7 @@ workflow theiaprok_illumina_pe {
             merlin_tag = select_first([expected_taxon, gambit.merlin_tag]),
             assembly = digger_denovo.assembly_fasta,
             samplename = samplename,
+            gambit_predicted_taxon = gambit.gambit_predicted_taxon,
             read1 = read_QC_trim.read1_clean,
             read2 = read_QC_trim.read2_clean
         }
@@ -368,6 +369,16 @@ workflow theiaprok_illumina_pe {
                 "agrvate_results": merlin_magic.agrvate_results,
                 "agrvate_summary": merlin_magic.agrvate_summary,
                 "agrvate_version": merlin_magic.agrvate_version,
+                "allele_calling_accessory_count": merlin_magic.allele_calling_accessory_count,
+                "allele_calling_accessory_percentage": merlin_magic.allele_calling_accessory_percentage,
+                "allele_calling_core_count": merlin_magic.allele_calling_core_count,
+                "allele_calling_core_percentage": merlin_magic.allele_calling_core_percentage,
+                "allele_calling_docker": merlin_magic.allele_calling_docker,
+                "allele_calling_result": merlin_magic.allele_calling_result,
+                "allele_calling_scheme": merlin_magic.allele_calling_scheme,
+                "allele_calling_standard_json": merlin_magic.allele_calling_standard_json,
+                "allele_calling_core_json": merlin_magic.allele_calling_core_json,
+                "allele_calling_total_loci_count": merlin_magic.allele_calling_total_loci_count,
                 "amr_search_all_resistances": merlin_magic.amr_search_all_resistances,
                 "amr_search_associated_resistances": merlin_magic.amr_search_associated_resistances,
                 "amr_search_csv": merlin_magic.amr_results_csv,
@@ -1368,5 +1379,16 @@ workflow theiaprok_illumina_pe {
     String? arln_taxon_gc_mean = arln_stats.taxon_gc_mean
     String? arln_assembly_zscore = arln_stats.assembly_zscore
     String? arln_stats_docker_version = arln_stats.docker_version
+    # allele caller outputs
+    String? allele_calling_scheme = merlin_magic.allele_calling_scheme
+    String? allele_calling_result = merlin_magic.allele_calling_result
+    File? allele_calling_standard_json = merlin_magic.allele_calling_standard_json
+    File? allele_calling_core_json = merlin_magic.allele_calling_core_json
+    Int? allele_calling_core_count = merlin_magic.allele_calling_core_count
+    Float? allele_calling_core_percentage = merlin_magic.allele_calling_core_percentage
+    Int? allele_calling_accessory_count = merlin_magic.allele_calling_accessory_count
+    Float? allele_calling_accessory_percentage = merlin_magic.allele_calling_accessory_percentage
+    Int? allele_calling_total_loci_count = merlin_magic.allele_calling_total_loci_count
+    String? allele_calling_docker = merlin_magic.allele_calling_docker
   }
 }
