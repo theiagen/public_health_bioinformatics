@@ -332,6 +332,7 @@ workflow theiaeuk_illumina_pe {
     File? theiaeuk_gatk_genotype_gvcf_index = medea_magic.gatk_genotype_gvcf_index
     File? theiaeuk_gatk_filtered_vcf = medea_magic.gatk_filtered_vcf
     File? theiaeuk_gatk_selected_vcf = medea_magic.gatk_selected_vcf
+    Float? theiaeuk_gatk_percent_passing_variants = medea_magic.gatk_percent_passing_variants
     # Gene Coverage Outputs
     File? gene_coverage_stats = medea_magic.gene_coverage_stats
     String? gene_coverage_reads_mapped = medea_magic.gene_coverage_reads_mapped
