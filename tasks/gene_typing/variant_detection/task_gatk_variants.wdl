@@ -7,7 +7,6 @@ task gatk_variants {
     File bai
     File reference_genome
     Int ploidy = 1 # integer indicating ploidy (N); default to haploid
-    File? intervals_file
 
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/gatk:4.6.2.0"
     Int cpu = 8
@@ -60,7 +59,6 @@ task gatk_variants {
       -O ~{samplename}_haplotypecall.g.vcf.gz \
       -ploidy ~{ploidy} \
       --sample-name ~{samplename} \
-      ~{"-L " + intervals_file} \
       --tmp-dir . \
       -ERC GVCF
 
@@ -73,7 +71,6 @@ task gatk_variants {
       GenotypeGVCFs \
       -R ${local_ref} \
       -V ~{samplename}_haplotypecall.g.vcf.gz \
-      ~{"-L " + intervals_file} \
       -O ~{samplename}_genotype.g.vcf.gz
   >>>
   output {
