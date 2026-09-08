@@ -54,6 +54,7 @@ task gatk_variants {
     gatk \
       --java-options "-Xms~{memory}G -Xmx~{memory}G" \
       HaplotypeCaller \
+      -A StrandBiasBySample \
       -R ${local_ref} \
       -I ${bam} \
       -O ~{samplename}_haplotypecall.g.vcf.gz \
@@ -71,7 +72,8 @@ task gatk_variants {
       GenotypeGVCFs \
       -R ${local_ref} \
       -V ~{samplename}_haplotypecall.g.vcf.gz \
-      -O ~{samplename}_genotype.g.vcf.gz
+      -O ~{samplename}_genotype.g.vcf.gz \
+      --keep-combined-raw-annotations
   >>>
   output {
     String gatk_version = read_string("VERSION")
