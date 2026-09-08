@@ -53,15 +53,11 @@ task tbprofiler {
 
     # check if specific branch is provided for tbdb
     elif [ -n "$DB_NAME" ]; then
-
-      # NOTE: `tb-profiler update_tbdb` hardcodes `mutations.csv`, so who_v2+'s `additional_mutations.csv`
-      # gets dropped from the DB (masked until now because the who_v2+ DB comes preloaded).
-      # This mirrors `update_tbdb` logic but globs all *mutations.csv files instead.
+      # NOTE: This section mirrors the `update_tbdb` subcommand logic but globs all *mutations.csv files instead.
       # https://github.com/jodyphelan/TBProfiler/blob/47e6c639c342eeda9791e5c700c1802fc5e8cb86/tb-profiler#L287
       echo "Cloning tbdb branch '$DB_NAME' into $CURRENT_DB"
       git clone --quiet --branch "$DB_NAME" https://github.com/jodyphelan/tbdb.git
       cd tbdb
-
       if [ -n "~{tbdb_branch_commit_hash}" ]; then
         git -c advice.detachedHead=false checkout --quiet ~{tbdb_branch_commit_hash}
       fi
@@ -140,13 +136,10 @@ task tbprofiler {
     import json
     import yaml
 
-    # --- build the gene/drug association truth set used to validate results.json ---
-    # NOTE: The 'genes.bed' from the TBProfiler database directory lists the reportable gene/drug associations,
-    # but CrossResistanceRule entries in 'rules.yml' add drugs at runtime that appear nowhere else in the
-    # database directory. So depending on the database, 'genes.bed' alone can under report the truth set.
-    # Combining both here for downstream input validation.
+    # --- build the gene/drug association truth set used to validate tbp-parser inputs ---
+    # NOTE: The 'genes.bed' from the TBProfiler database directory lists the reportable gene/drug associations.
+    # However, need to also add CrossResistanceRule entries from 'rules.yml' to get complete set of drugs found at runtime.
     # See https://github.com/jodyphelan/TBProfiler/blob/47e6c639c342eeda9791e5c700c1802fc5e8cb86/tbprofiler/rules.py#L179
-
     print("Preparing 'genes.xres.bed' representing the truth set of gene/drug associations.")
     db_dir = "${CURRENT_DB}/${DB_NAME}"
     db_variables = json.load(open(f"{db_dir}/variables.json"))
