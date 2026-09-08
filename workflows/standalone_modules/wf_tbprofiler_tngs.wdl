@@ -64,10 +64,10 @@ workflow tbprofiler_tngs {
   call tbp_parser_task.tbp_parser {
     input:
       coverage_bed = select_first([tbp_parser_coverage_bed, tbprofiler.tbprofiler_db_bed, "gs://theiagen-public-resources-rp/empty_files/empty.bed"]),
-      tbprofiler_db_bed = tbprofiler.tbprofiler_db_bed,
       tbprofiler_json = tbprofiler.tbprofiler_output_json,
       tbprofiler_bam = tbprofiler.tbprofiler_output_bam,
       tbprofiler_bai = tbprofiler.tbprofiler_output_bai,
+      tbprofiler_db_bed = tbprofiler.tbprofiler_db_bed,
       samplename = samplename,
       tngs_data = true
   }
