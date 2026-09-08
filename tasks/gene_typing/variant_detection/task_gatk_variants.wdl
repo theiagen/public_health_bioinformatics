@@ -70,10 +70,10 @@ task gatk_variants {
     # there is no need to specify ploidy for non-diploid organisms."
     gatk --java-options "-Xmx~{memory}G" \
       GenotypeGVCFs \
+      -keep-combined \
       -R ${local_ref} \
       -V ~{samplename}_haplotypecall.g.vcf.gz \
-      -O ~{samplename}_genotype.g.vcf.gz \
-      --keep-combined-raw-annotations
+      -O ~{samplename}_genotype.g.vcf.gz
   >>>
   output {
     String gatk_version = read_string("VERSION")
