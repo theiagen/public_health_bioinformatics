@@ -76,7 +76,7 @@ task metabuli {
     if [[ -n "~{taxon_id}" ]]; then
       echo "DEBUG: Extracting reads"
       awk -F '\t' '$5 == "~{taxon_id}" {print $1}' output_dir/~{samplename}_report.tsv > PERCENT_TARGET_LINEAGE
-      awk -F '\t' '$5 == "~{taxon_id}" {print $1}' output_dir/~{samplename}_report.tsv > READS_TARGET_LINEAGE
+      awk -F '\t' '$5 == "~{taxon_id}" {print $2}' output_dir/~{samplename}_report.tsv > READS_TARGET_LINEAGE
       if [[ -s PERCENT_TARGET_LINEAGE ]]; then
         echo "DEBUG: Taxon ID ~{taxon_id} found in report, proceeding with read extraction"
         echo "DEBUG: ~{taxon_id} comprises $(cat PERCENT_TARGET_LINEAGE)% of reads"
