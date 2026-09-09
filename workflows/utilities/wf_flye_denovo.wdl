@@ -25,7 +25,7 @@ workflow flye_denovo {
     Boolean skip_polishing = false # Default: Polishing enabled
 
     # Porechop inputs
-    String porechop_docker
+    String? porechop_docker
     Int? porechop_cpu
     Int? porechop_memory
     Int? porechop_disk_size
