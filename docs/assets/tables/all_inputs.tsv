@@ -1858,7 +1858,7 @@ quast_denovo	min_contig_length	Int	Minimum length of contig for QUAST	500	Option
 rasusa	coverage	Float	The desired coverage to sub-sample the reads to. If --bases is not provided, this option and --genome-size are required	250	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general	
 rasusa	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 rasusa	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
-rasusa	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/rasusa:2.1.0	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker	
+rasusa	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/rasusa:4.1.0	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker	
 rasusa	fraction_of_reads	Float	Subsample to a fraction of the reads - e.g., 0.5 samples half the reads		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general	
 rasusa	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 rasusa	num_bases	String	Explicitly set the number of bases required e.g., 4.3kb, 7Tb, 9000, 4.1MB. If this option is given, --coverage and --genome-size are ignored		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general	
@@ -1868,7 +1868,7 @@ rasusa	seed	Int	Random seed for reproducibility		Optional	TheiaViral_Illumina_PE
 rasusa_task	coverage	Float	The desired coverage to sub-sample the reads to. If --bases is not provided, this option and --genome-size are required	250	Optional	RASUSA	general	
 rasusa_task	cpu	Int	Number of CPUs to allocate to the task	4	Optional	RASUSA	runtime	
 rasusa_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	RASUSA	runtime	
-rasusa_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/rasusa:2.1.0	Optional	RASUSA	docker	
+rasusa_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/rasusa:4.1.0	Optional	RASUSA	docker	
 rasusa_task	fraction_of_reads	Float	Explicitly define the fraction of reads to keep in the subsample; when used, genome size and coverage are ignored; acceptable inputs include whole numbers and decimals, e.g. 50.0 will leave 50% of the reads in the subsample		Optional	RASUSA	general	
 rasusa_task	genome_length	Int	Input the approximate genome size expected in quotations; this is used to determine the number of bases required to achieve the desired coverage; acceptable metric suffixes include: b, k, m, g, and t for base, kilo, mega, giga, and tera, respectively		Optional	RASUSA	general	
 rasusa_task	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	RASUSA	runtime	
@@ -1954,8 +1954,8 @@ read_QC_trim	rasusa_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Th
 read_QC_trim	rasusa_cpu	Int	Internal component, do not modify	4	Optional	TheiaCoV_ONT	general	
 read_QC_trim	rasusa_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 read_QC_trim	rasusa_disk_size	Int	Internal component, do not modify	100	Optional	TheiaCoV_ONT	general	
-read_QC_trim	rasusa_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/rasusa:2.1.0	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-read_QC_trim	rasusa_docker	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/rasusa:2.1.0	Optional	TheiaCoV_ONT, TheiaEuk_ONT	general	
+read_QC_trim	rasusa_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/rasusa:4.1.0	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
+read_QC_trim	rasusa_docker	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/rasusa:4.1.0	Optional	TheiaCoV_ONT, TheiaEuk_ONT	general	
 read_QC_trim	rasusa_downsampling_coverage	Float	The desired coverage to sub-sample the reads to. If --bases is not provided, this option and --genome-size are required	150	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_ONT	general	
 read_QC_trim	rasusa_fraction_of_reads	Float	Subsample to a fraction of the reads - e.g., 0.5 samples half the reads		Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 read_QC_trim	rasusa_fraction_of_reads	Float	Internal component, do not modify		Optional	TheiaCoV_ONT	general	
@@ -2004,7 +2004,7 @@ read_QC_trim_ont	ncbi_scrub_docker	String	The Docker container to use for the ta
 read_QC_trim_ont	ncbi_scrub_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_ont	rasusa_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_ont	rasusa_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime	
-read_QC_trim_ont	rasusa_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/rasusa:2.1.0	Optional	Freyja_FASTQ	docker	
+read_QC_trim_ont	rasusa_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/rasusa:4.1.0	Optional	Freyja_FASTQ	docker	
 read_QC_trim_ont	rasusa_downsampling_coverage	Float	Internal component, do not modify	150	Optional	Freyja_FASTQ	general	
 read_QC_trim_ont	rasusa_fraction_of_reads	Float	Subsample to a fraction of the reads - e.g., 0.5 samples half the reads		Optional	Freyja_FASTQ	general	
 read_QC_trim_ont	rasusa_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime	
@@ -2033,7 +2033,7 @@ read_QC_trim_pe	min_expected_contaminants	Int	Minimum expected sequences detecte
 read_QC_trim_pe	phix	File	The file containing the phix sequence to be used during bbduk task		Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	rasusa_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_pe	rasusa_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime	
-read_QC_trim_pe	rasusa_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/rasusa:2.1.0	Optional	Freyja_FASTQ	docker	
+read_QC_trim_pe	rasusa_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/rasusa:4.1.0	Optional	Freyja_FASTQ	docker	
 read_QC_trim_pe	rasusa_downsampling_coverage	Float	The desired coverage to sub-sample the reads to with RASUSA	150	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	rasusa_fraction_of_reads	Float	The fraction of reads to retain during downsampling		Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	rasusa_genome_length	String	The length of the genome to use for downsampling calculations		Optional	Freyja_FASTQ	general	
@@ -2063,7 +2063,7 @@ read_QC_trim_se	midas_db	File	Database to use with MIDAS. Not required as one wi
 read_QC_trim_se	phix	File	The file containing the phix sequence to be used during bbduk task		Optional	Freyja_FASTQ	general	
 read_QC_trim_se	rasusa_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_se	rasusa_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime	
-read_QC_trim_se	rasusa_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/rasusa:2.1.0	Optional	Freyja_FASTQ	docker	
+read_QC_trim_se	rasusa_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/rasusa:4.1.0	Optional	Freyja_FASTQ	docker	
 read_QC_trim_se	rasusa_downsampling_coverage	Float	The desired coverage to sub-sample the reads to with RASUSA	150	Optional	Freyja_FASTQ	general	
 read_QC_trim_se	rasusa_fraction_of_reads	Float	The fraction of reads to retain during downsampling		Optional	Freyja_FASTQ	general	
 read_QC_trim_se	rasusa_genome_length	String	The length of the genome to use for downsampling calculations		Optional	Freyja_FASTQ	general	
