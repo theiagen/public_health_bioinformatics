@@ -604,7 +604,9 @@ kraken_report_dehosted	File	Full Kraken report after host removal	NCBI_Scrub_PE,
 kraken_report_dehosted	String	Full Kraken report after host removal	Freyja_FASTQ
 kraken_target_organism	String	Percent of target organism read data detected using the Kraken2 software	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 kraken_target_organism_dehosted	String	Percent of target organism read data detected using the Kraken2 software after host removal	NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
+kraken_target_organism_dehosted_reads	String	Number of reads assigned to the target organism clade detected using the Kraken2 software after host removal	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 kraken_target_organism_name	String	The name of the target organism; e.g., "Monkeypox" or "Human immunodeficiency virus"	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
+kraken_target_organism_reads	String	Number of reads assigned to the target organism clade detected using the Kraken2 software	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 kraken_version	String	Version of Kraken software used	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 kraken_version_dehosted	String	Version of Kraken2 software used	NCBI_Scrub_PE, NCBI_Scrub_SE
 krona_docker	String	The docker image of Krona	Kraken_PE, Kraken_SE, TheiaMeta_Illumina_PE
@@ -720,7 +722,9 @@ metabuli_report_dehosted	String	Classification report from Metabuli after removi
 metabuli_status	String	Status of Metabuli analysis	Metabuli, TheiaViral_ONT
 metabuli_target_organism	String	Percent of reads classified to target organism for Metabuli analysis	TheiaCoV_ONT
 metabuli_target_organism_dehosted	String	Percent of reads classified to target organism for Metabuli analysis after removing human reads	TheiaCoV_ONT
+metabuli_target_organism_dehosted_reads	String	Number of reads classified to target organism for Metabuli analysis after removing human reads	TheiaCoV_ONT
 metabuli_target_organism_name	String	Name of the target organism for Metabuli analysis	TheiaCoV_ONT
+metabuli_target_organism_reads	String	Number of reads classified to target organism for Metabuli analysis	TheiaCoV_ONT
 metabuli_version	String	Version of Metabuli used	Freyja_FASTQ, Metabuli, TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT
 metabuli_wf_analysis_date	String	Analysis date for Metabuli workflow	Metabuli
 metabuli_wf_version	String	Version of Metabuli workflow	Metabuli
