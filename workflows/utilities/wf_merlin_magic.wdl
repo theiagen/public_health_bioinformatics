@@ -205,6 +205,7 @@ workflow merlin_magic {
     Int? tbp_parser_min_read_support
     Float? tbp_parser_min_frequency
     Float? tbp_parser_min_percent_loci_covered
+    Boolean? tbp_parser_skip_input_validation
     Boolean? tbp_parser_tngs_data
     Boolean? tbp_parser_use_err_for_qc
     Boolean? tbp_parser_resolve_overlapping_regions
@@ -214,6 +215,7 @@ workflow merlin_magic {
     String? tbp_parser_operator
     Map[String, String]? tbp_parser_find_and_replace
     Boolean? tbp_parser_debug
+    Int? tbp_parser_memory
     # Vibecheck options
     File? vibecheck_lineage_barcodes
     Float? vibecheck_subsampling_fraction
@@ -486,9 +488,10 @@ workflow merlin_magic {
             tbprofiler_json = tbprofiler.tbprofiler_output_json,
             tbprofiler_bam = tbprofiler.tbprofiler_output_bam,
             tbprofiler_bai = tbprofiler.tbprofiler_output_bai,
+            tbprofiler_db_bed = tbprofiler.tbprofiler_db_bed,
             samplename = samplename,
             config = tbp_parser_config,
-            coverage_bed = tbp_parser_coverage_bed,
+            coverage_bed = select_first([tbp_parser_coverage_bed, tbprofiler.tbprofiler_db_bed, "gs://theiagen-public-resources-rp/empty_files/empty.bed"]),
             err_coverage_bed = tbp_parser_err_coverage_bed,
             lims_report_format_yml = tbp_parser_lims_report_format_yml,
             gene_database_yml = tbp_parser_gene_database_yml,
@@ -497,6 +500,7 @@ workflow merlin_magic {
             min_read_support = tbp_parser_min_read_support,
             min_frequency = tbp_parser_min_frequency,
             min_percent_loci_covered = tbp_parser_min_percent_loci_covered,
+            skip_input_validation = tbp_parser_skip_input_validation,
             tngs_data = tbp_parser_tngs_data,
             use_err_for_qc = tbp_parser_use_err_for_qc,
             resolve_overlapping_regions = tbp_parser_resolve_overlapping_regions,
@@ -507,6 +511,7 @@ workflow merlin_magic {
             find_and_replace = tbp_parser_find_and_replace,
             tbp_parser_debug = tbp_parser_debug,
             docker = tbp_parser_docker_image,
+            memory = tbp_parser_memory,
         }
       }
     }
@@ -894,6 +899,7 @@ workflow merlin_magic {
     String? tbprofiler_resistance_genes = tbprofiler.tbprofiler_resistance_genes
     Float? tbprofiler_median_depth = tbprofiler.tbprofiler_median_depth
     Float? tbprofiler_pct_reads_mapped = tbprofiler.tbprofiler_pct_reads_mapped
+    File? tbprofiler_db_bed = tbprofiler.tbprofiler_db_bed
     String? tbp_parser_version = tbp_parser.tbp_parser_version
     String? tbp_parser_docker = tbp_parser.tbp_parser_docker
     File? tbp_parser_looker_report_csv = tbp_parser.tbp_parser_looker_report_csv
@@ -905,6 +911,8 @@ workflow merlin_magic {
     File? tbp_parser_log = tbp_parser.tbp_parser_log
     Float? tbp_parser_genome_percent_coverage = tbp_parser.tbp_parser_genome_percent_coverage
     Float? tbp_parser_average_genome_depth = tbp_parser.tbp_parser_average_genome_depth
+    File? tbp_parser_generated_gene_database_yml = tbp_parser.tbp_parser_generated_gene_database_yml
+    File? tbp_parser_generated_lims_report_format_yml = tbp_parser.tbp_parser_generated_lims_report_format_yml
     File? clockwork_cleaned_read1 = clockwork_decon_reads.clockwork_cleaned_read1
     File? clockwork_cleaned_read2 = clockwork_decon_reads.clockwork_cleaned_read2
     # Legionella pneumophila Typing
