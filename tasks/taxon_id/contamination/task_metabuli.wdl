@@ -72,9 +72,11 @@ task metabuli {
 
     # Extract the reads
     echo "" > PERCENT_TARGET_LINEAGE
+    echo "" > READS_TARGET_LINEAGE
     if [[ -n "~{taxon_id}" ]]; then
       echo "DEBUG: Extracting reads"
       awk -F '\t' '$5 == "~{taxon_id}" {print $1}' output_dir/~{samplename}_report.tsv > PERCENT_TARGET_LINEAGE
+      awk -F '\t' '$5 == "~{taxon_id}" {print $1}' output_dir/~{samplename}_report.tsv > READS_TARGET_LINEAGE
       if [[ -s PERCENT_TARGET_LINEAGE ]]; then
         echo "DEBUG: Taxon ID ~{taxon_id} found in report, proceeding with read extraction"
         echo "DEBUG: ~{taxon_id} comprises $(cat PERCENT_TARGET_LINEAGE)% of reads"
@@ -121,6 +123,7 @@ task metabuli {
 
       else
         echo "0" > PERCENT_TARGET_LINEAGE
+        echo "0" > READS_TARGET_LINEAGE
         echo "ERROR: Taxon ID ~{taxon_id} not found in report, skipping read extraction"
         metabuli_status="FAIL; taxon not recovered"
       fi
@@ -139,6 +142,7 @@ task metabuli {
     String metabuli_docker = docker
     String metabuli_database = metabuli_db
     String metabuli_percent_target_lineage = read_string("PERCENT_TARGET_LINEAGE")
+    String metabuli_reads_target_lineage = read_string("READS_TARGET_LINEAGE")
     Float metabuli_percent_human = read_float("PERCENT_HUMAN")
   }
   runtime {
