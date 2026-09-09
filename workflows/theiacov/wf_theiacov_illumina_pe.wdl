@@ -316,13 +316,13 @@ workflow theiacov_illumina_pe {
     String? bracken_version = read_QC_trim.bracken_version
     Float? kraken_human = read_QC_trim.kraken2_human
     String? kraken_target_organism = read_QC_trim.kraken2_target_organism
-    String? kraken_reads_target_organism = read_QC_trim.kraken2_reads_target_organism
+    String? kraken_target_organism_reads = read_QC_trim.kraken2_reads_target_organism
     String? kraken_target_organism_name = read_QC_trim.kraken2_target_organism_name
     File? kraken_report = read_QC_trim.kraken2_report
     String? bracken_report = read_QC_trim.bracken_report
     Float? kraken_human_dehosted = read_QC_trim.kraken2_human_dehosted
     String? kraken_target_organism_dehosted = read_QC_trim.kraken2_target_organism_dehosted
-    String? kraken_reads_target_organism_dehosted = read_QC_trim.kraken2_reads_target_organism_dehosted
+    String? kraken_target_organism_dehosted_reads = read_QC_trim.kraken2_reads_target_organism_dehosted
     File? kraken_report_dehosted = read_QC_trim.kraken2_report_dehosted
     String? bracken_report_dehosted = read_QC_trim.bracken_report_dehosted
     # Read QC - rasusa outputs

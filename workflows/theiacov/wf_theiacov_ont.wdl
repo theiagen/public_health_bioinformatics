@@ -287,12 +287,12 @@ workflow theiacov_ont {
     # Read QC - metabuli outputs raw
     Float? metabuli_human = read_QC_trim.metabuli_percent_human
     String? metabuli_target_organism = read_QC_trim.metabuli_percent_target_organism
-    String? metabuli_reads_target_organism = read_QC_trim.metabuli_reads_target_organism
+    String? metabuli_target_organism_reads = read_QC_trim.metabuli_reads_target_organism
     String? metabuli_report = read_QC_trim.metabuli_report
     # Read QC - metabuli outputs dehosted
     Float? metabuli_human_dehosted = read_QC_trim.metabuli_percent_human_dehosted
     String? metabuli_target_organism_dehosted = read_QC_trim.metabuli_percent_target_organism_dehosted
-    String? metabuli_reads_target_organism_dehosted = read_QC_trim.metabuli_reads_target_organism_dehosted
+    String? metabuli_target_organism_dehosted_reads = read_QC_trim.metabuli_reads_target_organism_dehosted
     String? metabuli_report_dehosted = read_QC_trim.metabuli_report_dehosted
     # Read Alignment - Artic consensus and IRMA Aligned outputs
     String assembly_fasta = select_first([consensus.consensus_seq, flu_track.irma_assembly_fasta, "Assembly could not be generated"])
