@@ -19,7 +19,6 @@ workflow read_QC_trim_ont {
     # setting this to be 5Mb which is around .7Mb greater than the mean genome length of bacteria (based on https://github.com/CDCgov/phoenix/blob/717d19c19338373fc0f89eba30757fe5cfb3e18a/assets/databases/NCBI_Assembly_stats_20240124.txt)
     # this default will not be used for TheiaCoV as that workflow series pass in the expected length based on the organism tag
     Int? genome_length
-    Boolean? call_rasusa
 
     String? workflow_series
 
@@ -50,7 +49,7 @@ workflow read_QC_trim_ont {
     File? metabuli_taxdump_path
 
     # rasusa downsampling inputs
-    Boolean? call_rasusa = False
+    Boolean call_rasusa = false
     Float rasusa_downsampling_coverage = 150
     Int? rasusa_cpu
     Int? rasusa_disk_size
@@ -130,7 +129,8 @@ workflow read_QC_trim_ont {
   }
   if ( "~{workflow_series}" == "theiaprok" || "~{workflow_series}" == "theiaeuk" ) {
     # rasusa for random downsampling
-    if ( (defined(genome_length) ||  defined(rasusa_fraction_of_reads) || defined(rasusa_num_bases) || defined(rasusa_num_reads)) && call_rasusa) {
+    # ## need to specify that
+    if (call_rasusa && (defined(genome_length) ||  defined(rasusa_fraction_of_reads) || defined(rasusa_num_bases) || defined(rasusa_num_reads))) {
       call rasusa_task.rasusa {
         input:
           read1 = read1,
