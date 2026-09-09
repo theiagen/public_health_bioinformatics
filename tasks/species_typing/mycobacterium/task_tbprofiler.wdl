@@ -140,11 +140,12 @@ task tbprofiler {
     # NOTE: The 'genes.bed' from the TBProfiler database directory lists the reportable gene/drug associations.
     # However, need to also add CrossResistanceRule entries from 'rules.yml' to get complete set of drugs found at runtime.
     # See https://github.com/jodyphelan/TBProfiler/blob/47e6c639c342eeda9791e5c700c1802fc5e8cb86/tbprofiler/rules.py#L179
-    print("Preparing 'genes.xres.bed' representing the truth set of gene/drug associations.")
+    samplename = "~{samplename}"
     db_dir = "${CURRENT_DB}/${DB_NAME}"
+    print(f"Preparing '{samplename}.tbdb_xres.bed' representing the truth set of gene/drug associations.")
+
     db_variables = json.load(open(f"{db_dir}/variables.json"))
     db_files = db_variables["files"]
-
     rules = yaml.safe_load(open(f"{db_dir}/{db_files['rules']}")) if db_files.get("rules") else {}
 
     cross_resistance = [
@@ -153,7 +154,7 @@ task tbprofiler {
     ]
 
     genes_bed = f"{db_dir}/{db_files['bed']}"
-    genes_xres_bed = "genes.xres.bed"
+    genes_xres_bed = f"~{samplename}.tbdb_xres.bed"
     with open(genes_bed, "r") as infile, open(genes_xres_bed, "w") as outfile:
       reader = csv.reader(infile, delimiter="\t")
       writer = csv.writer(outfile, delimiter="\t", lineterminator="\n")
@@ -223,7 +224,7 @@ task tbprofiler {
     String tbprofiler_resistance_genes = read_string("RESISTANCE_GENES")
     Float tbprofiler_median_depth = read_float("MEDIAN_DEPTH")
     Float tbprofiler_pct_reads_mapped = read_float("PCT_READS_MAPPED")
-    File? tbprofiler_db_bed = "genes.xres.bed"
+    File? tbprofiler_db_bed = "~{samplename}.tbdb_xres.bed"
   }
   runtime {
     docker: "~{docker}"
