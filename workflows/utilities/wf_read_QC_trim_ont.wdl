@@ -49,6 +49,7 @@ workflow read_QC_trim_ont {
     File? metabuli_taxdump_path
 
     # rasusa downsampling inputs
+    Boolean call_rasusa = false
     Float rasusa_downsampling_coverage = 150
     Int? rasusa_cpu
     Int? rasusa_disk_size
@@ -128,7 +129,8 @@ workflow read_QC_trim_ont {
   }
   if ( "~{workflow_series}" == "theiaprok" || "~{workflow_series}" == "theiaeuk" ) {
     # rasusa for random downsampling
-    if ( defined(genome_length) ||  defined(rasusa_fraction_of_reads) || defined(rasusa_num_bases) || defined(rasusa_num_reads) ) {
+    # ## need to specify that
+    if (call_rasusa && (defined(genome_length) ||  defined(rasusa_fraction_of_reads) || defined(rasusa_num_bases) || defined(rasusa_num_reads))) {
       call rasusa_task.rasusa {
         input:
           read1 = read1,
