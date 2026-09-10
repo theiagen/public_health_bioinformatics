@@ -106,7 +106,7 @@ task amrfinderplus_nuc {
 
     # remove mutations where Element subtype is "POINT"
     if [[ "~{hide_point_mutations}" == "true" ]]; then
-      awk -F "\t" '$11 != "POINT"' ~{samplename}_amrfinder_all.tsv >> temp.tsv
+      awk -F "\t" '$11 != "POINT" && $11 != "POINT_DISRUPT"' ~{samplename}_amrfinder_all.tsv >> temp.tsv
       mv temp.tsv ~{samplename}_amrfinder_all.tsv
     fi
 
