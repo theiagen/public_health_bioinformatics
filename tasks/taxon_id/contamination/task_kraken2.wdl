@@ -138,14 +138,27 @@ task kraken2 {
       echo "INFO: Percentage target organism (~{target_organism}):"
       echo $percent_target_organism | tee PERCENT_TARGET_ORGANISM
 
-      reads_target_organism=$(echo "$target_organism_line" | cut -f2)
-      if [ -z "$reads_target_organism" ]; then
-        reads_target_organism="0"
+      # column 2 of the kraken2 report is fragments covered by the clade. In --paired
+      # mode kraken2 counts a read pair as a single fragment, so this is read pairs for
+      # paired-end data and reads for single-end data
+      fragments_target_organism=$(echo "$target_organism_line" | cut -f2)
+      if [ -z "$fragments_target_organism" ]; then
+        fragments_target_organism="0"
+      fi
+      echo "INFO: Fragments assigned to target organism clade (~{target_organism}):"
+      echo $fragments_target_organism | tee FRAGMENTS_TARGET_ORGANISM
+
+      # convert fragments to reads so the value means reads on every platform
+      if [ "$mode" == "--paired" ]; then
+        reads_target_organism=$(( fragments_target_organism * 2 ))
+      else
+        reads_target_organism="$fragments_target_organism"
       fi
       echo "INFO: Reads assigned to target organism clade (~{target_organism}):"
       echo $reads_target_organism | tee READS_TARGET_ORGANISM
     else
       echo "" > PERCENT_TARGET_ORGANISM
+      echo "" > FRAGMENTS_TARGET_ORGANISM
       echo "" > READS_TARGET_ORGANISM
     fi
   >>>
