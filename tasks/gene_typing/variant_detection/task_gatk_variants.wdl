@@ -71,6 +71,7 @@ task gatk_variants {
     gatk --java-options "-Xmx~{memory}G" \
       GenotypeGVCFs \
       -keep-combined \
+      -A StrandBiasBySample \
       -R ${local_ref} \
       -V ~{samplename}_haplotypecall.g.vcf.gz \
       -O ~{samplename}_genotype.g.vcf.gz
