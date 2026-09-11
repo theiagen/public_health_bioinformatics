@@ -146,7 +146,7 @@ task kraken2 {
         fragments_target_organism="0"
       fi
       echo "INFO: Fragments assigned to target organism clade (~{target_organism}):"
-      echo $fragments_target_organism | tee FRAGMENTS_TARGET_ORGANISM
+      echo $fragments_target_organism
 
       # convert fragments to reads so the value means reads on every platform
       if [ "$mode" == "--paired" ]; then
@@ -158,7 +158,6 @@ task kraken2 {
       echo $reads_target_organism | tee READS_TARGET_ORGANISM
     else
       echo "" > PERCENT_TARGET_ORGANISM
-      echo "" > FRAGMENTS_TARGET_ORGANISM
       echo "" > READS_TARGET_ORGANISM
     fi
   >>>
