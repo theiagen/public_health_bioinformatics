@@ -324,9 +324,15 @@ workflow organism_parameters {
     File rabies_nextclade_genome = "gs://theiagen-public-resources-rp/reference_data/viral/rabies/nextclade/rabies_reference.20250623.fasta"
     File rabies_nextclade_tree = "gs://theiagen-public-resources-rp/reference_data/viral/rabies/nextclade/rabies_tree.20250623.json"
   }
+  # set dengue nextclade parameters
+  if (organism == "dengue" || organism == "Dengue Virus" || organism == "Orthoflavivirus denguei" || organism == "DENV" || organism == "Dengue" || organism == "12637" || organism == "3052464") {
+    String dengue_org_name = "dengue"
+    String dengue_nextclade_ds_tag = "2026-04-14--11-55-23Z"
+    String dengue_nextclade_ds_name = "nextstrain/dengue/all"
+  }
   output {
     # standardized organism flag
-    String standardized_organism = select_first([sc2_org_name, mpox_org_name, wnv_org_name, flu_org_name, rsv_a_org_name, rsv_b_org_name, hiv_org_name, measles_org_name, rabies_org_name, mumps_org_name, rubella_org_name, organism])
+    String standardized_organism = select_first([sc2_org_name, mpox_org_name, wnv_org_name, flu_org_name, rsv_a_org_name, rsv_b_org_name, hiv_org_name, measles_org_name, rabies_org_name, mumps_org_name, rubella_org_name, dengue_org_name, organism])
     # reference genome and sequencing information
     File reference = select_first([reference_genome, sc2_reference_genome, mpox_reference_genome, wnv_reference_genome, h1n1_ha_reference, h3n2_ha_reference, vic_ha_reference, yam_ha_reference, h5n1_ha_reference, h1n1_na_reference, h3n2_na_reference, vic_na_reference, yam_na_reference, rsv_a_reference_genome, rsv_b_reference_genome, hiv_v1_reference_genome, hiv_v2_reference_genome, rabies_nextclade_genome, measles_reference_genome, mumps_reference_genome, rubella_reference_genome, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
     File gene_locations_bed = select_first([gene_locations_bed_file, sc2_gene_locations_bed, mpox_gene_locations_bed, "gs://theiagen-public-resources-rp/empty_files/empty.bed"])
@@ -334,8 +340,8 @@ workflow organism_parameters {
     File reference_gff = select_first([reference_gff_file, mpox_reference_gff_file, hiv_v1_reference_gff, hiv_v2_reference_gff, rabies_nextclade_gff, "gs://theiagen-public-resources-rp/empty_files/empty.gff3"])
     Int genome_length = select_first([genome_length_input, sc2_genome_len, mpox_genome_len, wnv_genome_len, flu_genome_len, rsv_a_genome_len, rsv_b_genome_len, hiv_v1_genome_len, hiv_v2_genome_len, measles_genome_len, mumps_genome_len, rubella_genome_len, 0])
     # nextclade information
-    String nextclade_dataset_tag = select_first([nextclade_dataset_tag_input, sc2_nextclade_ds_tag, mpox_nextclade_ds_tag, wnv_nextclade_ds_tag, h1n1_ha_nextclade_ds_tag, h3n2_ha_nextclade_ds_tag, vic_ha_nextclade_ds_tag, yam_ha_nextclade_ds_tag, h5n1_ha_nextclade_ds_tag, h1n1_na_nextclade_ds_tag, h3n2_na_nextclade_ds_tag, vic_na_nextclade_ds_tag, yam_na_nextclade_ds_tag, rsv_a_nextclade_ds_tag, rsv_b_nextclade_ds_tag, measles_nextclade_ds_tag, "NA"])
-    String nextclade_dataset_name = select_first([nextclade_dataset_name_input, sc2_nextclade_ds_name, mpox_nextclade_ds_name, wnv_nextclade_ds_name, h1n1_ha_nextclade_ds_name, h3n2_ha_nextclade_ds_name, vic_ha_nextclade_ds_name, yam_ha_nextclade_ds_name, h5n1_ha_nextclade_ds_name, h1n1_na_nextclade_ds_name, h3n2_na_nextclade_ds_name, vic_na_nextclade_ds_name, yam_na_nextclade_ds_name, rsv_a_nextclade_ds_name, rsv_b_nextclade_ds_name, measles_nextclade_ds_name, "NA"])
+    String nextclade_dataset_tag = select_first([nextclade_dataset_tag_input, sc2_nextclade_ds_tag, mpox_nextclade_ds_tag, wnv_nextclade_ds_tag, h1n1_ha_nextclade_ds_tag, h3n2_ha_nextclade_ds_tag, vic_ha_nextclade_ds_tag, yam_ha_nextclade_ds_tag, h5n1_ha_nextclade_ds_tag, h1n1_na_nextclade_ds_tag, h3n2_na_nextclade_ds_tag, vic_na_nextclade_ds_tag, yam_na_nextclade_ds_tag, rsv_a_nextclade_ds_tag, rsv_b_nextclade_ds_tag, measles_nextclade_ds_tag, dengue_nextclade_ds_tag, "NA"])
+    String nextclade_dataset_name = select_first([nextclade_dataset_name_input, sc2_nextclade_ds_name, mpox_nextclade_ds_name, wnv_nextclade_ds_name, h1n1_ha_nextclade_ds_name, h3n2_ha_nextclade_ds_name, vic_ha_nextclade_ds_name, yam_ha_nextclade_ds_name, h5n1_ha_nextclade_ds_name, h1n1_na_nextclade_ds_name, h3n2_na_nextclade_ds_name, vic_na_nextclade_ds_name, yam_na_nextclade_ds_name, rsv_a_nextclade_ds_name, rsv_b_nextclade_ds_name, measles_nextclade_ds_name, dengue_nextclade_ds_name, "NA"])
     File nextclade_custom_dataset = select_first([b3_13_custom_nextclade_dataset, d1_1_custom_nextclade_dataset, "gs://theiagen-public-resources-rp/empty_files/empty.json"])
     String nextclade_pathogen_json = select_first([rabies_pathogen_json, "NA"])
     String nextclade_auspice_tree = select_first([rabies_nextclade_tree, "NA"])
