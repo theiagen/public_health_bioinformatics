@@ -207,7 +207,7 @@ workflow morgana_magic {
     }
   }
   # Non-flu Nextclade
-  if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "measles" ) {
+  if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "measles" || organism_parameters.standardized_organism == "dengue") {
     call nextclade_task.nextclade_v3 {
       input:
         genome_fasta = assembly_fasta,
