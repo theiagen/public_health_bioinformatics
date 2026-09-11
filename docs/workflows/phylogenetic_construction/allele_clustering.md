@@ -6,7 +6,13 @@
 
 ## Allele_Clustering_PHB
 
-The Allele Clustering module is used by PulseNet 2.0 to generate NWK trees for visualization, using the results from the `allele_clustering` task in TheiaProk.
+The Allele_Clustering_PHB workflow provives tools for generating **distance matrices** and inferring **distance-based trees** from core- or whole-genome allele profiles produced by the [TheiaProk™ suite of workflows](../workflows/genomic_characterization/theiaprok.md).
+
+This workflow supports:
+
+- Calculation of **absolute or normalized allele differences** between samples in a set;
+- **Tree inference** using UPGMA, single-linkage, complete-linkage, neighbor-joining, and minimum-spanning tree algorithms;
+- Generation of trees directly from **TheiaProk's Allele Calling hashes**, which represent hierarchical groupings based on the provided  core- or whole-genome MLST results.
 
 === "Allele_Clustering_PHB"
 
