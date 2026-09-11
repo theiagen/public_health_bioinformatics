@@ -5,7 +5,7 @@ task quast {
     File assembly
     String samplename
     Int min_contig_length = 500
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/quast:5.0.2"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/quast:5.3.0"
     Int disk_size = 100
     Int memory = 2 # added default value
     Int cpu = 2 # added default value
