@@ -78,8 +78,8 @@ task gatk_variants {
   >>>
   output {
     String gatk_version = read_string("VERSION")
-    File gatk_genotype_gvcf = "~{samplename}_genotype.g.vcf.gz"
-    File gatk_genotype_gvcf_index = "~{samplename}_genotype.g.vcf.gz.tbi"
+    File gatk_genotype_vcf = "~{samplename}_genotype.vcf.gz"
+    File gatk_genotype_vcf_index = "~{samplename}_genotype.vcf.gz.tbi"
   }
   runtime {
     docker: "~{docker}"

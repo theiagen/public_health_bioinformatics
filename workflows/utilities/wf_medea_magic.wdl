@@ -147,8 +147,8 @@ workflow medea_magic {
         input:
           samplename = samplename,
           reference_genome = resolved_reference_fasta,
-          gvcf = gatk_variants.gatk_genotype_gvcf,
-          gvcf_index = gatk_variants.gatk_genotype_gvcf_index,
+          vcf = gatk_variants.gatk_genotype_vcf,
+          vcf_index = gatk_variants.gatk_genotype_vcf_index,
           min_variant_quality = gatk_filter_min_variant_quality,
           min_depth = gatk_filter_min_depth,
           min_map_quality = gatk_filter_min_map_quality,
@@ -290,8 +290,8 @@ workflow medea_magic {
     # variant calling - illumina (bwa alignment + gatk)
     String? bwa_version = bwa_variant_calling.bwa_version
     String? gatk_version = gatk_variants.gatk_version
-    File? gatk_genotype_gvcf = gatk_variants.gatk_genotype_gvcf
-    File? gatk_genotype_gvcf_index = gatk_variants.gatk_genotype_gvcf_index
+    File? gatk_genotype_vcf = gatk_variants.gatk_genotype_vcf
+    File? gatk_genotype_vcf_index = gatk_variants.gatk_genotype_vcf_index
     File? gatk_filtered_vcf = gatk_filter.gatk_filtered_vcf
     File? gatk_filtered_vcf_index = gatk_filter.gatk_filtered_vcf_index
     File? gatk_selected_vcf = gatk_filter.gatk_selected_vcf

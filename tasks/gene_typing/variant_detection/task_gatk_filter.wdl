@@ -4,8 +4,8 @@ task gatk_filter {
   input {
     String samplename
     File reference_genome
-    File gvcf
-    File gvcf_index
+    File vcf
+    File vcf_index
 
     # defaults informed by here: https://gatk.broadinstitute.org/hc/en-us/articles/360035890471-Hard-filtering-germline-short-variants
     Float min_variant_quality = 30
@@ -75,31 +75,31 @@ task gatk_filter {
     mapfile -t FILTER_ARGS < FILTER_EXPRESSION.txt
     gatk --java-options "-Xmx~{memory}G" VariantFiltration \
       -R ${local_ref} \
-      -V ~{gvcf} \
-      -O ~{samplename}_filtered.g.vcf.gz \
+      -V ~{vcf} \
+      -O ~{samplename}_filtered.vcf.gz \
       ~{'--filter-name "user_filter" --filter-expression "' + filter_expression + '"'} \
       ${FILTER_ARGS[@]}
 
     # call SelectVariants and drop those without PASS flags
     gatk --java-options "-Xmx~{memory}G" SelectVariants \
-      -V ~{samplename}_filtered.g.vcf.gz \
-      -O ~{samplename}_selected.g.vcf.gz \
+      -V ~{samplename}_filtered.vcf.gz \
+      -O ~{samplename}_selected.vcf.gz \
       --exclude-filtered true
 
     # quantify the proportion of records that survived filtering; the FILTER
     # column (7) of every non-header record is either PASS or the name(s) of the
     # filter(s) it failed. records with no annotation (".") count toward the
     # denominator only. an empty VCF reports 0
-    zcat ~{samplename}_filtered.g.vcf.gz \
+    zcat ~{samplename}_filtered.vcf.gz \
       | awk -F'\t' '!/^#/ {total++; if ($7 == "PASS") pass++} END {printf "%.2f\n", (total > 0) ? (pass / total) * 100 : 0}' \
       | tee PERCENT_PASS.txt
   >>>
   output {
     String gatk_version = read_string("VERSION")
-    File gatk_filtered_vcf = "~{samplename}_filtered.g.vcf.gz"
-    File gatk_filtered_vcf_index = "~{samplename}_filtered.g.vcf.gz.tbi"
-    File gatk_selected_vcf = "~{samplename}_selected.g.vcf.gz"
-    File gatk_selected_vcf_index = "~{samplename}_selected.g.vcf.gz.tbi"
+    File gatk_filtered_vcf = "~{samplename}_filtered.vcf.gz"
+    File gatk_filtered_vcf_index = "~{samplename}_filtered.vcf.gz.tbi"
+    File gatk_selected_vcf = "~{samplename}_selected.vcf.gz"
+    File gatk_selected_vcf_index = "~{samplename}_selected.vcf.gz.tbi"
     Float gatk_percent_passing = read_float("PERCENT_PASS.txt")
   }
   runtime {

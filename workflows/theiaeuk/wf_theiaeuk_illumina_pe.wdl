@@ -340,8 +340,8 @@ workflow theiaeuk_illumina_pe {
     File? theiaeuk_variant_calling_bam = medea_magic.variant_calling_bam
     File? theiaeuk_variant_calling_bai = medea_magic.variant_calling_bai
     String? theiaeuk_gatk_version = medea_magic.gatk_version
-    File? theiaeuk_gatk_genotype_gvcf = medea_magic.gatk_genotype_gvcf
-    File? theiaeuk_gatk_genotype_gvcf_index = medea_magic.gatk_genotype_gvcf_index
+    File? theiaeuk_gatk_genotype_vcf = medea_magic.gatk_genotype_vcf
+    File? theiaeuk_gatk_genotype_vcf_index = medea_magic.gatk_genotype_vcf_index
     File? theiaeuk_gatk_filtered_vcf = medea_magic.gatk_filtered_vcf
     File? theiaeuk_gatk_selected_vcf = medea_magic.gatk_selected_vcf
     Float? theiaeuk_gatk_percent_passing_variants = medea_magic.gatk_percent_passing_variants
