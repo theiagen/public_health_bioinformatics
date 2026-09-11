@@ -8,6 +8,13 @@
 
 The Allele Clustering module is used by PulseNet 2.0 to generate NWK trees for visualization, using the results from the `allele_clustering` task in TheiaProk.
 
+=== "Allele_Clustering_PHB"
+
+    !!! caption "Allele Clustering Workflow Overview"
+        <div style="text-align: center;">
+        ![Allele Clustering workflow taking cg- or wgMLST results and generating a dendogram in Newick format and an allele difference distance matrix.](../../assets/figures/Allele_Clustering.png){: onload="this.width/=2;this.onload=null;" }
+        </div>
+
 ### Inputs
 
 !!! dna "`tree_building_algorithm` options"
