@@ -39,7 +39,7 @@ If the **distance between the query genome assembly and the closest genome in th
 
 The [**GAMBIT_Query_PHB**](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Gambit_Query_PHB) workflow performs taxon assignment of a genome assembly using GAMBIT. It can be imported directly to [Terra.bio](https://terra.bio) via [Dockstore](https://dockstore.org).
 
-Two inputs are required for the **GAMBIT_Query_PHB** workflow: a genome assembly and a sample name associated with the genome assembly. The default GAMBIT database used for taxonomic identification is the Prokaryotic [GAMBIT Database GTDB v2.2.0](#gambit-gtdb-database-v220), but alternate GAMBIT databases can be provided.
+Two inputs are required for the **GAMBIT_Query_PHB** workflow: a genome assembly and a sample name associated with the genome assembly. The default GAMBIT database used for taxonomic identification is the Prokaryotic [GAMBIT Database GTDB v3.1.0](#gambit-gtdb-database-v310), but alternate GAMBIT databases can be provided.
 
 !!! dna "Gambit_Query_PHB"
     More information on [**GAMBIT_Query_PHB**](../workflows/standalone/gambit_query.md) is available.
@@ -62,7 +62,7 @@ Two inputs are required for the **GAMBIT_Query_PHB** workflow: a genome assembly
 
 Additionally, GAMBIT is also part of the **TheiaProk** and **TheiaEuk** collection of workflows. TheiaProk is dedicated to the analysis of prokaryotic data, and TheiaEuk is intended for mycotics. The TheiaProk or TheiaEuk workflow most appropriate for your type of input data can be imported from the Dockstore links on the right.
 
-In both, GAMBIT is responsible for performing the taxonomic identification of the assembled sequences, which can trigger taxa-specific submodules for further genomic characterization. For TheiaProk, the default database is the Prokaryotic [GAMBIT Database GTDB v2.2.0](#gambit-gtdb-database-v220) and for TheiaEuk, the default database is the [Fungal GAMBIT Database v1.0.0](#gambit-fungal-database-v100).
+In both, GAMBIT is responsible for performing the taxonomic identification of the assembled sequences, which can trigger taxa-specific submodules for further genomic characterization. For TheiaProk, the default database is the Prokaryotic [GAMBIT Database GTDB v3.1.0](#gambit-gtdb-database-v310) and for TheiaEuk, the default database is the [Fungal GAMBIT Database v1.0.0](#gambit-fungal-database-v100).
 
 !!! dna "TheiaProk and TheiaEuk"
     More information on TheiaProk and TheiaEuk is available on the following pages:
@@ -175,6 +175,43 @@ Options:
     A billing project **must** be provided in the request to download; otherwise, the following links and GS URIs will not work.
 
 ### GAMBIT Prokaryotic Databases
+
+#### GAMBIT GTDB Database v3.1.0
+
+??? toggle "Database Details"
+
+    This database is a **minor update** to the v3.0.0 database. This database is identical to the v3.0.0 database, **except for the following modifications**.
+
+    <!-- TODO: describe the curation changes made in v3.1.0, e.g.:
+    1. <Species renamed / reason>
+        a. Rationale: <why>
+    2. The following genomes were removed.
+        a. Rationale: <why>
+
+        GCF_XXXXXXXXX.X
+    -->
+
+    **Database Files**
+
+    These database files are hosted in a public "Requester Pays" Google bucket by Theiagen Genomics:
+
+    **GS URI (for [Terra.bio](https://terra.bio) usage):**
+
+    - `gs://gambit-databases-rp/3.1.0/gambit-metadata-3.1.0-20260911.gdb`
+    - `gs://gambit-databases-rp/3.1.0/gambit-signatures-3.1.0-20260911.gs`
+
+    **HTTPS URL (for local download):**
+
+    - <https://storage.googleapis.com/gambit-databases-rp/3.1.0/gambit-metadata-3.1.0-20260911.gdb>
+    - <https://storage.googleapis.com/gambit-databases-rp/3.1.0/gambit-signatures-3.1.0-20260911.gs>
+
+    **Taxa included in the GAMBIT database**
+
+    Summary of species represented in the database with number of genomes representing each species and the species threshold:
+
+    - <https://storage.googleapis.com/gambit-databases-rp/3.1.0/gambit-taxa-3.1.0-20260911.csv>
+
+        Note: Species with a threshold of "0" have been sub-speciated.
 
 #### GAMBIT GTDB Database v3.0.0
 
