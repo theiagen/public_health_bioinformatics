@@ -393,6 +393,7 @@ workflow theiaprok_ont {
                   "est_coverage_raw": nanoplot_raw.est_coverage,
                   "filtered_contigs_metrics": flye_denovo.filtered_contigs_metrics,
                   "flye_assembly_info": flye_denovo.flye_assembly_info,
+                  "flye_assembly_status": flye_denovo.flye_assembly_status,
                   "flye_version": flye_denovo.flye_version,
                   "gambit_closest_genomes": gambit.gambit_closest_genomes_file,
                   "gambit_db_version": gambit.gambit_db_version,
