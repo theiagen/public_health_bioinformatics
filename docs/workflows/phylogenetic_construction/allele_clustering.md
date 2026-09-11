@@ -6,20 +6,18 @@
 
 ## Allele_Clustering_PHB
 
-The Allele_Clustering_PHB workflow provives tools for generating **distance matrices** and inferring **distance-based trees** from core- or whole-genome allele profiles produced by the [TheiaProk™ suite of workflows](../workflows/genomic_characterization/theiaprok.md).
+The Allele_Clustering_PHB workflow provides tools for generating **distance matrices** and inferring **distance-based trees** from core- or whole-genome allele profiles produced by the [TheiaProk workflows](../workflows/genomic_characterization/theiaprok.md).
 
 This workflow supports:
 
 - Calculation of **absolute or normalized allele differences** between samples in a set;
 - **Tree inference** using UPGMA, single-linkage, complete-linkage, neighbor-joining, and minimum-spanning tree algorithms;
-- Generation of trees directly from **TheiaProk's Allele Calling hashes**, which represent hierarchical groupings based on the provided  core- or whole-genome MLST results.
+- Generation of trees directly from **TheiaProk's Allele Calling hashes**, which represent hierarchical groupings based on the provided core- or whole-genome MLST results.
 
-=== "Allele_Clustering_PHB"
-
-    !!! caption "Allele Clustering Workflow Overview"
-        <div style="text-align: center;">
-        ![Allele Clustering workflow taking cg- or wgMLST results and generating a dendogram in Newick format and an allele difference distance matrix.](../../assets/figures/Allele_Clustering.png){: onload="this.width/=2;this.onload=null;" }
-        </div>
+!!! caption "Allele Clustering Workflow Overview"
+    <div style="text-align: center;">
+    ![Allele Clustering workflow taking cg- or wgMLST results and generating a dendrogram in Newick format and an allele difference distance matrix.](../../assets/figures/Allele_Clustering.png){: onload="this.width/=2;this.onload=null;" }
+    </div>
 
 ### Inputs
 

@@ -369,6 +369,7 @@ dehost
 dehosted
 deinterleaves
 deltocephalinicola
+dendrogram
 demethylase
 demix
 demixed

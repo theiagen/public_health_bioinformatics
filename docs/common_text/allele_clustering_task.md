@@ -4,7 +4,7 @@ fragment: true
 ---
 
 ??? task "`allele_clustering`: PulseNet 2.0 Hash-Based Allele Clustering"
-    The Allele Clustering module is used by PulseNet 2.0 to generate NWK trees for visualization, using the results from the `allele_clustering` task available on the [TheiaProk™ suite of workflows](../workflows/genomic_characterization/theiaprok.md).
+    The Allele Clustering module is used by PulseNet 2.0 to generate NWK trees for visualization, using the results from the `allele_clustering` task available in the [TheiaProk workflows](../workflows/genomic_characterization/theiaprok.md).
 
     To run this task, a tree building algorithm and distance algorithm must be specified; these options are available in the [inputs](#inputs) section of the workflow documentation.
 
