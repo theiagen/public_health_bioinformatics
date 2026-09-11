@@ -219,10 +219,12 @@ workflow read_QC_trim_se {
     String bracken_version = select_first([kraken2_theiacov_raw.bracken_version, kraken2_theiaprok.bracken_version, ""])
     Float? kraken2_human = kraken2_theiacov_raw.kraken2_percent_human
     String? kraken2_target_organism = kraken2_theiacov_raw.kraken2_percent_target_organism
+    String? kraken2_reads_target_organism = kraken2_theiacov_raw.kraken2_reads_target_organism
     String kraken2_report = select_first([kraken2_theiacov_raw.kraken2_report, kraken2_theiaprok.kraken2_report, ""])
     String bracken_report = select_first([kraken2_theiacov_raw.bracken_report, kraken2_theiaprok.bracken_report, ""])
     Float? kraken2_human_dehosted = kraken2_theiacov_dehosted.kraken2_percent_human
     String? kraken2_target_organism_dehosted = kraken2_theiacov_dehosted.kraken2_percent_target_organism
+    String? kraken2_reads_target_organism_dehosted = kraken2_theiacov_dehosted.kraken2_reads_target_organism
     String? kraken2_target_organism_name = target_organism
     File? kraken2_report_dehosted = kraken2_theiacov_dehosted.kraken2_report
     File? bracken_report_dehosted = kraken2_theiacov_dehosted.bracken_report
