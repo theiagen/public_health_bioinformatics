@@ -429,6 +429,7 @@ flu_rimantadine_resistance	String	resistance mutations to rimantadine	TheiaCoV_F
 flu_xofluza_resistance	String	resistance mutations to xofluza (Baloxavir marboxil)	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT
 flu_zanamivir_resistance	String	resistance mutations to zanamivir (Relenza®)	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT
 flye_assembly_info	String	Information file from Flye assembly	TheiaEuk_ONT, TheiaProk_ONT
+flye_assembly_status	String	Status of Flye assembly	TheiaEuk_ONT, TheiaProk_ONT
 flye_denovo_docker	String	Docker image used for Flye	TheiaViral_ONT
 flye_denovo_info	File	Information file from Flye assembly	TheiaViral_ONT
 flye_denovo_status	String	Status of Flye assembly	TheiaViral_ONT
