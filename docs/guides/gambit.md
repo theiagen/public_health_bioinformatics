@@ -176,43 +176,6 @@ Options:
 
 ### GAMBIT Prokaryotic Databases
 
-#### GAMBIT GTDB Database v3.1.0
-
-??? toggle "Database Details"
-
-    This database is a **minor update** to the v3.0.0 database. This database is identical to the v3.0.0 database, **except for the following modifications**.
-
-    <!-- TODO: describe the curation changes made in v3.1.0, e.g.:
-    1. <Species renamed / reason>
-        a. Rationale: <why>
-    2. The following genomes were removed.
-        a. Rationale: <why>
-
-        GCF_XXXXXXXXX.X
-    -->
-
-    **Database Files**
-
-    These database files are hosted in a public "Requester Pays" Google bucket by Theiagen Genomics:
-
-    **GS URI (for [Terra.bio](https://terra.bio) usage):**
-
-    - `gs://gambit-databases-rp/3.1.0/gambit-metadata-3.1.0-20260911.gdb`
-    - `gs://gambit-databases-rp/3.1.0/gambit-signatures-3.1.0-20260911.gs`
-
-    **HTTPS URL (for local download):**
-
-    - <https://storage.googleapis.com/gambit-databases-rp/3.1.0/gambit-metadata-3.1.0-20260911.gdb>
-    - <https://storage.googleapis.com/gambit-databases-rp/3.1.0/gambit-signatures-3.1.0-20260911.gs>
-
-    **Taxa included in the GAMBIT database**
-
-    Summary of species represented in the database with number of genomes representing each species and the species threshold:
-
-    - <https://storage.googleapis.com/gambit-databases-rp/3.1.0/gambit-taxa-3.1.0-20260911.csv>
-
-        Note: Species with a threshold of "0" have been sub-speciated.
-
 #### GAMBIT GTDB Database v3.0.0
 
 ??? toggle "Database Details"
