@@ -114,7 +114,7 @@ workflow theiaprok_ont {
           read1 = read_QC_trim.read1_clean,
           samplename = samplename
       }
-      if ( flye_denovo.flye_assembly_status == "PASS") {
+      if (flye_denovo.flye_assembly_status == "PASS") {
         call quast_task.quast {
           input:
             assembly = select_first([flye_denovo.assembly_fasta]),
