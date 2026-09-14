@@ -88,13 +88,6 @@ workflow organism_parameters {
     String flu_org_name = "flu"
     Int flu_genome_len = 13500
 
-    # augur options for flu
-    Int flu_min_num_unambig = 900
-    Float flu_min_date = 2020.0
-    Int flu_pivot_interval = 1
-    Float flu_narrow_bandwidth = 0.1666667
-    Float flu_proportion_wide = 0.0
-
     # vadr options for flu
     String flu_vadr_options = "--mkey flu --atgonly --xnocomp --nomisc --alt_fail extrant5,extrant3"
     Int flu_vadr_max_length = 13500
@@ -102,8 +95,7 @@ workflow organism_parameters {
     Int flu_vadr_memory = 8
     File flu_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-flu-1.6.3-2.tar.gz"
 
-
-    # setting nextclade and augur parameters
+    # setting nextclade parameters
     if (flu_segment == "HA") {
       if (flu_subtype == "H1N1") {
         String h1n1_ha_reference = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1pdm_ha.fasta"
@@ -239,8 +231,8 @@ workflow organism_parameters {
     Int rubella_vadr_memory = 16
     File rubella_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-ruv-1.01.tar.gz"
   }
-  # set rabies nextclade parameters
   if (organism == "rabies" || organism == "Lyssavirus rabies" || organism == "lyssavirus" || organism == "Lyssavirus" || organism == "Rabies" || organism == "11292" || organism == "11286") {
+    # set rabies nextclade parameters
     String rabies_org_name = "rabies"
     File rabies_nextclade_gff = "gs://theiagen-public-resources-rp/reference_data/viral/rabies/nextclade/rabies_genome_annotation.20250623.gff3"
     File rabies_pathogen_json = "gs://theiagen-public-resources-rp/reference_data/viral/rabies/nextclade/rabies_pathogen.20250623.json"

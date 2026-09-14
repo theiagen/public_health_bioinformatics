@@ -10,15 +10,11 @@ import "../../tasks/phylogenetic_inference/augur/task_augur_translate.wdl" as tr
 import "../../tasks/phylogenetic_inference/augur/task_augur_tree.wdl" as tree_task
 import "../../tasks/phylogenetic_inference/augur/task_augur_mutation_context.wdl" as mutation_context_task
 import "../../tasks/phylogenetic_inference/augur/task_extract_clade_mutations.wdl" as extract_clade_mutations_task
-
 import "../../tasks/phylogenetic_inference/utilities/task_reorder_matrix.wdl" as reorder_matrix_task
 import "../../tasks/phylogenetic_inference/utilities/task_snp_dists.wdl" as snp_dists_task
-
 import "../../tasks/task_versioning.wdl" as versioning
-
 import "../../tasks/utilities/data_handling/task_augur_utilities.wdl" as augur_utils
 import "../../tasks/utilities/file_handling/task_cat_files.wdl" as file_handling
-
 import "../utilities/wf_augur_parameters.wdl" as set_organism_defaults
 
 workflow augur {
@@ -42,10 +38,6 @@ workflow augur {
     File? clades_tsv
     File lat_longs_tsv = "gs://theiagen-public-resources-rp/reference_data/viral/lat_longs.tsv"
     File? auspice_config
-    Int? pivot_interval
-    Float? min_date
-    Float? narrow_bandwidth
-    Float? proportion_wide
     String? augur_trait_columns # comma-separated list of columns to use for traits
     Boolean extract_clade_mutations = false # generate clades tsv file from clade_membership header
     String augur_id_column = "strain" # column in metadata tsv that contains the sequence names/IDs
@@ -53,6 +45,12 @@ workflow augur {
     # phylogenetic tree = true # by default, midpoint root the tree
     Boolean midpoint_root_tree = true
     String? outgroup_root
+
+    # currently unused inputs
+    # Int? pivot_interval
+    # Float? min_date
+    # Float? narrow_bandwidth
+    # Float? proportion_wide
   }
   String build_name_updated = sub(build_name, " ", "_")
 
@@ -75,11 +73,11 @@ workflow augur {
       flu_segment = flu_segment,
       flu_subtype = flu_subtype,
       clades_tsv = clades_tsv,
-      auspice_config = auspice_config,
-      pivot_interval = pivot_interval,
-      min_date = min_date,
-      narrow_bandwidth = narrow_bandwidth,
-      proportion_wide = proportion_wide
+      auspice_config = auspice_config
+      # pivot_interval = pivot_interval,
+      # min_date = min_date,
+      # narrow_bandwidth = narrow_bandwidth,
+      # proportion_wide = proportion_wide
   }
   # skip clade extraction if augur_clade_columns is not defined
   if (defined(clades_tsv) || (defined(augur_parameters.augur_clades_tsv) && (basename(augur_parameters.augur_clades_tsv) != "minimal-clades.tsv"))) {

@@ -221,7 +221,7 @@ We've provided the following information to help you set up the workflow for eac
         | reference_genome | WNV | `"gs://theiagen-public-resources-rp/reference_data/viral/wnv/NC_009942.1_wnv_L1.fasta"` |  |
         | vadr_max_length | WNV | `11000` |  |
         | vadr_skip_length | WNV | `3000` |  |
-        | vadr_mem | WNV | `8` |  |
+        | vadr_mem | WNV | `16` |  |
         | vadr_options | WNV | `"--mkey flavi --nomisc --noprotid --out_allfasta"` |  |
         | vadr_model_file | WNV | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-flavi-1.2-1.tar.gz"` |  |
 
@@ -296,7 +296,7 @@ We've provided the following information to help you set up the workflow for eac
 
         | **Overwrite Variable Name** | **Organism** | **Default Value** |
         |---|---|---|
-        | genome_length_input | rsv_a | `16000` |
+        | genome_length_input | rsv_a | `15500` |
         | kraken_target_organism_input | rsv_a | `"Human respiratory syncytial virus A"` |
         | nextclade_dataset_name_input | rsv_a | `nextstrain/rsv/a/EPI_ISL_412866` |
         | nextclade_dataset_tag_input | rsv_a | `"2026-04-14--11-55-23Z"` |
@@ -314,7 +314,7 @@ We've provided the following information to help you set up the workflow for eac
 
         | **Overwrite Variable Name** | **Organism** | **Default Value** |
         |---|---|---|
-        | genome_length_input | rsv_b | `16000` |
+        | genome_length_input | rsv_b | `15500` |
         | kraken_target_organism_input | rsv_b | `"human respiratory syncytial virus"` |
         | nextclade_dataset_name_input | rsv_b | `nextstrain/rsv/b/EPI_ISL_1653999` |
         | nextclade_dataset_tag_input | rsv_b | `"2026-04-14--11-55-23Z"` |
@@ -333,6 +333,7 @@ We've provided the following information to help you set up the workflow for eac
         | **Overwrite Variable Name** | **Organism** | **Default Value** | **Notes** |
         |---|---|---|---|
         | kraken_target_organism_input | HIV | `"Human immunodeficiency virus 1"` |  |
+        | hiv_primer_version | HIV | `"v1"` | Selects which set of HIV defaults is used; options are `"v1"` and `"v2"`. Ignored by TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs |
         | genome_length_input | HIV-v1 | `9181` | This version of HIV originates from Oregon |
         | primer_bed_file | HIV-v1 | `"gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed"` | This version of HIV originates from Oregon |
         | reference_genome | HIV-v1 | `"gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.fasta"` | This version of HIV originates from Oregon |
@@ -391,6 +392,11 @@ We've provided the following information to help you set up the workflow for eac
         | vadr_model_file | rubella | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-ruv-1.01.tar.gz"` |
 
         </div>
+
+    !!! techdetails "Organism Parameters Technical Details"
+        |  | Links |
+        | --- | --- |
+        | Task | [wf_organism_parameters.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl) |
 
 ### Core Tasks
 
