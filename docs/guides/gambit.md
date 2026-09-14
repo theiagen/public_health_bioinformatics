@@ -25,7 +25,7 @@ If the **distance between the query genome assembly and the closest genome in th
 
     ---
 
-    [GAMBIT Prokaryotic GTDB Database v3.0.0](#gambit-gtdb-database-v300)
+    [GAMBIT Prokaryotic GTDB Database v3.1.0](#gambit-gtdb-database-v310)
 
     [GAMBIT Fungal Database v1.0.0](#gambit-fungal-database-v100)
 
@@ -175,6 +175,34 @@ Options:
     A billing project **must** be provided in the request to download; otherwise, the following links and GS URIs will not work.
 
 ### GAMBIT Prokaryotic Databases
+
+#### GAMBIT GTDB Database v3.1.0
+
+??? toggle "Database Details"
+
+    This database is a **minor update** to the v3.0.0 database. This database is identical to the v3.0.0 database, except for the **following modifications**:
+
+    1. GTDB combines to _Burkholderia pseudomallei_ and _Burkholderia mallei_ in a single species cluster named _Burkholderia mallei_. This species cluster has been split to align with NCBI
+
+        1. **Rationale:** Both _B. pseudomallei_ and _B. mallei_ are Tier 1 select agents, but represent different diseases, epidemiologic risks, and public health responses. Melioidosis, caused by _B. pseudomallei_, has been nationally notifiable since 2023. This minor update to GAMBIT's GTDB database now allows for the distinction of these two species through the following steps:
+
+            1. A GAMBIT database for the  _Burkholderia mallei_ complex samples, sourced from GTDB r232, was created, but its taxonomy was sourced from NCBI. In GAMBIT's v3.0.0 database, signatures and metadata were updated to remove the original _Burkholderia mallei_ complex samples and insert _Burkholderia pseudomallei_ and _Burkholderia mallei_ genome signatures and metadata. The genus distance threshold for __Burkholderia_ remained consistent throughout this process. 
+
+            2. The  _Burkholderia mallei_ complex database that was merged into v3.0.0 was created with the same parameters as v3.0.0, with the exception of the taxonomy source, which was set to NCBI. 
+    
+    **Database Files**
+
+    These database files are hosted in a public "Requester Pays" Google bucket by Theiagen Genomics:
+
+    **GS URI (for [Terra.bio](https://terra.bio) usage):**
+
+    - `gs://gambit-databases-rp/3.1.0/gambit-metadata-3.1.0-20260911.gdb`
+    - `gs://gambit-databases-rp/3.1.0/gambit-signatures-3.1.0-20260911.gs`
+
+    **HTTPS URL (for local download):**
+
+    - <https://storage.cloud.google.com/gambit-databases-rp/3.1.0/gambit-metadata-3.1.0-20260911.gdb>
+    - <https://storage.cloud.google.com/gambit-databases-rp/3.1.0/gambit-signatures-3.1.0-20260911.gs>
 
 #### GAMBIT GTDB Database v3.0.0
 
