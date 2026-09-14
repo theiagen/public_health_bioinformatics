@@ -113,7 +113,7 @@ fragment: true
 
         </div>
 
-!!! techdetails "Augur Parameters Technical Details"
-    |  | Links |
-    | --- | --- |
-    | Task | [wf_augur_parameters.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_augur_parameters.wdl) |
+    !!! techdetails "Augur Parameters Technical Details"
+        |  | Links |
+        | --- | --- |
+        | Task | [wf_augur_parameters.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_augur_parameters.wdl) |
