@@ -72,7 +72,7 @@ workflow theiaeuk_ont {
           read1 = read_QC_trim.read1_clean,
           samplename = samplename,
           medaka_use_bacteria = false,
-          dorado_use_bacteria = false
+          dorado_use_bacteria = false,
           flye_genome_length = genome_length
       }
       #call quast on the assembly
