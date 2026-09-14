@@ -54,7 +54,7 @@ task augur_refine {
       ~{true="--covariance" false="--no-covariance" covariance} \
       ~{true="--keep-root" false="" keep_root} \
       ~{true="--keep-polytomies" false="" keep_polytomies} \
-      ~{true="--date-confidence" false="" date_confidence} 
+      ~{true="--date-confidence" false="" date_confidence}
   >>>
   output {
     File refined_tree   = "~{build_name}_refined.nwk"

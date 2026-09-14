@@ -61,7 +61,7 @@ task table2asn {
       -src-file ~{output_name}.src \
       -indir . \
       -a s # inputting a set of fasta data
-    
+
   >>>
   output {
     File sqn_file = "~{output_name}.sqn"

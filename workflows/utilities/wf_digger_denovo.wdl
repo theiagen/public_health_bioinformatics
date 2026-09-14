@@ -147,8 +147,8 @@ workflow digger_denovo {
         memory = filter_contigs_memory,
         disk_size = filter_contigs_disk_size,
         docker = filter_contigs_docker
-      }
     }
+  }
   output {
     File assembly_fasta = select_first([filter_contigs.filtered_fasta, pilon.assembly_fasta, spades.assembly_fasta, megahit.assembly_fasta, skesa.assembly_fasta])
     File? contigs_gfa = spades.assembly_gfa

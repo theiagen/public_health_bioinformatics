@@ -26,12 +26,14 @@ workflow flye_denovo {
     Boolean skip_polishing = false # Default: Polishing enabled
 
     # Porechop inputs
+    String? porechop_docker
     Int? porechop_cpu
     Int? porechop_memory
     Int? porechop_disk_size
     String? porechop_trimopts # Optional Porechop trimming options
 
     # Flye inputs
+    String? flye_docker
     String? flye_read_type
     Int? flye_genome_length # Requires `asm_coverage`
     Int? flye_asm_coverage # Reduced coverage for initial disjointig assembly
@@ -48,11 +50,13 @@ workflow flye_denovo {
     Int? flye_disk_size
 
     # Bandage inputs
+    String? bandage_docker
     Int? bandage_cpu
     Int? bandage_memory
     Int? bandage_disk_size
 
     # Polypolish inputs
+    String? polypolish_docker
     String? polypolish_pair_orientation
     Float? polypolish_low_percentile_threshold
     Float? polypolish_high_percentile_threshold
@@ -79,11 +83,13 @@ workflow flye_denovo {
     String? medaka_model
     Boolean? medaka_auto_detect_model
     Boolean? medaka_use_bacteria
+    String? medaka_docker
     Int? medaka_cpu
     Int? medaka_memory
     Int? medaka_disk_size
 
-     # Racon inputs
+    # Racon inputs
+    String? racon_docker
     Int? racon_cpu
     Int? racon_memory
     Int? racon_disk_size
@@ -95,6 +101,7 @@ workflow flye_denovo {
     Int? filter_contigs_disk_size
 
     # Dnaapler inputs
+    String? dnaapler_docker
     String? dnaapler_mode
     Int? dnaapler_cpu
     Int? dnaapler_memory
@@ -109,7 +116,8 @@ workflow flye_denovo {
         trimopts = porechop_trimopts,
         cpu = porechop_cpu,
         memory = porechop_memory,
-        disk_size = porechop_disk_size
+        disk_size = porechop_disk_size,
+        docker = porechop_docker
     }
   }
   # Call Flye using either trimmed reads or raw reads
@@ -130,112 +138,105 @@ workflow flye_denovo {
       additional_parameters = flye_additional_parameters,
       cpu = flye_cpu,
       memory = flye_memory,
-      disk_size = flye_disk_size
+      disk_size = flye_disk_size,
+      docker = flye_docker
   }
   if (flye.flye_status == "PASS") {}
-    # Bandage plot generation
-    call bandage_task.bandage_plot as bandage {
+  # Bandage plot generation
+  call bandage_task.bandage_plot as bandage {
+    input:
+      draft_assembly_fasta = select_first([flye.assembly_fasta]),
+      read1 = select_first([illumina_read1]),
+      read2 = select_first([illumina_read2]),
+      samplename = samplename
+  }
+  # Polypolish for hybrid assembly
+  if (defined(illumina_read1) && defined(illumina_read2)) {
+    call bwa_all_task.bwa_all as bwa {
       input:
-        assembly_graph_gfa = select_first([flye.assembly_graph_gfa]),
-        samplename = samplename,
-        cpu = bandage_cpu,
-        memory = bandage_memory,
-        disk_size = bandage_disk_size
+        draft_assembly_fasta = select_first([flye.assembly_fasta]),
+        read1 = select_first([illumina_read1]),
+        read2 = select_first([illumina_read2]),
+        samplename = samplename
     }
-    # Polypolish for hybrid assembly
-    if (defined(illumina_read1) && defined(illumina_read2)) {
-     call bwa_all_task.bwa_all as bwa {
-       input:
-         draft_assembly_fasta = select_first([flye.assembly_fasta]),
-         read1 = select_first([illumina_read1]),
-         read2 = select_first([illumina_read2]),
-         samplename = samplename
-      }
-      call polypolish_task.polypolish {
+    call polypolish_task.polypolish {
+      input:
+        unpolished_fasta = select_first([flye.assembly_fasta]),
+        samplename = samplename,
+        read1 = select_first([porechop.trimmed_reads, read1]),
+        medaka_model = medaka_model,
+        auto_model = auto_medaka_model,
+        cpu = medaka_cpu,
+        memory = medaka_memory,
+        disk_size = medaka_disk_size,
+        docker = medaka_docker
+    }
+  }
+  # ONT-only Polishing Path: Medaka or Racon
+  if (!skip_polishing) {
+    if (polisher == "medaka") {
+      call medaka_task.medaka {
         input:
-          assembly_fasta = select_first([flye.assembly_fasta]),
-          read1_sam = bwa.read1_sam,
-          read2_sam = bwa.read2_sam,
+          unpolished_fasta = select_first([flye.assembly_fasta]),
           samplename = samplename,
-          illumina_polishing_rounds = polish_rounds,
-          pair_orientation = polypolish_pair_orientation,
-          low_percentile_threshold = polypolish_low_percentile_threshold,
-          high_percentile_threshold = polypolish_high_percentile_threshold,
-          fraction_invalid = polypolish_fraction_invalid,
-          fraction_valid = polypolish_fraction_valid,
-          maximum_errors = polypolish_maximum_errors,
-          minimum_depth = polypolish_minimum_depth,
-          careful = polypolish_careful,
-          cpu = polypolish_cpu,
-          memory = polypolish_memory,
-          disk_size = polypolish_disk_size
+          read1 = select_first([porechop.trimmed_reads, read1]),
+          use_bacteria = medaka_use_bacteria,
+          medaka_model = medaka_model,
+          auto_detect_model = medaka_auto_detect_model,
+          cpu = medaka_cpu,
+          memory = medaka_memory,
+          disk_size = medaka_disk_size
       }
     }
-    # ONT-only Polishing Path: Medaka or Racon
-    if (!skip_polishing) {
-      if (polisher == "medaka") {
-        call medaka_task.medaka {
-          input:
-            unpolished_fasta = select_first([flye.assembly_fasta]),
-            samplename = samplename,
-            read1 = select_first([porechop.trimmed_reads, read1]),
-            use_bacteria = medaka_use_bacteria,
-            medaka_model = medaka_model,
-            auto_detect_model = medaka_auto_detect_model,
-            cpu = medaka_cpu,
-            memory = medaka_memory,
-            disk_size = medaka_disk_size
-        }
-      }
-      if (polisher == "racon") {
-        call racon_task.racon {
-          input:
-            unpolished_fasta = select_first([flye.assembly_fasta]),
-            read1 = select_first([porechop.trimmed_reads, read1]),
-            samplename = samplename,
-            polishing_rounds = polish_rounds,
-            cpu = racon_cpu,
-            memory = racon_memory,
-            disk_size = racon_disk_size
-        }
-      }
-      if (polisher == "dorado") {
-        call dorado_task.dorado {
-          input:
-            unpolished_fasta = select_first([flye.assembly_fasta]),
-            read1 = select_first([porechop.trimmed_reads, read1]),
-            samplename = samplename,
-            dorado_model = dorado_model,
-            ignore_read_groups = dorado_ignore_read_groups,
-            auto_detect_model = dorado_auto_detect_model,
-            use_bacteria = dorado_use_bacteria,
-            cpu = dorado_cpu,
-            memory = dorado_memory,
-            disk_size = dorado_disk_size,
-            docker = dorado_docker
-        }
+    if (polisher == "racon") {
+      call racon_task.racon {
+        input:
+          unpolished_fasta = select_first([flye.assembly_fasta]),
+          read1 = select_first([porechop.trimmed_reads, read1]),
+          samplename = samplename,
+          polishing_rounds = polish_rounds,
+          cpu = racon_cpu,
+          memory = racon_memory,
+          disk_size = racon_disk_size
       }
     }
-    # Contig Filtering and Final Assembly orientation
-    call filter_contigs_task.filter_contigs {
-      input:
-        samplename = samplename,
-        assembly_fasta = select_first([polypolish.polished_assembly, dorado.polished_fasta, medaka.medaka_fasta, racon.polished_fasta, flye.assembly_fasta]), # Use Flye assembly if no polishing
-        min_length = filter_contigs_min_length,
-        skip_coverage_filter = true,
-        cpu = filter_contigs_cpu,
-        memory = filter_contigs_memory,
-        disk_size = filter_contigs_disk_size
+    if (polisher == "dorado") {
+      call dorado_task.dorado {
+        input:
+          unpolished_fasta = select_first([flye.assembly_fasta]),
+          read1 = select_first([porechop.trimmed_reads, read1]),
+          samplename = samplename,
+          dorado_model = dorado_model,
+          ignore_read_groups = dorado_ignore_read_groups,
+          auto_detect_model = dorado_auto_detect_model,
+          use_bacteria = dorado_use_bacteria,
+          cpu = dorado_cpu,
+          memory = dorado_memory,
+          disk_size = dorado_disk_size,
+          docker = dorado_docker
+      }
     }
-    call dnaapler_task.dnaapler {
-      input:
-        input_fasta = filter_contigs.filtered_fasta,
-        samplename = samplename,
-        dnaapler_mode = dnaapler_mode,
-        cpu = dnaapler_cpu,
-        memory = dnaapler_memory,
-        disk_size = dnaapler_disk_size
-    }
+  }
+  # Contig Filtering and Final Assembly orientation
+  call filter_contigs_task.filter_contigs {
+    input:
+      samplename = samplename,
+      assembly_fasta = select_first([polypolish.polished_assembly, dorado.polished_fasta, medaka.medaka_fasta, racon.polished_fasta, flye.assembly_fasta]), # Use Flye assembly if no polishing
+      min_length = filter_contigs_min_length,
+      skip_coverage_filter = true,
+      cpu = filter_contigs_cpu,
+      memory = filter_contigs_memory,
+      disk_size = filter_contigs_disk_size
+  }
+  call dnaapler_task.dnaapler {
+    input:
+      input_fasta = filter_contigs.filtered_fasta,
+      samplename = samplename,
+      dnaapler_mode = dnaapler_mode,
+      cpu = dnaapler_cpu,
+      memory = dnaapler_memory,
+      disk_size = dnaapler_disk_size
+  }
   output {
     File assembly_fasta = dnaapler.reoriented_fasta
     File bandage_plot = bandage.plot

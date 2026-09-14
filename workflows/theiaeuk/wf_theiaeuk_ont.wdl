@@ -73,6 +73,7 @@ workflow theiaeuk_ont {
           samplename = samplename,
           medaka_use_bacteria = false,
           dorado_use_bacteria = false
+          flye_genome_length = genome_length
       }
       #call quast on the assembly
       call quast_task.quast {
@@ -112,7 +113,7 @@ workflow theiaeuk_ont {
           gambit_db_signatures = gambit_db_signatures
       }
       # call medea magic for cladetyper and AMR search, snippy variants
-       call medea_magic_workflow.medea_magic {
+      call medea_magic_workflow.medea_magic {
         input:
           samplename = samplename,
           medea_tag = gambit.merlin_tag,

@@ -51,7 +51,7 @@ task calculate_coverage_paf {
   }
   input {
     File paf
-    String docker = "us-docker.pkg.dev/general-theiagen/quay/ubuntu:latest"
+    String docker = "us-docker.pkg.dev/general-theiagen/ubuntu/ubuntu:jammy-20230816"
     Int disk_size = 100
     Int cpu = 2
     Int memory = 8
