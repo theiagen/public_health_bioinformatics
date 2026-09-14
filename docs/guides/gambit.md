@@ -189,7 +189,7 @@ Options:
             1. A GAMBIT database for the  _Burkholderia mallei_ complex samples, sourced from GTDB r232, was created, but its taxonomy was sourced from NCBI. In GAMBIT's v3.0.0 database, signatures and metadata were updated to remove the original _Burkholderia mallei_ complex samples and insert _Burkholderia pseudomallei_ and _Burkholderia mallei_ genome signatures and metadata. The genus distance threshold for __Burkholderia_ remained consistent throughout this process.
 
             2. The  _Burkholderia mallei_ complex database that was merged into v3.0.0 was created with the same parameters as v3.0.0, with the exception of the taxonomy source, which was set to NCBI.
-    
+
     **Database Files**
 
     These database files are hosted in a public "Requester Pays" Google bucket by Theiagen Genomics:
