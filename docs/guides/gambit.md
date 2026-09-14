@@ -186,9 +186,9 @@ Options:
 
         1. **Rationale:** Both _B. pseudomallei_ and _B. mallei_ are Tier 1 select agents, but represent different diseases, epidemiologic risks, and public health responses. Melioidosis, caused by _B. pseudomallei_, has been nationally notifiable since 2023. This minor update to GAMBIT's GTDB database now allows for the distinction of these two species through the following steps:
 
-            1. A GAMBIT database for the  _Burkholderia mallei_ complex samples, sourced from GTDB r232, was created, but its taxonomy was sourced from NCBI. In GAMBIT's v3.0.0 database, signatures and metadata were updated to remove the original _Burkholderia mallei_ complex samples and insert _Burkholderia pseudomallei_ and _Burkholderia mallei_ genome signatures and metadata. The genus distance threshold for __Burkholderia_ remained consistent throughout this process. 
+            1. A GAMBIT database for the  _Burkholderia mallei_ complex samples, sourced from GTDB r232, was created, but its taxonomy was sourced from NCBI. In GAMBIT's v3.0.0 database, signatures and metadata were updated to remove the original _Burkholderia mallei_ complex samples and insert _Burkholderia pseudomallei_ and _Burkholderia mallei_ genome signatures and metadata. The genus distance threshold for __Burkholderia_ remained consistent throughout this process.
 
-            2. The  _Burkholderia mallei_ complex database that was merged into v3.0.0 was created with the same parameters as v3.0.0, with the exception of the taxonomy source, which was set to NCBI. 
+            2. The  _Burkholderia mallei_ complex database that was merged into v3.0.0 was created with the same parameters as v3.0.0, with the exception of the taxonomy source, which was set to NCBI.
     
     **Database Files**
 
