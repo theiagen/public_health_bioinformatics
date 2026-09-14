@@ -383,6 +383,7 @@ The TheiaViral workflows activate taxa-specific sub-workflows after the identifi
 - **Rabies** (`"11292"`, `"Lyssavirus rabies"`)
 - **Mumps** (`"2560602"`, `"mumps virus"`, `"Mumps orthorubulavirus"`)
 - **Rubella** (`"11041"`, `"rubella virus"`)
+- **Dengue** (`"12637"`,`"Dengue Virus"`, `"dengue"`, `"Orthoflavivirus denguei"`)
 
 ### Outputs
 
