@@ -72,7 +72,7 @@ workflow theiaeuk_ont {
           read1 = read_QC_trim.read1_clean,
           samplename = samplename
       }
-      #call quast on the assembly
+      # call quast on the assembly
       call quast_task.quast {
         input:
           assembly = flye_denovo.assembly_fasta,
