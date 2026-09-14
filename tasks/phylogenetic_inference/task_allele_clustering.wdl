@@ -2,7 +2,7 @@ version 1.0
 
 task allele_clustering {
   meta {
-  description: "PulseNet 2.0 Allele Clustering algorithm"
+    description: "PulseNet 2.0 Allele Clustering algorithm"
   }
   input {
     Array[File] allele_jsons
