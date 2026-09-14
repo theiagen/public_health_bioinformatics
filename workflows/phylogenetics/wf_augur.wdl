@@ -19,7 +19,7 @@ import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/utilities/data_handling/task_augur_utilities.wdl" as augur_utils
 import "../../tasks/utilities/file_handling/task_cat_files.wdl" as file_handling
 
-import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
+import "../utilities/wf_augur_parameters.wdl" as set_organism_defaults
 
 workflow augur {
   input {
@@ -30,7 +30,7 @@ workflow augur {
     File? alignment_fasta # if alignment is provided, then skip alignment step
 
     # organism-specific inputs
-    String organism = "sars-cov-2" # compatible with organism_parameters inputs, or manual Augur parameters below
+    String organism = "sars-cov-2" # compatible with augur_parameters inputs, or manual Augur parameters below
     String flu_segment = "HA" # options: HA or NA
     String? flu_subtype # options: "Victoria" "Yamagata" "H3N2" "H1N1" "H5N1"
 
@@ -66,7 +66,7 @@ workflow augur {
   }
 
   # set organism parameters for default organisms, passthrough for others
-  call set_organism_defaults.organism_parameters {
+  call set_organism_defaults.augur_parameters {
     input:
       organism = organism,
       reference_genbank = reference_genbank,
@@ -82,7 +82,7 @@ workflow augur {
       proportion_wide = proportion_wide
   }
   # skip clade extraction if augur_clade_columns is not defined
-  if (defined(clades_tsv) || (defined(organism_parameters.augur_clades_tsv) && (basename(organism_parameters.augur_clades_tsv) != "minimal-clades.tsv"))) {
+  if (defined(clades_tsv) || (defined(augur_parameters.augur_clades_tsv) && (basename(augur_parameters.augur_clades_tsv) != "minimal-clades.tsv"))) {
     Boolean call_clades = true
   }
   if (defined(sample_metadata_tsvs)) {
@@ -108,14 +108,14 @@ workflow augur {
   call augur_utils.filter_sequences_by_length {
     input:
       sequences_fasta = select_first([cat_files.concatenated_files, alignment_fasta]),
-      min_non_N = select_first([min_num_unambig, organism_parameters.augur_min_num_unambig]),
+      min_non_N = select_first([min_num_unambig, augur_parameters.augur_min_num_unambig]),
   }
   if (defined(call_alignment)) {
     # perform mafft alignment on the sequences
     call align_task.augur_align {
       input:
         assembly_fasta = filter_sequences_by_length.filtered_fasta,
-        reference_fasta = select_first([reference_fasta, organism_parameters.reference]),
+        reference_fasta = select_first([reference_fasta, augur_parameters.reference]),
         remove_reference = remove_reference
     }
   }
@@ -168,16 +168,16 @@ workflow augur {
         build_name = build_name_updated
     }
     # translate gene regions from nucleotides to amino acids
-    if (defined(select_first([reference_genbank, organism_parameters.reference_gbk]))) {
+    if (defined(select_first([reference_genbank, augur_parameters.reference_gbk]))) {
       call translate_task.augur_translate {
         input:
           refined_tree = augur_refine.refined_tree,
           ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
-          reference_genbank = select_first([reference_genbank, organism_parameters.reference_gbk]),
+          reference_genbank = select_first([reference_genbank, augur_parameters.reference_gbk]),
           build_name = build_name_updated
       }
     }
-    if (organism_parameters.standardized_organism == "MPXV") {
+    if (augur_parameters.standardized_organism == "MPXV") {
       call mutation_context_task.mutation_context { # add mutation context to the tree
         input:
           refined_tree = augur_refine.refined_tree,
@@ -211,7 +211,7 @@ workflow augur {
           ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
           translated_aa_muts_json = augur_translate.translated_aa_muts_json,
           build_name = build_name_updated,
-          clades_tsv = select_first([clade_extraction_task.clades_tsv, clades_tsv, organism_parameters.augur_clades_tsv])
+          clades_tsv = select_first([clade_extraction_task.clades_tsv, clades_tsv, augur_parameters.augur_clades_tsv])
       }
     }
   }
@@ -229,7 +229,7 @@ workflow augur {
                           mutation_context.mutation_context_json]),
       build_name = build_name_updated,
       lat_longs_tsv = lat_longs_tsv,
-      auspice_config = select_first([auspice_config, organism_parameters.augur_auspice_config])
+      auspice_config = select_first([auspice_config, augur_parameters.augur_auspice_config])
   }
 
   # determine what the refined tree represents
