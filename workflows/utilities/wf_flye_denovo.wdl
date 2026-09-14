@@ -145,10 +145,12 @@ workflow flye_denovo {
   # Bandage plot generation
   call bandage_task.bandage_plot as bandage {
     input:
-      draft_assembly_fasta = select_first([flye.assembly_fasta]),
-      read1 = select_first([illumina_read1]),
-      read2 = select_first([illumina_read2]),
-      samplename = samplename
+      assembly_graph_gfa = select_first([flye.assembly_graph_gfa]),
+      samplename = samplename,
+      cpu = bandage_cpu,
+      memory = bandage_memory,
+      disk_size = bandage_disk_size,
+      docker = bandage_docker
   }
   # Polypolish for hybrid assembly
   if (defined(illumina_read1) && defined(illumina_read2)) {
@@ -161,15 +163,23 @@ workflow flye_denovo {
     }
     call polypolish_task.polypolish {
       input:
-        unpolished_fasta = select_first([flye.assembly_fasta]),
+        assembly_fasta = select_first([flye.assembly_fasta]),
+        read1_sam = bwa.read1_sam,
+        read2_sam = bwa.read2_sam,
         samplename = samplename,
-        read1 = select_first([porechop.trimmed_reads, read1]),
-        medaka_model = medaka_model,
-        auto_model = auto_medaka_model,
-        cpu = medaka_cpu,
-        memory = medaka_memory,
-        disk_size = medaka_disk_size,
-        docker = medaka_docker
+        illumina_polishing_rounds = polish_rounds,
+        pair_orientation = polypolish_pair_orientation,
+        low_percentile_threshold = polypolish_low_percentile_threshold,
+        high_percentile_threshold = polypolish_high_percentile_threshold,
+        fraction_invalid = polypolish_fraction_invalid,
+        fraction_valid = polypolish_fraction_valid,
+        maximum_errors = polypolish_maximum_errors,
+        minimum_depth = polypolish_minimum_depth,
+        careful = polypolish_careful,
+        cpu = polypolish_cpu,
+        memory = polypolish_memory,
+        disk_size = polypolish_disk_size,
+        docker = polypolish_docker
     }
   }
   # ONT-only Polishing Path: Medaka or Racon
@@ -185,7 +195,8 @@ workflow flye_denovo {
           auto_detect_model = medaka_auto_detect_model,
           cpu = medaka_cpu,
           memory = medaka_memory,
-          disk_size = medaka_disk_size
+          disk_size = medaka_disk_size,
+          docker = medaka_docker
       }
     }
     if (polisher == "racon") {
@@ -197,7 +208,8 @@ workflow flye_denovo {
           polishing_rounds = polish_rounds,
           cpu = racon_cpu,
           memory = racon_memory,
-          disk_size = racon_disk_size
+          disk_size = racon_disk_size,
+          docker = racon_docker
       }
     }
     if (polisher == "dorado") {
@@ -235,7 +247,8 @@ workflow flye_denovo {
       dnaapler_mode = dnaapler_mode,
       cpu = dnaapler_cpu,
       memory = dnaapler_memory,
-      disk_size = dnaapler_disk_size
+      disk_size = dnaapler_disk_size,
+      docker = dnaapler_docker
   }
   output {
     File assembly_fasta = dnaapler.reoriented_fasta

@@ -728,7 +728,7 @@ workflow merlin_magic {
     String? amr_search_associated_resistances = amr_search.amr_search_associated_resistances
     String? amr_search_docker = amr_search.amr_search_docker_image
     String? amr_search_version = amr_search.amr_search_version
-    # Allele variant_calling_params
+    # allele calling outputs
     String? allele_calling_scheme = allele_calling.allele_calling_scheme
     String? allele_calling_result = allele_calling.allele_calling_result
     File? allele_calling_standard_json = allele_calling.allele_calling_standard_json
