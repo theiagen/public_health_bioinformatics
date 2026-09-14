@@ -325,7 +325,7 @@ workflow organism_parameters {
     File rabies_nextclade_tree = "gs://theiagen-public-resources-rp/reference_data/viral/rabies/nextclade/rabies_tree.20250623.json"
   }
   # set dengue nextclade parameters
-  if (organism == "dengue" || organism == "Dengue Virus" || organism == "Orthoflavivirus denguei" || organism == "DENV" || organism == "Dengue" || organism == "12637" || organism == "3052464") {
+  if (organism == "dengue" || organism == "Dengue Virus" || organism == "Orthoflavivirus denguei" || organism == "denguei" || organism == "12637" || organism == "3052464") {
     String dengue_org_name = "dengue"
     String dengue_nextclade_ds_tag = "2026-04-14--11-55-23Z"
     String dengue_nextclade_ds_name = "nextstrain/dengue/all"
