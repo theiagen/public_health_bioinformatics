@@ -414,7 +414,7 @@ calculate_coverage	docker	String	The Docker container to use for the task	us-doc
 calculate_coverage	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaMeta_Illumina_PE	runtime	
 calculate_coverage_paf	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaMeta_Illumina_PE	runtime	
 calculate_coverage_paf	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaMeta_Illumina_PE	runtime	
-calculate_coverage_paf	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/quay/ubuntu:latest	Optional	TheiaMeta_Illumina_PE	docker	
+calculate_coverage_paf	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/ubuntu/ubuntu:jammy-20230816	Optional	TheiaMeta_Illumina_PE	docker	
 calculate_coverage_paf	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaMeta_Illumina_PE	runtime	
 cat_files	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Augur, Concatenate_Column_Content	runtime	
 cat_files	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Augur, Concatenate_Column_Content	runtime	
@@ -642,7 +642,7 @@ digger_denovo	filter_contigs_disk_size	Int	Amount of storage (in GB) to allocate
 digger_denovo	filter_contigs_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/shovilter:0.2	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	docker	
 digger_denovo	filter_contigs_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime	
 digger_denovo	filter_contigs_min_coverage	Float	Minimum coverage threshold for contig filtering	2.0	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
-digger_denovo	filter_contigs_min_length	Int	Minimum length threshold for contig filtering	200	Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
+digger_denovo	filter_contigs_min_length	Int	Minimum length threshold for contig filtering		Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 digger_denovo	filter_contigs_skip_coverage_filter	Boolean	Skip filtering contigs based on coverage	False	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 digger_denovo	filter_contigs_skip_homopolymer_filter	Boolean	Skip filtering contigs containing homopolymers	False	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 digger_denovo	filter_contigs_skip_length_filter	Boolean	Skip filtering contigs based on length	False	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
@@ -651,7 +651,6 @@ digger_denovo	megahit_cpu	Int	Number of CPUs to allocate to the task	4	Optional	
 digger_denovo	megahit_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime	
 digger_denovo	megahit_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/megahit:1.2.9	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	docker	
 digger_denovo	megahit_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime	
-digger_denovo	min_contig_length	Int	Minimum contig length to retain in final assembly	200	Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 digger_denovo	pilon_cpu	Int	Number of CPUs to allocate to the task	8	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime	
 digger_denovo	pilon_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime	
 digger_denovo	pilon_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/pilon:1.24--hdfd78af_0	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	docker	
@@ -715,7 +714,7 @@ export_two_tsvs	docker	String	The Docker container to use for the task	us-docker
 export_two_tsvs	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	1	Optional	TheiaValidate	runtime	
 fasta_to_ids	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Augur	runtime	
 fasta_to_ids	disk_size	Int	Amount of storage (in GB) to allocate to the task	375	Optional	Augur	runtime	
-fasta_to_ids	docker	String	The Docker container to use for the task	ubuntu	Optional	Augur	docker	
+fasta_to_ids	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/ubuntu/ubuntu:jammy-20230816	Optional	Augur	docker	
 fasta_to_ids	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	1	Optional	Augur	runtime	
 fasta_utilities	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaViral_ONT	runtime	
 fasta_utilities	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_ONT	runtime	
@@ -1508,8 +1507,8 @@ merlin_magic	tbprofiler_variant_caller	String	Internal component, do not modify	
 merlin_magic	tbprofiler_variant_caller	String	Select a different variant caller for TBProfiler to use by writing it in this block; see TBProfiler’s original documentation for available options.	gatk	Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	tbprofiler_variant_calling_params	String	Internal component, do not modify		Optional	TheiaProk_FASTA	general	
 merlin_magic	tbprofiler_variant_calling_params	String	Enter additional variant calling parameters in this free text input to customize how the variant caller works in TBProfiler		Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	vibecheck_docker_image	String	Internal component, do not modify	watronfire/vibecheck:2025.06.26	Optional	TheiaProk_FASTA, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	vibecheck_docker_image	String	The Docker container to use for the task	watronfire/vibecheck:2025.06.26	Optional	TheiaProk_Illumina_PE	docker	
+merlin_magic	vibecheck_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/watronfire/vibecheck:2025.06.26	Optional	TheiaProk_FASTA, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	vibecheck_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/watronfire/vibecheck:2025.06.26	Optional	TheiaProk_Illumina_PE	docker	
 merlin_magic	vibecheck_lineage_barcodes	File	Internal component, do not modify		Optional	TheiaProk_FASTA, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	vibecheck_lineage_barcodes	File	Feather formatted lineage barcodes to use instead of default O1 barcodes		Optional	TheiaProk_Illumina_PE	general	
 merlin_magic	vibecheck_skip_subsampling	Boolean	Internal component, do not modify	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
@@ -1849,7 +1848,7 @@ quast	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaEuk_ONT, Th
 quast	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 quast	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/quast:5.3.0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
 quast	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
-quast	min_contig_length	Int	Minimum length of contig for QUAST	200	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+quast	min_contig_length	Int	Minimum length of contig for QUAST	200	Optional	TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_ONT	general	
 quast_denovo	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 quast_denovo	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 quast_denovo	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/quast:5.3.0	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker	
@@ -2528,6 +2527,7 @@ theiaprok_illumina_pe	genome_annotation	String	If set to "bakta", TheiaProk will
 theiaprok_illumina_pe	genome_length	Int	User-specified expected genome length to be used in genome statistics calculations		Optional	TheiaProk_Illumina_PE	general	
 theiaprok_illumina_pe	max_genome_length	Int	Maximum genome length able to pass read screening.	18040666	Optional	TheiaProk_Illumina_PE	general	
 theiaprok_illumina_pe	min_basepairs	Int	Minimum number of base pairs able to pass read screening	2241820	Optional	TheiaProk_Illumina_PE	general	
+theiaprok_illumina_pe	min_contig_length	Int	The minimum contig length used in de novo assembly and for generating assembly statistics	200	Optional	TheiaProk_Illumina_PE	general	
 theiaprok_illumina_pe	min_coverage	Int	Minimum genome coverage able to pass read screening	10	Optional	TheiaProk_Illumina_PE	general	
 theiaprok_illumina_pe	min_genome_length	Int	Minimum genome length able to pass read screening.	100000	Optional	TheiaProk_Illumina_PE	general	
 theiaprok_illumina_pe	min_proportion	Int	Minimum proportion of total reads in each read file to pass read screening	40	Optional	TheiaProk_Illumina_PE	general	
@@ -2573,6 +2573,7 @@ theiaprok_illumina_se	genome_annotation	String	If set to "bakta", TheiaProk will
 theiaprok_illumina_se	genome_length	Int	User-specified expected genome length to be used in genome statistics calculations		Optional	TheiaProk_Illumina_SE	general	
 theiaprok_illumina_se	max_genome_length	Int	Maximum genome length able to pass read screening.	18040666	Optional	TheiaProk_Illumina_SE	general	
 theiaprok_illumina_se	min_basepairs	Int	Minimum number of base pairs able to pass read screening	2241820	Optional	TheiaProk_Illumina_SE	general	
+theiaprok_illumina_se	min_contig_length	Int	The minimum contig length used in de novo assembly and for generating assembly statistics	200	Optional	TheiaProk_Illumina_SE	general	
 theiaprok_illumina_se	min_coverage	Int	Minimum genome coverage able to pass read screening	10	Optional	TheiaProk_Illumina_SE	general	
 theiaprok_illumina_se	min_genome_length	Int	Minimum genome length able to pass read screening.	100000	Optional	TheiaProk_Illumina_SE	general	
 theiaprok_illumina_se	min_reads	Int	Minimum number of reads to pass read screening	7472	Optional	TheiaProk_Illumina_SE	general	
