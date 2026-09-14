@@ -10,7 +10,6 @@ workflow augur_parameters {
     # flu information
     String flu_segment = "N/A"
     String flu_subtype = "N/A"
-    String flu_genoflu_genotype = "N/A"
 
     File? reference_genome # this is for the most (all?) part fasta, so we may opt to rename to reference_fasta
     File? reference_genbank # for augur
