@@ -74,7 +74,7 @@ task gatk_variants {
       -A StrandBiasBySample \
       -R ${local_ref} \
       -V ~{samplename}_haplotypecall.g.vcf.gz \
-      -O ~{samplename}_genotype.g.vcf.gz
+      -O ~{samplename}_genotype.vcf.gz
   >>>
   output {
     String gatk_version = read_string("VERSION")
