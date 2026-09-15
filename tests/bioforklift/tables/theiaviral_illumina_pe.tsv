@@ -1,4 +1,4 @@
-entity:theiaviral_illumina_id	HOST	ORGANISM_NAME	read1	read2	READ_EXTRACTION_RANK	taxon
+entity:theiaviral_illumina_pe_id	HOST	ORGANISM_NAME	read1	read2	READ_EXTRACTION_RANK	taxon
 AT381-BJ-WNV		West Nile virus	gs://theiagen-large-public-files-rp/terra/phb-validation/theiacov/wnv-illumina-pe/AT381-BJ-WNV-i0886-210930_S1_L001_R1_001.fastq.gz	gs://theiagen-large-public-files-rp/terra/phb-validation/theiacov/wnv-illumina-pe/AT381-BJ-WNV-i0886-210930_S1_L001_R2_001.fastq.gz	family	11082
 AT395-BJ-WNV		West Nile virus	gs://theiagen-large-public-files-rp/terra/phb-validation/theiacov/wnv-illumina-pe/AT395-BJ-WNV-i0886-210930_S2_L001_R1_001.fastq.gz	gs://theiagen-large-public-files-rp/terra/phb-validation/theiacov/wnv-illumina-pe/AT395-BJ-WNV-i0886-210930_S2_L001_R2_001.fastq.gz	family	11082
 CAMD192-NJ-WNV		West Nile virus	gs://theiagen-large-public-files-rp/terra/phb-validation/theiacov/wnv-illumina-pe/CAMD192-NJ-WNV-i1403-221013_S2_L001_R1_001.fastq.gz	gs://theiagen-large-public-files-rp/terra/phb-validation/theiacov/wnv-illumina-pe/CAMD192-NJ-WNV-i1403-221013_S2_L001_R2_001.fastq.gz	family	11082
