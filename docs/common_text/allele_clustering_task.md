@@ -1,0 +1,18 @@
+---
+title: Task Fragment `allele_clustering`
+fragment: true
+---
+
+??? task "`allele_clustering`: PulseNet 2.0 Hash-Based Allele Clustering"
+    The Allele Clustering module is used by PulseNet 2.0 to generate NWK trees for visualization, using the results from the `allele_clustering` task available in the [TheiaProk workflows](../workflows/genomic_characterization/theiaprok.md).
+
+    To run this task, a tree building algorithm and distance algorithm must be specified; these options are available in the [inputs](#inputs) section of the workflow documentation.
+
+    This module adapts the PulseNet 2.0 code for the calculation of distance matrices from allele profiles or sequence alignment and distance-based tree inference for implementation on [Terra.bio](https://app.terra.bio), and was developed in collaboration with Association of Public Health Laboratories (APHL) and Centers for Disease Control and Prevention (CDC)'s Enteric Diseases Laboratory Branch (EDLB). We gratefully acknowledge the developers of the [this tool](https://github.com/ncezid-biome/pulsenet2.0-trees) and CDC EDLB team including [name individuals].
+
+    !!! techdetails "Allele Clustering Technical Details"
+        |  | Links |
+        | --- | --- |
+        | Task | [task_allele_clustering.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/task_allele_clustering.wdl) |
+        | Software Source Code | [PulseNet 2.0 Trees](https://github.com/ncezid-biome/pulsenet2.0-trees/tree/main) |
+        | Software Documentation |  [PulseNet 2.0 Trees on GitHub](https://github.com/ncezid-biome/pulsenet2.0-trees/tree/main#readme) |
