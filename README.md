@@ -18,8 +18,8 @@ All workflows in the PHB repository end with `_PHB` in order to differentiate th
 
 Briefly, the main _genomic characterization_  workflows are split by pathogen type:
 
-1. **Viral** (**_TheiaCoV_**™ & **_TheiaViral_**™ workflows)
-2. **Bacterial** (**_TheiaProk_**™ workflows)
+1. **Viral** (**_TheiaCoV_** & **_TheiaViral_** workflows)
+2. **Bacterial** (**_TheiaProk_** workflows)
 3. **Fungal** (**_TheiaEuk_**™ workflows)
 
 Many more workflows are available, and are documented in detail in the [Theiagen Public Resources Documentation](https://theiagen.github.io/public_health_bioinformatics/latest/).
@@ -42,53 +42,42 @@ You can expect a careful review of every PR and feedback as needed before mergin
 
 ### Authorship
 
-<!--
-A Public Service Announcement regarding calculating the contribution math:
+<!-- Ordered alphabetically -->
 
-Andrew Hale added a .txt database file to docs/assets that artifically inflates his line
-count by 55,316 lmao. This was not code and shouldn't be considered as such. Please subtract
-55,316 from his line count when updating this list. Sage Wright subsequently deleted that .txt
-database in a later commit, so also please subtract 55,316 from Sage Wright's line count as
-well. please see index.md for the math
-
-okay thanks byee.
--->
-
-(Ordered by contribution [# of lines changed] as of 2026-05-06)
-
-- **Sage Wright** ([@sage-wright](https://github.com/sage-wright)) - Conceptualization, Software, Validation, Documentation, Supervision
-- **Inês Mendes** ([@cimendes](https://github.com/cimendes)) - Software, Validation, Documentation
+- **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation, Documentation
+- **Andrew Hale** ([@awh082834](https://github.com/awh082834)) - Software, Validation, Documentation
+- **Theron James** ([@MrTheronJ](https://github.com/MrTheronJ)) - Software, Validation, Documentation
 - **Curtis Kapsak** ([@kapsakcj](https://github.com/kapsakcj)) - Conceptualization, Software, Validation, Documentation
 - **Zachary Konkel** ([@xonq](https://github.com/xonq)) - Software, Validation, Documentation
-- **Theron James** ([@MrTheronJ](https://github.com/MrTheronJ)) - Software, Validation, Documentation
-- **Andrew Hale** ([@awh082834](https://github.com/awh082834)) - Software, Validation, Documentation
-- **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation, Documentation
-- **Michelle Scribner** ([@michellescribner](https://github.com/michellescribner)) - Software, Validation, Documentation
-- **Kevin Libuit** ([@kevinlibuit](https://github.com/kevinlibuit)) - Conceptualization, Project Administration, Software, Validation, Supervision
-- **Andrew Lang** ([@AndrewLangVt](https://github.com/AndrewLangVt)) - Software, Supervision
 - **Kelsey Kropp** ([@kelseykropp](https://github.com/kelseykropp)) - Documentation
-- **Sushmita Sridhar** ([@ss43](https://github.com/ss43)) - Documentation
+- **Andrew Lang** ([@AndrewLangVt](https://github.com/AndrewLangVt)) - Software, Supervision
+- **Inês Mendes** ([@cimendes](https://github.com/cimendes)) - Software, Validation, Documentation
 - **Neha Mokashi** ([@nehavm456](https://github.com/nehavm456)) - Documentation
-- **Deborah Young** ([@theiadeb](https://github.com/theiadeb)) - Documentation
-- **Bruna Todani** ([@brunatodani](https://github.com/brunatodani)) - Documentation
+- **Michelle Scribner** ([@michellescribner](https://github.com/michellescribner)) - Software, Validation, Documentation
 - **Joel Sevinsky** ([@sevinsky](https://github.com/sevinsky)) - Conceptualization, Project Administration, Supervision
+- **Bruna Todani** ([@brunatodani](https://github.com/brunatodani)) - Documentation
+- **Sage Wright** ([@sage-wright](https://github.com/sage-wright)) - Conceptualization, Software, Validation, Documentation, Supervision
+- **Deborah Young** ([@theiadeb](https://github.com/theiadeb)) - Documentation
 
 ### External Contributors
 
 We would like to gratefully acknowledge the following individuals from the public health community for their contributions to the PHB repository:
 
+<!-- Ordered alphabetically -->
 - **Frank Ambrosio** ([@frankambrosio3](https://github.com/frankambrosio3))*
-- **James Otieno** ([@jrotieno](https://github.com/jrotieno))*
-- **Robert Petit** ([@rpetit3](https://github.com/rpetit3))*
+- **Sam Baird** ([@sam-baird](https://github.com/sam-baird))
 - **Fraser Combe** ([@fraser-combe](https://github.com/fraser-combe))*
-- **Andrew Page** ([@andrewjpage](https://github.com/andrewjpage))*
+- **Nicole Dagata** ([@nicoledagatatheiagen](https://github.com/nicoledagatatheiagen))*
 - **Emma Doughty** ([@emmadoughty](https://github.com/emmadoughty))*
+- **Holly Halstead** ([@HNHalstead](https://github.com/HNHalstead))
+- **Kevin Libuit** ([@kevinlibuit](https://github.com/kevinlibuit))*
 - **Nate Matteson** ([@watronfire](https://github.com/watronfire))
 - **Ash O'Farrel** ([@aofarrel](https://github.com/aofarrel))
-- **Sam Baird** ([@sam-baird](https://github.com/sam-baird))
-- **Holly Halstead** ([@HNHalstead](https://github.com/HNHalstead))
-- **Nicole Dagata** ([@nicoledagatatheiagen](https://github.com/nicoledagatatheiagen))*
+- **James Otieno** ([@jrotieno](https://github.com/jrotieno))*
+- **Andrew Page** ([@andrewjpage](https://github.com/andrewjpage))*
+- **Robert Petit** ([@rpetit3](https://github.com/rpetit3))*
 - **Emily Smith** ([@emily-smith1](https://github.com/emily-smith1))*
+- **Sushmita Sridhar** ([@ss43](https://github.com/ss43))*
 
 \* Former member of Theiagen
 
