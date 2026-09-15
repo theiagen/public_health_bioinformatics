@@ -314,7 +314,7 @@ workflow theiaprok_ont {
                   "agrvate_docker": merlin_magic.agrvate_docker,
                   "agrvate_results": merlin_magic.agrvate_results,
                   "agrvate_summary": merlin_magic.agrvate_summary,
-                  "agrvate_version": merlin_magic.agrvate_version
+                  "agrvate_version": merlin_magic.agrvate_version,
                   "allele_calling_accessory_count": merlin_magic.allele_calling_accessory_count,
                   "allele_calling_accessory_percentage": merlin_magic.allele_calling_accessory_percentage,
                   "allele_calling_core_count": merlin_magic.allele_calling_core_count,

@@ -261,7 +261,7 @@ workflow flye_denovo {
     String? medaka_model_used = medaka.resolved_medaka_model
     String? porechop_version = porechop.porechop_version
     String flye_version = flye.flye_version
-    String bandage_version = bandage.bandage_version
+    String? bandage_version = bandage.bandage_version
     String? dorado_version = dorado.dorado_version
     String? medaka_version = medaka.medaka_version
     String? racon_version = racon.racon_version
