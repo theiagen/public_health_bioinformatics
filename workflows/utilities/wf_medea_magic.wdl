@@ -33,7 +33,7 @@ workflow medea_magic {
     Int? cladetyper_kmer_size
     Float? cladetyper_max_distance
     # user-supplied reference fasta; when provided, overrides the hosted/organism reference
-    File? reference_genome_fasta
+    File? reference_fasta
     File? reference_gff
     # shared compute for the read_aligners (bwa for illumina, minimap2 for ont);
     String? read_aligner_docker
@@ -103,12 +103,12 @@ workflow medea_magic {
   # a user-supplied fasta takes precedence, otherwise the organism-specific reference is used
   # (cladetyper fasta for C. auris, hosted fasta for A. fumigatus and C. neoformans).
   # resolve the reference once; visible below (and in outputs) as File?
-  String resolved_reference_fasta = select_first([reference_genome_fasta, cladetyper.assembly_reference, afumigatus_variant_fasta, cryptoneo_reference_fasta, ""])
+  String resolved_reference_fasta = select_first([reference_fasta, cladetyper.assembly_reference, afumigatus_variant_fasta, cryptoneo_reference_fasta, ""])
   # Species-agnostic GFF resolution. A user-supplied reference_gff takes precedence,
   # otherwise the organism-specific reference is used (cladetyper outputs for
   # C. auris when a clade matches, hosted references for A. fumigatus and C. neoformans).
   # user cannot supply one reference file and not the other for GFF tasks to be functional
-  if ((defined(reference_gff) && defined(reference_genome_fasta)) || (! defined(reference_gff) && ! defined(reference_genome_fasta))) {
+  if ((defined(reference_gff) && defined(reference_fasta)) || (! defined(reference_gff) && ! defined(reference_fasta))) {
     String resolved_reference_gff = select_first([reference_gff, cladetyper.annotated_reference_gff, afumigatus_reference_gff, cryptoneo_reference_gff, ""])
   }
   # The user-supplied query_genes takes priority; otherwise the
