@@ -1,0 +1,28 @@
+{
+  "flu":
+    {
+      "inputs": {
+        "augur.organism": "this.phylogenetics_viral_set_id",
+        "augur.assembly_fastas": "this.phylogenetics_virals.assembly_fasta",
+        "augur.sample_metadata_tsvs": "this.phylogenetics_virals.augur_metadata",
+        "augur.flu_subtype": "H1N1",
+        "augur.build_name": "test",
+        "augur.augur_export.include_root_sequence": "true",
+        "augur.flu_segment": "HA"
+      },
+      "samples": ["92804" , "93547" , "94414" , "99056" , "100734" , "100954" , "109275" , "109292" , "109342" , "109562" , "109630" , "109974" , "110108" , "115485" , "115722" , "115833" , "115863" , "116143" , "116165" , "116225" , "116281" , "116354" , "116389" , "124408" , "124728" , "133124" , "133619" , "134526" , "134927" , "135010" , "135156" , "135379" , "135553" , "135676" , "SRR11445892" , "SRR11445940" , "SRR11445941" , "SRR13443360"],
+      "table": "phylogenetics_viral_set"
+    },
+  "sars-cov-2":
+    {
+      "inputs": {
+        "augur.organism": "this.phylogenetics_viral_set_id",
+        "augur.assembly_fastas": "this.phylogenetics_virals.assembly_fasta",
+        "augur.sample_metadata_tsvs": "this.phylogenetics_virals.augur_metadata",
+        "augur.build_name": "test",
+        "augur.augur_export.include_root_sequence": "true"
+      },
+      "samples": ["Sample_01", "Sample_02", "Sample_03", "Sample_04", "Sample_05", "Sample_06", "Sample_07", "Sample_08", "Sample_09", "Sample_10", "Sample_11", "Sample_12", "Sample_13", "Sample_14", "Sample_15", "Sample_16", "Sample_17", "Sample_18", "Sample_19", "Sample_20", "Sample_21", "Sample_22", "Sample_23", "Sample_24", "Sample_25"],
+      "table": "phylogenetics_viral_set"
+    }
+}

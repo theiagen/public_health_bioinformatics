@@ -19,7 +19,7 @@ workflow ksnp3_workflow {
     String? data_summary_column_names # string of comma delimited column names
     Boolean midpoint_root_tree = true
     Boolean phandango_coloring = false
-	}
+  }
   call ksnp3.ksnp3 as ksnp3_task {
     input:
       assembly_fasta = assembly_fasta,
@@ -97,7 +97,7 @@ workflow ksnp3_workflow {
     # optional tree outputs
     File? ksnp3_ml_tree = ksnp3_task.ksnp3_ml_tree
     File? ksnp3_nj_tree = ksnp3_task.ksnp3_nj_tree
-    # data summary output 
+    # data summary output
     File? ksnp3_summarized_data = summarize_data.summarized_data
     File? ksnp3_filtered_metadata = summarize_data.filtered_metadata
     # ksnp3_shared_snps outputs

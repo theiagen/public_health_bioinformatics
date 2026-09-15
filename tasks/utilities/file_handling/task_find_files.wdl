@@ -24,11 +24,12 @@ task find_files {
   output {
     Array[String] file_paths = read_lines("file_list.txt")
   }
-   runtime {
+  runtime {
     docker: docker
     cpu: cpu
     memory: "~{memory} GB"
     disks: "local-disk ~{disk_size} SSD"
+    disk: disk_size + " GB"
     preemptible: 1
     maxRetries: 3
   }

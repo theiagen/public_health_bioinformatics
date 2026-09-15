@@ -166,7 +166,7 @@ workflow freyja_fastq {
           # SC2-specific gene coverage - only available when freyja_pathogen == "SARS-CoV-2"
           "sc2_s_gene_mean_coverage": gene_coverage.sc2_s_gene_depth,
           "sc2_s_gene_percent_coverage": gene_coverage.sc2_s_gene_coverage
-      }
+        }
     }
   }
   if (run_qualimap) {
