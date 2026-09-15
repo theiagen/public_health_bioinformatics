@@ -7808,7 +7808,7 @@
 <td><strong>filter_contigs_min_length</strong></td>
 <td>Int</td>
 <td>Minimum length threshold for contig filtering</td>
-<td>200</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7873,14 +7873,6 @@
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>16</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>digger_denovo</td>
-<td><strong>min_contig_length</strong></td>
-<td>Int</td>
-<td>Minimum contig length to retain in final assembly</td>
-<td>200</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9716,14 +9708,6 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>quast</td>
-<td><strong>min_contig_length</strong></td>
-<td>Int</td>
-<td>Minimum length of contig for QUAST</td>
-<td>500</td>
-<td>Optional</td>
-</tr>
-<tr>
 <td>raw_check_reads</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
@@ -10233,6 +10217,14 @@
 <td>Int</td>
 <td>Minimum number of base pairs able to pass read screening</td>
 <td>2241820</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>min_contig_length</strong></td>
+<td>Int</td>
+<td>The minimum contig length used in de novo assembly and for generating assembly statistics</td>
+<td>200</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11162,7 +11154,7 @@
 <td><strong>filter_contigs_min_length</strong></td>
 <td>Int</td>
 <td>Minimum length threshold for contig filtering</td>
-<td>200</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11227,14 +11219,6 @@
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>16</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>digger_denovo</td>
-<td><strong>min_contig_length</strong></td>
-<td>Int</td>
-<td>Minimum contig length to retain in final assembly</td>
-<td>200</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13078,14 +13062,6 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>quast</td>
-<td><strong>min_contig_length</strong></td>
-<td>Int</td>
-<td>Minimum length of contig for QUAST</td>
-<td>500</td>
-<td>Optional</td>
-</tr>
-<tr>
 <td>raw_check_reads</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
@@ -13531,6 +13507,14 @@
 <td>Int</td>
 <td>Minimum number of base pairs able to pass read screening</td>
 <td>2241820</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>min_contig_length</strong></td>
+<td>Int</td>
+<td>The minimum contig length used in de novo assembly and for generating assembly statistics</td>
+<td>200</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16452,7 +16436,7 @@
 <td><strong>min_contig_length</strong></td>
 <td>Int</td>
 <td>Minimum length of contig for QUAST</td>
-<td>500</td>
+<td>200</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19270,7 +19254,7 @@
 <td><strong>min_contig_length</strong></td>
 <td>Int</td>
 <td>Minimum length of contig for QUAST</td>
-<td>500</td>
+<td>200</td>
 <td>Optional</td>
 </tr>
 <tr>
