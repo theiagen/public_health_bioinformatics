@@ -8,6 +8,8 @@ fragment: true
 
     To run this task, a tree building algorithm and distance algorithm must be specified; these options are available in the [inputs](#inputs) section of the workflow documentation.
 
+    This module adapts the PulseNet 2.0 code for the calculation of distance matrices from allele profiles or sequence alignment and distance-based tree inference for implementation on [Terra.bio](https://app.terra.bio), and was developed in collaboration with Association of Public Health Laboratories (APHL) and Centers for Disease Control and Prevention (CDC)'s Enteric Diseases Laboratory Branch (EDLB). We gratefully acknowledge the developers of the [this tool](https://github.com/ncezid-biome/pulsenet2.0-trees) and CDC EDLB team including [name individuals].
+
     !!! techdetails "Allele Clustering Technical Details"
         |  | Links |
         | --- | --- |
