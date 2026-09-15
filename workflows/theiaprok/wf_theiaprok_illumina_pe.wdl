@@ -1262,6 +1262,7 @@ workflow theiaprok_illumina_pe {
     String? tbprofiler_resistance_genes = merlin_magic.tbprofiler_resistance_genes
     Float? tbprofiler_median_depth = merlin_magic.tbprofiler_median_depth
     Float? tbprofiler_pct_reads_mapped = merlin_magic.tbprofiler_pct_reads_mapped
+    File? tbprofiler_db_bed = merlin_magic.tbprofiler_db_bed
     String? tbp_parser_version = merlin_magic.tbp_parser_version
     String? tbp_parser_docker = merlin_magic.tbp_parser_docker
     File? tbp_parser_looker_report_csv = merlin_magic.tbp_parser_looker_report_csv
@@ -1273,6 +1274,8 @@ workflow theiaprok_illumina_pe {
     File? tbp_parser_log = merlin_magic.tbp_parser_log
     Float? tbp_parser_genome_percent_coverage = merlin_magic.tbp_parser_genome_percent_coverage
     Float? tbp_parser_average_genome_depth = merlin_magic.tbp_parser_average_genome_depth
+    File? tbp_parser_generated_gene_database_yml = merlin_magic.tbp_parser_generated_gene_database_yml
+    File? tbp_parser_generated_lims_report_format_yml = merlin_magic.tbp_parser_generated_lims_report_format_yml
     File? clockwork_decontaminated_read1 = merlin_magic.clockwork_cleaned_read1
     File? clockwork_decontaminated_read2 = merlin_magic.clockwork_cleaned_read2
     # Legionella pneumophila typing
