@@ -116,6 +116,7 @@ workflow theiaeuk_illumina_pe {
         input:
           assembly = digger_denovo.assembly_fasta,
           samplename = samplename,
+          min_contig_length = min_contig_length,
           cpu = cpu,
           memory = memory
       }

@@ -646,7 +646,7 @@ digger_denovo	filter_contigs_disk_size	Int	Amount of storage (in GB) to allocate
 digger_denovo	filter_contigs_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/shovilter:0.2	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	docker	
 digger_denovo	filter_contigs_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime	
 digger_denovo	filter_contigs_min_coverage	Float	Minimum coverage threshold for contig filtering	2.0	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
-digger_denovo	filter_contigs_min_length	Int	Minimum length threshold for contig filtering	200	Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
+digger_denovo	filter_contigs_min_length	Int	Minimum length threshold for contig filtering		Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 digger_denovo	filter_contigs_skip_coverage_filter	Boolean	Skip filtering contigs based on coverage	False	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 digger_denovo	filter_contigs_skip_homopolymer_filter	Boolean	Skip filtering contigs containing homopolymers	False	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 digger_denovo	filter_contigs_skip_length_filter	Boolean	Skip filtering contigs based on length	False	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
@@ -1855,12 +1855,12 @@ quast	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaEuk_ONT, Th
 quast	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 quast	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/quast:5.3.0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
 quast	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
-quast	min_contig_length	Int	Minimum length of contig for QUAST	500	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+quast	min_contig_length	Int	Minimum length of contig for QUAST	200	Optional	TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_ONT	general	
 quast_denovo	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 quast_denovo	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 quast_denovo	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/quast:5.3.0	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker	
 quast_denovo	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
-quast_denovo	min_contig_length	Int	Minimum length of contig for QUAST	500	Optional	TheiaViral_ONT	general	
+quast_denovo	min_contig_length	Int	Minimum length of contig for QUAST	200	Optional	TheiaViral_ONT	general	
 rasusa	coverage	Float	The desired coverage to sub-sample the reads to. If --bases is not provided, this option and --genome-size are required	250	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general	
 rasusa	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 rasusa	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
@@ -2540,6 +2540,7 @@ theiaprok_illumina_pe	genome_annotation	String	If set to "bakta", TheiaProk will
 theiaprok_illumina_pe	genome_length	Int	User-specified expected genome length to be used in genome statistics calculations		Optional	TheiaProk_Illumina_PE	general	
 theiaprok_illumina_pe	max_genome_length	Int	Maximum genome length able to pass read screening.	18040666	Optional	TheiaProk_Illumina_PE	general	
 theiaprok_illumina_pe	min_basepairs	Int	Minimum number of base pairs able to pass read screening	2241820	Optional	TheiaProk_Illumina_PE	general	
+theiaprok_illumina_pe	min_contig_length	Int	The minimum contig length used in de novo assembly and for generating assembly statistics	200	Optional	TheiaProk_Illumina_PE	general	
 theiaprok_illumina_pe	min_coverage	Int	Minimum genome coverage able to pass read screening	10	Optional	TheiaProk_Illumina_PE	general	
 theiaprok_illumina_pe	min_genome_length	Int	Minimum genome length able to pass read screening.	100000	Optional	TheiaProk_Illumina_PE	general	
 theiaprok_illumina_pe	min_proportion	Int	Minimum proportion of total reads in each read file to pass read screening	40	Optional	TheiaProk_Illumina_PE	general	
@@ -2585,6 +2586,7 @@ theiaprok_illumina_se	genome_annotation	String	If set to "bakta", TheiaProk will
 theiaprok_illumina_se	genome_length	Int	User-specified expected genome length to be used in genome statistics calculations		Optional	TheiaProk_Illumina_SE	general	
 theiaprok_illumina_se	max_genome_length	Int	Maximum genome length able to pass read screening.	18040666	Optional	TheiaProk_Illumina_SE	general	
 theiaprok_illumina_se	min_basepairs	Int	Minimum number of base pairs able to pass read screening	2241820	Optional	TheiaProk_Illumina_SE	general	
+theiaprok_illumina_se	min_contig_length	Int	The minimum contig length used in de novo assembly and for generating assembly statistics	200	Optional	TheiaProk_Illumina_SE	general	
 theiaprok_illumina_se	min_coverage	Int	Minimum genome coverage able to pass read screening	10	Optional	TheiaProk_Illumina_SE	general	
 theiaprok_illumina_se	min_genome_length	Int	Minimum genome length able to pass read screening.	100000	Optional	TheiaProk_Illumina_SE	general	
 theiaprok_illumina_se	min_reads	Int	Minimum number of reads to pass read screening	7472	Optional	TheiaProk_Illumina_SE	general	

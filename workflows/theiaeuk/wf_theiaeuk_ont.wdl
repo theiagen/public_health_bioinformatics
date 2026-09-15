@@ -74,7 +74,7 @@ workflow theiaeuk_ont {
           samplename = samplename
       }
       if (flye_denovo.flye_assembly_status == "PASS") {
-        #call quast on the assembly
+        # call quast on the assembly
         call quast_task.quast {
           input:
             assembly = select_first([flye_denovo.assembly_fasta]),
