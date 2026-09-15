@@ -40,6 +40,6 @@ fragment: true
     !!! techdetails "Dorado Technical Details"
         |  | Links |
         | --- | --- |
-        | Task | [task_dorado.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_dorado.wdl) |
+        | Task | [task_dorado_polishing.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_dorado_polishing.wdl) |
         | Software Source Code | [Dorado on GitHub](https://github.com/nanoporetech/dorado) |
         | Software Documentation | [Dorado Documentation](https://software-docs.nanoporetech.com/dorado/latest/) |

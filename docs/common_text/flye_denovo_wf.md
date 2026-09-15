@@ -14,7 +14,7 @@ fragment: true
         To skip polishing,, set `skip_polishing` to `true`. These three modules are mututally exlcusive.
 
 {{ include_md("common_text/medaka_task.md", indent=8) }}
-{{ include_md("common_text/dorado_task.md", indent=8) }}
+{{ include_md("common_text/dorado_polishing_task.md", indent=8) }}
 {{ include_md("common_text/racon_task.md", indent=8) }}
 
 {{ include_md("common_text/filter_contigs_task.md", indent=4, condition="flye") }}

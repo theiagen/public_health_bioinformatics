@@ -3,7 +3,7 @@ version 1.0
 import "../../tasks/quality_control/read_filtering/task_porechop.wdl" as porechop_task
 import "../../tasks/assembly/task_flye.wdl" as flye_task
 import "../../tasks/assembly/task_bandage_plot.wdl" as bandage_task
-import "../../tasks/polishing/task_dorado.wdl" as dorado_task
+import "../../tasks/polishing/task_dorado_polishing.wdl" as dorado_task
 import "../../tasks/polishing/task_medaka.wdl" as medaka_task
 import "../../tasks/polishing/task_racon.wdl" as racon_task
 import "../../tasks/assembly/task_dnaapler.wdl" as dnaapler_task
