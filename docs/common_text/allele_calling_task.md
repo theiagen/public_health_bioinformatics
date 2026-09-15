@@ -6,6 +6,9 @@ fragment: true
 ??? task "`allele_calling`: PulseNet 2.0 Hash-Based Allele Calling"
     The Allele Calling module is used by PulseNet 2.0 to generate MLST calls for core and accessory genes with corresponding quality metrics for certain supported organisms.
 
+    !!! warning
+        Bu default, this module is turned off. To enable it, set `run_allele_calling` to `true`. 
+
     The module works by comparing genome assemblies against [reference allele sequences](https://github.com/ncezid-biome/pn2.0-mlst-databases/tree/main) using a BLASTn approach to find the presence of each locus. The query allele sequence is defined by the presence of start and stop codons (without nonsense mutations) and a similarity threshold (organism-specific) against a reference allele. Loci that were likely repeated (fully or partially) elsewhere in the genome are ignored. The query sequences are hashed using the 64-bit MD5 algorithm and then transformed into a 56-bit integer.
 
     These results are stored into multiple output files, for core and accessory MLST calls, alongside quality metrics such as core genome percentage and a pass/fail flag.
