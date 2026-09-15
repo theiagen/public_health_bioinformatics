@@ -303,12 +303,12 @@ augur	remove_reference	Boolean	Whether or not to remove the reference in Augur	F
 augur	sample_metadata_tsvs	Array[File]	An array of the metadata files produced in Augur_Prep_PHB		Optional	Augur	general	
 augur_align	cpu	Int	Number of CPUs to allocate to the task	64	Optional	Augur	runtime	
 augur_align	disk_size	Int	Amount of storage (in GB) to allocate to the task	750	Optional	Augur	runtime	
-augur_align	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0	Optional	Augur	docker	
+augur_align	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:34.1.3	Optional	Augur	docker	
 augur_align	fill_gaps	Boolean	If true, gaps represent missing data rather than true indels and so are replaced by N after aligning.	False	Optional	Augur	general	
 augur_align	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	128	Optional	Augur	runtime	
 augur_ancestral	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Augur	runtime	
 augur_ancestral	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Augur	runtime	
-augur_ancestral	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0	Optional	Augur	docker	
+augur_ancestral	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:34.1.3	Optional	Augur	docker	
 augur_ancestral	infer_ambiguous	Boolean	If true, infer nucleotides and ambiguous sites and replace with most likely	False	Optional	Augur	general	
 augur_ancestral	inference	String	Calculate joint or marginal maximum likelihood ancestral sequence states; options: "joint", "marginal"	joint	Optional	Augur	general	
 augur_ancestral	keep_ambiguous	Boolean	If true, do not infer nucleotides at ambiguous (N) sides	False	Optional	Augur	general	
@@ -316,13 +316,13 @@ augur_ancestral	keep_overhangs	Boolean	If true, do not infer nucleotides for gap
 augur_ancestral	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	50	Optional	Augur	runtime	
 augur_clades	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Augur	runtime	
 augur_clades	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Augur	runtime	
-augur_clades	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0	Optional	Augur	docker	
+augur_clades	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:34.1.3	Optional	Augur	docker	
 augur_clades	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Augur	runtime	
 augur_export	colors_tsv	File	Custom color defintiions, one per line in the format TRAIT_TYPE\tTRAIT_VALUE\tHEX_CODE		Optional	Augur	general	
 augur_export	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Augur	runtime	
 augur_export	description_md	File	Markdown file with description of build and/or acknowledgements		Optional	Augur	general	
 augur_export	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Augur	runtime	
-augur_export	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0	Optional	Augur	docker	
+augur_export	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:34.1.3	Optional	Augur	docker	
 augur_export	include_root_sequence	Boolean	Export an additional JSON containing the root sequence used to identify mutations	False	Optional	Augur	general	
 augur_export	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	64	Optional	Augur	runtime	
 augur_export	title	String	The title to be displayed by auspice		Optional	Augur	general	
@@ -344,7 +344,7 @@ augur_refine	date_confidence	Boolean	If true, calculate confidence intervals for
 augur_refine	date_inference	String	Assign internal nodes to their marginally most likely dates; options: "joint", "marginal"	marginal	Optional	Augur	general	
 augur_refine	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Augur	runtime	
 augur_refine	divergence_units	String	Units in which sequence divergences is exported; options: "mutations" or "mutations-per-site"	mutations	Optional	Augur	general	
-augur_refine	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0	Optional	Augur	docker	
+augur_refine	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:34.1.3	Optional	Augur	docker	
 augur_refine	gen_per_year	Int	Number of generations per year	50	Optional	Augur	general	
 augur_refine	keep_polytomies	Boolean	If true, don't attempt to resolve polytomies	False	Optional	Augur	general	
 augur_refine	keep_root	Boolean	If true, do not reroot the tree; use it as-is (overrides anything specified by root)	True	Optional	Augur	general	
@@ -353,18 +353,17 @@ augur_refine	precision	Int	Precision used by TreeTime to determine the number of
 augur_refine	root	String	Rooting mechanism; options: "best", "least-squares", "min_dev", "oldest", etc.		Optional	Augur	general	
 augur_traits	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Augur	runtime	
 augur_traits	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Augur	runtime	
-augur_traits	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0	Optional	Augur	docker	
+augur_traits	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:34.1.3	Optional	Augur	docker	
 augur_traits	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	30	Optional	Augur	runtime	
-augur_traits	metadata_id_columns	String	The names of possible metadata columns containing identifier information, ordered by priority	'strain' 'name'	Optional	Augur	general	
 augur_traits	weights	File	a dictionary of key/value mappings in JSON format used to weight KDE tip frequencies		Optional	Augur	general	
 augur_translate	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Augur	runtime	
 augur_translate	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Augur	runtime	
-augur_translate	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0	Optional	Augur	docker	
+augur_translate	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:34.1.3	Optional	Augur	docker	
 augur_translate	genes	File	A file containing a list of genes to translate (from nucleotides to amino acids)		Optional	Augur	general	
 augur_translate	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Augur	runtime	
 augur_tree	cpu	Int	Number of CPUs to allocate to the task	64	Optional	Augur	runtime	
 augur_tree	disk_size	Int	Amount of storage (in GB) to allocate to the task	750	Optional	Augur	runtime	
-augur_tree	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0	Optional	Augur	docker	
+augur_tree	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:34.1.3	Optional	Augur	docker	
 augur_tree	exclude_sites	File	File of one-based sites to exclude for raw tree building (BED format in .bed files, DRM format in tab-delimited files, or one position per line)		Optional	Augur	general	
 augur_tree	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Augur	runtime	
 augur_tree	method	String	The method used to build the tree. Options: "fasttree", "raxml", "IQ-TREE" (default)	iqtree	Optional	Augur	general	
@@ -650,7 +649,7 @@ digger_denovo	filter_contigs_disk_size	Int	Amount of storage (in GB) to allocate
 digger_denovo	filter_contigs_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/shovilter:0.2	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	docker	
 digger_denovo	filter_contigs_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime	
 digger_denovo	filter_contigs_min_coverage	Float	Minimum coverage threshold for contig filtering	2.0	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
-digger_denovo	filter_contigs_min_length	Int	Minimum length threshold for contig filtering	200	Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
+digger_denovo	filter_contigs_min_length	Int	Minimum length threshold for contig filtering		Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 digger_denovo	filter_contigs_skip_coverage_filter	Boolean	Skip filtering contigs based on coverage	False	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 digger_denovo	filter_contigs_skip_homopolymer_filter	Boolean	Skip filtering contigs containing homopolymers	False	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 digger_denovo	filter_contigs_skip_length_filter	Boolean	Skip filtering contigs based on length	False	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
@@ -659,7 +658,6 @@ digger_denovo	megahit_cpu	Int	Number of CPUs to allocate to the task	4	Optional	
 digger_denovo	megahit_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime	
 digger_denovo	megahit_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/megahit:1.2.9	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	docker	
 digger_denovo	megahit_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime	
-digger_denovo	min_contig_length	Int	Minimum contig length to retain in final assembly	200	Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 digger_denovo	pilon_cpu	Int	Number of CPUs to allocate to the task	8	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime	
 digger_denovo	pilon_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime	
 digger_denovo	pilon_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/pilon:1.24--hdfd78af_0	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	docker	
@@ -1875,12 +1873,12 @@ quast	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaEuk_ONT, Th
 quast	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 quast	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/quast:5.3.0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
 quast	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
-quast	min_contig_length	Int	Minimum length of contig for QUAST	500	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+quast	min_contig_length	Int	Minimum length of contig for QUAST	200	Optional	TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_ONT	general	
 quast_denovo	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 quast_denovo	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 quast_denovo	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/quast:5.3.0	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker	
 quast_denovo	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
-quast_denovo	min_contig_length	Int	Minimum length of contig for QUAST	500	Optional	TheiaViral_ONT	general	
+quast_denovo	min_contig_length	Int	Minimum length of contig for QUAST	200	Optional	TheiaViral_ONT	general	
 rasusa	coverage	Float	The desired coverage to sub-sample the reads to. If --bases is not provided, this option and --genome-size are required	250	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general	
 rasusa	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 rasusa	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
@@ -2555,6 +2553,7 @@ theiaprok_illumina_pe	genome_annotation	String	If set to "bakta", TheiaProk will
 theiaprok_illumina_pe	genome_length	Int	User-specified expected genome length to be used in genome statistics calculations		Optional	TheiaProk_Illumina_PE	general	
 theiaprok_illumina_pe	max_genome_length	Int	Maximum genome length able to pass read screening.	18040666	Optional	TheiaProk_Illumina_PE	general	
 theiaprok_illumina_pe	min_basepairs	Int	Minimum number of base pairs able to pass read screening	2241820	Optional	TheiaProk_Illumina_PE	general	
+theiaprok_illumina_pe	min_contig_length	Int	The minimum contig length used in de novo assembly and for generating assembly statistics	200	Optional	TheiaProk_Illumina_PE	general	
 theiaprok_illumina_pe	min_coverage	Int	Minimum genome coverage able to pass read screening	10	Optional	TheiaProk_Illumina_PE	general	
 theiaprok_illumina_pe	min_genome_length	Int	Minimum genome length able to pass read screening.	100000	Optional	TheiaProk_Illumina_PE	general	
 theiaprok_illumina_pe	min_proportion	Int	Minimum proportion of total reads in each read file to pass read screening	40	Optional	TheiaProk_Illumina_PE	general	
@@ -2600,6 +2599,7 @@ theiaprok_illumina_se	genome_annotation	String	If set to "bakta", TheiaProk will
 theiaprok_illumina_se	genome_length	Int	User-specified expected genome length to be used in genome statistics calculations		Optional	TheiaProk_Illumina_SE	general	
 theiaprok_illumina_se	max_genome_length	Int	Maximum genome length able to pass read screening.	18040666	Optional	TheiaProk_Illumina_SE	general	
 theiaprok_illumina_se	min_basepairs	Int	Minimum number of base pairs able to pass read screening	2241820	Optional	TheiaProk_Illumina_SE	general	
+theiaprok_illumina_se	min_contig_length	Int	The minimum contig length used in de novo assembly and for generating assembly statistics	200	Optional	TheiaProk_Illumina_SE	general	
 theiaprok_illumina_se	min_coverage	Int	Minimum genome coverage able to pass read screening	10	Optional	TheiaProk_Illumina_SE	general	
 theiaprok_illumina_se	min_genome_length	Int	Minimum genome length able to pass read screening.	100000	Optional	TheiaProk_Illumina_SE	general	
 theiaprok_illumina_se	min_reads	Int	Minimum number of reads to pass read screening	7472	Optional	TheiaProk_Illumina_SE	general	
