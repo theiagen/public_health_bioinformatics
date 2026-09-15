@@ -36,14 +36,14 @@ task tbp_parser {
     # WDL runtime arguments
     Int cpu = 1
     Int disk_size = 100
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:3.1.0-dev"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:v4.0.0-dev"
     Int memory = 16
   }
   command <<<
     # get version
     tbp-parser --version | tee VERSION
 
-    # tbp-parser v3.1.0 requires `--gene_database_yml`
+    # tbp-parser v4.0.0 requires `--gene_database_yml`
     # Build one from the TBProfiler database BED if one was not provided.
     gene_database_yml="~{gene_database_yml}"
     if [[ ! -s "${gene_database_yml}" ]]; then
@@ -61,7 +61,7 @@ task tbp_parser {
       gene_database_yml="gene_db.yml"
     fi
 
-    # tbp-parser v3.1.0 requires `--lims_report_format_yml`
+    # tbp-parser v4.0.0 requires `--lims_report_format_yml`
     # Build one from the gene database resolved above if one was not provided.
     lims_report_format_yml="~{lims_report_format_yml}"
     if [[ ! -s "${lims_report_format_yml}" ]]; then
