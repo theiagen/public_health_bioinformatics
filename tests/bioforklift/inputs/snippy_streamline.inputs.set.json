@@ -4,6 +4,7 @@
       "inputs": {
         "snippy_streamline.read1": "this.phylogenetics_bacterials.read1_clean",
         "snippy_streamline.read2": "this.phylogenetics_bacterials.read2_clean",
+        "snippy_streamline.assembly_fasta": "this.phylogenetics_bacterials.assembly_fasta",
         "snippy_streamline.samplenames": "this.phylogenetics_bacterials.phylogenetics_bacterial_id",
         "snippy_streamline.tree_name": "this.phylogenetics_bacterial_set_id"
       },
@@ -15,6 +16,7 @@
       "inputs": {
         "snippy_streamline.read1": "this.phylogenetics_bacterials.read1_clean",
         "snippy_streamline.read2": "this.phylogenetics_bacterials.read2_clean",
+        "snippy_streamline.assembly_fasta": "this.phylogenetics_bacterials.assembly_fasta",
         "snippy_streamline.samplenames": "this.phylogenetics_bacterials.phylogenetics_bacterial_id",
         "snippy_streamline.tree_name": "this.phylogenetics_bacterial_set_id"
       },
@@ -26,6 +28,7 @@
       "inputs": {
         "snippy_streamline.read1": "this.phylogenetics_bacterials.read1_clean",
         "snippy_streamline.read2": "this.phylogenetics_bacterials.read2_clean",
+        "snippy_streamline.assembly_fasta": "this.phylogenetics_bacterials.assembly_fasta",
         "snippy_streamline.samplenames": "this.phylogenetics_bacterials.phylogenetics_bacterial_id",
         "snippy_streamline.tree_name": "this.phylogenetics_bacterial_set_id"
       },
@@ -37,6 +40,7 @@
       "inputs": {
         "snippy_streamline.read1": "this.phylogenetics_bacterials.read1_clean",
         "snippy_streamline.read2": "this.phylogenetics_bacterials.read2_clean",
+        "snippy_streamline.assembly_fasta": "this.phylogenetics_bacterials.assembly_fasta",
         "snippy_streamline.samplenames": "this.phylogenetics_bacterials.phylogenetics_bacterial_id",
         "snippy_streamline.tree_name": "this.phylogenetics_bacterial_set_id"
       },
@@ -48,6 +52,7 @@
       "inputs": {
         "snippy_streamline.read1": "this.phylogenetics_bacterials.read1_clean",
         "snippy_streamline.read2": "this.phylogenetics_bacterials.read2_clean",
+        "snippy_streamline.assembly_fasta": "this.phylogenetics_bacterials.assembly_fasta",
         "snippy_streamline.samplenames": "this.phylogenetics_bacterials.phylogenetics_bacterial_id",
         "snippy_streamline.tree_name": "this.phylogenetics_bacterial_set_id"
       },

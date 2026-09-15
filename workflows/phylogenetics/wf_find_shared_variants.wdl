@@ -24,7 +24,7 @@ workflow shared_variants_wf {
     input:
       concatenated_variants = cat_variants.concatenated_variants,
       concatenated_file_name = concatenated_file_name_updated
-    }
+  }
   call versioning.version_capture{
     input:
   }

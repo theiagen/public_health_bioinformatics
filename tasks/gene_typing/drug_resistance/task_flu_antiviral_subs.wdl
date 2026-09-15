@@ -130,7 +130,7 @@ task antiviral_mutations_parser {
   }
   input {
     File mutations_tsv
-    String docker = "python:slim"
+    String docker = "us-docker.pkg.dev/general-theiagen/python/python:3.8.18-slim"
     Int disk_size = 50
     Int cpu = 2
     Int memory = 4
@@ -285,7 +285,7 @@ task serialization {
     Int disk_size = 10
     Int memory = 4
     Int cpu = 2
-    String docker = "python:slim"
+    String docker = "us-docker.pkg.dev/general-theiagen/python/python:3.8.18-slim"
   }
   command <<<
     python3 -c "print(', '.join([mutation for mutation in '~{sep=',' flu_A_315675_resistance_array}'.split(',') if mutation != '']))" > flu_A_315675_resistance.txt

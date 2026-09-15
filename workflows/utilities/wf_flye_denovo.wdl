@@ -25,12 +25,14 @@ workflow flye_denovo {
     Boolean skip_polishing = false # Default: Polishing enabled
 
     # Porechop inputs
+    String? porechop_docker
     Int? porechop_cpu
     Int? porechop_memory
     Int? porechop_disk_size
     String? porechop_trimopts # Optional Porechop trimming options
 
     # Flye inputs
+    String? flye_docker
     String? flye_read_type
     Int? flye_genome_length # Requires `asm_coverage`
     Int? flye_asm_coverage # Reduced coverage for initial disjointig assembly
@@ -47,11 +49,13 @@ workflow flye_denovo {
     Int? flye_disk_size
 
     # Bandage inputs
+    String? bandage_docker
     Int? bandage_cpu
     Int? bandage_memory
     Int? bandage_disk_size
 
     # Polypolish inputs
+    String? polypolish_docker
     String? polypolish_pair_orientation
     Float? polypolish_low_percentile_threshold
     Float? polypolish_high_percentile_threshold
@@ -65,13 +69,15 @@ workflow flye_denovo {
     Int? polypolish_disk_size
 
     # Medaka inputs
+    String? medaka_docker
     Boolean? auto_medaka_model
     String? medaka_model # Optional user-specified Medaka model
     Int? medaka_cpu
     Int? medaka_memory
     Int? medaka_disk_size
 
-     # Racon inputs
+    # Racon inputs
+    String? racon_docker
     Int? racon_cpu
     Int? racon_memory
     Int? racon_disk_size
@@ -83,6 +89,7 @@ workflow flye_denovo {
     Int? filter_contigs_disk_size
 
     # Dnaapler inputs
+    String? dnaapler_docker
     String? dnaapler_mode
     Int? dnaapler_cpu
     Int? dnaapler_memory
@@ -97,7 +104,8 @@ workflow flye_denovo {
         trimopts = porechop_trimopts,
         cpu = porechop_cpu,
         memory = porechop_memory,
-        disk_size = porechop_disk_size
+        disk_size = porechop_disk_size,
+        docker = porechop_docker
     }
   }
   # Call Flye using either trimmed reads or raw reads
@@ -118,9 +126,10 @@ workflow flye_denovo {
       additional_parameters = flye_additional_parameters,
       cpu = flye_cpu,
       memory = flye_memory,
-      disk_size = flye_disk_size
+      disk_size = flye_disk_size,
+      docker = flye_docker
   }
-  if (flye.flye_status == "PASS") {}
+  if (flye.flye_status == "PASS") {
     # Bandage plot generation
     call task_bandage.bandage_plot as bandage {
       input:
@@ -128,16 +137,17 @@ workflow flye_denovo {
         samplename = samplename,
         cpu = bandage_cpu,
         memory = bandage_memory,
-        disk_size = bandage_disk_size
+        disk_size = bandage_disk_size,
+        docker = bandage_docker
     }
     # Polypolish for hybrid assembly
     if (defined(illumina_read1) && defined(illumina_read2)) {
-     call task_bwa_all.bwa_all as bwa {
-       input:
-         draft_assembly_fasta = select_first([flye.assembly_fasta]),
-         read1 = select_first([illumina_read1]),
-         read2 = select_first([illumina_read2]),
-         samplename = samplename
+      call task_bwa_all.bwa_all as bwa {
+        input:
+          draft_assembly_fasta = select_first([flye.assembly_fasta]),
+          read1 = select_first([illumina_read1]),
+          read2 = select_first([illumina_read2]),
+          samplename = samplename
       }
       call task_polypolish.polypolish {
         input:
@@ -156,7 +166,8 @@ workflow flye_denovo {
           careful = polypolish_careful,
           cpu = polypolish_cpu,
           memory = polypolish_memory,
-          disk_size = polypolish_disk_size
+          disk_size = polypolish_disk_size,
+          docker = polypolish_docker
       }
     }
     # ONT-only Polishing Path: Medaka or Racon
@@ -171,7 +182,8 @@ workflow flye_denovo {
             auto_model = auto_medaka_model,
             cpu = medaka_cpu,
             memory = medaka_memory,
-            disk_size = medaka_disk_size
+            disk_size = medaka_disk_size,
+            docker = medaka_docker
         }
       }
       if (polisher == "racon") {
@@ -183,7 +195,8 @@ workflow flye_denovo {
             polishing_rounds = polish_rounds,
             cpu = racon_cpu,
             memory = racon_memory,
-            disk_size = racon_disk_size
+            disk_size = racon_disk_size,
+            docker = racon_docker
         }
       }
     }
@@ -205,23 +218,25 @@ workflow flye_denovo {
         dnaapler_mode = dnaapler_mode,
         cpu = dnaapler_cpu,
         memory = dnaapler_memory,
-        disk_size = dnaapler_disk_size
+        disk_size = dnaapler_disk_size,
+        docker = dnaapler_docker
     }
+  }
   output {
-    File assembly_fasta = dnaapler.reoriented_fasta
-    File bandage_plot = bandage.plot
+    File? assembly_fasta = dnaapler.reoriented_fasta
+    File? bandage_plot = bandage.plot
     File? contigs_gfa = flye.assembly_graph_gfa
-    File filtered_contigs_metrics = filter_contigs.assembly_filtering_metrics
+    File? filtered_contigs_metrics = filter_contigs.assembly_filtering_metrics
     File? flye_assembly_info = flye.assembly_info
     String? flye_assembly_status = flye.flye_status
     String? medaka_model_used = medaka.resolved_medaka_model
     String? porechop_version = porechop.porechop_version
     String flye_version = flye.flye_version
-    String bandage_version = bandage.bandage_version
+    String? bandage_version = bandage.bandage_version
     String? medaka_version = medaka.medaka_version
     String? racon_version = racon.racon_version
     String? bwa_version = bwa.bwa_version
     String? polypolish_version = polypolish.polypolish_version
-    String dnaapler_version = dnaapler.dnaapler_version
+    String? dnaapler_version = dnaapler.dnaapler_version
   }
 }

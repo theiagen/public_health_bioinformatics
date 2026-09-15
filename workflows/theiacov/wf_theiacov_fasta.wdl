@@ -119,7 +119,7 @@ workflow theiacov_fasta {
           "percent_reference_coverage":  consensus_qc.percent_reference_coverage,
           "vadr_num_alerts": morgana_magic.vadr_num_alerts
         }
-      }
+    }
   }
   call versioning.version_capture {
     input:
