@@ -6,7 +6,7 @@ task augur_refine {
     File aligned_fasta
     File draft_augur_tree
     File? metadata
-    String? metadata_id_columns 
+    String? metadata_id_columns
     String build_name
 
     # phylogeny parameters
