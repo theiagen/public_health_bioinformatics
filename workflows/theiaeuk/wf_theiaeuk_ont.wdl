@@ -70,67 +70,70 @@ workflow theiaeuk_ont {
       call flye_workflow.flye_denovo {
         input:
           read1 = read_QC_trim.read1_clean,
+          flye_genome_length = genome_length,
           samplename = samplename
       }
-      #call quast on the assembly
-      call quast_task.quast {
-        input:
-          assembly = flye_denovo.assembly_fasta,
-          samplename = samplename
-      }
-      # nanoplot for raw reads
-      call nanoplot_task.nanoplot as nanoplot_raw {
-        input:
-          read1 = read1,
-          samplename = samplename,
-          est_genome_length = select_first([genome_length, quast.genome_length])
-      }
-      # nanoplot for cleaned reads
-      call nanoplot_task.nanoplot as nanoplot_clean {
-        input:
-          read1 = read_QC_trim.read1_clean,
-          samplename = samplename,
-          est_genome_length = select_first([genome_length, quast.genome_length])
-      }
-      # busco on the assembly
-      call busco_task.busco {
-        input:
-          assembly = flye_denovo.assembly_fasta,
-          samplename = samplename,
-          eukaryote = true,
-          memory = busco_memory,
-          docker = busco_docker_image
-      }
-      # call gambit to predict taxon
-      call gambit.gambit {
-        input:
-          assembly = flye_denovo.assembly_fasta,
-          samplename = samplename,
-          gambit_db_genomes = gambit_db_genomes,
-          gambit_db_signatures = gambit_db_signatures
-      }
-      # call medea magic for cladetyper, AMR search, and read-based variant calling
-      # (minimap2 + Clair3) and gene coverage, feeding the cleaned long reads
-      call medea_magic_workflow.medea_magic {
-        input:
-          samplename = samplename,
-          medea_tag = gambit.merlin_tag,
-          assembly = flye_denovo.assembly_fasta,
-          read1 = read_QC_trim.read1_clean,
-          ont_data = true,
-          # mask Illumina inputs
-          gatk_docker = "",
-          gatk_cpu = 0,
-          gatk_memory = 0,
-          gatk_disk_size = 0,
-          gatk_ploidy = 0,
-          gatk_filter_min_variant_quality = 0.0,
-          gatk_filter_min_depth = 0,
-          gatk_filter_min_map_quality = 0.0,
-          gatk_filter_min_quality_by_depth = 0.0,
-          gatk_filter_max_fisher_strand_bias = 0.0,
-          gatk_filter_max_strand_odds_ratio = 0.0,
-          gatk_filter_expression = ""
+      if (flye_denovo.flye_assembly_status == "PASS") {
+        #call quast on the assembly
+        call quast_task.quast {
+          input:
+            assembly = select_first([flye_denovo.assembly_fasta]),
+            samplename = samplename
+        }
+        # nanoplot for raw reads
+        call nanoplot_task.nanoplot as nanoplot_raw {
+          input:
+            read1 = read1,
+            samplename = samplename,
+            est_genome_length = select_first([genome_length, quast.genome_length])
+        }
+        # nanoplot for cleaned reads
+        call nanoplot_task.nanoplot as nanoplot_clean {
+          input:
+            read1 = read_QC_trim.read1_clean,
+            samplename = samplename,
+            est_genome_length = select_first([genome_length, quast.genome_length])
+        }
+        # busco on the assembly
+        call busco_task.busco {
+          input:
+            assembly = select_first([flye_denovo.assembly_fasta]),
+            samplename = samplename,
+            eukaryote = true,
+            memory = busco_memory,
+            docker = busco_docker_image
+        }
+        # call gambit to predict taxon
+        call gambit.gambit {
+          input:
+            assembly = select_first([flye_denovo.assembly_fasta]),
+            samplename = samplename,
+            gambit_db_genomes = gambit_db_genomes,
+            gambit_db_signatures = gambit_db_signatures
+        }
+        # call medea magic for cladetyper, AMR search, and read-based variant calling
+        # (minimap2 + Clair3) and gene coverage, feeding the cleaned long reads
+        call medea_magic_workflow.medea_magic {
+          input:
+            samplename = samplename,
+            medea_tag = gambit.merlin_tag,
+            assembly = select_first([flye_denovo.assembly_fasta]),
+            read1 = read_QC_trim.read1_clean,
+            ont_data = true,
+            # mask Illumina inputs
+            gatk_docker = "",
+            gatk_cpu = 0,
+            gatk_memory = 0,
+            gatk_disk_size = 0,
+            gatk_ploidy = 0,
+            gatk_filter_min_variant_quality = 0.0,
+            gatk_filter_min_depth = 0,
+            gatk_filter_min_map_quality = 0.0,
+            gatk_filter_min_quality_by_depth = 0.0,
+            gatk_filter_max_fisher_strand_bias = 0.0,
+            gatk_filter_max_strand_odds_ratio = 0.0,
+            gatk_filter_expression = ""
+        }
       }
     }
   }
@@ -153,6 +156,7 @@ workflow theiaeuk_ont {
     File? bandage_plot = flye_denovo.bandage_plot
     File? filtered_contigs_metrics = flye_denovo.filtered_contigs_metrics
     String? flye_assembly_info = flye_denovo.flye_assembly_info
+    String? flye_assembly_status = flye_denovo.flye_assembly_status
     String? medaka_model = flye_denovo.medaka_model_used
     String? porechop_version = flye_denovo.porechop_version
     String? flye_version = flye_denovo.flye_version
