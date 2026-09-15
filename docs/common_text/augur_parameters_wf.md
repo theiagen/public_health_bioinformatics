@@ -4,7 +4,7 @@ fragment: true
 ---
 **The `augur_parameters` sub-workflow is the first step in the Augur workflow**. This step automatically sets the reference files and Augur parameters to the appropriate value for the user-designated organism (`"sars-cov-2"` is the default organism).
 
-!!! dna ""
+!!! dna "Defaults change based on the specified organism input"
     The following tables include the relevant organism-specific parameters; **all of these default values can be overwritten by providing a value for the "Overwrite Variable Name" field**.
 
     === "SARS-CoV-2"
