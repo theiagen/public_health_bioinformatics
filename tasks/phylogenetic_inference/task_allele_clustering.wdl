@@ -19,7 +19,6 @@ task allele_clustering {
   }
   command <<<
     # concatenate all GZIPPED JSONs into NDJSON format
-    touch ~{tree_name}_concatenated_profiles.ndjson.gz
     file_array=(~{sep=' ' allele_jsons})
     for index in ${!file_array[@]}; do
       # in the case where the input files do not end in newline characters,

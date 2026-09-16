@@ -19,7 +19,7 @@ task dorado {
   command <<<
     set -euo pipefail
 
-    dorado --version 2&> VERSION
+    dorado --version > VERSION 2>&1
 
     echo "DEBUG: moving the unpolished_fasta to the local dir and building the index locally"
     cp ~{unpolished_fasta} unpolished.fasta

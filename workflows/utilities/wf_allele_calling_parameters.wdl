@@ -57,7 +57,7 @@ workflow allele_calling_parameters {
     String listeria_scheme = "LISTERIA"
     String listeria_loci_path = "LISTERIA/loci.tsv"
     Float listeria_similarity = 85
-    String listeria_qc_genus = "LISTERIA_" # not sure if we should be using the I, II, III, or IV ones
+    String listeria_qc_genus = "LISTERIA_"
   }
   if (merlin_tag == "Salmonella") {
     String salm_scheme = "SALM"
@@ -66,7 +66,7 @@ workflow allele_calling_parameters {
     Float salm_similarity = 75
     String salm_qc_genus = "SALM"
   }
-  if (merlin_tag == "Vibrio" || merlin_tag == "Vibrio cholerae") { # do not run vibrio vulnificus ??
+  if (merlin_tag == "Vibrio" || merlin_tag == "Vibrio cholerae") {
     String vibrio_scheme = "VIBR"
     File vibrio_db = "gs://theiagen-public-resources-rp/reference_data/bacterial/pn2.0-mlst-databases/VIBR.tar.gz"
     String vibrio_loci_path = "VIBR/loci/VIBRIO_loci.tsv"
@@ -77,7 +77,7 @@ workflow allele_calling_parameters {
       String v_cholerae_loci_path = "VIBR/loci/VIBRIO_cholerae_loci.tsv"
     }
     if (gambit_predicted_taxon == "Vibrio parahaemolyticus") {
-      String v_parahaemolyticus_loci_path = "VIBR/loci/VIBRIO_parahaemloyticus_loci.tsv"
+      String v_parahaemolyticus_loci_path = "VIBR/loci/VIBRIO_parahaemolyticus_loci.tsv"
     }
     # qc species
     if (gambit_predicted_taxon == "Vibrio vulnificus") {

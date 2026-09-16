@@ -715,7 +715,8 @@ workflow merlin_magic {
           qc_genus = allele_calling_parameters.qc_genus,
           scheme = allele_calling_parameters.scheme,
           loci_path = allele_calling_parameters.loci_path,
-          qc_species = allele_calling_parameters.qc_species
+          qc_species = allele_calling_parameters.qc_species,
+          docker = allele_calling_docker_image
       }
     }
   }
