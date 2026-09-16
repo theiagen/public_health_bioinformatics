@@ -16,7 +16,7 @@ jobs:
   merge:
     # merge a pr if it's got the right label, will merge to main, isn't a draft, is open, and isn't a fork
     if: >
-      github.event.label.name == 'ready-to-merge' &&
+      github.event.label.name == '-merge' &&
       github.event.pull_request.base.ref == 'main' &&
       github.event.pull_request.draft == false &&
       github.event.pull_request.state == 'open' &&
@@ -46,8 +46,8 @@ jobs:
           token: ${{ steps.token.outputs.token }}
           fetch-depth: 0
 
-      # all three gates run before anything is written, so a failed gate
-      # leaves the branch tag intact.
+      # gate 1: approval. runs before anything is written, so an unapproved
+      # pr leaves the branch tag intact.
       - name: Require an approving review
         id: approval
         run: |
@@ -59,8 +59,34 @@ jobs:
           fi
           echo "Approvals: $N"
 
-      # tolerates a repo with no required checks configured; real failures
-      # still exit non-zero.
+      - name: Configure git identity
+        run: |
+          git config user.name  "${{ steps.token.outputs.app-slug }}[bot]"
+          git config user.email "${{ steps.token.outputs.app-slug }}[bot]@users.noreply.github.com"
+
+      # clearing runs BEFORE the remaining gates: the "awaiting merge bot"
+      # required check is red until this lands, so gating first would deadlock.
+      # this push also dismisses the approval — the app's ruleset bypass is
+      # what lets the merge go through anyway.
+      - name: Clear branch tag
+        id: clear
+        run: |
+          sed -i 's|^\( *BRANCH_TAG=\).*|\1""|' "$VERSION_FILE"
+          if git diff --quiet; then
+            echo "Already clear."
+          else
+            git commit -am "ci: clear version tag for merge"
+            git push
+          fi
+
+      # the clear push restarts the check suite; give github time to register
+      # the new run before --watch starts polling, or it can return a stale
+      # result from the previous run.
+      - name: Wait for checks to settle
+        run: sleep 15
+
+      # gate 2: checks. --watch blocks on pending rather than failing.
+      # tolerates a repo with no required checks configured.
       - name: Require checks to pass
         id: checks
         run: |
@@ -72,9 +98,9 @@ jobs:
           fi
           exit "$RC"
 
-      # github computes mergeability asynchronously; UNKNOWN just means it
-      # hasn't settled yet. BLOCKED is expected once the clear push below
-      # dismisses the approval — the app's ruleset bypass resolves it.
+      # gate 3: mergeable. github computes this asynchronously, so UNKNOWN
+      # just means it hasn't settled. BLOCKED is expected here because the
+      # clear push dismissed the approval.
       - name: Require mergeable state
         id: mergeable
         run: |
@@ -90,24 +116,6 @@ jobs:
             UNKNOWN) echo "::error::GitHub did not settle mergeability in time."; exit 1 ;;
             *) echo "::error::PR is not mergeable (state: $STATE)."; exit 1 ;;
           esac
-
-      - name: Configure git identity
-        run: |
-          git config user.name  "${{ steps.token.outputs.app-slug }}[bot]"
-          git config user.email "${{ steps.token.outputs.app-slug }}[bot]@users.noreply.github.com"
-
-      # this push dismisses the approval. that is expected — the ruleset
-      # bypass is what lets the merge below go through anyway.
-      - name: Clear branch tag
-        id: clear
-        run: |
-          sed -i 's|^\( *BRANCH_TAG=\).*|\1""|' "$VERSION_FILE"
-          if git diff --quiet; then
-            echo "Already clear."
-          else
-            git commit -am "ci: clear version tag for merge"
-            git push
-          fi
 
       - name: Debug merge block
         continue-on-error: true
@@ -273,10 +281,10 @@ jobs:
             echo "| Branch tag on \`$BRANCH\` | $([ "$TAG_STATE" = ok ] && echo 'intact' || echo '**cleared — needs manual fix**') |"
             echo "| Failed at | \`$STAGE\` |"
             echo
-            echo "The \`ready-to-merge\` label has been removed. Re-apply it to retry."
+            echo "The \`-merge\` label has been removed. Re-apply it to retry."
             echo
             echo "[Run log]($RUN_URL)"
           } > "$BODY_FILE"
 
-          gh pr edit "$PR" --remove-label ready-to-merge || true
+          gh pr edit "$PR" --remove-label -merge || true
           gh pr comment "$PR" --body-file "$BODY_FILE"

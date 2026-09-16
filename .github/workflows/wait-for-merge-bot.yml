@@ -1,0 +1,19 @@
+name: awaiting merge bot
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+
+jobs:
+  check:
+    name: awaiting merge bot
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: BRANCH_TAG must be empty
+        run: |
+          if ! grep -qE '^ *BRANCH_TAG=""$' tasks/task_versioning.wdl; then
+            echo "::error file=tasks/task_versioning.wdl::This PR still carries its branch version tag. Apply the '-merge' label — the merge bot clears the tag, merges, and restores it. Do not use the Squash and merge button."
+            exit 1
+          fi
