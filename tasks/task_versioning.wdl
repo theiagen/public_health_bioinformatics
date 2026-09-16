@@ -10,7 +10,7 @@ task version_capture {
   }
   command <<<
     VERSION_TAG="v4.3.0"    # managed by us
-    BRANCH_TAG=""           # CI-managed; do NOT edit by hand
+    BRANCH_TAG=""
     if [ -n "${BRANCH_TAG}" ]; then
       echo "PHB ${VERSION_TAG}; branch: ${BRANCH_TAG}" > PHB_VERSION
     else
