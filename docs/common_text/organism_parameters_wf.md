@@ -57,7 +57,6 @@ fragment: true
             - auspice_config = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_h5n1.json"`
             - HA
                 - reference_fasta = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h5n1_ha.gb"`
-                - clades_tsv = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/h5nx-clades.tsv"`
 
     ??? toggle "Default values for MPXV"
         - min_num_unambig = 150000

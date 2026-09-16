@@ -39,6 +39,7 @@ workflow theiaprok_illumina_se {
     File? read1_lane4
 
     Int? genome_length
+    Int min_contig_length = 200
     # export taxon table parameters
     String? run_id
     String? collection_date
@@ -141,11 +142,13 @@ workflow theiaprok_illumina_se {
       call digger_denovo.digger_denovo {
         input:
           samplename = samplename,
-          read1 = read_QC_trim.read1_clean
+          read1 = read_QC_trim.read1_clean,
+          min_contig_length = min_contig_length
       }
       call quast_task.quast {
         input:
           assembly = digger_denovo.assembly_fasta,
+          min_contig_length = min_contig_length,
           samplename = samplename
       }
       call cg_pipeline.cg_pipeline as cg_pipeline_raw {
