@@ -26,15 +26,26 @@ jobs:
       PR: ${{ github.event.pull_request.number }}
       BRANCH: ${{ github.event.pull_request.head.ref }}
       VERSION_FILE: tasks/task_versioning.wdl
-      GH_TOKEN: ${{ secrets.VERSION_BOT_TOKEN }}
 
     steps:
+      - name: Mint token
+        id: token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.VERSION_BOT_APP_ID }}
+          private-key: ${{ secrets.VERSION_BOT_PRIVATE_KEY }}
+
+      - name: Export token
+        run: echo "GH_TOKEN=${{ steps.token.outputs.token }}" >> "$GITHUB_ENV"
+
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.ref }}
-          token: ${{ secrets.VERSION_BOT_TOKEN }}
+          token: ${{ steps.token.outputs.token }}
           fetch-depth: 0
 
+      # all three gates run before anything is written, so a failed gate
+      # leaves the branch tag intact.
       - name: Require an approving review
         run: |
           N=$(gh pr view "$PR" --json reviews \
@@ -59,9 +70,11 @@ jobs:
 
       - name: Configure git identity
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name  "${{ steps.token.outputs.app-slug }}[bot]"
+          git config user.email "${{ steps.token.outputs.app-slug }}[bot]@users.noreply.github.com"
 
+      # this push dismisses the approval. the app's ruleset bypass is what
+      # allows the squash merge below to still go through.
       - name: Clear branch tag
         # remove any content in BRANCH_TAG=""
         run: |
@@ -94,7 +107,10 @@ jobs:
 
       - name: Report failure
         if: failure()
-        # remove the ready-to-merge label and leaves a comment.
+        # remove the ready-to-merge label and leave a comment.
+        # falls back to GITHUB_TOKEN in case minting the app token failed.
+        env:
+          GH_TOKEN: ${{ steps.token.outputs.token || secrets.GITHUB_TOKEN }}
         run: |
           gh pr edit "$PR" --remove-label ready-to-merge || true
           RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
