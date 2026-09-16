@@ -47,7 +47,7 @@ workflow read_QC_trim_pe {
     String read_processing = "trimmomatic" # options: trimmomatic, fastp
     String read_qc = "fastq_scan" # options: fastq_scan, fastqc
     String? trimmomatic_override_args
-    String trimmomatic_quality_encoding = "-phred33" # options: "-phred33", "-phred64", or "" (auto-detect)
+    String? trimmomatic_quality_encoding # options: "-phred33" (default), "-phred64", or "" (auto-detect)
     String fastp_args = "--detect_adapter_for_pe -g -5 20 -3 20"
 
     # rasusa downsampling inputs
