@@ -202,18 +202,18 @@ workflow theiaeuk_illumina_pe {
     File? read_screen_raw_tsv = raw_check_reads.read_screen_tsv
     String? read_screen_clean = clean_check_reads.read_screen
     File? read_screen_clean_tsv = clean_check_reads.read_screen_tsv
-    # Read QC - decontaminate outputs
-    File? contaminant_bam = read_QC_trim.contaminant_bam
-    File? contaminant_bai = read_QC_trim.contaminant_bai
-    Float? contaminant_coverage = read_QC_trim.contaminant_coverage
-    Float? contaminant_mean_depth = read_QC_trim.contaminant_mean_depth
-    File? contaminant_mapping_stats = read_QC_trim.contaminant_mapping_stats
-    File? contaminant_cov_hist = read_QC_trim.contaminant_cov_hist
-    File? contaminant_mapping_flagstat = read_QC_trim.contaminant_mapping_flagstat
-    Float? contaminant_percent_mapped_reads = read_QC_trim.contaminant_percent_mapped_reads
-    Map[String, Float]? contaminant_coverage_by_sequence = read_QC_trim.contaminant_sequence_coverage
-    Map[String, Float]? contaminant_depth_by_sequence = read_QC_trim.contaminant_sequence_depth
-    String? contaminant_status = read_QC_trim.contaminant_status
+    # Read QC - mapped read removal outputs
+    File? mapped_read_removal_bam = read_QC_trim.mapped_read_removal_bam
+    File? mapped_read_removal_bai = read_QC_trim.mapped_read_removal_bai
+    Float? mapped_read_removal_coverage = read_QC_trim.mapped_read_removal_coverage
+    Float? mapped_read_removal_mean_depth = read_QC_trim.mapped_read_removal_mean_depth
+    File? mapped_read_removal_mapping_stats = read_QC_trim.mapped_read_removal_mapping_stats
+    File? mapped_read_removal_cov_hist = read_QC_trim.mapped_read_removal_cov_hist
+    File? mapped_read_removal_mapping_flagstat = read_QC_trim.mapped_read_removal_mapping_flagstat
+    Float? mapped_read_removal_percent_mapped_reads = read_QC_trim.mapped_read_removal_percent_mapped_reads
+    Map[String, Float]? mapped_read_removal_coverage_by_sequence = read_QC_trim.mapped_read_removal_sequence_coverage
+    Map[String, Float]? mapped_read_removal_depth_by_sequence = read_QC_trim.mapped_read_removal_sequence_depth
+    String? mapped_read_removal_status = read_QC_trim.mapped_read_removal_status
     # Read QC - fastq_scan outputs
     Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
     Int? fastq_scan_num_reads_raw2 = read_QC_trim.fastq_scan_raw2
