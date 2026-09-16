@@ -1,0 +1,290 @@
+name: Merge bot
+
+on:
+  pull_request:
+    types: [labeled]
+
+concurrency:
+  group: merge-bot-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  merge:
+    # merge a pr if it's got the right label, will merge to main, isn't a draft, is open, and isn't a fork
+    if: >
+      github.event.label.name == '-merge' &&
+      github.event.pull_request.base.ref == 'main' &&
+      github.event.pull_request.draft == false &&
+      github.event.pull_request.state == 'open' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      PR: ${{ github.event.pull_request.number }}
+      BRANCH: ${{ github.event.pull_request.head.ref }}
+      VERSION_FILE: tasks/task_versioning.wdl
+
+    steps:
+      - name: Mint token
+        id: token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.VERSION_BOT_APP_ID }}
+          private-key: ${{ secrets.VERSION_BOT_PRIVATE_KEY }}
+
+      - name: Export token
+        run: echo "GH_TOKEN=${{ steps.token.outputs.token }}" >> "$GITHUB_ENV"
+
+      - uses: actions/checkout@v4
+        id: checkout
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          token: ${{ steps.token.outputs.token }}
+          fetch-depth: 0
+
+      # gate 1: approval. runs before anything is written, so an unapproved
+      # pr leaves the branch tag intact.
+      - name: Require an approving review
+        id: approval
+        run: |
+          N=$(gh pr view "$PR" --json reviews \
+                --jq '[.reviews[] | select(.state == "APPROVED")] | length')
+          if [ "$N" -lt 1 ]; then
+            echo "::error::No approving review on PR #$PR."
+            exit 1
+          fi
+          echo "Approvals: $N"
+
+      - name: Configure git identity
+        run: |
+          git config user.name  "${{ steps.token.outputs.app-slug }}[bot]"
+          git config user.email "${{ steps.token.outputs.app-slug }}[bot]@users.noreply.github.com"
+
+      # clearing runs BEFORE the remaining gates: the "awaiting merge bot"
+      # required check is red until this lands, so gating first would deadlock.
+      # this push also dismisses the approval — the app's ruleset bypass is
+      # what lets the merge go through anyway.
+      - name: Clear branch tag
+        id: clear
+        run: |
+          sed -i 's|^\( *BRANCH_TAG=\).*|\1""|' "$VERSION_FILE"
+          if git diff --quiet; then
+            echo "Already clear."
+          else
+            git commit -am "ci: clear version tag for merge"
+            git push
+          fi
+
+      # the clear push restarts the check suite; give github time to register
+      # the new run before --watch starts polling, or it can return a stale
+      # result from the previous run.
+      - name: Wait for checks to settle
+        run: sleep 15
+
+      # gate 2: checks. --watch blocks on pending rather than failing.
+      # tolerates a repo with no required checks configured.
+      - name: Require checks to pass
+        id: checks
+        run: |
+          OUT=$(gh pr checks "$PR" --required --watch --fail-fast 2>&1) && RC=0 || RC=$?
+          echo "$OUT"
+          if [ "$RC" -ne 0 ] && printf '%s' "$OUT" | grep -q 'no required checks'; then
+            echo "No required checks configured — skipping gate."
+            exit 0
+          fi
+          exit "$RC"
+
+      # gate 3: mergeable. github computes this asynchronously, so UNKNOWN
+      # just means it hasn't settled. BLOCKED is expected here because the
+      # clear push dismissed the approval.
+      - name: Require mergeable state
+        id: mergeable
+        run: |
+          for i in $(seq 1 10); do
+            STATE=$(gh pr view "$PR" --json mergeStateStatus --jq .mergeStateStatus)
+            [ "$STATE" != "UNKNOWN" ] && break
+            echo "mergeStateStatus UNKNOWN, retrying ($i)..."
+            sleep 3
+          done
+          echo "mergeStateStatus: $STATE"
+          case "$STATE" in
+            CLEAN|UNSTABLE|BLOCKED) ;;
+            UNKNOWN) echo "::error::GitHub did not settle mergeability in time."; exit 1 ;;
+            *) echo "::error::PR is not mergeable (state: $STATE)."; exit 1 ;;
+          esac
+
+      - name: Debug merge block
+        continue-on-error: true
+        run: |
+          echo "--- app identity ---"
+          gh api /installation/repositories --jq '.repositories[].full_name' || echo "(failed)"
+          echo "--- pr state ---"
+          gh pr view "$PR" --json reviewDecision,mergeStateStatus,mergeable,isDraft || true
+          echo "--- allowed merge methods ---"
+          gh api "repos/${{ github.repository }}" \
+            --jq '{squash: .allow_squash_merge, merge: .allow_merge_commit, rebase: .allow_rebase_merge}' || true
+          echo "--- rules in effect for main ---"
+          gh api "repos/${{ github.repository }}/rules/branches/main" \
+            --jq '[.[] | {type, ruleset_id: .ruleset_id, source: .ruleset_source}]' || true
+          echo "--- classic protection ---"
+          gh api "repos/${{ github.repository }}/branches/main/protection" >/dev/null 2>&1 \
+            && echo "CLASSIC PROTECTION PRESENT — this is likely the problem" \
+            || echo "none (good)"
+
+      # uses the rest api rather than `gh pr merge`: gh does a client-side
+      # mergeability pre-flight that refuses on BLOCKED without knowing the
+      # token holds a ruleset bypass. the api evaluates the bypass server-side.
+      - name: Squash merge
+        id: squash
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          COMMITS=$(gh api "repos/${{ github.repository }}/pulls/$PR/commits" --paginate \
+            --jq '.[] | "* " + (.commit.message | split("\n")[0])' \
+            | grep -v '^\* ci: clear version tag' || true)
+          gh api -X PUT "repos/${{ github.repository }}/pulls/$PR/merge" \
+            -f merge_method=squash \
+            -f commit_title="$PR_TITLE (#$PR)" \
+            -f commit_message="$COMMITS"
+
+      - name: Restore branch tag
+        id: restore
+        # put the branch tag back
+        run: |
+          git fetch origin "$BRANCH"
+          git reset --hard "origin/$BRANCH"
+          SAFE=$(printf '%s' "$BRANCH" | tr -c 'A-Za-z0-9._/-' '-')
+          sed -i "s|^\( *BRANCH_TAG=\).*|\1\"${SAFE}\"|" "$VERSION_FILE"
+          if git diff --quiet; then
+            echo "Already stamped."
+          else
+            git commit -am "ci: restore version tag after merge"
+            git push
+          fi
+
+      # if the clear landed but the merge didn't, the branch is sitting with
+      # an empty tag and nothing else will fix it — the stamp workflow needs
+      # a push to fire.
+      - name: Restore branch tag after failure
+        id: repair
+        if: failure() && steps.clear.outcome == 'success' && steps.squash.outcome != 'success'
+        run: |
+          git fetch origin "$BRANCH"
+          git reset --hard "origin/$BRANCH"
+          SAFE=$(printf '%s' "$BRANCH" | tr -c 'A-Za-z0-9._/-' '-')
+          sed -i "s|^\( *BRANCH_TAG=\).*|\1\"${SAFE}\"|" "$VERSION_FILE"
+          if git diff --quiet; then
+            echo "Already stamped."
+          else
+            git commit -am "ci: restore version tag after failed merge"
+            git push
+          fi
+
+      - name: Report failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ steps.token.outputs.token || secrets.GITHUB_TOKEN }}
+          TOKEN_OUT: ${{ steps.token.outcome }}
+          CHECKOUT: ${{ steps.checkout.outcome }}
+          APPROVAL: ${{ steps.approval.outcome }}
+          CHECKS: ${{ steps.checks.outcome }}
+          MERGEABLE: ${{ steps.mergeable.outcome }}
+          CLEAR: ${{ steps.clear.outcome }}
+          SQUASH: ${{ steps.squash.outcome }}
+          RESTORE: ${{ steps.restore.outcome }}
+          REPAIR: ${{ steps.repair.outcome }}
+        run: |
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          BODY_FILE="$RUNNER_TEMP/merge-bot-comment.md"
+
+          if   [ "$TOKEN_OUT" = "failure" ]; then STAGE="token"
+          elif [ "$CHECKOUT"  = "failure" ]; then STAGE="checkout"
+          elif [ "$APPROVAL"  = "failure" ]; then STAGE="approval"
+          elif [ "$CHECKS"    = "failure" ]; then STAGE="checks"
+          elif [ "$MERGEABLE" = "failure" ]; then STAGE="mergeable"
+          elif [ "$CLEAR"     = "failure" ]; then STAGE="clear"
+          elif [ "$SQUASH"    = "failure" ]; then STAGE="squash"
+          elif [ "$RESTORE"   = "failure" ]; then STAGE="restore"
+          else STAGE="unknown"
+          fi
+
+          if [ "$SQUASH" = "success" ]; then MERGED="yes"; else MERGED="no"; fi
+
+          if [ "$CLEAR" = "success" ] && [ "$RESTORE" != "success" ] && [ "$REPAIR" != "success" ]; then
+            TAG_STATE="cleared"
+          else
+            TAG_STATE="ok"
+          fi
+
+          case "$STAGE" in
+            token)
+              TITLE=":x: **Merge bot failed: could not authenticate.**"
+              WHY="The GitHub App token could not be minted."
+              FIX="Check that \`VERSION_BOT_APP_ID\` and \`VERSION_BOT_PRIVATE_KEY\` are set as repo secrets, that the private key was pasted in full including its BEGIN/END lines, and that the app is still installed on this repository."
+              ;;
+            checkout)
+              TITLE=":x: **Merge bot failed: could not check out the branch.**"
+              WHY="Checkout of \`$BRANCH\` failed."
+              FIX="Usually means the branch was deleted or force-pushed while the bot was running."
+              ;;
+            approval)
+              TITLE=":x: **Merge bot stopped: no approving review.**"
+              WHY="This PR has no review in the APPROVED state."
+              FIX="Get an approval before re-applying the label. Note that a prior approval is dismissed whenever new commits are pushed."
+              ;;
+            checks)
+              TITLE=":x: **Merge bot stopped: required checks are not passing.**"
+              WHY="One or more required status checks failed, or are still pending."
+              FIX="See the checks tab on this PR and fix the failures."
+              ;;
+            mergeable)
+              TITLE=":x: **Merge bot stopped: PR is not in a mergeable state.**"
+              WHY="GitHub reports this PR as not mergeable — most often a conflict with \`main\`, or the branch is behind and the ruleset requires it to be up to date."
+              FIX="Merge \`main\` into \`$BRANCH\` and resolve any conflicts. The run log shows the exact \`mergeStateStatus\`."
+              ;;
+            clear)
+              TITLE=":x: **Merge bot failed: could not clear the version tag.**"
+              WHY="The bot could not commit or push the cleared \`BRANCH_TAG\` to \`$BRANCH\`."
+              FIX="Usually the app lacks \`Contents: write\`, or \`$BRANCH\` is itself protected, or someone pushed to the branch mid-run. Nothing was merged and the branch is unchanged."
+              ;;
+            squash)
+              TITLE=":x: **Merge bot failed: the squash merge was refused.**"
+              WHY="GitHub rejected the merge."
+              FIX="Check that the ruleset containing the **Require a pull request before merging** rule lists the app in its Bypass list (Apps tab, set to Always), that squash merging is enabled in Settings → General, and that no second ruleset targets \`main\` without the bypass. The run log contains the API's specific error message."
+              ;;
+            restore)
+              TITLE=":warning: **Merged, but the branch tag was not restored.**"
+              WHY="The squash merge succeeded, so \`main\` is correct. Restoring \`BRANCH_TAG\` on \`$BRANCH\` failed."
+              FIX="Set \`BRANCH_TAG=\"$BRANCH\"\` in \`$VERSION_FILE\` on \`$BRANCH\` manually, or push any commit to that branch and the stamp workflow will fix it."
+              ;;
+            *)
+              TITLE=":x: **Merge bot failed.**"
+              WHY="The job failed at a step that does not have specific diagnostics."
+              FIX="See the run log."
+              ;;
+          esac
+
+          {
+            echo "$TITLE"
+            echo
+            echo "**What happened:** $WHY"
+            echo
+            echo "**What to do:** $FIX"
+            echo
+            echo "| | |"
+            echo "|---|---|"
+            echo "| Merged to \`main\` | $([ "$MERGED" = yes ] && echo 'yes' || echo 'no') |"
+            echo "| Branch tag on \`$BRANCH\` | $([ "$TAG_STATE" = ok ] && echo 'intact' || echo '**cleared — needs manual fix**') |"
+            echo "| Failed at | \`$STAGE\` |"
+            echo
+            echo "The \`-merge\` label has been removed. Re-apply it to retry."
+            echo
+            echo "[Run log]($RUN_URL)"
+          } > "$BODY_FILE"
+
+          gh pr edit "$PR" --remove-label -merge || true
+          gh pr comment "$PR" --body-file "$BODY_FILE"

@@ -1,0 +1,36 @@
+name: Stamp branch version
+
+on:
+  push:
+    branches-ignore: [main]
+
+concurrency:
+  group: stamp-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  stamp:
+    # don't do anything if the last actor was GHA (prevent double stamping)
+    if: ${{ !endsWith(github.actor, '[bot]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - name: Set BRANCH_TAG
+        # add the name of the branch to the BRANCH var in task_versioning
+        run: |
+          SAFE=$(printf '%s' "$GITHUB_REF_NAME" | tr -c 'A-Za-z0-9._/-' '-')
+          sed -i "s|^\( *BRANCH_TAG=\).*|\1\"${SAFE}\"|" tasks/task_versioning.wdl
+
+      - name: Commit if changed
+        run: |
+          git diff --quiet && exit 0
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "ci: stamp branch version tag"
+          git push
