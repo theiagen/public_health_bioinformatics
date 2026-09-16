@@ -57,8 +57,8 @@ jobs:
           echo "Approvals: $N"
 
       - name: Require checks to pass
-        run: gh pr checks "$PR" --required --watch --fail-fast
-
+        run: gh pr checks "$PR" --required
+        
       - name: Require mergeable state
         run: |
           STATE=$(gh pr view "$PR" --json mergeStateStatus --jq .mergeStateStatus)
