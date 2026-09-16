@@ -850,14 +850,9 @@ workflow theiaprok_illumina_pe {
     Map[String, Float]? mapped_read_removal_coverage_by_sequence = read_QC_trim.mapped_read_removal_sequence_coverage
     Map[String, Float]? mapped_read_removal_depth_by_sequence = read_QC_trim.mapped_read_removal_sequence_depth
     Map[String, Float]? mapped_read_removal_reads_by_sequence = read_QC_trim.mapped_read_removal_sequence_reads_mapped
-    Map[String, Float]? mapped_read_removal_expected_coverage_by_sequence = read_QC_trim.mapped_read_removal_expected_sequence_coverage
-    Map[String, Float]? mapped_read_removal_expected_depth_by_sequence = read_QC_trim.mapped_read_removal_expected_sequence_depth
-    Map[String, Float]? mapped_read_removal_expected_reads_by_sequence = read_QC_trim.mapped_read_removal_expected_sequence_reads_mapped
-    Map[String, Float]? mapped_read_removal_unexpected_coverage_by_sequence = read_QC_trim.mapped_read_removal_unexpected_sequence_coverage
-    Map[String, Float]? mapped_read_removal_unexpected_depth_by_sequence = read_QC_trim.mapped_read_removal_unexpected_sequence_depth
-    Map[String, Float]? mapped_read_removal_unexpected_reads_by_sequence = read_QC_trim.mapped_read_removal_unexpected_sequence_reads_mapped
-    String? mapped_read_removal_status = read_QC_trim.mapped_read_removal_status
     # Read QC - spike-in screening outputs
+    File? spike_in_removed_read1 = read_QC_trim.spike_in_removed_read1
+    File? spike_in_removed_read2 = read_QC_trim.spike_in_removed_read2
     File? spike_in_bam = read_QC_trim.spike_in_bam
     File? spike_in_bai = read_QC_trim.spike_in_bai
     Float? spike_in_coverage = read_QC_trim.spike_in_coverage

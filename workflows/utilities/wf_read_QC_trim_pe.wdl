@@ -27,14 +27,7 @@ workflow read_QC_trim_pe {
     # mapped read removal inputs - reads mapping to this FASTA are removed prior to downstream analysis
     File? mapped_read_removal_fasta
     Int? mapped_read_removal_memory
-    String? mapped_read_removal_expected_sequences # comma-delimited list of expected sequences, OR a key into mapped_read_removal_expected_sequences_json when that is provided
-    File? mapped_read_removal_expected_sequences_json # optional JSON mapping of {"<NAME>": ["<SEQUENCE1>", "<SEQUENCE2>", ...]}; when provided, mapped_read_removal_expected_sequences is used as the key to look up the list of expected sequences
-    Float? mapped_read_removal_min_coverage
-    Int? mapped_read_removal_min_depth
-    Int? mapped_read_removal_min_reads_mapped
-    Int? mapped_read_removal_min_expected_sequences
-    Int? mapped_read_removal_max_unexpected_sequences
-    # spike-in screening inputs - reads are screened against this FASTA, but are NOT removed; both inputs are required to run
+    # spike-in screening inputs - reads mapping to this FASTA are removed prior to downstream analysis; both inputs are required to run
     File? spike_in_fasta
     String? expected_spike_ins # comma-delimited list of expected spike-in sequences, OR a key into expected_spike_ins_json when that is provided
     File? expected_spike_ins_json # optional JSON mapping of {"<NAME>": ["<SPIKE_IN_SEQUENCE1>", "<SPIKE_IN_SEQUENCE2>", ...]}; when provided, expected_spike_ins is used as the key to look up the list of expected spike-in sequences
@@ -100,23 +93,16 @@ workflow read_QC_trim_pe {
         is_accession = false,
         refseq = false,
         complete_only = false,
-        expected_sequences = mapped_read_removal_expected_sequences,
-        expected_sequences_json = mapped_read_removal_expected_sequences_json,
-        min_expected_coverage = mapped_read_removal_min_coverage,
-        min_expected_depth = mapped_read_removal_min_depth,
-        min_expected_reads_mapped = mapped_read_removal_min_reads_mapped,
-        min_expected_seq = mapped_read_removal_min_expected_sequences,
-        max_unexpected_seq = mapped_read_removal_max_unexpected_sequences,
         minimap2_memory = mapped_read_removal_memory
     }
   }
-  # spike-in screening only reports on reads mapping to the spike-in FASTA; the reads themselves are not removed
+  # spike-in screening reports on reads mapping to the spike-in FASTA and removes them; runs on the reads left over from mapped_read_removal
   if (defined(spike_in_fasta) && defined(expected_spike_ins)) {
     call read_decontaminate_wf.read_decontaminate as spike_in_screen {
       input:
         samplename = samplename,
-        read1 = read1,
-        read2 = read2,
+        read1 = select_first([mapped_read_removal.decontaminate_read1, read1]),
+        read2 = select_first([mapped_read_removal.decontaminate_read2, read2]),
         contaminant = select_first([spike_in_fasta]),
         is_genome = true,
         is_accession = false,
@@ -136,8 +122,8 @@ workflow read_QC_trim_pe {
     call ncbi_scrub.ncbi_scrub_pe {
       input:
         samplename = samplename,
-        read1 = select_first([mapped_read_removal.decontaminate_read1, read1]),
-        read2 = select_first([mapped_read_removal.decontaminate_read2, read2])
+        read1 = select_first([spike_in_screen.decontaminate_read1, mapped_read_removal.decontaminate_read1, read1]),
+        read2 = select_first([spike_in_screen.decontaminate_read2, mapped_read_removal.decontaminate_read2, read2])
     }
   }
   if ("~{workflow_series}" == "theiacov") {
@@ -190,8 +176,8 @@ workflow read_QC_trim_pe {
     call trimmomatic_task.trimmomatic {
       input:
         samplename = samplename,
-        read1 = select_first([rasusa.read1_subsampled, ncbi_scrub_pe.read1_dehosted, mapped_read_removal.decontaminate_read1, read1]),
-        read2 = select_first([rasusa.read2_subsampled, ncbi_scrub_pe.read2_dehosted, mapped_read_removal.decontaminate_read2, read2]),
+        read1 = select_first([rasusa.read1_subsampled, ncbi_scrub_pe.read1_dehosted, spike_in_screen.decontaminate_read1, mapped_read_removal.decontaminate_read1, read1]),
+        read2 = select_first([rasusa.read2_subsampled, ncbi_scrub_pe.read2_dehosted, spike_in_screen.decontaminate_read2, mapped_read_removal.decontaminate_read2, read2]),
         trimmomatic_window_size = trim_window_size,
         trimmomatic_window_quality = trim_quality_min_score,
         trimmomatic_min_length = trim_min_length,
@@ -202,8 +188,8 @@ workflow read_QC_trim_pe {
     call fastp_task.fastp {
       input:
         samplename = samplename,
-        read1 = select_first([rasusa.read1_subsampled, ncbi_scrub_pe.read1_dehosted, mapped_read_removal.decontaminate_read1, read1]),
-        read2 = select_first([rasusa.read2_subsampled, ncbi_scrub_pe.read2_dehosted, mapped_read_removal.decontaminate_read2, read2]),
+        read1 = select_first([rasusa.read1_subsampled, ncbi_scrub_pe.read1_dehosted, spike_in_screen.decontaminate_read1, mapped_read_removal.decontaminate_read1, read1]),
+        read2 = select_first([rasusa.read2_subsampled, ncbi_scrub_pe.read2_dehosted, spike_in_screen.decontaminate_read2, mapped_read_removal.decontaminate_read2, read2]),
         fastp_window_size = trim_window_size,
         fastp_quality_trim_score = trim_quality_min_score,
         fastp_min_length = trim_min_length,
@@ -304,14 +290,9 @@ workflow read_QC_trim_pe {
     Map[String, Float]? mapped_read_removal_sequence_coverage = mapped_read_removal.contaminant_coverage_by_sequence
     Map[String, Float]? mapped_read_removal_sequence_depth = mapped_read_removal.contaminant_depth_by_sequence
     Map[String, Float]? mapped_read_removal_sequence_reads_mapped = mapped_read_removal.contaminant_reads_by_sequence
-    Map[String, Float]? mapped_read_removal_expected_sequence_coverage = mapped_read_removal.contaminant_expected_coverage_by_sequence
-    Map[String, Float]? mapped_read_removal_expected_sequence_depth = mapped_read_removal.contaminant_expected_depth_by_sequence
-    Map[String, Float]? mapped_read_removal_expected_sequence_reads_mapped = mapped_read_removal.contaminant_expected_reads_by_sequence
-    Map[String, Float]? mapped_read_removal_unexpected_sequence_coverage = mapped_read_removal.contaminant_unexpected_coverage_by_sequence
-    Map[String, Float]? mapped_read_removal_unexpected_sequence_depth = mapped_read_removal.contaminant_unexpected_depth_by_sequence
-    Map[String, Float]? mapped_read_removal_unexpected_sequence_reads_mapped = mapped_read_removal.contaminant_unexpected_reads_by_sequence
-    String? mapped_read_removal_status = mapped_read_removal.contaminant_check_status
     # spike-in screening data
+    File? spike_in_removed_read1 = spike_in_screen.decontaminate_read1
+    File? spike_in_removed_read2 = spike_in_screen.decontaminate_read2
     File? spike_in_bam = spike_in_screen.contaminant_bam
     File? spike_in_bai = spike_in_screen.contaminant_bai
     Float? spike_in_coverage = spike_in_screen.contaminant_mapping_coverage
