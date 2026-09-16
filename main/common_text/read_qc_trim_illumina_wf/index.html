@@ -6573,7 +6573,7 @@
 
     Rasusa executes after host-read removal (HRRT, if applicable) and before read trimming (Trimmomatic or fastp). Classification tasks (Kraken2, MIDAS) always run on the original/raw reads regardless of whether `call_rasusa` is enabled. The downsampled (but un-trimmed) reads are output to the Terra data table as `read1_subsampled_raw` and `read2_subsampled_raw`.
 
-    When running in coverage mode, it's strongly recommended to manually set the `rasusa_genome_length` input parameter in order to ensure accurate downsampling. If not provided, `rasusa_genome_length` falls back to `raw_check_reads.est_genome_length` from the `read_screen` task. Oftentimes, this value can overestimate the true genome length, particularly for large, high-coverage FASTQ files. If `skip_screen` is set to `true`, you must supply `genome_length` explicitly or use one of the override modes above.
+    When running in coverage mode, it's strongly recommended to manually set the `rasusa_genome_length` input parameter in order to ensure accurate downsampling. If not provided, `rasusa_genome_length` falls back to `raw_check_reads.est_genome_length` from the `read_screen` task. Oftentimes, this value can overestimate the true genome length, particularly for large, high-coverage FASTQ files. If the screen on the raw reads is skipped (`skip_screen_raw` in TheiaCoV, `skip_screen` in TheiaProk and TheiaEuk), no genome length is estimated, so you must supply `genome_length` explicitly or use one of the override modes above.
 
 
 

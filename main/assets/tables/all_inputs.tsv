@@ -2375,7 +2375,8 @@ theiacov_illumina_pe	reference_gene_locations_bed	File	Use to provide locations 
 theiacov_illumina_pe	reference_genome	File	An optional reference genome used for consensus assembly and QC		Optional	TheiaCoV_Illumina_PE	general	
 theiacov_illumina_pe	reference_gff	File	The general feature format (gff) of the reference genome.		Optional	TheiaCoV_Illumina_PE	general	
 theiacov_illumina_pe	seq_method	String	The sequencing methodology used to generate the input read data; for TheiaProk workflows, this input will be used in the "seq_id" column in any taxon-specific tables created in the Export Taxon Tables task	ILLUMINA	Optional	TheiaCoV_Illumina_PE	general	
-theiacov_illumina_pe	skip_screen	Boolean	Set to True to skip the read screening prior to analysis	False	Optional	TheiaCoV_Illumina_PE	general	
+theiacov_illumina_pe	skip_screen_clean	Boolean	Set to True to skip the read screening of the cleaned reads	False	Optional	TheiaCoV_Illumina_PE	general	
+theiacov_illumina_pe	skip_screen_raw	Boolean	Set to True to skip the read screening of the raw reads	False	Optional	TheiaCoV_Illumina_PE	general	
 theiacov_illumina_pe	target_organism	String	The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database.		Optional	TheiaCoV_Illumina_PE	general	
 theiacov_illumina_pe	trim_min_length	Int	Specifies minimum length of each read after trimming to be kept	75	Optional	TheiaCoV_Illumina_PE	general	
 theiacov_illumina_pe	trim_primers	Boolean	A True/False option that determines if primers should be trimmed.	True	Optional	TheiaCoV_Illumina_PE	general	
@@ -2410,7 +2411,8 @@ theiacov_illumina_se	reference_genome	File	An optional reference genome used for
 theiacov_illumina_se	reference_gff	File	The general feature format (gff) of the reference genome.		Optional	TheiaCoV_Illumina_SE	general	
 theiacov_illumina_se	seq_method	String	The sequencing methodology used to generate the input read data; for TheiaProk workflows, this input will be used in the "seq_id" column in any taxon-specific tables created in the Export Taxon Tables task	ILLUMINA	Optional	TheiaCoV_Illumina_SE	general	
 theiacov_illumina_se	skip_mash	Boolean	If true, skips estimation of genome size and coverage using mash in read screening steps. As a result, providing true also prevents screening using these parameters.	False	Optional	TheiaCoV_Illumina_SE	general	
-theiacov_illumina_se	skip_screen	Boolean	Set to True to skip the read screening prior to analysis	False	Optional	TheiaCoV_Illumina_SE	general	
+theiacov_illumina_se	skip_screen_clean	Boolean	Set to True to skip the read screening of the cleaned reads	False	Optional	TheiaCoV_Illumina_SE	general	
+theiacov_illumina_se	skip_screen_raw	Boolean	Set to True to skip the read screening of the raw reads	False	Optional	TheiaCoV_Illumina_SE	general	
 theiacov_illumina_se	trim_min_length	Int	Specifies minimum length of each read after trimming to be kept	25	Optional	TheiaCoV_Illumina_SE	general	
 theiacov_illumina_se	trim_primers	Boolean	A True/False option that determines if primers should be trimmed.	True	Optional	TheiaCoV_Illumina_SE	general	
 theiacov_illumina_se	trim_quality_min_score	Int	Specifies the minimum average quality of bases in a sliding window to be kept	30	Optional	TheiaCoV_Illumina_SE	general	
@@ -2441,7 +2443,8 @@ theiacov_ont	reference_gene_locations_bed	File	Use to provide locations of inter
 theiacov_ont	reference_genome	File	An optional reference genome used for consensus assembly and QC		Optional	TheiaCoV_ONT	general	
 theiacov_ont	seq_method	String	The sequencing methodology used to generate the input read data; for TheiaProk workflows, this input will be used in the "seq_id" column in any taxon-specific tables created in the Export Taxon Tables task	OXFORD_NANOPORE	Optional	TheiaCoV_ONT	general	
 theiacov_ont	skip_mash	Boolean	If true, skips estimation of genome size and coverage using mash in read screening steps. As a result, providing true also prevents screening using these parameters.	False	Optional	TheiaCoV_ONT	general	
-theiacov_ont	skip_screen	Boolean	Set to True to skip the read screening prior to analysis	False	Optional	TheiaCoV_ONT	general	
+theiacov_ont	skip_screen_clean	Boolean	Set to True to skip the read screening of the cleaned reads	False	Optional	TheiaCoV_ONT	general	
+theiacov_ont	skip_screen_raw	Boolean	Set to True to skip the read screening of the raw reads	False	Optional	TheiaCoV_ONT	general	
 theiacov_ont	target_organism	String	The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database.		Optional	TheiaCoV_ONT	general	
 theiacov_ont	vadr_max_length	Int	Maximum length of contig allowed to run VADR		Optional	TheiaCoV_ONT	general	
 theiacov_ont	vadr_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32 (RSV-A and RSV-B) and 8 (all other TheiaCoV organisms)	Optional	TheiaCoV_ONT	runtime	True

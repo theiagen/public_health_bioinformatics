@@ -9576,7 +9576,7 @@
 <li>Estimated genome size:  A sample will fail the read screening if the estimated genome size is smaller than <code>min_genome_length</code> or bigger than <code>max_genome_length</code>.</li>
 <li>Estimated genome coverage: A sample will fail the read screening if the estimated genome coverage is less than the <code>min_coverage</code>.</li>
 </ol>
-<p>Read screening is undertaken on both the raw and cleaned reads. The task may be skipped by setting the <code>skip_screen</code> variable to true.</p>
+<p>Read screening is undertaken on both the raw and cleaned reads. The task may be skipped by setting the <code>skip_screen</code> variable to <code>true</code>.</p>
 <p>Default values vary between the PE, SE, and ONT workflows. The rationale for these default values can be found below. If two default values are shown, the first is for Illumina workflows and the second is for ONT.</p>
 <table>
 <thead>
@@ -9926,7 +9926,7 @@
 </tbody>
 </table>
 <p>Rasusa executes after host-read removal (HRRT, if applicable) and before read trimming (Trimmomatic or fastp). Classification tasks (Kraken2, MIDAS) always run on the original/raw reads regardless of whether <code>call_rasusa</code> is enabled. The downsampled (but un-trimmed) reads are output to the Terra data table as <code>read1_subsampled_raw</code> and <code>read2_subsampled_raw</code>.</p>
-<p>When running in coverage mode, it's strongly recommended to manually set the <code>rasusa_genome_length</code> input parameter in order to ensure accurate downsampling. If not provided, <code>rasusa_genome_length</code> falls back to <code>raw_check_reads.est_genome_length</code> from the <code>read_screen</code> task. Oftentimes, this value can overestimate the true genome length, particularly for large, high-coverage FASTQ files. If <code>skip_screen</code> is set to <code>true</code>, you must supply <code>genome_length</code> explicitly or use one of the override modes above.</p>
+<p>When running in coverage mode, it's strongly recommended to manually set the <code>rasusa_genome_length</code> input parameter in order to ensure accurate downsampling. If not provided, <code>rasusa_genome_length</code> falls back to <code>raw_check_reads.est_genome_length</code> from the <code>read_screen</code> task. Oftentimes, this value can overestimate the true genome length, particularly for large, high-coverage FASTQ files. If the screen on the raw reads is skipped (<code>skip_screen_raw</code> in TheiaCoV, <code>skip_screen</code> in TheiaProk and TheiaEuk), no genome length is estimated, so you must supply <code>genome_length</code> explicitly or use one of the override modes above.</p>
 <details class="warning" open="open">
 <summary>Non-deterministic output(s)</summary>
 <p>This task may yield non-deterministic outputs since it performs <em>random</em> subsampling. To ensure reproducibility, set a value for the <code>rasusa_seed</code> optional input variable.</p>
@@ -10555,7 +10555,7 @@
 <li>Estimated genome size:  A sample will fail the read screening if the estimated genome size is smaller than <code>min_genome_length</code> or bigger than <code>max_genome_length</code>.</li>
 <li>Estimated genome coverage: A sample will fail the read screening if the estimated genome coverage is less than the <code>min_coverage</code>.</li>
 </ol>
-<p>Read screening is undertaken on both the raw and cleaned reads. The task may be skipped by setting the <code>skip_screen</code> variable to true.</p>
+<p>Read screening is undertaken on both the raw and cleaned reads. The task may be skipped by setting the <code>skip_screen</code> variable to <code>true</code>.</p>
 <p>Default values vary between the PE, SE, and ONT workflows. The rationale for these default values can be found below. If two default values are shown, the first is for Illumina workflows and the second is for ONT.</p>
 <table>
 <thead>

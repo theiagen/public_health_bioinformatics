@@ -6772,6 +6772,10 @@
 <li>ClearLabs sequencing (<strong>TheiaCoV_ClearLabs</strong>)</li>
 </ol>
 <p>Additionally, the <strong>TheiaCoV_FASTA_Batch</strong> workflow is available to process several hundred SARS-CoV-2 assemblies at the same time.</p>
+<div class="admonition warning">
+<p class="admonition-title">Breaking change: <code>skip_screen</code> split into <code>skip_screen_raw</code> and <code>skip_screen_clean</code></p>
+<p>TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, and TheiaCoV_ONT no longer accept a <code>skip_screen</code> input. The raw and cleaned read screens are now gated independently by <code>skip_screen_raw</code> and <code>skip_screen_clean</code>, both defaulting to <code>false</code>.</p>
+</div>
 <hr />
 <div class="admonition dna inline end">
 <p class="admonition-title">Key Resources</p>
@@ -8546,9 +8550,17 @@
 </tr>
 <tr>
 <td>theiacov_illumina_pe</td>
-<td><strong>skip_screen</strong></td>
+<td><strong>skip_screen_clean</strong></td>
 <td>Boolean</td>
-<td>Set to True to skip the read screening prior to analysis</td>
+<td>Set to True to skip the read screening of the cleaned reads</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiacov_illumina_pe</td>
+<td><strong>skip_screen_raw</strong></td>
+<td>Boolean</td>
+<td>Set to True to skip the read screening of the raw reads</td>
 <td>False</td>
 <td>Optional</td>
 </tr>
@@ -9836,9 +9848,17 @@
 </tr>
 <tr>
 <td>theiacov_illumina_se</td>
-<td><strong>skip_screen</strong></td>
+<td><strong>skip_screen_clean</strong></td>
 <td>Boolean</td>
-<td>Set to True to skip the read screening prior to analysis</td>
+<td>Set to True to skip the read screening of the cleaned reads</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiacov_illumina_se</td>
+<td><strong>skip_screen_raw</strong></td>
+<td>Boolean</td>
+<td>Set to True to skip the read screening of the raw reads</td>
 <td>False</td>
 <td>Optional</td>
 </tr>
@@ -11526,9 +11546,17 @@
 </tr>
 <tr>
 <td>theiacov_ont</td>
-<td><strong>skip_screen</strong></td>
+<td><strong>skip_screen_clean</strong></td>
 <td>Boolean</td>
-<td>Set to True to skip the read screening prior to analysis</td>
+<td>Set to True to skip the read screening of the cleaned reads</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiacov_ont</td>
+<td><strong>skip_screen_raw</strong></td>
+<td>Boolean</td>
+<td>Set to True to skip the read screening of the raw reads</td>
 <td>False</td>
 <td>Optional</td>
 </tr>
@@ -15527,8 +15555,12 @@
 <li>Estimated genome size:  A sample will fail the read screening if the estimated genome size is smaller than <code>min_genome_length</code> or bigger than <code>max_genome_length</code>.</li>
 <li>Estimated genome coverage: A sample will fail the read screening if the estimated genome coverage is less than the <code>min_coverage</code>.</li>
 </ol>
-<p>Read screening is undertaken on both the raw and cleaned reads. The task may be skipped by setting the <code>skip_screen</code> variable to true.</p>
-<p>Default values vary between the PE, SE, and ONT workflows. The rationale for these default values can be found below. If two default values are shown, the first is for Illumina workflows and the second is for ONT.</p>
+<p>Read screening is undertaken on both the raw and cleaned reads. Each screen has its own gate: set <code>skip_screen_raw</code> to <code>true</code> to skip the screen on the raw reads, and <code>skip_screen_clean</code> to <code>true</code> to skip the screen on the cleaned reads. The two are independent, so you can screen the raw reads only, the cleaned reads only, both, or neither.</p>
+<div class="admonition warning">
+<p class="admonition-title">Breaking change: <code>skip_screen</code> has been replaced</p>
+<p>The single <code>skip_screen</code> input has been split into <code>skip_screen_raw</code> and <code>skip_screen_clean</code>, and <code>skip_screen</code> is no longer a recognized input for TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, or TheiaCoV_ONT.</p>
+<p>Existing workspace configurations and input JSONs that set <code>skip_screen</code> will <strong>not</strong> carry over. The value is silently dropped, both screens fall back to their <code>false</code> default, and samples that previously bypassed screening will now be screened and may terminate at the screen task. Replace <code>skip_screen</code> with <code>skip_screen_raw</code> and/or <code>skip_screen_clean</code> before rerunning. Other workflow series (TheiaProk, TheiaEuk, TheiaViral) are unaffected and keep the single <code>skip_screen</code> input.</p>
+</div>
 <table>
 <thead>
 <tr>
@@ -15539,9 +15571,14 @@
 </thead>
 <tbody>
 <tr>
-<td><code>skip_screen</code></td>
+<td><code>skip_screen_raw</code></td>
 <td>false</td>
-<td>Set to true to skip the read screen from running</td>
+<td>Set to true to skip the read screen on the raw reads. If set to true, <code>est_genome_length</code> is not estimated, so provide <code>genome_length</code> explicitly when <code>call_rasusa</code> is enabled</td>
+</tr>
+<tr>
+<td><code>skip_screen_clean</code></td>
+<td>false</td>
+<td>Set to true to skip the read screen on the cleaned reads</td>
 </tr>
 <tr>
 <td><code>min_reads</code></td>
@@ -15907,7 +15944,7 @@
 </tbody>
 </table>
 <p>Rasusa executes after host-read removal (HRRT, if applicable) and before read trimming (Trimmomatic or fastp). Classification tasks (Kraken2, MIDAS) always run on the original/raw reads regardless of whether <code>call_rasusa</code> is enabled. The downsampled (but un-trimmed) reads are output to the Terra data table as <code>read1_subsampled_raw</code> and <code>read2_subsampled_raw</code>.</p>
-<p>When running in coverage mode, it's strongly recommended to manually set the <code>rasusa_genome_length</code> input parameter in order to ensure accurate downsampling. If not provided, <code>rasusa_genome_length</code> falls back to <code>raw_check_reads.est_genome_length</code> from the <code>read_screen</code> task. Oftentimes, this value can overestimate the true genome length, particularly for large, high-coverage FASTQ files. If <code>skip_screen</code> is set to <code>true</code>, you must supply <code>genome_length</code> explicitly or use one of the override modes above.</p>
+<p>When running in coverage mode, it's strongly recommended to manually set the <code>rasusa_genome_length</code> input parameter in order to ensure accurate downsampling. If not provided, <code>rasusa_genome_length</code> falls back to <code>raw_check_reads.est_genome_length</code> from the <code>read_screen</code> task. Oftentimes, this value can overestimate the true genome length, particularly for large, high-coverage FASTQ files. If the screen on the raw reads is skipped (<code>skip_screen_raw</code> in TheiaCoV, <code>skip_screen</code> in TheiaProk and TheiaEuk), no genome length is estimated, so you must supply <code>genome_length</code> explicitly or use one of the override modes above.</p>
 <details class="warning" open="open">
 <summary>Non-deterministic output(s)</summary>
 <p>This task may yield non-deterministic outputs since it performs <em>random</em> subsampling. To ensure reproducibility, set a value for the <code>rasusa_seed</code> optional input variable.</p>
@@ -16423,8 +16460,12 @@
 <li>Estimated genome size:  A sample will fail the read screening if the estimated genome size is smaller than <code>min_genome_length</code> or bigger than <code>max_genome_length</code>.</li>
 <li>Estimated genome coverage: A sample will fail the read screening if the estimated genome coverage is less than the <code>min_coverage</code>.</li>
 </ol>
-<p>Read screening is undertaken on both the raw and cleaned reads. The task may be skipped by setting the <code>skip_screen</code> variable to true.</p>
-<p>Default values vary between the PE, SE, and ONT workflows. The rationale for these default values can be found below. If two default values are shown, the first is for Illumina workflows and the second is for ONT.</p>
+<p>Read screening is undertaken on both the raw and cleaned reads. Each screen has its own gate: set <code>skip_screen_raw</code> to <code>true</code> to skip the screen on the raw reads, and <code>skip_screen_clean</code> to <code>true</code> to skip the screen on the cleaned reads. The two are independent, so you can screen the raw reads only, the cleaned reads only, both, or neither.</p>
+<div class="admonition warning">
+<p class="admonition-title">Breaking change: <code>skip_screen</code> has been replaced</p>
+<p>The single <code>skip_screen</code> input has been split into <code>skip_screen_raw</code> and <code>skip_screen_clean</code>, and <code>skip_screen</code> is no longer a recognized input for TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, or TheiaCoV_ONT.</p>
+<p>Existing workspace configurations and input JSONs that set <code>skip_screen</code> will <strong>not</strong> carry over. The value is silently dropped, both screens fall back to their <code>false</code> default, and samples that previously bypassed screening will now be screened and may terminate at the screen task. Replace <code>skip_screen</code> with <code>skip_screen_raw</code> and/or <code>skip_screen_clean</code> before rerunning. Other workflow series (TheiaProk, TheiaEuk, TheiaViral) are unaffected and keep the single <code>skip_screen</code> input.</p>
+</div>
 <table>
 <thead>
 <tr>
@@ -16435,9 +16476,14 @@
 </thead>
 <tbody>
 <tr>
-<td><code>skip_screen</code></td>
+<td><code>skip_screen_raw</code></td>
 <td>false</td>
-<td>Set to true to skip the read screen from running</td>
+<td>Set to true to skip the read screen on the raw reads. If set to true, <code>est_genome_length</code> is not estimated, so provide <code>genome_length</code> explicitly when <code>call_rasusa</code> is enabled</td>
+</tr>
+<tr>
+<td><code>skip_screen_clean</code></td>
+<td>false</td>
+<td>Set to true to skip the read screen on the cleaned reads</td>
 </tr>
 <tr>
 <td><code>min_reads</code></td>
@@ -16803,7 +16849,7 @@
 </tbody>
 </table>
 <p>Rasusa executes after host-read removal (HRRT, if applicable) and before read trimming (Trimmomatic or fastp). Classification tasks (Kraken2, MIDAS) always run on the original/raw reads regardless of whether <code>call_rasusa</code> is enabled. The downsampled (but un-trimmed) reads are output to the Terra data table as <code>read1_subsampled_raw</code> and <code>read2_subsampled_raw</code>.</p>
-<p>When running in coverage mode, it's strongly recommended to manually set the <code>rasusa_genome_length</code> input parameter in order to ensure accurate downsampling. If not provided, <code>rasusa_genome_length</code> falls back to <code>raw_check_reads.est_genome_length</code> from the <code>read_screen</code> task. Oftentimes, this value can overestimate the true genome length, particularly for large, high-coverage FASTQ files. If <code>skip_screen</code> is set to <code>true</code>, you must supply <code>genome_length</code> explicitly or use one of the override modes above.</p>
+<p>When running in coverage mode, it's strongly recommended to manually set the <code>rasusa_genome_length</code> input parameter in order to ensure accurate downsampling. If not provided, <code>rasusa_genome_length</code> falls back to <code>raw_check_reads.est_genome_length</code> from the <code>read_screen</code> task. Oftentimes, this value can overestimate the true genome length, particularly for large, high-coverage FASTQ files. If the screen on the raw reads is skipped (<code>skip_screen_raw</code> in TheiaCoV, <code>skip_screen</code> in TheiaProk and TheiaEuk), no genome length is estimated, so you must supply <code>genome_length</code> explicitly or use one of the override modes above.</p>
 <details class="warning" open="open">
 <summary>Non-deterministic output(s)</summary>
 <p>This task may yield non-deterministic outputs since it performs <em>random</em> subsampling. To ensure reproducibility, set a value for the <code>rasusa_seed</code> optional input variable.</p>
@@ -17281,8 +17327,12 @@
 <li>Estimated genome size:  A sample will fail the read screening if the estimated genome size is smaller than <code>min_genome_length</code> or bigger than <code>max_genome_length</code>.</li>
 <li>Estimated genome coverage: A sample will fail the read screening if the estimated genome coverage is less than the <code>min_coverage</code>.</li>
 </ol>
-<p>Read screening is undertaken on both the raw and cleaned reads. The task may be skipped by setting the <code>skip_screen</code> variable to true.</p>
-<p>Default values vary between the PE, SE, and ONT workflows. The rationale for these default values can be found below. If two default values are shown, the first is for Illumina workflows and the second is for ONT.</p>
+<p>Read screening is undertaken on both the raw and cleaned reads. Each screen has its own gate: set <code>skip_screen_raw</code> to <code>true</code> to skip the screen on the raw reads, and <code>skip_screen_clean</code> to <code>true</code> to skip the screen on the cleaned reads. The two are independent, so you can screen the raw reads only, the cleaned reads only, both, or neither.</p>
+<div class="admonition warning">
+<p class="admonition-title">Breaking change: <code>skip_screen</code> has been replaced</p>
+<p>The single <code>skip_screen</code> input has been split into <code>skip_screen_raw</code> and <code>skip_screen_clean</code>, and <code>skip_screen</code> is no longer a recognized input for TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, or TheiaCoV_ONT.</p>
+<p>Existing workspace configurations and input JSONs that set <code>skip_screen</code> will <strong>not</strong> carry over. The value is silently dropped, both screens fall back to their <code>false</code> default, and samples that previously bypassed screening will now be screened and may terminate at the screen task. Replace <code>skip_screen</code> with <code>skip_screen_raw</code> and/or <code>skip_screen_clean</code> before rerunning. Other workflow series (TheiaProk, TheiaEuk, TheiaViral) are unaffected and keep the single <code>skip_screen</code> input.</p>
+</div>
 <table>
 <thead>
 <tr>
@@ -17293,9 +17343,14 @@
 </thead>
 <tbody>
 <tr>
-<td><code>skip_screen</code></td>
+<td><code>skip_screen_raw</code></td>
 <td>false</td>
-<td>Set to true to skip the read screen from running</td>
+<td>Set to true to skip the read screen on the raw reads. If set to true, <code>est_genome_length</code> is not estimated, so provide <code>genome_length</code> explicitly when <code>call_rasusa</code> is enabled</td>
+</tr>
+<tr>
+<td><code>skip_screen_clean</code></td>
+<td>false</td>
+<td>Set to true to skip the read screen on the cleaned reads</td>
 </tr>
 <tr>
 <td><code>min_reads</code></td>
