@@ -9,8 +9,13 @@ task version_capture {
     volatile: true
   }
   command <<<
-    VERSION_TAG="v4.3.0"
-    echo "PHB ${VERSION_TAG}" > PHB_VERSION
+    VERSION_TAG="v4.3.0"    # managed by us
+    BRANCH_TAG=""           # CI-managed; do NOT edit by hand
+    if [ -n "${BRANCH_TAG}" ]; then
+      echo "PHB ${VERSION_TAG}; branch: ${BRANCH_TAG}" > PHB_VERSION
+    else
+      echo "PHB ${VERSION_TAG}" > PHB_VERSION
+    fi
 
     export TZ=~{timezone}
     date -I > TODAY
