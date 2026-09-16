@@ -1183,7 +1183,6 @@ spatyper_version	String	spatyper version used	TheiaProk_FASTA, TheiaProk_Illumin
 spike_in_bai	File	Index of reads aligned to the spike-in FASTA	TheiaProk_Illumina_PE
 spike_in_bam	File	Reads aligned to the spike-in FASTA	TheiaProk_Illumina_PE
 spike_in_cov_hist	File	Coverage histogram of reads mapped to spike-in FASTA	TheiaProk_Illumina_PE
-spike_in_coverage	Float	Mean coverage of reads mapped to spike-in FASTA	TheiaProk_Illumina_PE
 spike_in_coverage_by_sequence	Map[String,Float]	A JSON map relating identified spike-in sequence headers to read mapping coverage	TheiaProk_Illumina_PE
 spike_in_depth_by_sequence	Map[String,Float]	A JSON map relating identified spike-in sequence headers to read mapping depth	TheiaProk_Illumina_PE
 spike_in_expected_coverage_by_sequence	Map[String,Float]	A JSON map relating expected spike-in sequences to the read mapping coverage 	TheiaProk_Illumina_PE
@@ -1191,8 +1190,6 @@ spike_in_expected_depth_by_sequence	Map[String,Float]	A JSON map relating expect
 spike_in_expected_reads_by_sequence	Map[String,Float]	A JSON map relating expected spike-in sequences to the number of reads mapped	TheiaProk_Illumina_PE
 spike_in_mapping_flagstat	File	samtools flagstat of reads mapped to spike-in FASTA	TheiaProk_Illumina_PE
 spike_in_mapping_stats	File	samtools statistics of reads mapped to spike-in FASTA	TheiaProk_Illumina_PE
-spike_in_mean_depth	Float	Mean depth of reads mapped to spike-in FASTA	TheiaProk_Illumina_PE
-spike_in_percent_mapped_reads	Float	Percent of reads mapped to spike-in FASTA	TheiaProk_Illumina_PE
 spike_in_reads_by_sequence	Map[String,Float]	A JSON map relating spike-in sequences to the number of reads mapped	TheiaProk_Illumina_PE
 spike_in_removed_read1	File	Read1 after reads mapping to the spike-in FASTA were removed	TheiaProk_Illumina_PE
 spike_in_removed_read2	File	Read2 after reads mapping to the spike-in FASTA were removed	TheiaProk_Illumina_PE

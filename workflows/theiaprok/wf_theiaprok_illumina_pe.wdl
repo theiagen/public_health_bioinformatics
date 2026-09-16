@@ -855,12 +855,9 @@ workflow theiaprok_illumina_pe {
     File? spike_in_removed_read2 = read_QC_trim.spike_in_removed_read2
     File? spike_in_bam = read_QC_trim.spike_in_bam
     File? spike_in_bai = read_QC_trim.spike_in_bai
-    Float? spike_in_coverage = read_QC_trim.spike_in_coverage
-    Float? spike_in_mean_depth = read_QC_trim.spike_in_mean_depth
     File? spike_in_mapping_stats = read_QC_trim.spike_in_mapping_stats
     File? spike_in_cov_hist = read_QC_trim.spike_in_cov_hist
     File? spike_in_mapping_flagstat = read_QC_trim.spike_in_mapping_flagstat
-    Float? spike_in_percent_mapped_reads = read_QC_trim.spike_in_percent_mapped_reads
     Map[String, Float]? spike_in_coverage_by_sequence = read_QC_trim.spike_in_sequence_coverage
     Map[String, Float]? spike_in_depth_by_sequence = read_QC_trim.spike_in_sequence_depth
     Map[String, Float]? spike_in_reads_by_sequence = read_QC_trim.spike_in_sequence_reads_mapped

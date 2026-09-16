@@ -295,9 +295,6 @@ workflow read_QC_trim_pe {
     File? spike_in_removed_read2 = spike_in_screen.decontaminate_read2
     File? spike_in_bam = spike_in_screen.contaminant_bam
     File? spike_in_bai = spike_in_screen.contaminant_bai
-    Float? spike_in_coverage = spike_in_screen.contaminant_mapping_coverage
-    Float? spike_in_mean_depth = spike_in_screen.contaminant_mapping_mean_depth
-    Float? spike_in_percent_mapped_reads = spike_in_screen.contaminant_percent_mapped_reads
     File? spike_in_mapping_stats = spike_in_screen.contaminant_mapping_stats
     File? spike_in_cov_hist = spike_in_screen.contaminant_mapping_cov_hist
     File? spike_in_mapping_flagstat = spike_in_screen.contaminant_flagstat
