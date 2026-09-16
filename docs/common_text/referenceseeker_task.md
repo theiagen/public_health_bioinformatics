@@ -8,14 +8,14 @@ fragment: true
 
     Databases that can be used with ReferenceSeeker are as follows, and can be used by pasting the GSURI in double quotation marks `""` into the `referenceseeker_db` optional input:
 
-      - **archea**:  `gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-archaea-refseq-205.v20210406.tar.gz`
+      - **archaea**:  `gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-archaea-refseq-205.v20210406.tar.gz`
       - **bacterial** (**default**): `gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-bacteria-refseq-205.v20210406.tar.gz`
       - **fungi**: `gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-fungi-refseq-205.v20210406.tar.gz`
       - **plasmids**: `gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-plasmids-refseq-205.v20210406.tar.gz`
       - **viral**: `gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-viral-refseq-205.v20210406.tar.gz`
 
-    For ReferenceSeeker to identify a genome, it must meet user-specified thresholds for sequence coverage (`referenceseeker_conserved_dna_threshold`; default >= 0.69) and identity (`referenceseeker_ani_threshold`; default >= 0.95 ). 
-    
+    For ReferenceSeeker to identify a genome, it must meet user-specified thresholds for sequence coverage (`referenceseeker_conserved_dna_threshold`; default >= 0.69) and identity (`referenceseeker_ani_threshold`; default >= 0.95 ).
+
     A list of closely related genomes is provided in `referenceseeker_tsv`. The reference genome that ranks highest according to ANI and conserved DNA values is considered the closest match and will be downloaded, with information about this provided in the `assembly_fetch_referenceseeker_top_hit_ncbi_accession` output.
 
     !!! techdetails "ReferenceSeeker Technical Details"

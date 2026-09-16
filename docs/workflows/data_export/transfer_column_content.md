@@ -29,7 +29,10 @@ This workflow runs on the _set_ level.
 
 ///
 
+<!-- markdownlint-disable MD053 -->
+<!-- this section throws a linter error since the footnote is in the output table -->
 [^1]: GS URI: Google Storage Uniform Resource Identifier. This is **not** the same as a URL, which typically begins with http:// or https://. A GS URI begins with `gs://` and is used to reference a location in a Google Cloud Storage Bucket. For example, `gs://bucket-name/folder-name/file-name`. Other cloud storage providers have their own URIs, such as `s3://` for Amazon S3, although this workflow only supports Google Cloud Storage URIs.
+<!-- markdownlint-enable MD053 -->
 
 ### Outputs
 

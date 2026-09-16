@@ -13,12 +13,15 @@ task freyja_dashboard_task {
     Boolean scale_by_viral_load = false
     String freyja_dashboard_title
     File? dashboard_intro_text
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.1"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.3"
     Int disk_size = 100
     Int memory = 2
     Int cpu = 1
   }
   command <<<
+  # This export is a stop gap to prevent pandas v2 vs v3 type errors.
+  # Check in future implementations of staphb/freyja for resolution.
+  export PANDAS_FUTURE_INFER_STRING=0
   # capture version
   freyja --version | tee FREYJA_VERSION
 

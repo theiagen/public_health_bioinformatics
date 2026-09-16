@@ -39,10 +39,6 @@ fragment: true
 {{ include_md("common_text/kraken2_task.md", condition="theiacov", indent=4) }}
 <!-- endif -->
 
-<!-- if: theiameta -->
-{{ include_md("common_text/readlength_task.md", indent=4) }}
-<!-- endif -->
-
     !!! techdetails "read_QC_trim Technical Details"
         |  | Links |
         | --- | --- |

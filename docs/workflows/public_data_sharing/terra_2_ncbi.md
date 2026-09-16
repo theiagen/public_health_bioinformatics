@@ -25,11 +25,11 @@ The Terra_2_NCBI workflow is a programmatic data submission method to share meta
 
 ??? toggle "Before running the Terra_2_NCBI workflow"
 
-    1. The user **must** have access to the NCBI FTP. To gain these credentials, we recommend emailing `**sra@ncbi.nlm.nih.gov**` a variation of the following example, including all the information:
+    1. The user **must** have access to the NCBI FTP. To gain these credentials, we recommend emailing <sra@ncbi.nlm.nih.gov> a variation of the following example, including all the information:
 
         > Hello,
         >
-        >We would like to automate submissions to the Submission Portal using XML metadata to accompany our cloud-hosted data files.  We would like to upload via FTP and need to create a submission group.
+        >We would like to automate submissions to the Submission Portal using XML metadata to accompany our cloud-hosted data files.  We would like to upload via FTP and need to create a submission group.
         >
         >Here is the relevant information:
         >
@@ -40,7 +40,7 @@ The Terra_2_NCBI workflow is a programmatic data submission method to share meta
         >5. Contact email:
         >6. Mailing address (including country and postcode):
         >
-        >We will be using an existing submission pipeline that is known to work and would like to request that the production folder be activated. Thank you for your assistance!
+        >We will be using an existing submission pipeline that is known to work and would like to request that the production folder be activated. Thank you for your assistance!
 
     2. From NCBI, you will need to get in response:
         1. an FTP address (it will likely be ftp-private.ncbi.nih.gov)
@@ -64,7 +64,7 @@ In order to create BioSamples, you need to choose the correct BioSample package 
 Currently, Terra_2_NCBI only supports _Pathogen_, _Virus_, _Microbe_, and _SARS-CoV-2 Wastewater Surveillance_ BioSample packages. **Most organisms should be submitted using the Pathogen package** unless you have been specifically directed otherwise (either through CDC communications or another reliable source). Definitions of packages supported by Terra_2_NCBI are listed below with more requirements provided via the links:
 
 - [Pathogen.cl](https://www.ncbi.nlm.nih.gov/biosample/docs/packages/Pathogen.cl.1.0/) - any clinical or host-associated pathogen
-- [Pathogen.env](https://www.ncbi.nlm.nih.gov/biosample/docs/packages/Pathogen.env.1.0/) - environmental, food or other pathogen *(no metadata formatter available at this time)*
+- [Pathogen.env](https://www.ncbi.nlm.nih.gov/biosample/docs/packages/Pathogen.env.1.0/) - environmental, food or other pathogen _(no metadata formatter available at this time)_
 - [Microbe](https://www.ncbi.nlm.nih.gov/biosample/docs/packages/Microbe.1.0/) - bacteria or other unicellular microbes that do not fit under the MIxS, Pathogen, or Virus packages.
 - [Virus](https://www.ncbi.nlm.nih.gov/biosample/docs/packages/Virus.1.0/) -  viruses **not** directly associated with disease
     - Viral pathogens should be submitted using the Pathogen: Clinical or host-associated pathogen package.
@@ -91,10 +91,10 @@ In the test submission, any real BioProject accession numbers you provide will n
 
 ??? toggle "**What's the difference between a test submission and a production submission?**"
 
-    A production submission means that your submission using Terra_2_NCBI will be submitted to NCBI as if you were using the online portal. That means that anything you submit on production will be given to the ****real** **NCBI servers and appear and become searchable on the NCBI website.
-    
-    A test submission gives your data to a completely detached **replica** of the production server. This means that any data you submit as a test will behave exactly **like a real submission, but since it's detached, nothing **will appear on the NCBI website, and anything returned from the workflow (such as BioSample accession numbers) will be fake. If you search for these test BioSample accession numbers on the NCBI website, either (a) nothing will appear, or (b) it will link to a random sample. 
-    
+    A production submission means that your submission using Terra_2_NCBI will be submitted to NCBI as if you were using the online portal. That means that anything you submit on production will be given to the **real** NCBI servers and appear and become searchable on the NCBI website.
+
+    A test submission gives your data to a completely detached **replica** of the production server. This means that any data you submit as a test will behave exactly like a real submission, but since it's detached, **nothing** will appear on the NCBI website, and anything returned from the workflow (such as BioSample accession numbers) will be fake. If you search for these test BioSample accession numbers on the NCBI website, either (a) nothing will appear, or (b) it will link to a random sample.
+
     If you want your data to be on NCBI, you must run a production submission. Initially, NCBI locks the production folder so that the user doesn't accidentally submit test data to the main database. You must have requested activation of the production folder prior to your first production submission.
 
 ### Inputs
@@ -111,7 +111,7 @@ This workflow runs on set-level data tables.
     To use a custom column mapping file:
 
     1. Create a tab-delimited `.tsv` file with the following structure:
-   
+
         A header including "Custom" and "Required" should be included in the first row.
         The "Custom" column should contain the actual column names in your Terra table (e.g., 'collection-date'), and the "Required" column should contain the column names expected by the workflow (e.g., 'collection_date').
 
@@ -128,9 +128,9 @@ This workflow runs on set-level data tables.
 
     Ensure the mapping file includes all columns with custom names. Columns that match the default workflow names do not need to be included. Missing mappings for renamed columns may result in errors during execution if the column is required, and will not be found if the column is optional.
 
-    The workflow will automatically map the specified column names from your Terra table to the required workflow variables using the 'custom_mapping_file'.
+    The workflow will automatically map the specified column names from your Terra table to the required workflow variables using the 'column_mapping_file'.
 
-    To find a list of the expected required and optional column names, [please refer to the code blocks that can be found here](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/submission/task_submission.wdl#L65). The required and optional metadata fields are organized by the BioSample type.
+    To find a list of the expected required and optional column names, [please refer to the column definitions in `task_submission.wdl`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/submission/task_submission.wdl#L65). The required and optional metadata fields are organized by the BioSample type.
 
     Below, you can find the required metadata fields for the currently supported BioSample types:
 
@@ -164,7 +164,7 @@ This workflow runs on set-level data tables.
         - host_disease
         - isolation_source
         - lat_lon
-    
+
     ??? toggle "Pathogen.env Required Metadata"
         - submission_id
         - organism
@@ -196,9 +196,9 @@ This workflow runs on set-level data tables.
 
     The workflow will perform the following tasks, each highlighted as `code`
 
-    1. `prune_table`formats all incoming metadata for submission.
+    1. `prune_table` formats all incoming metadata for submission.
     2. If you are submitting BioSamples:
-        1. `biosample_submit_tsv_ftp_upload` will 
+        1. `biosample_submit_tsv_ftp_upload` will
             1. format the BioSample table into XML format
             2. submit BioSamples to NCBI
             3. return all NCBI communications in XML format, and
@@ -207,12 +207,12 @@ This workflow runs on set-level data tables.
             1. add the BioSample accessions to SRA metadata
             2. upload the BioSample accessions to the origin Terra table
 
-            If BioSample accessions fail to be generated, this task ends the workflow and users should contact Theiagen for further support. Otherwise, the workflow will continue and outputs are returned to the Terra data table. 
+            If BioSample accessions fail to be generated, this task ends the workflow and users should contact Theiagen for further support. Otherwise, the workflow will continue and outputs are returned to the Terra data table.
 
     3. If BioSample accessions were generated or if BioSample submission was skipped
         1. `sra_tsv_to_xml` converts the SRA metadata (including any generated or pre-provided BioSample accessions) into XML format.
-        2. `ncbi_sftp_upload` 
-            1. uploads the SRA metadata to NCBI 
+        2. `ncbi_sftp_upload`
+            1. uploads the SRA metadata to NCBI
             2. returns any XML communications from NCBI.
 
 #### Workflow Success
@@ -235,28 +235,28 @@ The output files contain information mostly for debugging purposes. Additionally
 
     ##### An example excluded_samples.tsv file {% raw %} {#example-excluded-samples} {% endraw %}
 
-    Due to the nature of tsv files, it may be easier to download and open this file in Excel. 
-    
+    Due to the nature of tsv files, it may be easier to download and open this file in Excel.
+
     [example_excluded_samples.tsv](../../assets/files/example_excluded_samples.tsv)
-    
+
     ```
     Samples excluded for quality thresholds:
-    sample_name message 
+    sample_name message
     sample2 VADR skipped due to poor assembly
     sample3 VADR number alerts too high: 3 greater than limit of 0
     sample4 Number of Ns was too high: 10000 greater than limit of 5000
-    
+
     Samples excluded for missing required metadata (will have empty values in indicated columns):
     tablename_id    organism    country library_layout
     sample5         paired
     sample6 SARS-CoV-2  USA
     ```
-    
+
     This example informs the user that samples 2-4 were excluded for quality reasons (the exact reason is listed in the `message` column), and that samples 5 and 6 were excluded because they were missing required metadata fields (sample5 was missing the `organism` and `country` fields, and sample6 was missing the `library_layout` field).
 
 ### Limitations
 
-- The maximum number of samples that can be submitted at once appears to be 300. We recommend submitting less than 300 samples at a time to avoid errors due to large submission sizes.
+- The maximum number of samples that can be submitted at once appears to be 300. We recommend submitting fewer than 300 samples at a time to avoid errors due to large submission sizes.
 - A workflow on returning SRA accessions using the generated BioSample accessions is in progress.
 
 ### Acknowledgments

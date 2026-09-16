@@ -6,7 +6,7 @@ fragment: true
     !!! tip "`ShigEiFinder_reads`: _Shigella_/EIEC Differentiation and Serotyping ==_using Illumina read files as input_== (optional)"
         To activate the `shigeifinder_reads` task, set the `call_shigeifinder_reads_input` to be `true`. If set to `true`, `shigeifinder_reads` will run **in addition to** the assembly-based `shigeifinder` task.
 
-    ShigEiFinder differentiates _Shigella_ and enteroinvasive _E. coli_ (EIEC) using cluster-specific genes, identifies some serotypes based on the presence of O-antigen and H-antigen genes (_wzx_ and _wzy_), and predicts the number of virulence plasmids. It can serotype over 59 _Shigella_ and 22 EIEC serotypes using BLAST and BWA.
+    ShigEiFinder differentiates _Shigella_ and enteroinvasive _E. coli_ (EIEC) using cluster-specific genes, identifies some serotypes based on the presence of O-antigen and H-antigen genes (_wzx_ and _wzy_), and predicts the number of virulence plasmids. It can serotype over 59 _Shigella_ and 22 EIEC serotypes using BLAST and BWA.
 
     !!! techdetails "ShigEiFinder Technical Details"
         |  | Links |

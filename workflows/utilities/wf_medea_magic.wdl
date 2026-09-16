@@ -60,7 +60,7 @@ workflow medea_magic {
   }
   if (medea_tag == "Candidozyma auris" || medea_tag == "Candida auris") {
     call cauris_cladetyper.cauris_cladetyper as cladetyper {
-      input: 
+      input:
         assembly_fasta = assembly,
         samplename = samplename,
         kmer_size = cladetyper_kmer_size,
@@ -242,7 +242,7 @@ workflow medea_magic {
   }
   # Running AMR Search
   if (run_amr_search) {
-    # Map containing the taxon tag reported by typing paired with it's taxon code for AMR search. 
+    # Map containing the taxon tag reported by typing paired with it's taxon code for AMR search.
     Map[String, String] taxon_code = {
       "Candida auris" : "498019",
       "Candidozyma auris" : "498019"
@@ -262,7 +262,7 @@ workflow medea_magic {
     }
   }
   output {
-    # AMR_Search 
+    # AMR_Search
     File? amr_search_results = amr_search.amr_search_json_output
     File? amr_results_csv = amr_search.amr_search_output_csv
     File? amr_results_pdf = amr_search.amr_search_output_pdf
@@ -270,7 +270,7 @@ workflow medea_magic {
     String? amr_search_associated_resistances = amr_search.amr_search_associated_resistances
     String? amr_search_docker = amr_search.amr_search_docker_image
     String? amr_search_version = amr_search.amr_search_version
-    # c auris 
+    # c auris
     String? clade_type = cladetyper.gambit_cladetype
     String? cladetyper_version = cladetyper.gambit_version
     String? cladetyper_docker_image = cladetyper.gambit_cladetyper_docker_image

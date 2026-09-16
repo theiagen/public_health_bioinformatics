@@ -7,7 +7,7 @@ fragment: true
 
     - **all**: Reorients contigs to start with `dnaA`, `terL`, `repA`, or `COG1474` (_Default_)
     - **chromosome**: Reorients to begin with the `dnaA` chromosomal replication initiator gene, commonly used for bacterial chromosome assemblies.
-    - **plasmid**: Reorients to start with the `repA` plasmid replication initiation gene, ideal for plasmid assemblie
+    - **plasmid**: Reorients to start with the `repA` plasmid replication initiation gene, ideal for plasmid assemblies
     - **phage**: Reorients to start with the `terL` large terminase subunit gene, used for bacteriophage assemblies
     - **archaea**: Reorients to start with the `COG1474` archaeal Orc1/cdc6 gene, relevant for archaeal assemblies
     - **custom**: Reorients based on a user-specified gene in amino acid FASTA format for experimental or unique workflows

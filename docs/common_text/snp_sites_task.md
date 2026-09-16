@@ -10,8 +10,8 @@ fragment: true
 
     If Gubbins has been used, the output file will not contain any sites that are predicted to have arisen via recombination.
 <!-- endif -->
-    
-    SNP-sites is used to identify variants in a multi-FASTA alignment, and returns _only_ the sites with SNPs in FASTA format. 
+
+    SNP-sites is used to identify variants in a multi-FASTA alignment, and returns _only_ the sites with SNPs in FASTA format.
 
     For example, if your input FASTA is as follows:
 

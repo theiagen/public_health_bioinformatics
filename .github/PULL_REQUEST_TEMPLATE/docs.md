@@ -1,5 +1,5 @@
 <!--
-Thank you for contributing to Theiagen's Public Health Bioinformatics repository! 
+Thank you for contributing to Theiagen's Public Health Bioinformatics repository!
 
 Please ensure your contributions are formatted following our DOCUMENTATION style guide, which can be found here: <https://theiagen.github.io/public_health_bioinformatics/latest/contributing/doc_contribution/>.
 
@@ -20,6 +20,7 @@ This PR closes #
 - [ ] I have checked my updates for any errors or typos.
 - [ ] I have checked my updates for any rendering issues. If not, please explain why or request help below.
 - [ ] My updates follow the [documentation style guide](https://theiagen.github.io/public_health_bioinformatics/main/contributing/doc_contribution/)
+- [ ] All CI checks are passing.
 
 ## 🎯 Reviewer Checklist
 <!--  Indicate NA when not applicable  -->

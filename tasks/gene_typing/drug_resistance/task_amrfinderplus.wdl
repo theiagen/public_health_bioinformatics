@@ -14,7 +14,7 @@ task amrfinderplus_nuc {
     Float min_percent_coverage = 0.5 # set to mirror v4.0.23 default
     Boolean detailed_drug_class = false
     Int cpu = 2
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:4.2.7-2026-03-24.1"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:4.2.7-2026-08-07.1"
     Int disk_size = 50
     Int memory = 8
     Boolean hide_point_mutations = false
@@ -104,9 +104,10 @@ task amrfinderplus_nuc {
       fi
     fi
 
-    # remove mutations where Element subtype is "POINT"
+    # remove mutations where Element subtype is "POINT" or "POINT_DISRUPT"
+    # see https://github.com/ncbi/amr/wiki/Interpreting-results#element-type-and-subtype for element explainations
     if [[ "~{hide_point_mutations}" == "true" ]]; then
-      awk -F "\t" '$11 != "POINT"' ~{samplename}_amrfinder_all.tsv >> temp.tsv
+      awk -F "\t" '$11 != "POINT" && $11 != "POINT_DISRUPT"' ~{samplename}_amrfinder_all.tsv >> temp.tsv
       mv temp.tsv ~{samplename}_amrfinder_all.tsv
     fi
 

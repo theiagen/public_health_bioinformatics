@@ -26,9 +26,9 @@ We recommend running this workflow with **"Run workflow with inputs defined by f
 
     !!! info "Note"
         If you click "Next" after uploading your files, it will ask for a metadata TSV. You do not have to provide this, and can instead exit the window. Your data will still be uploaded.
-    
-    !!! caption narrow "Using the Terra data uiploader"
-        ![Data uploader](../../assets/figures/Create_Terra_Table_example1.png)
+
+    !!! caption narrow "Using the Terra data uploader"
+        ![Terra data uploader showing the Upload Your Data Files screen, with a right-click context menu open on the collection link and "Copy link address" highlighted.](../../assets/figures/Create_Terra_Table_example1.png)
 
 ??? toggle "Using the Files section in Terra"
     You can browse workspace files by clicking on the folder icon in the right-hand sidebar of the Data tab in Terra.
@@ -38,7 +38,7 @@ We recommend running this workflow with **"Run workflow with inputs defined by f
     If you uploaded data with the Terra data uploader, your collection will be nested in the "uploads" folder.
 
     !!! caption narrow "Using the Files section"
-        ![Data tab](../../assets/figures/Create_Terra_Table_example2.png)
+        ![Terra Google Cloud Storage browser showing a folder named "example-create-terra-table" with a tooltip prompting the user to copy the folder URL to the clipboard.](../../assets/figures/Create_Terra_Table_example2.png)
 
 #### How to determine the appropriate `file_ending` for your data {% raw %} {#file-ending} {% endraw %}
 

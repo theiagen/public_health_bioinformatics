@@ -13,7 +13,7 @@ The kSNP3 workflow is for phylogenetic analysis of bacterial genomes using singl
 
 This workflow also features an optional module, `summarize_data` that creates a presence/absence matrix for the analyzed samples from a list of indicated columns (such as AMR genes, plasmid types etc.). If the `phandango_coloring` variable is set to `true`, this will be formatted for visualization in [Phandango](https://jameshadfield.github.io/phandango/#/), else it can be viewed in Excel.
 
-You can learn more about the kSNP3 workflow, including how to visualize the outputs with MicrobeTrace in the following video: **📺 [Using KSNP3 in Terra and Visualizing Bacterial Genomic Networks in MicrobeTrace](https://www.youtube.com/watch?v=iRpNDun46R8)**
+You can learn more about the kSNP3 workflow, including how to visualize the outputs with MicrobeTrace in the following video: **[Using kSNP3 in Terra and Visualizing Bacterial Genomic Networks in MicrobeTrace](https://www.youtube.com/watch?v=iRpNDun46R8)**
 
 ### Inputs
 
@@ -39,6 +39,6 @@ You can learn more about the kSNP3 workflow, including how to visualize the outp
 
 ## References
 
->Shea N Gardner, Tom Slezak, Barry G. Hall, kSNP3.0: SNP detection and phylogenetic analysis of genomes without genome alignment or reference genome, _Bioinformatics_, Volume 31, Issue 17, 1 September 2015, Pages 2877–2878, <https://doi.org/10.1093/bioinformatics/btv271>
+>Shea N Gardner, Tom Slezak, Barry G. Hall, kSNP3.0: SNP detection and phylogenetic analysis of genomes without genome alignment or reference genome, _Bioinformatics_, Volume 31, Issue 17, 1 September 2015, Pages 2877–2878, <https://doi.org/10.1093/bioinformatics/btv271>
 <!-- -->
 <https://github.com/tseemann/snp-dists>

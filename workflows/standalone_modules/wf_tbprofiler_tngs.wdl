@@ -25,9 +25,9 @@ workflow tbprofiler_tngs {
     input:
   }
   call fastq_scan.fastq_scan_pe as fastq_scan_raw {
-      input:
-        read1 = read1,
-        read2 = read2
+    input:
+      read1 = read1,
+      read2 = read2
   }
   if (run_trimmomatic) {
     call trimmomatic_task.trimmomatic {

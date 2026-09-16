@@ -8,7 +8,7 @@
 
 Terra_2_GISAID programmatically submits SARS-CoV-2 assembly files to GISAID.
 
-This workflow expects data that has been prepared for submission using either Mercury_Batch or Mercury_Prep_N_Batch (recommended).
+This workflow expects data that has been prepared for submission using either Mercury_Batch (deprecated) or Mercury_Prep_N_Batch (recommended).
 
 !!! dna "client-ID"
     To obtain a client-ID, contact `clisupport@gisaid.org` and include your username in your request.

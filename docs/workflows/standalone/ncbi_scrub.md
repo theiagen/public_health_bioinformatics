@@ -7,7 +7,7 @@
 ## NCBI Scrub Workflows
 
 NCBI Scrub, also known as the human read removal tool (HRRT), is based on the [SRA Taxonomy Analysis Tool](https://doi.org/10.1186/s13059-021-02490-0) that will take as input a FASTQ file, and produce as output a FASTQ file in which all reads identified as potentially of human origin are either removed (default) or masked with 'N'.
-There are three Kraken2 workflows:
+There are two NCBI Scrub workflows:
 
 - `NCBI_Scrub_PE` is compatible with **Illumina paired-end data**
 - `NCBI_Scrub_SE` is compatible with **Illumina single-end data**
@@ -48,5 +48,5 @@ This workflow is composed of two tasks, one to dehost the input reads and anothe
         /// html | div[class="searchable-table"]
 
         {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "NCBI_Scrub_SE"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=8) }}
-        
+
         ///

@@ -6,7 +6,7 @@ fragment: true
 <!-- if: snippy -->
     ##### SNP-dists
 <!-- endif -->
-    SNP-dists computes pairwise SNP distances using a multifasta alignment, and returns a matrix of those distances. 
+    SNP-dists computes pairwise SNP distances using a multifasta alignment, and returns a matrix of those distances.
 
     !!! techdetails "SNP-dists Technical Details"
         |  | Links |

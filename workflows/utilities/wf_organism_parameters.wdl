@@ -53,10 +53,10 @@ workflow organism_parameters {
     String sc2_org_name = "sars-cov-2"
     String sc2_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/MN908947.fasta"
     String sc2_gene_locations_bed = "gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_gene_locations.bed"
-    String sc2_nextclade_ds_tag = "2026-04-21--09-39-50Z"
+    String sc2_nextclade_ds_tag = "2026-06-16--14-30-45Z"
     String sc2_nextclade_ds_name = "nextstrain/sars-cov-2/wuhan-hu-1/orfs"
     String sc2_kraken_target_organism = "Severe acute respiratory syndrome coronavirus 2"
-    String sc2_pangolin_docker = "us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.4-pdata-1.38"
+    String sc2_pangolin_docker = "us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.4-pdata-1.39"
     Int sc2_genome_len = 29903
     Int sc2_vadr_max_length = 30000
     Int sc2_vadr_skip_length = 10000
@@ -78,7 +78,7 @@ workflow organism_parameters {
     String mpox_org_name = "MPXV"
     String mpox_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/mpox/MPXV.MT903345.reference.fasta"
     String mpox_gene_locations_bed = "gs://theiagen-public-resources-rp/reference_data/viral/mpox/mpox_gene_locations.bed"
-    String mpox_nextclade_ds_tag = "2026-04-14--11-55-23Z"
+    String mpox_nextclade_ds_tag = "2026-07-07--14-07-11Z"
     String mpox_nextclade_ds_name = "nextstrain/mpox/lineage-b.1"
     String mpox_kraken_target_organism = "Monkeypox virus"
     String mpox_primer_bed_file = "gs://theiagen-public-resources-rp/reference_data/viral/mpox/MPXV.primer.bed"
@@ -174,7 +174,6 @@ workflow organism_parameters {
         String h5n1_ha_reference_gbk = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h5n1_ha.gb"
         String h5n1_ha_nextclade_ds_tag = "2026-04-14--11-55-23Z"
         String h5n1_ha_nextclade_ds_name = "community/moncla-lab/iav-h5/ha/all-clades"
-        String h5n1_ha_clades_tsv = "gs://theiagen-public-resources-rp/reference_data/viral/flu/h5nx-clades.tsv"
         String h5n1_ha_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_h5n1_20251030.json"
       }
     }
@@ -351,7 +350,7 @@ workflow organism_parameters {
     String kraken_target_organism = select_first([kraken_target_organism_input, sc2_kraken_target_organism, mpox_kraken_target_organism, wnv_kraken_target_organism, hiv_v1_target_organism, hiv_v2_target_organism, rsv_a_kraken_target_organism, rsv_b_kraken_target_organism, measles_kraken_target_organism, ""])
     # augur options
     Int augur_min_num_unambig = select_first([min_num_unambig, sc2_min_num_unambig, mpox_min_num_unambig, flu_min_num_unambig, rsv_a_min_num_unambig, rsv_b_min_num_unambig, 0])
-    File augur_clades_tsv = select_first([clades_tsv, sc2_clades_tsv, h1n1_ha_clades_tsv, h3n2_ha_clades_tsv, vic_ha_clades_tsv, yam_ha_clades_tsv, h5n1_ha_clades_tsv, rsv_a_clades_tsv, rsv_b_clades_tsv, mpox_clades_tsv, "gs://theiagen-public-resources-rp/empty_files/minimal-clades.tsv"])
+    File augur_clades_tsv = select_first([clades_tsv, sc2_clades_tsv, h1n1_ha_clades_tsv, h3n2_ha_clades_tsv, vic_ha_clades_tsv, yam_ha_clades_tsv, rsv_a_clades_tsv, rsv_b_clades_tsv, mpox_clades_tsv, "gs://theiagen-public-resources-rp/empty_files/minimal-clades.tsv"])
     File reference_gbk = select_first([reference_genbank, sc2_reference_genbank, h1n1_ha_reference_gbk, h3n2_ha_reference_gbk, vic_ha_reference_gbk, yam_ha_reference_gbk, h5n1_ha_reference_gbk, h1n1_na_reference_gbk, h3n2_na_reference_gbk, vic_na_reference_gbk, yam_na_reference_gbk, rsv_a_reference_gbk, rsv_b_reference_gbk, mpox_reference_gbk, "gs://theiagen-public-resources-rp/empty_files/empty.gbk"])
     File augur_auspice_config = select_first([auspice_config, sc2_auspice_config, h1n1_ha_auspice_config, h3n2_ha_auspice_config, vic_ha_auspice_config, yam_ha_auspice_config, h5n1_ha_auspice_config, h1n1_na_auspice_config, h3n2_na_auspice_config, vic_na_auspice_config, yam_na_auspice_config, rsv_a_auspice_config, rsv_b_auspice_config, mpox_auspice_config, "gs://theiagen-public-resources-rp/empty_files/minimal-auspice-config.json"])
     Float augur_min_date = select_first([min_date, sc2_min_date, flu_min_date, rsv_a_min_date, rsv_b_min_date, mpox_min_date, 0.0])

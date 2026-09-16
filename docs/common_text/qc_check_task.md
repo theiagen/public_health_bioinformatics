@@ -26,8 +26,8 @@ fragment: true
         - Any genus or species can be included as a row of the qc_check_table. However, these taxa must **uniquely** match the sample taxa, meaning that the file can include multiple species from the same genus (Vibrio_cholerae and Vibrio_vulnificus), but not both a genus row and species within that genus (Vibrio and Vibrio cholerae). **The taxa should be formatted with the first letter capitalized and underscores in lieu of spaces.**
 <!-- endif -->
         - Each subsequent column indicates a QC metric and lists a threshold for each organism that will be checked. **The column names must exactly match expected values, so we highly recommend copy and pasting the header from the template file below as a starting place.**
-    
-    ??? toggle "Template _qc_check_table.tsv_ files"    
+
+    ??? toggle "Template _qc_check_table.tsv_ files"  
 <!-- if: theiacov -->
         - TheiaCoV_Illumina_PE: [TheiaCoV_Illumina_PE_qc_check_template.tsv](../../assets/files/TheiaCoV_Illumina_PE_qc_check_template.tsv)
         - TheiaCoV_ONT: [TheiaCoV_ONT_qc_check_template.tsv](../../assets/files/TheiaCoV_ONT_qc_check_template.tsv)

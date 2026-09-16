@@ -7,6 +7,9 @@ fragment: true
 <!-- endif -->
 <!-- if: ksnp4 -->
 ??? task "`kSNP4`: Phylogenetic Construction"
+    !!! tip "Ensuring Disk Space for Large Datasets"
+        For kSNP4, disk space requirements scale with the number and size of input samples. By default, 500 GB of disk space is available for the ksnp4 task. For a genome size of 12 Mb, we recommend budgeting ~1 GB per genome, ensuring that the final disk size is larger than the set size you’ve selected.
+
 <!-- endif -->
     This workflow is run on a set of assembly files to produce both pan-genome and core-genome phylogenies. This also results in alignment files which are used by downstream tasks.
 

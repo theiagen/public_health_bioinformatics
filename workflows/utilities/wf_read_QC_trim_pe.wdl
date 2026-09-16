@@ -2,7 +2,6 @@ version 1.0
 
 import "../../tasks/quality_control/basic_statistics/task_fastq_scan.wdl" as fastq_scan
 import "../../tasks/quality_control/basic_statistics/task_fastqc.wdl" as fastqc_task
-import "../../tasks/quality_control/basic_statistics/task_readlength.wdl" as readlength_task
 import "../../tasks/quality_control/read_filtering/task_bbduk.wdl" as bbduk_task
 import "../../tasks/quality_control/read_filtering/task_fastp.wdl" as fastp_task
 import "../../tasks/quality_control/read_filtering/task_ncbi_scrub.wdl" as ncbi_scrub
@@ -235,13 +234,6 @@ workflow read_QC_trim_pe {
       String kraken_db_warning = "Kraken2 database not defined"
     }
   }
-  if ("~{workflow_series}" == "theiameta") {
-    call readlength_task.readlength {
-      input:
-        read1 = bbduk.read1_clean,
-        read2 = bbduk.read2_clean
-    }
-  }
   if (read_qc == "fastqc") {
     call fastqc_task.fastqc as fastqc_clean {
       input:
@@ -336,10 +328,12 @@ workflow read_QC_trim_pe {
     String bracken_version = select_first([kraken2_theiacov_raw.bracken_version, kraken2_standalone.bracken_version, ""])
     Float? kraken2_human =  kraken2_theiacov_raw.kraken2_percent_human
     String? kraken2_target_organism = kraken2_theiacov_raw.kraken2_percent_target_organism
+    String? kraken2_reads_target_organism = kraken2_theiacov_raw.kraken2_reads_target_organism
     String kraken2_report = select_first([kraken2_theiacov_raw.kraken2_report, kraken2_standalone.kraken2_report, ""])
     String? bracken_report = select_first([kraken2_theiacov_raw.bracken_report, kraken2_standalone.bracken_report, ""])
     Float? kraken2_human_dehosted = kraken2_theiacov_dehosted.kraken2_percent_human
     String? kraken2_target_organism_dehosted = kraken2_theiacov_dehosted.kraken2_percent_target_organism
+    String? kraken2_reads_target_organism_dehosted = kraken2_theiacov_dehosted.kraken2_reads_target_organism
     String? kraken2_target_organism_name = target_organism
     File? kraken2_report_dehosted = kraken2_theiacov_dehosted.kraken2_report
     File? bracken_report_dehosted = kraken2_theiacov_dehosted.bracken_report
@@ -359,8 +353,6 @@ workflow read_QC_trim_pe {
     String? midas_secondary_genus = midas.midas_secondary_genus
     Float? midas_secondary_genus_abundance = midas.midas_secondary_genus_abundance
     Float? midas_secondary_genus_coverage = midas.midas_secondary_genus_coverage
-    # readlength
-    Float? average_read_length = readlength.average_read_length
     # rasusa
     File? read1_subsampled_raw = rasusa.read1_subsampled
     File? read2_subsampled_raw = rasusa.read2_subsampled

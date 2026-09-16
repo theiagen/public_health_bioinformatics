@@ -26,7 +26,7 @@ fragment: true
     The mode used in this task is `sr` which is intended for "short single-end reads without splicing". The `sr` mode indicates the following parameters should be used: `-k21 -w11 --sr --frag=yes -A2 -B8 -O12,32 -E2,1 -b0 -r100 -p.5 -N20 -f1000,5000 -n2 -m20 -s40 -g100 -2K50m --heap-sort=yes --secondary=no`. The output file is in SAM format.
 <!-- endif -->
 
-    For more information regarding modes and the available options for Minimap2, please see the [Minimap2 manpage](https://lh3.github.io/minimap2/minimap2.html)
+    For more information regarding modes and the available options for Minimap2, please see the [Minimap2 manpage](https://lh3.github.io/minimap2/minimap2.html).
 
     !!! techdetails "Minimap2 Technical Details"
         | | Links |

@@ -10,7 +10,7 @@ The `Snippy_Variants` workflow aligns single-end or paired-end reads (in FASTQ f
 
 !!! caption "Snippy_Variants Workflow Diagram"
     <div style="text-align: center;">
-    ![Snippy_Variants Workflow Diagram](../../assets/figures/Snippy_Variants.png){: onload="this.width/=2;this.onload=null;" }
+    ![Workflow diagram for Snippy_Variants, taking sequence data and a reference genome as inputs, running alignment, variant calling, and annotation steps, and producing an annotated VCF and variants summary. Optionally accepts query genes to output a gene query CSV.](../../assets/figures/Snippy_Variants.png){: onload="this.width/=2;this.onload=null;" }
     </div>
 
 !!! tip "Example Use Cases"
@@ -52,4 +52,3 @@ The `Snippy_Variants` workflow aligns single-end or paired-end reads (in FASTQ f
 {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "Snippy_Variants"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
 
 ///
-

@@ -3,12 +3,12 @@ title: Task Fragment `nextclade`
 fragment: true
 ---
 ??? task "`Nextclade`: Clade Assignment"
-    Nextclade is an open-source project used to analyze viral genomes, particularly for clade assignment and mutation calling. Simply, Nextclade works by aligning viral genomes to a reference genome, calling variants between the two sequences, and then assigning clades based on those identified mutations. 
-    
+    Nextclade is an open-source project used to analyze viral genomes, particularly for clade assignment and mutation calling. Simply, Nextclade works by aligning viral genomes to a reference genome, calling variants between the two sequences, and then assigning clades based on those identified mutations.
+
     Clade assignment is performed via _phylogenetic placement_. Phylogenetic placement compares the mutations of the provided sequence to the mutations of each node found in a reference tree, where the root of that tree is the reference genome. The node that is most similar to the sample is used to both assign a clade designation and calculate where the sample should be placed in the phylogenetic tree.
-    
+
 <!-- if: theiaviral -->
-    Theiagen has implemented a full genome-based [Nextclade dataset](https://github.com/theiagen/rabies) for *L. rabies* with subclade classification resolution.
+    Theiagen has implemented a full genome-based [Nextclade dataset](https://github.com/theiagen/rabies) for _Lyssavirus rabies_ with subclade classification resolution.
 <!-- endif -->
 
     !!! techdetails "Nextclade Technical Details"

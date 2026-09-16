@@ -3,11 +3,13 @@ title: Task Fragment `extract_clade_mutations`
 fragment: true
 ---
 ??? task "`extract_clade_mutations`: Extract Clade-Defining Signature Sequences"
-    Extract Clade Mutations will create an Augur-compatible "clades.tsv" by extracting signature clade-defining sequences. A nucleotide JSON outputted by Augur Ancestral is required, and an optional amino acid JSON outputted by Augur Translate can be used to infer specific amino acid mutations.
+    This task automatically identifies the mutations that define each clade (a group of closely related samples) in your phylogenetic tree, so you do not have to list them by hand. It is helpful when you want the final tree to be grouped or colored by clade but do not already have a set of clade-defining mutations.
+
+    Extract Clade Mutations will create an Augur-compatible "clades.tsv" by extracting signature clade-defining sequences. A nucleotide JSON output by Augur Ancestral is required, and an optional amino acid JSON output by Augur Translate can be used to infer specific amino acid mutations.
 
     Clade-defining signatures can only be extracted from monophyletic clades with unique mutation signatures. If no clade-defining mutations are reported, an error is raised. If the clade metadata column does not exist, then an error is raised as well.
 
-    !!! techdetails "Extract Clade Mutations Technical Details"        
+    !!! techdetails "Extract Clade Mutations Technical Details"
         |  | Links |
         | --- | --- |
         | Task | [task_extract_clade_mutations.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/augur/task_extract_clade_mutations.wdl) |

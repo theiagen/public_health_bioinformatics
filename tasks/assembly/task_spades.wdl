@@ -7,7 +7,7 @@ task spades {
     String samplename
     String? spades_type
     Int timeout = 360 # timeout in minutes
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/spades:4.1.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/spades:4.3.0"
     Int disk_size = 100
     Int cpu = 4
     Int memory = 16

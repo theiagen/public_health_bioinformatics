@@ -5,7 +5,7 @@ fragment: true
 ??? task "`ABRicate`: _Vibrio_ Characterization"
     ABRicate is used to perform general characterization of _Vibrio_ genomes using a database of target sequences that are traditionally used in PCR methods. The sequences included in the database are as follows:
 
-    ??? toggle "Resistence Gene Database"
+    ??? toggle "Resistance Gene Database"
         | Sequence Name | Sequence Role | Purpose in Database |
         | --- | --- | --- |
         | _toxR_ | Transcriptional activator | Species marker where presence identifies _V. cholerae_  |

@@ -9,6 +9,7 @@ task freyja_one_sample {
     String? freyja_pathogen
     File? freyja_barcodes
     File? freyja_lineage_metadata
+    File? freyja_lineage_yml
     Boolean auto_adapt = false
     Float eps = 0.001 # set to mirror v2.0.1 default
     Float adapt = 0.0 # set to mirror v2.0.1 default
@@ -19,18 +20,18 @@ task freyja_one_sample {
     Int? depth_cutoff
     Int memory = 8
     Int cpu = 2
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.1"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.3"
     Int disk_size = 100
   }
   command <<<
   # capture version
   freyja --version | tee FREYJA_VERSION
-  
+
   # update freyja reference files if specified
-  if ~{update_db}; then 
+  if ~{update_db}; then
       freyja update ~{"--pathogen " + freyja_pathogen} 2>&1 | tee freyja_update.log
       # check log files to ensure update did not fail
-      if grep "FileNotFoundError.*lineagePaths.*" freyja_update.log; then 
+      if grep "FileNotFoundError.*lineagePaths.*" freyja_update.log; then
         echo "Error in attempting to update Freyja files. Try increasing memory"
         >&2 echo "Killed"
         exit 1
@@ -44,26 +45,26 @@ task freyja_one_sample {
       freyja_usher_barcode_version="freyja update: $(date +"%Y-%m-%d")"
       freyja_metadata_version="freyja update: $(date +"%Y-%m-%d")"
   else
-    # configure barcode    
+    # configure barcode
     if [[ ! -z "~{freyja_barcodes}" ]]; then
       echo "User freyja usher barcodes identified; ~{freyja_barcodes} will be utilized for freyja demixing"
       freyja_usher_barcode_version=$(basename -- "~{freyja_barcodes}")
     else
-      freyja_usher_barcode_version="unmodified from freyja container: ~{docker}"  
+      freyja_usher_barcode_version="unmodified from freyja container: ~{docker}"
     fi
     # configure lineage metadata
     if [[ ! -z "~{freyja_lineage_metadata}" ]]; then
-      echo "User lineage metadata; ~{freyja_lineage_metadata} will be utilized fre freyja demixing"
+      echo "User lineage metadata; ~{freyja_lineage_metadata} will be utilized freyja demixing"
       freyja_metadata_version=$(basename -- "~{freyja_lineage_metadata}")
     else
       freyja_metadata_version="unmodified from freyja container: ~{docker}"
     fi
   fi
-  
+
   # Capture reference file versions
   echo ${freyja_usher_barcode_version} | tee FREYJA_BARCODES
   echo ${freyja_metadata_version} | tee FREYJA_METADATA
-  
+
   # Call variants and capture sequencing depth information
   echo "Running: freyja variants ~{bamfile} --variants ~{samplename}_freyja_variants.tsv --depths ~{samplename}_freyja_depths.tsv --ref ~{reference_genome}"
   freyja variants \
@@ -72,13 +73,14 @@ task freyja_one_sample {
     --variants ~{samplename}_freyja_variants.tsv \
     --depths ~{samplename}_freyja_depths.tsv \
     --ref ~{reference_genome}
-  
+
   # Calculate Boostraps, if specified
   if ~{bootstrap}; then
     freyja boot \
     ~{"--pathogen " + freyja_pathogen} \
     ~{"--eps " + eps} \
     ~{"--meta " + freyja_lineage_metadata} \
+    ~{'--lineageyml ' + freyja_lineage_yml} \
     ~{"--barcodes " + freyja_barcodes} \
     ~{"--depthcutoff " + depth_cutoff} \
     ~{"--nb " + number_bootstraps } \
@@ -89,13 +91,14 @@ task freyja_one_sample {
     --output_base ~{samplename} \
     --boxplot pdf
   fi
-  
-  # Demix variants 
+
+  # Demix variants
   echo "Running: freyja demix --eps ~{eps} ${freyja_barcode} ${freyja_metadata} ~{samplename}_freyja_variants.tsv ~{samplename}_freyja_depths.tsv --output ~{samplename}_freyja_demixed.tmp"
   freyja demix \
     ~{"--pathogen " + freyja_pathogen} \
     ~{'--eps ' + eps} \
     ~{'--meta ' + freyja_lineage_metadata} \
+    ~{'--lineageyml ' + freyja_lineage_yml} \
     ~{'--barcodes ' + freyja_barcodes} \
     ~{'--depthcutoff ' + depth_cutoff} \
     ~{true='--confirmedonly' false='' confirmed_only} \
@@ -103,7 +106,7 @@ task freyja_one_sample {
     ~{samplename}_freyja_variants.tsv \
     ~{samplename}_freyja_depths.tsv \
     --output ~{samplename}_freyja_demixed.tmp
-  
+
   # Adjust output header
   echo -e "\t/~{samplename}" > ~{samplename}_freyja_demixed.tsv
   tail -n+2 ~{samplename}_freyja_demixed.tmp >> ~{samplename}_freyja_demixed.tsv
@@ -128,7 +131,7 @@ task freyja_one_sample {
   parsed_data = {
     "LIMS_ID": "~{samplename}"
   }
-  
+
   #Want coverage output from freyja_demixed tsv file
   with open("~{samplename}_freyja_demixed.tsv",'r') as tsv_file:
     tsv_reader = csv.reader(tsv_file, delimiter="\t")
@@ -153,13 +156,13 @@ task freyja_one_sample {
         with open("SUMMARIZED", 'wt') as summarized:
           summarized.write(line[1])
         parsed_data["summarized"] = dataf.loc[dataf['Attribute'] == "summarized", "~{samplename}"].values[0]
-  
+
   # Initialize a list to store output rows
   output_data = []
   output_data.append(parsed_data)
   output_df = pd.DataFrame(output_data)
   output_df.to_csv("~{samplename}_freyja_demixed_parsed.tsv", sep='\t', index=False)
-  
+
   CODE
   >>>
   output {

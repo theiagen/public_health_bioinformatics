@@ -26,8 +26,7 @@ fragment: true
         | _Staphylococcus aureus_      | 1280      |
         | _Salmonella_ Typhi           | 90370     |
         | _Streptococcus pneumoniae_   | 1313      |
-        | _Klebisiella_                | 570       |
-        | _Escherichia_                | 561       |
+        | _Klebsiella_                | 570       |
         | _Mycobacterium tuberculosis_ | 1773      |
         | _Candida auris_              | 498019    |
         | _Vibrio cholerae_            | 666       |
@@ -38,7 +37,7 @@ fragment: true
     - **JSON Output**: Contains the complete AMR profile, including detailed resistance state, detected resistance genes/mutations, and supporting BLAST results.
     - **CSV & PDF Tables**: An incorporated Python script, `parse_amr_json.py`, extracts and formats results into a CSV file and PDF summary table for easier visualization.
 
-    !!! techdetails "AMRsearch Technical Details"    
+    !!! techdetails "AMRsearch Technical Details"  
         |  | Links |
         | --- | --- |
         | Task | [task_amr_search.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_amr_search.wdl) |

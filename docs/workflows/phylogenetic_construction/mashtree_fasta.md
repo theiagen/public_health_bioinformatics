@@ -32,7 +32,7 @@ This workflow also features an optional module, `summarize_data`, that creates a
         | Software Source Code | [Mashtree on GitHub](https://github.com/lskatz/mashtree) |
         | Software Documentation | [Mashtree on GitHub](https://github.com/lskatz/mashtree) |
         | Original Publication(s) | [Mashtree: a rapid comparison of whole genome sequence files](https://doi.org/10.21105/joss.01762) |
-        
+
 {{ include_md("common_text/data_summary_task.md") }}
 
 ### Outputs
@@ -45,6 +45,6 @@ This workflow also features an optional module, `summarize_data`, that creates a
 
 ## References
 
-> Katz, L. S., Griswold, T., Morrison, S., Caravas, J., Zhang, S., den Bakker, H.C., Deng, X., and Carleton, H. A., (2019). Mashtree: a rapid comparison of whole genome sequence files. Journal of Open Source Software, 4(44), 1762, <https://doi.org/10.21105/joss.01762>
+> Katz, L. S., Griswold, T., Morrison, S., Caravas, J., Zhang, S., den Bakker, H.C., Deng, X., and Carleton, H. A., (2019). Mashtree: a rapid comparison of whole genome sequence files. Journal of Open Source Software, 4(44), 1762, <https://doi.org/10.21105/joss.01762>
 <!-- -->
 >Ondov, B. D., Treangen, T. J., Melsted, P., Mallonee, A. B., Bergman, N. H., Koren, S., & Phillippy, A. M. (2016). Mash: Fast genome and metagenome distance estimation using minhash. Genome Biology, 17(1), 132. doi:10.1186/s13059-016-0997-x

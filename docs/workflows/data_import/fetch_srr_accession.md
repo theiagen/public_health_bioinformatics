@@ -23,11 +23,11 @@ The workflow uses the fastq-dl tool to fetch metadata from SRA and specifically 
 This workflow has a single task that performs metadata retrieval for the specified sample accession.
 
 ??? task "`fastq-dl`: Fetches SRR metadata for sample accession"
-    When provided a BioSample accession or SRA experiment ID, 'fastq-dl' collects metadata and returns the appropriate SRR accession.
+    When provided a BioSample accession or SRA experiment ID, `fastq-dl` collects metadata and returns the appropriate SRR accession.
 
     !!! techdetails "fastq-dl Technical Details"
-    |  | Links | 
-    | --- | --- | 
+    |  | Links |
+    | --- | --- |
     | **Task** | [task_fetch_srr_accession.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_fetch_srr_accession.wdl) |
     | **Software Source Code** | [https://github.com/rpetit3/fastq-dl](https://github.com/rpetit3/fastq-dl) |
     | **Software Documentation** | [https://github.com/rpetit3/fastq-dl#usage](https://github.com/rpetit3/fastq-dl#usage) |

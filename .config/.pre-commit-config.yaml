@@ -1,0 +1,162 @@
+# Lint hooks for PHB, split into two groups by the prek-only `groups:` key:
+#   docs -> docs/**/*.md          wdl -> tasks|workflows/**/*.wdl
+#
+#   pip install prek && prek install -c .config/.pre-commit-config.yaml
+#   prek run --all-files -c .config/.pre-commit-config.yaml --group wdl
+#
+# The -c flag is required because this file is not at the repo root.
+#
+# `prek run` defaults to the manual stage; use `--stage pre-commit` to see
+# exactly what a commit executes.
+#
+# vale must be installed separately: https://vale.sh/docs/vale-cli/installation/
+
+minimum_pre_commit_version: "3.0.0"
+
+# docs/theme/macros/ is macro implementation, not a documentation page.
+exclude: ^docs/theme/macros/
+
+repos:
+  # --- docs: whitespace (auto-fix) ---
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+        name: trim trailing whitespace
+        # Preserve Markdown hard line breaks (two trailing spaces).
+        args: [--markdown-linebreak-ext=md]
+        files: ^docs/.*\.md$
+        groups: [docs]
+      - id: end-of-file-fixer
+        name: ensure files end with a single newline
+        files: ^docs/.*\.md$
+        groups: [docs]
+      - id: mixed-line-ending
+        name: normalize line endings to LF
+        args: [--fix=lf]
+        files: ^docs/.*\.md$
+        groups: [docs]
+
+  # --- docs: prose patterns (report) ---
+  - repo: local
+    hooks:
+      - id: no-space-before-percent
+        name: no space before a percent sign (write "95%" not "95 %")
+        language: pygrep
+        entry: '[0-9] +%'
+        files: ^docs/.*\.md$
+        groups: [docs]
+      - id: no-inputted
+        name: avoid "inputted" (use "input" or "provided")
+        language: pygrep
+        entry: '(?i)\binputted\b'
+        files: ^docs/.*\.md$
+        groups: [docs]
+      - id: no-outputted
+        name: avoid "outputted" (use "output" or "created")
+        language: pygrep
+        entry: '(?i)\boutputted\b'
+        files: ^docs/.*\.md$
+        groups: [docs]
+
+  # --- docs: markdownlint (report; add --fix when running by hand) ---
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.44.0
+    hooks:
+      - id: markdownlint
+        name: markdownlint
+        files: ^docs/.*\.md$
+        # abbreviations.md is a tooltip snippet, not a page. Excluded inline
+        # because -p/--ignore-path is broken in this CLI version.
+        args: ["-c", ".config/.markdownlint.yaml", "-i", "docs/assets/abbreviations.md"]
+        groups: [docs]
+
+  # --- docs: vale (needs the vale binary) ---
+  - repo: local
+    hooks:
+      - id: vale
+        name: vale (prose, tool names, American spelling)
+        language: system
+        entry: vale
+        files: ^docs/.*\.md$
+        # Warnings and above fail; suggestions are advisory.
+        args: ["--config=.config/.vale.ini", "--minAlertLevel=warning"]
+        groups: [docs]
+
+  # --- wdl: whitespace (auto-fix) ---
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+        name: trim trailing whitespace (WDL)
+        files: ^(tasks|workflows)/.*\.wdl$
+        groups: [wdl]
+      - id: end-of-file-fixer
+        name: ensure WDL files end with a single newline
+        files: ^(tasks|workflows)/.*\.wdl$
+        groups: [wdl]
+      - id: mixed-line-ending
+        name: normalize WDL line endings to LF
+        args: [--fix=lf]
+        files: ^(tasks|workflows)/.*\.wdl$
+        groups: [wdl]
+      - id: check-yaml
+        name: check .dockstore.yml parses
+        files: ^\.dockstore\.yml$
+        groups: [wdl]
+
+  # --- wdl: style rules from docs/contributing/code_contribution.md (report) ---
+  - repo: local
+    hooks:
+      - id: wdl-no-tabs
+        name: indent WDL with spaces, never tabs
+        language: pygrep
+        entry: '\t'
+        files: ^(tasks|workflows)/.*\.wdl$
+        groups: [wdl]
+      - id: wdl-heredoc-command
+        name: command blocks use <<< >>>, not { }
+        language: pygrep
+        entry: '^\s*command\s*\{'
+        files: ^(tasks|workflows)/.*\.wdl$
+        groups: [wdl]
+      - id: wdl-no-brace-linebreak
+        name: opening brace on the same line ("input {" not "input" + newline)
+        language: pygrep
+        # A line holding only a block keyword means its "{" went to the next line.
+        entry: '^\s*(task|workflow|struct|input|output|runtime|meta|parameter_meta)\s*$'
+        files: ^(tasks|workflows)/.*\.wdl$
+        groups: [wdl]
+      - id: wdl-no-docker-latest
+        name: docker images must be pinned, never :latest
+        language: pygrep
+        entry: ':latest"'
+        files: ^(tasks|workflows)/.*\.wdl$
+        groups: [wdl]
+        stages: [manual]
+
+  # --- wdl: rules needing more than a line-oriented regex ---
+  - repo: local
+    hooks:
+      - id: wdl-indent
+        name: fix 2-space indentation
+        language: system
+        entry: python3 .config/hooks/check_wdl_conventions.py --fix
+        files: ^(tasks|workflows)/.*\.wdl$
+        groups: [wdl]
+      - id: wdl-conventions
+        name: report runtime disks/disk + docker tag/GAR
+        language: system
+        entry: python3 .config/hooks/check_wdl_conventions.py --report
+        files: ^(tasks|workflows)/.*\.wdl$
+        groups: [wdl]
+        stages: [manual]
+      - id: wdl-docker-exists
+        name: pinned docker images exist in GAR
+        language: system
+        entry: python3 .config/hooks/check_docker_images_exist.py
+        files: ^(tasks|workflows)/.*\.wdl$
+        # Second group so this hook alone can be dropped when offline:
+        #   prek run ... --group wdl --no-group docker-registry
+        groups: [wdl, docker-registry]
+        stages: [manual]

@@ -1,0 +1,61 @@
+name: lint-wdl
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  wdl:
+    name: wdl checks
+    runs-on: ubuntu-latest
+    env:
+      PREK_VERSION: "0.5.2"
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: dorny/paths-filter@v4
+        id: filter
+        with:
+          filters: |
+            wf:
+              - added|modified: 'tasks/**'
+              - added|modified: 'workflows/**'
+            lint:
+              - added|modified: 'tasks/**'
+              - added|modified: 'workflows/**'
+              - added|modified: '.dockstore.yml'
+          list-files: json
+
+      - name: Set up Python
+        if: steps.filter.outputs.lint_files != '[]'
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        if: steps.filter.outputs.lint_files != '[]'
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install shellcheck
+          pip3 -q install miniwdl 'importlib-metadata==4.13.0' "prek==${PREK_VERSION}"
+
+      - name: miniwdl check
+        if: steps.filter.outputs.wf_files != '[]'
+        run: |
+          FILES="${{ join(fromJson(steps.filter.outputs.wf_files), ' ') }}"
+          fail=0
+          for f in $FILES; do
+            echo "::group::$f"
+            miniwdl check "$f" || fail=1
+            echo "::endgroup::"
+          done
+          exit $fail
+
+      - name: prek (wdl hooks)
+        # always(): a red miniwdl must not hide the policy results.
+        if: always() && steps.filter.outputs.lint_files != '[]'
+        run: |
+          prek run --show-diff-on-failure --stage manual \
+            -c .config/.pre-commit-config.yaml --group wdl \
+            --files ${{ join(fromJson(steps.filter.outputs.lint_files), ' ') }}

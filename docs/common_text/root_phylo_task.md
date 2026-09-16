@@ -3,7 +3,7 @@ title: Task Fragment `root_phylo`
 fragment: true
 ---
 ??? task "`Root_Phylo`: Phylogeny Rooting"
-    This task returns a rooted phylogeny from inputted outgroup or by rooting upon the midpoint root. Outgroups must be tip names (case-sensitive) that exist within the tree.
+    This task returns a rooted phylogeny from a provided outgroup or by rooting upon the midpoint root. Outgroups must be tip names (case-sensitive) that exist within the tree.
 
     !!! techdetails "Root_Phylo Technical Details"
         |  | Links |

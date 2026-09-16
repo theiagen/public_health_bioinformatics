@@ -3,10 +3,10 @@ title: Task Fragment `ete4_identify`
 fragment: true
 ---
 ??? task "`ete4_identify`: Taxonomic Identification"
-    The ETE Toolkit uses ete4 to parses the NCBI taxonomy hierarchy from a user's inputted taxonomy and desired taxonomic rank. This task returns a taxon ID, name, and rank, which facilitates downstream functions, including **read classification, targeted read extraction, and genomic characterization modules**.
+    The ETE Toolkit uses ete4 to parse the NCBI taxonomy hierarchy from a user's provided taxonomy and desired taxonomic rank. This task returns a taxon ID, name, and rank, which facilitates downstream functions, including **read classification, targeted read extraction, and genomic characterization modules**.
 
     ??? dna "`taxon` input parameter"
-        This parameter accepts either a NCBI taxon ID (e.g. `11292`) or an organism name (e.g. `Lyssavirus rabies`).
+        This parameter accepts either an NCBI taxon ID (e.g. `11292`) or an organism name (e.g. `Lyssavirus rabies`).
 
     ??? dna "`rank` a.k.a `read_extraction_rank` input parameter"
         Valid options include: `"species"`, `"genus"`, `"family"`, `"order"`, `"class"`, `"phylum"`, `"kingdom"`, or `"domain"`. By default it is set to `"family"`. This parameter filters metadata to report information only at the taxonomic `rank` specified by the user, regardless of the taxonomic rank implied by the original input `taxon`.
@@ -17,7 +17,7 @@ fragment: true
         **Examples:**
 
         - If your input `taxon` is `Lyssavirus rabies` (species level) with `rank` set to `family`, the task will return information for the family of `Lyssavirus rabies`: taxon ID for Rhabdoviridae (11270), name "Rhabdoviridae", and rank "family".
-        - If your input `taxon` is `Lyssavirus` (genus level) with `rank` set to `species`, the task will fail because it cannot determine species information from an inputted genus.
+        - If your input `taxon` is `Lyssavirus` (genus level) with `rank` set to `species`, the task will fail because it cannot determine species information from a genus.
 
     !!! techdetails "ETE Toolkit Technical Details"
         |  | Links |

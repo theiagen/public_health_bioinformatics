@@ -9,7 +9,7 @@
 The `Assembly_Fetch` workflow downloads assemblies from NCBI. This is particularly useful when you need to align reads against a reference genome, for example during a reference-based phylogenetics workflow. This workflow can be run in two ways:
 
 1. You can provide an accession for the specific assembly that you want to download, and `Assembly_Fetch` will run only the NCBI genome download task to download this assembly,
-2. You can provide an assembly, and `Assembly_Fetch` will first use the `ReferenceSeeker` task to first find the closest reference genome in RefSeq to your query assembly and then will run the NCBI genome download task to download that reference assembly.
+2. You can provide an assembly, and `Assembly_Fetch` will first use the `ReferenceSeeker` task to find the closest reference genome in RefSeq to your query assembly and then will run the NCBI genome download task to download that reference assembly.
 
 !!! info "Call-Caching Disabled"
 

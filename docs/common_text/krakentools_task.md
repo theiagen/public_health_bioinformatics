@@ -10,7 +10,7 @@ fragment: true
         This parameter determines whether unclassified reads should also be extracted and combined with the `taxon`-specific extracted reads. By default, this is set to `false`, meaning that only reads classified to the specified input `taxon` will be extracted.
 
     ???+ warning "Important"
-        This task will extract reads classified to the input `taxon` and **all of its descendant taxa**. The `rank` input parameter controls the extraction of reads classified at the specified `rank` and all suboridante taxonomic levels. See task `ncbi_identify` under the **Taxonomic Identification** section for more details on the `rank` input parameter.
+        This task will extract reads classified to the input `taxon` and **all of its descendant taxa**. The `rank` input parameter controls the extraction of reads classified at the specified `rank` and all subordinate taxonomic levels. See task `ncbi_identify` under the **Taxonomic Identification** section for more details on the `rank` input parameter.
 <!-- endif -->
 
     !!! techdetails "KrakenTools Technical Details"

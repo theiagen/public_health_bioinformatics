@@ -22,7 +22,7 @@ task rasusa {
     #  --num [INTEGER] Subsample to a specific number of reads
     String? num_bases
     Float coverage = 250
-    String? genome_length
+    Int? genome_length
     Int? seed
     Float? fraction_of_reads
     Int? num_reads

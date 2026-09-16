@@ -1,7 +1,7 @@
 # Getting Started with the Command-Line
 
 !!! dna "What is WDL?"
-    Running workflows on the command-line requires the direct use of the WDL (Workflow Development Language). As the name suggests, this is the workflow management language that is used to write and execute workflows. Frank has put together a great video describing 📺 [**WDL Task and Workflow Files**](https://www.youtube.com/watch?v=DNtdra59Y6o) and you can find full instructions below on running these WDL workflows.
+    Running workflows on the command-line requires the direct use of the WDL (Workflow Development Language). As the name suggests, this is the workflow management language that is used to write and execute workflows. Frank has put together a great video describing [**WDL Task and Workflow Files**](https://www.youtube.com/watch?v=DNtdra59Y6o) and you can find full instructions below on running these WDL workflows.
 
 ## Step 1: Obtain the Workflow and Data
 
@@ -21,7 +21,7 @@ If you don't already have Git installed on your system, you will need to install
 ??? toggle "macOS"
 
     Git is usually pre-installed on macOS. However, you can install or update it using Homebrew:
-    
+
     ```bash
     brew install git
     ```
@@ -70,13 +70,13 @@ This should display the files and directories within the <https://github.com/the
 
 Congratulations! You've successfully cloned the <https://github.com/theiagen/public_health_bioinformatics.git> repository from GitHub to your local command-line environment. You're now ready to proceed with running the bioinformatics analysis workflows using WDL as described in subsequent steps.
 
-## Step 2: Install docker and miniWDL
+## Step 2: Install docker and miniwdl
 
 Docker and miniwdl will be required for command-line execution. We will check if these are installed on your system and if not, install them now.
 
 1. Open your terminal.
 2. Navigate to the directory where your workflow and input files are located using the `cd` command:
- 
+
     ```bash
     cd /path/to/your/workflow/directory
     ```
@@ -123,7 +123,7 @@ In a WDL (Workflow Description Language) workflow, an input JSON file is used to
       "inputFastq": "data/sample.fastq",
       "referenceGenome": "reference/genome.fasta"
     }
-    
+
     ```
 
 ??? toggle "Int Input"
@@ -212,7 +212,7 @@ You can monitor the progress of the workflow by checking the console output for 
 
     **Early Troubleshooting:**
 
-    If you encounter errors or unexpected behavior, the console output can provide valuable information for troubleshooting. You can search for the specific error messages to understand the problem and take appropriate action, such as correcting input values, adjusting parameters, or addressing software dependencies. 
+    If you encounter errors or unexpected behavior, the console output can provide valuable information for troubleshooting. You can search for the specific error messages to understand the problem and take appropriate action, such as correcting input values, adjusting parameters, or addressing software dependencies.
 
     Monitoring the workflow progress through the console output is an essential practice for successful execution. It allows you to track the status of individual tasks, identify errors, and ensure that your analysis is proceeding as planned. Regularly reviewing the output will help you address any issues and improve the efficiency of your bioinformatics workflow.
 
@@ -224,21 +224,21 @@ You can monitor the progress of the workflow by checking the console output for 
     1. **Ctrl + C**: The simplest way to cancel a running command in the terminal is to press `Ctrl + C`. This sends an interrupt signal to the running process, which should gracefully terminate it. However, keep in mind that this might not work for all scenarios, and some tasks might not be able to cleanly terminate.
     2. **Terminate Docker Containers**: If your workflow involves Docker containers, you might need to ensure that any Docker containers launched by the workflow are also terminated. To do this, you can manually stop the Docker containers associated with the workflow. You can use the `docker ps` command to list running containers and `docker stop <container_id>` to stop a specific container.
     3. **Kill the miniwdl Process**: If the `Ctrl + C` approach doesn't work, you might need to explicitly kill the `miniwdl` process running in the terminal. To do this, you can use the `kill` command. First, find the process ID (PID) of the `miniwdl` process by running:
-        
+
         ```bash
         ps aux | grep miniwdl
-        
+
         ```
-        
+
         Identify the PID in the output and then run:
-        
+
         ```bash
         kill -9 <PID>
-        
+
         ```
-        
+
         This forcefully terminates the process.
-        
+
     4. **Clean Up Intermediate Files**: Depending on the workflow and how tasks are structured, there might be intermediate files or resources that were generated before the cancellation. You might need to manually clean up these files to free up disk space.
     5. **Check for Workflow-Specific Cancellation**: Some workflows might have specific mechanisms to handle cancellation. Refer to the workflow documentation or user guide to understand if there's a recommended way to cancel the workflow gracefully.
     6. **Check for Any Remaining Resources**: After canceling the workflow, it's a good practice to check for any remaining resources that might need to be cleaned up. This could include temporary files, Docker images, or other resources that were created during the workflow's execution.
@@ -254,7 +254,7 @@ Once the workflow completes successfully, you will find the output files and res
 ??? toggle "Substep 1: Locate the Output Directory"
 
     Before you begin reviewing outputs, make sure you know where the output directory of your workflow is located. This is typically specified in the workflow configuration or input JSON file. Navigate to this directory using the **`cd`** command in your terminal.
-    
+
     ```bash
     cd /path/to/your/output/directory
     ```
@@ -262,49 +262,49 @@ Once the workflow completes successfully, you will find the output files and res
 ??? toggle "Substep 2: Logs"
 
     Logs are a valuable source of information about what happened during each step of the workflow. Each task in the workflow might generate its own log file. Here's how to review logs:
-    
+
     1. Use the **`ls`** command to list the files in the output directory:
-        
+
         ```bash
-        
+
         ls
-        
+
         ```
-        
+
     2. Look for log files with names that correspond to the tasks in your workflow. These files often have a **`.log`** extension.
     3. Open a log file using a text editor like **`less`** or **`cat`**:
-        
+
         ```bash
-        
+
         less task_name.log
-        
+
         ```
-        
+
         Use the arrow keys to navigate through the log, and press **`q`** to exit.
-        
+
     4. Inspect the log for messages related to the task's execution, input values, software versions, and any errors or warnings that might have occurred.
 
 ??? toggle "Substep 3: stderr (Standard Error) and stdout (Standard Output)"
 
     stderr and stdout are streams where processes write error messages and standard output, respectively. These are often redirected to files during workflow execution. Here's how to review them:
-    
+
     1. Use the **`ls`** command to list the files in the output directory.
     2. Look for files with names like **`task_name.err`** (for stderr) and **`task_name.out`** (for stdout).
     3. Open the files using a text editor:
-        
+
         ```bash
-        
+
         less task_name.err
         less task_name.out
-        
+
         ```
-        
+
         These files might contain additional information about the task's execution, errors, and output generated during the analysis.
 
 ??? toggle "Substep 4: Reviewing Output Files"
 
     Workflow tasks might generate various types of output files, such as plots, reports, or data files. Here's how to review them:
-    
+
     1. Use the **`ls`** command to list the files in the output directory.
     2. Identify the files generated by your workflow tasks.
     3. Depending on the file type, you can use different tools to open and view them. For example, you might use **`less`** or a text editor for text-based files, or an image viewer for image files.
@@ -312,7 +312,7 @@ Once the workflow completes successfully, you will find the output files and res
 ??? toggle "Substep 5: Interpretation and Troubleshooting"
 
     As you review the outputs, keep these points in mind:
-    
+
     - **Successful Execution:** Look for indicators of successful task execution, such as expected messages, correct output files, and absence of error messages.
     - **Errors and Warnings:** Pay close attention to any error or warning messages in logs, stderr, or stdout. These can help you identify issues that need troubleshooting.
     - **Input Values and Parameters:** Verify that input values and parameters were correctly passed to tasks. Incorrect input can lead to unexpected behavior.
@@ -322,7 +322,7 @@ Once the workflow completes successfully, you will find the output files and res
 ??? toggle "Substep 6: Make Notes and Take Action"
 
     As you review the outputs, make notes of any issues, errors, or unexpected behavior you encounter. Depending on the severity of the issues, you might need to:
-    
+
     - Adjust input parameters.
     - Re-run specific tasks.
     - Debug and troubleshoot errors.
