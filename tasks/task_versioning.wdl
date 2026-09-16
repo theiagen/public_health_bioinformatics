@@ -11,7 +11,7 @@ task version_capture {
   command <<<
     VERSION_TAG="v4.3.0"
     # BRANCH_TAG is managed by CI; do NOT edit manually
-    BRANCH_TAG=""
+    BRANCH_TAG="smw-test3"
     if [ -n "${BRANCH_TAG}" ]; then
       echo "PHB ${VERSION_TAG}; branch: ${BRANCH_TAG}" > PHB_VERSION
     else
