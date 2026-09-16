@@ -1,0 +1,119 @@
+name: Merge bot
+
+on:
+  pull_request:
+    types: [labeled]
+
+concurrency:
+  group: merge-bot-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  merge:
+    # merge a pr if it's got the right label, will merge to main, isn't a draft, is open, and isn't a fork
+    if: >
+      github.event.label.name == 'ready-to-merge' &&
+      github.event.pull_request.base.ref == 'main' &&
+      github.event.pull_request.draft == false &&
+      github.event.pull_request.state == 'open' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    env:
+      PR: ${{ github.event.pull_request.number }}
+      BRANCH: ${{ github.event.pull_request.head.ref }}
+      VERSION_FILE: tasks/task_versioning.wdl
+      GH_TOKEN: ${{ secrets.VERSION_BOT_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          token: ${{ secrets.VERSION_BOT_TOKEN }}
+          fetch-depth: 0
+
+      - name: Require an approving review
+        run: |
+          N=$(gh pr view "$PR" --json reviews \
+                --jq '[.reviews[] | select(.state == "APPROVED")] | length')
+          if [ "$N" -lt 1 ]; then
+            echo "::error::No approving review on PR #$PR."
+            exit 1
+          fi
+          echo "Approvals: $N"
+
+      - name: Require checks to pass
+        run: gh pr checks "$PR" --required --fail-fast
+
+      - name: Require mergeable state
+        run: |
+          STATE=$(gh pr view "$PR" --json mergeStateStatus --jq .mergeStateStatus)
+          echo "mergeStateStatus: $STATE"
+          case "$STATE" in
+            CLEAN|UNSTABLE|BLOCKED) ;;
+            *) echo "::error::PR is not mergeable (state: $STATE)."; exit 1 ;;
+          esac
+
+      - name: Configure git identity
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Clear branch tag
+        # remove any content in BRANCH_TAG=""
+        run: |
+          sed -i 's|^\( *BRANCH_TAG=\).*|\1""|' "$VERSION_FILE"
+          if git diff --quiet; then
+            echo "Already clear."
+          else
+            git commit -am "ci: clear version tag for merge"
+            git push
+          fi
+
+      - name: Squash merge
+        # perform a squash and merge
+        id: squash
+        run: gh pr merge "$PR" --squash --delete-branch=false
+
+      - name: Restore branch tag
+        # put the branch tag back
+        run: |
+          git fetch origin "$BRANCH"
+          git reset --hard "origin/$BRANCH"
+          SAFE=$(printf '%s' "$BRANCH" | tr -c 'A-Za-z0-9._/-' '-')
+          sed -i "s|^\( *BRANCH_TAG=\).*|\1\"${SAFE}\"|" "$VERSION_FILE"
+          if git diff --quiet; then
+            echo "Already stamped."
+          else
+            git commit -am "ci: restore version tag after merge"
+            git push
+          fi
+
+      - name: Report failure
+        if: failure()
+        # remove the ready-to-merge label and leaves a comment.
+        run: |
+          gh pr edit "$PR" --remove-label ready-to-merge || true
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          BODY_FILE="$RUNNER_TEMP/merge-bot-comment.md"
+          if [ "${{ steps.squash.outcome }}" = "success" ]; then
+            {
+              echo ":warning: **Merge bot: merged, but the branch tag was not restored.**"
+              echo
+              echo "The squash merge succeeded, so \`main\` is correct. The \`BRANCH_TAG\` line on \`$BRANCH\` may still be empty — set it to \`\"$BRANCH\"\` manually if users are still launching from this branch in Terra."
+              echo
+              echo "[Run log]($RUN_URL)"
+            } > "$BODY_FILE"
+          else
+            {
+              echo ":x: **Merge bot stopped — nothing was merged.**"
+              echo
+              echo "Needs an approving review, green required checks, and/or a mergeable branch. Fix the cause and re-apply the \`ready-to-merge\` label to retry."
+              echo
+              echo "[Run log]($RUN_URL)"
+            } > "$BODY_FILE"
+          fi
+          gh pr comment "$PR" --body-file "$BODY_FILE"
