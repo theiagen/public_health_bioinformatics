@@ -57,7 +57,7 @@ jobs:
           echo "Approvals: $N"
 
       - name: Require checks to pass
-        run: gh pr checks "$PR" --required --fail-fast
+        run: gh pr checks "$PR" --required --watch --fail-fast
 
       - name: Require mergeable state
         run: |
