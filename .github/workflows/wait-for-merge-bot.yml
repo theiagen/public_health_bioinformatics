@@ -1,4 +1,4 @@
-name: awaiting merge bot
+name: use merge bot
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   check:
-    name: awaiting merge bot
+    name: use merge bot
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
