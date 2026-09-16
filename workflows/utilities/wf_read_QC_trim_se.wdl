@@ -26,6 +26,7 @@ workflow read_QC_trim_se {
     File? phix
     String? workflow_series
     String? trimmomatic_override_args
+    String trimmomatic_quality_encoding = "-phred33" # options: "-phred33", "-phred64", or "" (auto-detect)
     Boolean call_midas = false
     File? midas_db
     Boolean call_bracken = true
@@ -86,6 +87,7 @@ workflow read_QC_trim_se {
         trimmomatic_min_length = trim_min_length,
         trimmomatic_window_quality = trim_quality_min_score,
         trimmomatic_window_size = trim_window_size,
+        trimmomatic_quality_encoding = trimmomatic_quality_encoding,
         trimmomatic_override_args = trimmomatic_override_args
     }
   }
