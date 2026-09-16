@@ -12,12 +12,12 @@ fragment: true
     5. Estimated genome coverage: A sample will fail the read screening if the estimated genome coverage is less than the `min_coverage`.
 
 <!-- if: theiacov -->
-    Read screening is undertaken on both the raw and cleaned reads. Each screen has its own gate: set `skip_screen_raw` to true to skip the screen on the raw reads, and `skip_screen_clean` to true to skip the screen on the cleaned reads. The two are independent, so you can screen the raw reads only, the cleaned reads only, both, or neither.
+    Read screening is undertaken on both the raw and cleaned reads. Each screen has its own gate: set `skip_screen_raw` to `true` to skip the screen on the raw reads, and `skip_screen_clean` to `true` to skip the screen on the cleaned reads. The two are independent, so you can screen the raw reads only, the cleaned reads only, both, or neither.
 
 <!-- endif -->
 
 <!-- if: theiaprok|theiaeuk|theiaeukont -->
-    Read screening is undertaken on both the raw and cleaned reads. The task may be skipped by setting the `skip_screen` variable to true.
+    Read screening is undertaken on both the raw and cleaned reads. The task may be skipped by setting the `skip_screen` variable to `true`.
 
     Default values vary between the PE, SE, and ONT workflows. The rationale for these default values can be found below. If two default values are shown, the first is for Illumina workflows and the second is for ONT.
 <!-- endif -->
