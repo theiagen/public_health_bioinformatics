@@ -96,34 +96,34 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 #### Organism-specific characterization
 
 !!! tip ""
-    The TheiaEuk workflow automatically activates taxa-specific tasks after identification of the relevant taxa using `GAMBIT`. Default taxa (_Candidozyma auris_, _Cryptococcus neoformans_, or _Aspergillus fumigatus_) do not require user input to run characterization modules, and other taxa can undergo reference-based variant calling and gene characterization by inputting a `reference_genome_fasta` and `reference_gff`.
+    The TheiaEuk workflow automatically activates taxa-specific tasks after identification of the relevant taxa using `GAMBIT`. Default taxa (_Candidozyma auris_, _Cryptococcus neoformans_, or _Aspergillus fumigatus_) do not require user input to run characterization modules, and other taxa can undergo reference-based variant calling and gene characterization by inputting a `reference_fasta` and `reference_gff`.
 
 ??? toggle "Reference-based variant calling"
-    After taxonomic identification, TheiaEuk performs reference-based variant calling whenever a `reference_genome_fasta` is provided or a default organism is selected (user input takes precedence). The resulting variants are summarized with respect to target if a `reference_gff` and `query_genes`/`query_genes_bed` are populated.
+    After taxonomic identification, TheiaEuk performs reference-based variant calling whenever a `reference_fasta` is provided or a default organism is selected (user input takes precedence). The resulting variants are summarized with respect to target regions if a `reference_gff` and `query_genes`/`query_genes_bed` are populated.
 
     Two data-type-specific tracks are supported:
 
     - **Illumina (paired-end):** reads are aligned to the reference with `BWA`, variants are called with `gatk_variants`, and the genotyped GVCF is filtered with `gatk_filter`.
     - **ONT:** reads are aligned with `minimap2` and variants are called and filtered with `Clair3`.
 
-    ??? dna "`reference_genome_fasta` input parameter"
-        The reference FASTA used for read alignment and variant calling. A user-supplied `reference_genome_fasta` always takes precedence over the defaults below. When it is not provided, an organism-specific default reference is selected automatically:
+    ??? dna "`reference_fasta` input parameter"
+        The reference FASTA used for read alignment and variant calling. A user-supplied `reference_fasta` always takes precedence over the defaults below. When it is not provided, an organism-specific default reference is selected automatically:
 
         - _Candidozyma auris_ / _Candida auris_: the clade-specific reference selected by `cladetyper`.
         - _Aspergillus fumigatus_: a hosted reference (`GCF_000002655.1`, ASM265v1).
         - _Cryptococcus neoformans_: a hosted reference (`GCF_000091045.1`, ASM9104v1).
 
-        For any other identified organism (e.g. _Candida albicans_), variant calling only runs if `reference_genome_fasta` is supplied by the user.
+        For any other identified organism (e.g. _Candida albicans_), variant calling only runs if `reference_fasta` is supplied by the user.
 
     ??? dna "`reference_gff` input parameter"
         The annotated reference (General Features Format, GFF) used by the `gene_coverage` and `variant_annotate` tasks to extract query genes list into genomic coordinates. A user-supplied `reference_gff` always takes precedence over the defaults below. When it is not provided, an organism-specific default is selected automatically:
 
-        - _Candidozyma auris_ / _Candida auris_: the `cladetyper` clade annotation, used only when the assembly matches a clade that has an available annotation (e.g. Clade VI currently has no annotation).
+        - _Candidozyma auris_ / _Candida auris_: the CladeTyper clade annotation, used only when the assembly matches a clade that has an available annotation (e.g. Clade VI is missing an annotation).
         - _Aspergillus fumigatus_: a hosted reference (`GCF_000002655.1`, ASM265v1).
         - _Cryptococcus neoformans_: a hosted reference (`GCF_000091045.1`, ASM9104v1).
 
         !!! warning "Keep the FASTA and GFF matched"
-            The reference FASTA and GFF must use the same assembly. If a custom `reference_genome_fasta` is provided, an associated `reference_gff` must also be provided (and vice versa).
+            The reference FASTA and GFF must use the same assembly. If a custom `reference_fasta` is provided, an associated `reference_gff` must also be provided (and vice versa).
 
             If only one of these inputs is provided, gene coverage calculations and gene-centric variant reporting will not run under the assumption there is a discrepancy.
 
