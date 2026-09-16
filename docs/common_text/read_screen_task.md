@@ -14,7 +14,6 @@ fragment: true
 <!-- if: theiacov -->
     Read screening is undertaken on both the raw and cleaned reads. Each screen has its own gate: set `skip_screen_raw` to true to skip the screen on the raw reads, and `skip_screen_clean` to true to skip the screen on the cleaned reads. The two are independent, so you can screen the raw reads only, the cleaned reads only, both, or neither.
 
-    Default values vary between the PE, SE, and ONT workflows. The rationale for these default values can be found below. If two default values are shown, the first is for Illumina workflows and the second is for ONT.
 <!-- endif -->
 
 <!-- if: theiaprok|theiaeuk|theiaeukont -->
