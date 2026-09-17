@@ -1981,6 +1981,7 @@ read_QC_trim	trim_min_length	Int	Specifies minimum length of each read after tri
 read_QC_trim	trim_quality_min_score	Int	Specifies the average quality of bases in a sliding window to be kept	30	Optional	TheiaMeta_Illumina_PE	general	
 read_QC_trim	trim_window_size	Int	Specifies window size for trimming (the number of bases to average the quality across)	4	Optional	TheiaMeta_Illumina_PE	general	
 read_QC_trim	trimmomatic_override_args	String	Additional arguments to pass to trimmomatic. Can be used to override all trimming parameters		Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
+read_QC_trim	trimmomatic_quality_encoding	String	Controls the Phred quality score encoding used by Trimmomatic for input FASTQ files	-phred33	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 read_QC_trim_ont	artic_guppyplex_cpu	Int	Number of CPUs to allocate to the task	8	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_ont	artic_guppyplex_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_ont	artic_guppyplex_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/artic:1.9.0	Optional	Freyja_FASTQ	docker	
@@ -2053,6 +2054,7 @@ read_QC_trim_pe	read_qc	String	Allows the user to decide between fastq_scan (def
 read_QC_trim_pe	trim_quality_min_score	Int	The minimum quality score to keep during trimming	30	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	trim_window_size	Int	The window size to use during trimming	4	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	trimmomatic_override_args	String	Additional arguments to pass to trimmomatic. Can be used to override all trimming parameters		Optional	Freyja_FASTQ	general	
+read_QC_trim_pe	trimmomatic_quality_encoding	String	Controls the Phred quality score encoding used by Trimmomatic for input FASTQ files	-phred33	Optional	Freyja_FASTQ	general	
 read_QC_trim_se	adapters	File	A FASTA file containing adapter sequences		Optional	Freyja_FASTQ	general	
 read_QC_trim_se	bbduk_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_se	bracken_kmer_length	Int	Kmer length for Bracken to use instead of auto-detection - must be present in database		Optional	Freyja_FASTQ	general	
@@ -2081,6 +2083,7 @@ read_QC_trim_se	read_qc	String	Allows the user to decide between fastq_scan (def
 read_QC_trim_se	trim_quality_min_score	Int	The minimum quality score to keep during trimming	30	Optional	Freyja_FASTQ	general	
 read_QC_trim_se	trim_window_size	Int	The window size to use during trimming	4	Optional	Freyja_FASTQ	general	
 read_QC_trim_se	trimmomatic_override_args	String	Additional arguments to pass to trimmomatic. Can be used to override all trimming parameters		Optional	Freyja_FASTQ	general	
+read_QC_trim_se	trimmomatic_quality_encoding	String	Controls the Phred quality score encoding used by Trimmomatic for input FASTQ files	-phred33	Optional	Freyja_FASTQ	general	
 referenceseeker	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	runtime	
 referenceseeker	disk_size	Int	Amount of storage (in GB) to allocate to the task	200	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	runtime	
 referenceseeker	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/referenceseeker:1.8.0--pyhdfd78af_0	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	docker	
@@ -2701,6 +2704,7 @@ trimmomatic	trimmomatic_adapter_fasta	File	A FASTA file containing adapter seque
 trimmomatic	trimmomatic_adapter_trim_args	String	Colon-delimited adapter trimming parameters representing [seed mismatches: palindrome clip threshold: simple clip threshold]	2:30:10	Optional	TBProfiler_tNGS	general	True
 trimmomatic	trimmomatic_min_length	Int	Specifies minimum length of each read after trimming to be kept	75	Optional	TBProfiler_tNGS	general	
 trimmomatic	trimmomatic_override_args	String	Additional arguments to pass to trimmomatic. Can be used to override all trimming parameters		Optional	TBProfiler_tNGS	general	
+trimmomatic	trimmomatic_quality_encoding	String	Controls the Phred quality score encoding used by Trimmomatic for input FASTQ files	-phred33	Optional	TBProfiler_tNGS	general	
 trimmomatic	trimmomatic_trim_adapters	Boolean	A True/False option that determines if adapters should be trimmed	False	Optional	TBProfiler_tNGS	general	
 trimmomatic	trimmomatic_window_quality	Int	The trimming window quality score	30	Optional	TBProfiler_tNGS	general	
 trimmomatic	trimmomatic_window_size	Int	The window size for trimming	4	Optional	TBProfiler_tNGS	general	

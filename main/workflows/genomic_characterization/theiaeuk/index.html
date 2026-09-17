@@ -7863,6 +7863,14 @@
 <td>Optional</td>
 </tr>
 <tr>
+<td>read_QC_trim</td>
+<td><strong>trimmomatic_quality_encoding</strong></td>
+<td>String</td>
+<td>Controls the Phred quality score encoding used by Trimmomatic for input FASTQ files</td>
+<td>-phred33</td>
+<td>Optional</td>
+</tr>
+<tr>
 <td>theiaeuk_illumina_pe</td>
 <td><strong>busco_docker_image</strong></td>
 <td>String</td>
@@ -9978,9 +9986,12 @@
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>trimmomatic_adapter_fasta="path/to/my_custom_adapters.fa"
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>trimmomatic_adapter_trim_args="2:30:10"
 </span></code></pre></div>
-<p>For more advanced configurations, there are options to override the default trimming parameters via <code>trimmomatic_override_args</code>. Note that when using <code>trimmomatic_override_args</code>, the user is responsible for specifying all desired trimming steps and their order, as the default trimming steps will be ignored. See the <a href="https://github.com/usadellab/Trimmomatic?tab=readme-ov-file#step-options">Trimmomatic documentation</a> for more details on available trimming steps and their parameters.</p>
+<p>Trimmomatic's automatic detection of the phred quality score encoding is not always reliable, particularly for older or SRA-Lite-formatted FASTQ files. PHB explicitly sets <code>"-phred33"</code> as the default via <code>trimmomatic_quality_encoding</code>, since the vast majority of modern FASTQ files use <code>"-phred33"</code> encoding. The accepted values for <code>trimmomatic_quality_encoding</code> are <code>"-phred33"</code>, <code>"-phred64"</code>, and <code>""</code> (an empty string, which restores Trimmomatic's auto-detection). Note that the leading dash is required and <code>"-phred64"</code> should only be used for genuinely pre-2011 Illumina data.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>trimmomatic_quality_encoding="-phred33"
+</span></code></pre></div>
+<p>For more advanced configurations, there are options to override the default trimming parameters via <code>trimmomatic_override_args</code>. Note that when using <code>trimmomatic_override_args</code>, the user is responsible for specifying all desired trimming steps and their order, as the default trimming steps will be ignored. Adapter trimming and the quality score encoding are configured separately and are not affected. See the <a href="https://github.com/usadellab/Trimmomatic?tab=readme-ov-file#step-options">Trimmomatic documentation</a> for more details on available trimming steps and their parameters.</p>
 <p>Advanced Configuration Example Usage:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>trimmomatic_override_args="LEADING:30 TRAILING:30 AVGQUAL:36 SLIDINGWINDOW:4:33 MINLEN:75"
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>trimmomatic_override_args="LEADING:30 TRAILING:30 AVGQUAL:36 SLIDINGWINDOW:4:33 MINLEN:75"
 </span></code></pre></div></p>
 <div class="admonition techdetails">
 <p class="admonition-title">Trimmomatic Technical Details</p>
@@ -11300,16 +11311,16 @@
 <p>This task calculates average read depth and the percent of a region (typically genes) covered above a minimum depth and quality using samtools (Pysam) and basic arithmetic.</p>
 <p>Outputs are reported as JSON-based "maps" that relate gene names to their breadth and depth of coverage. For example:</p>
 <p><code>percent_coverage_by_gene</code>:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>{
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    "GENE1": 99.5,
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    "GENE2": 10
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>{
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    "GENE1": 99.5,
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    "GENE2": 10
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>}
 </span></code></pre></div></p>
 <p><code>depth_by_gene</code>:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>{
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    "GENE1": 10,
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    "GENE2": 1
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>{
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    "GENE1": 10,
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    "GENE2": 1
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>}
 </span></code></pre></div></p>
 <details class="dna">
 <summary>GBFF and BED file usage</summary>
@@ -11706,7 +11717,7 @@
 <details class="toggle">
 <summary>Example Output Interpretation</summary>
 <p>For example, one sample may have the following output for the <code>theiaeuk_snippy_variants_hits</code> column:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>lanosterol.14-alpha.demethylase: lanosterol 14-alpha demethylase (missense_variant c.428A&gt;G p.Lys143Arg; C:266 T:0),B9J08_000401: hypothetical protein (stop_gained c.424C&gt;T p.Gln142*; A:70 G:0)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>lanosterol.14-alpha.demethylase: lanosterol 14-alpha demethylase (missense_variant c.428A&gt;G p.Lys143Arg; C:266 T:0),B9J08_000401: hypothetical protein (stop_gained c.424C&gt;T p.Gln142*; A:70 G:0)
 </span></code></pre></div>
 <p>Based on this, we can tell that ERG11 has a missense variant at position 143 (Lysine to Arginine) and B9J08_000401 (which is FLO8) has a stop-gained variant at position 142 (Glutamine to Stop).</p>
 </details>
@@ -11779,7 +11790,7 @@
 <details class="toggle">
 <summary>Example Output Interpretation</summary>
 <p>For example, one sample may have the following output for the <code>theiaeuk_snippy_variants_hits</code> column:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>lanosterol.14-alpha.demethylase: lanosterol 14-alpha demethylase (missense_variant c.428A&gt;G p.Lys143Arg; C:266 T:0),B9J08_000401: hypothetical protein (stop_gained c.424C&gt;T p.Gln142*; A:70 G:0)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>lanosterol.14-alpha.demethylase: lanosterol 14-alpha demethylase (missense_variant c.428A&gt;G p.Lys143Arg; C:266 T:0),B9J08_000401: hypothetical protein (stop_gained c.424C&gt;T p.Gln142*; A:70 G:0)
 </span></code></pre></div>
 <p>Based on this, we can tell that ERG11 has a missense variant at position 143 (Lysine to Arginine) and B9J08_000401 (which is FLO8) has a stop-gained variant at position 142 (Glutamine to Stop).</p>
 </details>
@@ -11847,7 +11858,7 @@
 <details class="toggle">
 <summary>Example Output Interpretation</summary>
 <p>For example, one sample may have the following output for the <code>theiaeuk_snippy_variants_hits</code> column:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>lanosterol.14-alpha.demethylase: lanosterol 14-alpha demethylase (missense_variant c.428A&gt;G p.Lys143Arg; C:266 T:0),B9J08_000401: hypothetical protein (stop_gained c.424C&gt;T p.Gln142*; A:70 G:0)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>lanosterol.14-alpha.demethylase: lanosterol 14-alpha demethylase (missense_variant c.428A&gt;G p.Lys143Arg; C:266 T:0),B9J08_000401: hypothetical protein (stop_gained c.424C&gt;T p.Gln142*; A:70 G:0)
 </span></code></pre></div>
 <p>Based on this, we can tell that ERG11 has a missense variant at position 143 (Lysine to Arginine) and B9J08_000401 (which is FLO8) has a stop-gained variant at position 142 (Glutamine to Stop).</p>
 </details>
@@ -11905,7 +11916,7 @@
 <details class="toggle">
 <summary>Example Output Interpretation</summary>
 <p>For example, one sample may have the following output for the <code>theiaeuk_snippy_variants_hits</code> column:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>lanosterol.14-alpha.demethylase: lanosterol 14-alpha demethylase (missense_variant c.428A&gt;G p.Lys143Arg; C:266 T:0),B9J08_000401: hypothetical protein (stop_gained c.424C&gt;T p.Gln142*; A:70 G:0)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>lanosterol.14-alpha.demethylase: lanosterol 14-alpha demethylase (missense_variant c.428A&gt;G p.Lys143Arg; C:266 T:0),B9J08_000401: hypothetical protein (stop_gained c.424C&gt;T p.Gln142*; A:70 G:0)
 </span></code></pre></div>
 <p>Based on this, we can tell that ERG11 has a missense variant at position 143 (Lysine to Arginine) and B9J08_000401 (which is FLO8) has a stop-gained variant at position 142 (Glutamine to Stop).</p>
 </details>

@@ -6755,7 +6755,7 @@
 <tr>
 <td><a href="../../../workflows_overview/workflows_type/#genomic-characterization">Genomic Characterization</a></td>
 <td>HIV, Influenza, Monkeypox virus, RSV-A, RSV-B, SARS-CoV-2, <a href="../../../workflows_overview/workflows_kingdom/#viral">Viral</a>, WNV</td>
-<td>v4.3.0</td>
+<td>vX.X.X</td>
 <td>Some optional features incompatible, Yes</td>
 <td>Sample-level, Set-level</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaCoV_Illumina_PE_PHB:main?tab=info">TheiaCoV_Illumina_PE_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaCoV_Illumina_SE_PHB:main?tab=info">TheiaCoV_Illumina_SE_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaCoV_ONT_PHB:main?tab=info">TheiaCoV_ONT_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaCoV_ClearLabs_PHB:main?tab=info">TheiaCoV_ClearLabs_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaCoV_FASTA_PHB:main?tab=info">TheiaCoV_FASTA_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaCoV_FASTA_Batch_PHB:main?tab=info">TheiaCoV_FASTA_Batch_PHB</a></td>
@@ -8365,6 +8365,14 @@
 <td>Optional</td>
 </tr>
 <tr>
+<td>read_QC_trim</td>
+<td><strong>trimmomatic_quality_encoding</strong></td>
+<td>String</td>
+<td>Controls the Phred quality score encoding used by Trimmomatic for input FASTQ files</td>
+<td>-phred33</td>
+<td>Optional</td>
+</tr>
+<tr>
 <td>theiacov_illumina_pe</td>
 <td><strong>adapters</strong></td>
 <td>File</td>
@@ -9660,6 +9668,14 @@
 <td>String</td>
 <td>Additional arguments to pass to trimmomatic. Can be used to override all trimming parameters</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>trimmomatic_quality_encoding</strong></td>
+<td>String</td>
+<td>Controls the Phred quality score encoding used by Trimmomatic for input FASTQ files</td>
+<td>-phred33</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -15996,9 +16012,12 @@
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>trimmomatic_adapter_fasta="path/to/my_custom_adapters.fa"
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>trimmomatic_adapter_trim_args="2:30:10"
 </span></code></pre></div>
-<p>For more advanced configurations, there are options to override the default trimming parameters via <code>trimmomatic_override_args</code>. Note that when using <code>trimmomatic_override_args</code>, the user is responsible for specifying all desired trimming steps and their order, as the default trimming steps will be ignored. See the <a href="https://github.com/usadellab/Trimmomatic?tab=readme-ov-file#step-options">Trimmomatic documentation</a> for more details on available trimming steps and their parameters.</p>
+<p>Trimmomatic's automatic detection of the phred quality score encoding is not always reliable, particularly for older or SRA-Lite-formatted FASTQ files. PHB explicitly sets <code>"-phred33"</code> as the default via <code>trimmomatic_quality_encoding</code>, since the vast majority of modern FASTQ files use <code>"-phred33"</code> encoding. The accepted values for <code>trimmomatic_quality_encoding</code> are <code>"-phred33"</code>, <code>"-phred64"</code>, and <code>""</code> (an empty string, which restores Trimmomatic's auto-detection). Note that the leading dash is required and <code>"-phred64"</code> should only be used for genuinely pre-2011 Illumina data.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>trimmomatic_quality_encoding="-phred33"
+</span></code></pre></div>
+<p>For more advanced configurations, there are options to override the default trimming parameters via <code>trimmomatic_override_args</code>. Note that when using <code>trimmomatic_override_args</code>, the user is responsible for specifying all desired trimming steps and their order, as the default trimming steps will be ignored. Adapter trimming and the quality score encoding are configured separately and are not affected. See the <a href="https://github.com/usadellab/Trimmomatic?tab=readme-ov-file#step-options">Trimmomatic documentation</a> for more details on available trimming steps and their parameters.</p>
 <p>Advanced Configuration Example Usage:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>trimmomatic_override_args="LEADING:30 TRAILING:30 AVGQUAL:36 SLIDINGWINDOW:4:33 MINLEN:75"
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>trimmomatic_override_args="LEADING:30 TRAILING:30 AVGQUAL:36 SLIDINGWINDOW:4:33 MINLEN:75"
 </span></code></pre></div></p>
 <div class="admonition techdetails">
 <p class="admonition-title">Trimmomatic Technical Details</p>
@@ -16891,19 +16910,22 @@
 <p>Read processing is available via Trimmomatic by default.</p>
 <p>Trimmomatic trims low-quality regions of Illumina paired-end or single-end reads with a sliding window (with a default window size of 4, specified with <code>trim_window_size</code>), cutting once the average quality within the window falls below the <code>trimmomatic_window_quality</code> (default of 30 for both paired-end and single-end). The read is discarded if it is trimmed below <code>trimmomatic_min_length</code> (default of 75 for paired-end, 25 for single-end).</p>
 <p>Adapter trimming with Trimmomatic is disabled by default. It can be enabled by setting <code>trimmomatic_trim_adapters=true</code>. When enabled, Trimmomatic uses its default adapter sequences, <a href="https://github.com/usadellab/Trimmomatic/tree/main/adapters"><code>TruSeq3-PE-2.fa</code></a> (for paired-end) or <a href="https://github.com/usadellab/Trimmomatic/tree/main/adapters"><code>TruSeq3-SE.fa</code></a> (for single-end) with default adapter clipping settings equivalent to:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ILLUMINACLIP:&lt;adapter_fasta&gt;:2:30:10
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>2 = seed mismatches
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>30 = palindrome clip threshold
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>10 = simple clip threshold
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>ILLUMINACLIP:&lt;adapter_fasta&gt;:2:30:10
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>2 = seed mismatches
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>30 = palindrome clip threshold
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>10 = simple clip threshold
 </span></code></pre></div>
 <p>Users can optionally provide a custom adapter file or modify adapter trimming parameters using the <code>trimmomatic_adapter_fasta</code> and <code>trimmomatic_adapter_trim_args</code> respectively. See the <a href="https://github.com/usadellab/Trimmomatic?tab=readme-ov-file#the-adapter-fasta-files">Trimmomatic adapter documentation</a> for more details. The <code>trimmomatic_adapter_fasta</code> parameter should just include the path to your fasta file. The <code>trimmomatic_adapter_trim_args</code> parameter should only contain the colon-delimited values that come after the adapter fasta file in the <code>ILLUMINACLIP</code> argument. Example usage:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>trimmomatic_adapter_fasta="path/to/my_custom_adapters.fa"
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>trimmomatic_adapter_trim_args="2:30:10"
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>trimmomatic_adapter_fasta="path/to/my_custom_adapters.fa"
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>trimmomatic_adapter_trim_args="2:30:10"
 </span></code></pre></div>
-<p>For more advanced configurations, there are options to override the default trimming parameters via <code>trimmomatic_override_args</code>. Note that when using <code>trimmomatic_override_args</code>, the user is responsible for specifying all desired trimming steps and their order, as the default trimming steps will be ignored. See the <a href="https://github.com/usadellab/Trimmomatic?tab=readme-ov-file#step-options">Trimmomatic documentation</a> for more details on available trimming steps and their parameters.</p>
+<p>Trimmomatic's automatic detection of the phred quality score encoding is not always reliable, particularly for older or SRA-Lite-formatted FASTQ files. PHB explicitly sets <code>"-phred33"</code> as the default via <code>trimmomatic_quality_encoding</code>, since the vast majority of modern FASTQ files use <code>"-phred33"</code> encoding. The accepted values for <code>trimmomatic_quality_encoding</code> are <code>"-phred33"</code>, <code>"-phred64"</code>, and <code>""</code> (an empty string, which restores Trimmomatic's auto-detection). Note that the leading dash is required and <code>"-phred64"</code> should only be used for genuinely pre-2011 Illumina data.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>trimmomatic_quality_encoding="-phred33"
+</span></code></pre></div>
+<p>For more advanced configurations, there are options to override the default trimming parameters via <code>trimmomatic_override_args</code>. Note that when using <code>trimmomatic_override_args</code>, the user is responsible for specifying all desired trimming steps and their order, as the default trimming steps will be ignored. Adapter trimming and the quality score encoding are configured separately and are not affected. See the <a href="https://github.com/usadellab/Trimmomatic?tab=readme-ov-file#step-options">Trimmomatic documentation</a> for more details on available trimming steps and their parameters.</p>
 <p>Advanced Configuration Example Usage:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>trimmomatic_override_args="LEADING:30 TRAILING:30 AVGQUAL:36 SLIDINGWINDOW:4:33 MINLEN:75"
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>trimmomatic_override_args="LEADING:30 TRAILING:30 AVGQUAL:36 SLIDINGWINDOW:4:33 MINLEN:75"
 </span></code></pre></div></p>
 <div class="admonition techdetails">
 <p class="admonition-title">Trimmomatic Technical Details</p>
@@ -17576,8 +17598,8 @@
 <div class="admonition info">
 <p class="admonition-title">Primer BED formatting</p>
 <p>ARTIC has stringent primer BED formatting standards that are briefly depicted in <a href="https://chrisgkent.github.io/primalbedtools/">the primalbedtools documentation</a> and fully described in <a href="https://github.com/artic-network/primerscheme-specs/blob/main/pdf/primerscheme.pdf">the ARTIC primer-scheme specification</a>. The "sequence" and "primerAttributes" fields are NOT necessary for this task, though a comprehensive example is depicted here:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a># chrom     start   end     primername              pool    strand  sequence            primerAttributes
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>MN908947.3  47      78      SARS-CoV-2_1_LEFT_1     1       +       CTCTTGTAGATCTT...   pw=1.0;ps=100
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a># chrom     start   end     primername              pool    strand  sequence            primerAttributes
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>MN908947.3  47      78      SARS-CoV-2_1_LEFT_1     1       +       CTCTTGTAGATCTT...   pw=1.0;ps=100
 </span></code></pre></div>
 <p>Some other noteworthy formatting standards include:</p>
 <ul>
@@ -17809,8 +17831,8 @@
 <div class="admonition info">
 <p class="admonition-title">Primer BED formatting</p>
 <p>ARTIC has stringent primer BED formatting standards that are briefly depicted in <a href="https://chrisgkent.github.io/primalbedtools/">the primalbedtools documentation</a> and fully described in <a href="https://github.com/artic-network/primerscheme-specs/blob/main/pdf/primerscheme.pdf">the ARTIC primer-scheme specification</a>. The "sequence" and "primerAttributes" fields are NOT necessary for this task, though a comprehensive example is depicted here:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a># chrom     start   end     primername              pool    strand  sequence            primerAttributes
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>MN908947.3  47      78      SARS-CoV-2_1_LEFT_1     1       +       CTCTTGTAGATCTT...   pw=1.0;ps=100
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a># chrom     start   end     primername              pool    strand  sequence            primerAttributes
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>MN908947.3  47      78      SARS-CoV-2_1_LEFT_1     1       +       CTCTTGTAGATCTT...   pw=1.0;ps=100
 </span></code></pre></div>
 <p>Some other noteworthy formatting standards include:</p>
 <ul>
@@ -18226,16 +18248,16 @@
 <p>This task calculates average read depth and the percent of a region (typically genes) covered above a minimum depth and quality using samtools (Pysam) and basic arithmetic.</p>
 <p>Outputs are reported as JSON-based "maps" that relate gene names to their breadth and depth of coverage. For example:</p>
 <p><code>percent_coverage_by_gene</code>:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>{
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    "GENE1": 99.5,
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    "GENE2": 10
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>{
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    "GENE1": 99.5,
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    "GENE2": 10
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>}
 </span></code></pre></div></p>
 <p><code>depth_by_gene</code>:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>{
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>    "GENE1": 10,
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    "GENE2": 1
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>{
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>    "GENE1": 10,
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>    "GENE2": 1
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>}
 </span></code></pre></div></p>
 <p>By default, this task runs for SARS-CoV-2 and Mpox.</p>
 <div class="admonition warning">
@@ -18356,16 +18378,16 @@
 <p>This task calculates average read depth and the percent of a region (typically genes) covered above a minimum depth and quality using samtools (Pysam) and basic arithmetic.</p>
 <p>Outputs are reported as JSON-based "maps" that relate gene names to their breadth and depth of coverage. For example:</p>
 <p><code>percent_coverage_by_gene</code>:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>{
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    "GENE1": 99.5,
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    "GENE2": 10
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>{
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>    "GENE1": 99.5,
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>    "GENE2": 10
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>}
 </span></code></pre></div></p>
 <p><code>depth_by_gene</code>:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>{
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>    "GENE1": 10,
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>    "GENE2": 1
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>{
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>    "GENE1": 10,
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>    "GENE2": 1
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>}
 </span></code></pre></div></p>
 <p>By default, this task runs for SARS-CoV-2 and Mpox.</p>
 <div class="admonition warning">
@@ -18452,16 +18474,16 @@
 <p>This task calculates average read depth and the percent of a region (typically genes) covered above a minimum depth and quality using samtools (Pysam) and basic arithmetic.</p>
 <p>Outputs are reported as JSON-based "maps" that relate gene names to their breadth and depth of coverage. For example:</p>
 <p><code>percent_coverage_by_gene</code>:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>{
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>    "GENE1": 99.5,
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>    "GENE2": 10
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>{
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>    "GENE1": 99.5,
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>    "GENE2": 10
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>}
 </span></code></pre></div></p>
 <p><code>depth_by_gene</code>:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>{
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>    "GENE1": 10,
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>    "GENE2": 1
-</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>{
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>    "GENE1": 10,
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>    "GENE2": 1
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>}
 </span></code></pre></div></p>
 <p>By default, this task runs for SARS-CoV-2 and Mpox.</p>
 <div class="admonition warning">
@@ -18780,136 +18802,6 @@
 <p>This task calculates average read depth and the percent of a region (typically genes) covered above a minimum depth and quality using samtools (Pysam) and basic arithmetic.</p>
 <p>Outputs are reported as JSON-based "maps" that relate gene names to their breadth and depth of coverage. For example:</p>
 <p><code>percent_coverage_by_gene</code>:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>{
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>    "GENE1": 99.5,
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>    "GENE2": 10
-</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>}
-</span></code></pre></div></p>
-<p><code>depth_by_gene</code>:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>{
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>    "GENE1": 10,
-</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>    "GENE2": 1
-</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>}
-</span></code></pre></div></p>
-<p>By default, this task runs for SARS-CoV-2 and Mpox.</p>
-<div class="admonition warning">
-<p class="admonition-title">Region coordinates must be relevant to the reference genome</p>
-<p>Please note that default BEDfiles contain gene coordinates that may not directly match user-provided or dynamically-selected reference genomes (TheiaViral).</p>
-</div>
-<details class="dna">
-<summary>BED file usage</summary>
-<p>In viral characterization workflows, gene coverage regions are supplied with a BED file.</p>
-<ul>
-<li>To extract custom regions of interest, populate the <code>reference_gene_locations_bed</code> input (task <code>theiacov</code> / <code>morgana_magic</code>)</li>
-<li>If no custom BED is provided, organism defaults are used when available</li>
-<li>BED files should include a gene name in column 4 to label output</li>
-</ul>
-</details>
-<div class="admonition techdetails">
-<p class="admonition-title">Gene Coverage Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_gene_coverage.wdl">task_gene_coverage.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/samtools/samtools">samtools on GitHub</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://www.htslib.org/doc/samtools.html">samtools Manual</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td><a href="https://doi.org/10.1093/gigascience/giab008">Twelve years of SAMtools and BCFtools</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-</div>
-<div class="tabbed-block">
-<details class="task">
-<summary><code>Nextclade</code>: Clade Assignment</summary>
-<p>Nextclade is an open-source project used to analyze viral genomes, particularly for clade assignment and mutation calling. Simply, Nextclade works by aligning viral genomes to a reference genome, calling variants between the two sequences, and then assigning clades based on those identified mutations.</p>
-<p>Clade assignment is performed via <em>phylogenetic placement</em>. Phylogenetic placement compares the mutations of the provided sequence to the mutations of each node found in a reference tree, where the root of that tree is the reference genome. The node that is most similar to the sample is used to both assign a clade designation and calculate where the sample should be placed in the phylogenetic tree.</p>
-<div class="admonition techdetails">
-<p class="admonition-title">Nextclade Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_nextclade.wdl">task_nextclade.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/nextstrain/nextclade">https://github.com/nextstrain/nextclade</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://docs.nextstrain.org/projects/nextclade/en/stable/">Nextclade</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td><a href="https://doi.org/10.21105/joss.03773">Nextclade: clade assignment, mutation calling and quality control for viral genomes.</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-<details class="task">
-<summary><code>VADR</code>: Assembly Validation and Annotation</summary>
-<p>VADR (Viral Annotation DefineR) annotates and validates completed assembly files. For details on VADR default models/parameters, see the <a href="../theiacov/#org-specific"><em>organism-specific parameters and logic</em> section</a>. It was primarily developed to test viral sequences to confirm they would be accepted to NCBI's GenBank data repository, but has found wide usage in general sequence validation and annotation.</p>
-<p>As part of the analysis of the assemblies, more than 70 types of unexpected characteristics, also known as <em>alerts</em>, can be reported. Any identified alerts can be found in the <code>vadr_alerts_list</code> output. Fatal alerts indicate that the sample is unlikely to be accepted to GenBank; non-fatal alerts are designated as passing sequences, but may still require further investigation. A full description of the potential alerts can be found on the <a href="https://github.com/ncbi/vadr/blob/master/documentation/alerts.md">VADR alerts documentation</a>, including details on how to allow sequences to pass despite having fatal alerts.</p>
-<div class="admonition techdetails">
-<p class="admonition-title">VADR Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/advanced_metrics/task_vadr.wdl">task_vadr.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/ncbi/vadr">https://github.com/ncbi/vadr</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://github.com/ncbi/vadr/wiki">https://github.com/ncbi/vadr/wiki</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td>For SARS-CoV-2: <a href="https://doi.org/10.1093/nargab/lqad002"><em>Faster SARS-CoV-2 sequence validation and annotation for GenBank using VADR</em></a><br> For non-SARS-CoV-2: <a href="https://doi.org/10.1186/s12859-020-3537-3"><em>VADR: validation and annotation of virus sequence submissions to GenBank</em></a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-<details class="task">
-<summary><code>gene_coverage</code>: Depth and Breadth of Coverage Calculations</summary>
-<p>This task calculates average read depth and the percent of a region (typically genes) covered above a minimum depth and quality using samtools (Pysam) and basic arithmetic.</p>
-<p>Outputs are reported as JSON-based "maps" that relate gene names to their breadth and depth of coverage. For example:</p>
-<p><code>percent_coverage_by_gene</code>:
 <div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>{
 </span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>    "GENE1": 99.5,
 </span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>    "GENE2": 10
@@ -19098,6 +18990,136 @@
 </div>
 <div class="tabbed-block">
 <details class="task">
+<summary><code>Nextclade</code>: Clade Assignment</summary>
+<p>Nextclade is an open-source project used to analyze viral genomes, particularly for clade assignment and mutation calling. Simply, Nextclade works by aligning viral genomes to a reference genome, calling variants between the two sequences, and then assigning clades based on those identified mutations.</p>
+<p>Clade assignment is performed via <em>phylogenetic placement</em>. Phylogenetic placement compares the mutations of the provided sequence to the mutations of each node found in a reference tree, where the root of that tree is the reference genome. The node that is most similar to the sample is used to both assign a clade designation and calculate where the sample should be placed in the phylogenetic tree.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Nextclade Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_nextclade.wdl">task_nextclade.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/nextstrain/nextclade">https://github.com/nextstrain/nextclade</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://docs.nextstrain.org/projects/nextclade/en/stable/">Nextclade</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.21105/joss.03773">Nextclade: clade assignment, mutation calling and quality control for viral genomes.</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>VADR</code>: Assembly Validation and Annotation</summary>
+<p>VADR (Viral Annotation DefineR) annotates and validates completed assembly files. For details on VADR default models/parameters, see the <a href="../theiacov/#org-specific"><em>organism-specific parameters and logic</em> section</a>. It was primarily developed to test viral sequences to confirm they would be accepted to NCBI's GenBank data repository, but has found wide usage in general sequence validation and annotation.</p>
+<p>As part of the analysis of the assemblies, more than 70 types of unexpected characteristics, also known as <em>alerts</em>, can be reported. Any identified alerts can be found in the <code>vadr_alerts_list</code> output. Fatal alerts indicate that the sample is unlikely to be accepted to GenBank; non-fatal alerts are designated as passing sequences, but may still require further investigation. A full description of the potential alerts can be found on the <a href="https://github.com/ncbi/vadr/blob/master/documentation/alerts.md">VADR alerts documentation</a>, including details on how to allow sequences to pass despite having fatal alerts.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">VADR Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/advanced_metrics/task_vadr.wdl">task_vadr.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/ncbi/vadr">https://github.com/ncbi/vadr</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/ncbi/vadr/wiki">https://github.com/ncbi/vadr/wiki</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td>For SARS-CoV-2: <a href="https://doi.org/10.1093/nargab/lqad002"><em>Faster SARS-CoV-2 sequence validation and annotation for GenBank using VADR</em></a><br> For non-SARS-CoV-2: <a href="https://doi.org/10.1186/s12859-020-3537-3"><em>VADR: validation and annotation of virus sequence submissions to GenBank</em></a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>gene_coverage</code>: Depth and Breadth of Coverage Calculations</summary>
+<p>This task calculates average read depth and the percent of a region (typically genes) covered above a minimum depth and quality using samtools (Pysam) and basic arithmetic.</p>
+<p>Outputs are reported as JSON-based "maps" that relate gene names to their breadth and depth of coverage. For example:</p>
+<p><code>percent_coverage_by_gene</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>{
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>    "GENE1": 99.5,
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>    "GENE2": 10
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>}
+</span></code></pre></div></p>
+<p><code>depth_by_gene</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>{
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>    "GENE1": 10,
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>    "GENE2": 1
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>}
+</span></code></pre></div></p>
+<p>By default, this task runs for SARS-CoV-2 and Mpox.</p>
+<div class="admonition warning">
+<p class="admonition-title">Region coordinates must be relevant to the reference genome</p>
+<p>Please note that default BEDfiles contain gene coordinates that may not directly match user-provided or dynamically-selected reference genomes (TheiaViral).</p>
+</div>
+<details class="dna">
+<summary>BED file usage</summary>
+<p>In viral characterization workflows, gene coverage regions are supplied with a BED file.</p>
+<ul>
+<li>To extract custom regions of interest, populate the <code>reference_gene_locations_bed</code> input (task <code>theiacov</code> / <code>morgana_magic</code>)</li>
+<li>If no custom BED is provided, organism defaults are used when available</li>
+<li>BED files should include a gene name in column 4 to label output</li>
+</ul>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">Gene Coverage Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_gene_coverage.wdl">task_gene_coverage.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/samtools/samtools">samtools on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://www.htslib.org/doc/samtools.html">samtools Manual</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1093/gigascience/giab008">Twelve years of SAMtools and BCFtools</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</div>
+<div class="tabbed-block">
+<details class="task">
 <summary><code>Quasitools</code>: HIV Characterization</summary>
 <p>Quasitools performs genomic characterization for HIV by using the HyDRA module for identifying drug resistance mutations in HIV-1 samples based on the <a href="https://hivdb.stanford.edu/">Stanford HIV Drug Resistance Database</a> and the <a href="https://hivdb.stanford.edu/page/who-sdrm-list/">2009 WHO list for Surveillance of Transmitted HIVDR</a>; see also the papers linked below.</p>
 <p>The HyDRA module in Quasitools maps the sample sequence against an annotated HIV-1 reference and performs variant calling. Those variants are compared to the databases described above, and any matches are reported, along with the complete list of variants.</p>
@@ -19136,16 +19158,16 @@
 <p>This task calculates average read depth and the percent of a region (typically genes) covered above a minimum depth and quality using samtools (Pysam) and basic arithmetic.</p>
 <p>Outputs are reported as JSON-based "maps" that relate gene names to their breadth and depth of coverage. For example:</p>
 <p><code>percent_coverage_by_gene</code>:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>{
-</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>    "GENE1": 99.5,
-</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>    "GENE2": 10
-</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>{
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>    "GENE1": 99.5,
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>    "GENE2": 10
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>}
 </span></code></pre></div></p>
 <p><code>depth_by_gene</code>:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>{
-</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>    "GENE1": 10,
-</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>    "GENE2": 1
-</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>{
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>    "GENE1": 10,
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>    "GENE2": 1
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>}
 </span></code></pre></div></p>
 <p>By default, this task runs for SARS-CoV-2 and Mpox.</p>
 <div class="admonition warning">
@@ -19227,102 +19249,6 @@
 </table>
 </div>
 </details>
-<details class="task">
-<summary><code>VADR</code>: Assembly Validation and Annotation</summary>
-<p>VADR (Viral Annotation DefineR) annotates and validates completed assembly files. For details on VADR default models/parameters, see the <a href="../theiacov/#org-specific"><em>organism-specific parameters and logic</em> section</a>. It was primarily developed to test viral sequences to confirm they would be accepted to NCBI's GenBank data repository, but has found wide usage in general sequence validation and annotation.</p>
-<p>As part of the analysis of the assemblies, more than 70 types of unexpected characteristics, also known as <em>alerts</em>, can be reported. Any identified alerts can be found in the <code>vadr_alerts_list</code> output. Fatal alerts indicate that the sample is unlikely to be accepted to GenBank; non-fatal alerts are designated as passing sequences, but may still require further investigation. A full description of the potential alerts can be found on the <a href="https://github.com/ncbi/vadr/blob/master/documentation/alerts.md">VADR alerts documentation</a>, including details on how to allow sequences to pass despite having fatal alerts.</p>
-<div class="admonition techdetails">
-<p class="admonition-title">VADR Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/advanced_metrics/task_vadr.wdl">task_vadr.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/ncbi/vadr">https://github.com/ncbi/vadr</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://github.com/ncbi/vadr/wiki">https://github.com/ncbi/vadr/wiki</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td>For SARS-CoV-2: <a href="https://doi.org/10.1093/nargab/lqad002"><em>Faster SARS-CoV-2 sequence validation and annotation for GenBank using VADR</em></a><br> For non-SARS-CoV-2: <a href="https://doi.org/10.1186/s12859-020-3537-3"><em>VADR: validation and annotation of virus sequence submissions to GenBank</em></a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-<details class="task">
-<summary><code>gene_coverage</code>: Depth and Breadth of Coverage Calculations</summary>
-<p>This task calculates average read depth and the percent of a region (typically genes) covered above a minimum depth and quality using samtools (Pysam) and basic arithmetic.</p>
-<p>Outputs are reported as JSON-based "maps" that relate gene names to their breadth and depth of coverage. For example:</p>
-<p><code>percent_coverage_by_gene</code>:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>{
-</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>    "GENE1": 99.5,
-</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>    "GENE2": 10
-</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>}
-</span></code></pre></div></p>
-<p><code>depth_by_gene</code>:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>{
-</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>    "GENE1": 10,
-</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>    "GENE2": 1
-</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>}
-</span></code></pre></div></p>
-<p>By default, this task runs for SARS-CoV-2 and Mpox.</p>
-<div class="admonition warning">
-<p class="admonition-title">Region coordinates must be relevant to the reference genome</p>
-<p>Please note that default BEDfiles contain gene coordinates that may not directly match user-provided or dynamically-selected reference genomes (TheiaViral).</p>
-</div>
-<details class="dna">
-<summary>BED file usage</summary>
-<p>In viral characterization workflows, gene coverage regions are supplied with a BED file.</p>
-<ul>
-<li>To extract custom regions of interest, populate the <code>reference_gene_locations_bed</code> input (task <code>theiacov</code> / <code>morgana_magic</code>)</li>
-<li>If no custom BED is provided, organism defaults are used when available</li>
-<li>BED files should include a gene name in column 4 to label output</li>
-</ul>
-</details>
-<div class="admonition techdetails">
-<p class="admonition-title">Gene Coverage Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_gene_coverage.wdl">task_gene_coverage.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/samtools/samtools">samtools on GitHub</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://www.htslib.org/doc/samtools.html">samtools Manual</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td><a href="https://doi.org/10.1093/gigascience/giab008">Twelve years of SAMtools and BCFtools</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-</div>
-<div class="tabbed-block">
 <details class="task">
 <summary><code>VADR</code>: Assembly Validation and Annotation</summary>
 <p>VADR (Viral Annotation DefineR) annotates and validates completed assembly files. For details on VADR default models/parameters, see the <a href="../theiacov/#org-specific"><em>organism-specific parameters and logic</em> section</a>. It was primarily developed to test viral sequences to confirm they would be accepted to NCBI's GenBank data repository, but has found wide usage in general sequence validation and annotation.</p>
@@ -19468,6 +19394,102 @@
 </span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>    "GENE1": 10,
 </span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>    "GENE2": 1
 </span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>}
+</span></code></pre></div></p>
+<p>By default, this task runs for SARS-CoV-2 and Mpox.</p>
+<div class="admonition warning">
+<p class="admonition-title">Region coordinates must be relevant to the reference genome</p>
+<p>Please note that default BEDfiles contain gene coordinates that may not directly match user-provided or dynamically-selected reference genomes (TheiaViral).</p>
+</div>
+<details class="dna">
+<summary>BED file usage</summary>
+<p>In viral characterization workflows, gene coverage regions are supplied with a BED file.</p>
+<ul>
+<li>To extract custom regions of interest, populate the <code>reference_gene_locations_bed</code> input (task <code>theiacov</code> / <code>morgana_magic</code>)</li>
+<li>If no custom BED is provided, organism defaults are used when available</li>
+<li>BED files should include a gene name in column 4 to label output</li>
+</ul>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">Gene Coverage Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_gene_coverage.wdl">task_gene_coverage.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/samtools/samtools">samtools on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://www.htslib.org/doc/samtools.html">samtools Manual</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1093/gigascience/giab008">Twelve years of SAMtools and BCFtools</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</div>
+<div class="tabbed-block">
+<details class="task">
+<summary><code>VADR</code>: Assembly Validation and Annotation</summary>
+<p>VADR (Viral Annotation DefineR) annotates and validates completed assembly files. For details on VADR default models/parameters, see the <a href="../theiacov/#org-specific"><em>organism-specific parameters and logic</em> section</a>. It was primarily developed to test viral sequences to confirm they would be accepted to NCBI's GenBank data repository, but has found wide usage in general sequence validation and annotation.</p>
+<p>As part of the analysis of the assemblies, more than 70 types of unexpected characteristics, also known as <em>alerts</em>, can be reported. Any identified alerts can be found in the <code>vadr_alerts_list</code> output. Fatal alerts indicate that the sample is unlikely to be accepted to GenBank; non-fatal alerts are designated as passing sequences, but may still require further investigation. A full description of the potential alerts can be found on the <a href="https://github.com/ncbi/vadr/blob/master/documentation/alerts.md">VADR alerts documentation</a>, including details on how to allow sequences to pass despite having fatal alerts.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">VADR Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/advanced_metrics/task_vadr.wdl">task_vadr.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/ncbi/vadr">https://github.com/ncbi/vadr</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/ncbi/vadr/wiki">https://github.com/ncbi/vadr/wiki</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td>For SARS-CoV-2: <a href="https://doi.org/10.1093/nargab/lqad002"><em>Faster SARS-CoV-2 sequence validation and annotation for GenBank using VADR</em></a><br> For non-SARS-CoV-2: <a href="https://doi.org/10.1186/s12859-020-3537-3"><em>VADR: validation and annotation of virus sequence submissions to GenBank</em></a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>gene_coverage</code>: Depth and Breadth of Coverage Calculations</summary>
+<p>This task calculates average read depth and the percent of a region (typically genes) covered above a minimum depth and quality using samtools (Pysam) and basic arithmetic.</p>
+<p>Outputs are reported as JSON-based "maps" that relate gene names to their breadth and depth of coverage. For example:</p>
+<p><code>percent_coverage_by_gene</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>{
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>    "GENE1": 99.5,
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>    "GENE2": 10
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>}
+</span></code></pre></div></p>
+<p><code>depth_by_gene</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>{
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>    "GENE1": 10,
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>    "GENE2": 1
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>}
 </span></code></pre></div></p>
 <p>By default, this task runs for SARS-CoV-2 and Mpox.</p>
 <div class="admonition warning">
