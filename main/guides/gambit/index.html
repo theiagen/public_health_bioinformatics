@@ -922,6 +922,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#gambit-gtdb-database-v310" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        GAMBIT GTDB Database v3.1.0
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#gambit-gtdb-database-v300" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -6915,6 +6926,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#gambit-gtdb-database-v310" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        GAMBIT GTDB Database v3.1.0
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#gambit-gtdb-database-v300" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -7316,7 +7338,7 @@
 <li>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7s3.58 4 8 4 8-1.79 8-4-3.58-4-8-4M4 9v3c0 2.21 3.58 4 8 4s8-1.79 8-4V9c0 2.21-3.58 4-8 4s-8-1.79-8-4m0 5v3c0 2.21 3.58 4 8 4s8-1.79 8-4v-3c0 2.21-3.58 4-8 4s-8-1.79-8-4"/></svg></span> <strong>Latest Database Version</strong></p>
 <hr />
-<p><a href="#gambit-gtdb-database-v300">GAMBIT Prokaryotic GTDB Database v3.0.0</a></p>
+<p><a href="#gambit-gtdb-database-v310">GAMBIT Prokaryotic GTDB Database v3.1.0</a></p>
 <p><a href="#gambit-fungal-database-v100">GAMBIT Fungal Database v1.0.0</a></p>
 </li>
 </ul>
@@ -7428,6 +7450,41 @@
 <p>A billing project <strong>must</strong> be provided in the request to download; otherwise, the following links and GS URIs will not work.</p>
 </div>
 <h3 id="gambit-prokaryotic-databases">GAMBIT Prokaryotic Databases<a class="headerlink" href="#gambit-prokaryotic-databases" title="Permanent link">&para;</a></h3>
+<h4 id="gambit-gtdb-database-v310">GAMBIT GTDB Database v3.1.0<a class="headerlink" href="#gambit-gtdb-database-v310" title="Permanent link">&para;</a></h4>
+<details class="toggle">
+<summary>Database Details</summary>
+<p>This database is a <strong>minor update</strong> to the v3.0.0 database. This database is identical to the v3.0.0 database, except for the <strong>following modifications</strong>:</p>
+<ol>
+<li>
+<p>GTDB combines to <em>Burkholderia pseudomallei</em> and <em>Burkholderia mallei</em> in a single species cluster named <em>Burkholderia mallei</em>. This species cluster has been split to align with NCBI</p>
+<ol>
+<li>
+<p><strong>Rationale:</strong> Both <em>B. pseudomallei</em> and <em>B. mallei</em> are Tier 1 select agents, but represent different diseases, epidemiologic risks, and public health responses. Melioidosis, caused by <em>B. pseudomallei</em>, has been nationally notifiable since 2023. This minor update to GAMBIT's GTDB database now allows for the distinction of these two species through the following steps:</p>
+<ol>
+<li>
+<p>A GAMBIT database for the  <em>Burkholderia mallei</em> complex samples, sourced from GTDB r232, was created, but its taxonomy was sourced from NCBI. In GAMBIT's v3.0.0 database, signatures and metadata were updated to remove the original <em>Burkholderia mallei</em> complex samples and insert <em>Burkholderia pseudomallei</em> and <em>Burkholderia mallei</em> genome signatures and metadata. The genus distance threshold for __Burkholderia_ remained consistent throughout this process.</p>
+</li>
+<li>
+<p>The  <em>Burkholderia mallei</em> complex database that was merged into v3.0.0 was created with the same parameters as v3.0.0, with the exception of the taxonomy source, which was set to NCBI.</p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<p><strong>Database Files</strong></p>
+<p>These database files are hosted in a public "Requester Pays" Google bucket by Theiagen Genomics:</p>
+<p><strong>GS URI (for <a href="https://terra.bio">Terra.bio</a> usage):</strong></p>
+<ul>
+<li><code>gs://gambit-databases-rp/3.1.0/gambit-metadata-3.1.0-20260911.gdb</code></li>
+<li><code>gs://gambit-databases-rp/3.1.0/gambit-signatures-3.1.0-20260911.gs</code></li>
+</ul>
+<p><strong>HTTPS URL (for local download):</strong></p>
+<ul>
+<li><a href="https://storage.cloud.google.com/gambit-databases-rp/3.1.0/gambit-metadata-3.1.0-20260911.gdb">https://storage.cloud.google.com/gambit-databases-rp/3.1.0/gambit-metadata-3.1.0-20260911.gdb</a></li>
+<li><a href="https://storage.cloud.google.com/gambit-databases-rp/3.1.0/gambit-signatures-3.1.0-20260911.gs">https://storage.cloud.google.com/gambit-databases-rp/3.1.0/gambit-signatures-3.1.0-20260911.gs</a></li>
+</ul>
+</details>
 <h4 id="gambit-gtdb-database-v300">GAMBIT GTDB Database v3.0.0<a class="headerlink" href="#gambit-gtdb-database-v300" title="Permanent link">&para;</a></h4>
 <details class="toggle">
 <summary>Database Details</summary>
