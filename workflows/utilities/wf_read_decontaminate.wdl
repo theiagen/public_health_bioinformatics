@@ -140,9 +140,9 @@ workflow read_decontaminate {
     Float? contaminant_mapping_coverage = read_mapping_stats.coverage
     Float? contaminant_mapping_mean_depth = read_mapping_stats.depth
     Float? contaminant_percent_mapped_reads = read_mapping_stats.percentage_mapped_reads
-    Map[String, Float]? contaminant_coverage_by_sequence = select_first([spoof_sequence_maps, read_mapping_stats.coverage_by_sequence])
-    Map[String, Float]? contaminant_depth_by_sequence = select_first([spoof_sequence_maps, read_mapping_stats.depth_by_sequence])
-    Map[String, Float]? contaminant_reads_by_sequence = select_first([spoof_sequence_maps, read_mapping_stats.reads_by_sequence])
+    Map[String, Float]? contaminant_coverage_by_sequence = select_first([read_mapping_stats.coverage_by_sequence])
+    Map[String, Float]? contaminant_depth_by_sequence = select_first([read_mapping_stats.depth_by_sequence])
+    Map[String, Float]? contaminant_reads_by_sequence = select_first([read_mapping_stats.reads_by_sequence])
     # Contaminant check outputs
     String? contaminant_check_status = contaminant_check.contaminant_check_status 
     Map[String, Float]? contaminant_expected_coverage_by_sequence = select_first([spoof_expectation_maps, contaminant_check.expected_coverage_by_sequence])
