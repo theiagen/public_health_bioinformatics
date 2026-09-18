@@ -17,12 +17,12 @@ task tbprofiler {
     Float min_af = 0.1
 
     File? tbprofiler_custom_db
-    String? tbdb_branch
+    String tbdb_branch = "who_v2+"
     String? tbdb_branch_commit_hash
 
     Int cpu = 8
     Int disk_size = 100
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:6.6.3"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:6.7.0"
     Int memory = 16
   }
   command <<<
@@ -36,32 +36,45 @@ task tbprofiler {
       INPUT_READS="-1 ~{read1} -2 ~{read2}"
     fi
 
+    mkdir "current_db"
+    CURRENT_DB=$(realpath "current_db")
+    DB_NAME="~{tbdb_branch}"
+
     # check if new database file is provided and not empty - if so, use that database preferentially
     if [ -s "~{tbprofiler_custom_db}" ]; then
       echo "Found new database file ~{tbprofiler_custom_db}"
-      prefix=$(basename "~{tbprofiler_custom_db}" | sed 's/\.tar\.gz$//')
-      tar xfv ~{tbprofiler_custom_db}
-
-      tb-profiler load_library ./"$prefix"/"$prefix"
-      TBDB="--db $prefix"
+      tar xfv ~{tbprofiler_custom_db} -C "$CURRENT_DB"
+      DB_VARIABLES=$(find "$CURRENT_DB" -maxdepth 3 -name "variables.json" | head -n 1)
+      if [ -z "$DB_VARIABLES" ]; then
+        echo "ERROR: no variables.json in ~{tbprofiler_custom_db}; expected a built TBProfiler database directory"
+        exit 1
+      fi
+      DB_NAME=$(basename $(dirname "$DB_VARIABLES"))
 
     # check if specific branch is provided for tbdb
-    elif [ -n "~{tbdb_branch}" ]; then
-      echo "Using tbdb branch ~{tbdb_branch}"
-      TBDB="--db ~{tbdb_branch}"
-
-      UPDATE_TBDB="--branch '~{tbdb_branch}'"
-      # check if specific commit hash is provided for tbdb branch, otherwise will pull latest
+    elif [ -n "$DB_NAME" ]; then
+      # NOTE: This section mirrors the `update_tbdb` subcommand logic but globs all *mutations.csv files instead.
+      # https://github.com/jodyphelan/TBProfiler/blob/47e6c639c342eeda9791e5c700c1802fc5e8cb86/tb-profiler#L287
+      echo "Cloning tbdb branch '$DB_NAME' into $CURRENT_DB"
+      git clone --quiet --branch "$DB_NAME" https://github.com/jodyphelan/tbdb.git
+      cd tbdb
       if [ -n "~{tbdb_branch_commit_hash}" ]; then
-        echo "Checking out commit hash ~{tbdb_branch_commit_hash} for tbdb branch"
-        UPDATE_TBDB+=" --commit '~{tbdb_branch_commit_hash}'"
+        git -c advice.detachedHead=false checkout --quiet ~{tbdb_branch_commit_hash}
       fi
+      echo "Using tbdb branch '$DB_NAME' at commit $(git rev-parse --short HEAD)"
 
-      # update tbdb to specified branch
-      tb-profiler update_tbdb ${UPDATE_TBDB} --debug
-    else
-      echo "Using default tbdb database"
-      TBDB=""
+      echo "Creating tbdb database: $CURRENT_DB/$DB_NAME"
+      tb-profiler create_db \
+        --create_index \
+        --force \
+        --db_dir "$CURRENT_DB" \
+        --dir "$CURRENT_DB" \
+        --prefix "$DB_NAME" \
+        --csv *mutations.csv \
+        --watchlist watchlist.csv \
+        --load
+      cd ..
+      echo "Database created: $CURRENT_DB/$DB_NAME"
     fi
 
     # Run tb-profiler on the input reads with samplename prefix
@@ -77,10 +90,17 @@ task tbprofiler {
       --csv --txt \
       ~{true="--platform nanopore" false="" ont_data} \
       ~{additional_parameters} \
-      ${TBDB}
+      --db_dir "$CURRENT_DB" \
+      --db "$DB_NAME" \
+      --debug
 
     # Collate results
-    tb-profiler collate --prefix ~{samplename}
+    echo "Now collating tbprofiler results"
+    tb-profiler collate \
+      --prefix ~{samplename} \
+      --db_dir "$CURRENT_DB" \
+      --db "$DB_NAME" \
+      --debug
 
     # convert any bcf files to vcf
     for bcf_file in ./vcf/*.bcf; do
@@ -114,8 +134,48 @@ task tbprofiler {
     python3 <<CODE
     import csv
     import json
-    import os
+    import yaml
 
+    # --- build the gene/drug association truth set used to validate tbp-parser inputs ---
+    # NOTE: The 'genes.bed' from the TBProfiler database directory lists the reportable gene/drug associations.
+    # However, need to also add CrossResistanceRule entries from 'rules.yml' to get complete set of drugs found at runtime.
+    # See https://github.com/jodyphelan/TBProfiler/blob/47e6c639c342eeda9791e5c700c1802fc5e8cb86/tbprofiler/rules.py#L179
+    samplename = "~{samplename}"
+    db_dir = "${CURRENT_DB}/${DB_NAME}"
+    print(f"Preparing '{samplename}.tbdb_xres.bed' representing the truth set of gene/drug associations.")
+
+    db_variables = json.load(open(f"{db_dir}/variables.json"))
+    db_files = db_variables["files"]
+    rules = yaml.safe_load(open(f"{db_dir}/{db_files['rules']}")) if db_files.get("rules") else {}
+
+    cross_resistance = [
+      (rule["source_drug"], rule["target_drug"])
+      for rule in rules.values() if rule.get("type") == "CrossResistanceRule"
+    ]
+
+    genes_bed = f"{db_dir}/{db_files['bed']}"
+    genes_xres_bed = f"~{samplename}.tbdb_xres.bed"
+    with open(genes_bed, "r") as infile, open(genes_xres_bed, "w") as outfile:
+      reader = csv.reader(infile, delimiter="\t")
+      writer = csv.writer(outfile, delimiter="\t", lineterminator="\n")
+
+      for row in reader:
+        if not row:
+          continue
+
+        # genes.bed: chrom, start, end, locus_tag, gene_name, drugs
+        drugs = {drug for drug in row[5].split(",") if drug}
+        for source_drug, target_drug in cross_resistance:
+          if source_drug in drugs:
+            drugs.add(target_drug)
+            print(f"{row[4]}: adding {target_drug} (cross-resistance with {source_drug})")
+
+        writer.writerow(row[:5] + [",".join(sorted(drugs))])
+
+    if not cross_resistance:
+      print(f"No cross resistance rules specified in database: {db_dir}.")
+
+    # ---- parse the collated results table into per-value output files ----
     with open("./~{samplename}.txt",'r') as tsv_file:
       tsv_reader=csv.reader(tsv_file, delimiter="\t")
       tsv_data=list(tsv_reader)
@@ -134,7 +194,7 @@ task tbprofiler {
         num_other_variants.write(tsv_dict['num_other_variants'])
 
       with open ("RESISTANCE_GENES", 'wt') as resistance_genes:
-        res_genes_list=['rifampicin', 'isoniazid', 'ethambutol', 'pyrazinamide', 'moxifloxacin', 'levofloxacin', 'bedaquiline', 'delamanid', 'pretomanid', 'linezolid', 'streptomycin', 'amikacin', 'kanamycin', 'capreomycin', 'clofazimine', 'ethionamide', 'para-aminosalicylic_acid', 'cycloserine']
+        res_genes_list=tsv_data[0][tsv_data[0].index('num_other_variants') + 1:]
         res_genes=[]
         for i in res_genes_list:
           if tsv_dict[i] != '-':
@@ -164,6 +224,7 @@ task tbprofiler {
     String tbprofiler_resistance_genes = read_string("RESISTANCE_GENES")
     Float tbprofiler_median_depth = read_float("MEDIAN_DEPTH")
     Float tbprofiler_pct_reads_mapped = read_float("PCT_READS_MAPPED")
+    File? tbprofiler_db_bed = "~{samplename}.tbdb_xres.bed"
   }
   runtime {
     docker: "~{docker}"
