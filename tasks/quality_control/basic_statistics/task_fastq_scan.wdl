@@ -71,10 +71,10 @@ task fastq_scan_pe {
     File read2_fastq_scan_json = "~{read2_name}_fastq-scan.json"
     Int read1_seq = read_int("READ1_SEQS")
     Int read2_seq = read_int("READ2_SEQS")
-    Float read1_mean_length = read_float("READ1_MEAN_LENGTH")
-    Float read2_mean_length = read_float("READ2_MEAN_LENGTH")
-    Float read1_mean_quality = read_float("READ1_MEAN_QUALITY")
-    Float read2_mean_quality = read_float("READ2_MEAN_QUALITY")
+    String read1_mean_length = read_string("READ1_MEAN_LENGTH")
+    String read2_mean_length = read_string("READ2_MEAN_LENGTH")
+    String read1_mean_quality = read_string("READ1_MEAN_QUALITY")
+    String read2_mean_quality = read_string("READ2_MEAN_QUALITY")
     String read_pairs = read_string("READ_PAIRS")
     String version = read_string("VERSION")
     String fastq_scan_docker = docker
