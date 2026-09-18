@@ -987,8 +987,8 @@ freyja_plot_task	plot_time_interval	String	Options: "MS" for month, "D" for day	
 gambit	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Gambit_Query, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 gambit	disk_size	Int	Amount of storage (in GB) to allocate to the task	20	Optional	Gambit_Query, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 gambit	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0	Optional	Gambit_Query, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-gambit	gambit_db_genomes	File	Database of metadata for assembled query genomes; requires complementary signatures file. If not provided, uses default database "/gambit-db"	gs://gambit-databases-rp/3.0.0/gambit-metadata-3.0.0-20260601.gdb	Optional	Gambit_Query, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	
-gambit	gambit_db_signatures	File	Signatures file; requires complementary genomes file. If not specified, the file from the docker container will be used.	gs://gambit-databases-rp/3.0.0/gambit-signatures-3.0.0-20260601.gs	Optional	Gambit_Query, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	
+gambit	gambit_db_genomes	File	Database of metadata for assembled query genomes; requires complementary signatures file. If not provided, uses default database "/gambit-db"	gs://gambit-databases-rp/3.1.0/gambit-metadata-3.1.0-20260911.gdb	Optional	Gambit_Query, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	
+gambit	gambit_db_signatures	File	Signatures file; requires complementary genomes file. If not specified, the file from the docker container will be used.	gs://gambit-databases-rp/3.1.0/gambit-signatures-3.1.0-20260911.gs	Optional	Gambit_Query, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	
 gambit	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Gambit_Query, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 gamma	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 gamma	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
@@ -1987,6 +1987,7 @@ read_QC_trim	trim_min_length	Int	Specifies minimum length of each read after tri
 read_QC_trim	trim_quality_min_score	Int	Specifies the average quality of bases in a sliding window to be kept	30	Optional	TheiaMeta_Illumina_PE	general	
 read_QC_trim	trim_window_size	Int	Specifies window size for trimming (the number of bases to average the quality across)	4	Optional	TheiaMeta_Illumina_PE	general	
 read_QC_trim	trimmomatic_override_args	String	Additional arguments to pass to trimmomatic. Can be used to override all trimming parameters		Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
+read_QC_trim	trimmomatic_quality_encoding	String	Controls the Phred quality score encoding used by Trimmomatic for input FASTQ files	-phred33	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 read_QC_trim_ont	artic_guppyplex_cpu	Int	Number of CPUs to allocate to the task	8	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_ont	artic_guppyplex_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_ont	artic_guppyplex_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/artic:1.9.0	Optional	Freyja_FASTQ	docker	
@@ -2062,6 +2063,7 @@ read_QC_trim_pe	spike_in_min_reads_mapped	Int	Minimum number of reads mapped to 
 read_QC_trim_pe	trim_quality_min_score	Int	The minimum quality score to keep during trimming	30	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	trim_window_size	Int	The window size to use during trimming	4	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	trimmomatic_override_args	String	Additional arguments to pass to trimmomatic. Can be used to override all trimming parameters		Optional	Freyja_FASTQ	general	
+read_QC_trim_pe	trimmomatic_quality_encoding	String	Controls the Phred quality score encoding used by Trimmomatic for input FASTQ files	-phred33	Optional	Freyja_FASTQ	general	
 read_QC_trim_se	adapters	File	A FASTA file containing adapter sequences		Optional	Freyja_FASTQ	general	
 read_QC_trim_se	bbduk_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_se	bracken_kmer_length	Int	Kmer length for Bracken to use instead of auto-detection - must be present in database		Optional	Freyja_FASTQ	general	
@@ -2090,6 +2092,7 @@ read_QC_trim_se	read_qc	String	Allows the user to decide between fastq_scan (def
 read_QC_trim_se	trim_quality_min_score	Int	The minimum quality score to keep during trimming	30	Optional	Freyja_FASTQ	general	
 read_QC_trim_se	trim_window_size	Int	The window size to use during trimming	4	Optional	Freyja_FASTQ	general	
 read_QC_trim_se	trimmomatic_override_args	String	Additional arguments to pass to trimmomatic. Can be used to override all trimming parameters		Optional	Freyja_FASTQ	general	
+read_QC_trim_se	trimmomatic_quality_encoding	String	Controls the Phred quality score encoding used by Trimmomatic for input FASTQ files	-phred33	Optional	Freyja_FASTQ	general	
 referenceseeker	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	runtime	
 referenceseeker	disk_size	Int	Amount of storage (in GB) to allocate to the task	200	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	runtime	
 referenceseeker	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/referenceseeker:1.8.0--pyhdfd78af_0	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	docker	
@@ -2384,7 +2387,8 @@ theiacov_illumina_pe	reference_gene_locations_bed	File	Use to provide locations 
 theiacov_illumina_pe	reference_genome	File	An optional reference genome used for consensus assembly and QC		Optional	TheiaCoV_Illumina_PE	general	
 theiacov_illumina_pe	reference_gff	File	The general feature format (gff) of the reference genome.		Optional	TheiaCoV_Illumina_PE	general	
 theiacov_illumina_pe	seq_method	String	The sequencing methodology used to generate the input read data; for TheiaProk workflows, this input will be used in the "seq_id" column in any taxon-specific tables created in the Export Taxon Tables task	ILLUMINA	Optional	TheiaCoV_Illumina_PE	general	
-theiacov_illumina_pe	skip_screen	Boolean	Set to True to skip the read screening prior to analysis	False	Optional	TheiaCoV_Illumina_PE	general	
+theiacov_illumina_pe	skip_screen_clean	Boolean	Set to True to skip the read screening of the cleaned reads	False	Optional	TheiaCoV_Illumina_PE	general	
+theiacov_illumina_pe	skip_screen_raw	Boolean	Set to True to skip the read screening of the raw reads	False	Optional	TheiaCoV_Illumina_PE	general	
 theiacov_illumina_pe	target_organism	String	The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database.		Optional	TheiaCoV_Illumina_PE	general	
 theiacov_illumina_pe	trim_min_length	Int	Specifies minimum length of each read after trimming to be kept	75	Optional	TheiaCoV_Illumina_PE	general	
 theiacov_illumina_pe	trim_primers	Boolean	A True/False option that determines if primers should be trimmed.	True	Optional	TheiaCoV_Illumina_PE	general	
@@ -2419,7 +2423,8 @@ theiacov_illumina_se	reference_genome	File	An optional reference genome used for
 theiacov_illumina_se	reference_gff	File	The general feature format (gff) of the reference genome.		Optional	TheiaCoV_Illumina_SE	general	
 theiacov_illumina_se	seq_method	String	The sequencing methodology used to generate the input read data; for TheiaProk workflows, this input will be used in the "seq_id" column in any taxon-specific tables created in the Export Taxon Tables task	ILLUMINA	Optional	TheiaCoV_Illumina_SE	general	
 theiacov_illumina_se	skip_mash	Boolean	If true, skips estimation of genome size and coverage using mash in read screening steps. As a result, providing true also prevents screening using these parameters.	False	Optional	TheiaCoV_Illumina_SE	general	
-theiacov_illumina_se	skip_screen	Boolean	Set to True to skip the read screening prior to analysis	False	Optional	TheiaCoV_Illumina_SE	general	
+theiacov_illumina_se	skip_screen_clean	Boolean	Set to True to skip the read screening of the cleaned reads	False	Optional	TheiaCoV_Illumina_SE	general	
+theiacov_illumina_se	skip_screen_raw	Boolean	Set to True to skip the read screening of the raw reads	False	Optional	TheiaCoV_Illumina_SE	general	
 theiacov_illumina_se	trim_min_length	Int	Specifies minimum length of each read after trimming to be kept	25	Optional	TheiaCoV_Illumina_SE	general	
 theiacov_illumina_se	trim_primers	Boolean	A True/False option that determines if primers should be trimmed.	True	Optional	TheiaCoV_Illumina_SE	general	
 theiacov_illumina_se	trim_quality_min_score	Int	Specifies the minimum average quality of bases in a sliding window to be kept	30	Optional	TheiaCoV_Illumina_SE	general	
@@ -2450,7 +2455,8 @@ theiacov_ont	reference_gene_locations_bed	File	Use to provide locations of inter
 theiacov_ont	reference_genome	File	An optional reference genome used for consensus assembly and QC		Optional	TheiaCoV_ONT	general	
 theiacov_ont	seq_method	String	The sequencing methodology used to generate the input read data; for TheiaProk workflows, this input will be used in the "seq_id" column in any taxon-specific tables created in the Export Taxon Tables task	OXFORD_NANOPORE	Optional	TheiaCoV_ONT	general	
 theiacov_ont	skip_mash	Boolean	If true, skips estimation of genome size and coverage using mash in read screening steps. As a result, providing true also prevents screening using these parameters.	False	Optional	TheiaCoV_ONT	general	
-theiacov_ont	skip_screen	Boolean	Set to True to skip the read screening prior to analysis	False	Optional	TheiaCoV_ONT	general	
+theiacov_ont	skip_screen_clean	Boolean	Set to True to skip the read screening of the cleaned reads	False	Optional	TheiaCoV_ONT	general	
+theiacov_ont	skip_screen_raw	Boolean	Set to True to skip the read screening of the raw reads	False	Optional	TheiaCoV_ONT	general	
 theiacov_ont	target_organism	String	The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database.		Optional	TheiaCoV_ONT	general	
 theiacov_ont	vadr_max_length	Int	Maximum length of contig allowed to run VADR		Optional	TheiaCoV_ONT	general	
 theiacov_ont	vadr_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32 (RSV-A and RSV-B) and 8 (all other TheiaCoV organisms)	Optional	TheiaCoV_ONT	runtime	True
@@ -2707,6 +2713,7 @@ trimmomatic	trimmomatic_adapter_fasta	File	A FASTA file containing adapter seque
 trimmomatic	trimmomatic_adapter_trim_args	String	Colon-delimited adapter trimming parameters representing [seed mismatches: palindrome clip threshold: simple clip threshold]	2:30:10	Optional	TBProfiler_tNGS	general	True
 trimmomatic	trimmomatic_min_length	Int	Specifies minimum length of each read after trimming to be kept	75	Optional	TBProfiler_tNGS	general	
 trimmomatic	trimmomatic_override_args	String	Additional arguments to pass to trimmomatic. Can be used to override all trimming parameters		Optional	TBProfiler_tNGS	general	
+trimmomatic	trimmomatic_quality_encoding	String	Controls the Phred quality score encoding used by Trimmomatic for input FASTQ files	-phred33	Optional	TBProfiler_tNGS	general	
 trimmomatic	trimmomatic_trim_adapters	Boolean	A True/False option that determines if adapters should be trimmed	False	Optional	TBProfiler_tNGS	general	
 trimmomatic	trimmomatic_window_quality	Int	The trimming window quality score	30	Optional	TBProfiler_tNGS	general	
 trimmomatic	trimmomatic_window_size	Int	The window size for trimming	4	Optional	TBProfiler_tNGS	general	
