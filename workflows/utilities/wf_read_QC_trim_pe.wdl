@@ -96,7 +96,7 @@ workflow read_QC_trim_pe {
     }
   }
   # spike-in screening reports on reads mapping to the spike-in FASTA and removes them; runs on the reads left over from mapped_read_removal
-  if (defined(spike_in_fasta) && defined(expected_spike_ins)) {
+  if (defined(spike_in_fasta) && spike_in_fasta != "" && defined(expected_spike_ins) && expected_spike_ins != "") {
     call read_decontaminate_wf.read_decontaminate as spike_in_screen {
       input:
         samplename = samplename,
