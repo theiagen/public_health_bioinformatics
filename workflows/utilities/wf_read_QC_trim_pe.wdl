@@ -96,13 +96,14 @@ workflow read_QC_trim_pe {
     }
   }
   # spike-in screening reports on reads mapping to the spike-in FASTA and removes them; runs on the reads left over from mapped_read_removal
-  if (defined(spike_in_fasta) && spike_in_fasta != "" && defined(expected_spike_ins) && expected_spike_ins != "") {
+  if (defined(spike_in_fasta) && spike_in_fasta != "") {
     call read_decontaminate_wf.read_decontaminate as spike_in_screen {
       input:
         samplename = samplename,
         read1 = select_first([mapped_read_removal.decontaminate_read1, read1]),
         read2 = select_first([mapped_read_removal.decontaminate_read2, read2]),
         contaminant = select_first([spike_in_fasta]),
+        force_contaminant_check = true,
         is_genome = true,
         is_accession = false,
         refseq = false,

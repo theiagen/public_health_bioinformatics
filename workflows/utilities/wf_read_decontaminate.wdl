@@ -20,6 +20,7 @@ workflow read_decontaminate {
     Boolean is_genome = false
     Boolean refseq = true
     Boolean complete_only = false
+    Boolean force_contaminant_check = false
 
     String? expected_sequences # comma-delimited list of expected sequences, OR a key into expected_sequences_json when that is provided
     File? expected_sequences_json # optional JSON mapping of {"<NAME>": ["<SEQ1>", "<SEQ2>", ...]}; when provided, expected_sequences is used as the key to look up the list of expected sequences
@@ -100,7 +101,7 @@ workflow read_decontaminate {
       read2 = read2
   }
   # run contaminant check
-  if (defined(expected_sequences) && expected_sequences != "") {
+  if ((defined(expected_sequences) && expected_sequences != "") || force_contaminant_check) {
     # stage fail variable
     String contaminant_check_fail = "FAIL: no reads mapped to inputted sequences"
     if (read_mapping_stats.mapping_stats_status == "PASS") {
