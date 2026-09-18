@@ -157,6 +157,7 @@ bankit_metadata	File	**Only for mpox submission**: the metadata file that you wi
 bankit_sqn_to_email	File	**Only for mpox submission**: the sqn file that you will use to submit mpox assembly files to NCBI via email	Mercury_Prep_N_Batch
 basespace_fetch_analysis_date	String	The date the workflow was run	BaseSpace_Fetch
 basespace_fetch_version	String	The version of the repository the BaseSpace_Fetch workflow is in	BaseSpace_Fetch
+basespace_log	File	The bioforklift log file created for each BaseSpace API interaction	BaseSpace_Fetch
 bbduk_docker	String	The Docker image for bbduk, which was used to remove the adapters from the sequences	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
 bbduk_primer_stats	File	Primer trimming statistics	TheiaViral_Illumina_PE
 bbduk_read1_clean	File	Clean forward reads after BBDuk processing	TheiaViral_Illumina_PE
