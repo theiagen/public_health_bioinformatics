@@ -112,7 +112,7 @@ workflow theiacov_fasta {
         irma_min_avg_consensus_allele_quality = 0,
         irma_min_ambiguous_threshold = 0.0,
         irma_memory = 0,
-        irma_keep_ref_deletions = True,
+        irma_keep_ref_deletions = true,
         irma_docker_image = "",
         irma_disk_size = 0,
         irma_cpu = 0,
