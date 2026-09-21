@@ -263,7 +263,12 @@ workflow theiaprok_ont {
               assembly = select_first([flye_denovo.assembly_fasta]),
               samplename = samplename,
               read1 = read_QC_trim.read1_clean,
-              ont_data = true
+              ont_data = true,
+              # hiding these inputs from terra to avoid input bloat
+              vibecheck_docker_image = "",
+              vibecheck_lineage_barcodes = "gs://theiagen-public-resources-rp/empty_files/empty.txt",
+              vibecheck_skip_subsampling = false,
+              vibecheck_subsampling_fraction = 0.0
           }
           if (call_arln_stats) {
             call arln_stats.arln_stats {
@@ -285,6 +290,7 @@ workflow theiaprok_ont {
                 gambit_predicted_taxon = gambit.gambit_predicted_taxon,
                 taxon_table = taxon_tables,
                 samplename = samplename,
+                theiaviral_panel = false,
                 columns_to_export = {
                   "abricate_abaum_database": merlin_magic.abricate_abaum_database,
                   "abricate_abaum_docker": merlin_magic.abricate_abaum_docker,

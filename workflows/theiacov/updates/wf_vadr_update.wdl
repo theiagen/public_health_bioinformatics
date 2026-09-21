@@ -40,7 +40,8 @@ workflow vadr_update {
   }
   call consensus_qc_task.consensus_qc {
     input:
-      assembly_fasta = genome_fasta
+      assembly_fasta = genome_fasta,
+
   }
   if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "flu" || organism_parameters.standardized_organism == "mumps" || organism_parameters.standardized_organism == "rubella" || organism_parameters.standardized_organism == "measles") {
     call vadr_task.vadr {

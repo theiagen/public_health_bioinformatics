@@ -342,6 +342,7 @@ workflow theiaprok_illumina_pe {
               gambit_predicted_taxon = gambit.gambit_predicted_taxon,
               taxon_table = taxon_tables,
               samplename = samplename,
+              theiaviral_panel = false,
               columns_to_export = {
                 "abricate_abaum_database": merlin_magic.abricate_abaum_database,
                 "abricate_abaum_docker": merlin_magic.abricate_abaum_docker,

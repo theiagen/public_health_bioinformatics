@@ -157,7 +157,7 @@ workflow theiacov_ont {
             irma_min_consensus_support = irma_min_consensus_support,
             # hiding these inputs from terra to avoid input bloat
             assembly_fasta = "gs://theiagen-public-resources-rp/empty_files/empty.fasta",
-            vadr_outputs_tgz = "gs://theiagen-public-resources-rp/empty_files/empty.fasta"
+            vadr_outputs_tgz = "gs://theiagen-public-resources-rp/empty_files/empty.txt"
         }
       }
       # nanoplot for basic QC metrics
@@ -199,7 +199,7 @@ workflow theiacov_ont {
             nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
             nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
             pangolin_docker_image = organism_parameters.pangolin_docker,
-            # Setting flu_track related inputs to default values as they are not utilized in TheiaCov, decreasing external input bloat
+            # hiding internal components to decrease input bloat
             seq_method = "",
             assembly_metrics_cpu = 0,
             assembly_metrics_disk_size = 0,

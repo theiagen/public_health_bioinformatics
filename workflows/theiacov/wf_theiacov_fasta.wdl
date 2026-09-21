@@ -71,8 +71,10 @@ workflow theiacov_fasta {
       vadr_memory = organism_parameters.vadr_memory,
       nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
       nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
-      pangolin_docker_image = organism_parameters.pangolin_docker,
-      # Setting flu_track related inputs to default values as they are not utilized in TheiaCov, decreasing external input bloat
+      pangolin_docker_image = organism_parameters.pangolin_docker,,
+      workflow_type = "theiacov_fasta",
+      # hiding internal components to decrease input bloat
+      reference_gene_locations_bed = "gs://theiagen-public-resources-rp/empty_file/empty.bed",
       seq_method = "",
       assembly_metrics_cpu = 0,
       assembly_metrics_disk_size = 0,
@@ -93,8 +95,7 @@ workflow theiacov_fasta {
       abricate_flu_memory = 0,
       abricate_flu_min_percent_coverage = 0,
       abricate_flu_min_percent_identity = 0,
-      flu_track_antiviral_aa_subs = "",
-      workflow_type = "theiacov_fasta"
+      flu_track_antiviral_aa_subs = ""
   }
   if (organism == "flu") {
     call run_flu_track.flu_track {
@@ -105,8 +106,7 @@ workflow theiacov_fasta {
         seq_method = seq_method,
         flu_subtype = flu_subtype,
         vadr_outputs_tgz = morgana_magic.vadr_all_outputs_tar_gz,
-        # setting these input parameters to avoid input bloat in terra
-        # cannot provide r1 and r2 to hide it b/c it will think there's actual data there
+        # hiding internal components to decrease input bloat
         irma_min_read_length = 0,
         irma_min_consensus_support = 0,
         irma_min_avg_consensus_allele_quality = 0,

@@ -163,7 +163,7 @@ workflow theiacov_illumina_pe {
             irma_min_consensus_support = select_first([min_depth, 30]),
             # hiding parameters from terra to avoid input bloat
             assembly_fasta = "gs://theiagen-public-resources-rp/empty_files/empty.fasta",
-            vadr_outputs_tgz = "gs://theiagen-public-resources-rp/empty_files/empty.fasta"
+            vadr_outputs_tgz = "gs://theiagen-public-resources-rp/empty_files/empty.txt"
         }
       }
       if (defined(ivar_consensus.assembly_fasta) || defined(flu_track.irma_assembly_fasta)) {
@@ -191,7 +191,7 @@ workflow theiacov_illumina_pe {
             nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
             nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
             pangolin_docker_image = organism_parameters.pangolin_docker,
-            # Setting flu_track related inputs to default values as they are not utilized in TheiaCov, decreasing external input bloat
+            # hiding internal components to decrease input bloat
             seq_method = "",
             assembly_metrics_cpu = 0,
             assembly_metrics_disk_size = 0,
