@@ -30,7 +30,8 @@ workflow theiacov_fasta_batch {
       organism = organism,
       nextclade_dataset_tag_input = nextclade_dataset_tag,
       nextclade_dataset_name_input = nextclade_dataset_name,
-      pangolin_docker_image = pangolin_docker
+      pangolin_docker_image = pangolin_docker,
+      flu_genoflu_genotype = ""
   }
   call concatenate.cat_files_fasta {
     input:

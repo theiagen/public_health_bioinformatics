@@ -73,7 +73,8 @@ workflow theiacov_ont {
       vadr_model = vadr_model_file,
       vadr_mem = vadr_memory,
       primer_bed_file = primer_bed,
-      pangolin_docker_image = pangolin_docker_image
+      pangolin_docker_image = pangolin_docker_image,
+      flu_genoflu_genotype = ""
   }
   if (organism_parameters.standardized_organism == "HIV") { # set HIV specific artic version
     String run_prefix = "artic_hiv"

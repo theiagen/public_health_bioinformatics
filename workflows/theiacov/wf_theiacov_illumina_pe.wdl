@@ -81,7 +81,8 @@ workflow theiacov_illumina_pe {
       vadr_mem = vadr_memory,
       primer_bed_file = primer_bed,
       pangolin_docker_image = pangolin_docker_image,
-      kraken_target_organism_input = target_organism
+      kraken_target_organism_input = target_organism,
+      flu_genoflu_genotype = ""
   }
   if (! skip_screen) {
     call screen.check_reads as raw_check_reads {

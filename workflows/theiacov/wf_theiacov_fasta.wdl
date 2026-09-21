@@ -49,7 +49,8 @@ workflow theiacov_fasta {
       vadr_skip_length = vadr_skip_length,
       vadr_options = vadr_opts,
       vadr_model = vadr_model_file,
-      vadr_mem = vadr_memory
+      vadr_mem = vadr_memory,
+      flu_genoflu_genotype = ""
   }
   call consensus_qc_task.consensus_qc {
     input:
