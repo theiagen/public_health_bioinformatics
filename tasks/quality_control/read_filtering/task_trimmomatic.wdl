@@ -11,6 +11,9 @@ task trimmomatic {
     Int trimmomatic_window_quality = 30
     String? trimmomatic_override_args #Note that trimming steps occur in the same order that they are given on the command line
 
+    # See PR#389; trimmomatic auto-detection of phred encoding can be unreliable for some FASTQ files
+    String trimmomatic_quality_encoding = "-phred33"  # accepts "-phred33", "-phred64", or "" (auto-detect)
+
     Boolean trimmomatic_trim_adapters = false
     File? trimmomatic_adapter_fasta
     String? trimmomatic_adapter_trim_args
@@ -54,6 +57,7 @@ task trimmomatic {
     TRIMMOMATIC_ARGS="SLIDINGWINDOW:~{trimmomatic_window_size}:~{trimmomatic_window_quality} MINLEN:~{trimmomatic_min_length}"
 
     trimmomatic ~{if defined(read2) then "PE" else "SE"} \
+      ~{trimmomatic_quality_encoding} \
       ~{read1} \
       ~{read2} \
       ~{if defined(read2) then "-baseout ~{samplename}.fastq.gz" else "~{samplename}_1P.fastq.gz"} \
