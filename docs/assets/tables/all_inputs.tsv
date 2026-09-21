@@ -783,24 +783,19 @@ flu_track	abricate_flu_memory	Int	Amount of memory/RAM (in GB) to allocate to th
 flu_track	abricate_flu_min_percent_coverage	Int	Minimum DNA percent coverage	60	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
 flu_track	abricate_flu_min_percent_identity	Int	Minimum DNA percent identity	70	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
 flu_track	antiviral_aa_subs	String	Additional list of antiviral resistance associated amino acid substitutions of interest to be searched against those called on the sample segments. They take the format of :, e.g. NA:A26V		Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
-flu_track	assembly_fasta	File	Internal component, do not modify		Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
-flu_track	assembly_metrics_cpu	Int	Internal component, do not modify	2	Optional	TheiaCoV_FASTA	general	
 flu_track	assembly_metrics_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	runtime	
-flu_track	assembly_metrics_disk_size	Int	Internal component, do not modify	100	Optional	TheiaCoV_FASTA	general	
 flu_track	assembly_metrics_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	runtime	
-flu_track	assembly_metrics_docker	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.23	Optional	TheiaCoV_FASTA	general	
 flu_track	assembly_metrics_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.23	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	docker	
-flu_track	assembly_metrics_memory	Int	Internal component, do not modify	8	Optional	TheiaCoV_FASTA	general	
 flu_track	assembly_metrics_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	runtime	
-flu_track	flu_h1_ha_ref	File	The reference fasta for the H1 HA segment in influenza	gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1_ha.fasta	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
-flu_track	flu_h1n1_m2_ref	File	The reference fasta for the H1N1 M2 segment in influenza	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
-flu_track	flu_h3_ha_ref	File	Internal component, do not The reference fasta for the H3 HA segment in influenza	gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3_ha.fasta	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
-flu_track	flu_h3n2_m2_ref	File	The reference fasta for the H3N2 M2 segment in influenza	gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_m2.fasta	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
-flu_track	flu_n1_na_ref	File	The reference fasta for the N1 NA segment in influenza	gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_n1_na.fasta	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
-flu_track	flu_n2_na_ref	File	The reference fasta for the N2 NA segment in influenza	gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_n2_na.fasta	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
-flu_track	flu_pa_ref	File	The reference fasta for the PA segment in influenza	gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_pa.fasta	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
-flu_track	flu_pb1_ref	File	The reference fasta for the PB1 segment in influenza	gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_pb1.fasta	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
-flu_track	flu_pb2_ref	File	The reference fasta for the PB2 segment in influenza	gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_pb2.fasta	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
+flu_track	flu_h1_ha_ref	File	The reference fasta for the H1 HA segment in influenza	gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1_ha.fasta	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	reference	
+flu_track	flu_h1n1_m2_ref	File	The reference fasta for the H1N1 M2 segment in influenza	gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1_m2.fasta	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	reference	
+flu_track	flu_h3_ha_ref	File	Internal component, do not The reference fasta for the H3 HA segment in influenza	gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3_ha.fasta	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	reference	
+flu_track	flu_h3n2_m2_ref	File	The reference fasta for the H3N2 M2 segment in influenza	gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_m2.fasta	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	reference	
+flu_track	flu_n1_na_ref	File	The reference fasta for the N1 NA segment in influenza	gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_n1_na.fasta	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	reference	
+flu_track	flu_n2_na_ref	File	The reference fasta for the N2 NA segment in influenza	gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_n2_na.fasta	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	reference	
+flu_track	flu_pa_ref	File	The reference fasta for the PA segment in influenza	gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_pa.fasta	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	reference	
+flu_track	flu_pb1_ref	File	The reference fasta for the PB1 segment in influenza	gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_pb1.fasta	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	reference	
+flu_track	flu_pb2_ref	File	The reference fasta for the PB2 segment in influenza	gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_pb2.fasta	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	reference	
 flu_track	flu_subtype	String	The influenza subtype being analyzed. Used for picking nextclade datasets. Options: "Yamagata", "Victoria", "H1N1", "H3N2", "H5N1". Only use to override the subtype call from IRMA and ABRicate.		Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
 flu_track	genoflu_cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	runtime	
 flu_track	genoflu_cross_reference	File	An Excel file to cross-reference BLAST findings; probably useful if novel genotypes are not in the default file used by genoflu.py		Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
@@ -808,22 +803,13 @@ flu_track	genoflu_disk_size	Int	Amount of storage (in GB) to allocate to the tas
 flu_track	genoflu_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/genoflu:1.07	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	docker	
 flu_track	genoflu_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	runtime	
 flu_track	genoflu_min_percent_identity	Float	Percent identity threshold used for calling matches for each genome segment that make up the final GenoFlu genotype	98	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
-flu_track	irma_cpu	Int	Internal component, do not modify	4	Optional	TheiaCoV_FASTA	general	
 flu_track	irma_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	runtime	
-flu_track	irma_disk_size	Int	Internal component, do not modify	100	Optional	TheiaCoV_FASTA	general	
 flu_track	irma_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	runtime	
-flu_track	irma_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/theiagen/irma:1.3.1-20260507	Optional	TheiaCoV_FASTA	general	
 flu_track	irma_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/irma:1.3.1-20260507	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	docker	
-flu_track	irma_keep_ref_deletions	Boolean	Internal component, do not modify	True	Optional	TheiaCoV_FASTA	general	
 flu_track	irma_keep_ref_deletions	Boolean	True/False variable that determines if sites missed (i.e. 0 reads for a site in the reference genome) during read gathering should be deleted by ambiguation by inserting N's or deleting the sequence entirely. False sets this IRMA paramater to "DEL" and true sets it to "NNN"	True	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	True
-flu_track	irma_memory	Int	Internal component, do not modify	16	Optional	TheiaCoV_FASTA	general	
 flu_track	irma_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	runtime	
-flu_track	irma_min_ambiguous_threshold	Float	Internal component, do not modify	0.25	Optional	TheiaCoV_FASTA	general	
 flu_track	irma_min_ambiguous_threshold	Float	Minimum called Single Nucleotide Variant (SNV) frequency for mixed based calls in the output consensus assembly (AKA amended consensus).	0.25	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
-flu_track	irma_min_avg_consensus_allele_quality	Int	Internal component, do not modify	10	Optional	TheiaCoV_FASTA	general	
 flu_track	irma_min_avg_consensus_allele_quality	Int	Minimum allele coverage depth to call plurality consensus, otherwise calls "N". Setting this value too high can negatively impact final amended consensus.	10	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
-flu_track	irma_min_consensus_support	Int	Internal component, do not modify	50	Optional	TheiaCoV_FASTA	general	
-flu_track	irma_min_read_length	Int	Internal component, do not modify	75	Optional	TheiaCoV_FASTA	general	
 flu_track	irma_min_read_length	Int	Minimum read length to include reads in read gathering step in IRMA. This value should not be greater than the typical read length.	75	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
 flu_track	nextclade_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	runtime	
 flu_track	nextclade_custom_input_dataset	File	For H5N1 flu samples only. A custom Nextclade dataset in JSON format. If provided, this dataset will be used to process any H5N1 flu samples. If not provided, a custom dataset will be selected depending on the GenoFLU Genotype.	Defaults are GenoFLU Genotype specific. Please find these default values here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	True
@@ -836,7 +822,6 @@ flu_track	nextclade_output_parser_docker	String	The Docker container to use for 
 flu_track	nextclade_output_parser_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	runtime	
 flu_track	read1	File	Internal component, do not modify		Optional	TheiaCoV_FASTA	general	
 flu_track	read2	File	Internal component, do not modify		Optional	TheiaCoV_FASTA, TheiaCoV_ONT	general	
-flu_track	vadr_outputs_tgz	File	Internal component, do not modify		Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
 flye	additional_parameters	String	Additional parameters for Flye assembler		Optional	TheiaViral_ONT	general	
 flye	asm_coverage	Int	Reduced coverage for initial disjointig assembly		Optional	TheiaViral_ONT	general	
 flye	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_ONT	runtime	
