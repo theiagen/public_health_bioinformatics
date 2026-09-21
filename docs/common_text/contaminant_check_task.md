@@ -8,8 +8,8 @@ fragment: true
     ```json
     {"<SET_NAME1>": ["<CONTAMINANT_SEQUENCE_1>", "<CONTAMINANT_SEQUENCE_n">]}
     ```
-    
-    The composite status, `contaminant_check_status`, will report `"PASS"` if expected and unexpected sequences are identified within the `min_expected_seq` and `max_unexpected_seq` thresholds; if not, `"FAIL ..."` is reported depicting which `expected_sequences` failed and why, along with which unexpected sequences were identified. 
+
+    The composite status, `contaminant_check_status`, will report `"PASS"` if expected and unexpected sequences are identified within the `min_expected_seq` and `max_unexpected_seq` thresholds; if not, `"FAIL ..."` is reported depicting which `expected_sequences` failed and why, along with which unexpected sequences were identified.
 
     Additionally, the coverage, depth, and number of reads mapped are reported in JSON mappings for the sets of expected and unexpected sequences.
 
