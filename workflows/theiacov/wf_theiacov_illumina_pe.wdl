@@ -84,7 +84,9 @@ workflow theiacov_illumina_pe {
       primer_bed_file = primer_bed,
       pangolin_docker_image = pangolin_docker_image,
       kraken_target_organism_input = target_organism,
+      # hiding parameters from terra to avoid input bloat
       flu_genoflu_genotype = ""
+
   }
   if (! skip_screen_raw) {
     call screen.check_reads as raw_check_reads {
@@ -141,6 +143,7 @@ workflow theiacov_illumina_pe {
             samplename = samplename,
             read1 = read_QC_trim.read1_clean,
             read2 = read_QC_trim.read2_clean,
+            assembly_fasta = ""
             reference_genome = organism_parameters.reference,
             primer_bed = organism_parameters.primer_bed,
             reference_gff = organism_parameters.reference_gff,
@@ -159,7 +162,10 @@ workflow theiacov_illumina_pe {
             samplename = samplename,
             standardized_organism = organism_parameters.standardized_organism,
             seq_method = seq_method,
-            irma_min_consensus_support = select_first([min_depth, 30])
+            irma_min_consensus_support = select_first([min_depth, 30]),
+            # hiding parameters from terra to avoid input bloat
+            assembly_fasta = "gs://theiagen-public-resources-rp/empty_files/empty.fasta",
+            vadr_outputs_tgz = "gs://theiagen-public-resources-rp/empty_files/empty.fasta",
         }
       }
       if (defined(ivar_consensus.assembly_fasta) || defined(flu_track.irma_assembly_fasta)) {

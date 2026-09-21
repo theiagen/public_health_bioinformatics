@@ -105,6 +105,21 @@ workflow theiacov_fasta {
         seq_method = seq_method,
         flu_subtype = flu_subtype,
         vadr_outputs_tgz = morgana_magic.vadr_all_outputs_tar_gz,
+        # setting these input parameters to avoid input bloat in terra
+        # cannot provide r1 and r2 to hide it b/c it will think there's actual data there
+        irma_min_read_length = 0,
+        irma_min_consensus_support = 0,
+        irma_min_avg_consensus_allele_quality = 0,
+        irma_min_ambiguous_threshold = 0.0,
+        irma_memory = 0,
+        irma_keep_ref_deletions = True,
+        irma_docker_image = "",
+        irma_disk_size = 0,
+        irma_cpu = 0,
+        assembly_metrics_memory = 0,
+        assembly_metrics_docker = "",
+        assembly_metrics_disk_size = 0,
+        assembly_metrics_cpu = 0
     }
   }
   # QC check task
