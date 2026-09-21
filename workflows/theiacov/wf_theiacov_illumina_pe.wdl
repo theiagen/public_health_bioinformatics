@@ -143,7 +143,6 @@ workflow theiacov_illumina_pe {
             samplename = samplename,
             read1 = read_QC_trim.read1_clean,
             read2 = read_QC_trim.read2_clean,
-            assembly_fasta = "",
             reference_genome = organism_parameters.reference,
             primer_bed = organism_parameters.primer_bed,
             reference_gff = organism_parameters.reference_gff,
