@@ -71,7 +71,7 @@ workflow theiacov_fasta {
       vadr_memory = organism_parameters.vadr_memory,
       nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
       nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
-      pangolin_docker_image = organism_parameters.pangolin_docker,,
+      pangolin_docker_image = organism_parameters.pangolin_docker,
       workflow_type = "theiacov_fasta",
       # hiding internal components to decrease input bloat
       reference_gene_locations_bed = "gs://theiagen-public-resources-rp/empty_file/empty.bed",
