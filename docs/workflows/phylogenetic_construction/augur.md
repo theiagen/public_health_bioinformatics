@@ -81,7 +81,7 @@ Any metadata present in the final JSON file for Auspice visualization is determi
     <div style="text-align: center;">
     ![Workflow showing how metadata fields (dates, clades, and geographical location) conditionally trigger Augur steps (building a time tree, adding clade info, adding map info) to produce an Auspice JSON output.](../../assets/figures/Augur_Metadata_Conditionals.png){data-description="The metadata and type of tree in the output JSON for Auspice will depend on the metadata that is present in input metadata file. If no metadata file is provided, the output JSON will only contain a distance tree. If date information is present, the distance tree will be replaced by a tree refined by time (time tree). If clade and/or pango lineage (for SARS-CoV-2) information is provided, the tree will display an option to color by lineage. If geographical information is present, a map will load in Auspice using the information provided."}
     </div>
-    ///caption
+    /// caption
     The metadata and type of tree in the output JSON for Auspice will depend on the metadata that is present in input metadata file. If no metadata file is provided, the output JSON will only contain a distance tree. If date information is present, the distance tree will be replaced by a tree refined by time (time tree). If clade and/or pango lineage (for SARS-CoV-2) information is provided, the tree will display an option to color by lineage. If geographical information is present, a map will load in Auspice using the information provided.
     ///
 
