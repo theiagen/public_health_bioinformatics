@@ -86,7 +86,6 @@ workflow theiacov_illumina_pe {
       kraken_target_organism_input = target_organism,
       # hiding parameters from terra to avoid input bloat
       flu_genoflu_genotype = ""
-
   }
   if (! skip_screen_raw) {
     call screen.check_reads as raw_check_reads {
