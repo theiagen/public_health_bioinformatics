@@ -51,7 +51,7 @@ workflow theiaprok_illumina_se {
     String terra_project="NA"
     String terra_workspace="NA"
     # read screen paramaters
-    Boolean skip_scren_raw = false
+    Boolean skip_screen_raw = false
     Boolean skip_screen_clean = false
     Boolean skip_mash = false
     Int min_reads = 7472
