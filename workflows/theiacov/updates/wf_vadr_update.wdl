@@ -23,11 +23,25 @@ workflow vadr_update {
       vadr_skip_length = vadr_skip_length,
       vadr_options = vadr_opts,
       vadr_model = vadr_model_file,
-      vadr_mem = vadr_memory
+      vadr_mem = vadr_memory,
+      flu_genoflu_genotype = "",
+      flu_segment = "",
+      flu_subtype = "",
+      gene_locations_bed_file = "gs://theiagen-public-resources-rp/empty_files/empty.bed",
+      genome_length_input = 0,
+      hiv_primer_version = "",
+      kraken_target_organism_input = "",
+      nextclade_dataset_name_input = "",
+      nextclade_dataset_tag_input = "",
+      pangolin_docker_image = "",
+      primer_bed_file = "gs://theiagen-public-resources-rp/empty_files/empty.bed",
+      reference_genome = "gs://theiagen-public-resources-rp/empty_files/empty.fasta",
+      reference_gff_file = "gs://theiagen-public-resources-rp/empty_files/empty.gff3"
   }
   call consensus_qc_task.consensus_qc {
     input:
-      assembly_fasta = genome_fasta
+      assembly_fasta = genome_fasta,
+
   }
   if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "flu" || organism_parameters.standardized_organism == "mumps" || organism_parameters.standardized_organism == "rubella" || organism_parameters.standardized_organism == "measles") {
     call vadr_task.vadr {

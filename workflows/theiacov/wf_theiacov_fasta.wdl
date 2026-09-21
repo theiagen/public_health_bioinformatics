@@ -49,7 +49,8 @@ workflow theiacov_fasta {
       vadr_skip_length = vadr_skip_length,
       vadr_options = vadr_opts,
       vadr_model = vadr_model_file,
-      vadr_mem = vadr_memory
+      vadr_mem = vadr_memory,
+      flu_genoflu_genotype = ""
   }
   call consensus_qc_task.consensus_qc {
     input:
@@ -71,7 +72,9 @@ workflow theiacov_fasta {
       nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
       nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
       pangolin_docker_image = organism_parameters.pangolin_docker,
-      # Setting flu_track related inputs to default values as they are not utilized in TheiaCov, decreasing external input bloat
+      workflow_type = "theiacov_fasta",
+      # hiding internal components to decrease input bloat
+      reference_gene_locations_bed = "gs://theiagen-public-resources-rp/empty_file/empty.bed",
       seq_method = "",
       assembly_metrics_cpu = 0,
       assembly_metrics_disk_size = 0,
@@ -92,8 +95,7 @@ workflow theiacov_fasta {
       abricate_flu_memory = 0,
       abricate_flu_min_percent_coverage = 0,
       abricate_flu_min_percent_identity = 0,
-      flu_track_antiviral_aa_subs = "",
-      workflow_type = "theiacov_fasta"
+      flu_track_antiviral_aa_subs = ""
   }
   if (organism == "flu") {
     call run_flu_track.flu_track {
@@ -104,6 +106,20 @@ workflow theiacov_fasta {
         seq_method = seq_method,
         flu_subtype = flu_subtype,
         vadr_outputs_tgz = morgana_magic.vadr_all_outputs_tar_gz,
+        # hiding internal components to decrease input bloat
+        irma_min_read_length = 0,
+        irma_min_consensus_support = 0,
+        irma_min_avg_consensus_allele_quality = 0,
+        irma_min_ambiguous_threshold = 0.0,
+        irma_memory = 0,
+        irma_keep_ref_deletions = true,
+        irma_docker_image = "",
+        irma_disk_size = 0,
+        irma_cpu = 0,
+        assembly_metrics_memory = 0,
+        assembly_metrics_docker = "",
+        assembly_metrics_disk_size = 0,
+        assembly_metrics_cpu = 0
     }
   }
   # QC check task

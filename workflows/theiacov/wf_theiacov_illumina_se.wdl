@@ -78,7 +78,8 @@ workflow theiacov_illumina_se {
       vadr_model = vadr_model_file,
       vadr_mem = vadr_memory,
       primer_bed_file = primer_bed,
-      pangolin_docker_image = pangolin_docker_image
+      pangolin_docker_image = pangolin_docker_image,
+      flu_genoflu_genotype = ""
   }
   if (! skip_screen_raw) {
     call screen.check_reads_se as raw_check_reads {
@@ -159,7 +160,8 @@ workflow theiacov_illumina_se {
           nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
           nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
           pangolin_docker_image = organism_parameters.pangolin_docker,
-          # Setting flu_track related inputs to default values as they are not utilized in TheiaCov, decreasing external input bloat
+          workflow_type = "theiacov_se",
+          # hiding internal components to decrease input bloat
           seq_method = "",
           assembly_metrics_cpu = 0,
           assembly_metrics_disk_size = 0,
@@ -171,6 +173,7 @@ workflow theiacov_illumina_se {
           irma_keep_ref_deletions = false,
           irma_memory = 0,
           genoflu_cpu = 0,
+          genoflu_cross_reference = "gs://theiagen-public-resources-rp/empty_files/empty.fasta",
           genoflu_disk_size = 0,
           genoflu_docker = "",
           genoflu_memory = 0,
@@ -181,7 +184,7 @@ workflow theiacov_illumina_se {
           abricate_flu_min_percent_coverage = 0,
           abricate_flu_min_percent_identity = 0,
           flu_track_antiviral_aa_subs = "",
-          workflow_type = "theiacov_se"
+          nextclade_custom_input_dataset = "gs://theiagen-public-resources-rp/empty_file/empty.txt"
       }
       if (defined(qc_check_table)) {
         call qc_check.qc_check_phb as qc_check_task {
