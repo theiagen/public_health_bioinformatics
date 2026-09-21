@@ -165,7 +165,7 @@ workflow theiacov_illumina_pe {
             irma_min_consensus_support = select_first([min_depth, 30]),
             # hiding parameters from terra to avoid input bloat
             assembly_fasta = "gs://theiagen-public-resources-rp/empty_files/empty.fasta",
-            vadr_outputs_tgz = "gs://theiagen-public-resources-rp/empty_files/empty.fasta",
+            vadr_outputs_tgz = "gs://theiagen-public-resources-rp/empty_files/empty.fasta"
         }
       }
       if (defined(ivar_consensus.assembly_fasta) || defined(flu_track.irma_assembly_fasta)) {

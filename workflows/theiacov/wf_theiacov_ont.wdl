@@ -157,7 +157,7 @@ workflow theiacov_ont {
             irma_min_consensus_support = irma_min_consensus_support,
             # hiding these inputs from terra to avoid input bloat
             assembly_fasta = "gs://theiagen-public-resources-rp/empty_files/empty.fasta",
-            vadr_outputs_tgz = "gs://theiagen-public-resources-rp/empty_files/empty.fasta",
+            vadr_outputs_tgz = "gs://theiagen-public-resources-rp/empty_files/empty.fasta"
         }
       }
       # nanoplot for basic QC metrics
