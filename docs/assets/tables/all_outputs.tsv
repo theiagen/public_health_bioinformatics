@@ -346,7 +346,6 @@ ete4_status	String	Status of standardized taxonomy acquisition	TheiaViral_Illumi
 ete4_version	String	The version of ETE4 used	Metabuli, TheiaViral_Illumina_PE, TheiaViral_ONT
 excluded_samples	File	A file that contains the names and reasons why a sample was excluded from submission. **For SARS-CoV-2**, there are two sections: First, a section for any samples that failed to meet pre-determined quality thresholds (`number_N` and `vadr_num_alert`). Second, a section that includes a table that describes any missing required metadata for each sample. This table has the sample name for rows and any columns that have missing metadata as headers. If a sample is missing a piece of required metadata, the corresponding cell will be blank. However, if a different sample does have metadata for that column, the associated value will appear in the corresponding cell. **For flu and mpox**, only the second section described above exists. _Please see the example below for more details_.	Mercury_Prep_N_Batch
 excluded_samples	File	Text file listing samples that were excluded from BioSample submission for missing required metadata	Terra_2_NCBI
-failed_uploads	File	The metadata for any failed uploads	Terra_2_GISAID
 fasta_utilities_fai	File	FASTA index file	TheiaViral_ONT
 fasta_utilities_samtools_docker	String	Docker image used for samtools in fasta utilities	TheiaViral_ONT
 fasta_utilities_samtools_version	String	Version of samtools used in fasta utilities	TheiaViral_ONT
@@ -505,9 +504,7 @@ genotyphi_report_tsv	File	TSV file of GenoTyphi output, described <https://githu
 genotyphi_species	String	Species call from Mykrobe, used to run GenoTyphi	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 genotyphi_st_probes_percent_coverage	Float	Percentage coverage to the Typhi MLST probes	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 genotyphi_version	String	Version of GenoTyphi used	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-gisaid_cli_version	String	The verison of the GISAID CLI tool	Terra_2_GISAID
 gisaid_fasta	File	**Only for mpox and SARS-CoV-2 submission**: GISAID fasta file for upload	Mercury_Prep_N_Batch
-gisaid_logs	File	The log files regarding the submission	Terra_2_GISAID
 gisaid_metadata	File	**Only for mpox and SARS-CoV-2 submission**: GISAID metadata for upload	Mercury_Prep_N_Batch
 hicap_docker	String	Docker image used for hicap	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 hicap_genes	String	cap genes identified. genes on different contigs delimited by;. truncation shown by trailing *	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
@@ -1266,8 +1263,6 @@ tbprofiler_tngs_wf_version	String	The version of the tbprofiler_tngs workflow us
 tbprofiler_version	String	The version of TBProfiler used for this analysis	TBProfiler_tNGS, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 Terra_2_ENA_analysis_date	String	Date the Terra to ENA workflow was run	Terra_2_ENA
 Terra_2_ENA_version	String	Version of the Terra to ENA workflow used	Terra_2_ENA
-terra_2_gisaid_analysis_date	String	The date of the analysis	Terra_2_GISAID
-terra_2_gisaid_version	String	The version of the PHB repository that this workflow is hosted in	Terra_2_GISAID
 Terra_2_NCBI_analysis_date	String	Date that the workflow was run	Terra_2_NCBI
 Terra_2_NCBI_version	String	Version of the PHB repository where the workflow is hosted	Terra_2_NCBI
 terra_table	File	Terra table file used for submission to ENA	Terra_2_ENA
