@@ -50,7 +50,7 @@ fragment: true
 
     These parameters, and others, are set in a preceeding [`allele_calling_parameters` subworkflow](https://github.com/theiagen/public_health_bioinformations/blob/main/workflows/utilities/wf_allele_calling_parameters.wdl). These parameters include the organism-specific databases sourced from the [pn2.0-mlst-databases](https://github.com/ncezid-biome/pn2.0-mlst-databases/tree/main) repository, specific pathing information unique to each database, and [organism-specific similarity thresholds](https://github.com/ncezid-biome/pulsenet2.0-bfx/blob/47644186f2df27e9f01a000d47c451135a75f65d/main/utils/utils.nf#L40).
 
-    This module adapts the PulseNet 2.0 Allele Calling process for implementation on [Terra.bio](https://app.terra.bio), and was developed in collaboration with Association of Public Health Laboratories (APHL) and Centers for Disease Control and Prevention (CDC)'s Enteric Diseases Laboratory Branch (EDLB). We gratefully acknowledge the developers of the [Allele Calling tool](https://github.com/ncezid-biome/pulsenet2.0-bfx/tree/main/processes/AlleleCalling) and the CDC EDLB team, including [name individuals].
+    This module adapts the PulseNet 2.0 Allele Calling process for implementation on [Terra.bio](https://app.terra.bio), and was developed in collaboration with the Association of Public Health Laboratories (APHL) and Centers for Disease Control and Prevention (CDC)'s Enteric Diseases Laboratory Branch (EDLB). We gratefully acknowledge the developers of the [Allele Calling tool](https://github.com/ncezid-biome/pulsenet2.0-bfx/tree/main/processes/AlleleCalling) and the CDC EDLB team.
 
     !!! techdetails "Allele Calling Technical Details"
         |  | Links |
