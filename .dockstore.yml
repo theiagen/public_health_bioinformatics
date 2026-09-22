@@ -325,3 +325,8 @@ workflows:
    primaryDescriptorPath: /workflows/utilities/wf_microreact_export.wdl
    testParameterFiles:
      - /tests/inputs/empty.json
+  - name: Allele_Clustering_PHB
+    subclass: WDL
+    primaryDescriptorPath: /workflows/phylogenetics/wf_allele_clustering.wdl
+    testParameterFiles:
+      - /tests/inputs/empty.json
