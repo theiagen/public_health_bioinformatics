@@ -1483,6 +1483,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../workflows/phylogenetic_construction/allele_clustering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Allele_Clustering
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../workflows/phylogenetic_construction/augur/" class="md-nav__link">
         
   
@@ -3468,6 +3495,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../workflows/phylogenetic_construction/allele_clustering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Allele_Clustering
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../workflows/phylogenetic_construction/core_gene_snp/" class="md-nav__link">
         
   
@@ -4759,6 +4813,33 @@
     
   
   Overview Table
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../workflows/phylogenetic_construction/allele_clustering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Allele_Clustering
 
     
   </span>
@@ -6318,15 +6399,8 @@
   <h1 id="__skip">Workflow Fragment `flye_denovo`</h1>
 
 <details class="task">
-<summary><code>Flye-Denovo</code>: <em>De novo</em> Assembly</summary>
-<p>Flye-Denovo is a sub-workflow that performs <em>de novo</em> assembly using Flye for ONT data and supports additional polishing and visualization steps.</p>
-<div class="admonition tip">
-<p class="admonition-title">Ensure correct Medaka model is selected if performing Medaka polishing</p>
-<p>In order to obtain the best results, the appropriate model must be set to match the sequencer's basecaller model; this string takes the format of <code>{pore}\_{device}\_{caller variant}\_{caller_version}</code>. See also <a href="https://github.com/nanoporetech/medaka?tab=readme-ov-file#models">https://github.com/nanoporetech/medaka?tab=readme-ov-file#models</a>.</p>
-<p>If Flye is being run on legacy data the Medaka model will likely be <code>r941_min_hac_g507</code>.</p>
-<p>Recently generated data will likely be suited by the default model of <code>r1041_e82_400bps_sup_v5.0.0</code>.</p>
-</div>
-<p>The detailed steps and tasks are as follows:</p>
+<summary><code>flye_denovo</code>: <em>De novo</em> Assembly</summary>
+<p><em>De novo</em> assembly is the process or product of attempting to reconstruct a genome from scratch (without prior knowledge of the genome).</p>
 <details class="task">
 <summary><code>Porechop</code>: Read Trimming (optional)</summary>
 <p>Porechop is a tool for finding and removing adapters from ONT data. Adapters on the ends of reads are trimmed, and when a read has an adapter in the middle, the read is split into two.</p>
@@ -6464,7 +6538,6 @@
 </tbody>
 </table>
 </div>
-</details>
 <details class="task">
 <summary><code>Polypolish</code>: Hybrid Assembly Polishing <mark><em>for ONT and Illumina data</em></mark></summary>
 <p>If short reads are provided with the optional <code>illumina_read1</code> and <code>illumina_read2</code> inputs, Polypolish will use those short-reads to correct errors in the long-read assemblies. Uniquely, Polypolish uses the short-read alignments where each read is aligned to <em>all</em> possible locations, meaning that even repeat regions will have error correction.</p>
@@ -6498,20 +6571,19 @@
 </table>
 </div>
 </details>
+</details>
+<div class="admonition dna">
+<p>To skip polishing,, set <code>skip_polishing</code> to <code>true</code>. These three modules are mututally exlcusive.</p>
 <details class="task">
-<summary><code>Medaka</code>: Polishing of Flye assembly (default; optional)</summary>
-<p>Polishing is optional and can be skipped by setting the <code>skip_polishing</code> variable to true. If polishing is skipped, then neither Medaka nor Racon will run.</p>
-<p>Medaka is the default assembly polisher used in TheiaProk. Racon may be used alternatively, and if so, Medaka will not run. Medaka uses the raw reads to polish the assembly and generate a consensus sequence.</p>
-<p>Importantly, Medaka requires knowing the model that was used to generate the read data. There are several ways to provide this information:</p>
-<ul>
-<li>Automatic Model Selection: Automatically determines the most appropriate Medaka model based on the input data, ensuring optimal polishing results without manual intervention.</li>
-<li>User-Specified Model Override: Allows users to specify a particular <code>Medaka model</code> if automatic selection does not yield the desired outcome or for specialized use cases.</li>
-<li>Default Model: If both automatic model selection fails and no user-specified model is provided, Medaka defaults to the predefined fallback model <code>r1041_e82_400bps_sup_v5.0.0</code>.</li>
-</ul>
-<div class="admonition info">
-<p class="admonition-title">Medaka Model Resolution Process</p>
-<p>Medaka's automatic model selection uses the <code>medaka tools resolve_model</code> command to identify the appropriate model for polishing. This process relies on metadata embedded in the input file, which is typically generated by the basecaller. If the automatic selection fails to identify a suitable model, Medaka gracefully falls back to the default model to maintain workflow continuity. <strong>Users should verify the chosen model and consider specifying a model override if necessary.</strong></p>
+<summary><code>Medaka</code>: Assembly Polishing (optional; default)</summary>
+<p>Medaka uses the raw reads to polish the assembly and generate a consensus sequence.</p>
+<div class="admonition dna">
+<p class="admonition-title">Medaka supports legacy data models</p>
+<p>If you have legacy data, the Medaka model will likely be <code>r941_min_hac_g507</code>.</p>
 </div>
+<p>If the user wants to have Medaka auto-detect the model, set <code>medaka_auto_detect_model</code> to <code>true</code>. Alternatively, the user may specify a model with <code>medaka_model</code>. The default <code>medaka_model</code> is <code>r1041_e82_400bps_sup_v5.0.0</code>.</p>
+<p>The selected model is important for result accuracy. See also <a href="https://github.com/nanoporetech/medaka?tab=readme-ov-file#models">Medaka's model documentation</a>.</p>
+<p>When run in TheiaProk_ONT, the <code>--bacteria</code> flag is included; this behavior can be turned off with the <code>medaka_use_bacteria</code> optional input. In TheiaEuk_ONT, the <code>--bacteria</code> flag is not available.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">Medaka Technical Details</p>
 <table>
@@ -6539,9 +6611,67 @@
 </div>
 </details>
 <details class="task">
-<summary><code>Racon</code>: Polishing of Flye assembly (alternative; optional)</summary>
-<p>Polishing is optional and can be skipped by setting the <code>skip_polishing</code> variable to true. If polishing is skipped, then neither Medaka nor Racon will run.</p>
-<p>Racon is an alternative to using Medaka for assembly polishing, and can be run by setting the <code>polisher</code> input to "racon". Racon is a consensus algorithm designed for refining raw de novo DNA assemblies generated from long, uncorrected sequencing reads.</p>
+<summary><code>Dorado</code>: Assembly Polishing (alternative; optional)</summary>
+<p>Dorado uses raw sequencing reads to polish an assembly.</p>
+<div class="admonition warning">
+<p class="admonition-title">Dorado DOES NOT support legacy data models</p>
+<p><a href="https://software-docs.nanoporetech.com/dorado/latest/models/list/">Only the DNA R10.4.1 and RNA004 models are supported in Dorado</a>. If you have legacy data generated with DNA R9.4.1 or RNA002, we recommend using Medaka instead.</p>
+</div>
+<p>Dorado will by default auto-detect the basecalling model that was used to generate the data. If the user wants to specify their own model, they must set <code>dorado_auto_detect_model</code> to <code>false</code> and provide the model in the <code>dorado_model</code> input. Read groups will be ignored automatically; this behavior can be turned off with <code>dorado_ignore_read_groups</code>.</p>
+<p>The following models are available in the default Docker image in this task:</p>
+<details class="toggle">
+<summary>Available Dorado models</summary>
+<p>The following models are compatible with this version of Dorado:</p>
+<ul>
+<li>dna_r10.4.1_e8.2_400bps_hac@v5.0.0_polish_rl</li>
+<li>dna_r10.4.1_e8.2_400bps_hac@v5.0.0_polish_rl_mv</li>
+<li>dna_r10.4.1_e8.2_400bps_sup@v5.0.0_polish_rl</li>
+<li>dna_r10.4.1_e8.2_400bps_sup@v5.0.0_polish_rl_mv</li>
+<li>dna_r10.4.1_e8.2_400bps_hac@v5.2.0_polish_rl</li>
+<li>dna_r10.4.1_e8.2_400bps_hac@v5.2.0_polish_rl_mv</li>
+<li>dna_r10.4.1_e8.2_400bps_sup@v5.2.0_polish_rl</li>
+<li>dna_r10.4.1_e8.2_400bps_sup@v5.2.0_polish_rl_mv</li>
+<li>dna_r10.4.1_e8.2_400bps_hac@v6.0.0_polish_rl</li>
+<li>dna_r10.4.1_e8.2_400bps_hac@v6.0.0_polish_rl_mv</li>
+<li>dna_r10.4.1_e8.2_400bps_polish_bacterial_methylation_v5.0.0</li>
+<li>dna_r10.4.1_e8.2_400bps_hac@v4.2.0_polish</li>
+<li>dna_r10.4.1_e8.2_400bps_sup@v4.2.0_polish</li>
+<li>dna_r10.4.1_e8.2_400bps_hac@v4.3.0_polish</li>
+<li>dna_r10.4.1_e8.2_400bps_sup@v4.3.0_polish</li>
+</ul>
+<p>Specify a model at your own risk.</p>
+</details>
+<p>The selected model is important for result accuracy. See also <a href="https://software-docs.nanoporetech.com/dorado/latest/models/models/">Dorado's model documentation</a>.</p>
+<p>When run in TheiaProk_ONT, the <code>--bacteria</code> flag is included; this behavior can be turned off with the <code>dorado_use_bacteria</code> optional input. In TheiaEuk_ONT, the <code>--bacteria</code> flag is not available.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Dorado Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_dorado_polishing.wdl">task_dorado_polishing.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/nanoporetech/dorado">Dorado on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://software-docs.nanoporetech.com/dorado/latest/">Dorado Documentation</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>Racon</code>: Assembly Polishing (alternative; optional)</summary>
+<p>Racon is an alternative to using Medaka or Dorado for assembly polishing, and can be run by setting the <code>polisher</code> input to "racon". Racon is a consensus algorithm designed for refining raw de novo DNA assemblies generated from long, uncorrected sequencing reads.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">Racon Technical Details</p>
 <table>
@@ -6572,6 +6702,7 @@
 </table>
 </div>
 </details>
+</div>
 <details class="task">
 <summary><code>Filter Contigs</code>: Contig Quality Control</summary>
 <p>This task filters the created contigs based on a user-defined minimum length threshold (default of 1000) and removes homopolymer contigs (contigs of any length that consist of a single nucleotide).</p>

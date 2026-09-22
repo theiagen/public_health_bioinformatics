@@ -1483,6 +1483,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../workflows/phylogenetic_construction/allele_clustering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Allele_Clustering
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../workflows/phylogenetic_construction/augur/" class="md-nav__link">
         
   
@@ -3468,6 +3495,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../workflows/phylogenetic_construction/allele_clustering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Allele_Clustering
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../workflows/phylogenetic_construction/core_gene_snp/" class="md-nav__link">
         
   
@@ -4759,6 +4813,33 @@
     
   
   Overview Table
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../workflows/phylogenetic_construction/allele_clustering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Allele_Clustering
 
     
   </span>
@@ -6317,38 +6398,42 @@
 
   <h1 id="__skip">Task Fragment `rasusa`</h1>
 
+<!-- if: ont|read_qc_trim|theiaviral -->
 <details class="task">
-<summary><code>Rasusa</code>: Read Subsampling</summary>
-<p>Rasusa is a tool to randomly subsample sequencing reads to a specified coverage without assuming that all reads are of equal length, making it especially suitable for long-read data while still being applicable to short-read data.</p>
-<p>The Rasusa task supports four mutually exclusive subsampling modes:</p>
-<table>
-<thead>
-<tr>
-<th>Mode</th>
-<th>Behavior</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>--bases</code></td>
-<td>Subsample to a target number of bases (e.g. <code>100M</code>, <code>4.3kb</code>). Overrides coverage.</td>
-</tr>
-<tr>
-<td><code>--frac</code></td>
-<td>Subsample to a fraction of the input reads (e.g. <code>0.5</code> keeps half). Overrides coverage.</td>
-</tr>
-<tr>
-<td><code>--num</code></td>
-<td>Subsample to an explicit number of reads. Overrides coverage.</td>
-</tr>
-<tr>
-<td><code>--coverage</code> + <code>--genome-size</code></td>
-<td>Default mode. Subsamples to a target depth using an estimated genome length.</td>
-</tr>
-</tbody>
-</table>
-<p>If more than one of <code>--bases</code>, <code>--frac</code>, or <code>--num</code> is supplied the task will fail with a descriptive error. See <a href="#inputs">inputs</a> section for details on Terra variable names.</p>
+<summary><code>Rasusa</code>: Read Subsampling (optional)</summary>
 </details>
+<!-- endif -->
+<!-- if: wf -->
+<details class="task">
+<summary>`Rasusa: Read Subsampling</summary>
+</details>
+<!-- endif -->
+<div class="language-text highlight"><pre><span></span><code>Rasusa is a tool to randomly subsample sequencing reads to a specified coverage without assuming that all reads are of equal length, making it especially suitable for long-read data while still being applicable to short-read data.
+</code></pre></div>
+<!-- if: ont -->
+<div class="language-text highlight"><pre><span></span><code>By default, this task will subsample TheiaProk_ONT reads to a depth of 150X using an estimated genome length of 5 million basepairs and TheiaEuk_ONT reads using an estimated genome length of 50 million basepairs. The estimated genome length can be changed by the user by providing a different value for the `genome_length` input parameter. The target subsampling depth can also be adjusted by modifying the `rasusa_downsampling_coverage` variable.
+
+!!! dna "Activate Rasusa by providing a downsampling metric"
+    One of the following mutually exclusive parameters must be set to enable Rasusa downsampling:
+
+    - `genome_length`
+    - `rasusa_num_bases`
+    - `rasusa_fraction_of_reads`
+    - `rasusa_num_reads`
+</code></pre></div>
+<!-- endif -->
+
+<div class="language-text highlight"><pre><span></span><code>The Rasusa task supports four mutually exclusive subsampling modes:
+
+| Mode | Behavior |
+| --- | --- |
+| `--bases` | Subsample to a target number of bases (e.g. `100M`, `4.3kb`). Overrides coverage. |
+| `--frac` | Subsample to a fraction of the input reads (e.g. `0.5` keeps half). Overrides coverage. |
+| `--num` | Subsample to an explicit number of reads. Overrides coverage. |
+| `--coverage` + `--genome-size` | Default mode. Subsamples to a target depth using a genome length. |
+
+If more than one of `--bases`, `--frac`, or `--num` is supplied the task will fail with a descriptive error. See [inputs](#inputs) section for details on Terra variable names.
+</code></pre></div>
 <!-- if: read_qc_trim -->
 <div class="language-text highlight"><pre><span></span><code>To enable/disable this task, set the `call_rasusa` parameter to `true`/`false`. Each workflow has its own default values for Rasusa which can be overridden by the user:
 
@@ -6367,15 +6452,10 @@ When running in coverage mode, it's strongly recommended to manually set the `ra
 <!-- endif -->
 
 <!-- if: theiaviral -->
-<div class="language-text highlight"><pre><span></span><code>The Rasusa task performs subsampling on the input raw reads. By default, it subsamples reads to a target depth of 250X, using the estimated genome length either generated by the `datasets_genome_length` task or provided directly by the user. Disabled by default, users can enable it by setting the `skip_rasusa` variable to `false`. The target subsampling depth can also be adjusted by modifying the `coverage` variable.
+<div class="language-text highlight"><pre><span></span><code>The Rasusa task performs subsampling on the input raw reads and is disabled by default. Users can enable it by setting the `skip_rasusa` variable to `false`. When activated, it subsamples reads to a target depth of 250X, using the estimated genome length either generated by the `datasets_genome_length` task or provided directly by the user. The target subsampling depth can also be adjusted by modifying the `coverage` variable.
 
 ??? dna "`coverage` input parameter"
     This parameter specifies the target coverage for subsampling. The default value is `250`, but users can adjust it as needed.
-</code></pre></div>
-<!-- endif -->
-
-<!-- if: ont -->
-<div class="language-text highlight"><pre><span></span><code>The Rasusa task performs subsampling on the input raw reads. By default, this task will subsample TheiaProk_ONT reads to a depth of 150X using an estimated genome length of 5 million basepairs (0.7 Mb higher than the average bacterial genome length), and TheiaEuk_ONT reads using an estimated genome length of 50 million basepairs. The estimated genome length can be changed by the user by providing a different value for the `genome_length` input parameter. The target subsampling depth can also be adjusted by modifying the `rasusa_downsampling_coverage` variable.
 </code></pre></div>
 <!-- endif -->
 

@@ -1483,6 +1483,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../workflows/phylogenetic_construction/allele_clustering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Allele_Clustering
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../workflows/phylogenetic_construction/augur/" class="md-nav__link">
         
   
@@ -3468,6 +3495,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../workflows/phylogenetic_construction/allele_clustering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Allele_Clustering
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../workflows/phylogenetic_construction/core_gene_snp/" class="md-nav__link">
         
   
@@ -4759,6 +4813,33 @@
     
   
   Overview Table
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../workflows/phylogenetic_construction/allele_clustering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Allele_Clustering
 
     
   </span>
@@ -6550,6 +6631,7 @@
 <div class="language-text highlight"><pre><span></span><code>??? task "`Rasusa`: Read Subsampling (optional)"
     Rasusa is a tool to randomly subsample sequencing reads to a specified coverage without assuming that all reads are of equal length, making it especially suitable for long-read data while still being applicable to short-read data.
 
+
     The Rasusa task supports four mutually exclusive subsampling modes:
 
     | Mode | Behavior |
@@ -6557,7 +6639,7 @@
     | `--bases` | Subsample to a target number of bases (e.g. `100M`, `4.3kb`). Overrides coverage. |
     | `--frac` | Subsample to a fraction of the input reads (e.g. `0.5` keeps half). Overrides coverage. |
     | `--num` | Subsample to an explicit number of reads. Overrides coverage. |
-    | `--coverage` + `--genome-size` | Default mode. Subsamples to a target depth using an estimated genome length. |
+    | `--coverage` + `--genome-size` | Default mode. Subsamples to a target depth using a genome length. |
 
     If more than one of `--bases`, `--frac`, or `--num` is supplied the task will fail with a descriptive error. See [inputs](#inputs) section for details on Terra variable names.
 
@@ -6574,7 +6656,6 @@
     Rasusa executes after host-read removal (HRRT, if applicable) and before read trimming (Trimmomatic or fastp). Classification tasks (Kraken2, MIDAS) always run on the original/raw reads regardless of whether `call_rasusa` is enabled. The downsampled (but un-trimmed) reads are output to the Terra data table as `read1_subsampled_raw` and `read2_subsampled_raw`.
 
     When running in coverage mode, it's strongly recommended to manually set the `rasusa_genome_length` input parameter in order to ensure accurate downsampling. If not provided, `rasusa_genome_length` falls back to `raw_check_reads.est_genome_length` from the `read_screen` task. Oftentimes, this value can overestimate the true genome length, particularly for large, high-coverage FASTQ files. If the screen on the raw reads is skipped (`skip_screen_raw` in TheiaCoV, `skip_screen` in TheiaProk and TheiaEuk), no genome length is estimated, so you must supply `genome_length` explicitly or use one of the override modes above.
-
 
 
     ???+ warning "Non-deterministic output(s)"

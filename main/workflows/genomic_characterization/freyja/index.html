@@ -1873,6 +1873,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/allele_clustering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Allele_Clustering
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../phylogenetic_construction/augur/" class="md-nav__link">
         
   
@@ -3858,6 +3885,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/allele_clustering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Allele_Clustering
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../phylogenetic_construction/core_gene_snp/" class="md-nav__link">
         
   
@@ -5149,6 +5203,33 @@
     
   
   Overview Table
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/allele_clustering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Allele_Clustering
 
     
   </span>
@@ -12303,7 +12384,7 @@
 </tr>
 <tr>
 <td><code>--coverage</code> + <code>--genome-size</code></td>
-<td>Default mode. Subsamples to a target depth using an estimated genome length.</td>
+<td>Default mode. Subsamples to a target depth using a genome length.</td>
 </tr>
 </tbody>
 </table>
@@ -13028,7 +13109,7 @@
 </tr>
 <tr>
 <td><code>--coverage</code> + <code>--genome-size</code></td>
-<td>Default mode. Subsamples to a target depth using an estimated genome length.</td>
+<td>Default mode. Subsamples to a target depth using a genome length.</td>
 </tr>
 </tbody>
 </table>
@@ -13591,14 +13672,14 @@
 </table>
 </div>
 </details>
-</details>
-<div class="admonition dna">
-<p class="admonition-title">Nanoplot and genome length</p>
-<p>If <code>genome_length</code> is not provided Nanoplot will use the Quast assembly length to calculate the estimated coverage.</p>
 <details class="task">
 <summary><code>NanoPlot</code>: Read Quantification</summary>
 <p>NanoPlot is used for the determination of mean quality scores, read lengths, and number of reads. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
 <p>While this task currently is run <em>outside</em> of the <code>read_QC_trim_ont</code> workflow, it is being included here as it calculates statistics on the read data. This is done so that the actual assembly genome lengths can be used (if an estimated genome length is not provided by the user) to ensure the estimated coverage statistics are accurate.</p>
+<div class="admonition dna">
+<p class="admonition-title">Estimated coverage calculations depend on <code>genome_length</code> or <code>quast</code></p>
+<p>If the user does not provide a <code>genome_length</code>, Nanoplot will use the Quast assembly length to calculate the estimated coverage.</p>
+</div>
 <div class="admonition techdetails">
 <p class="admonition-title">NanoPlot Technical Details</p>
 <table>
@@ -13646,7 +13727,7 @@
 </tbody>
 </table>
 </div>
-</div>
+</details>
 <details class="task">
 <summary><code>Minimap2</code>: Read Alignment</summary>
 <p>Minimap2 is a popular aligner that is used to align reads (or assemblies) to an assembly file. In Minimap2, "modes" are a group of preset options.</p>

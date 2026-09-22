@@ -1499,6 +1499,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/allele_clustering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Allele_Clustering
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../phylogenetic_construction/augur/" class="md-nav__link">
         
   
@@ -3607,6 +3634,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/allele_clustering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Allele_Clustering
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../phylogenetic_construction/core_gene_snp/" class="md-nav__link">
         
   
@@ -4898,6 +4952,33 @@
     
   
   Overview Table
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/allele_clustering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Allele_Clustering
 
     
   </span>
@@ -6810,71 +6891,33 @@
 </table>
 </div>
 <h3 id="workflow-tasks">Workflow Tasks<a class="headerlink" href="#workflow-tasks" title="Permanent link">&para;</a></h3>
-<details class="task">
-<summary><code>Rasusa</code>: Read Subsampling</summary>
-<p>Rasusa is a tool to randomly subsample sequencing reads to a specified coverage without assuming that all reads are of equal length, making it especially suitable for long-read data while still being applicable to short-read data.</p>
-<p>The Rasusa task supports four mutually exclusive subsampling modes:</p>
-<table>
-<thead>
-<tr>
-<th>Mode</th>
-<th>Behavior</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>--bases</code></td>
-<td>Subsample to a target number of bases (e.g. <code>100M</code>, <code>4.3kb</code>). Overrides coverage.</td>
-</tr>
-<tr>
-<td><code>--frac</code></td>
-<td>Subsample to a fraction of the input reads (e.g. <code>0.5</code> keeps half). Overrides coverage.</td>
-</tr>
-<tr>
-<td><code>--num</code></td>
-<td>Subsample to an explicit number of reads. Overrides coverage.</td>
-</tr>
-<tr>
-<td><code>--coverage</code> + <code>--genome-size</code></td>
-<td>Default mode. Subsamples to a target depth using an estimated genome length.</td>
-</tr>
-</tbody>
-</table>
-<p>If more than one of <code>--bases</code>, <code>--frac</code>, or <code>--num</code> is supplied the task will fail with a descriptive error. See <a href="#inputs">inputs</a> section for details on Terra variable names.</p>
-<details class="warning" open="open">
-<summary>Non-deterministic output(s)</summary>
-<p>This task may yield non-deterministic outputs since it performs <em>random</em> subsampling. To ensure reproducibility, set a value for the <code>rasusa_seed</code> optional input variable.</p>
-</details>
-<div class="admonition techdetails">
-<p class="admonition-title">Rasusa Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/task_rasusa.wdl">task_rasusa.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/mbhall88/rasusa">Rasusa on GitHub</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://github.com/mbhall88/rasusa">Rasusa on GitHub</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td><a href="https://doi.org/10.21105/joss.03941">Rasusa: Randomly subsample sequencing reads to a specified coverage</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
+<div class="language-text highlight"><pre><span></span><code>Rasusa is a tool to randomly subsample sequencing reads to a specified coverage without assuming that all reads are of equal length, making it especially suitable for long-read data while still being applicable to short-read data.
+
+
+The Rasusa task supports four mutually exclusive subsampling modes:
+
+| Mode | Behavior |
+| --- | --- |
+| `--bases` | Subsample to a target number of bases (e.g. `100M`, `4.3kb`). Overrides coverage. |
+| `--frac` | Subsample to a fraction of the input reads (e.g. `0.5` keeps half). Overrides coverage. |
+| `--num` | Subsample to an explicit number of reads. Overrides coverage. |
+| `--coverage` + `--genome-size` | Default mode. Subsamples to a target depth using a genome length. |
+
+If more than one of `--bases`, `--frac`, or `--num` is supplied the task will fail with a descriptive error. See [inputs](#inputs) section for details on Terra variable names.
+
+
+
+???+ warning "Non-deterministic output(s)"
+    This task may yield non-deterministic outputs since it performs _random_ subsampling. To ensure reproducibility, set a value for the `rasusa_seed` optional input variable.
+
+!!! techdetails "Rasusa Technical Details"
+    |  | Links |
+    | --- | --- |
+    | Task | [task_rasusa.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/task_rasusa.wdl) |
+    | Software Source Code | [Rasusa on GitHub](https://github.com/mbhall88/rasusa) |
+    | Software Documentation | [Rasusa on GitHub](https://github.com/mbhall88/rasusa) |
+    | Original Publication(s) | [Rasusa: Randomly subsample sequencing reads to a specified coverage](https://doi.org/10.21105/joss.03941) |
+</code></pre></div>
 <h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
 <div class="searchable-table">
 <table>

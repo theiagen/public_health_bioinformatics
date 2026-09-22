@@ -1483,6 +1483,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../workflows/phylogenetic_construction/allele_clustering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Allele_Clustering
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../workflows/phylogenetic_construction/augur/" class="md-nav__link">
         
   
@@ -3468,6 +3495,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../workflows/phylogenetic_construction/allele_clustering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Allele_Clustering
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../workflows/phylogenetic_construction/core_gene_snp/" class="md-nav__link">
         
   
@@ -4759,6 +4813,33 @@
     
   
   Overview Table
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../workflows/phylogenetic_construction/allele_clustering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Allele_Clustering
 
     
   </span>
@@ -6371,13 +6452,19 @@
 </code></pre></div>
 <!-- endif -->
 
-<!-- if: theiaprok -->
-<div class="language-text highlight"><pre><span></span><code>!!! dna "A note on estimated genome length and Rasusa"
-
-    Rasusa is now skipped unless the user explicitly requests downsampling by setting one of the following: `genome_length`, `rasusa_num_bases`, `rasusa_fraction_of_reads`, or `rasusa_num_reads`. To downsample by coverage, please provide the genome length of your expected taxa. Downsampling is beneficial when coverage exceeds ~150x as this can increase assembly time, computational costs, and can introduce errors.
-
-??? task "`Rasusa`: Read Subsampling"
+<!-- if: theiaprok|theiaeuk -->
+<div class="language-text highlight"><pre><span></span><code>??? task "`Rasusa`: Read Subsampling (optional)"
     Rasusa is a tool to randomly subsample sequencing reads to a specified coverage without assuming that all reads are of equal length, making it especially suitable for long-read data while still being applicable to short-read data.
+
+    By default, this task will subsample TheiaProk_ONT reads to a depth of 150X using an estimated genome length of 5 million basepairs and TheiaEuk_ONT reads using an estimated genome length of 50 million basepairs. The estimated genome length can be changed by the user by providing a different value for the `genome_length` input parameter. The target subsampling depth can also be adjusted by modifying the `rasusa_downsampling_coverage` variable.
+
+    !!! dna "Activate Rasusa by providing a downsampling metric"
+        One of the following mutually exclusive parameters must be set to enable Rasusa downsampling:
+
+        - `genome_length`
+        - `rasusa_num_bases`
+        - `rasusa_fraction_of_reads`
+        - `rasusa_num_reads`
 
     The Rasusa task supports four mutually exclusive subsampling modes:
 
@@ -6386,13 +6473,11 @@
     | `--bases` | Subsample to a target number of bases (e.g. `100M`, `4.3kb`). Overrides coverage. |
     | `--frac` | Subsample to a fraction of the input reads (e.g. `0.5` keeps half). Overrides coverage. |
     | `--num` | Subsample to an explicit number of reads. Overrides coverage. |
-    | `--coverage` + `--genome-size` | Default mode. Subsamples to a target depth using an estimated genome length. |
+    | `--coverage` + `--genome-size` | Default mode. Subsamples to a target depth using a genome length. |
 
     If more than one of `--bases`, `--frac`, or `--num` is supplied the task will fail with a descriptive error. See [inputs](#inputs) section for details on Terra variable names.
 
 
-
-    The Rasusa task performs subsampling on the input raw reads. By default, this task will subsample TheiaProk_ONT reads to a depth of 150X using an estimated genome length of 5 million basepairs (0.7 Mb higher than the average bacterial genome length), and TheiaEuk_ONT reads using an estimated genome length of 50 million basepairs. The estimated genome length can be changed by the user by providing a different value for the `genome_length` input parameter. The target subsampling depth can also be adjusted by modifying the `rasusa_downsampling_coverage` variable.
 
     ???+ warning "Non-deterministic output(s)"
         This task may yield non-deterministic outputs since it performs _random_ subsampling. To ensure reproducibility, set a value for the `rasusa_seed` optional input variable.
@@ -6404,7 +6489,6 @@
         | Software Source Code | [Rasusa on GitHub](https://github.com/mbhall88/rasusa) |
         | Software Documentation | [Rasusa on GitHub](https://github.com/mbhall88/rasusa) |
         | Original Publication(s) | [Rasusa: Randomly subsample sequencing reads to a specified coverage](https://doi.org/10.21105/joss.03941) |
-
 ??? task "`Nanoq`: Read Filtering"
     Reads are filtered by length and quality using Nanoq. By default, sequences with less than 500 basepairs and quality scores lower than 10 are filtered out to improve assembly accuracy. These defaults are able to be modified by the user.
 
@@ -6415,7 +6499,6 @@
         | Software Source Code | [Nanoq on GitHub](https://github.com/esteinig/nanoq) |
         | Software Documentation | [Nanoq Documentation](https://github.com/esteinig/nanoq/blob/master/README.md) |
         | Original Publication(s) | [Nanoq: ultra-fast quality control for nanopore reads](https://doi.org/10.21105/joss.02991) |
-
 ??? task "`Metabuli`: Read Classification"
     Metabuli is used to classify and optionally extract reads against a reference database. Metabuli uses a novel k-mer structure, called metamer, to analyze both amino acid (AA) and DNA sequences. It leverages AA conservation for sensitive homology detection and DNA mutations for specific differentiation between closely related taxa.
 
@@ -6443,61 +6526,27 @@
 </code></pre></div>
 <!-- endif -->
 
-<div class="admonition dna">
-<p class="admonition-title">Nanoplot and genome length</p>
-<p>If <code>genome_length</code> is not provided Nanoplot will use the Quast assembly length to calculate the estimated coverage.</p>
-<details class="task">
-<summary><code>NanoPlot</code>: Read Quantification</summary>
-<p>NanoPlot is used for the determination of mean quality scores, read lengths, and number of reads. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
-<p>While this task currently is run <em>outside</em> of the <code>read_QC_trim_ont</code> workflow, it is being included here as it calculates statistics on the read data. This is done so that the actual assembly genome lengths can be used (if an estimated genome length is not provided by the user) to ensure the estimated coverage statistics are accurate.</p>
-<div class="admonition techdetails">
-<p class="admonition-title">NanoPlot Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_nanoplot.wdl">task_nanoplot.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/wdecoster/NanoPlot">NanoPlot on GitHub</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://github.com/wdecoster/NanoPlot/blob/master/README.md">NanoPlot Documentation</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td><a href="https://academic.oup.com/bioinformatics/article/39/5/btad311/7160911">NanoPack2: population-scale evaluation of long-read sequencing data</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-<div class="admonition techdetails">
-<p class="admonition-title">read_QC_trim_ont Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Subworkflow</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_ont.wdl">wf_read_QC_trim_ont.wdl</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<div class="language-text highlight"><pre><span></span><code>??? task "`NanoPlot`: Read Quantification"
+    NanoPlot is used for the determination of mean quality scores, read lengths, and number of reads. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect **fewer** clean reads than raw reads.
+
+    While this task currently is run _outside_ of the `read_QC_trim_ont` workflow, it is being included here as it calculates statistics on the read data. This is done so that the actual assembly genome lengths can be used (if an estimated genome length is not provided by the user) to ensure the estimated coverage statistics are accurate.
+
+    !!! dna "Estimated coverage calculations depend on `genome_length` or `quast`"
+        If the user does not provide a `genome_length`, Nanoplot will use the Quast assembly length to calculate the estimated coverage.
+
+    !!! techdetails "NanoPlot Technical Details"
+        |  | Links |
+        | --- | --- |
+        | Task | [task_nanoplot.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_nanoplot.wdl) |
+        | Software Source Code | [NanoPlot on GitHub](https://github.com/wdecoster/NanoPlot) |
+        | Software Documentation | [NanoPlot Documentation](https://github.com/wdecoster/NanoPlot/blob/master/README.md) |
+        | Original Publication(s) | [NanoPack2: population-scale evaluation of long-read sequencing data](https://academic.oup.com/bioinformatics/article/39/5/btad311/7160911) |
+
+!!! techdetails "read_QC_trim_ont Technical Details"
+    |  | Links |
+    | --- | --- |
+    | Subworkflow | [wf_read_QC_trim_ont.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_ont.wdl) |
+</code></pre></div>
 <!--
   PHB organization tooltips.
 

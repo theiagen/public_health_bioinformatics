@@ -82,6 +82,9 @@
         <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/genomic_characterization/vadr_update/</loc>
       </url>
       <url>
+        <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/phylogenetic_construction/allele_clustering/</loc>
+      </url>
+      <url>
         <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/phylogenetic_construction/augur/</loc>
       </url>
       <url>
@@ -259,6 +262,9 @@
         <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/data_export/zip_column_content/</loc>
       </url>
       <url>
+        <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/phylogenetic_construction/allele_clustering/</loc>
+      </url>
+      <url>
         <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/phylogenetic_construction/core_gene_snp/</loc>
       </url>
       <url>
@@ -383,6 +389,9 @@
       </url>
       <url>
         <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows_overview/workflows_alphabetically/</loc>
+      </url>
+      <url>
+        <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/phylogenetic_construction/allele_clustering/</loc>
       </url>
       <url>
         <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/standalone/amr_search/</loc>
