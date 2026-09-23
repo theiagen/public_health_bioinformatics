@@ -315,7 +315,7 @@ jobs:
             squash)
               TITLE=":x: **Merge bot failed: the squash merge was refused.**"
               WHY="GitHub rejected the merge."
-              FIX="Check that the ruleset containing the **Require a pull request before merging** rule lists the app in its Bypass list (Apps tab, set to Always), that squash merging is enabled in Settings → General, and that no second ruleset targets \`main\` without the bypass. If the error says the head was modified, someone pushed to \`$BRANCH\` while the bot was running — re-apply the label. The run log contains the API's specific error message."
+              FIX="Check that the ruleset containing the **Require a pull request before merging** rule lists the app in its Bypass list (Apps tab, set to For pull requests only), that squash merging is enabled in Settings → General, and that no second ruleset targets \`main\` without the bypass. If the error says the head was modified, someone pushed to \`$BRANCH\` while the bot was running — re-apply the label. The run log contains the API's specific error message."
               ;;
             restore)
               TITLE=":warning: **Merged, but the branch tag was not restored.**"
