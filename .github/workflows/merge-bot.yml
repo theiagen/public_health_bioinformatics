@@ -27,13 +27,14 @@ jobs:
       github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    environment: theiagen-version-merge-bot
     env:
       PR: ${{ github.event.pull_request.number }}
       BRANCH: ${{ github.event.pull_request.head.ref }}
       VERSION_FILE: tasks/task_versioning.wdl
       LABEL: "-merge"
-      # must match the team in .github/CODEOWNERS (team slug, not display name)
-      CODEOWNER_TEAM: theiagen/theiagen-codeowners
+      CODEOWNERS_FILE: .github/CODEOWNERS
+      CODEOWNERS_TEAM: theiagen/theiagen-codeowners
 
     steps:
       - name: Mint token
@@ -55,24 +56,47 @@ jobs:
 
       # gate 1: code-owner authorization. runs before anything is written, so
       # a rejected pr leaves the branch tag intact.
-      # team membership lookup needs the app's org permission "Members: read".
       - name: Require label applied by a code owner
         id: labeler
         env:
           SENDER: ${{ github.event.sender.login }}
+          BASE: ${{ github.event.pull_request.base.ref }}
         run: |
-          gh api "orgs/${CODEOWNER_TEAM%/*}/teams/${CODEOWNER_TEAM#*/}/memberships/$SENDER" --jq .state \
-            | grep -qx active || { echo "::error::$SENDER is not in $CODEOWNER_TEAM"; exit 1; }
-          echo "Label applied by code owner: $SENDER"
+          # "reason" tells the failure report which check failed:
+          # codeowners = CODEOWNERS unreadable or lists the wrong team,
+          # not_member = the labeler isn't in the team.
+          # get the contents of the CODEOWNERS file from main
+          TEAM=$(gh api "repos/${{ github.repository }}/contents/$CODEOWNERS_FILE?ref=$BASE" \
+                   -H "Accept: application/vnd.github.raw" \
+                 | awk '$1 == "*" { t = $2 } END { print t }') || {
+            echo "reason=codeowners" >> "$GITHUB_OUTPUT"
+            echo "::error::Could not read $CODEOWNERS_FILE on $BASE"
+            exit 1
+          }
+          TEAM=${TEAM#@}
 
-      # reviewDecision is github's own verdict against CODEOWNERS for the files
-      # changed. it only reflects code owners when the ruleset on main has
-      # "Require review from Code Owners" enabled.
-      - name: Require Code Owner approval
+          # team names are case-insensitive, so compare lowercase
+          if [ "$(printf '%s' "$TEAM" | tr 'A-Z' 'a-z')" != "$CODEOWNERS_TEAM" ]; then
+            echo "reason=codeowners" >> "$GITHUB_OUTPUT"
+            echo "::error::$CODEOWNERS_FILE on $BASE lists '@$TEAM' on its \"*\" line; expected '@$CODEOWNERS_TEAM'"
+            exit 1
+          fi
+
+          # check if user who applied the label is in CODEOWNERS
+          gh api "orgs/${TEAM%%/*}/teams/${TEAM#*/}/memberships/$SENDER" --jq .state \
+            | grep -qx active || {
+            echo "reason=not_member" >> "$GITHUB_OUTPUT"
+            echo "::error::$SENDER is not in @$TEAM"
+            exit 1
+          }
+          echo "Label applied by code owner: $SENDER (@$TEAM)"
+
+      # gate 1 continued: approval must come from code owners
+      - name: Require code owner approval
         id: approval
         run: |
           DECISION=$(gh pr view "$PR" --json reviewDecision --jq .reviewDecision)
-          [ "$DECISION" = "APPROVED" ] || { echo "::error::reviewDecision is ${DECISION:-empty} — needs Code Owner approval"; exit 1; }
+          [ "$DECISION" = "APPROVED" ] || { echo "::error::reviewDecision is ${DECISION:-empty} — needs code owner approval"; exit 1; }
           echo "reviewDecision: $DECISION"
 
       - name: Configure git identity
@@ -94,6 +118,8 @@ jobs:
             git commit -am "ci: clear version tag for merge"
             git push
           fi
+          # the exact commit the gates below approve; the merge is pinned to it
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
       # the clear push restarts the check suite; give github time to register
       # the new run before --watch starts polling, or it can return a stale
@@ -136,16 +162,21 @@ jobs:
       # uses the rest api rather than `gh pr merge`: gh does a client-side
       # mergeability pre-flight that refuses on BLOCKED without knowing the
       # token holds a ruleset bypass. the api evaluates the bypass server-side.
+      # sha pins the merge to the cleared commit: if anything was pushed to the
+      # branch after it, github refuses instead of merging unreviewed commits.
+      # the commit message drops the bot's own "ci:" stamp/clear commits.
       - name: Squash merge
         id: squash
         env:
           PR_TITLE: ${{ github.event.pull_request.title }}
+          SHA: ${{ steps.clear.outputs.sha }}
         run: |
           COMMITS=$(gh api "repos/${{ github.repository }}/pulls/$PR/commits" --paginate \
             --jq '.[] | "* " + (.commit.message | split("\n")[0])' \
-            | grep -v '^\* ci: clear version tag' || true)
+            | grep -v '^\* ci: ' || true)
           gh api -X PUT "repos/${{ github.repository }}/pulls/$PR/merge" \
             -f merge_method=squash \
+            -f sha="$SHA" \
             -f commit_title="$PR_TITLE (#$PR)" \
             -f commit_message="$COMMITS"
 
@@ -189,6 +220,7 @@ jobs:
           TOKEN_OUT: ${{ steps.token.outcome }}
           CHECKOUT: ${{ steps.checkout.outcome }}
           LABELER: ${{ steps.labeler.outcome }}
+          LABELER_REASON: ${{ steps.labeler.outputs.reason }}
           SENDER: ${{ github.event.sender.login }}
           APPROVAL: ${{ steps.approval.outcome }}
           CHECKS: ${{ steps.checks.outcome }}
@@ -203,6 +235,7 @@ jobs:
 
           if   [ "$TOKEN_OUT" = "failure" ]; then STAGE="token"
           elif [ "$CHECKOUT"  = "failure" ]; then STAGE="checkout"
+          elif [ "$LABELER"   = "failure" ] && [ "$LABELER_REASON" = "codeowners" ]; then STAGE="codeowners"
           elif [ "$LABELER"   = "failure" ]; then STAGE="labeler"
           elif [ "$APPROVAL"  = "failure" ]; then STAGE="approval"
           elif [ "$CHECKS"    = "failure" ]; then STAGE="checks"
@@ -232,13 +265,18 @@ jobs:
               WHY="Checkout of \`$BRANCH\` failed."
               FIX="Usually means the branch was deleted or force-pushed while the bot was running."
               ;;
+            codeowners)
+              TITLE=":x: **Merge bot stopped: unexpected CODEOWNERS.**"
+              WHY="The \`*\` line of \`$CODEOWNERS_FILE\` on \`main\` does not list \`@$CODEOWNERS_TEAM\`, or the file could not be read."
+              FIX="Restore \`* @$CODEOWNERS_TEAM\` in \`$CODEOWNERS_FILE\` on \`main\`, or update \`CODEOWNERS_TEAM\` in this workflow if the team was intentionally changed. The run log shows what the file actually lists."
+              ;;
             labeler)
               TITLE=":x: **Merge bot stopped: label not applied by a code owner.**"
-              WHY="@$SENDER applied \`$LABEL\` but is not a member of \`@$CODEOWNER_TEAM\`."
-              FIX="Ask a code owner to apply the label. If they are one, check that the app has the organization **Members: read** permission — without it every membership lookup fails."
+              WHY="@$SENDER applied \`$LABEL\` but is not a member of \`@$CODEOWNERS_TEAM\`."
+              FIX="Ask a code owner to apply the label. Edits to \`$CODEOWNERS_FILE\` on this PR's branch don't count. If they are in the team, check that the app has the organization **Members: read** permission — without it every membership lookup fails."
               ;;
             approval)
-              TITLE=":x: **Merge bot stopped: no Code Owner approval.**"
+              TITLE=":x: **Merge bot stopped: no code owner approval.**"
               WHY="GitHub's review decision for this PR is not APPROVED."
               FIX="Get an approval from a Code Owner before re-applying the label. Note that a prior approval is dismissed whenever new commits are pushed."
               ;;
@@ -260,7 +298,7 @@ jobs:
             squash)
               TITLE=":x: **Merge bot failed: the squash merge was refused.**"
               WHY="GitHub rejected the merge."
-              FIX="Check that the ruleset containing the **Require a pull request before merging** rule lists the app in its Bypass list (Apps tab, set to Always), that squash merging is enabled in Settings → General, and that no second ruleset targets \`main\` without the bypass. The run log contains the API's specific error message."
+              FIX="Check that the ruleset containing the **Require a pull request before merging** rule lists the app in its Bypass list (Apps tab, set to Always), that squash merging is enabled in Settings → General, and that no second ruleset targets \`main\` without the bypass. If the error says the head was modified, someone pushed to \`$BRANCH\` while the bot was running — re-apply the label. The run log contains the API's specific error message."
               ;;
             restore)
               TITLE=":warning: **Merged, but the branch tag was not restored.**"

@@ -2,7 +2,7 @@ name: Stamp branch version
 
 on:
   push:
-    branches-ignore: [main]
+    branches-ignore: [main, gh-pages]
 
 concurrency:
   group: stamp-${{ github.ref }}
@@ -13,8 +13,10 @@ permissions:
 
 jobs:
   stamp:
-    # don't do anything if the last actor was GHA (prevent double stamping)
-    if: ${{ !endsWith(github.actor, '[bot]') }}
+    # don't do anything if the last actor was GHA (prevent double stamping),
+    # and never stamp in a fork — fork prs are merged without the merge bot,
+    # so their BRANCH_TAG must stay empty.
+    if: ${{ !endsWith(github.actor, '[bot]') && !github.event.repository.fork }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
