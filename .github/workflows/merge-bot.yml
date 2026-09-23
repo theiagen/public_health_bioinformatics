@@ -1,7 +1,11 @@
 name: Merge bot
 
+# pull_request_target runs this file as it exists on main, not the pr's copy,
+# so a pr can't edit out the gates below and then apply the label. the
+# checkout step still checks out the pr branch, but only to sed/commit the
+# version file — no code from the pr is ever executed.
 on:
-  pull_request:
+  pull_request_target:
     types: [labeled]
 
 concurrency:
@@ -28,6 +32,8 @@ jobs:
       BRANCH: ${{ github.event.pull_request.head.ref }}
       VERSION_FILE: tasks/task_versioning.wdl
       LABEL: "-merge"
+      # must match the team in .github/CODEOWNERS (team slug, not display name)
+      CODEOWNER_TEAM: theiagen/theiagen-codeowners
 
     steps:
       - name: Mint token
@@ -47,18 +53,27 @@ jobs:
           token: ${{ steps.token.outputs.token }}
           fetch-depth: 0
 
-      # gate 1: approval. runs before anything is written, so an unapproved
-      # pr leaves the branch tag intact.
-      - name: Require an approving review
+      # gate 1: code-owner authorization. runs before anything is written, so
+      # a rejected pr leaves the branch tag intact.
+      # team membership lookup needs the app's org permission "Members: read".
+      - name: Require label applied by a code owner
+        id: labeler
+        env:
+          SENDER: ${{ github.event.sender.login }}
+        run: |
+          gh api "orgs/${CODEOWNER_TEAM%/*}/teams/${CODEOWNER_TEAM#*/}/memberships/$SENDER" --jq .state \
+            | grep -qx active || { echo "::error::$SENDER is not in $CODEOWNER_TEAM"; exit 1; }
+          echo "Label applied by code owner: $SENDER"
+
+      # reviewDecision is github's own verdict against CODEOWNERS for the files
+      # changed. it only reflects code owners when the ruleset on main has
+      # "Require review from Code Owners" enabled.
+      - name: Require Code Owner approval
         id: approval
         run: |
-          N=$(gh pr view "$PR" --json reviews \
-                --jq '[.reviews[] | select(.state == "APPROVED")] | length')
-          if [ "$N" -lt 1 ]; then
-            echo "::error::No approving review on PR #$PR."
-            exit 1
-          fi
-          echo "Approvals: $N"
+          DECISION=$(gh pr view "$PR" --json reviewDecision --jq .reviewDecision)
+          [ "$DECISION" = "APPROVED" ] || { echo "::error::reviewDecision is ${DECISION:-empty} — needs Code Owner approval"; exit 1; }
+          echo "reviewDecision: $DECISION"
 
       - name: Configure git identity
         run: |
@@ -173,6 +188,8 @@ jobs:
           GH_TOKEN: ${{ steps.token.outputs.token || secrets.GITHUB_TOKEN }}
           TOKEN_OUT: ${{ steps.token.outcome }}
           CHECKOUT: ${{ steps.checkout.outcome }}
+          LABELER: ${{ steps.labeler.outcome }}
+          SENDER: ${{ github.event.sender.login }}
           APPROVAL: ${{ steps.approval.outcome }}
           CHECKS: ${{ steps.checks.outcome }}
           MERGEABLE: ${{ steps.mergeable.outcome }}
@@ -186,6 +203,7 @@ jobs:
 
           if   [ "$TOKEN_OUT" = "failure" ]; then STAGE="token"
           elif [ "$CHECKOUT"  = "failure" ]; then STAGE="checkout"
+          elif [ "$LABELER"   = "failure" ]; then STAGE="labeler"
           elif [ "$APPROVAL"  = "failure" ]; then STAGE="approval"
           elif [ "$CHECKS"    = "failure" ]; then STAGE="checks"
           elif [ "$MERGEABLE" = "failure" ]; then STAGE="mergeable"
@@ -214,10 +232,15 @@ jobs:
               WHY="Checkout of \`$BRANCH\` failed."
               FIX="Usually means the branch was deleted or force-pushed while the bot was running."
               ;;
+            labeler)
+              TITLE=":x: **Merge bot stopped: label not applied by a code owner.**"
+              WHY="@$SENDER applied \`$LABEL\` but is not a member of \`@$CODEOWNER_TEAM\`."
+              FIX="Ask a code owner to apply the label. If they are one, check that the app has the organization **Members: read** permission — without it every membership lookup fails."
+              ;;
             approval)
-              TITLE=":x: **Merge bot stopped: no approving review.**"
-              WHY="This PR has no review in the APPROVED state."
-              FIX="Get an approval before re-applying the label. Note that a prior approval is dismissed whenever new commits are pushed."
+              TITLE=":x: **Merge bot stopped: no Code Owner approval.**"
+              WHY="GitHub's review decision for this PR is not APPROVED."
+              FIX="Get an approval from a Code Owner before re-applying the label. Note that a prior approval is dismissed whenever new commits are pushed."
               ;;
             checks)
               TITLE=":x: **Merge bot stopped: required checks are not passing.**"
