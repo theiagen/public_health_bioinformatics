@@ -12,7 +12,7 @@ task version_capture {
     # VERSION_TAG is managed manually only on version updates
     VERSION_TAG="v4.3.0"
     # BRANCH_TAG is managed by CI; do NOT edit manually
-    BRANCH_TAG="smw-mergebot-dev"
+    BRANCH_TAG=""
     if [ -n "${BRANCH_TAG}" ]; then
       echo "PHB ${VERSION_TAG}; branch: ${BRANCH_TAG}" > PHB_VERSION
     else
