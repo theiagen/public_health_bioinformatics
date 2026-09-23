@@ -2,7 +2,7 @@
 
 The documentation for PHB is hosted in the `docs/` directory. This documentation is written in Markdown and was historically built using [MkDocs](https://www.mkdocs.org/) and the [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) theme. Currently, we are using [Zensical](https://zensical.org/) to build the documentation, which is a new static site generator built by the same developer as Material for MkDocs. Zensical is still in beta, but we are using it to take advantage of its improved performance and features as future updates to MkDocs will not be backwards compatible. Our documentation is built and deployed using GitHub Actions.
 
-This guide is intended to provide a brief overview of the documentation structure and how to contribute to the documentation, including standard language and formatting conventions.
+This guide is intended to provide a brief overview of the documentation structure and how to contribute to the documentation, including standard language and formatting conventions. Theiagen developers should also review [how pull requests are merged](code_contribution.md#merging).
 
 ## Local Installation & Live Previews
 

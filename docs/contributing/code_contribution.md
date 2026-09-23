@@ -367,3 +367,46 @@ output {
       }
     }
     ```
+
+## Merging Pull Requests {% raw %} {#merging} {% endraw %}
+
+!!! tip "This section applies to Theiagen developers"
+    Pull requests from forks are not handled by the merge bot. Once approved and passing all checks, a Code Owner merges them with the **Squash and merge** button.
+
+Pull requests into `main` are merged by the merge bot (the `theiagen-version-merge-bot` GitHub App) rather than the merge button. This keeps branch names out of the version reported by workflows on `main`.
+
+**_Branch Version Tags_**
+
+- Every push to a branch (other than `main` and `gh-pages`) adds a `ci: stamp branch version tag` commit that writes the branch name into `BRANCH_TAG` in `tasks/task_versioning.wdl`. Workflows run from that branch report it in their `phb_version` output:
+
+    ```text
+    PHB v4.3.0; branch: smw-my-feature-dev
+    ```
+
+- Because the stamp commit lands immediately after your push, pull before pushing again (`git pull --rebase`) or your next push will be rejected.
+- **Do not edit `BRANCH_TAG` manually.** It is managed entirely by CI.
+
+**_Using the Merge Bot_**
+
+1. Get an approving review from a Code Owner (a member of [@theiagen/Theiagen-CodeOwners](https://github.com/orgs/theiagen/teams/theiagen-codeowners)).
+2. A Code Owner applies the `-merge` label to the pull request.
+3. The merge bot confirms the label and approval came from Code Owners, clears the branch tag with a `ci: clear version tag for merge` commit, waits for all required checks to pass, squash-merges the pull request, and then restores the branch tag on your branch.
+
+- The `label not found` check fails while your branch carries its branch tag, which also blocks the merge buttons. This is expected; the check passes once the merge bot clears the tag.
+- Do not push to the branch while the merge bot is running. The merge is pinned to the commit the bot checked, so GitHub will refuse it and you will need to re-apply the label.
+- The squash commit uses the pull request title and lists your commit messages, excluding the `ci:` commits made by the bot.
+
+**_When the Merge Bot Stops_**
+
+If any step fails, the merge bot removes the `-merge` label and comments on the pull request with what happened and what to do. Fix the problem and re-apply the label to try again.
+
+| Failed at | What it usually means |
+| --- | --- |
+| `labeler` | The label was applied by someone who is not a Code Owner |
+| `codeowners` | `.github/CODEOWNERS` on `main` no longer lists `@theiagen/Theiagen-CodeOwners`; contact a repository admin |
+| `approval` | There is no current Code Owner approval. Approvals are dismissed when new commits are pushed, so you may need a fresh one |
+| `checks` | A required check failed or never started; see the **Checks** tab on the pull request |
+| `mergeable` | The pull request conflicts with `main`; merge `main` into your branch and resolve the conflicts |
+| `squash` | GitHub refused the merge, usually because a commit was pushed while the bot was running; re-apply the label |
+| `restore` | The merge succeeded but the branch tag was not restored; push any commit to your branch to re-stamp it |
+| `cancelled` | The run was cancelled or hit its 15-minute timeout, usually while waiting on checks; re-apply the label |
