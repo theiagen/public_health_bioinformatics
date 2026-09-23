@@ -6516,6 +6516,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#merging" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Merging Pull Requests
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -6706,6 +6717,17 @@
     <span class="md-ellipsis">
       <span class="md-typeset">
         Example Workflow formats
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#merging" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Merging Pull Requests
       </span>
     </span>
   </a>
@@ -7156,6 +7178,81 @@
 </span><span id="__span-20-33"><a id="__codelineno-20-33" name="__codelineno-20-33" href="#__codelineno-20-33"></a><span class="o">}</span>
 </span></code></pre></div>
 </details>
+<h2 id="merging">Merging Pull Requests<a class="headerlink" href="#merging" title="Permanent link">&para;</a></h2>
+<div class="admonition tip">
+<p class="admonition-title">This section applies to Theiagen developers</p>
+<p>Pull requests from forks are not handled by the merge bot. Once approved and passing all checks, a Code Owner merges them with the <strong>Squash and merge</strong> button.</p>
+</div>
+<p>Pull requests into <code>main</code> are merged by the merge bot (the <code>theiagen-version-merge-bot</code> GitHub App) rather than the merge button. This keeps branch names out of the version reported by workflows on <code>main</code>.</p>
+<p><strong><em>Branch Version Tags</em></strong></p>
+<ul>
+<li>
+<p>Every push to a branch (other than <code>main</code> and <code>gh-pages</code>) adds a <code>ci: stamp branch version tag</code> commit that writes the branch name into <code>BRANCH_TAG</code> in <code>tasks/task_versioning.wdl</code>. Workflows run from that branch report it in their <code>phb_version</code> output:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>PHB v4.3.0; branch: smw-my-feature-dev
+</span></code></pre></div>
+</li>
+<li>
+<p>Because the stamp commit lands immediately after your push, pull before pushing again (<code>git pull --rebase</code>) or your next push will be rejected.</p>
+</li>
+<li><strong>Do not edit <code>BRANCH_TAG</code> manually.</strong> It is managed entirely by CI.</li>
+</ul>
+<p><strong><em>Using the Merge Bot</em></strong></p>
+<ol>
+<li>Get an approving review from a Code Owner (a member of <a href="https://github.com/orgs/theiagen/teams/theiagen-codeowners">@theiagen/Theiagen-CodeOwners</a>).</li>
+<li>A Code Owner applies the <code>-merge</code> label to the pull request.</li>
+<li>
+<p>The merge bot confirms the label and approval came from Code Owners, clears the branch tag with a <code>ci: clear version tag for merge</code> commit, waits for all required checks to pass, squash-merges the pull request, and then restores the branch tag on your branch.</p>
+</li>
+<li>
+<p>The <code>label not found</code> check fails while your branch carries its branch tag, which also blocks the merge buttons. This is expected; the check passes once the merge bot clears the tag.</p>
+</li>
+<li>Do not push to the branch while the merge bot is running. The merge is pinned to the commit the bot checked, so GitHub will refuse it and you will need to re-apply the label.</li>
+<li>The squash commit uses the pull request title and lists your commit messages, excluding the <code>ci:</code> commits made by the bot.</li>
+</ol>
+<p><strong><em>When the Merge Bot Stops</em></strong></p>
+<p>If any step fails, the merge bot removes the <code>-merge</code> label and comments on the pull request with what happened and what to do. Fix the problem and re-apply the label to try again.</p>
+<table>
+<thead>
+<tr>
+<th>Failed at</th>
+<th>What it usually means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>labeler</code></td>
+<td>The label was applied by someone who is not a Code Owner</td>
+</tr>
+<tr>
+<td><code>codeowners</code></td>
+<td><code>.github/CODEOWNERS</code> on <code>main</code> no longer lists <code>@theiagen/Theiagen-CodeOwners</code>; contact a repository admin</td>
+</tr>
+<tr>
+<td><code>approval</code></td>
+<td>There is no current Code Owner approval. Approvals are dismissed when new commits are pushed, so you may need a fresh one</td>
+</tr>
+<tr>
+<td><code>checks</code></td>
+<td>A required check failed or never started; see the <strong>Checks</strong> tab on the pull request</td>
+</tr>
+<tr>
+<td><code>mergeable</code></td>
+<td>The pull request conflicts with <code>main</code>; merge <code>main</code> into your branch and resolve the conflicts</td>
+</tr>
+<tr>
+<td><code>squash</code></td>
+<td>GitHub refused the merge, usually because a commit was pushed while the bot was running; re-apply the label</td>
+</tr>
+<tr>
+<td><code>restore</code></td>
+<td>The merge succeeded but the branch tag was not restored; push any commit to your branch to re-stamp it</td>
+</tr>
+<tr>
+<td><code>cancelled</code></td>
+<td>The run was cancelled or hit its 15-minute timeout, usually while waiting on checks; re-apply the label</td>
+</tr>
+</tbody>
+</table>
 <!--
   PHB organization tooltips.
 
