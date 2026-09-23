@@ -121,24 +121,39 @@ jobs:
           # the exact commit the gates below approve; the merge is pinned to it
           echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
-      # the clear push restarts the check suite; give github time to register
-      # the new run before --watch starts polling, or it can return a stale
-      # result from the previous run.
-      - name: Wait for checks to settle
-        run: sleep 15
+      # the clear push restarts the check suite, and each required check shows
+      # up on the new commit only once its workflow run registers. --watch
+      # below only sees checks that exist, so a check that hasn't registered
+      # yet would be silently skipped. wait until every required check named
+      # in main's ruleset exists on the cleared commit (reading check runs
+      # needs the app's "Checks: read" permission).
+      - name: Wait for required checks to register
+        id: settle
+        env:
+          SHA: ${{ steps.clear.outputs.sha }}
+        run: |
+          REQUIRED=$(gh api "repos/${{ github.repository }}/rules/branches/main" \
+            --jq '[.[] | select(.type == "required_status_checks") | .parameters.required_status_checks[].context] | unique | .[]')
+          if [ -z "$REQUIRED" ]; then
+            echo "::error::main's ruleset has no required status checks; refusing to merge without them."
+            exit 1
+          fi
+          echo "Required checks:"; printf '%s\n' "$REQUIRED" | sed 's/^/  /'
+          for i in $(seq 1 40); do
+            SEEN=$(gh api "repos/${{ github.repository }}/commits/$SHA/check-runs" --paginate \
+              --jq '.check_runs[].name')
+            MISSING=$(printf '%s\n' "$REQUIRED" | grep -vxF -f <(printf '%s\n' "$SEEN") || true)
+            [ -z "$MISSING" ] && { echo "All required checks registered."; exit 0; }
+            echo "Waiting for: $(echo $MISSING) ($i)..."
+            sleep 3
+          done
+          echo "::error::Required checks never started on $SHA: $(echo $MISSING)"
+          exit 1
 
       # gate 2: checks. --watch blocks on pending rather than failing.
-      # tolerates a repo with no required checks configured.
       - name: Require checks to pass
         id: checks
-        run: |
-          OUT=$(gh pr checks "$PR" --required --watch --fail-fast 2>&1) && RC=0 || RC=$?
-          echo "$OUT"
-          if [ "$RC" -ne 0 ] && printf '%s' "$OUT" | grep -q 'no required checks'; then
-            echo "No required checks configured — skipping gate."
-            exit 0
-          fi
-          exit "$RC"
+        run: gh pr checks "$PR" --required --watch --fail-fast
 
       # gate 3: mergeable. github computes this asynchronously, so UNKNOWN
       # just means it hasn't settled. BLOCKED is expected here because the
@@ -223,6 +238,7 @@ jobs:
           LABELER_REASON: ${{ steps.labeler.outputs.reason }}
           SENDER: ${{ github.event.sender.login }}
           APPROVAL: ${{ steps.approval.outcome }}
+          SETTLE: ${{ steps.settle.outcome }}
           CHECKS: ${{ steps.checks.outcome }}
           MERGEABLE: ${{ steps.mergeable.outcome }}
           CLEAR: ${{ steps.clear.outcome }}
@@ -238,6 +254,7 @@ jobs:
           elif [ "$LABELER"   = "failure" ] && [ "$LABELER_REASON" = "codeowners" ]; then STAGE="codeowners"
           elif [ "$LABELER"   = "failure" ]; then STAGE="labeler"
           elif [ "$APPROVAL"  = "failure" ]; then STAGE="approval"
+          elif [ "$SETTLE"    = "failure" ]; then STAGE="checks"
           elif [ "$CHECKS"    = "failure" ]; then STAGE="checks"
           elif [ "$MERGEABLE" = "failure" ]; then STAGE="mergeable"
           elif [ "$CLEAR"     = "failure" ]; then STAGE="clear"
@@ -258,7 +275,7 @@ jobs:
             token)
               TITLE=":x: **Merge bot failed: could not authenticate.**"
               WHY="The GitHub App token could not be minted."
-              FIX="Check that \`VERSION_BOT_APP_ID\` and \`VERSION_BOT_PRIVATE_KEY\` are set as repo secrets, that the private key was pasted in full including its BEGIN/END lines, and that the app is still installed on this repository."
+              FIX="Check that \`VERSION_BOT_APP_ID\` and \`VERSION_BOT_PRIVATE_KEY\` are set as secrets on the \`theiagen-version-merge-bot\` environment (Settings → Environments), that the environment allows the \`main\` branch, that the private key was pasted in full including its BEGIN/END lines, and that the app is still installed on this repository."
               ;;
             checkout)
               TITLE=":x: **Merge bot failed: could not check out the branch.**"
@@ -282,8 +299,8 @@ jobs:
               ;;
             checks)
               TITLE=":x: **Merge bot stopped: required checks are not passing.**"
-              WHY="One or more required status checks failed, or are still pending."
-              FIX="See the checks tab on this PR and fix the failures."
+              WHY="One or more required status checks failed, never started on the bot's commit, or \`main\` has no required checks configured."
+              FIX="See the checks tab on this PR and fix the failures. If a check never started, the run log lists which one; check that its workflow still runs on PRs to \`main\` and that the app has **Checks: read**."
               ;;
             mergeable)
               TITLE=":x: **Merge bot stopped: PR is not in a mergeable state.**"
