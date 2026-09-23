@@ -1,19 +1,36 @@
 name: merge this pr with the -merge label
 
+# pull_request_target runs this file as it exists on main, so a pr can't edit
+# the check away. that also means actions/checkout would check out main, not
+# the pr — so instead the version file is read from the pr's head commit
+# through the api. no pr code is checked out or run.
 on:
-  pull_request:
+  pull_request_target:
     branches: [main]
     types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
 
 jobs:
   check:
     name: label not found
+    # fork prs are left alone: they aren't stamped or handled by the merge
+    # bot. a skipped job reports success, so it doesn't block them when this
+    # check is required.
+    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      # fails only when a non-empty BRANCH_TAG is present; a branch that
+      # predates BRANCH_TAG (no such line) passes.
       - name: BRANCH_TAG must be empty
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
-          if ! grep -qE '^ *BRANCH_TAG=""$' tasks/task_versioning.wdl; then
+          gh api "repos/${{ github.repository }}/contents/tasks/task_versioning.wdl?ref=$HEAD_SHA" \
+            -H "Accept: application/vnd.github.raw" > task_versioning.wdl
+          if grep -qE '^ *BRANCH_TAG="[^"]+"' task_versioning.wdl; then
             echo "::error file=tasks/task_versioning.wdl::This PR still carries its branch version tag. Apply the '-merge' label — the merge bot clears the tag, merges, and restores it. Do not use the Squash and merge button."
             exit 1
           fi

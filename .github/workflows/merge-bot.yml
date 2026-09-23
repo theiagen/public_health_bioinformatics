@@ -12,8 +12,10 @@ concurrency:
   group: merge-bot-${{ github.event.pull_request.number }}
   cancel-in-progress: false
 
+# these apply to the default GITHUB_TOKEN, which is only the failure report's
+# fallback (to comment and remove the label) if the app token couldn't be
+# minted. everything else uses the app token.
 permissions:
-  contents: write
   pull-requests: write
 
 jobs:
@@ -215,7 +217,7 @@ jobs:
       # a push to fire.
       - name: Restore branch tag after failure
         id: repair
-        if: failure() && steps.clear.outcome == 'success' && steps.squash.outcome != 'success'
+        if: (failure() || cancelled()) && steps.clear.outcome == 'success' && steps.squash.outcome != 'success'
         run: |
           git fetch origin "$BRANCH"
           git reset --hard "origin/$BRANCH"
@@ -229,9 +231,11 @@ jobs:
           fi
 
       - name: Report failure
-        if: failure()
+        if: failure() || cancelled()
         env:
           GH_TOKEN: ${{ steps.token.outputs.token || secrets.GITHUB_TOKEN }}
+          # "cancelled" when the run was cancelled by hand or hit timeout-minutes
+          JOB_STATUS: ${{ job.status }}
           TOKEN_OUT: ${{ steps.token.outcome }}
           CHECKOUT: ${{ steps.checkout.outcome }}
           LABELER: ${{ steps.labeler.outcome }}
@@ -249,7 +253,8 @@ jobs:
           RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           BODY_FILE="$RUNNER_TEMP/merge-bot-comment.md"
 
-          if   [ "$TOKEN_OUT" = "failure" ]; then STAGE="token"
+          if   [ "$JOB_STATUS" = "cancelled" ]; then STAGE="cancelled"
+          elif [ "$TOKEN_OUT" = "failure" ]; then STAGE="token"
           elif [ "$CHECKOUT"  = "failure" ]; then STAGE="checkout"
           elif [ "$LABELER"   = "failure" ] && [ "$LABELER_REASON" = "codeowners" ]; then STAGE="codeowners"
           elif [ "$LABELER"   = "failure" ]; then STAGE="labeler"
@@ -272,6 +277,11 @@ jobs:
           fi
 
           case "$STAGE" in
+            cancelled)
+              TITLE=":warning: **Merge bot run was cancelled.**"
+              WHY="The run was cancelled, either manually or because it hit the 15-minute timeout (usually while waiting on required checks)."
+              FIX="Re-apply the label to try again. If it timed out, check the checks tab for a required check that is stuck or never started. The table below shows whether anything was merged."
+              ;;
             token)
               TITLE=":x: **Merge bot failed: could not authenticate.**"
               WHY="The GitHub App token could not be minted."

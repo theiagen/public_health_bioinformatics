@@ -409,3 +409,4 @@ If any step fails, the merge bot removes the `-merge` label and comments on the 
 | `mergeable` | The pull request conflicts with `main`; merge `main` into your branch and resolve the conflicts |
 | `squash` | GitHub refused the merge, usually because a commit was pushed while the bot was running; re-apply the label |
 | `restore` | The merge succeeded but the branch tag was not restored; push any commit to your branch to re-stamp it |
+| `cancelled` | The run was cancelled or hit its 15-minute timeout, usually while waiting on checks; re-apply the label |
