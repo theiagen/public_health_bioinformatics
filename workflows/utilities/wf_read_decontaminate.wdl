@@ -20,8 +20,10 @@ workflow read_decontaminate {
     Boolean is_genome = false
     Boolean refseq = true
     Boolean complete_only = false
+    Boolean force_contaminant_check = false
 
-    String? expected_sequences
+    String? expected_sequences # comma-delimited list of expected sequences, OR a key into expected_sequences_json when that is provided
+    File? expected_sequences_json # optional JSON mapping of {"<NAME>": ["<SEQ1>", "<SEQ2>", ...]}; when provided, expected_sequences is used as the key to look up the list of expected sequences
     Float min_expected_coverage = 0
     Int min_expected_depth = 0
     Int min_expected_reads_mapped = 0
@@ -99,31 +101,25 @@ workflow read_decontaminate {
       read2 = read2
   }
   # run contaminant check
-  if (defined(expected_sequences) && expected_sequences != "") {
-    # stage fail variable
-    String contaminant_check_fail = "FAIL: no reads mapped to inputted sequences"
-    if (read_mapping_stats.mapping_stats_status == "PASS") {
-      call contaminant_check_task.contaminant_check {
-        input:
-          expected_sequences = select_first([expected_sequences]),
-          coverage_by_sequence_json = select_first([read_mapping_stats.coverage_by_sequence_json]),
-          depth_by_sequence_json = select_first([read_mapping_stats.depth_by_sequence_json]),
-          reads_by_sequence_json = select_first([read_mapping_stats.reads_by_sequence_json]),
-          min_percent_coverage = min_expected_coverage,
-          min_depth = min_expected_depth,
-          min_reads_mapped = min_expected_reads_mapped,
-          contaminant_fasta = select_first([download_accession.ncbi_datasets_assembly_fasta, contaminant]),
-          min_expected_seq = min_expected_seq,
-          max_unexpected_seq = max_unexpected_seq,
-      }
+  if ((defined(expected_sequences) && expected_sequences != "") || force_contaminant_check) {
+    call contaminant_check_task.contaminant_check {
+      input:
+        expected_sequences = select_first([expected_sequences]),
+        expected_sequences_json = expected_sequences_json,
+        coverage_by_sequence_json = select_first([read_mapping_stats.coverage_by_sequence_json]),
+        depth_by_sequence_json = select_first([read_mapping_stats.depth_by_sequence_json]),
+        reads_by_sequence_json = select_first([read_mapping_stats.reads_by_sequence_json]),
+        min_percent_coverage = min_expected_coverage,
+        min_depth = min_expected_depth,
+        min_reads_mapped = min_expected_reads_mapped,
+        contaminant_fasta = select_first([download_accession.ncbi_datasets_assembly_fasta, contaminant]),
+        min_expected_seq = min_expected_seq,
+        max_unexpected_seq = max_unexpected_seq,
     }
   }
   # set arbitrary empty Maps for WDL/Terra compatibility
-  if (! defined(expected_sequences) || expected_sequences == "" || read_mapping_stats.mapping_stats_status != "PASS") {
+  if (! defined(expected_sequences) || expected_sequences == "") {
     Map[String, Float] spoof_expectation_maps = {"": 0}
-  }
-  if (read_mapping_stats.mapping_stats_status != "PASS") {
-    Map[String, Float] spoof_sequence_maps = {"": 0}
   }
   output {
     # Datasets download outputs
@@ -144,11 +140,11 @@ workflow read_decontaminate {
     Float? contaminant_mapping_coverage = read_mapping_stats.coverage
     Float? contaminant_mapping_mean_depth = read_mapping_stats.depth
     Float? contaminant_percent_mapped_reads = read_mapping_stats.percentage_mapped_reads
-    Map[String, Float]? contaminant_coverage_by_sequence = select_first([spoof_sequence_maps, read_mapping_stats.coverage_by_sequence])
-    Map[String, Float]? contaminant_depth_by_sequence = select_first([spoof_sequence_maps, read_mapping_stats.depth_by_sequence])
-    Map[String, Float]? contaminant_reads_by_sequence = select_first([spoof_sequence_maps, read_mapping_stats.reads_by_sequence])
+    Map[String, Float]? contaminant_coverage_by_sequence = select_first([read_mapping_stats.coverage_by_sequence])
+    Map[String, Float]? contaminant_depth_by_sequence = select_first([read_mapping_stats.depth_by_sequence])
+    Map[String, Float]? contaminant_reads_by_sequence = select_first([read_mapping_stats.reads_by_sequence])
     # Contaminant check outputs
-    String? contaminant_check_status = select_first([contaminant_check.contaminant_check_status, contaminant_check_fail, ""])
+    String? contaminant_check_status = contaminant_check.contaminant_check_status
     Map[String, Float]? contaminant_expected_coverage_by_sequence = select_first([spoof_expectation_maps, contaminant_check.expected_coverage_by_sequence])
     Map[String, Float]? contaminant_expected_depth_by_sequence = select_first([spoof_expectation_maps, contaminant_check.expected_depth_by_sequence])
     Map[String, Float]? contaminant_expected_reads_by_sequence = select_first([spoof_expectation_maps, contaminant_check.expected_reads_by_sequence])

@@ -26,8 +26,17 @@ task fastq_scan_pe {
     fi
 
     # capture forward read stats
-    echo "DEBUG: running fastq-scan on $(basename ~{read1})"
-    eval "${cat_reads} ~{read1}" | fastq-scan | tee ~{read1_name}_fastq-scan.json
+    # require at least 3 decompressed lines as a proxy for a valid, non-empty fastq
+    read1_lines=$(eval "${cat_reads} ~{read1}" 2>/dev/null | head -n 3 | wc -l || true)
+    if [[ "${read1_lines}" -lt 3 ]] ; then
+      # empty or invalid input; write a zeroed fastq-scan-formatted json so stats report 0
+      echo "DEBUG: $(basename ~{read1}) has fewer than 3 lines"
+      echo '{"qc_stats":{"total_bp":0,"coverage":0,"read_total":0,"read_min":0,"read_mean":0,"read_std":0,"read_median":0,"read_max":0,"read_qual_min":0,"read_qual_mean":0,"read_qual_std":0,"read_qual_median":0,"read_qual_max":0,"qual_min":0,"qual_mean":0,"qual_std":0,"qual_median":0,"qual_max":0},"read_lengths":{},"qual_scores":{}}' | jq . | tee ~{read1_name}_fastq-scan.json
+    else
+      echo "DEBUG: running fastq-scan on $(basename ~{read1})"
+      eval "${cat_reads} ~{read1}" | fastq-scan | tee ~{read1_name}_fastq-scan.json
+    fi
+
     # using simple redirect so STDOUT is not confusing
     jq .qc_stats.read_total ~{read1_name}_fastq-scan.json > READ1_SEQS
     echo "DEBUG: number of reads in $(basename ~{read1}): $(cat READ1_SEQS)"
@@ -41,8 +50,16 @@ task fastq_scan_pe {
     echo "DEBUG: mean read quality in $(basename ~{read1}): $(cat READ1_MEAN_QUALITY)"
 
     # capture reverse read stats
-    echo "DEBUG: running fastq-scan on $(basename ~{read2})"
-    eval "${cat_reads} ~{read2}" | fastq-scan | tee ~{read2_name}_fastq-scan.json
+    # require at least 3 decompressed lines as a proxy for a valid, non-empty fastq
+    read2_lines=$(eval "${cat_reads} ~{read2}" 2>/dev/null | head -n 3 | wc -l || true)
+    if [[ "${read2_lines}" -lt 3 ]] ; then
+      # empty or invalid input; write a zeroed fastq-scan-formatted json so stats report 0
+      echo "DEBUG: $(basename ~{read2}) has fewer than 3 lines"
+      echo '{"qc_stats":{"total_bp":0,"coverage":0,"read_total":0,"read_min":0,"read_mean":0,"read_std":0,"read_median":0,"read_max":0,"read_qual_min":0,"read_qual_mean":0,"read_qual_std":0,"read_qual_median":0,"read_qual_max":0,"qual_min":0,"qual_mean":0,"qual_std":0,"qual_median":0,"qual_max":0},"read_lengths":{},"qual_scores":{}}' | jq . | tee ~{read2_name}_fastq-scan.json
+    else
+      echo "DEBUG: running fastq-scan on $(basename ~{read2})"
+      eval "${cat_reads} ~{read2}" | fastq-scan | tee ~{read2_name}_fastq-scan.json
+    fi
 
     # using simple redirect so STDOUT is not confusing
     jq .qc_stats.read_total ~{read2_name}_fastq-scan.json > READ2_SEQS
@@ -114,8 +131,17 @@ task fastq_scan_se {
     fi
 
     # capture forward read stats
-    echo "DEBUG: running fastq-scan on $(basename ~{read1})"
-    eval "${cat_reads} ~{read1}" | fastq-scan | tee ~{read1_name}_fastq-scan.json
+    # require at least 3 decompressed lines as a proxy for a valid, non-empty fastq
+    read1_lines=$(eval "${cat_reads} ~{read1}" 2>/dev/null | head -n 3 | wc -l || true)
+    if [[ "${read1_lines}" -lt 3 ]] ; then
+      # empty or invalid input; write a zeroed fastq-scan-formatted json so stats report 0
+      echo "DEBUG: $(basename ~{read1}) has fewer than 3 lines, writing zeroed fastq-scan json"
+      echo '{"qc_stats":{"total_bp":0,"coverage":0,"read_total":0,"read_min":0,"read_mean":0,"read_std":0,"read_median":0,"read_max":0,"read_qual_min":0,"read_qual_mean":0,"read_qual_std":0,"read_qual_median":0,"read_qual_max":0,"qual_min":0,"qual_mean":0,"qual_std":0,"qual_median":0,"qual_max":0},"read_lengths":{},"qual_scores":{}}' | jq . | tee ~{read1_name}_fastq-scan.json
+    else
+      echo "DEBUG: running fastq-scan on $(basename ~{read1})"
+      eval "${cat_reads} ~{read1}" | fastq-scan | tee ~{read1_name}_fastq-scan.json
+    fi
+
     # using simple redirect so STDOUT is not confusing
     jq .qc_stats.read_total ~{read1_name}_fastq-scan.json > READ1_SEQS
     echo "DEBUG: number of reads in $(basename ~{read1}): $(cat READ1_SEQS)"
