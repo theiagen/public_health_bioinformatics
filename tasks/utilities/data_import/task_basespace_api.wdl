@@ -8,14 +8,15 @@ task fetch_bs {
     String basespace_access_token
     String basespace_api_url = "https://api.basespace.illumina.com"
 
-    Boolean validate_paired_end = true
-    Boolean group_by_lane = true
+    Boolean validate_paired_end = false
+    Boolean group_by_lane = false
+    Boolean use_latest_dataset = false
 
     Int memory = 8
     Int cpu = 2
     Int disk_size = 250
 
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/bioforklift:0.5.2"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/bioforklift:0.5.4-dev"
   }
   meta {
     # added so that call caching is always turned off
@@ -30,6 +31,7 @@ task fetch_bs {
     # convert boolean WDL inputs to pythonic type bool
     validate_paired_end = "~{validate_paired_end}" == "true"
     group_by_lane = "~{group_by_lane}" == "true"
+    use_latest_dataset = "~{use_latest_dataset}" == "true"
 
     bs = BaseSpace(
         access_token="~{basespace_access_token}",
@@ -42,18 +44,21 @@ task fetch_bs {
         priority="runs",
         validate_paired_end=validate_paired_end,
         group_by_lane=group_by_lane,
+        use_latest_dataset=use_latest_dataset,
     )
     CODE
 
     # Cannot rename the concatenated FASTQs if they have the same name
     if [[ "~{basespace_sample_id}" != "~{sample_name}" ]]; then
         mv "~{basespace_sample_id}_R1.fastq.gz" "~{sample_name}_R1.fastq.gz"
-        mv "~{basespace_sample_id}_R2.fastq.gz" "~{sample_name}_R2.fastq.gz"
+        if [[ -f "~{basespace_sample_id}_R2.fastq.gz" ]]; then
+            mv "~{basespace_sample_id}_R2.fastq.gz" "~{sample_name}_R2.fastq.gz"
+        fi
     fi
   >>>
   output {
     File read1 = "~{sample_name}_R1.fastq.gz"
-    File read2 = "~{sample_name}_R2.fastq.gz"
+    File? read2 = "~{sample_name}_R2.fastq.gz"
     File basespace_log = "bioforklift.log"
   }
   runtime {

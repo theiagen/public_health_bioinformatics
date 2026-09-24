@@ -13,6 +13,7 @@ workflow basespace_fetch {
     String? basespace_api_url
     Boolean? validate_paired_end
     Boolean? group_by_lane
+    Boolean? use_latest_dataset
   }
   call basespace.fetch_bs {
     input:
@@ -23,6 +24,7 @@ workflow basespace_fetch {
       basespace_api_url = basespace_api_url,
       validate_paired_end = validate_paired_end,
       group_by_lane = group_by_lane,
+      use_latest_dataset = use_latest_dataset,
   }
   call versioning_task.version_capture {
     input:
@@ -31,7 +33,7 @@ workflow basespace_fetch {
     String basespace_fetch_version = version_capture.phb_version
     String basespace_fetch_analysis_date = version_capture.date
     File read1 = fetch_bs.read1
-    File read2 = fetch_bs.read2
+    File? read2 = fetch_bs.read2
     File basespace_log = fetch_bs.basespace_log
   }
 }
