@@ -31,6 +31,7 @@ jobs:
     timeout-minutes: 15
     environment: theiagen-version-merge-bot
     env:
+      GH_REPO: ${{ github.repository }}
       PR: ${{ github.event.pull_request.number }}
       BRANCH: ${{ github.event.pull_request.head.ref }}
       VERSION_FILE: tasks/task_versioning.wdl
@@ -181,20 +182,27 @@ jobs:
       # token holds a ruleset bypass. the api evaluates the bypass server-side.
       # sha pins the merge to the cleared commit: if anything was pushed to the
       # branch after it, github refuses instead of merging unreviewed commits.
-      # the commit message drops the bot's own "ci:" stamp/clear commits.
+      # the commit message drops any bot commits (since they don't end up in main)
+      # also strips ci-skip markers from the title and commit list: on main they
+      # would make github skip every workflow for the merge, including the
+      # docs deploy.
       - name: Squash merge
         id: squash
         env:
           PR_TITLE: ${{ github.event.pull_request.title }}
           SHA: ${{ steps.clear.outputs.sha }}
         run: |
+          # every marker github honors, in any case, plus a leading space
+          STRIP='s/ *\[(skip ci|ci skip|no ci|skip actions|actions skip)\]//Ig'
+          TITLE=$(printf '%s' "$PR_TITLE" | sed -E "$STRIP")
           COMMITS=$(gh api "repos/${{ github.repository }}/pulls/$PR/commits" --paginate \
             --jq '.[] | "* " + (.commit.message | split("\n")[0])' \
-            | grep -v '^\* ci: ' || true)
+            | grep -vE '^\* ci: (stamp branch version tag|clear version tag for merge|restore version tag after (failed )?merge)$' \
+            | sed -E "$STRIP" || true)
           gh api -X PUT "repos/${{ github.repository }}/pulls/$PR/merge" \
             -f merge_method=squash \
             -f sha="$SHA" \
-            -f commit_title="$PR_TITLE (#$PR)" \
+            -f commit_title="$TITLE (#$PR)" \
             -f commit_message="$COMMITS"
 
       - name: Restore branch tag
