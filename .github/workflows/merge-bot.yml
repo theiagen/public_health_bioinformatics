@@ -31,6 +31,7 @@ jobs:
     timeout-minutes: 15
     environment: theiagen-version-merge-bot
     env:
+      GH_REPO: ${{ github.repository }}
       PR: ${{ github.event.pull_request.number }}
       BRANCH: ${{ github.event.pull_request.head.ref }}
       VERSION_FILE: tasks/task_versioning.wdl
@@ -38,18 +39,24 @@ jobs:
       CODEOWNERS_FILE: .github/CODEOWNERS
       CODEOWNERS_TEAM: theiagen/theiagen-codeowners
 
+    # actions in this job are pinned to full commit shas, not tags: this job
+    # holds the app key, and a tag can be moved to different code by whoever
+    # controls the action's repo. to update, find the release's commit sha
+    # and keep the version comment in sync.
     steps:
       - name: Mint token
         id: token
-        uses: actions/create-github-app-token@v2
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         with:
-          app-id: ${{ secrets.VERSION_BOT_APP_ID }}
+          # the client id is public (it's in GET /apps/theiagen-version-merge-bot),
+          # so it isn't a secret; only the private key is
+          client-id: Iv23liRlAOzAxhj4bfv7
           private-key: ${{ secrets.VERSION_BOT_PRIVATE_KEY }}
 
       - name: Export token
         run: echo "GH_TOKEN=${{ steps.token.outputs.token }}" >> "$GITHUB_ENV"
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         id: checkout
         with:
           ref: ${{ github.event.pull_request.head.ref }}
@@ -181,20 +188,27 @@ jobs:
       # token holds a ruleset bypass. the api evaluates the bypass server-side.
       # sha pins the merge to the cleared commit: if anything was pushed to the
       # branch after it, github refuses instead of merging unreviewed commits.
-      # the commit message drops the bot's own "ci:" stamp/clear commits.
+      # the commit message drops any bot commits (since they don't end up in main)
+      # also strips ci-skip markers from the title and commit list: on main they
+      # would make github skip every workflow for the merge, including the
+      # docs deploy.
       - name: Squash merge
         id: squash
         env:
           PR_TITLE: ${{ github.event.pull_request.title }}
           SHA: ${{ steps.clear.outputs.sha }}
         run: |
+          # every marker github honors, in any case, plus a leading space
+          STRIP='s/ *\[(skip ci|ci skip|no ci|skip actions|actions skip)\]//Ig'
+          TITLE=$(printf '%s' "$PR_TITLE" | sed -E "$STRIP")
           COMMITS=$(gh api "repos/${{ github.repository }}/pulls/$PR/commits" --paginate \
             --jq '.[] | "* " + (.commit.message | split("\n")[0])' \
-            | grep -v '^\* ci: ' || true)
+            | grep -vE '^\* ci: (stamp branch version tag|clear version tag for merge|restore version tag after (failed )?merge)$' \
+            | sed -E "$STRIP" || true)
           gh api -X PUT "repos/${{ github.repository }}/pulls/$PR/merge" \
             -f merge_method=squash \
             -f sha="$SHA" \
-            -f commit_title="$PR_TITLE (#$PR)" \
+            -f commit_title="$TITLE (#$PR)" \
             -f commit_message="$COMMITS"
 
       - name: Restore branch tag
@@ -285,7 +299,7 @@ jobs:
             token)
               TITLE=":x: **Merge bot failed: could not authenticate.**"
               WHY="The GitHub App token could not be minted."
-              FIX="Check that \`VERSION_BOT_APP_ID\` and \`VERSION_BOT_PRIVATE_KEY\` are set as secrets on the \`theiagen-version-merge-bot\` environment (Settings → Environments), that the environment allows the \`main\` branch, that the private key was pasted in full including its BEGIN/END lines, and that the app is still installed on this repository."
+              FIX="Check that the app is still installed on this repository (Org settings → GitHub Apps → theiagen-version-merge-bot → Configure → Repository access), that \`VERSION_BOT_PRIVATE_KEY\` is set as a secret on the \`theiagen-version-merge-bot\` environment (Settings → Environments) with the full private key including its BEGIN/END lines, that the environment allows the \`main\` branch, and that the \`client-id\` in this workflow still matches the app's Client ID on its settings page."
               ;;
             checkout)
               TITLE=":x: **Merge bot failed: could not check out the branch.**"
