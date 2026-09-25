@@ -153,11 +153,12 @@ task snippy_variants {
     String snippy_variants_percent_reads_aligned = read_string("PERCENT_READS_ALIGNED")
   }
   runtime {
-      docker: "~{docker}"
-      memory: "~{memory} GB"
-      cpu: cpu
-      disks: "local-disk " + disk_size + " SSD"
-      preemptible: 0
-      maxRetries: 3
+    docker: "~{docker}"
+    memory: "~{memory} GB"
+    cpu: cpu
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    preemptible: 0
+    maxRetries: 3
   }
 }

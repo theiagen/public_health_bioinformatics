@@ -14,9 +14,9 @@ task transfer_files {
   command <<<
   # transfer_files to specified gcp_uri
   date_tag=$(date +"%Y-%m-%d")
-  
+
   gsutil -m cp ~{updated_barcodes} ~{updated_lineages} ~{update_log} ~{gcp_uri}/${date_tag}
-  
+
   >>>
   runtime {
     memory: memory + " GB"
@@ -25,6 +25,6 @@ task transfer_files {
     disks:  "local-disk " + disk_size + " HDD"
     disk: disk_size + " GB" # TES
   }
-  output {    
+  output {
   }
 }

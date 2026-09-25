@@ -5,7 +5,7 @@ task kraken_output_parser {
     File kraken2_report
     Array[String] taxon_ids
     Int? read_count_threshold
-    
+
     Int cpu = 2
     Int disk_size = 100
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/krakentools:d4a2fbe"

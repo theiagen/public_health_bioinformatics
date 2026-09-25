@@ -75,53 +75,42 @@ You can expect a careful review of every PR and receive feedback as needed befor
 
 ### Authorship
 
-<!--
-A Public Service Announcement regarding calculating the contribution math:
+<!-- Ordered alphabetically -->
 
-Andrew Hale added a .txt database file to docs/assets that artificially inflates his line
-count by 55,316. This was not code and shouldn't be considered as such. Please subtract
-55,316 from his line count when updating this list. Sage Wright subsequently deleted that .txt
-database in a later commit (on 2025-09-03), so also please subtract 55,316 from Sage Wright's
-line count as well.
-
-okay thanks bye
--->
-
-(Ordered by contribution [# of lines changed] as of 2026-05-06)
-
-- **Sage Wright** ([@sage-wright](https://github.com/sage-wright)) - Conceptualization, Software, Validation, Documentation, Supervision <!-- 99625 + 116557 - 55316 = 160866 -->
-- **Inês Mendes** ([@cimendes](https://github.com/cimendes)) - Software, Validation, Documentation <!-- 25655 + 23922 = 49577 -->
-- **Curtis Kapsak** ([@kapsakcj](https://github.com/kapsakcj)) - Conceptualization, Software, Validation, Documentation <!-- 20852 + 15908 = 36760 -->
-- **Zachary Konkel** ([@xonq](https://github.com/xonq)) - Software, Validation, Documentation <!-- 17396 + 14827 = 32223 -->
-- **Theron James** ([@MrTheronJ](https://github.com/MrTheronJ)) - Software, Validation, Documentation <!-- 17777 + 13121 = 30898 -->
-- **Andrew Hale** ([@awh082834](https://github.com/awh082834)) - Software, Validation, Documentation <!-- 62354 + 3600 - 55316 = 10638  -->
-- **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation, Documentation <!-- 4419 + 2686 = 7105 -->
-- **Michelle Scribner** ([@michellescribner](https://github.com/michellescribner)) - Software, Validation, Documentation <!-- 3597 + 851 = 4448 -->
-- **Kevin Libuit** ([@kevinlibuit](https://github.com/kevinlibuit)) - Conceptualization, Project Administration, Software, Validation, Supervision <!-- 2908 + 444 = 3352 -->
-- **Andrew Lang** ([@AndrewLangVt](https://github.com/AndrewLangVt)) - Software, Supervision <!-- 84 + 68 = 152 -->
-- **Kelsey Kropp** ([@kelseykropp](https://github.com/kelseykropp)) - Documentation <!-- 72 + 39 = 111 -->
-- **Sushmita Sridhar** ([@ss43](https://github.com/ss43)) - Documentation <!-- 11 + 12 = 23 -->
-- **Neha Mokashi** ([@nehavm456](https://github.com/nehavm456)) - Documentation <!-- 3 + 4 = 7 -->
-- **Deborah Young** ([@theiadeb](https://github.com/theiadeb)) - Documentation <!-- 3 + 3 = 6 -->
-- **Bruna Todani** ([@brunatodani](https://github.com/brunatodani)) - Documentation <!-- 2 + 1 = 3 -->
-- **Joel Sevinsky** ([@sevinsky](https://github.com/sevinsky)) - Conceptualization, Project Administration, Supervision <!-- 0 + 0 = 0 -->
+- **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation, Documentation
+- **Andrew Hale** ([@awh082834](https://github.com/awh082834)) - Software, Validation, Documentation
+- **Theron James** ([@MrTheronJ](https://github.com/MrTheronJ)) - Software, Validation, Documentation
+- **Curtis Kapsak** ([@kapsakcj](https://github.com/kapsakcj)) - Conceptualization, Software, Validation, Documentation
+- **Zachary Konkel** ([@xonq](https://github.com/xonq)) - Software, Validation, Documentation
+- **Kelsey Kropp** ([@kelseykropp](https://github.com/kelseykropp)) - Documentation
+- **Andrew Lang** ([@AndrewLangVt](https://github.com/AndrewLangVt)) - Software, Supervision
+- **Inês Mendes** ([@cimendes](https://github.com/cimendes)) - Software, Validation, Documentation
+- **Neha Mokashi** ([@nehavm456](https://github.com/nehavm456)) - Documentation
+- **Michelle Scribner** ([@michellescribner](https://github.com/michellescribner)) - Software, Validation, Documentation
+- **Joel Sevinsky** ([@sevinsky](https://github.com/sevinsky)) - Conceptualization, Project Administration, Supervision
+- **Bruna Todani** ([@brunatodani](https://github.com/brunatodani)) - Documentation
+- **Sage Wright** ([@sage-wright](https://github.com/sage-wright)) - Conceptualization, Software, Validation, Documentation, Supervision
+- **Deborah Young** ([@theiadeb](https://github.com/theiadeb)) - Documentation
 
 ### External Contributors
 
 We would like to gratefully acknowledge the following individuals from the public health community for their contributions to the PHB repository:
 
+<!-- Ordered alphabetically -->
 - **Frank Ambrosio** ([@frankambrosio3](https://github.com/frankambrosio3))*
-- **James Otieno** ([@jrotieno](https://github.com/jrotieno))*
-- **Robert Petit** ([@rpetit3](https://github.com/rpetit3))*
+- **Sam Baird** ([@sam-baird](https://github.com/sam-baird))
 - **Fraser Combe** ([@fraser-combe](https://github.com/fraser-combe))*
-- **Andrew Page** ([@andrewjpage](https://github.com/andrewjpage))*
+- **Nicole Dagata** ([@nicoledagatatheiagen](https://github.com/nicoledagatatheiagen))*
 - **Emma Doughty** ([@emmadoughty](https://github.com/emmadoughty))*
+- **Holly Halstead** ([@HNHalstead](https://github.com/HNHalstead))
+- **Kevin Libuit** ([@kevinlibuit](https://github.com/kevinlibuit))*
 - **Nate Matteson** ([@watronfire](https://github.com/watronfire))
 - **Ash O'Farrel** ([@aofarrel](https://github.com/aofarrel))
-- **Sam Baird** ([@sam-baird](https://github.com/sam-baird))
-- **Holly Halstead** ([@HNHalstead](https://github.com/HNHalstead))
-- **Nicole Dagata** ([@nicoledagatatheiagen](https://github.com/nicoledagatatheiagen))*
+- **James Otieno** ([@jrotieno](https://github.com/jrotieno))*
+- **Andrew Page** ([@andrewjpage](https://github.com/andrewjpage))*
+- **Robert Petit** ([@rpetit3](https://github.com/rpetit3))*
 - **Emily Smith** ([@emily-smith1](https://github.com/emily-smith1))*
+- **Sushmita Sridhar** ([@ss43](https://github.com/ss43))*
 
 \* Former member of Theiagen
 

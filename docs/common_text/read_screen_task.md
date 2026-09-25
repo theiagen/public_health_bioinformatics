@@ -11,8 +11,13 @@ fragment: true
     4. Estimated genome size:  A sample will fail the read screening if the estimated genome size is smaller than `min_genome_length` or bigger than `max_genome_length`.
     5. Estimated genome coverage: A sample will fail the read screening if the estimated genome coverage is less than the `min_coverage`.
 
-<!-- if: theiacov|theiaprok|theiaeuk|theiaeukont -->
-    Read screening is undertaken on both the raw and cleaned reads. The task may be skipped by setting the `skip_screen` variable to true.
+<!-- if: theiacov -->
+    Read screening is undertaken on both the raw and cleaned reads. Each screen has its own gate: set `skip_screen_raw` to `true` to skip the screen on the raw reads, and `skip_screen_clean` to `true` to skip the screen on the cleaned reads. The two are independent, so you can screen the raw reads only, the cleaned reads only, both, or neither.
+
+<!-- endif -->
+
+<!-- if: theiaprok|theiaeuk|theiaeukont -->
+    Read screening is undertaken on both the raw and cleaned reads. The task may be skipped by setting the `skip_screen` variable to `true`.
 
     Default values vary between the PE, SE, and ONT workflows. The rationale for these default values can be found below. If two default values are shown, the first is for Illumina workflows and the second is for ONT.
 <!-- endif -->
@@ -33,9 +38,15 @@ fragment: true
 <!-- endif -->
 
 <!-- if: theiacov -->
+    !!! warning "Breaking change: `skip_screen` has been replaced"
+        The single `skip_screen` input has been split into `skip_screen_raw` and `skip_screen_clean`, and `skip_screen` is no longer a recognized input for TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, or TheiaCoV_ONT.
+
+        Existing workspace configurations and input JSONs that set `skip_screen` will **not** carry over. The value is silently dropped, both screens fall back to their `false` default, and samples that previously bypassed screening will now be screened and may terminate at the screen task. Replace `skip_screen` with `skip_screen_raw` and/or `skip_screen_clean` before rerunning. Other workflow series (TheiaProk, TheiaEuk, TheiaViral) are unaffected and keep the single `skip_screen` input.
+
     | Variable  | Default Value | Rationale |
     | --- | --- | --- |
-    | `skip_screen` | false | Set to true to skip the read screen from running |
+    | `skip_screen_raw` | false | Set to true to skip the read screen on the raw reads. If set to true, `est_genome_length` is not estimated, so provide `genome_length` explicitly when `call_rasusa` is enabled |
+    | `skip_screen_clean` | false | Set to true to skip the read screen on the cleaned reads |
     | `min_reads` | 57 | Calculated from the minimum number of base pairs required for 10x coverage of the Hepatitis delta (of the _Deltavirus_ genus) genome, the smallest known viral genome as of 2024-04-11 (1,700 bp), divided by 300 (the longest Illumina read length) |
     | `min_basepairs` | 17000 | Should be greater than 10x coverage of Hepatitis delta (of the _Deltavirus_ genus), the smallest known viral genome (1,700 bp) |
     | `min_genome_length` | 1700 | Based on the Hepatitis delta (of the _Deltavirus_ genus) genome, the smallest viral genome as of 2024-04-11 (1,700 bp) |

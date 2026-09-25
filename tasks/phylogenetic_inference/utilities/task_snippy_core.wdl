@@ -16,7 +16,7 @@ task snippy_core {
   command <<<
     # version control
     snippy --version | head -1 | tee VERSION
-    
+
     tarball_array=(~{sep=" " snippy_variants_outdir_tarball})
     samplename_array=(~{sep=" " samplenames})
 

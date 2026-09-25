@@ -49,6 +49,7 @@ workflow read_QC_trim_ont {
     File? metabuli_taxdump_path
 
     # rasusa downsampling inputs
+    Boolean call_rasusa = false
     Float rasusa_downsampling_coverage = 150
     Int? rasusa_cpu
     Int? rasusa_disk_size
@@ -128,7 +129,7 @@ workflow read_QC_trim_ont {
   }
   if ( "~{workflow_series}" == "theiaprok" || "~{workflow_series}" == "theiaeuk" ) {
     # rasusa for random downsampling
-    if ( defined(genome_length) ||  defined(rasusa_fraction_of_reads) || defined(rasusa_num_bases) || defined(rasusa_num_reads) ) {
+    if (call_rasusa && (defined(genome_length) ||  defined(rasusa_fraction_of_reads) || defined(rasusa_num_bases) || defined(rasusa_num_reads))) {
       call rasusa_task.rasusa {
         input:
           read1 = read1,
@@ -186,10 +187,13 @@ workflow read_QC_trim_ont {
     String metabuli_percent_human = select_first([metabuli_theiacov_raw.metabuli_percent_human, metabuli_theiaprok.metabuli_percent_human, ""])
     String? metabuli_target_organism = ete4_taxon_id.taxon_name
     String metabuli_percent_target_organism = select_first([metabuli_theiacov_raw.metabuli_percent_target_lineage, metabuli_theiaprok.metabuli_percent_target_lineage, ""])
+    String metabuli_reads_target_organism = select_first([metabuli_theiacov_raw.metabuli_reads_target_lineage, metabuli_theiaprok.metabuli_reads_target_lineage, ""])
+
     String? metabuli_taxon_id = ete4_taxon_id.taxon_id
     String metabuli_report = select_first([metabuli_theiacov_raw.metabuli_report, metabuli_theiaprok.metabuli_report, ""])
     Float? metabuli_percent_human_dehosted = metabuli_theiacov_dehosted.metabuli_percent_human
     String? metabuli_percent_target_organism_dehosted = metabuli_theiacov_dehosted.metabuli_percent_target_lineage
+    String? metabuli_reads_target_organism_dehosted = metabuli_theiacov_dehosted.metabuli_reads_target_lineage
     File? metabuli_report_dehosted = metabuli_theiacov_dehosted.metabuli_report
     String metabuli_database = select_first([metabuli_theiacov_raw.metabuli_database, metabuli_theiaprok.metabuli_database, ""])
 

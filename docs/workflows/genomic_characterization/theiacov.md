@@ -16,6 +16,9 @@
 
 Additionally, the **TheiaCoV_FASTA_Batch** workflow is available to process several hundred SARS-CoV-2 assemblies at the same time.
 
+!!! warning "Breaking change: `skip_screen` split into `skip_screen_raw` and `skip_screen_clean`"
+    TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, and TheiaCoV_ONT no longer accept a `skip_screen` input. The raw and cleaned read screens are now gated independently by `skip_screen_raw` and `skip_screen_clean`, both defaulting to `false`.
+
 ---
 
 !!! dna inline end "Key Resources"

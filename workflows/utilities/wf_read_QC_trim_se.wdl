@@ -26,6 +26,7 @@ workflow read_QC_trim_se {
     File? phix
     String? workflow_series
     String? trimmomatic_override_args
+    String? trimmomatic_quality_encoding # options: "-phred33" (default), "-phred64", or "" (auto-detect)
     Boolean call_midas = false
     File? midas_db
     Boolean call_bracken = true
@@ -86,6 +87,7 @@ workflow read_QC_trim_se {
         trimmomatic_min_length = trim_min_length,
         trimmomatic_window_quality = trim_quality_min_score,
         trimmomatic_window_size = trim_window_size,
+        trimmomatic_quality_encoding = trimmomatic_quality_encoding,
         trimmomatic_override_args = trimmomatic_override_args
     }
   }
@@ -219,10 +221,12 @@ workflow read_QC_trim_se {
     String bracken_version = select_first([kraken2_theiacov_raw.bracken_version, kraken2_theiaprok.bracken_version, ""])
     Float? kraken2_human = kraken2_theiacov_raw.kraken2_percent_human
     String? kraken2_target_organism = kraken2_theiacov_raw.kraken2_percent_target_organism
+    String? kraken2_reads_target_organism = kraken2_theiacov_raw.kraken2_reads_target_organism
     String kraken2_report = select_first([kraken2_theiacov_raw.kraken2_report, kraken2_theiaprok.kraken2_report, ""])
     String bracken_report = select_first([kraken2_theiacov_raw.bracken_report, kraken2_theiaprok.bracken_report, ""])
     Float? kraken2_human_dehosted = kraken2_theiacov_dehosted.kraken2_percent_human
     String? kraken2_target_organism_dehosted = kraken2_theiacov_dehosted.kraken2_percent_target_organism
+    String? kraken2_reads_target_organism_dehosted = kraken2_theiacov_dehosted.kraken2_reads_target_organism
     String? kraken2_target_organism_name = target_organism
     File? kraken2_report_dehosted = kraken2_theiacov_dehosted.kraken2_report
     File? bracken_report_dehosted = kraken2_theiacov_dehosted.bracken_report

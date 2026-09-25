@@ -10,7 +10,7 @@ task amr_search {
     Int disk_size = 50
     Int memory = 8
   }
-  command <<< 
+  command <<<
     # Extract base name without path or extension
     input_base=$(basename ~{input_fasta})
     input_base=${input_base%.*}
@@ -28,7 +28,7 @@ task amr_search {
     python3 /scripts/parse_amr_json.py \
         ./~{samplename}_paarsnp_results.jsn \
         ~{samplename}
-    
+
     # Fix carriage return characters
     sed -i 's/\r$//' "~{samplename}_amr_results.csv"
 
@@ -60,6 +60,7 @@ task amr_search {
     cpu: cpu
     docker: docker
     disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
     maxRetries: 1
   }
 }

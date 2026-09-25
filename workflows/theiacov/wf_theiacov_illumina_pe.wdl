@@ -57,7 +57,9 @@ workflow theiacov_illumina_pe {
     Int max_genome_length = 2673870 # size of Pandoravirus salinus + 200 kb
     Int min_coverage = 10
     Int min_proportion = 40
-    Boolean skip_screen = false
+    # skip screen gates
+    Boolean skip_screen_raw = false
+    Boolean skip_screen_clean = false
     # pangolin parameters
     String? pangolin_docker_image
     # kraken parameters
@@ -83,7 +85,7 @@ workflow theiacov_illumina_pe {
       pangolin_docker_image = pangolin_docker_image,
       kraken_target_organism_input = target_organism
   }
-  if (! skip_screen) {
+  if (! skip_screen_raw) {
     call screen.check_reads as raw_check_reads {
       input:
         read1 = read1,
@@ -98,7 +100,7 @@ workflow theiacov_illumina_pe {
         expected_genome_length = organism_parameters.genome_length
     }
   }
-  if (select_first([raw_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
+  if (select_first([raw_check_reads.read_screen, ""]) == "PASS" || skip_screen_raw) {
     call read_qc.read_QC_trim_pe as read_QC_trim {
       input:
         samplename = samplename,
@@ -115,7 +117,7 @@ workflow theiacov_illumina_pe {
         rasusa_downsampling_coverage = rasusa_downsampling_coverage,
         rasusa_genome_length = select_first([genome_length, raw_check_reads.est_genome_length, 0]),
     }
-    if (! skip_screen) {
+    if (! skip_screen_clean) {
       call screen.check_reads as clean_check_reads {
         input:
           read1 = read_QC_trim.read1_clean,
@@ -130,7 +132,7 @@ workflow theiacov_illumina_pe {
           expected_genome_length = organism_parameters.genome_length
       }
     }
-    if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
+    if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen_clean) {
       # assembly via bwa and ivar for non-flu data
       if (organism_parameters.standardized_organism != "flu") {
         call consensus_call.ivar_consensus {
@@ -229,7 +231,7 @@ workflow theiacov_illumina_pe {
                 "number_Degenerate":  consensus_qc.number_Degenerate,
                 "percent_reference_coverage":  consensus_qc.percent_reference_coverage,
                 "vadr_num_alerts": morgana_magic.vadr_num_alerts
-            }
+              }
           }
         }
       }
@@ -316,11 +318,13 @@ workflow theiacov_illumina_pe {
     String? bracken_version = read_QC_trim.bracken_version
     Float? kraken_human = read_QC_trim.kraken2_human
     String? kraken_target_organism = read_QC_trim.kraken2_target_organism
+    String? kraken_target_organism_reads = read_QC_trim.kraken2_reads_target_organism
     String? kraken_target_organism_name = read_QC_trim.kraken2_target_organism_name
     File? kraken_report = read_QC_trim.kraken2_report
     String? bracken_report = read_QC_trim.bracken_report
     Float? kraken_human_dehosted = read_QC_trim.kraken2_human_dehosted
     String? kraken_target_organism_dehosted = read_QC_trim.kraken2_target_organism_dehosted
+    String? kraken_target_organism_dehosted_reads = read_QC_trim.kraken2_reads_target_organism_dehosted
     File? kraken_report_dehosted = read_QC_trim.kraken2_report_dehosted
     String? bracken_report_dehosted = read_QC_trim.bracken_report_dehosted
     # Read QC - rasusa outputs

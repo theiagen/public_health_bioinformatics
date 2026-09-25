@@ -48,7 +48,9 @@ workflow theiacov_illumina_se {
     Int min_genome_length = 1700 # size of hepatitis delta virus
     Int max_genome_length = 2673870 # size of Pandoravirus salinus + 200 kb
     Int min_coverage = 10
-    Boolean skip_screen = false
+    # skip screen gates
+    Boolean skip_screen_raw = false
+    Boolean skip_screen_clean = false
     Boolean skip_mash = false
     # vadr parameters
     Int? vadr_max_length
@@ -78,7 +80,7 @@ workflow theiacov_illumina_se {
       primer_bed_file = primer_bed,
       pangolin_docker_image = pangolin_docker_image
   }
-  if (! skip_screen) {
+  if (! skip_screen_raw) {
     call screen.check_reads_se as raw_check_reads {
       input:
         read1 = read1,
@@ -92,7 +94,7 @@ workflow theiacov_illumina_se {
         expected_genome_length = organism_parameters.genome_length
     }
   }
-  if (select_first([raw_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
+  if (select_first([raw_check_reads.read_screen, ""]) == "PASS" || skip_screen_raw) {
     call read_qc.read_QC_trim_se as read_QC_trim {
       input:
         samplename = samplename,
@@ -108,7 +110,7 @@ workflow theiacov_illumina_se {
         rasusa_downsampling_coverage = rasusa_downsampling_coverage,
         rasusa_genome_length = select_first([genome_length, raw_check_reads.est_genome_length, 0]),
     }
-    if (! skip_screen) {
+    if (! skip_screen_clean) {
       call screen.check_reads_se as clean_check_reads {
         input:
           read1 = read_QC_trim.read1_clean,
@@ -122,7 +124,7 @@ workflow theiacov_illumina_se {
           expected_genome_length = organism_parameters.genome_length
       }
     }
-    if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
+    if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen_clean) {
       call consensus_call.ivar_consensus {
         input:
           samplename = samplename,
@@ -252,10 +254,12 @@ workflow theiacov_illumina_se {
     Float? kraken_human = read_QC_trim.kraken2_human
     String? kraken_target_organism = read_QC_trim.kraken2_target_organism
     String? kraken_target_organism_name = read_QC_trim.kraken2_target_organism_name
+    String? kraken_target_organism_reads = read_QC_trim.kraken2_reads_target_organism
     File? kraken_report = read_QC_trim.kraken2_report
     String? bracken_report = read_QC_trim.bracken_report
     Float? kraken_human_dehosted = read_QC_trim.kraken2_human_dehosted
     String? kraken_target_organism_dehosted = read_QC_trim.kraken2_target_organism_dehosted
+    String? kraken_target_organism_dehosted_reads = read_QC_trim.kraken2_reads_target_organism_dehosted
     File? kraken_report_dehosted = read_QC_trim.kraken2_report_dehosted
     File? bracken_report_dehosted = read_QC_trim.bracken_report_dehosted
     # Read QC - rasusa outputs
