@@ -16,9 +16,9 @@ The `BaseSpace_Fetch` workflow facilitates the transfer of Illumina sequencing d
 
 ---
 
-## Step 1 — Get your `access_token` {% raw %} {#step-1-access-token} {% endraw %}
+## Step 1 — Get your `basespace_access_token` {% raw %} {#step-1-access-token} {% endraw %}
 
-This workflow requires a BaseSpace access token to authenticate your BaseSpace account and download FASTQ files from your Runs/Projects. Each `access_token` is tied to a single BaseSpace account, so you'll need a separate token for every account you want the workflow to access. The simplest way to obtain this token is with the BaseSpace command-line tool (`bs`), described below.
+This workflow requires a BaseSpace access token to authenticate your BaseSpace account and download FASTQ files from your Runs/Projects. Each `basespace_access_token` is tied to a single BaseSpace account, so you'll need a separate token for every account you want the workflow to access. The simplest way to obtain this token is with the BaseSpace command-line tool (`bs`), described below.
 
 _Already have a command-line environment available?_ You can skip ahead to [1.2 `bs` CLI installation](#install-bs-cli).
 
@@ -99,10 +99,10 @@ _Already have a command-line environment available?_ You can skip ahead to [1.2 
     !!! caption narrow "Create workspace data elements"
         ![Workspace data table showing the basespace_access_token and basespace_api_server key-value pairs required for BaseSpace configuration.](../../assets/figures/basespace_fetch/info5-copy-information.png)
 
-    When you launch the workflow, point the `access_token` input at this variable using `workspace.basespace_access_token`.
+    When you launch the workflow, point the `basespace_access_token` input at this variable using `workspace.basespace_access_token`. The `basespace_api_url` input is optional and defaults to `https://api.basespace.illumina.com`.
 
     !!! info "Pulling from more than one BaseSpace account in a single run"
-        `access_token` is an ordinary workflow input, so it does not _have_ to come from workspace data. If different samples live under different BaseSpace accounts, add an `access_token` column to your data table and point the input at `this.access_token` instead.
+        `basespace_access_token` is an ordinary workflow input, so it does not _have_ to come from workspace data. If different samples live under different BaseSpace accounts, add a `basespace_access_token` column to your data table and point the input at `this.basespace_access_token` instead.
 
 ---
 
@@ -155,6 +155,8 @@ The workflow searches for each `basespace_sample_id` in the following order, sto
     !!! info "Lane-suffixed dataset names"
         A dataset is considered a lane-suffixed dataset if removing its lane suffix (for example, `_L1` or `_L001`) leaves a name that **exactly** matches the value you provided. See examples below.
 
+If neither step finds a match, the workflow fails with `No exact dataset match`. If only lane-suffixed datasets exist and `group_by_lane` is `false`, it fails with `Partial dataset match`. Set `group_by_lane` to `true` to merge them.
+
 ### 3.3 Worked examples using `group_by_lane`
 
 Each example below lists the datasets that exist in a collection, then shows what a given `basespace_sample_id` resolves to with `group_by_lane` on and off (the default).
@@ -194,7 +196,7 @@ Each example below lists the datasets that exist in a collection, then shows wha
     | `Sample-2026-002_L001` | ✅ Lane 1 only, on its own | ✅ Lane 1 only, on its own |
 
     !!! warning "Exact matches always take precedence"
-        Although rare, it is possible to have an "un-laned" dataset alongside lane-suffixed datasets. In this case, the workflow will always use the exact match first, even if `group_by_lane` is set to `true`. The workflow will pass with a warning that the lane-suffixed datasets were ignored.
+        Although rare, it is possible to have an "un-laned" dataset alongside lane-suffixed datasets. In this case, the workflow will always use the exact match first, even if `group_by_lane` is set to `true`. The workflow will pass with a warning, recorded in the `basespace_log` output, that the lane-suffixed datasets were ignored.
 
 ---
 
@@ -246,7 +248,7 @@ To build and format a data table, follow Terra's guide: [How to make a data tabl
 
 ## Outputs
 
-The outputs of this workflow will be the fastq files imported from BaseSpace into the data table where the sample ID information had originally been uploaded.
+The outputs of this workflow will be the fastq files imported from BaseSpace into the data table where the sample ID information had originally been uploaded, along with a `basespace_log` describing each BaseSpace API interaction.
 
 /// html | div[class="searchable-table"]
 
