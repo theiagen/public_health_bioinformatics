@@ -200,9 +200,7 @@ Each example below lists the datasets that exist in a collection, then shows wha
 
 ## Step 4 — Build the Terra data table {% raw %} {#step-4-data-table} {% endraw %}
 
-To build and format a data table, follow Terra's guide: [How to make a data table from scratch or a template](https://support.terra.bio/hc/en-us/articles/6197368140955-How-to-make-a-data-table-from-scratch-or-a-template).
-
-Alternatively, feel free to download our [BaseSpace_Fetch template](https://storage.cloud.google.com/theiagen-public-resources-rp/reference_data/family_agnostic/bs_fetch_template_20260925.tsv). It already has the required columns, so you only need to fill in one row per sample and rename the table in the first column header. See the table below for a description of each column.
+To build and format a data table, follow Terra's guide: [How to make a data table from scratch or a template](https://support.terra.bio/hc/en-us/articles/6197368140955-How-to-make-a-data-table-from-scratch-or-a-template). Alternatively, feel free to download our [BaseSpace_Fetch template](https://storage.cloud.google.com/theiagen-public-resources-rp/reference_data/family_agnostic/bs_fetch_template_20260925.tsv). It already has the required columns, so you only need to fill in one row per sample and rename the table in the first column header. See the table below for a description of each column.
 
 | Column | What to enter |
 | --- | --- |
