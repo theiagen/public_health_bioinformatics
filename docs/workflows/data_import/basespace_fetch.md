@@ -146,14 +146,18 @@ If you have the Run's sample sheet, its `Sample_ID` column is a good starting po
 The workflow searches for each `basespace_sample_id` in the following order, stopping after the first successful match:
 
 1. **Exact dataset name.** If a dataset name **exactly** matches the value you provided, that dataset is used to retrieve the associated FASTQ files.
-2. **Lane-suffixed datasets.** If no dataset name **exactly** matches the value you provided, and `group_by_lane` is `true` (the default), the workflow searches for datasets with that value followed by a lane suffix. FASTQ files from matching datasets are then merged into a single R1/R2 pair.
 
-    !!! info "Note"
+    !!! warning "Duplicate dataset names"
+        If a collection has more than one dataset with the **same** name (for example, a requeued sample), the workflow fails with a `Duplicate datasets` error by default. Set `use_latest_dataset` to `true` (default: `false`) to use the most recently created dataset instead, or remove the extra datasets in BaseSpace.
+
+2. **Lane-suffixed datasets.** If no dataset name **exactly** matches the value you provided, and `group_by_lane` is set to `true` (default: `false`), the workflow searches for datasets with that value followed by a lane suffix. FASTQ files from matching datasets are then merged into a single R1/R2 pair.
+
+    !!! info "Lane-suffixed dataset names"
         A dataset is considered a lane-suffixed dataset if removing its lane suffix (for example, `_L1` or `_L001`) leaves a name that **exactly** matches the value you provided. See examples below.
 
-### 3.3 Worked examples
+### 3.3 Worked examples using `group_by_lane`
 
-Each example below lists the datasets that exist in a collection, then shows what a given `basespace_sample_id` resolves to with `group_by_lane` on (the default) and off.
+Each example below lists the datasets that exist in a collection, then shows what a given `basespace_sample_id` resolves to with `group_by_lane` on and off (the default).
 
 ??? toggle "A sample split across lanes (most common)"
 
@@ -167,20 +171,14 @@ Each example below lists the datasets that exist in a collection, then shows wha
     Sample-2026-0010_L001
     ```
 
-    | `basespace_sample_id` | `group_by_lane = true` (default) | `group_by_lane = false` |
+    | `basespace_sample_id` | `group_by_lane = true` | `group_by_lane = false` (default) |
     | --- | --- | --- |
     | `Sample-2026` | ❌ Fails — `No exact dataset match` | ❌ Fails — `No exact dataset match` |
     | `sample-2026-001` | ❌ Fails — `No exact dataset match` | ❌ Fails — `No exact dataset match` |
-    | `Sample-2026-001` | ✅ All four lanes merged into **one** R1/R2 pair | ❌ Fails — `Partial dataset match` |
-    | `Sample-2026-001_L001` | ✅ Lane 1 only, on its own | ✅ Lane 1 only, on its own |
+    | `Sample-2026-001` | ✅ All four lanes merged into **one** R1/R2 pair. <br> `Sample-2026-0010_L001` is excluded. The "unlaned" dataset name (`Sample-2026-0010`) does not exactly match. | ❌ Fails — `Partial dataset match` |
+    | `Sample-2026-001_L001` | ✅ Lane 1 only, on its own. Exact matches always take precedence. | ✅ Lane 1 only, on its own. Exact matches always take precedence. |
 
-    !!! warning "Note"
-        Writing the **lane-less** sample name is what triggers grouping. A name that already carries a lane suffix is an exact match, so it returns just that one lane whether or not `group_by_lane` is on.
-
-    !!! warning "Note"
-        `Sample-2026-0010_L001` is never swept in by `Sample-2026-001`. The lane suffix is removed and what remains (`Sample-2026-0010`) has to equal your string **exactly**.
-
-??? toggle "An un-laned dataset sitting alongside lanes"
+??? toggle "An un-laned dataset sitting alongside lanes (rare)"
 
     ```
     Dataset Name:
@@ -190,31 +188,32 @@ Each example below lists the datasets that exist in a collection, then shows wha
     Sample-2026-002_L002
     ```
 
-    | `basespace_sample_id` | `group_by_lane = true` (default) | `group_by_lane = false` |
+    | `basespace_sample_id` | `group_by_lane = true` | `group_by_lane = false` (default) |
     | --- | --- | --- |
     | `Sample-2026-002` | ⚠️ Only the `Sample-2026-002` dataset (PASSES with warning) | ⚠️ Only the `Sample-2026-002` dataset (PASSES with warning) |
     | `Sample-2026-002_L001` | ✅ Lane 1 only, on its own | ✅ Lane 1 only, on its own |
 
-    !!! warning "Note"
-        An exact dataset name always wins, so `group_by_lane` changes nothing here. Although rare, this is the one case where you can quietly end up with a different result than you expected.
+    !!! warning "Exact matches always take precedence"
+        Although rare, it is possible to have an "un-laned" dataset alongside lane-suffixed datasets. In this case, the workflow will always use the exact match first, even if `group_by_lane` is set to `true`. The workflow will pass with a warning that the lane-suffixed datasets were ignored.
 
 ---
 
 ## Step 4 — Build the Terra data table {% raw %} {#step-4-data-table} {% endraw %}
 
-In Excel or an alternative spreadsheet software, set up a data table for Terra, with a row for each sample. Please feel free to use our [BaseSpace_Fetch Template](https://storage.cloud.google.com/theiagen-public-resources-rp/reference_data/family_agnostic/bs_fetch_template_20231103.tsv) to help ensure the file is formatted correctly.
+To build and format a data table, follow Terra's guide: [How to make a data table from scratch or a template](https://support.terra.bio/hc/en-us/articles/6197368140955-How-to-make-a-data-table-from-scratch-or-a-template).
 
-1. In the first column's **header**, enter the data table name with the format `entity:TABLENAME_id`.
-2. Populate the first column with a unique identifier for each sample. This value can be the same as the corresponding `basespace_sample_id` or any other name you choose, as long as no two rows have the same value.
+Alternatively, feel free to download our [BaseSpace_Fetch template](https://storage.cloud.google.com/theiagen-public-resources-rp/reference_data/family_agnostic/bs_fetch_template_20260925.tsv). It already has the required columns, so you only need to fill in one row per sample and rename the table in the first column header. See the table below for a description of each column.
 
-    !!! warning "This column determines your final FASTQ filenames"
-        The FASTQ files downloaded from your BaseSpace **Run** or **Project** are renamed to `{TABLENAME_id}_R1.fastq.gz` / `{TABLENAME_id}_R2.fastq.gz` using the value in the first column, **not** `basespace_sample_id`.
+| Column | What to enter |
+| --- | --- |
+| First column (`entity:<table name>_id`) | A unique name for each sample. This can be the same as `basespace_sample_id` or any other name. |
+| `basespace_sample_id` | The dataset name found in [Step 3](#step-3-sample-id). |
+| `basespace_collection_id` | The Run or Project name found in [Step 2](#step-2-collection-id). |
 
-3. Create a `basespace_sample_id` column and populate it with the samples found in [Step 3](#step-3-sample-id).
-4. Create a `basespace_collection_id` column and populate it with the BaseSpace Project or Run identifier from [Step 2](#step-2-collection-id).
+??? warning "The downloaded FASTQ files are named after the first column's values"
+    Each downloaded FASTQ file is renamed using the **values under the first column (`entity:<table name>_id`)**. See example image below, in a table named `bs_fetch`:
 
-??? toggle "Example Terra data table"
-    ![A spreadsheet with columns for bs_fetch_sample_id, basespace_sample_id, and basespace_collection_id, populated with six example sample rows all belonging to Run_01.](../../assets/figures/basespace_fetch/step7-metadata-sheet.png)
+    ![A spreadsheet with columns for entity:bs_fetch_id, basespace_sample_id, and basespace_collection_id, populated with six example sample rows.](../../assets/figures/basespace_fetch/step7-metadata-sheet.png)
 
 ---
 
