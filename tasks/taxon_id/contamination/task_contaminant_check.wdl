@@ -51,7 +51,7 @@ task contaminant_check {
         # otherwise coerce into a compatible comma-delimited string by removing spaces
         else:
           temp_resolved = str(value).replace(" ", "")
-       resolved_list.append(temp_resolved)
+        resolved_list.append(temp_resolved)
     # join all resolved sequences together
     resolved = ",".join(resolved_list)
   else:
