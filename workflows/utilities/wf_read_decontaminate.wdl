@@ -104,7 +104,7 @@ workflow read_decontaminate {
   if ((defined(expected_sequences) && expected_sequences != "") || force_contaminant_check) {
     call contaminant_check_task.contaminant_check {
       input:
-        expected_sequences = select_first([expected_sequences]),
+        expected_sequences = expected_sequences,
         expected_sequences_json = expected_sequences_json,
         coverage_by_sequence_json = select_first([read_mapping_stats.coverage_by_sequence_json]),
         depth_by_sequence_json = select_first([read_mapping_stats.depth_by_sequence_json]),

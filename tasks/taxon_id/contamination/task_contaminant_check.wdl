@@ -2,7 +2,7 @@ version 1.0
 
 task contaminant_check {
   input {
-    String expected_sequences # comma-delimited list of expected sequences, OR a key into expected_sequences_json when that is provided
+    String? expected_sequences # comma-delimited list of expected sequences, OR a key into expected_sequences_json when that is provided
     File? expected_sequences_json # optional JSON mapping of {"<NAME>": ["<SEQ1>", "<SEQ2>", ...]}; when provided, expected_sequences is used as the key to look up the list of expected sequences
     File coverage_by_sequence_json # task_mapping_stats output: coverage_by_sequence_json
     File depth_by_sequence_json # task_mapping_stats output: depth_by_sequence_json
