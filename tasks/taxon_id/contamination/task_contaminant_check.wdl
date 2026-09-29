@@ -40,17 +40,18 @@ task contaminant_check {
     expected_list = expected.replace(" ", "").split(",")
     resolved_list = []
     for exp in expected_list:
-      exp_clean = exp.strip().lower()
-      if exp_clean not in mapping:
-        raise KeyError(f"Key '{exp} ({exp_clean})'' not found in expected_sequences_json mapping")
-      value = mapping[exp_clean]
-      # if it's a json list, append as a comma-delimited string
-      if isinstance(value, list):
-        temp_resolved = ",".join(str(sequence) for sequence in value)
-      # otherwise coerce into a compatible comma-delimited string by removing spaces
-      else:
-        temp_resolved = str(value).replace(" ", "")
-      resolved_list.append(temp_resolved)
+      if exp:
+        exp_clean = exp.strip().lower()
+        if exp_clean not in mapping:
+          raise KeyError(f"Key '{exp} ({exp_clean})'' not found in expected_sequences_json mapping")
+        value = mapping[exp_clean]
+        # if it's a json list, append as a comma-delimited string
+        if isinstance(value, list):
+          temp_resolved = ",".join(str(sequence) for sequence in value)
+        # otherwise coerce into a compatible comma-delimited string by removing spaces
+        else:
+          temp_resolved = str(value).replace(" ", "")
+       resolved_list.append(temp_resolved)
     # join all resolved sequences together
     resolved = ",".join(resolved_list)
   else:
