@@ -15,10 +15,17 @@ fragment: true
 <!-- endif -->
 
 <!-- if: read_qc_trim -->
-??? task "`read_decontaminate`: Mapping-based Read Decontamination (optional)"
-    Activate this task by providing a `read_decontaminate_fasta`.
+??? task "`mapped_read_removal`: Mapping-based Read Removal (optional)"
+    Activate this task by providing a `mapped_read_removal_fasta`.
 
-    Known contaminant genetic data can be removed by mapping directly to an input `read_decontaminate_fasta`. This input can be a host genome, common microbial contaminant genome, or intentionally spiked sequences. The mapping statistics and aligned reads to the contaminant FASTA are output in JSON-formatted mappings, while downstream quality control tasks will input the decontaminated reads. An optional "pass/fail" status can be output based on identification of expected/unexpected sequences if the `expected_contaminants` input is populated with a comma-delimited string of expected sequence headers - `expected_contaminants` must exactly match sequence headers in the input.
+    Known contaminant genetic data can be removed by mapping directly to an provided `mapped_read_removal_fasta`. This input can be a host genome or a common microbial contaminant genome. The mapping statistics and aligned reads to the provided FASTA are created in JSON-formatted mappings, while downstream quality control tasks will input the reads that did not map. To additionally report a "pass/fail" status from expected/unexpected sequences, use `spike_in_screen`.
+
+??? task "`spike_in_screen`: Mapping-based Spike-in Screening and Removal (optional)"
+    Activate this task by providing **both** a `spike_in_fasta` and `expected_spike_ins`; the task will not run if either input is missing.
+
+    Intentionally spiked sequences can be screened for by mapping directly to an provided `spike_in_fasta`. Reads that map to the `spike_in_fasta` are removed, and the remaining reads are created as `spike_in_removed_read1`/`spike_in_removed_read2` and passed to downstream quality control tasks. The mapping statistics and aligned reads to the spike-in FASTA are created in JSON-formatted mappings, alongside a "pass/fail" status based on identification of expected/unexpected sequences. `expected_spike_ins` is a comma-delimitted string of expected sequence headers that must exactly match sequence headers in the `spike_in_fasta`.
+
+    If `mapped_read_removal` is also activated, `spike_in_screen` runs on the reads that `mapped_read_removal` left behind, so both sets of reads are removed before downstream analysis.
 
     The detailed steps and tasks are as follows:
 <!-- endif -->

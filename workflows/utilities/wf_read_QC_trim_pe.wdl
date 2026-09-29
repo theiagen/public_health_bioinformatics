@@ -23,14 +23,19 @@ workflow read_QC_trim_pe {
     Int trim_quality_min_score = 30
     Int trim_window_size = 4
     Int bbduk_memory = 8
-    File? read_decontaminate_fasta
-    Int? read_decontaminate_memory
-    String? expected_contaminants
-    Float? min_contaminant_coverage
-    Int? min_contaminant_depth
-    Int? min_contaminant_reads_mapped
-    Int? min_expected_contaminants
-    Int? max_unexpected_contaminants
+    # mapped read removal inputs - reads mapping to this FASTA are removed prior to downstream analysis
+    File? mapped_read_removal_fasta
+    Int? mapped_read_removal_memory
+    # spike-in screening inputs - reads mapping to this FASTA are removed prior to downstream analysis; both inputs are required to run
+    File? spike_in_fasta
+    String? expected_spike_ins # comma-delimited list of expected spike-in sequences, OR a key into expected_spike_ins_json when that is provided
+    File? expected_spike_ins_json # optional JSON mapping of {"<NAME>": ["<SPIKE_IN_SEQUENCE1>", "<SPIKE_IN_SEQUENCE2>", ...]}; when provided, expected_spike_ins is used as the key to look up the list of expected spike-in sequences
+    Int? spike_in_memory
+    Float? spike_in_min_coverage
+    Int? spike_in_min_depth
+    Int? spike_in_min_reads_mapped
+    Int? spike_in_min_expected_sequences
+    Int? spike_in_max_unexpected_sequences
     Boolean call_midas = false
     File? midas_db
     Boolean call_bracken = true
@@ -77,32 +82,49 @@ workflow read_QC_trim_pe {
         read2 = read2,
     }
   }
-  if (defined(read_decontaminate_fasta)) {
-    call read_decontaminate_wf.read_decontaminate {
+  if (defined(mapped_read_removal_fasta)) {
+    call read_decontaminate_wf.read_decontaminate as mapped_read_removal {
       input:
         samplename = samplename,
         read1 = read1,
         read2 = read2,
-        contaminant = select_first([read_decontaminate_fasta]),
+        contaminant = select_first([mapped_read_removal_fasta]),
         is_genome = true,
         is_accession = false,
         refseq = false,
         complete_only = false,
-        expected_sequences = expected_contaminants,
-        min_expected_coverage = min_contaminant_coverage,
-        min_expected_depth = min_contaminant_depth,
-        min_expected_reads_mapped = min_contaminant_reads_mapped,
-        min_expected_seq = min_expected_contaminants,
-        max_unexpected_seq = max_unexpected_contaminants,
-        minimap2_memory = read_decontaminate_memory
+        minimap2_memory = mapped_read_removal_memory
+    }
+  }
+  # spike-in screening reports on reads mapping to the spike-in FASTA and removes them; runs on the reads left over from mapped_read_removal
+  if (defined(spike_in_fasta) && select_first([spike_in_fasta, ""]) != "") {
+    call read_decontaminate_wf.read_decontaminate as spike_in_screen {
+      input:
+        samplename = samplename,
+        read1 = select_first([mapped_read_removal.decontaminate_read1, read1]),
+        read2 = select_first([mapped_read_removal.decontaminate_read2, read2]),
+        contaminant = select_first([spike_in_fasta]),
+        force_contaminant_check = true,
+        is_genome = true,
+        is_accession = false,
+        refseq = false,
+        complete_only = false,
+        expected_sequences = expected_spike_ins,
+        expected_sequences_json = expected_spike_ins_json,
+        min_expected_coverage = spike_in_min_coverage,
+        min_expected_depth = spike_in_min_depth,
+        min_expected_reads_mapped = spike_in_min_reads_mapped,
+        min_expected_seq = spike_in_min_expected_sequences,
+        max_unexpected_seq = spike_in_max_unexpected_sequences,
+        minimap2_memory = spike_in_memory
     }
   }
   if (("~{workflow_series}" == "theiacov") || ("~{workflow_series}" == "theiameta")) {
     call ncbi_scrub.ncbi_scrub_pe {
       input:
         samplename = samplename,
-        read1 = select_first([read_decontaminate.decontaminate_read1, read1]),
-        read2 = select_first([read_decontaminate.decontaminate_read2, read2])
+        read1 = select_first([spike_in_screen.decontaminate_read1, mapped_read_removal.decontaminate_read1, read1]),
+        read2 = select_first([spike_in_screen.decontaminate_read2, mapped_read_removal.decontaminate_read2, read2])
     }
   }
   if ("~{workflow_series}" == "theiacov") {
@@ -155,8 +177,8 @@ workflow read_QC_trim_pe {
     call trimmomatic_task.trimmomatic {
       input:
         samplename = samplename,
-        read1 = select_first([rasusa.read1_subsampled, ncbi_scrub_pe.read1_dehosted, read_decontaminate.decontaminate_read1, read1]),
-        read2 = select_first([rasusa.read2_subsampled, ncbi_scrub_pe.read2_dehosted, read_decontaminate.decontaminate_read2, read2]),
+        read1 = select_first([rasusa.read1_subsampled, ncbi_scrub_pe.read1_dehosted, spike_in_screen.decontaminate_read1, mapped_read_removal.decontaminate_read1, read1]),
+        read2 = select_first([rasusa.read2_subsampled, ncbi_scrub_pe.read2_dehosted, spike_in_screen.decontaminate_read2, mapped_read_removal.decontaminate_read2, read2]),
         trimmomatic_window_size = trim_window_size,
         trimmomatic_window_quality = trim_quality_min_score,
         trimmomatic_min_length = trim_min_length,
@@ -168,8 +190,8 @@ workflow read_QC_trim_pe {
     call fastp_task.fastp {
       input:
         samplename = samplename,
-        read1 = select_first([rasusa.read1_subsampled, ncbi_scrub_pe.read1_dehosted, read_decontaminate.decontaminate_read1, read1]),
-        read2 = select_first([rasusa.read2_subsampled, ncbi_scrub_pe.read2_dehosted, read_decontaminate.decontaminate_read2, read2]),
+        read1 = select_first([rasusa.read1_subsampled, ncbi_scrub_pe.read1_dehosted, spike_in_screen.decontaminate_read1, mapped_read_removal.decontaminate_read1, read1]),
+        read2 = select_first([rasusa.read2_subsampled, ncbi_scrub_pe.read2_dehosted, spike_in_screen.decontaminate_read2, mapped_read_removal.decontaminate_read2, read2]),
         fastp_window_size = trim_window_size,
         fastp_quality_trim_score = trim_quality_min_score,
         fastp_min_length = trim_min_length,
@@ -251,25 +273,36 @@ workflow read_QC_trim_pe {
     String? fastq_scan_docker = fastq_scan_raw.fastq_scan_docker
     File? fastq_scan_raw1_json = fastq_scan_raw.read1_fastq_scan_json
     File? fastq_scan_raw2_json = fastq_scan_raw.read2_fastq_scan_json
-    # read decontamination data
-    File? contaminant_bam = read_decontaminate.contaminant_bam
-    File? contaminant_bai = read_decontaminate.contaminant_bai
-    Float? contaminant_coverage = read_decontaminate.contaminant_mapping_coverage
-    Float? contaminant_mean_depth = read_decontaminate.contaminant_mapping_mean_depth
-    Float? contaminant_percent_mapped_reads = read_decontaminate.contaminant_percent_mapped_reads
-    File? contaminant_mapping_stats = read_decontaminate.contaminant_mapping_stats
-    File? contaminant_cov_hist = read_decontaminate.contaminant_mapping_cov_hist
-    File? contaminant_mapping_flagstat = read_decontaminate.contaminant_flagstat
-    Map[String, Float]? contaminant_sequence_coverage = read_decontaminate.contaminant_coverage_by_sequence
-    Map[String, Float]? contaminant_sequence_depth = read_decontaminate.contaminant_depth_by_sequence
-    Map[String, Float]? contaminant_sequence_reads_mapped = read_decontaminate.contaminant_reads_by_sequence
-    Map[String, Float]? contaminant_expected_sequence_coverage = read_decontaminate.contaminant_expected_coverage_by_sequence
-    Map[String, Float]? contaminant_expected_sequence_depth = read_decontaminate.contaminant_expected_depth_by_sequence
-    Map[String, Float]? contaminant_expected_sequence_reads_mapped = read_decontaminate.contaminant_expected_reads_by_sequence
-    Map[String, Float]? contaminant_unexpected_sequence_coverage = read_decontaminate.contaminant_unexpected_coverage_by_sequence
-    Map[String, Float]? contaminant_unexpected_sequence_depth = read_decontaminate.contaminant_unexpected_depth_by_sequence
-    Map[String, Float]? contaminant_unexpected_sequence_reads_mapped = read_decontaminate.contaminant_unexpected_reads_by_sequence
-    String? contaminant_status = read_decontaminate.contaminant_check_status
+    # mapped read removal data
+    File? mapped_read_removal_bam = mapped_read_removal.contaminant_bam
+    File? mapped_read_removal_bai = mapped_read_removal.contaminant_bai
+    Float? mapped_read_removal_coverage = mapped_read_removal.contaminant_mapping_coverage
+    Float? mapped_read_removal_mean_depth = mapped_read_removal.contaminant_mapping_mean_depth
+    Float? mapped_read_removal_percent_mapped_reads = mapped_read_removal.contaminant_percent_mapped_reads
+    File? mapped_read_removal_mapping_stats = mapped_read_removal.contaminant_mapping_stats
+    File? mapped_read_removal_cov_hist = mapped_read_removal.contaminant_mapping_cov_hist
+    File? mapped_read_removal_mapping_flagstat = mapped_read_removal.contaminant_flagstat
+    Map[String, Float]? mapped_read_removal_sequence_coverage = mapped_read_removal.contaminant_coverage_by_sequence
+    Map[String, Float]? mapped_read_removal_sequence_depth = mapped_read_removal.contaminant_depth_by_sequence
+    Map[String, Float]? mapped_read_removal_sequence_reads_mapped = mapped_read_removal.contaminant_reads_by_sequence
+    # spike-in screening data
+    File? spike_in_removed_read1 = spike_in_screen.decontaminate_read1
+    File? spike_in_removed_read2 = spike_in_screen.decontaminate_read2
+    File? spike_in_bam = spike_in_screen.contaminant_bam
+    File? spike_in_bai = spike_in_screen.contaminant_bai
+    File? spike_in_mapping_stats = spike_in_screen.contaminant_mapping_stats
+    File? spike_in_cov_hist = spike_in_screen.contaminant_mapping_cov_hist
+    File? spike_in_mapping_flagstat = spike_in_screen.contaminant_flagstat
+    Map[String, Float]? spike_in_sequence_coverage = spike_in_screen.contaminant_coverage_by_sequence
+    Map[String, Float]? spike_in_sequence_depth = spike_in_screen.contaminant_depth_by_sequence
+    Map[String, Float]? spike_in_sequence_reads_mapped = spike_in_screen.contaminant_reads_by_sequence
+    Map[String, Float]? spike_in_expected_sequence_coverage = spike_in_screen.contaminant_expected_coverage_by_sequence
+    Map[String, Float]? spike_in_expected_sequence_depth = spike_in_screen.contaminant_expected_depth_by_sequence
+    Map[String, Float]? spike_in_expected_sequence_reads_mapped = spike_in_screen.contaminant_expected_reads_by_sequence
+    Map[String, Float]? spike_in_unexpected_sequence_coverage = spike_in_screen.contaminant_unexpected_coverage_by_sequence
+    Map[String, Float]? spike_in_unexpected_sequence_depth = spike_in_screen.contaminant_unexpected_depth_by_sequence
+    Map[String, Float]? spike_in_unexpected_sequence_reads_mapped = spike_in_screen.contaminant_unexpected_reads_by_sequence
+    String? spike_in_status = spike_in_screen.contaminant_check_status
     # fastq_scan clean (per read stats)
     Int? fastq_scan_clean1 = fastq_scan_clean.read1_seq
     Int? fastq_scan_clean2 = fastq_scan_clean.read2_seq

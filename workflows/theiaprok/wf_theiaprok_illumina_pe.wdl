@@ -56,7 +56,8 @@ workflow theiaprok_illumina_pe {
     String terra_project = "NA"
     String terra_workspace = "NA"
     # read screen parameters
-    Boolean skip_screen = false
+    Boolean skip_screen_raw = false
+    Boolean skip_screen_clean = false
     Int min_reads = 7472
     Int min_basepairs = 2241820
     Int min_genome_length = 100000
@@ -105,7 +106,7 @@ workflow theiaprok_illumina_pe {
         read2_lane4 = read2_lane4
     }
   }
-  if (! skip_screen) {
+  if (! skip_screen_raw) {
     call screen.check_reads as raw_check_reads {
       input:
         read1 = select_first([concatenate_illumina_lanes.read1_concatenated, read1]),
@@ -120,7 +121,7 @@ workflow theiaprok_illumina_pe {
         workflow_series = "theiaprok"
     }
   }
-  if (select_first([raw_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
+  if (select_first([raw_check_reads.read_screen, ""]) == "PASS" || skip_screen_raw) {
     call read_qc.read_QC_trim_pe as read_QC_trim {
       input:
         samplename = samplename,
@@ -134,7 +135,7 @@ workflow theiaprok_illumina_pe {
         rasusa_downsampling_coverage = rasusa_downsampling_coverage,
         rasusa_genome_length = select_first([genome_length, raw_check_reads.est_genome_length, 0]),
     }
-    if (! skip_screen) {
+    if (! skip_screen_clean) {
       call screen.check_reads as clean_check_reads {
         input:
           read1 = read_QC_trim.read1_clean,
@@ -149,7 +150,7 @@ workflow theiaprok_illumina_pe {
           workflow_series = "theiaprok"
       }
     }
-    if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
+    if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen_clean) {
       call digger_denovo.digger_denovo {
         input:
           samplename = samplename,
@@ -452,15 +453,6 @@ workflow theiaprok_illumina_pe {
                 "combined_mean_q_raw": cg_pipeline_raw.combined_mean_q,
                 "combined_mean_readlength_clean": cg_pipeline_clean.combined_mean_readlength,
                 "combined_mean_readlength_raw": cg_pipeline_raw.combined_mean_readlength,
-                "contaminant_bai": read_QC_trim.contaminant_bai,
-                "contaminant_bam": read_QC_trim.contaminant_bam,
-                "contaminant_cov_hist": read_QC_trim.contaminant_cov_hist,
-                "contaminant_coverage": read_QC_trim.contaminant_coverage,
-                "contaminant_mapping_flagstat": read_QC_trim.contaminant_mapping_flagstat,
-                "contaminant_mapping_stats": read_QC_trim.contaminant_mapping_stats,
-                "contaminant_mean_depth": read_QC_trim.contaminant_mean_depth,
-                "contaminant_percent_mapped_reads": read_QC_trim.contaminant_percent_mapped_reads,
-                "contaminant_status": read_QC_trim.contaminant_status,
                 "contigs_gfa": digger_denovo.contigs_gfa,
                 "county": county,
                 "ectyper_database_version": merlin_magic.ectyper_database_version,
@@ -881,25 +873,36 @@ workflow theiaprok_illumina_pe {
     File? fastqc_clean2_html = read_QC_trim.fastqc_clean2_html
     String? fastqc_version = read_QC_trim.fastqc_version
     String? fastqc_docker = read_QC_trim.fastqc_docker
-    # Read QC - decontaminate outputs
-    File? contaminant_bam = read_QC_trim.contaminant_bam
-    File? contaminant_bai = read_QC_trim.contaminant_bai
-    Float? contaminant_coverage = read_QC_trim.contaminant_coverage
-    Float? contaminant_mean_depth = read_QC_trim.contaminant_mean_depth
-    File? contaminant_mapping_stats = read_QC_trim.contaminant_mapping_stats
-    File? contaminant_cov_hist = read_QC_trim.contaminant_cov_hist
-    File? contaminant_mapping_flagstat = read_QC_trim.contaminant_mapping_flagstat
-    Float? contaminant_percent_mapped_reads = read_QC_trim.contaminant_percent_mapped_reads
-    Map[String, Float]? contaminant_coverage_by_sequence = read_QC_trim.contaminant_sequence_coverage
-    Map[String, Float]? contaminant_depth_by_sequence = read_QC_trim.contaminant_sequence_depth
-    Map[String, Float]? contaminant_reads_by_sequence = read_QC_trim.contaminant_sequence_reads_mapped
-    Map[String, Float]? contaminant_expected_coverage_by_sequence = read_QC_trim.contaminant_expected_sequence_coverage
-    Map[String, Float]? contaminant_expected_depth_by_sequence = read_QC_trim.contaminant_expected_sequence_depth
-    Map[String, Float]? contaminant_expected_reads_by_sequence = read_QC_trim.contaminant_expected_sequence_reads_mapped
-    Map[String, Float]? contaminant_unexpected_coverage_by_sequence = read_QC_trim.contaminant_unexpected_sequence_coverage
-    Map[String, Float]? contaminant_unexpected_depth_by_sequence = read_QC_trim.contaminant_unexpected_sequence_depth
-    Map[String, Float]? contaminant_unexpected_reads_by_sequence = read_QC_trim.contaminant_unexpected_sequence_reads_mapped
-    String? contaminant_status = read_QC_trim.contaminant_status
+    # Read QC - mapped read removal outputs
+    File? mapped_read_removal_bam = read_QC_trim.mapped_read_removal_bam
+    File? mapped_read_removal_bai = read_QC_trim.mapped_read_removal_bai
+    Float? mapped_read_removal_coverage = read_QC_trim.mapped_read_removal_coverage
+    Float? mapped_read_removal_mean_depth = read_QC_trim.mapped_read_removal_mean_depth
+    File? mapped_read_removal_mapping_stats = read_QC_trim.mapped_read_removal_mapping_stats
+    File? mapped_read_removal_cov_hist = read_QC_trim.mapped_read_removal_cov_hist
+    File? mapped_read_removal_mapping_flagstat = read_QC_trim.mapped_read_removal_mapping_flagstat
+    Float? mapped_read_removal_percent_mapped_reads = read_QC_trim.mapped_read_removal_percent_mapped_reads
+    Map[String, Float]? mapped_read_removal_coverage_by_sequence = read_QC_trim.mapped_read_removal_sequence_coverage
+    Map[String, Float]? mapped_read_removal_depth_by_sequence = read_QC_trim.mapped_read_removal_sequence_depth
+    Map[String, Float]? mapped_read_removal_reads_by_sequence = read_QC_trim.mapped_read_removal_sequence_reads_mapped
+    # Read QC - spike-in screening outputs
+    File? spike_in_removed_read1 = read_QC_trim.spike_in_removed_read1
+    File? spike_in_removed_read2 = read_QC_trim.spike_in_removed_read2
+    File? spike_in_bam = read_QC_trim.spike_in_bam
+    File? spike_in_bai = read_QC_trim.spike_in_bai
+    File? spike_in_mapping_stats = read_QC_trim.spike_in_mapping_stats
+    File? spike_in_cov_hist = read_QC_trim.spike_in_cov_hist
+    File? spike_in_mapping_flagstat = read_QC_trim.spike_in_mapping_flagstat
+    Map[String, Float]? spike_in_coverage_by_sequence = read_QC_trim.spike_in_sequence_coverage
+    Map[String, Float]? spike_in_depth_by_sequence = read_QC_trim.spike_in_sequence_depth
+    Map[String, Float]? spike_in_reads_by_sequence = read_QC_trim.spike_in_sequence_reads_mapped
+    Map[String, Float]? spike_in_expected_coverage_by_sequence = read_QC_trim.spike_in_expected_sequence_coverage
+    Map[String, Float]? spike_in_expected_depth_by_sequence = read_QC_trim.spike_in_expected_sequence_depth
+    Map[String, Float]? spike_in_expected_reads_by_sequence = read_QC_trim.spike_in_expected_sequence_reads_mapped
+    Map[String, Float]? spike_in_unexpected_coverage_by_sequence = read_QC_trim.spike_in_unexpected_sequence_coverage
+    Map[String, Float]? spike_in_unexpected_depth_by_sequence = read_QC_trim.spike_in_unexpected_sequence_depth
+    Map[String, Float]? spike_in_unexpected_reads_by_sequence = read_QC_trim.spike_in_unexpected_sequence_reads_mapped
+    String? spike_in_status = read_QC_trim.spike_in_status
     # Read QC - trimmomatic outputs
     String? trimmomatic_version = read_QC_trim.trimmomatic_version
     String? trimmomatic_docker = read_QC_trim.trimmomatic_docker
