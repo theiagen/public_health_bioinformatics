@@ -997,7 +997,7 @@ gene_coverage	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Freyja_F
 gene_coverage	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime	
 gene_coverage	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/ensembl-vep:116.0	Optional	Freyja_FASTQ	docker	
 gene_coverage	exact_match	Boolean	Search for exact matches to query_genes / BED file gene queries	False	Optional	Freyja_FASTQ	general	
-gene_coverage	feature_qualifier	String	Feature qualifier to use in parsing GBFF for coverage calculations	product	Optional	Freyja_FASTQ	general	
+gene_coverage	feature_qualifier	String	Comma-delimited GFF feature qualifier(s) matched against query_genes for coverage calculations	product,locus_tag	Optional	Freyja_FASTQ	general	
 gene_coverage	feature_type	String	Feature type to use in parsing GBFF for coverage calculations	CDS	Optional	Freyja_FASTQ	general	
 gene_coverage	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime	
 gene_coverage	min_base_quality	Int	Minimum base quality to consider a base in coverage calculations	0	Optional	Freyja_FASTQ	general	
