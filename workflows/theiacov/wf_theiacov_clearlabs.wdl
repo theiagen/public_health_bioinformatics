@@ -41,7 +41,8 @@ workflow theiacov_clearlabs {
       reference_genome = reference_genome,
       nextclade_dataset_tag_input = nextclade_dataset_tag,
       nextclade_dataset_name_input = nextclade_dataset_name,
-      kraken_target_organism_input = target_organism
+      kraken_target_organism_input = target_organism,
+      flu_genoflu_genotype = ""
   }
   call fastq_scan.fastq_scan_se as fastq_scan_raw_reads {
     input:
@@ -114,6 +115,8 @@ workflow theiacov_clearlabs {
         nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
         nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
         pangolin_docker_image = organism_parameters.pangolin_docker,
+        workflow_type = "theiacov_clearlabs",
+        # hiding internal components to decrease input bloat
         seq_method = "",
         assembly_metrics_cpu = 0,
         assembly_metrics_disk_size = 0,
@@ -128,14 +131,15 @@ workflow theiacov_clearlabs {
         genoflu_disk_size = 0,
         genoflu_docker = "",
         genoflu_memory = 0,
+        genoflu_cross_reference = "gs://theiagen-public-resources-rp/empty_file/empty.txt",
+        nextclade_custom_input_dataset = "gs://theiagen-public-resources-rp/empty_file/empty.txt",
         abricate_flu_cpu = 0,
         abricate_flu_disk_size = 0,
         abricate_flu_docker = "",
         abricate_flu_memory = 0,
         abricate_flu_min_percent_coverage = 0,
         abricate_flu_min_percent_identity = 0,
-        flu_track_antiviral_aa_subs = "",
-        workflow_type = "theiacov_clearlabs"
+        flu_track_antiviral_aa_subs = ""
     }
   }
   if (defined(qc_check_table)) {
