@@ -208,7 +208,7 @@ bwa_sorted_bai	File	Sorted BAM index file of reads aligned to reference	TheiaVir
 bwa_sorted_bam	File	Sorted BAM file of reads aligned to reference	TheiaViral_Illumina_PE
 bwa_sorted_bam_unaligned	File	A BAM file that only contains reads that did not align to the reference	TheiaViral_Illumina_PE
 bwa_sorted_bam_unaligned_bai	File	Index companion file to a BAM file that only contains reads that did not align to the reference	TheiaViral_Illumina_PE
-bwa_version	String	Version of BWA software used	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_Illumina_PE
+bwa_version	String	Version of BWA software used	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_Illumina_PE
 cauris_cladetyper_wf_analysis_date	String	Date of analysis	Cauris_CladeTyper
 cauris_cladetyper_wf_version	String	Version of PHB used for the analysis	Cauris_CladeTyper
 cg_pipeline_docker	String	Docker file used for running CG-Pipeline on cleaned reads	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
@@ -237,16 +237,16 @@ cladetyper_version	String	The version of Cladetyper used for the analysis	TheiaE
 clair3_aligned_bai	File	Index companion file to the bam file generated during the consensus assembly process	Clair3_Variants_ONT
 clair3_aligned_bam	File	Sorted BAM file containing the alignments of reads to the reference genome	Clair3_Variants_ONT
 clair3_aligned_fai	File	Index file for the reference genome	Clair3_Variants_ONT
-clair3_docker	String	Docker image used for Clair3	TheiaViral_ONT
+clair3_docker	String	Docker image used for Clair3	TheiaEuk_ONT, TheiaViral_ONT
 clair3_docker_image	String	Version of the Docker container used for Clair3 variant calling	Clair3_Variants_ONT
 clair3_gvcf	File	Genomic VCF file from Clair3	TheiaViral_ONT
 clair3_model	String	Model used for Clair3 variant calling	TheiaViral_ONT
-clair3_model_used	String	Name of the Clair3 model used for variant calling	Clair3_Variants_ONT
-clair3_variants_gvcf	File	Optional genome VCF file containing information about all genomic positions, including non-variant sites	Clair3_Variants_ONT
-clair3_variants_vcf	File	Final merged VCF file containing high-confidence variant calls, combining results from both pileup and full-alignment approaches	Clair3_Variants_ONT
+clair3_model_used	String	Name of the Clair3 model used for variant calling	Clair3_Variants_ONT, TheiaEuk_ONT
+clair3_variants_gvcf	File	Optional genome VCF file containing information about all genomic positions, including non-variant sites	Clair3_Variants_ONT, TheiaEuk_ONT
+clair3_variants_vcf	File	Final merged VCF file containing high-confidence variant calls, combining results from both pileup and full-alignment approaches	Clair3_Variants_ONT, TheiaEuk_ONT
 clair3_variants_wf_version	String	Version of the PHB workflow used	Clair3_Variants_ONT
 clair3_vcf	File	Variant calls in VCF format from Clair3	TheiaCoV_ONT, TheiaViral_ONT
-clair3_version	String	Clair3 Version being used	Clair3_Variants_ONT, TheiaViral_ONT
+clair3_version	String	Clair3 Version being used	Clair3_Variants_ONT, TheiaEuk_ONT, TheiaViral_ONT
 clockwork_decontaminated_read1	File	Decontaminated forward reads by Clockwork	TBProfiler_tNGS, TheiaProk_Illumina_PE
 clockwork_decontaminated_read2	File	Decontaminated reverse reads by Clockwork	TBProfiler_tNGS, TheiaProk_Illumina_PE
 clockwork_version	String	The version of Clockwork used	TBProfiler_tNGS
@@ -505,6 +505,12 @@ gamma_fasta	File	The FASTA file reporting gene matches if boolean was set to tru
 gamma_gff	File	The GFF file reporting gene matches if boolean was set to true	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 gamma_results	File	The .gamma file reporting gene matches	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 gamma_version	String	The version of GAMMA used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+gatk_filtered_vcf	File	VCF annotated following GATK VariantFiltration with applied filter flags - contains entries that failed filtration	TheiaEuk_Illumina_PE
+gatk_genotype_vcf	File	VCF annotated with the raw, unfiltered variant calls	TheiaEuk_Illumina_PE
+gatk_genotype_vcf_index	File	VCF index for the raw, unfiltered variant calls	TheiaEuk_Illumina_PE
+gatk_percent_passing_variants	Float	Percent of variant records that passed filtering	TheiaEuk_Illumina_PE
+gatk_selected_vcf	File	Records extracted from the filtered VCF by GATK SelectVariants - removes entries that failed filtration	TheiaEuk_Illumina_PE
+gatk_version	String	Version of GATK used for variant calling and filtering	TheiaEuk_Illumina_PE
 genbank_fasta	File	**Only for SARS-CoV-2 submission**: GenBank fasta file for upload	Mercury_Prep_N_Batch
 genbank_metadata	File	**Only for SARS-CoV-2 submission**: GenBank metadata for upload	Mercury_Prep_N_Batch
 gene_coverage_breadth_by_gene	Map[String,String]	A JSON map relating gene queries to their percent breadth of coverage	TheiaEuk_Illumina_PE, TheiaEuk_ONT
@@ -767,7 +773,7 @@ midas_secondary_genus_abundance	Float	Relative abundance of secondary genus	Thei
 midas_secondary_genus_coverage	Float	Absolute coverage of secondary genus	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 minimap2_docker	String	The Docker image of minimap2	Freyja_FASTQ, TheiaMeta_Illumina_PE, TheiaViral_ONT
 minimap2_out	File	Output file from Minimap2 alignment	TheiaViral_ONT
-minimap2_version	String	The version of minimap2	Freyja_FASTQ, TheiaMeta_Illumina_PE, TheiaViral_ONT
+minimap2_version	String	The version of minimap2	Freyja_FASTQ, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaViral_ONT
 morgana_magic_organism	String	Standardized organism name used for characterization	TheiaViral_Illumina_PE, TheiaViral_ONT
 n50_value	Int	N50 of assembly calculated by QUAST	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 nanoplot_docker	String	Docker image for nanoplot	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT
@@ -1029,6 +1035,8 @@ read_screen_clean	String	PASS or FAIL result from clean read screening; FAIL acc
 read_screen_clean_tsv	File	Clean read screening report TSV depicting read counts, total read base pairs, and estimated genome length	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 read_screen_raw	String	PASS or FAIL result from raw read screening; FAIL accompanied by the reason(s) for failure	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 read_screen_raw_tsv	File	Raw read screening report TSV depicting read counts, total read base pairs, and estimated genome length	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+reference_fasta_used	String	Reference FASTA used in variant calling	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+reference_gff_used	String	Reference GFF used in gene variant annotation and coverage calculations	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 rename_fastq_files_analysis_date	String	Date of analysis	Rename_FASTQ
 rename_fastq_files_version	String	Version of PHB used for the analysis	Rename_FASTQ
 resfinder_db_version	String	Version of ResFinder database	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
@@ -1307,27 +1315,10 @@ theiacov_illumina_se_analysis_date	String	Date of analysis	TheiaCoV_Illumina_SE
 theiacov_illumina_se_version	String	Version of PHB used for running the workflow	TheiaCoV_Illumina_SE
 theiacov_ont_analysis_date	String	Date of analysis	TheiaCoV_ONT
 theiacov_ont_version	String	Version of PHB used for running the workflow	TheiaCoV_ONT
-theiaeuk_bwa_version	String	Version of BWA used for read alignment	TheiaEuk_Illumina_PE
-theiaeuk_clair3_docker	String	Docker container used for Clair3 variant calling	TheiaEuk_ONT
-theiaeuk_clair3_model_used	String	Clair3 model used for variant calling	TheiaEuk_ONT
-theiaeuk_clair3_variants_gvcf	File	Clair3 variant calls in gVCF format	TheiaEuk_ONT
-theiaeuk_clair3_variants_vcf	File	Clair3 variant calls in VCF format	TheiaEuk_ONT
-theiaeuk_clair3_version	String	Version of Clair3 used for variant calling	TheiaEuk_ONT
-theiaeuk_gatk_filtered_vcf	File	VCF annotated by GATK VariantFiltration with the applied filter flags	TheiaEuk_Illumina_PE
-theiaeuk_gatk_genotype_vcf	File	VCF annotated with the raw, unfiltered variant calls	TheiaEuk_Illumina_PE
-theiaeuk_gatk_genotype_vcf_index	File	VCF index for the raw, unfiltered VCF	TheiaEuk_Illumina_PE
-theiaeuk_gatk_percent_passing_variants	Float	Percent of variant records that passed filtering	TheiaEuk_Illumina_PE
-theiaeuk_gatk_selected_vcf	File	Records extracted from the filtered VCF by GATK SelectVariants	TheiaEuk_Illumina_PE
-theiaeuk_gatk_version	String	Version of GATK used for variant calling and filtering	TheiaEuk_Illumina_PE
 theiaeuk_illumina_pe_analysis_date	String	Date of TheiaEuk PE workflow execution	TheiaEuk_Illumina_PE
 theiaeuk_illumina_pe_version	String	TheiaEuk PE workflow version used	TheiaEuk_Illumina_PE
-theiaeuk_minimap2_version	String	Version of minimap2 used for read alignment	TheiaEuk_ONT
 theiaeuk_ont_analysis_date	String	Date of TheiaEuk_ONT workflow execution	TheiaEuk_ONT
 theiaeuk_ont_version	String	TheiaEuk_ONT workflow version used	TheiaEuk_ONT
-theiaeuk_reference_fasta	String	Reference genome FASTA used in characterization	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-theiaeuk_reference_gff	String	Reference GFF annotation used in characterization	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-theiaeuk_variant_calling_bai	File	Index for the sorted alignment BAM used for variant calling	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-theiaeuk_variant_calling_bam	File	Sorted alignment BAM used for variant calling	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 theiameta_illumina_pe_analysis_date	String	The date of analysis	TheiaMeta_Illumina_PE
 theiameta_illumina_pe_version	String	The version of TheiaMeta used during execution	TheiaMeta_Illumina_PE
 theiaprok_fasta_analysis_date	String	Date of TheiaProk FASTA workflow execution	TheiaProk_FASTA
@@ -1406,6 +1397,8 @@ variant_annotation_summary	File	An HTML report summarizing the annotated variant
 variant_annotation_tsv	File	A TSV file depicting VEP variant reporting	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 variant_annotation_warnings	File	Warnings emitted by VEP during variant annotation	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 variant_annotations	String	A comma-delimited list of variant annotations detected in the query gene regions	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+variant_calling_bai	File	Read mapping BAM index file used for variant calling	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+variant_calling_bam	File	Read mapping BAM file used for variant calling	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 variants_from_ref_vcf	File	Number of variants relative to the reference genome	TheiaCoV_ClearLabs
 vibecheck_classification_notes	String	Additional information provided by Vibecheck during classification	TheiaProk_Illumina_PE
 vibecheck_confidence	Float	How confidence lineage assignment is. 0 - uncertain; 100 - Very certain	TheiaProk_Illumina_PE

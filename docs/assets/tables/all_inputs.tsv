@@ -658,7 +658,6 @@ digger_denovo	filter_contigs_skip_coverage_filter	Boolean	Skip filtering contigs
 digger_denovo	filter_contigs_skip_homopolymer_filter	Boolean	Skip filtering contigs containing homopolymers	False	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 digger_denovo	filter_contigs_skip_length_filter	Boolean	Skip filtering contigs based on length	False	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 digger_denovo	kmers	String	K-mer sizes for assembly (comma-separated)		Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
-digger_denovo	min_contig_length	Int	Minimum contig length to retain in final assembly	200	Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 digger_denovo	pilon_cpu	Int	Number of CPUs to allocate to the task	8	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime	
 digger_denovo	pilon_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime	
 digger_denovo	pilon_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/pilon:1.24--hdfd78af_0	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	docker	
@@ -1357,7 +1356,7 @@ merlin_magic	abricate_vibrio_min_percent_identity	Int	Minimum DNA percent identi
 merlin_magic	agrvate_agr_typing_only	Boolean	Set to true to skip agr operon extraction and frameshift detection	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	agrvate_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/agrvate:1.0.2--hdfd78af_0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
 merlin_magic	allele_calling_blast_db	File	The BLAST database to use		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	allele_calling_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/allele_calling:1.0.0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	allele_calling_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/allele-calling:1.0.0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
 merlin_magic	amr_search_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 merlin_magic	amr_search_disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 merlin_magic	amr_search_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/amrsearch:0.2.1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
