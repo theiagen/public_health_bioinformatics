@@ -24,7 +24,7 @@ Use the Rasusa workflow to:
 
 ### Workflow Tasks
 
-{{ include_md("common_text/rasusa_task.md") }}
+{{ include_md("common_text/rasusa_task.md", condition="rasusa") }}
 
 ### Outputs
 

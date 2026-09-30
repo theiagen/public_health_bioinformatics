@@ -147,59 +147,9 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
         | --- | --- |
         | Task | [task_chunk_files.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/file_handling/task_chunk_files.wdl) |
 
-??? task "`dorado_basecall`: Basecalling POD5 files"
-    The basecalling task takes POD5 files as input and converts each individual POD5 file into 'BAM' format using either the default or user-specified model. This step leverages GPU acceleration for efficient processing.
-
-    Please see the [Dorado documentation](https://dorado-docs.readthedocs.io/en/latest/basecaller/basecall_overview/) for more details, but what follows is a brief overview of the basecalling process:
-
-    1. POD5 files are pre-processed via signal scaling and normalization.
-    2. The machine learning algorithm decodes the sequence signals into nucleotide base calls. There are different machine learning models that can be specified as input; see [Model Type Selection](#model-type-selection).
-    3. [Barcode classification](https://dorado-docs.readthedocs.io/en/latest/barcoding/barcoding/) is performed based on the indicated kit name to enable downstream demultiplexing.
-
-        !!! info "Barcode Trimming"
-            Barcode trimming is purposefully **disabled** during the basecalling step to ensure accurate demultiplexing in subsequent workflow steps.
-
-    4. Modified basecalling can be performed if indicated through [modification to the model name](https://dorado-docs.readthedocs.io/en/latest/basecaller/mods/).
-    5. [Reads are split](https://dorado-docs.readthedocs.io/en/latest/basecaller/read_splitting/) when a single read contains multiple concatenated reads.
-
-    Other options are available, but currently Dorado_Basecalling_PHB does not support them. Please contact <support@theiagen.com> if you would like additional options.
-
-    !!! techdetails "Dorado Basecalling Technical Details"
-        |  | Links |
-        | --- | --- |
-        | Task | [task_dorado_basecall.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/basecalling/task_dorado_basecall.wdl) |
-        | Software Source Code | [Dorado on GitHub](https://github.com/nanoporetech/dorado/) |
-        | Software Documentation | [Dorado ReadTheDocs](https://dorado-docs.readthedocs.io/en/latest/) |
-
-??? task "`dorado_demux`: Produces barcode-specific FASTQ files"
-    This task takes each basecalled BAM file and demultiplexes it based on the identified barcodes found during basecalling. An individual FASTQ file is generated for each barcode found per BAM file. All FASTQ files that are associated with a single barcode are then merged.
-
-    !!! info "Disabling Barcode Trimming"
-        By default, barcodes _are_ trimmed during demultiplexing.
-
-        This can be disabled by setting the optional input variable `demux_no_trim` to `true`. This allows users to retain untrimmed reads for troubleshooting, such as inspecting reads in the "unclassified" folder when reads are mis-binned or other data issues occur.
-
-    !!! techdetails "Dorado Demultiplexing Technical Details"
-        |  | Links |
-        | --- | --- |
-        | Task | [task_dorado_demux.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/basecalling/task_dorado_demux.wdl) |
-        | Software Source Code | [Dorado on GitHub](https://github.com/nanoporetech/dorado/) |
-        | Software Documentation | [Dorado ReadTheDocs](https://dorado-docs.readthedocs.io/en/latest/) |
-
-??? task "`dorado_trim`: Custom Primer Trimming (optional)"
-    If the optional input `custom_primers` is provided, this task is activated to trim the primer sequences from the beginning and end of the demultiplexed reads.
-
-    To determine how to format the FASTA file that is expected in `custom_primers` please see the [Dorado documentation](https://dorado-docs.readthedocs.io/en/latest/barcoding/custom_primers/), specifically the section on "Custom adapter/primer file format".
-
-    !!! tip "Older Dorado Version Used"
-        The Dorado version used in this task is not the most up-to-date version (set to v0.8.3) due to a bug in the Dorado subcommand in the latest version (v0.9.0). This will be updated in the future when the bug has been resolved by the Dorado developers.
-
-    !!! techdetails "Dorado Trimming Technical Details"
-        |  | Links |
-        | --- | --- |
-        | Task | [task_dorado_trim.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/basecalling/task_dorado_trim.wdl) |
-        | Software Source Code | [Dorado on GitHub](https://github.com/nanoporetech/dorado/) |
-        | Software Documentation | [Dorado ReadTheDocs](https://dorado-docs.readthedocs.io/en/latest/) |
+{{ include_md("common_text/dorado_basecall_task.md") }}
+{{ include_md("common_text/dorado_demux_task.md") }}
+{{ include_md("common_text/dorado_trim_task.md") }}
 
 ??? task "`create_table_from_array`: Creates a Terra table with FASTQ files"
     The final task in this workflow will create a Terra table using the array of generated FASTQ files. This table will be named according to the `new_table_name` input variable and will contain all the FASTQ files generated during the workflow. The new table will contain the following columns with a row for each identified barcode and a single row for any unclassified reads.

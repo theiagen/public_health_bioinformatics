@@ -78,7 +78,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 
     === "TheiaEuk_ONT"
 {{ include_md("common_text/read_screen_task.md", condition="theiaeukont", indent=8) }}
-{{ include_md("common_text/read_qc_trim_ont_wf.md", condition="theiaprok", indent=8) }}
+{{ include_md("common_text/read_qc_trim_ont_wf.md", condition="theiaeuk", indent=8) }}
 
         !!! dna ""
             These tasks assemble the reads into a _de novo_ assembly and assess the quality of the assembly.

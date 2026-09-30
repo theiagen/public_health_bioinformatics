@@ -1,0 +1,361 @@
+name: Merge bot
+
+# pull_request_target runs this file as it exists on main, not the pr's copy,
+# so a pr can't edit out the gates below and then apply the label. the
+# checkout step still checks out the pr branch, but only to sed/commit the
+# version file — no code from the pr is ever executed.
+on:
+  pull_request_target:
+    types: [labeled]
+
+concurrency:
+  group: merge-bot-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+# these apply to the default GITHUB_TOKEN, which is only the failure report's
+# fallback (to comment and remove the label) if the app token couldn't be
+# minted. everything else uses the app token.
+permissions:
+  pull-requests: write
+
+jobs:
+  merge:
+    # merge a pr if: it has the right label, merges to main, isn't a draft, is open, and isn't a fork
+    if: >
+      github.event.label.name == '-merge' &&
+      github.event.pull_request.base.ref == 'main' &&
+      github.event.pull_request.draft == false &&
+      github.event.pull_request.state == 'open' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: theiagen-version-merge-bot
+    env:
+      PR: ${{ github.event.pull_request.number }}
+      BRANCH: ${{ github.event.pull_request.head.ref }}
+      VERSION_FILE: tasks/task_versioning.wdl
+      LABEL: "-merge"
+      CODEOWNERS_FILE: .github/CODEOWNERS
+      CODEOWNERS_TEAM: theiagen/theiagen-codeowners
+
+    steps:
+      - name: Mint token
+        id: token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.VERSION_BOT_APP_ID }}
+          private-key: ${{ secrets.VERSION_BOT_PRIVATE_KEY }}
+
+      - name: Export token
+        run: echo "GH_TOKEN=${{ steps.token.outputs.token }}" >> "$GITHUB_ENV"
+
+      - uses: actions/checkout@v4
+        id: checkout
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          token: ${{ steps.token.outputs.token }}
+          fetch-depth: 0
+
+      # gate 1: code-owner authorization. runs before anything is written, so
+      # a rejected pr leaves the branch tag intact.
+      - name: Require label applied by a code owner
+        id: labeler
+        env:
+          SENDER: ${{ github.event.sender.login }}
+          BASE: ${{ github.event.pull_request.base.ref }}
+        run: |
+          # "reason" tells the failure report which check failed:
+          # codeowners = CODEOWNERS unreadable or lists the wrong team,
+          # not_member = the labeler isn't in the team.
+          # get the contents of the CODEOWNERS file from main
+          TEAM=$(gh api "repos/${{ github.repository }}/contents/$CODEOWNERS_FILE?ref=$BASE" \
+                   -H "Accept: application/vnd.github.raw" \
+                 | awk '$1 == "*" { t = $2 } END { print t }') || {
+            echo "reason=codeowners" >> "$GITHUB_OUTPUT"
+            echo "::error::Could not read $CODEOWNERS_FILE on $BASE"
+            exit 1
+          }
+          TEAM=${TEAM#@}
+
+          # team names are case-insensitive, so compare lowercase
+          if [ "$(printf '%s' "$TEAM" | tr 'A-Z' 'a-z')" != "$CODEOWNERS_TEAM" ]; then
+            echo "reason=codeowners" >> "$GITHUB_OUTPUT"
+            echo "::error::$CODEOWNERS_FILE on $BASE lists '@$TEAM' on its \"*\" line; expected '@$CODEOWNERS_TEAM'"
+            exit 1
+          fi
+
+          # check if user who applied the label is in CODEOWNERS
+          gh api "orgs/${TEAM%%/*}/teams/${TEAM#*/}/memberships/$SENDER" --jq .state \
+            | grep -qx active || {
+            echo "reason=not_member" >> "$GITHUB_OUTPUT"
+            echo "::error::$SENDER is not in @$TEAM"
+            exit 1
+          }
+          echo "Label applied by code owner: $SENDER (@$TEAM)"
+
+      # gate 1 continued: approval must come from code owners
+      - name: Require code owner approval
+        id: approval
+        run: |
+          DECISION=$(gh pr view "$PR" --json reviewDecision --jq .reviewDecision)
+          [ "$DECISION" = "APPROVED" ] || { echo "::error::reviewDecision is ${DECISION:-empty} — needs code owner approval"; exit 1; }
+          echo "reviewDecision: $DECISION"
+
+      - name: Configure git identity
+        run: |
+          git config user.name  "${{ steps.token.outputs.app-slug }}[bot]"
+          git config user.email "${{ steps.token.outputs.app-slug }}[bot]@users.noreply.github.com"
+
+      # clearing runs BEFORE the remaining gates: the "label not found"
+      # required check stays red until this lands, so gating first would
+      # deadlock. this push also dismisses the approval — the app's ruleset
+      # bypass is what lets the merge go through anyway.
+      - name: Clear branch tag
+        id: clear
+        run: |
+          sed -i 's|^\( *BRANCH_TAG=\).*|\1""|' "$VERSION_FILE"
+          if git diff --quiet; then
+            echo "Already clear."
+          else
+            git commit -am "ci: clear version tag for merge"
+            git push
+          fi
+          # the exact commit the gates below approve; the merge is pinned to it
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      # the clear push restarts the check suite, and each required check shows
+      # up on the new commit only once its workflow run registers. --watch
+      # below only sees checks that exist, so a check that hasn't registered
+      # yet would be silently skipped. wait until every required check named
+      # in main's ruleset exists on the cleared commit (reading check runs
+      # needs the app's "Checks: read" permission).
+      - name: Wait for required checks to register
+        id: settle
+        env:
+          SHA: ${{ steps.clear.outputs.sha }}
+        run: |
+          REQUIRED=$(gh api "repos/${{ github.repository }}/rules/branches/main" \
+            --jq '[.[] | select(.type == "required_status_checks") | .parameters.required_status_checks[].context] | unique | .[]')
+          if [ -z "$REQUIRED" ]; then
+            echo "::error::main's ruleset has no required status checks; refusing to merge without them."
+            exit 1
+          fi
+          echo "Required checks:"; printf '%s\n' "$REQUIRED" | sed 's/^/  /'
+          for i in $(seq 1 40); do
+            SEEN=$(gh api "repos/${{ github.repository }}/commits/$SHA/check-runs" --paginate \
+              --jq '.check_runs[].name')
+            MISSING=$(printf '%s\n' "$REQUIRED" | grep -vxF -f <(printf '%s\n' "$SEEN") || true)
+            [ -z "$MISSING" ] && { echo "All required checks registered."; exit 0; }
+            echo "Waiting for: $(echo $MISSING) ($i)..."
+            sleep 3
+          done
+          echo "::error::Required checks never started on $SHA: $(echo $MISSING)"
+          exit 1
+
+      # gate 2: checks. --watch blocks on pending rather than failing.
+      - name: Require checks to pass
+        id: checks
+        run: gh pr checks "$PR" --required --watch --fail-fast
+
+      # gate 3: mergeable. github computes this asynchronously, so UNKNOWN
+      # just means it hasn't settled. BLOCKED is expected here because the
+      # clear push dismissed the approval.
+      - name: Require mergeable state
+        id: mergeable
+        run: |
+          for i in $(seq 1 10); do
+            STATE=$(gh pr view "$PR" --json mergeStateStatus --jq .mergeStateStatus)
+            [ "$STATE" != "UNKNOWN" ] && break
+            echo "mergeStateStatus UNKNOWN, retrying ($i)..."
+            sleep 3
+          done
+          echo "mergeStateStatus: $STATE"
+          case "$STATE" in
+            CLEAN|UNSTABLE|BLOCKED) ;;
+            UNKNOWN) echo "::error::GitHub did not settle mergeability in time."; exit 1 ;;
+            *) echo "::error::PR is not mergeable (state: $STATE)."; exit 1 ;;
+          esac
+
+      # uses the rest api rather than `gh pr merge`: gh does a client-side
+      # mergeability pre-flight that refuses on BLOCKED without knowing the
+      # token holds a ruleset bypass. the api evaluates the bypass server-side.
+      # sha pins the merge to the cleared commit: if anything was pushed to the
+      # branch after it, github refuses instead of merging unreviewed commits.
+      # the commit message drops the bot's own "ci:" stamp/clear commits.
+      - name: Squash merge
+        id: squash
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          SHA: ${{ steps.clear.outputs.sha }}
+        run: |
+          COMMITS=$(gh api "repos/${{ github.repository }}/pulls/$PR/commits" --paginate \
+            --jq '.[] | "* " + (.commit.message | split("\n")[0])' \
+            | grep -v '^\* ci: ' || true)
+          gh api -X PUT "repos/${{ github.repository }}/pulls/$PR/merge" \
+            -f merge_method=squash \
+            -f sha="$SHA" \
+            -f commit_title="$PR_TITLE (#$PR)" \
+            -f commit_message="$COMMITS"
+
+      - name: Restore branch tag
+        id: restore
+        # put the branch tag back
+        run: |
+          git fetch origin "$BRANCH"
+          git reset --hard "origin/$BRANCH"
+          SAFE=$(printf '%s' "$BRANCH" | tr -c 'A-Za-z0-9._/-' '-')
+          sed -i "s|^\( *BRANCH_TAG=\).*|\1\"${SAFE}\"|" "$VERSION_FILE"
+          if git diff --quiet; then
+            echo "Already stamped."
+          else
+            git commit -am "ci: restore version tag after merge"
+            git push
+          fi
+
+      # if the clear landed but the merge didn't, the branch is sitting with
+      # an empty tag and nothing else will fix it — the stamp workflow needs
+      # a push to fire.
+      - name: Restore branch tag after failure
+        id: repair
+        if: (failure() || cancelled()) && steps.clear.outcome == 'success' && steps.squash.outcome != 'success'
+        run: |
+          git fetch origin "$BRANCH"
+          git reset --hard "origin/$BRANCH"
+          SAFE=$(printf '%s' "$BRANCH" | tr -c 'A-Za-z0-9._/-' '-')
+          sed -i "s|^\( *BRANCH_TAG=\).*|\1\"${SAFE}\"|" "$VERSION_FILE"
+          if git diff --quiet; then
+            echo "Already stamped."
+          else
+            git commit -am "ci: restore version tag after failed merge"
+            git push
+          fi
+
+      - name: Report failure
+        if: failure() || cancelled()
+        env:
+          GH_TOKEN: ${{ steps.token.outputs.token || secrets.GITHUB_TOKEN }}
+          # "cancelled" when the run was cancelled by hand or hit timeout-minutes
+          JOB_STATUS: ${{ job.status }}
+          TOKEN_OUT: ${{ steps.token.outcome }}
+          CHECKOUT: ${{ steps.checkout.outcome }}
+          LABELER: ${{ steps.labeler.outcome }}
+          LABELER_REASON: ${{ steps.labeler.outputs.reason }}
+          SENDER: ${{ github.event.sender.login }}
+          APPROVAL: ${{ steps.approval.outcome }}
+          SETTLE: ${{ steps.settle.outcome }}
+          CHECKS: ${{ steps.checks.outcome }}
+          MERGEABLE: ${{ steps.mergeable.outcome }}
+          CLEAR: ${{ steps.clear.outcome }}
+          SQUASH: ${{ steps.squash.outcome }}
+          RESTORE: ${{ steps.restore.outcome }}
+          REPAIR: ${{ steps.repair.outcome }}
+        run: |
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          BODY_FILE="$RUNNER_TEMP/merge-bot-comment.md"
+
+          if   [ "$JOB_STATUS" = "cancelled" ]; then STAGE="cancelled"
+          elif [ "$TOKEN_OUT" = "failure" ]; then STAGE="token"
+          elif [ "$CHECKOUT"  = "failure" ]; then STAGE="checkout"
+          elif [ "$LABELER"   = "failure" ] && [ "$LABELER_REASON" = "codeowners" ]; then STAGE="codeowners"
+          elif [ "$LABELER"   = "failure" ]; then STAGE="labeler"
+          elif [ "$APPROVAL"  = "failure" ]; then STAGE="approval"
+          elif [ "$SETTLE"    = "failure" ]; then STAGE="checks"
+          elif [ "$CHECKS"    = "failure" ]; then STAGE="checks"
+          elif [ "$MERGEABLE" = "failure" ]; then STAGE="mergeable"
+          elif [ "$CLEAR"     = "failure" ]; then STAGE="clear"
+          elif [ "$SQUASH"    = "failure" ]; then STAGE="squash"
+          elif [ "$RESTORE"   = "failure" ]; then STAGE="restore"
+          else STAGE="unknown"
+          fi
+
+          if [ "$SQUASH" = "success" ]; then MERGED="yes"; else MERGED="no"; fi
+
+          if [ "$CLEAR" = "success" ] && [ "$RESTORE" != "success" ] && [ "$REPAIR" != "success" ]; then
+            TAG_STATE="cleared"
+          else
+            TAG_STATE="ok"
+          fi
+
+          case "$STAGE" in
+            cancelled)
+              TITLE=":warning: **Merge bot run was cancelled.**"
+              WHY="The run was cancelled, either manually or because it hit the 15-minute timeout (usually while waiting on required checks)."
+              FIX="Re-apply the label to try again. If it timed out, check the checks tab for a required check that is stuck or never started. The table below shows whether anything was merged."
+              ;;
+            token)
+              TITLE=":x: **Merge bot failed: could not authenticate.**"
+              WHY="The GitHub App token could not be minted."
+              FIX="Check that \`VERSION_BOT_APP_ID\` and \`VERSION_BOT_PRIVATE_KEY\` are set as secrets on the \`theiagen-version-merge-bot\` environment (Settings → Environments), that the environment allows the \`main\` branch, that the private key was pasted in full including its BEGIN/END lines, and that the app is still installed on this repository."
+              ;;
+            checkout)
+              TITLE=":x: **Merge bot failed: could not check out the branch.**"
+              WHY="Checkout of \`$BRANCH\` failed."
+              FIX="Usually means the branch was deleted or force-pushed while the bot was running."
+              ;;
+            codeowners)
+              TITLE=":x: **Merge bot stopped: unexpected CODEOWNERS.**"
+              WHY="The \`*\` line of \`$CODEOWNERS_FILE\` on \`main\` does not list \`@$CODEOWNERS_TEAM\`, or the file could not be read."
+              FIX="Restore \`* @$CODEOWNERS_TEAM\` in \`$CODEOWNERS_FILE\` on \`main\`, or update \`CODEOWNERS_TEAM\` in this workflow if the team was intentionally changed. The run log shows what the file actually lists."
+              ;;
+            labeler)
+              TITLE=":x: **Merge bot stopped: label not applied by a code owner.**"
+              WHY="@$SENDER applied \`$LABEL\` but is not a member of \`@$CODEOWNERS_TEAM\`."
+              FIX="Ask a code owner to apply the label. Edits to \`$CODEOWNERS_FILE\` on this PR's branch don't count. If they are in the team, check that the app has the organization **Members: read** permission — without it every membership lookup fails."
+              ;;
+            approval)
+              TITLE=":x: **Merge bot stopped: no code owner approval.**"
+              WHY="GitHub's review decision for this PR is not APPROVED."
+              FIX="Get an approval from a Code Owner before re-applying the label. Note that a prior approval is dismissed whenever new commits are pushed."
+              ;;
+            checks)
+              TITLE=":x: **Merge bot stopped: required checks are not passing.**"
+              WHY="One or more required status checks failed, never started on the bot's commit, or \`main\` has no required checks configured."
+              FIX="See the checks tab on this PR and fix the failures. If a check never started, the run log lists which one; check that its workflow still runs on PRs to \`main\` and that the app has **Checks: read**."
+              ;;
+            mergeable)
+              TITLE=":x: **Merge bot stopped: PR is not in a mergeable state.**"
+              WHY="GitHub reports this PR as not mergeable — most often a conflict with \`main\`, or the branch is behind and the ruleset requires it to be up to date."
+              FIX="Merge \`main\` into \`$BRANCH\` and resolve any conflicts. The run log shows the exact \`mergeStateStatus\`."
+              ;;
+            clear)
+              TITLE=":x: **Merge bot failed: could not clear the version tag.**"
+              WHY="The bot could not commit or push the cleared \`BRANCH_TAG\` to \`$BRANCH\`."
+              FIX="Usually the app lacks \`Contents: write\`, or \`$BRANCH\` is itself protected, or someone pushed to the branch mid-run. Nothing was merged and the branch is unchanged."
+              ;;
+            squash)
+              TITLE=":x: **Merge bot failed: the squash merge was refused.**"
+              WHY="GitHub rejected the merge."
+              FIX="Check that the ruleset containing the **Require a pull request before merging** rule lists the app in its Bypass list (Apps tab, set to For pull requests only), that squash merging is enabled in Settings → General, and that no second ruleset targets \`main\` without the bypass. If the error says the head was modified, someone pushed to \`$BRANCH\` while the bot was running — re-apply the label. The run log contains the API's specific error message."
+              ;;
+            restore)
+              TITLE=":warning: **Merged, but the branch tag was not restored.**"
+              WHY="The squash merge succeeded, so \`main\` is correct. Restoring \`BRANCH_TAG\` on \`$BRANCH\` failed."
+              FIX="Set \`BRANCH_TAG=\"$BRANCH\"\` in \`$VERSION_FILE\` on \`$BRANCH\` manually, or push any commit to that branch and the stamp workflow will fix it."
+              ;;
+            *)
+              TITLE=":x: **Merge bot failed.**"
+              WHY="The job failed at a step that does not have specific diagnostics."
+              FIX="See the run log."
+              ;;
+          esac
+
+          {
+            echo "$TITLE"
+            echo
+            echo "**What happened:** $WHY"
+            echo
+            echo "**What to do:** $FIX"
+            echo
+            echo "| | |"
+            echo "|---|---|"
+            echo "| Merged to \`main\` | $([ "$MERGED" = yes ] && echo 'yes' || echo 'no') |"
+            echo "| Branch tag on \`$BRANCH\` | $([ "$TAG_STATE" = ok ] && echo 'intact' || echo '**cleared — needs manual fix**') |"
+            echo "| Failed at | \`$STAGE\` |"
+            echo
+            echo "The \`$LABEL\` label has been removed. Re-apply it to retry."
+            echo
+            echo "[Run log]($RUN_URL)"
+          } > "$BODY_FILE"
+
+          gh pr edit "$PR" --remove-label="$LABEL" || true
+          gh pr comment "$PR" --body-file "$BODY_FILE"

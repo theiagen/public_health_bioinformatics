@@ -24,7 +24,13 @@ fragment: true
     trimmomatic_adapter_trim_args="2:30:10"
     ```
 
-    For more advanced configurations, there are options to override the default trimming parameters via `trimmomatic_override_args`. Note that when using `trimmomatic_override_args`, the user is responsible for specifying all desired trimming steps and their order, as the default trimming steps will be ignored. See the [Trimmomatic documentation](https://github.com/usadellab/Trimmomatic?tab=readme-ov-file#step-options) for more details on available trimming steps and their parameters.
+    Trimmomatic's automatic detection of the phred quality score encoding is not always reliable, particularly for older or SRA-Lite-formatted FASTQ files. PHB explicitly sets `"-phred33"` as the default via `trimmomatic_quality_encoding`, since the vast majority of modern FASTQ files use `"-phred33"` encoding. The accepted values for `trimmomatic_quality_encoding` are `"-phred33"`, `"-phred64"`, and `""` (an empty string, which restores Trimmomatic's auto-detection). Note that the leading dash is required and `"-phred64"` should only be used for genuinely pre-2011 Illumina data.
+
+    ```
+    trimmomatic_quality_encoding="-phred33"
+    ```
+
+    For more advanced configurations, there are options to override the default trimming parameters via `trimmomatic_override_args`. Note that when using `trimmomatic_override_args`, the user is responsible for specifying all desired trimming steps and their order, as the default trimming steps will be ignored. Adapter trimming and the quality score encoding are configured separately and are not affected. See the [Trimmomatic documentation](https://github.com/usadellab/Trimmomatic?tab=readme-ov-file#step-options) for more details on available trimming steps and their parameters.
 
     Advanced Configuration Example Usage:
     ```
