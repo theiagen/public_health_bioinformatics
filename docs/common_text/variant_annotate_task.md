@@ -30,7 +30,7 @@ fragment: true
     ??? dna "Gene selection and coordinate sources"
         Variant annotation uses the same gene selection inputs as the `gene_coverage` task:
 
-        - `query_genes` extracts gene coordinates from the reference GFF by matching the `product` qualifier of CDS entries. Matching is substring-based and case-insensitive unless `query_exact_match` is set to `true`
+        - `query_genes` extracts gene coordinates from the reference GFF by matching the `product` or `locus_tag` qualifier of gene/CDS entries. Matching is substring-based and case-insensitive unless `query_exact_match` is set to `true`
         - `query_genes_bed` supplies coordinates directly; gene names are taken from the fourth column of the BED file
         - If neither is supplied, the entire VCF is annotated
 

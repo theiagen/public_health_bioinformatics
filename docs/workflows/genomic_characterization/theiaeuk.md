@@ -123,7 +123,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 
 
     ??? dna "`query_genes` and `query_genes_bed` input parameter"
-        `query_genes` is a comma-delimited list of query genes to extract from the `reference_gff` supplied by default/the user. These `query_genes` _must_ correspond to the associated "product" field of CDS entries within the `reference_gff`. By default, "FKS1" will match "1,3-beta-D-glucan synthase_complex_FKS1", though exact product matching can be enforced by setting `query_exact_match` to "true".
+        `query_genes` is a comma-delimited list of query genes to extract from the `reference_gff` supplied by default/the user. These `query_genes` _must_ correspond to the associated "product" or "locus_tag" field of gene/CDS entries within the `reference_gff`. By default, "FKS1" will match "1,3-beta-D-glucan synthase_complex_FKS1", though exact product matching can be enforced by setting `query_exact_match` to "true".
 
         !!! warning "Replace ',' in query names with '.'"
             Commas within `query_genes` inputs can be replaced with "." to properly resolve the query name(s).
@@ -148,7 +148,19 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
     When this species is detected by GAMBIT, clade typing determines the clade the genome belongs to. Reference-based variant calling is performed against the clade-specific reference, and AMR detection is conducted.
 
     - Default reference genome and annotation: a clade-specific reference is selected by the `cladetyper` task. NOTE: Gene-specific variant calling is skipped for Clade VI because a reference gene annotation is not present for this lineage.
-    - Default gene query: `FKS1`, `lanosterol.14-alpha.demethylase`, `uracil.phosphoribosyltransferase`, `B9J08_005340`, `B9J08_000401`, `B9J08_003102`, `B9J08_003737`, `B9J08_005343`
+    - Default gene query: A combination of product IDs and locus tags (table below) are queried to cover common genes. Product IDs: `FKS1`, `lanosterol 14-alpha.demethylase` (_ERG11_), `uracil phosphoribosyltransferase` (_FUR1_), `sterol 24-C-methyltransferase` (_ERG6_)
+
+        | Gene | Clade I `locus_tag` | Clade II | Clade III | Clade IV | Clade V |
+        |---|---|---|---|---|---|
+        | _FLO8_ | `B9J08_02359` | `CJI96_0001121`\* | `CJI97_000401` | `CJJ07_003930`\* | `FDK38_002567`\* |
+        | _FLO8_ N-terminus | `B9J08_02360` | \* | `CJI97_000402` | \* | \* |
+        | _MEC3_ | `B9J08_00960` | `CJI96_0001637` | `CJI97_003175` | `CJJ07_005307` | `FDK38_000935` |
+        | _ERG3_ | `B9J08_01595` | `CJI96_0002270` | `CJI97_003811` | `CJJ07_003685` | `FDK38_001564` |
+        | _PSK74852_ | `B9J08_04226` | `CJI96_0004130` | `CJI97_005426` | `CJJ07_003405` | `FDK38_004143` |
+
+        \* _FLO8_ is annotated as a single gene in this reference
+
+        NOTE: Variants derived from locus tag searches will be reported with respect to the locus tag name, not the gene name
 
 
 {{ include_md("common_text/cauris_cladetyper.md", indent=4) }}
@@ -158,14 +170,22 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
     When this species is detected by GAMBIT, reference-based variant calling is performed against the hosted _A. fumigatus_ reference (see the **Reference-based variant calling** section above).
 
     - Default reference genome and annotation: `GCF_000002655.1` (ASM265v1)
-    - Default gene query: `Cyp51A`, `HapE`, `AFUA_4G08340` (COX10 in the default reference)
+    - Default gene query: locus tags are queried instead of product names to maintain search specificity
+
+        | Gene | Locus tag | Product |
+        |---|---|---|
+        | _CYP51A_ | `AFUA_4G06890` | cytochrome P450 |
+        | _HAPE_ | `AFUA_6G05300` | CCAAT-binding factor complex subunit HapE |
+        | _COX10_ | `AFUA_4G08340` | protoheme IX farnesyltransferase |
+
+        NOTE: Variants derived from locus tag searches will be reported with respect to the locus tag name, not the gene name
 
 
 ??? toggle "_Cryptococcus neoformans_"
     When this species is detected by GAMBIT, reference-based variant calling is performed against the hosted _C. neoformans_ reference (see the **Reference-based variant calling** section above).
 
     - Default reference genome and annotation: `GCF_000091045.1` (ASM9104v1)
-    - Default gene query: `CNA00300` (ERG11 in the default reference)
+    - Default gene query: `sterol.14-demethylase` (_ERG11_)
 
 
 ### Outputs
