@@ -86,17 +86,19 @@ workflow medea_magic {
         max_distance = cladetyper_max_distance,
         docker = cauris_cladetyper_docker_image
     }
-    String cauris_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,B9J08_005340,B9J08_000401,B9J08_003102,B9J08_003737,B9J08_005343"
+    # product names where they resolve a single gene (Clade II writes products with "_"),
+    # otherwise the ortholog locus tags of each clade reference (Clade I-V: B9J08, CJI96, CJI97, CJJ07, FDK38)
+    String cauris_query_genes = "FKS1,lanosterol.14-alpha.demethylase,lanosterol_14-alpha_demethylase,uracil.phosphoribosyltransferase,uracil_phosphoribosyltransferase,sterol.24-C-methyltransferase,sterol_24-C-methyltransferase,B9J08_02359,CJI96_0001121,CJI97_000401,CJJ07_003930,FDK38_002567,B9J08_02360,CJI97_000402,B9J08_00960,CJI96_0001637,CJI97_003175,CJJ07_005307,FDK38_000935,B9J08_01595,CJI96_0002270,CJI97_003811,CJJ07_003685,FDK38_001564,B9J08_04226,CJI96_0004130,CJI97_005426,CJJ07_003405,FDK38_004143"
   }
   if (medea_tag == "Aspergillus fumigatus") {
     File afumigatus_variant_fasta = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.fasta"
     File afumigatus_reference_gff = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gff"
-    String afumigatus_query_genes = "Cyp51A,HapE,AFUA_4G08340"
+    String afumigatus_query_genes = "AFUA_4G06890,AFUA_6G05300,AFUA_4G08340"
   }
   if (medea_tag == "Cryptococcus neoformans") {
     File cryptoneo_reference_fasta = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.fasta"
     File cryptoneo_reference_gff = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gff"
-    String cryptoneo_query_genes = "CNA00300"
+    String cryptoneo_query_genes = "sterol.14-demethylase"
   }
 
   # RESOLVE MULTI-SOURCE DOWNSTREAM INPUTS
