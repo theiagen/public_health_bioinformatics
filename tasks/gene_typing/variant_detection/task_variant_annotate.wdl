@@ -112,7 +112,14 @@ task variant_annotate {
         | tr '\n' ',' | sed 's/,$//' > VARIANT_REPORT
     else
       echo "WARNING: no variants detected in VCF or extracted gene VCF" >&2
-      echo "" > VARIANT_REPORT
+      # report the queried genes, else the bedfile basename, else a generic message
+      if [ -n "~{query_genes}" ]; then
+        echo "No variants detected: ~{query_genes}" > VARIANT_REPORT
+      elif [ -n "~{bedfile}" ]; then
+        echo "No variants detected: $(basename ~{bedfile})" > VARIANT_REPORT
+      else
+        echo "No variants detected" > VARIANT_REPORT
+      fi
     fi
   >>>
   output {
