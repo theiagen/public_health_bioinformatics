@@ -86,9 +86,29 @@ workflow medea_magic {
         max_distance = cladetyper_max_distance,
         docker = cauris_cladetyper_docker_image
     }
-    # product names where they resolve a single gene (Clade II writes products with "_"),
-    # otherwise the ortholog locus tags of each clade reference (Clade I-V: B9J08, CJI96, CJI97, CJJ07, FDK38)
-    String cauris_query_genes = "FKS1,lanosterol.14-alpha.demethylase,lanosterol_14-alpha_demethylase,uracil.phosphoribosyltransferase,uracil_phosphoribosyltransferase,sterol.24-C-methyltransferase,sterol_24-C-methyltransferase,B9J08_02359,CJI96_0001121,CJI97_000401,CJJ07_003930,FDK38_002567,B9J08_02360,CJI97_000402,B9J08_00960,CJI96_0001637,CJI97_003175,CJJ07_005307,FDK38_000935,B9J08_01595,CJI96_0002270,CJI97_003811,CJJ07_003685,FDK38_001564,B9J08_04226,CJI96_0004130,CJI97_005426,CJJ07_003405,FDK38_004143"
+    # a user-supplied GFF has unknown locus tags, so only product names are queried
+    if (defined(reference_gff)) {
+      String cauris_custom_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,sterol.24-C-methyltransferase"
+    }
+    # clade reference defaults: product names where they resolve a single gene, otherwise the
+    # clade reference's ortholog locus tags (FLO8, FLO8 N-terminus, MEC3, ERG3, PSK74852)
+    if (cladetyper.gambit_cladetype == "Clade1") {
+      String cauris_clade1_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,sterol.24-C-methyltransferase,B9J08_02359,B9J08_02360,B9J08_00960,B9J08_01595,B9J08_04226"
+    }
+    # Clade II writes products with "_" and annotates FLO8 as a single gene
+    if (cladetyper.gambit_cladetype == "Clade2") {
+      String cauris_clade2_query_genes = "FKS1,lanosterol_14-alpha_demethylase,uracil_phosphoribosyltransferase,sterol_24-C-methyltransferase,CJI96_0001121,CJI96_0001637,CJI96_0002270,CJI96_0004130"
+    }
+    if (cladetyper.gambit_cladetype == "Clade3") {
+      String cauris_clade3_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,sterol.24-C-methyltransferase,CJI97_000401,CJI97_000402,CJI97_003175,CJI97_003811,CJI97_005426"
+    }
+    # Clade IV and V annotate FLO8 as a single gene
+    if (cladetyper.gambit_cladetype == "Clade4") {
+      String cauris_clade4_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,sterol.24-C-methyltransferase,CJJ07_003930,CJJ07_005307,CJJ07_003685,CJJ07_003405"
+    }
+    if (cladetyper.gambit_cladetype == "Clade5") {
+      String cauris_clade5_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,sterol.24-C-methyltransferase,FDK38_002567,FDK38_000935,FDK38_001564,FDK38_004143"
+    }
   }
   if (medea_tag == "Aspergillus fumigatus") {
     File afumigatus_variant_fasta = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.fasta"
@@ -113,9 +133,10 @@ workflow medea_magic {
   if ((defined(reference_gff) && defined(reference_fasta)) || (! defined(reference_gff) && ! defined(reference_fasta))) {
     String resolved_reference_gff = select_first([reference_gff, cladetyper.annotated_reference_gff, afumigatus_reference_gff, cryptoneo_reference_gff, ""])
   }
-  # The user-supplied query_genes takes priority; otherwise the
-  # organism-specific default set (if any) is used. Inherently depends on variant calling
-  String resolved_query_genes = select_first([query_genes, cauris_query_genes, afumigatus_query_genes, cryptoneo_query_genes, ""])
+  # The user-supplied query_genes takes priority; otherwise the organism-specific default
+  # set (if any) is used, with the C. auris user-supplied GFF set preceding the clade sets.
+  # Inherently depends on variant calling
+  String resolved_query_genes = select_first([query_genes, cauris_custom_query_genes, cauris_clade1_query_genes, cauris_clade2_query_genes, cauris_clade3_query_genes, cauris_clade4_query_genes, cauris_clade5_query_genes, afumigatus_query_genes, cryptoneo_query_genes, ""])
 
   # REFERENCE-BASED VARIANT CALLING
   # variant calling runs automatically whenever a reference fasta and read1 are available
