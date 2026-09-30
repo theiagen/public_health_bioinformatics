@@ -55,6 +55,7 @@ Clair3
 Clockwork
 Concatenate_Column_Content
 Conda
+Cronobacter
 Create_Terra_Table
 Cryptococcus
 Cython
@@ -368,6 +369,7 @@ dehost
 dehosted
 deinterleaves
 deltocephalinicola
+dendrogram
 demethylase
 demix
 demixed
