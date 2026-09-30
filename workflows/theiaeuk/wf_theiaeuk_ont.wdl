@@ -231,16 +231,16 @@ workflow theiaeuk_ont {
     String? amr_search_docker = medea_magic.amr_search_docker
     String? amr_search_version = medea_magic.amr_search_version
     # Variant Calling Outputs (minimap2 alignment + Clair3)
-    String? theiaeuk_reference_gff = medea_magic.reference_gff_used
-    String? theiaeuk_reference_fasta = medea_magic.reference_fasta_used
-    String? theiaeuk_minimap2_version = medea_magic.minimap2_version
-    File? theiaeuk_variant_calling_bam = medea_magic.variant_calling_bam
-    File? theiaeuk_variant_calling_bai = medea_magic.variant_calling_bai
-    String? theiaeuk_clair3_version = medea_magic.clair3_version
-    File? theiaeuk_clair3_variants_vcf = medea_magic.clair3_variants_vcf
-    File? theiaeuk_clair3_variants_gvcf = medea_magic.clair3_variants_gvcf
-    String? theiaeuk_clair3_docker = medea_magic.clair3_variants_docker
-    String? theiaeuk_clair3_model_used = medea_magic.clair3_model_used
+    String? reference_gff_used = medea_magic.reference_gff_used
+    String? reference_fasta_used = medea_magic.reference_fasta_used
+    String? minimap2_version = medea_magic.minimap2_version
+    File? variant_calling_bam = medea_magic.variant_calling_bam
+    File? variant_calling_bai = medea_magic.variant_calling_bai
+    String? clair3_version = medea_magic.clair3_version
+    File? clair3_variants_vcf = medea_magic.clair3_variants_vcf
+    File? clair3_variants_gvcf = medea_magic.clair3_variants_gvcf
+    String? clair3_docker = medea_magic.clair3_variants_docker
+    String? clair3_model_used = medea_magic.clair3_model_used
     # Gene Coverage Outputs
     File? gene_coverage_stats = medea_magic.gene_coverage_stats
     String? gene_coverage_reads_mapped = medea_magic.gene_coverage_reads_mapped
