@@ -11,7 +11,7 @@ task gene_coverage {
     String? query_genes # comma-delimited list of strings
 
     String feature_type = "CDS" # GFF feature type to use for coordinate extraction
-    String feature_qualifier = "product" # GFF feature qualifier to use for comparison to query gene
+    String feature_qualifier = "product,locus_tag" # comma-delimited GFF feature qualifier(s) to use for comparison to query gene
     Boolean exact_match = false # use an exact match for qualifier mapping (always case-sensitive)
     Boolean ambiguous_contig = false # apply coordinates from BED to first identified contig in BAM
 

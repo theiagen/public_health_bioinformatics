@@ -10,7 +10,7 @@ task variant_annotate {
     File? bedfile
     File vcf
 
-    String feature_qualifier = "product" # GFF feature qualifier to use for comparison to query gene
+    String feature_qualifier = "product,locus_tag" # comma-delimited GFF feature qualifier(s) to use for comparison to query gene
     Boolean exact_match = false # use an exact match for qualifier mapping (always case-sensitive)
     Boolean ambiguous_contig = false # relate bedfile to GFF and FASTA ambiguous
 
