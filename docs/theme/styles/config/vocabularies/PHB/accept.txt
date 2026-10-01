@@ -66,6 +66,7 @@ Dorado
 ECtyper
 ENA
 EcOH
+Ensembl
 Enterobacter
 Entrez
 Escherichia
@@ -290,6 +291,7 @@ VADR
 VADR_Update
 VCF
 VCFs
+VEP
 VFDB
 VSCode
 Varghese
@@ -487,8 +489,10 @@ phylogenies
 phylogeny
 plasmid
 plasmids
+ploidy
 pneumoniae
 pneumophila
+polyploid
 polytomy
 prefilter
 prokaryote
