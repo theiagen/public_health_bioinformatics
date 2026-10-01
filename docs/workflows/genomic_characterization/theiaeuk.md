@@ -148,9 +148,9 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
     When this species is detected by GAMBIT, clade typing determines the clade the genome belongs to. Reference-based variant calling is performed against the clade-specific reference, and AMR detection is conducted.
 
     - Default reference genome and annotation: a clade-specific reference is selected by the `cladetyper` task. NOTE: Gene-specific variant calling is skipped for Clade VI because a reference gene annotation is not present for this lineage.
-    - Default gene query: A combination of product IDs and locus tags (table below) are queried to cover common genes. Product IDs: `FKS1`, `lanosterol 14-alpha.demethylase` (_ERG11_), `uracil phosphoribosyltransferase` (_FUR1_), `sterol 24-C-methyltransferase` (_ERG6_)
+    - Default gene query: `FKS1`, `lanosterol.14-alpha.demethylase` (_ERG11_), `uracil.phosphoribosyltransferase` (_FUR1_), and `sterol.24-C-methyltransferase` (_ERG6_), plus clade-specific locus tags for genes annotated only as "hypothetical protein" (the Clade II reference delimits product IDs with "_", e.g. `lanosterol_14-alpha_demethylase`)
 
-        | Gene | Clade I `locus_tag` | Clade II | Clade III | Clade IV | Clade V |
+        | Gene | Clade I | Clade II | Clade III | Clade IV | Clade V |
         |---|---|---|---|---|---|
         | _FLO8_ | `B9J08_02359` | `CJI96_0001121`\* | `CJI97_000401` | `CJJ07_003930`\* | `FDK38_002567`\* |
         | _FLO8_ N-terminus | `B9J08_02360` | \* | `CJI97_000402` | \* | \* |
@@ -158,9 +158,11 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
         | _ERG3_ | `B9J08_01595` | `CJI96_0002270` | `CJI97_003811` | `CJJ07_003685` | `FDK38_001564` |
         | _PSK74852_ | `B9J08_04226` | `CJI96_0004130` | `CJI97_005426` | `CJJ07_003405` | `FDK38_004143` |
 
-        \* _FLO8_ is annotated as a single gene in this reference
+        \* _FLO8_ is annotated as a single gene in the Clade II, IV, and V references
 
         NOTE: Variants derived from locus tag searches will be reported with respect to the locus tag name, not the gene name
+
+        NOTE: If a `reference_gff` is supplied, only the product IDs are queried by default. To include the genes above, supply their locus tags in `query_genes` alongside the product IDs.
 
 
 {{ include_md("common_text/cauris_cladetyper.md", indent=4) }}
