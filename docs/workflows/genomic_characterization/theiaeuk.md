@@ -148,10 +148,14 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
     When this species is detected by GAMBIT, clade typing determines the clade the genome belongs to. Reference-based variant calling is performed against the clade-specific reference, and AMR detection is conducted.
 
     - Default reference genome and annotation: a clade-specific reference is selected by the `cladetyper` task. NOTE: Gene-specific variant calling is skipped for Clade VI because a reference gene annotation is not present for this lineage.
-    - Default gene query: `FKS1`, `lanosterol.14-alpha.demethylase` (_ERG11_), `uracil.phosphoribosyltransferase` (_FUR1_), and `sterol.24-C-methyltransferase` (_ERG6_), plus clade-specific locus tags for genes annotated only as "hypothetical protein" (the Clade II reference delimits product IDs with "_", e.g. `lanosterol_14-alpha_demethylase`)
+    - Default gene query: product IDs for genes with a unique product annotation, plus clade-specific locus tags for genes annotated only as "hypothetical protein" (the Clade II reference delimits product IDs with "_")
 
         | Gene | Clade I | Clade II | Clade III | Clade IV | Clade V |
         |---|---|---|---|---|---|
+        | _FKS1_ | `FKS1` | `FKS1` | `FKS1` | `FKS1` | `FKS1` |
+        | _ERG11_ | `lanosterol.14-alpha.demethylase` | `lanosterol_14-alpha_demethylase` | `lanosterol.14-alpha.demethylase` | `lanosterol.14-alpha.demethylase` | `lanosterol.14-alpha.demethylase` |
+        | _FUR1_ | `uracil.phosphoribosyltransferase` | `uracil_phosphoribosyltransferase` | `uracil.phosphoribosyltransferase` | `uracil.phosphoribosyltransferase` | `uracil.phosphoribosyltransferase` |
+        | _ERG6_ | `sterol.24-C-methyltransferase` | `sterol_24-C-methyltransferase` | `sterol.24-C-methyltransferase` | `sterol.24-C-methyltransferase` | `sterol.24-C-methyltransferase` |
         | _FLO8_ | `B9J08_02359` | `CJI96_0001121`\* | `CJI97_000401` | `CJJ07_003930`\* | `FDK38_002567`\* |
         | _FLO8_ N-terminus | `B9J08_02360` | \* | `CJI97_000402` | \* | \* |
         | _MEC3_ | `B9J08_00960` | `CJI96_0001637` | `CJI97_003175` | `CJJ07_005307` | `FDK38_000935` |
@@ -162,7 +166,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 
         NOTE: Variants derived from locus tag searches will be reported with respect to the locus tag name, not the gene name
 
-        NOTE: If a `reference_gff` is supplied, only the product IDs are queried by default. To include the genes above, supply their locus tags in `query_genes` alongside the product IDs.
+        NOTE: If a `reference_gff` is supplied, only the product IDs (_FKS1_, _ERG11_, _FUR1_, and _ERG6_ rows; "." delimited) are queried by default. To include the remaining genes above, supply their locus tags in `query_genes` alongside the product IDs.
 
 
 {{ include_md("common_text/cauris_cladetyper.md", indent=4) }}
@@ -187,7 +191,11 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
     When this species is detected by GAMBIT, reference-based variant calling is performed against the hosted _C. neoformans_ reference (see the **Reference-based variant calling** section above).
 
     - Default reference genome and annotation: `GCF_000091045.1` (ASM9104v1)
-    - Default gene query: `sterol.14-demethylase` (_ERG11_)
+    - Default gene query: product IDs are queried
+
+        | Gene | Locus tag | Product |
+        |---|---|---|
+        | _ERG11_ | CNA00300 | `sterol.14-demethylase` |
 
 
 ### Outputs
