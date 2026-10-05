@@ -1018,7 +1018,8 @@ gene_coverage	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	
 gene_coverage	min_base_quality	Int	Minimum base quality to consider a base in coverage calculations	0	Optional	Freyja_FASTQ	general	
 gene_coverage	min_depth	Int	Minimum depth to call a base covered	10	Optional	Freyja_FASTQ	general	
 gene_coverage	min_map_quality	Int	Minimum mapping quality to consider a base in coverage calculations	0	Optional	Freyja_FASTQ	general	
-gene_coverage	query_genes	String	Comma-separated list of query genes to parse GBFF/BED file for region coordinates		Optional	Freyja_FASTQ	general	
+gene_coverage	query_check_hard_fail	Boolean	Fail the task if any query gene is missing from the reference genome	False	Optional	Freyja_FASTQ	general
+gene_coverage	query_genes	String	Comma-separated list of query genes to parse GBFF/BED file for region coordinates		Optional	Freyja_FASTQ	general
 gene_coverage	reference_gff	File	Internal component, do not modify		Optional	Freyja_FASTQ	general	
 get_fasta_genome_size	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Freyja_FASTQ	runtime	
 get_fasta_genome_size	disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	Freyja_FASTQ	runtime	

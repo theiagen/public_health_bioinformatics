@@ -248,7 +248,8 @@ workflow medea_magic {
           exact_match = query_exact_match,
           min_map_quality = min_gene_coverage_map_quality,
           min_base_quality = min_gene_coverage_base_quality,
-          min_depth = min_gene_coverage_depth
+          min_depth = min_gene_coverage_depth,
+          query_check_hard_fail = true
       }
       if (resolved_query_genes != "" && defined(resolved_vcf) && select_first([resolved_reference_gff, ""]) != "") {
         call variant_annotate_task.variant_annotate as gene_variants {

@@ -14,6 +14,7 @@ task gene_coverage {
     String feature_qualifier = "product,locus_tag" # comma-delimited GFF feature qualifier(s) to use for comparison to query gene
     Boolean exact_match = false # use an exact match for qualifier mapping (always case-sensitive)
     Boolean ambiguous_contig = false # apply coordinates from BED to first identified contig in BAM
+    Boolean query_check_hard_fail = false # fail the task if any query is missing from the reference genome
 
     Int min_depth = 10 # minimum depth to count a base
     Int min_map_quality = 0 # minimum mapping quality to count a base
@@ -54,6 +55,7 @@ task gene_coverage {
     with open("LENGTHS_DICT.json", "r") as f:
       # the empty key is theiagene's placeholder when nothing was quantified
       lengths = {k: v for k, v in json.load(f).items() if k}
+    missing = [label for label, length in lengths.items() if length == "NA"]
 
     with open("QUERY_CHECK", "w") as f:
       f.write(",".join(
@@ -63,7 +65,10 @@ task gene_coverage {
       ))
 
     with open("QUERY_CHECK_STATUS", "w") as f:
-      f.write("FAIL" if "NA" in lengths.values() else "PASS")
+      f.write("FAIL" if missing else "PASS")
+
+    if ~{if query_check_hard_fail then "True" else "False"} and missing:
+      raise KeyError(f"queries missing from reference genome: {', '.join(missing)}")
     CODE
 
     # deprecated outputs v4.2.0; theiagene quantifies every gene, so the S gene
