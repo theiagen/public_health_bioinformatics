@@ -45,6 +45,7 @@ workflow medea_magic {
     Int? gatk_cpu
     Int? gatk_memory
     Int? gatk_disk_size
+    Boolean? gatk_decompress # output uncompressed GATK VCFs instead of bgzipped VCFs
     # gatk-specific variant-calling options (illumina)
     Int? gatk_ploidy
     # gatk-specific filtering options (illumina)
@@ -161,6 +162,7 @@ workflow medea_magic {
           bai = bwa_variant_calling.sorted_bai,
           reference_genome = resolved_reference_fasta,
           ploidy = gatk_ploidy,
+          decompress = gatk_decompress,
           docker = gatk_docker,
           cpu = gatk_cpu,
           memory = gatk_memory,
@@ -179,6 +181,7 @@ workflow medea_magic {
           max_fisher_strand_bias = gatk_filter_max_fisher_strand_bias,
           max_strand_odds_ratio = gatk_filter_max_strand_odds_ratio,
           filter_expression = gatk_filter_expression,
+          decompress = gatk_decompress,
           docker = gatk_docker,
           cpu = gatk_cpu,
           memory = gatk_memory,

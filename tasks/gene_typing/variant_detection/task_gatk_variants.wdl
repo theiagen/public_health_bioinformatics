@@ -7,12 +7,17 @@ task gatk_variants {
     File bai
     File reference_genome
     Int ploidy = 1 # integer indicating ploidy (N); default to haploid
+    Boolean decompress = false # output an uncompressed VCF instead of a bgzipped VCF
 
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/gatk:4.6.2.0"
     Int cpu = 8
     Int memory = 32
     Int disk_size = 100
   }
+  # GATK infers output compression from the extension: ".vcf.gz" is bgzipped with a
+  # tabix (.tbi) index, while ".vcf" is plain text with a Tribble (.idx) index
+  String vcf_suffix = if decompress then ".vcf" else ".vcf.gz"
+  String index_suffix = if decompress then ".idx" else ".tbi"
   command <<<
     # fail hard
     set -euo pipefail
@@ -74,12 +79,12 @@ task gatk_variants {
       -A StrandBiasBySample \
       -R ${local_ref} \
       -V ~{samplename}_haplotypecall.g.vcf.gz \
-      -O ~{samplename}_genotype.vcf.gz
+      -O ~{samplename}_genotype~{vcf_suffix}
   >>>
   output {
     String gatk_version = read_string("VERSION")
-    File gatk_genotype_vcf = "~{samplename}_genotype.vcf.gz"
-    File gatk_genotype_vcf_index = "~{samplename}_genotype.vcf.gz.tbi"
+    File gatk_genotype_vcf = "~{samplename}_genotype~{vcf_suffix}"
+    File gatk_genotype_vcf_index = "~{samplename}_genotype~{vcf_suffix}~{index_suffix}"
   }
   runtime {
     docker: "~{docker}"

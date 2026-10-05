@@ -1280,6 +1280,7 @@ medea_magic	clair3_memory	Int	Amount of memory/RAM (in GB) to allocate to the ta
 medea_magic	clair3_model	String	Model name for Clair3 variant calling (see supported models for available options)	r1041_e82_400bps_sup_v500	Optional	TheiaEuk_ONT	general	
 medea_magic	clair3_variant_quality	Int	Minimum variant quality score for Clair3	2	Optional	TheiaEuk_ONT	general	
 medea_magic	gatk_cpu	Int	Number of CPUs to allocate to the task	8	Optional	TheiaEuk_Illumina_PE	runtime	
+medea_magic	gatk_decompress	Boolean	Output uncompressed GATK VCFs (.vcf with a .idx index) instead of bgzipped VCFs (.vcf.gz with a .tbi index)	False	Optional	TheiaEuk_Illumina_PE	general	
 medea_magic	gatk_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_Illumina_PE	runtime	
 medea_magic	gatk_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/gatk:4.6.2.0	Optional	TheiaEuk_Illumina_PE	docker	
 medea_magic	gatk_filter_expression	String	Custom JEXL filter expression applied by GATK VariantFiltration (annotated with the filter name 'user_filter')		Optional	TheiaEuk_Illumina_PE	general	

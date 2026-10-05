@@ -5,7 +5,8 @@ task gatk_filter {
     String samplename
     File reference_genome
     File vcf
-    File vcf_index
+    File vcf_index # tabix (.tbi) index for a bgzipped VCF or Tribble (.idx) index for an uncompressed VCF
+    Boolean decompress = false # output uncompressed VCFs instead of bgzipped VCFs
 
     # defaults informed by here: https://gatk.broadinstitute.org/hc/en-us/articles/360035890471-Hard-filtering-germline-short-variants
     Float min_variant_quality = 30
@@ -21,6 +22,10 @@ task gatk_filter {
     Int memory = 32
     Int disk_size = 100
   }
+  # GATK infers output compression from the extension: ".vcf.gz" is bgzipped with a
+  # tabix (.tbi) index, while ".vcf" is plain text with a Tribble (.idx) index
+  String vcf_suffix = if decompress then ".vcf" else ".vcf.gz"
+  String index_suffix = if decompress then ".idx" else ".tbi"
   command <<<
     # fail hard
     set -euo pipefail
@@ -34,6 +39,16 @@ task gatk_filter {
     # index reference FASTA
     samtools faidx ${local_ref}
     gatk CreateSequenceDictionary -R ${local_ref}
+
+    # GATK locates a VCF's index by appending ".tbi" (bgzipped) or ".idx" (uncompressed)
+    # to the VCF path, so symlink the pair side by side under the expected names
+    local_vcf=$(basename ~{vcf})
+    ln -s ~{vcf} ${local_vcf}
+    if [[ "${local_vcf}" == *.gz ]]; then
+      ln -s ~{vcf_index} ${local_vcf}.tbi
+    else
+      ln -s ~{vcf_index} ${local_vcf}.idx
+    fi
 
     # assemble the VariantFiltration arguments, giving each filter its
     # own descriptive --filter-name
@@ -75,31 +90,31 @@ task gatk_filter {
     mapfile -t FILTER_ARGS < FILTER_EXPRESSION.txt
     gatk --java-options "-Xmx~{memory}G" VariantFiltration \
       -R ${local_ref} \
-      -V ~{vcf} \
-      -O ~{samplename}_filtered.vcf.gz \
+      -V ${local_vcf} \
+      -O ~{samplename}_filtered~{vcf_suffix} \
       ~{'--filter-name "user_filter" --filter-expression "' + filter_expression + '"'} \
       ${FILTER_ARGS[@]}
 
     # call SelectVariants and drop those without PASS flags
     gatk --java-options "-Xmx~{memory}G" SelectVariants \
-      -V ~{samplename}_filtered.vcf.gz \
-      -O ~{samplename}_selected.vcf.gz \
+      -V ~{samplename}_filtered~{vcf_suffix} \
+      -O ~{samplename}_selected~{vcf_suffix} \
       --exclude-filtered true
 
     # quantify the proportion of records that survived filtering; the FILTER
     # column (7) of every non-header record is either PASS or the name(s) of the
     # filter(s) it failed. records with no annotation (".") count toward the
-    # denominator only. an empty VCF reports 0
-    zcat ~{samplename}_filtered.vcf.gz \
+    # denominator only. an empty VCF reports 0. zcat -f passes uncompressed input through
+    zcat -f ~{samplename}_filtered~{vcf_suffix} \
       | awk -F'\t' '!/^#/ {total++; if ($7 == "PASS") pass++} END {printf "%.2f\n", (total > 0) ? (pass / total) * 100 : 0}' \
       | tee PERCENT_PASS.txt
   >>>
   output {
     String gatk_version = read_string("VERSION")
-    File gatk_filtered_vcf = "~{samplename}_filtered.vcf.gz"
-    File gatk_filtered_vcf_index = "~{samplename}_filtered.vcf.gz.tbi"
-    File gatk_selected_vcf = "~{samplename}_selected.vcf.gz"
-    File gatk_selected_vcf_index = "~{samplename}_selected.vcf.gz.tbi"
+    File gatk_filtered_vcf = "~{samplename}_filtered~{vcf_suffix}"
+    File gatk_filtered_vcf_index = "~{samplename}_filtered~{vcf_suffix}~{index_suffix}"
+    File gatk_selected_vcf = "~{samplename}_selected~{vcf_suffix}"
+    File gatk_selected_vcf_index = "~{samplename}_selected~{vcf_suffix}~{index_suffix}"
     Float gatk_percent_passing = read_float("PERCENT_PASS.txt")
   }
   runtime {
