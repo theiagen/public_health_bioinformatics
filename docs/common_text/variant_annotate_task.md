@@ -1,8 +1,8 @@
 ---
-title: Task Fragment `variant_annotate`
+title: Task Fragment `gene_variants`
 fragment: true
 ---
-??? task "`variant_annotate`: Variant Effect Annotation"
+??? task "`gene_variants`: Variant Effect Annotation"
     This task annotates variants in regions-of-interest using Ensembl Variant Effect Predictor (VEP) by reporting the predicted consequence of each variant (e.g. `missense_variant`, `frameshift_variant`) alongside its pseudo-[HGVS](https://hgvs-nomenclature.org/stable/) coding (`c.`) and protein (`p.`) notation. Reference GFFs should be formatted in accord with [VEP's requirements](https://jun2026.archive.ensembl.org/info/docs/tools/vep/script/vep_cache.html#gff).
 
     The task proceeds in three steps:
@@ -11,7 +11,7 @@ fragment: true
     2. **Annotation** - VEP annotates the VCF against the reference FASTA and GFF by translating genes' CDS coordinates.
     3. **Reporting** - the VEP output is condensed into a comma-delimited list of human-readable annotations, where each transcript/protein identifier is replaced by the queried gene name, followed by the gene product name taken from the reference GFF.
 
-    Each entry of the `variant_annotations` output takes the form:
+    Each entry of the `gene_variants_annotations` output takes the form:
 
     ```
     <query>: "<product>" (<consequence> <HGVSc> <HGVSp>; <ref>:<ref depth> <alt>:<alt depth>)
@@ -25,7 +25,7 @@ fragment: true
 
     `<query>` is the `query_genes`/`query_genes_bed` term that selected the gene. When no query was supplied (the whole VCF is annotated) or no query matches the annotated feature, the product name is normalized into the label instead (`lanosterol.14-alpha.demethylase`). The product is quoted because product names frequently contain commas, which would otherwise be indistinguishable from the delimiter separating entries.
 
-    Variants that resolve to neither a coding nor a protein change, and variants whose feature cannot be traced back to a gene product in the reference GFF, are omitted from `variant_annotations`. The full VEP run is preserved in `variant_annotation_summary` (VEP's HTML summary), while the extracted variants themselves are retained in `variant_annotation_gene_vcf`.
+    Variants that resolve to neither a coding nor a protein change, and variants whose feature cannot be traced back to a gene product in the reference GFF, are omitted from `gene_variants_annotations`. The full VEP run is preserved in `gene_variants_summary` (VEP's HTML summary), while the extracted variants themselves are retained in `gene_variants_vcf`.
 
     ??? dna "Gene selection and coordinate sources"
         Variant annotation uses the same gene selection inputs as the `gene_coverage` task:

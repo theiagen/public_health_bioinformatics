@@ -519,9 +519,16 @@ gene_coverage_depth_by_gene	Map[String,String]	A JSON map relating gene queries 
 gene_coverage_mean_depth	String	Mean depth of coverage across the query genes	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 gene_coverage_mean_percent_coverage	String	Mean breadth of coverage across the query genes	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 gene_coverage_percent_coverage_by_gene	Map[String,Float]	A JSON map relating gene queries to their percent breadth of coverage	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+gene_coverage_query_check	String	Comma-delimited report of whether each gene query was found in the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+gene_coverage_query_check_status	String	PASS if every gene query was found in the reference genome, else FAIL	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 gene_coverage_reads_by_gene	Map[String,String]	A JSON map relating gene queries to the number of reads mapped	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 gene_coverage_reads_mapped	String	Number of reads mapped to query genes	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 gene_coverage_stats	File	A tab-delimited table depicting gene coverage depth and breadth on a gene-by-gene basis	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+gene_variants_annotations	String	A comma-delimited list of variant annotations detected in the query gene regions	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+gene_variants_summary	File	An HTML report summarizing the annotated variants in the query gene regions	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+gene_variants_tsv	File	A TSV file depicting VEP variant reporting	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+gene_variants_vcf	File	VCF of variant calls overlapping the query gene regions	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+gene_variants_warnings	File	Warnings emitted by VEP during variant annotation	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 generated_accessions	File	Text file mapping the BioSample accession with its sample name.	Terra_2_NCBI
 genoflu_all_segments	String	The genotypes for each individual flu segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 genoflu_genotype	String	The genotype of the whole genome, based off of the individual segments types	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
@@ -1392,11 +1399,6 @@ vadr_flu_segment_concatenated_fasta	File	Assembly FASTA file of all Influenza ge
 vadr_num_alerts	String	Number of fatal alerts as determined by VADR	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, VADR_Update
 vadr_update_analysis_date	String	Date of analysis	VADR_Update
 vadr_update_version	String	Version of the Public Health Bioinformatics (PHB) repository used	VADR_Update
-variant_annotation_gene_vcf	File	VCF of variant calls overlapping the query gene regions	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-variant_annotation_summary	File	An HTML report summarizing the annotated variants in the query gene regions	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-variant_annotation_tsv	File	A TSV file depicting VEP variant reporting	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-variant_annotation_warnings	File	Warnings emitted by VEP during variant annotation	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-variant_annotations	String	A comma-delimited list of variant annotations detected in the query gene regions	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 variant_calling_bai	File	Read mapping BAM index file used for variant calling	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 variant_calling_bam	File	Read mapping BAM file used for variant calling	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 variants_from_ref_vcf	File	Number of variants relative to the reference genome	TheiaCoV_ClearLabs

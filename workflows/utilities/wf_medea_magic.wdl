@@ -251,7 +251,7 @@ workflow medea_magic {
           min_depth = min_gene_coverage_depth
       }
       if (resolved_query_genes != "" && defined(resolved_vcf) && select_first([resolved_reference_gff, ""]) != "") {
-        call variant_annotate_task.variant_annotate {
+        call variant_annotate_task.variant_annotate as gene_variants {
           input:
             samplename = samplename,
             reference_fasta = resolved_reference_fasta,
@@ -337,10 +337,12 @@ workflow medea_magic {
     Map[String, String]? gene_coverage_depth_by_gene = gene_coverage.depth_by_gene
     Map[String, String]? gene_coverage_breadth_by_gene = gene_coverage.breadth_by_gene
     Map[String, String]? gene_coverage_reads_by_gene = gene_coverage.reads_by_gene
-    File? variant_annotation_warnings = variant_annotate.variant_annotation_warnings
-    File? variant_annotation_summary = variant_annotate.variant_annotation_html
-    File? variant_annotation_gene_vcf = variant_annotate.variant_annotation_gene_vcf
-    File? variant_annotation_tsv = variant_annotate.variant_annotation_tsv
-    String? variant_annotations = variant_annotate.variant_annotation
+    String? gene_coverage_query_check = gene_coverage.gene_coverage_query_check
+    String? gene_coverage_query_check_status = gene_coverage.gene_coverage_query_check_status
+    File? gene_variants_warnings = gene_variants.variant_annotation_warnings
+    File? gene_variants_summary = gene_variants.variant_annotation_html
+    File? gene_variants_vcf = gene_variants.variant_annotation_gene_vcf
+    File? gene_variants_tsv = gene_variants.variant_annotation_tsv
+    String? gene_variants_annotations = gene_variants.variant_annotation
   }
 }

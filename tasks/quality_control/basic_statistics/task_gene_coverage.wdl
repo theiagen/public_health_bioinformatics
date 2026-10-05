@@ -47,6 +47,25 @@ task gene_coverage {
     # rename files
     mv COVERAGE_STATS.tsv ~{samplename}.coverage_stats.tsv
 
+    # report whether each query was recovered based on "NA" in gene lengths
+    python3 <<CODE
+    import json
+
+    with open("LENGTHS_DICT.json", "r") as f:
+      # the empty key is theiagene's placeholder when nothing was quantified
+      lengths = {k: v for k, v in json.load(f).items() if k}
+
+    with open("QUERY_CHECK", "w") as f:
+      f.write(",".join(
+        f"{label} was NOT found in reference genome" if length == "NA"
+        else f"{label} was found in reference genome"
+        for label, length in lengths.items()
+      ))
+
+    with open("QUERY_CHECK_STATUS", "w") as f:
+      f.write("FAIL" if "NA" in lengths.values() else "PASS")
+    CODE
+
     # deprecated outputs v4.2.0; theiagene quantifies every gene, so the S gene
     # figures are read back out of its per-gene files rather than recomputed
     python3 <<CODE
@@ -78,6 +97,8 @@ task gene_coverage {
     Map[String, String] depth_by_gene = read_json("DEPTH_DICT.json")
     Map[String, String] breadth_by_gene = read_json("COVERAGE_DICT.json")
     Map[String, String] reads_by_gene = read_json("READS_DICT.json")
+    String gene_coverage_query_check = read_string("QUERY_CHECK")
+    String gene_coverage_query_check_status = read_string("QUERY_CHECK_STATUS")
     # deprecated v4.2.0
     Float sc2_s_gene_depth = read_string("SC2_S_GENE_DEPTH")
     Float sc2_s_gene_coverage = read_string("SC2_S_GENE_COVERAGE")

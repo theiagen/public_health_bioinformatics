@@ -61,7 +61,7 @@ columns:
     method: percent_diff
     threshold: 0.05
     type: float
-  variant_annotations:
+  gene_variants_annotations:
     mappings: ["theiaeuk_snippy_variants_hits"] # <= 4.3.0 compatibility
     method: exact
     type: set[str]

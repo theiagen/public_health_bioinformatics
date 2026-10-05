@@ -354,10 +354,12 @@ workflow theiaeuk_illumina_pe {
     Map[String, String]? gene_coverage_depth_by_gene = medea_magic.gene_coverage_depth_by_gene
     Map[String, String]? gene_coverage_breadth_by_gene = medea_magic.gene_coverage_breadth_by_gene
     Map[String, String]? gene_coverage_reads_by_gene = medea_magic.gene_coverage_reads_by_gene
-    File? variant_annotation_gene_vcf = medea_magic.variant_annotation_gene_vcf
-    File? variant_annotation_warnings = medea_magic.variant_annotation_warnings
-    File? variant_annotation_summary = medea_magic.variant_annotation_summary
-    File? variant_annotation_tsv = medea_magic.variant_annotation_tsv
-    String? variant_annotations = medea_magic.variant_annotations
+    String? gene_coverage_query_check = medea_magic.gene_coverage_query_check
+    String? gene_coverage_query_check_status = medea_magic.gene_coverage_query_check_status
+    File? gene_variants_vcf = medea_magic.gene_variants_vcf
+    File? gene_variants_warnings = medea_magic.gene_variants_warnings
+    File? gene_variants_summary = medea_magic.gene_variants_summary
+    File? gene_variants_tsv = medea_magic.gene_variants_tsv
+    String? gene_variants_annotations = medea_magic.gene_variants_annotations
   }
 }

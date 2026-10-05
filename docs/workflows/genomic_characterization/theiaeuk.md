@@ -114,7 +114,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
         For any other identified organism (e.g. _Candida albicans_), variant calling only runs if `reference_fasta` is supplied by the user.
 
     ??? dna "`reference_gff` input parameter"
-        The annotated reference (General Features Format, GFF) used by the `gene_coverage` and `variant_annotate` tasks to extract query genes list into genomic coordinates. A user-supplied `reference_gff` always takes precedence over the defaults below. When it is not provided, an organism-specific default is selected automatically if a default organism is identified:
+        The annotated reference (General Features Format, GFF) used by the `gene_coverage` and `gene_variants` tasks to extract query genes list into genomic coordinates. A user-supplied `reference_gff` always takes precedence over the defaults below. When it is not provided, an organism-specific default is selected automatically if a default organism is identified:
 
         !!! warning "Keep the FASTA and GFF matched"
             The reference FASTA and GFF must use the same assembly. If a custom `reference_fasta` is provided, an associated `reference_gff` must also be provided (and vice versa).
