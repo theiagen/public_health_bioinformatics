@@ -423,7 +423,7 @@ workflow theiaprok_illumina_pe {
                 "arln_taxon_assembly_ratio_stdev": arln_stats.taxon_assembly_ratio_stdev,
                 "arln_taxon_gc_mean": arln_stats.taxon_gc_mean,
                 "arln_taxon_gc_percent_stdev": arln_stats.taxon_gc_percent_stdev,
-                "assembler": digger_denovo.assembler_used,
+                "assembler_used": digger_denovo.assembler_used,
                 "assembler_version": digger_denovo.assembler_version,
                 "assembly_fasta": digger_denovo.assembly_fasta,
                 "assembly_length": quast.genome_length,
@@ -948,7 +948,7 @@ workflow theiaprok_illumina_pe {
     File? assembly_fasta = digger_denovo.assembly_fasta
     File? contigs_gfa = digger_denovo.contigs_gfa
     File? filtered_contigs_metrics = digger_denovo.filtered_contigs_metrics
-    String? assembler = digger_denovo.assembler_used
+    String? assembler_used = digger_denovo.assembler_used
     String? assembler_version = digger_denovo.assembler_version
     String? pilon_version = digger_denovo.pilon_version
     # Assembly QC - quast outputs
