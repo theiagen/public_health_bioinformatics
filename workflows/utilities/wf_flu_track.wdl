@@ -187,7 +187,8 @@ workflow flu_track {
     }
   }
   # assembly can be a full flu genome or various segments
-  if (defined(assembly_fasta) && defined(vadr_outputs_tgz)) {
+  # size() returns 0 for undefined optionals, so this also skips the empty placeholder files
+  if (size(assembly_fasta) > 0 && size(vadr_outputs_tgz) > 0) {
     call vadr_flu_segments_task.vadr_flu_segments {
       input:
         genome_fasta = select_first([assembly_fasta]),
