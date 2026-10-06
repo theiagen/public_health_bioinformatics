@@ -141,7 +141,21 @@ Runs → {run} → Files → SampleSheet.csv
 
 If you have the Run's sample sheet, its `Sample_ID` column is a good starting point, however keep in mind that they may not always provide an exact match. Per Illumina's [BaseSpace data model](https://knowledge.illumina.com/software/cloud-software/software-cloud-software-reference_material-list/000007009), `Sample_ID` becomes the **biosample** name and `Sample_Name` becomes the **library** name. A **_FastQ Dataset_** is a separate object produced downstream by demultiplexing, so while the `Sample_ID` often matches the resulting dataset name, it is not guaranteed to. In practice, if the **_FastQ Dataset_** name differs from the `Sample_ID`, it's usually because a lane suffix was added.
 
-### 3.2 How your `basespace_sample_id` name is matched
+### 3.2 Without a SampleSheet.csv
+
+??? toggle "If your collection is a Run"
+      ```
+      Runs → {run} → Biosamples → "FastQ Dataset" column
+      ```
+      Open the Runs tab and go to the Biosamples tab. The values in the **"FastQ Dataset"** column are the dataset names that your `basespace_sample_id`s are matched against.
+
+??? toggle "If your collection is a Project"
+      ```
+      Projects → {project} → FASTQS → "Dataset Name" column
+      ```
+      Open the Projects tab and go to the FASTQS tab. The values in the **"Dataset Name"** column are the dataset names that your `basespace_sample_id`s are matched against.
+
+### 3.3 How your `basespace_sample_id` name is matched
 
 The workflow searches for each `basespace_sample_id` in the following order, stopping after the first successful match:
 
@@ -157,7 +171,7 @@ The workflow searches for each `basespace_sample_id` in the following order, sto
 
 If neither step finds a match, the workflow fails with `No exact dataset match`. If only lane-suffixed datasets exist and `group_by_lane` is `false`, it fails with `Partial dataset match`. Set `group_by_lane` to `true` to merge them.
 
-### 3.3 Worked examples using `group_by_lane`
+### 3.4 Worked examples using `group_by_lane`
 
 Each example below lists the datasets that exist in a collection, then shows what a given `basespace_sample_id` resolves to with `group_by_lane` on and off (the default).
 
