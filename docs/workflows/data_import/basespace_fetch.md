@@ -91,13 +91,13 @@ _Already have a command-line environment available?_ You can skip ahead to [1.2 
 
 ??? toggle "Click for more information"
 
-    Copy the contents of `~/.basespace/default.cfg` (specifically the **accessToken** and **API server** details) into Terra as a workspace data elements. Storing this here means you can enter the token and API url once per workspace instead of repeating it on every row of every data table.
+    Copy the contents of `~/.basespace/default.cfg` (specifically the **accessToken** and **API server** details) into Terra as workspace data elements. Storing this here means you can enter the token and API url once per workspace instead of repeating it on every row of every data table.
 
     1. Navigate to the Terra "DATA" tab, and select "Workspace Data" at the bottom of the left sidebar.
     2. Click on "Edit" and then "Add variable" to add the new workspace data elements as in the examples below.
 
     !!! caption narrow "Create workspace data elements"
-        ![Workspace data table showing the basespace_access_token and basespace_api_server key-value pairs required for BaseSpace configuration.](../../assets/figures/basespace_fetch/info5-copy-information.png)
+        ![Workspace data table showing the basespace_access_token and basespace_api_url key-value pairs required for BaseSpace configuration.](../../assets/figures/basespace_fetch/info5-copy-information.png)
 
     When you launch the workflow, point the `basespace_access_token` input at this variable using `workspace.basespace_access_token`. The `basespace_api_url` input is optional and defaults to `https://api.basespace.illumina.com`.
 
