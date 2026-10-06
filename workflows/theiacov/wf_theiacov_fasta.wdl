@@ -74,7 +74,7 @@ workflow theiacov_fasta {
       pangolin_docker_image = organism_parameters.pangolin_docker,
       workflow_type = "theiacov_fasta",
       # hiding internal components to decrease input bloat
-      reference_gene_locations_bed = "gs://theiagen-public-resources-rp/empty_file/empty.bed",
+      reference_gene_locations_bed = "gs://theiagen-public-resources-rp/empty_files/empty.bed",
       seq_method = "",
       assembly_metrics_cpu = 0,
       assembly_metrics_disk_size = 0,

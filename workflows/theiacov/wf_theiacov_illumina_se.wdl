@@ -184,7 +184,7 @@ workflow theiacov_illumina_se {
           abricate_flu_min_percent_coverage = 0,
           abricate_flu_min_percent_identity = 0,
           flu_track_antiviral_aa_subs = "",
-          nextclade_custom_input_dataset = "gs://theiagen-public-resources-rp/empty_file/empty.txt"
+          nextclade_custom_input_dataset = "gs://theiagen-public-resources-rp/empty_files/empty.txt"
       }
       if (defined(qc_check_table)) {
         call qc_check.qc_check_phb as qc_check_task {

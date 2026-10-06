@@ -192,7 +192,7 @@ workflow theiaprok_fasta {
         tbp_parser_tngs_frequency_boundaries = "",
         tbp_parser_tngs_read_support_boundaries = "",
         tbp_parser_use_err_for_qc = false,
-        tbprofiler_additional_parameters = false,
+        tbprofiler_additional_parameters = "",
         tbprofiler_custom_db = "gs://theiagen-public-resources-rp/empty_files/empty.txt",
         tbprofiler_docker_image = "",
         tbprofiler_mapper = "",
