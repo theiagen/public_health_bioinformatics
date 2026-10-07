@@ -409,6 +409,7 @@ fumigatus
 genome_annotations
 genome_sets
 genotype
+genotyped
 genotyping
 geospatial
 gisaid_credentials
@@ -567,3 +568,4 @@ vadr_model_file
 vadr_opts
 virulence
 wgMLST
+whipplei
