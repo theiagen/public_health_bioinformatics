@@ -168,7 +168,6 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 
         NOTE: If a `reference_gff` is supplied, only the product IDs (_FKS1_, _ERG11_, _FUR1_, and _ERG6_ rows; "." delimited) are queried by default. To include the remaining genes above, supply their locus tags in `query_genes` alongside the product IDs.
 
-
 {{ include_md("common_text/cauris_cladetyper.md", indent=4) }}
 {{ include_md("common_text/amr_search_task.md", indent=4, condition="theiaeuk") }}
 
@@ -186,7 +185,6 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 
         NOTE: Variants derived from locus tag searches will be reported with respect to the locus tag name, not the gene name
 
-
 ??? toggle "_Cryptococcus neoformans_"
     When this species is detected by GAMBIT, reference-based variant calling is performed against the hosted _C. neoformans_ reference (see the **Reference-based variant calling** section above).
 
@@ -196,7 +194,6 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
         | Gene | Locus tag | Product |
         |---|---|---|
         | _ERG11_ | CNA00300 | `sterol.14-demethylase` |
-
 
 ### Outputs
 
