@@ -7187,12 +7187,12 @@
 <p><strong><em>Branch Version Tags</em></strong></p>
 <ul>
 <li>
-<p>Every push to a branch (other than <code>main</code> and <code>gh-pages</code>) adds a <code>ci: stamp branch version tag</code> commit that writes the branch name into <code>BRANCH_TAG</code> in <code>tasks/task_versioning.wdl</code>. Workflows run from that branch report it in their <code>phb_version</code> output:</p>
+<p>The first push to a branch (other than <code>main</code> and <code>gh-pages</code>) adds a <code>ci: stamp branch version tag</code> commit that writes the branch name into <code>BRANCH_TAG</code> in <code>tasks/task_versioning.wdl</code>; later pushes leave it alone. Workflows run from that branch report it in their <code>phb_version</code> output:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>PHB v4.3.0; branch: smw-my-feature-dev
 </span></code></pre></div>
 </li>
 <li>
-<p>Because the stamp commit lands immediately after your push, pull before pushing again (<code>git pull --rebase</code>) or your next push will be rejected.</p>
+<p>Because the stamp commit lands immediately after that first push, pull before pushing again (<code>git pull --rebase</code>) or your next push will be rejected.</p>
 </li>
 <li><strong>Do not edit <code>BRANCH_TAG</code> manually.</strong> It is managed entirely by CI.</li>
 </ul>
