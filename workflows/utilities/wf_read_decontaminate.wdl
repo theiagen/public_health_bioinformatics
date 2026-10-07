@@ -117,8 +117,8 @@ workflow read_decontaminate {
         max_unexpected_seq = max_unexpected_seq,
     }
   }
-  # set arbitrary empty Maps for WDL/Terra compatibility
-  if (! defined(expected_sequences) || expected_sequences == "") {
+  # set arbitrary empty Maps for WDL/Terra compatibility when contaminant_check does not run
+  if (! defined(contaminant_check.contaminant_check_status)) {
     Map[String, Float] spoof_expectation_maps = {"": 0}
   }
   output {
@@ -145,11 +145,11 @@ workflow read_decontaminate {
     Map[String, Float]? contaminant_reads_by_sequence = select_first([read_mapping_stats.reads_by_sequence])
     # Contaminant check outputs
     String? contaminant_check_status = contaminant_check.contaminant_check_status
-    Map[String, Float]? contaminant_expected_coverage_by_sequence = select_first([spoof_expectation_maps, contaminant_check.expected_coverage_by_sequence])
-    Map[String, Float]? contaminant_expected_depth_by_sequence = select_first([spoof_expectation_maps, contaminant_check.expected_depth_by_sequence])
-    Map[String, Float]? contaminant_expected_reads_by_sequence = select_first([spoof_expectation_maps, contaminant_check.expected_reads_by_sequence])
-    Map[String, Float]? contaminant_unexpected_coverage_by_sequence = select_first([spoof_expectation_maps, contaminant_check.unexpected_coverage_by_sequence])
-    Map[String, Float]? contaminant_unexpected_depth_by_sequence = select_first([spoof_expectation_maps, contaminant_check.unexpected_depth_by_sequence])
-    Map[String, Float]? contaminant_unexpected_reads_by_sequence = select_first([spoof_expectation_maps, contaminant_check.unexpected_reads_by_sequence])
+    Map[String, Float]? contaminant_expected_coverage_by_sequence = select_first([contaminant_check.expected_coverage_by_sequence, spoof_expectation_maps])
+    Map[String, Float]? contaminant_expected_depth_by_sequence = select_first([contaminant_check.expected_depth_by_sequence, spoof_expectation_maps])
+    Map[String, Float]? contaminant_expected_reads_by_sequence = select_first([contaminant_check.expected_reads_by_sequence, spoof_expectation_maps])
+    Map[String, Float]? contaminant_unexpected_coverage_by_sequence = select_first([contaminant_check.unexpected_coverage_by_sequence, spoof_expectation_maps])
+    Map[String, Float]? contaminant_unexpected_depth_by_sequence = select_first([contaminant_check.unexpected_depth_by_sequence, spoof_expectation_maps])
+    Map[String, Float]? contaminant_unexpected_reads_by_sequence = select_first([contaminant_check.unexpected_reads_by_sequence, spoof_expectation_maps])
   }
 }
