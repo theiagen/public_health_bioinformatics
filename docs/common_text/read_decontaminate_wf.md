@@ -18,7 +18,7 @@ fragment: true
 ??? task "`mapped_read_removal`: Mapping-based Read Removal (optional)"
     Activate this task by providing a `mapped_read_removal_fasta`.
 
-    Known contaminant genetic data can be removed by mapping directly to an provided `mapped_read_removal_fasta`. This input can be a host genome or a common microbial contaminant genome. The mapping statistics and aligned reads to the provided FASTA are created in JSON-formatted mappings, while downstream quality control tasks will input the reads that did not map. To additionally report a "pass/fail" status from expected/unexpected sequences, use `spike_in_screen`.
+    Known contaminant genetic data can be removed by mapping directly to a provided `mapped_read_removal_fasta`. This input can be a host genome or a common microbial contaminant genome. The mapping statistics and aligned reads to the provided FASTA are created in JSON-formatted mappings, while downstream quality control tasks will input the reads that did not map. To additionally report a "pass/fail" status from expected/unexpected sequences, use `spike_in_screen`.
 
 ??? task "`spike_in_screen`: Mapping-based Spike-in Screening and Removal (optional)"
     Activate this task by providing a `spike_in_fasta`. `expected_spike_ins` is optional.

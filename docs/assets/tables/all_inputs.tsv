@@ -2668,7 +2668,8 @@ theiaprok_ont	qc_check_table	File	TSV value with taxons for rows and QC values f
 theiaprok_ont	run_id	String	Will be used in the "run_id" column in any taxon-specific tables created in the Export Taxon Tables task		Optional	TheiaProk_ONT	general	
 theiaprok_ont	seq_method	String	The sequencing methodology used to generate the input read data; for TheiaProk workflows, this input will be used in the "seq_id" column in any taxon-specific tables created in the Export Taxon Tables task	ONT	Optional	TheiaProk_ONT	general	
 theiaprok_ont	skip_mash	Boolean	If true, skips estimation of genome size and coverage using mash in read screening steps. As a result, providing true also prevents screening using these parameters.	True	Optional	TheiaProk_ONT	general	
-theiaprok_ont	skip_screen	Boolean	Set to True to skip the read screening prior to analysis	False	Optional	TheiaProk_ONT	general	
+theiaprok_ont	skip_screen_clean	Boolean	Set to True to skip the read screening of the cleaned reads	False	Optional	TheiaProk_ONT	general	
+theiaprok_ont	skip_screen_raw	Boolean	Set to True to skip the read screening of the raw reads	False	Optional	TheiaProk_ONT	general	
 theiaprok_ont	taxon_tables	File	File indicating data table names to copy samples of a particular taxon to		Optional	TheiaProk_ONT	general	
 theiaprok_ont	terra_project	String	The name of the Terra Project where you want the taxon tables written to	NA	Optional	TheiaProk_ONT	general	
 theiaprok_ont	terra_workspace	String	The name of the Terra Workspace where you want the taxon tables written to	NA	Optional	TheiaProk_ONT	general	

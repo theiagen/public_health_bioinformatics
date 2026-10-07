@@ -16,6 +16,11 @@ fragment: true
 
 <!-- endif -->
 
+<!-- if: theiaprok -->
+    Default values vary between the Illumina and ONT workflows. The rationale for these default values can be found below. If two default values are shown, the first is for Illumina workflows and the second is for ONT.
+
+<!-- endif -->
+
 <!-- if: theiaeuk|theiaeukont -->
     Read screening is undertaken on both the raw and cleaned reads. The task may be skipped by setting the `skip_screen` variable to `true`.
 
@@ -39,7 +44,7 @@ fragment: true
 
 <!-- if: theiacov|theiaprok -->
     !!! warning "Breaking change: `skip_screen` has been replaced"
-        The single `skip_screen` input has been split into `skip_screen_raw` and `skip_screen_clean`, and `skip_screen` is no longer a recognized input for all TheiaCoV and TheiaProk workflows.
+        The single `skip_screen` input has been split into `skip_screen_raw` and `skip_screen_clean`, and `skip_screen` is no longer a recognized input for any TheiaCoV or TheiaProk read-based workflow (Illumina PE, Illumina SE, and ONT).
 
         Existing workspace configurations and input JSONs that set `skip_screen` will **not** carry over. The value is silently dropped, both screens fall back to their `false` default, and samples that previously bypassed screening will now be screened and may terminate at the screen task. Replace `skip_screen` with `skip_screen_raw` and/or `skip_screen_clean` before rerunning. Other workflow series (TheiaEuk, TheiaViral) are unaffected and keep the single `skip_screen` input.
 <!-- endif -->
@@ -60,7 +65,8 @@ fragment: true
 <!-- if: theiaprok -->
     | Variable  | Default Value | Rationale |
     | --- | --- | --- |
-    | `skip_screen` | false | Set to true to skip the read screen from running |
+    | `skip_screen_raw` | false | Set to true to skip the read screen on the raw reads. For the Illumina workflows, `est_genome_length` is then not estimated, so provide `genome_length` explicitly when `call_rasusa` is enabled |
+    | `skip_screen_clean` | false | Set to true to skip the read screen on the cleaned reads |
     | `min_reads` | 7472 or 5000 | Calculated from the minimum number of base pairs required for 20x coverage of the Nasuia deltocephalinicola genome, the smallest known bacterial genome as of 2019-08-07 (112,091 bp), divided by 300 (the longest Illumina read length) or 5000 (estimate of ONT read length) |
     | `min_basepairs` | 2241820 | Should be greater than 20x coverage of Nasuia deltocephalinicola, the smallest known bacterial genome (112,091 bp) |
     | `min_genome_length` | 100000 | Based on the Nasuia deltocephalinicola genome, the smallest known bacterial genome (112,091 bp) |
