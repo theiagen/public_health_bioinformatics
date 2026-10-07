@@ -44,7 +44,7 @@ fragment: true
 
 <!-- if: theiacov|theiaprok -->
     !!! warning "Breaking change: `skip_screen` has been replaced"
-        The single `skip_screen` input has been split into `skip_screen_raw` and `skip_screen_clean`, and `skip_screen` is no longer a recognized input for any TheiaCoV or TheiaProk read-based workflow (Illumina PE, Illumina SE, and ONT).
+        The single `skip_screen` input has been split into `skip_screen_raw` and `skip_screen_clean`, and `skip_screen` is no longer a recognized input for any TheiaCoV or TheiaProk read-based workflow.
 
         Existing workspace configurations and input JSONs that set `skip_screen` will **not** carry over. The value is silently dropped, both screens fall back to their `false` default, and samples that previously bypassed screening will now be screened and may terminate at the screen task. Replace `skip_screen` with `skip_screen_raw` and/or `skip_screen_clean` before rerunning. Other workflow series (TheiaEuk, TheiaViral) are unaffected and keep the single `skip_screen` input.
 <!-- endif -->
