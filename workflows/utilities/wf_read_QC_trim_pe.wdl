@@ -26,7 +26,7 @@ workflow read_QC_trim_pe {
     # mapped read removal inputs - reads mapping to this FASTA are removed prior to downstream analysis
     File? mapped_read_removal_fasta
     Int? mapped_read_removal_memory
-    # spike-in screening inputs - reads mapping to this FASTA are removed prior to downstream analysis; both inputs are required to run
+    # spike-in screening inputs - reads mapping to this FASTA are removed prior to downstream analysis; runs when spike_in_fasta is provided, and all detected spike-ins are unexpected if expected_spike_ins is not provided
     File? spike_in_fasta
     String? expected_spike_ins # comma-delimited list of expected spike-in sequences, OR a key into expected_spike_ins_json when that is provided
     File? expected_spike_ins_json # optional JSON mapping of {"<NAME>": ["<SPIKE_IN_SEQUENCE1>", "<SPIKE_IN_SEQUENCE2>", ...]}; when provided, expected_spike_ins is used as the key to look up the list of expected spike-in sequences
@@ -158,8 +158,8 @@ workflow read_QC_trim_pe {
   if (call_rasusa) {
     call rasusa_task.rasusa {
       input:
-        read1 = select_first([ncbi_scrub_pe.read1_dehosted, read1]),
-        read2 = select_first([ncbi_scrub_pe.read2_dehosted, read2]),
+        read1 = select_first([ncbi_scrub_pe.read1_dehosted, spike_in_screen.decontaminate_read1, mapped_read_removal.decontaminate_read1, read1]),
+        read2 = select_first([ncbi_scrub_pe.read2_dehosted, spike_in_screen.decontaminate_read2, mapped_read_removal.decontaminate_read2, read2]),
         samplename = samplename,
         coverage = rasusa_downsampling_coverage,
         genome_length = rasusa_genome_length,
