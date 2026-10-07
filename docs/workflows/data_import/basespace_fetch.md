@@ -91,7 +91,7 @@ _Already have a command-line environment available?_ You can skip ahead to [1.2 
 
 ??? toggle "Click for more information"
 
-    Copy the contents of `~/.basespace/default.cfg` (specifically the **accessToken** and **API server** details) into Terra as workspace data elements. Storing this here means you can enter the token and API url once per workspace instead of repeating it on every row of every data table.
+    Copy the contents of `~/.basespace/default.cfg` (specifically the **accessToken** and **API server** details) into Terra as workspace data elements.
 
     1. Navigate to the Terra "DATA" tab, and select "Workspace Data" at the bottom of the left sidebar.
     2. Click on "Edit" and then "Add variable" to add the new workspace data elements as in the examples below.
@@ -191,7 +191,7 @@ Each example below lists the datasets that exist in a collection, then shows wha
     | --- | --- | --- |
     | `Sample-2026` | ❌ Fails — `No exact dataset match` | ❌ Fails — `No exact dataset match` |
     | `sample-2026-001` | ❌ Fails — `No exact dataset match` | ❌ Fails — `No exact dataset match` |
-    | `Sample-2026-001` | ✅ All four lanes merged into **one** R1/R2 pair. <br> `Sample-2026-0010_L001` is excluded. The "unlaned" dataset name (`Sample-2026-0010`) does not exactly match. | ❌ Fails — `Partial dataset match` |
+    | `Sample-2026-001` | ✅ All four lanes merged into **one** R1/R2 pair. <br> `Sample-2026-0010_L001` is excluded. The "un-laned" dataset name (`Sample-2026-0010`) does not exactly match. | ❌ Fails — `Partial dataset match` |
     | `Sample-2026-001_L001` | ✅ Lane 1 only, on its own. Exact matches always take precedence. | ✅ Lane 1 only, on its own. Exact matches always take precedence. |
 
 ??? toggle "An un-laned dataset sitting alongside lanes (rare)"
