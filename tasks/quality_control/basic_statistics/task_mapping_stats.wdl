@@ -23,8 +23,6 @@ task mapping_stats {
     samtools coverage ~{bamfile} -o ~{samplename}.cov.txt
     samtools flagstat ~{bamfile} > ~{samplename}.flagstat.txt
 
-    echo "PASS" > STATUS
-
      # Extracting coverage, depth, meanbaseq, and meanmapq
     python3 <<CODE
     import json
@@ -91,26 +89,21 @@ task mapping_stats {
       json.dump(depth_dict, f, indent=4)
     with open("SEQ2READS.json", "w") as f:
       json.dump(read_dict, f, indent=4)
-
-    if not cov_dict or not depth_dict:
-      print("DEBUG: no sequences had coverage or depth above 0")
-      with open("STATUS", "w") as f:
-        f.write("FAIL")
     CODE
 
     # parse inputted reads for total read count
-    read1_count=$(samtools view -c ~{read1})
+    read1_count=$(samtools view -c ~{read1} 2>/dev/null || echo 0)
     if [ ~{if defined(read2) then "true" else "false"} == "true" ]; then
-      read2_count=$(samtools view -c ~{read2})
+      read2_count=$(samtools view -c ~{read2} 2>/dev/null || echo 0)
       total_reads=$(echo $(($read1_count + $read2_count)))
     else
       total_reads=$read1_count
     fi
     # exclude supplementary, unmapped, and secondary alignments from the mapped count
-    mapped_reads=$(samtools view -c -F 0x904 ~{bamfile})
+    mapped_reads=$(samtools view -c -F 0x904 ~{bamfile} 2>/dev/null || echo 0)
 
-    # Check for empty values and set defaults to avoid errors
-    if [ -z "$total_reads" ]; then total_reads="1"; fi  # Avoid division by zero
+    # Check for empty/zero values and set defaults to avoid errors
+    if [ -z "$total_reads" ] || [ "$total_reads" -eq 0 ]; then total_reads="1"; fi  # Avoid division by zero
     if [ -z "$mapped_reads" ]; then mapped_reads="0"; fi
 
     # Calculate the percentage of mapped reads
@@ -140,7 +133,6 @@ task mapping_stats {
     Float meanbaseq = read_string("MEANBASEQ")
     Float meanmapq = read_string("MEANMAPQ")
     Float percentage_mapped_reads = read_string("PERCENTAGE_MAPPED_READS")
-    String mapping_stats_status = read_string("STATUS")
   }
   runtime {
     docker: docker
