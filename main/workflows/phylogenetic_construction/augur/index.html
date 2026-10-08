@@ -1675,10 +1675,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#a-note-on-optional-inputs" class="md-nav__link">
+  <a href="#org-specific" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        A Note on Optional Inputs
+        Organism-Specific Parameters
       </span>
     </span>
   </a>
@@ -6587,10 +6587,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#a-note-on-optional-inputs" class="md-nav__link">
+  <a href="#org-specific" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        A Note on Optional Inputs
+        Organism-Specific Parameters
       </span>
     </span>
   </a>
@@ -7039,7 +7039,7 @@
 </div>
 <p>Some inputs will automatically bypass or trigger modules, such as populating <code>alignment_fasta</code>, which bypasses alignment. Clade-defining mutations can be automatically extracted if the "clade_membership" metadata field is provided and the <code>extract_clade_mutations</code> optional input is set to <code>true</code>.</p>
 <p>Any metadata present in the final JSON file for Auspice visualization is determined by what metadata was provided by the user. If the <code>sample_metadata_tsvs</code> optional input parameter is <strong>not</strong> provided, the final tree visual will only include the distance tree. If metadata was provided, different metadata fields will trigger different steps: date information will trigger the refinement of the distance tree into a time tree; clade information will be assigned to the tree nodes; geographical information will be represented in the Auspice visual within a map. The following figure illustrates this logic.</p>
-<div class="admonition caption">
+<div class="admonition caption narrow">
 <p class="admonition-title">How Metadata Shapes the Augur Output</p>
 <figure>
 <p><div style="text-align: center;">
@@ -7050,166 +7050,446 @@
 </figcaption>
 </figure>
 </div>
-<h5 id="a-note-on-optional-inputs">A Note on Optional Inputs<a class="headerlink" href="#a-note-on-optional-inputs" title="Permanent link">&para;</a></h5>
-<div class="admonition warning">
+<h5 id="org-specific">Organism-Specific Parameters<a class="headerlink" href="#org-specific" title="Permanent link">&para;</a></h5>
+<p><strong>The <code>augur_parameters</code> sub-workflow is the first step in the Augur workflow</strong>. This step automatically sets the reference files and Augur parameters to the appropriate value for the user-designated organism (<code>"sars-cov-2"</code> is the default organism).</p>
+<div class="admonition dna">
 <p class="admonition-title">Defaults change based on the specified organism input</p>
-<p>Default values that mimic the Nextstrain builds for the following organisms have been preselected:</p>
+<p>The following tables include the relevant organism-specific parameters; <strong>all of these default values can be overwritten by providing a value for the "Overwrite Variable Name" field</strong>.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:5"><input checked="checked" id="sars-cov-2" name="__tabbed_1" type="radio" /><input id="mpox" name="__tabbed_1" type="radio" /><input id="influenza" name="__tabbed_1" type="radio" /><input id="rsv-a" name="__tabbed_1" type="radio" /><input id="rsv-b" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="sars-cov-2">SARS-CoV-2</label><label for="mpox">Mpox</label><label for="influenza">Influenza</label><label for="rsv-a">RSV-A</label><label for="rsv-b">RSV-B</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="searchable-table" markdown="block">
+<table>
+<thead>
+<tr>
+<th><strong>Overwrite Variable Name</strong></th>
+<th><strong>Organism</strong></th>
+<th><strong>Default Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>min_num_unambig</td>
+<td>sars-cov-2</td>
+<td><code>27000</code></td>
+</tr>
+<tr>
+<td>clades_tsv</td>
+<td>sars-cov-2</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_clades_20251008.tsv"</code></td>
+</tr>
+<tr>
+<td>auspice_config</td>
+<td>sars-cov-2</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_auspice_config_20251030.json"</code></td>
+</tr>
+<tr>
+<td>reference_fasta</td>
+<td>sars-cov-2</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/MN908947.fasta"</code></td>
+</tr>
+<tr>
+<td>reference_genbank</td>
+<td>sars-cov-2</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_reference_seq_20251008.gb"</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="tabbed-block">
+<div class="searchable-table" markdown="block">
+<table>
+<thead>
+<tr>
+<th><strong>Overwrite Variable Name</strong></th>
+<th><strong>Organism</strong></th>
+<th><strong>Default Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>min_num_unambig</td>
+<td>MPXV</td>
+<td><code>150000</code></td>
+</tr>
+<tr>
+<td>clades_tsv</td>
+<td>MPXV</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/mpox/mpox_clades.tsv"</code></td>
+</tr>
+<tr>
+<td>auspice_config</td>
+<td>MPXV</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/mpox/mpox_auspice_config_mpxv.json"</code></td>
+</tr>
+<tr>
+<td>reference_fasta</td>
+<td>MPXV</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/mpox/MPXV.MT903345.reference.fasta"</code></td>
+</tr>
+<tr>
+<td>reference_genbank</td>
+<td>MPXV</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/mpox/NC_063383.1_reference.gb"</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="tabbed-block">
+<div class="admonition dna">
+<p class="admonition-title">Defaults available for several subtypes</p>
+<p>We have default Augur parameters available for the following subtypes:</p>
 <ul>
-<li>Flu (<code>"flu"</code>), which also requires the following two inputs:<ul>
-<li><code>flu_segment</code> (<code>"HA"</code> or <code>"NA"</code>)</li>
-<li><code>flu_subtype</code> (<code>"H1N1"</code>, <code>"H3N2"</code>, <code>"Victoria"</code>, <code>"Yamagata"</code>, or <code>"H5N1"</code>)</li>
+<li>H1N1 (HA and NA segments)</li>
+<li>H3N2 (HA and NA segments)</li>
+<li>Victoria (HA and NA segments)</li>
+<li>Yamagata (HA and NA segments)</li>
+<li>H5Nx (HA segment)</li>
 </ul>
-</li>
-<li>RSV-A (<code>"rsv-a"</code>)</li>
-<li>RSV-B (<code>"rsv-b"</code>)</li>
-<li>Mpox (<code>"mpox"</code>)</li>
-<li>SARS-CoV-2 (default; <code>"sars-cov-2"</code>)</li>
-</ul>
-<p>View these default parameters in the relevant toggle block below.</p>
-<details class="task">
-<summary><code>organism_parameters</code>: Setting default values for specific organisms</summary>
-<p>Organism Parameters acquires and propagates default files and variable values for specific organisms.</p>
-<!--if: virus -->
-<details class="toggle">
-<summary>Default values for SARS-CoV-2</summary>
-<ul>
-<li>min_num_unambig = 27000</li>
-<li>clades_tsv = <code>"gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_clades_20251008.tsv"</code></li>
-<li>reference_fasta = <code>"gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/MN908947.fasta"</code></li>
-<li>reference_genbank = <code>"gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_reference_seq_20251008.gb"</code></li>
-<li>auspice_config = <code>"gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_auspice_config_20251008.json"</code></li>
-<li>min_date = 2020.0</li>
-<li>pivot_interval = 1</li>
-<li>pivot_interval_units = "weeks"</li>
-<li>narrow_bandwidth = 0.05</li>
-<li>proportion_wide = 0.0</li>
-</ul>
-</details>
-<details class="toggle">
-<summary>Default values for Flu</summary>
-<ul>
-<li>min_num_unambig = 900</li>
-<li>min_date = 2020.0</li>
-<li>pivot_interval = 1</li>
-<li>narrow_bandwidth = 0.1666667</li>
-<li>proportion_wide = 0.0</li>
-</ul>
-<details class="toggle">
-<summary>H1N1</summary>
-<ul>
-<li>auspice_config = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_h1n1pdm.json"</code></li>
-<li>HA<ul>
-<li>reference_fasta = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1pdm_ha.gb"</code></li>
-<li>clades_tsv = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/clades_h1n1pdm_ha.tsv"</code></li>
-</ul>
-</li>
-<li>NA<ul>
-<li>reference_fasta = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1pdm_na.gb"</code></li>
-</ul>
-</li>
-</ul>
-</details>
-<details class="toggle">
-<summary>H3N2</summary>
-<ul>
-<li>auspice_config = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_h3n2.json"</code></li>
-<li>HA<ul>
-<li>reference_fasta = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_ha.gb"</code></li>
-<li>clades_tsv = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/clades_h3n2_ha.tsv"</code></li>
-</ul>
-</li>
-<li>NA<ul>
-<li>reference_fasta = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_na.gb"</code></li>
-</ul>
-</li>
-</ul>
-</details>
-<details class="toggle">
-<summary>Victoria</summary>
-<ul>
-<li>auspice_config = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_vic.json"</code></li>
-<li>HA<ul>
-<li>reference_fasta = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_vic_ha.gb"</code></li>
-<li>clades_tsv = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/clades_vic_ha.tsv"</code></li>
-</ul>
-</li>
-<li>NA<ul>
-<li>reference_fasta = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_vic_na.gb"</code></li>
-</ul>
-</li>
-</ul>
-</details>
-<details class="toggle">
-<summary>Yamagata</summary>
-<ul>
-<li>auspice_config = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_yam.json"</code></li>
-<li>HA<ul>
-<li>reference_fasta = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_yam_ha.gb"</code></li>
-<li>clades_tsv = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/clades_yam_ha.tsv"</code></li>
-</ul>
-</li>
-<li>NA<ul>
-<li>reference_fasta = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_yam_na.gb"</code></li>
-</ul>
-</li>
-</ul>
-</details>
-<details class="toggle">
-<summary>H5N1</summary>
-<ul>
-<li>auspice_config = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_h5n1.json"</code></li>
-<li>HA<ul>
-<li>reference_fasta = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h5n1_ha.gb"</code></li>
-</ul>
-</li>
-</ul>
-</details>
-</details>
-<details class="toggle">
-<summary>Default values for MPXV</summary>
-<ul>
-<li>min_num_unambig = 150000</li>
-<li>clades_tsv = <code>"gs://theiagen-public-resources-rp/reference_data/viral/mpox/mpox_clades.tsv"</code></li>
-<li>reference_fasta = <code>"gs://theiagen-public-resources-rp/reference_data/viral/mpox/NC_063383.1.reference.fasta"</code></li>
-<li>reference_genbank = <code>"gs://theiagen-public-resources-rp/reference_data/viral/mpox/NC_063383.1_reference.gb"</code></li>
-<li>auspice_config = <code>"gs://theiagen-public-resources-rp/reference_data/viral/mpox/mpox_auspice_config_mpxv.json"</code></li>
-<li>min_date = 2020.0</li>
-<li>pivot_interval = 1</li>
-<li>narrow_bandwidth = 0.1666667</li>
-<li>proportion_wide = 0.0</li>
-</ul>
-</details>
-<details class="toggle">
-<summary>Default values for RSV-A</summary>
-<ul>
-<li>min_num_unambig = 10850</li>
-<li>clades_tsv = <code>"gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_a_clades.tsv"</code></li>
-<li>reference_fasta = <code>"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.EPI_ISL_412866.fasta"</code></li>
-<li>reference_genbank = <code>"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.gb"</code></li>
-<li>auspice_config = <code>"gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_auspice_config.json"</code></li>
-<li>min_date = 2020.0</li>
-<li>pivot_interval = 1</li>
-<li>narrow_bandwidth = 0.1666667</li>
-<li>proportion_wide = 0.0</li>
-</ul>
-</details>
-<details class="toggle">
-<summary>Default values for RSV-B</summary>
-<ul>
-<li>min_num_unambig = 10850</li>
-<li>clades_tsv = <code>"gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_b_clades.tsv"</code></li>
-<li>reference_fasta = <code>"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.EPI_ISL_1653999.fasta"</code></li>
-<li>reference_genbank = <code>"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.gb"</code></li>
-<li>auspice_config = <code>"gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_auspice_config.json"</code></li>
-<li>min_date = 2020.0</li>
-<li>pivot_interval = 1</li>
-<li>narrow_bandwidth = 0.1666667</li>
-<li>proportion_wide = 0.0</li>
-</ul>
-</details>
-<!-- endif -->
+<p>A default <code>clades_tsv</code> is only available for the HA segment of H1N1, H3N2, Victoria, and Yamagata. You can find more details below.</p>
+</div>
+<div class="searchable-table" markdown="block">
+<table>
+<thead>
+<tr>
+<th><strong>Overwrite Variable Name</strong></th>
+<th><strong>Organism</strong></th>
+<th><strong>Flu Segment</strong></th>
+<th><strong>Flu Subtype</strong></th>
+<th><strong>Default Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>min_num_unambig</td>
+<td>flu</td>
+<td>all</td>
+<td>all</td>
+<td><code>900</code></td>
+</tr>
+<tr>
+<td>auspice_config</td>
+<td>flu</td>
+<td>ha</td>
+<td>h1n1</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_h1n1pdm.json"</code></td>
+</tr>
+<tr>
+<td>clades_tsv</td>
+<td>flu</td>
+<td>ha</td>
+<td>h1n1</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/clades_h1n1pdm_ha.tsv"</code></td>
+</tr>
+<tr>
+<td>reference_fasta</td>
+<td>flu</td>
+<td>ha</td>
+<td>h1n1</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1pdm_ha.fasta"</code></td>
+</tr>
+<tr>
+<td>reference_genbank</td>
+<td>flu</td>
+<td>ha</td>
+<td>h1n1</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1pdm_ha.gb"</code></td>
+</tr>
+<tr>
+<td>auspice_config</td>
+<td>flu</td>
+<td>ha</td>
+<td>h3n2</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_h3n2.json"</code></td>
+</tr>
+<tr>
+<td>clades_tsv</td>
+<td>flu</td>
+<td>ha</td>
+<td>h3n2</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/clades_h3n2_ha.tsv"</code></td>
+</tr>
+<tr>
+<td>reference_fasta</td>
+<td>flu</td>
+<td>ha</td>
+<td>h3n2</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_ha.fasta"</code></td>
+</tr>
+<tr>
+<td>reference_genbank</td>
+<td>flu</td>
+<td>ha</td>
+<td>h3n2</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_ha.gb"</code></td>
+</tr>
+<tr>
+<td>auspice_config</td>
+<td>flu</td>
+<td>ha</td>
+<td>victoria</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_vic.json"</code></td>
+</tr>
+<tr>
+<td>clades_tsv</td>
+<td>flu</td>
+<td>ha</td>
+<td>victoria</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/clades_vic_ha.tsv"</code></td>
+</tr>
+<tr>
+<td>reference_fasta</td>
+<td>flu</td>
+<td>ha</td>
+<td>victoria</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_vic_ha.fasta"</code></td>
+</tr>
+<tr>
+<td>reference_genbank</td>
+<td>flu</td>
+<td>ha</td>
+<td>victoria</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_vic_ha.gb"</code></td>
+</tr>
+<tr>
+<td>auspice_config</td>
+<td>flu</td>
+<td>ha</td>
+<td>yamagata</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_yam_20251030.json"</code></td>
+</tr>
+<tr>
+<td>clades_tsv</td>
+<td>flu</td>
+<td>ha</td>
+<td>yamagata</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/clades_yam_ha.tsv"</code></td>
+</tr>
+<tr>
+<td>reference_fasta</td>
+<td>flu</td>
+<td>ha</td>
+<td>yamagata</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_yam_ha.fasta"</code></td>
+</tr>
+<tr>
+<td>reference_genbank</td>
+<td>flu</td>
+<td>ha</td>
+<td>yamagata</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_yam_ha.gb"</code></td>
+</tr>
+<tr>
+<td>auspice_config</td>
+<td>flu</td>
+<td>ha</td>
+<td>h5n1</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_h5n1_20251030.json"</code></td>
+</tr>
+<tr>
+<td>reference_fasta</td>
+<td>flu</td>
+<td>ha</td>
+<td>h5n1</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h5n1_ha.fasta"</code></td>
+</tr>
+<tr>
+<td>reference_genbank</td>
+<td>flu</td>
+<td>ha</td>
+<td>h5n1</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h5n1_ha.gb"</code></td>
+</tr>
+<tr>
+<td>auspice_config</td>
+<td>flu</td>
+<td>na</td>
+<td>h1n1</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_h1n1pdm_20251030.json"</code></td>
+</tr>
+<tr>
+<td>reference_fasta</td>
+<td>flu</td>
+<td>na</td>
+<td>h1n1</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1pdm_na.fasta"</code></td>
+</tr>
+<tr>
+<td>reference_genbank</td>
+<td>flu</td>
+<td>na</td>
+<td>h1n1</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1pdm_na.gb"</code></td>
+</tr>
+<tr>
+<td>auspice_config</td>
+<td>flu</td>
+<td>na</td>
+<td>h3n2</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_h3n2_20251030.json"</code></td>
+</tr>
+<tr>
+<td>reference_fasta</td>
+<td>flu</td>
+<td>na</td>
+<td>h3n2</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_na.fasta"</code></td>
+</tr>
+<tr>
+<td>reference_genbank</td>
+<td>flu</td>
+<td>na</td>
+<td>h3n2</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_na.gb"</code></td>
+</tr>
+<tr>
+<td>auspice_config</td>
+<td>flu</td>
+<td>na</td>
+<td>victoria</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_vic_20251030.json"</code></td>
+</tr>
+<tr>
+<td>reference_fasta</td>
+<td>flu</td>
+<td>na</td>
+<td>victoria</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_vic_na.fasta"</code></td>
+</tr>
+<tr>
+<td>reference_genbank</td>
+<td>flu</td>
+<td>na</td>
+<td>victoria</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_vic_na.gb"</code></td>
+</tr>
+<tr>
+<td>auspice_config</td>
+<td>flu</td>
+<td>na</td>
+<td>yamagata</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_yam_20251030.json"</code></td>
+</tr>
+<tr>
+<td>reference_fasta</td>
+<td>flu</td>
+<td>na</td>
+<td>yamagata</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_yam_na.fasta"</code></td>
+</tr>
+<tr>
+<td>reference_genbank</td>
+<td>flu</td>
+<td>na</td>
+<td>yamagata</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_yam_na.gb"</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">H5 subtypes</p>
+<p>Any subtype matching <code>H5N*</code> (and <code>"H5"</code>) uses the H5N1 defaults.</p>
+</div>
+</div>
+<div class="tabbed-block">
+<div class="searchable-table" markdown="block">
+<table>
+<thead>
+<tr>
+<th><strong>Overwrite Variable Name</strong></th>
+<th><strong>Organism</strong></th>
+<th><strong>Default Value</strong></th>
+<th><strong>Notes</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>min_num_unambig</td>
+<td>rsv_a</td>
+<td><code>10850</code></td>
+<td>70% of the 15500 bp RSV genome</td>
+</tr>
+<tr>
+<td>clades_tsv</td>
+<td>rsv_a</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_a_clades.tsv"</code></td>
+<td></td>
+</tr>
+<tr>
+<td>auspice_config</td>
+<td>rsv_a</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_auspice_config_20251030.json"</code></td>
+<td></td>
+</tr>
+<tr>
+<td>reference_fasta</td>
+<td>rsv_a</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.EPI_ISL_412866.fasta"</code></td>
+<td></td>
+</tr>
+<tr>
+<td>reference_genbank</td>
+<td>rsv_a</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.gb"</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="tabbed-block">
+<div class="searchable-table" markdown="block">
+<table>
+<thead>
+<tr>
+<th><strong>Overwrite Variable Name</strong></th>
+<th><strong>Organism</strong></th>
+<th><strong>Default Value</strong></th>
+<th><strong>Notes</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>min_num_unambig</td>
+<td>rsv_b</td>
+<td><code>10850</code></td>
+<td>70% of the 15500 bp RSV genome</td>
+</tr>
+<tr>
+<td>clades_tsv</td>
+<td>rsv_b</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_b_clades.tsv"</code></td>
+<td></td>
+</tr>
+<tr>
+<td>auspice_config</td>
+<td>rsv_b</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_auspice_config_20251030.json"</code></td>
+<td></td>
+</tr>
+<tr>
+<td>reference_fasta</td>
+<td>rsv_b</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.EPI_ISL_1653999.fasta"</code></td>
+<td></td>
+</tr>
+<tr>
+<td>reference_genbank</td>
+<td>rsv_b</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.gb"</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
 <div class="admonition techdetails">
-<p class="admonition-title">Organism Parameters Technical Details</p>
+<p class="admonition-title">Augur Parameters Technical Details</p>
 <table>
 <thead>
 <tr>
@@ -7220,12 +7500,11 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">wf_organism_parameters.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_augur_parameters.wdl">wf_augur_parameters.wdl</a></td>
 </tr>
 </tbody>
 </table>
 </div>
-</details>
 </div>
 <details class="info" open="open">
 <summary>Running Augur_PHB on custom organisms</summary>
@@ -7308,7 +7587,7 @@
 <td><strong>clades_tsv</strong></td>
 <td>File</td>
 <td>TSV file containing clade mutation positions in four columns</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, an empty clades file is provided to prevent workflow failure, "gs://theiagen-public-resources-rp/empty_files/minimal-clades.tsv", but will not be as useful as an organism specific clades file.</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_augur_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_augur_parameters.wdl</a>. For an organism without set defaults, an empty clades file is provided to prevent workflow failure, "gs://theiagen-public-resources-rp/empty_files/minimal-clades.tsv", but will not be as useful as an organism specific clades file.</td>
 <td>Optional, Required</td>
 </tr>
 <tr>
@@ -7324,7 +7603,7 @@
 <td><strong>reference_fasta</strong></td>
 <td>File</td>
 <td>The reference FASTA file used to align the genomes and build the trees</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, a reference fasta file must be provided otherwise the workflow fails.</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_augur_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_augur_parameters.wdl</a>. For an organism without set defaults, a reference fasta file must be provided otherwise the workflow fails.</td>
 <td>Optional, Required</td>
 </tr>
 <tr>
@@ -7332,7 +7611,7 @@
 <td><strong>reference_genbank</strong></td>
 <td>File</td>
 <td>The GenBank .gb file for the same reference genome used for the reference_fasta</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>.</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_augur_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_augur_parameters.wdl</a>.</td>
 <td>Optional, Required</td>
 </tr>
 <tr>
@@ -7364,7 +7643,7 @@
 <td><strong>auspice_config</strong></td>
 <td>File</td>
 <td>Auspice config file for customizing visualizations; takes priority over the other customization values available for augur_export</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, a minimal auspice config file is provided to prevent workflow failure, "gs://theiagen-public-resources-rp/empty_files/minimal-auspice-config.json", but will not be as useful as an organism specific config file.</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_augur_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_augur_parameters.wdl</a>. For an organism without set defaults, a minimal auspice config file is provided to prevent workflow failure, "gs://theiagen-public-resources-rp/empty_files/minimal-auspice-config.json", but will not be as useful as an organism specific config file.</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7401,26 +7680,10 @@
 </tr>
 <tr>
 <td>augur</td>
-<td><strong>min_date</strong></td>
-<td>Float</td>
-<td>Minimum date to begin filtering or frequencies calculations</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default value is 0.0</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>augur</td>
 <td><strong>min_num_unambig</strong></td>
 <td>Int</td>
 <td>Minimum number of called bases in genome to pass prefilter</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default value is 0</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>augur</td>
-<td><strong>narrow_bandwidth</strong></td>
-<td>Float</td>
-<td>The bandwidth for the narrow KDE</td>
-<td>0.08333</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_augur_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_augur_parameters.wdl</a>. For an organism without set defaults, the default value is 0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7437,22 +7700,6 @@
 <td>String</td>
 <td>Tip name to root phylogenetic tree upon (overrides midpoint root)</td>
 <td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>augur</td>
-<td><strong>pivot_interval</strong></td>
-<td>Int</td>
-<td>Number of units between pivots</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default value is 3</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>augur</td>
-<td><strong>proportion_wide</strong></td>
-<td>Float</td>
-<td>The proportion of the wide bandwidth to use in the KDE mixture model</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default value is 0.2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8144,126 +8391,6 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>organism_parameters</td>
-<td><strong>flu_genoflu_genotype</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td>N/A</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>gene_locations_bed_file</strong></td>
-<td>File</td>
-<td>Use to provide locations of interest where average coverage will be calculated</td>
-<td>Default provided for SARS-CoV-2 ("gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_gene_locations.bed") and mpox ("gs://theiagen-public-resources-rp/reference_data/viral/mpox/mpox_gene_locations.bed")</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>genome_length_input</strong></td>
-<td>Int</td>
-<td>Use to specify the expected genome length; provided by default for all supported organisms</td>
-<td>Default provided for SARS-CoV-2 (29903), mpox (197200), WNV (11000), flu (13000), RSV-A (16000), RSV-B (16000), HIV (primer versions 1 [9181] and 2 [9840])</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>hiv_primer_version</strong></td>
-<td>String</td>
-<td>The version of HIV primers used. Options are <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L156">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L156</a> and <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L164">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L164</a>. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
-<td>v1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>kraken_target_organism_input</strong></td>
-<td>String</td>
-<td>The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database.</td>
-<td>Default provided for mpox (Monkeypox virus), WNV (West Nile virus), and HIV (Human immunodeficiency virus 1)</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>nextclade_dataset_name_input</strong></td>
-<td>String</td>
-<td>NextClade organism dataset name</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default is "NA".</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>nextclade_dataset_tag_input</strong></td>
-<td>String</td>
-<td>NextClade organism dataset tag</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default is "NA".</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>pangolin_docker_image</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.4-pdata-1.39</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>primer_bed_file</strong></td>
-<td>File</td>
-<td>The bed file containing the primers used when sequencing was performed</td>
-<td>REQUIRED FOR SARS-CoV-2, MPOX, WNV, RSV-A &amp; RSV-B. Provided by default only for HIV primer versions 1 ("gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed" and 2 ("gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed")</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>reference_gff_file</strong></td>
-<td>File</td>
-<td>Reference GFF file for the organism being analyzed</td>
-<td>Default provided for mpox ("gs://theiagen-public-resources-rp/reference_data/viral/mpox/Mpox-MT903345.1.reference.gff3") and HIV (primer versions 1 ["gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3"] and 2 ["gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3"])</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>vadr_max_length</strong></td>
-<td>Int</td>
-<td>Maximum length for the fasta-trim-terminal-ambigs.pl VADR script</td>
-<td>Default provided for SARS-CoV-2 (30000), mpox (210000), WNV (11000), flu (0), RSV-A (15500) and RSV-B (15500).</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>vadr_mem</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>32 (RSV-A, RSV-B, WNV) and 16 (all other TheiaCoV organisms)</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>vadr_model</strong></td>
-<td>File</td>
-<td>Path to the a tar + gzipped VADR model file</td>
-<td>gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-sarscov2-1.6.3-1.tar.gz</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>vadr_options</strong></td>
-<td>String</td>
-<td>Options for the v-annotate.pl VADR script</td>
-<td>--mkey sarscov2 --glsearch -s -r --nomisc --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --noseqnamemax --out_allfasta</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>vadr_skip_length</strong></td>
-<td>Int</td>
-<td>Minimum assembly length (unambiguous) to run VADR</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
 <td>reorder_matrix</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
@@ -8443,35 +8570,6 @@
 </div>
 </details>
 <details class="task">
-<summary><code>SNP-dists</code>: Pairwise SNP Distance Calculation</summary>
-<p>SNP-dists computes pairwise SNP distances using a multifasta alignment, and returns a matrix of those distances.</p>
-<div class="admonition techdetails">
-<p class="admonition-title">SNP-dists Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_snp_dists.wdl">task_snp_dists.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/tseemann/snp-dists">SNP-dists on GitHub</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://github.com/tseemann/snp-dists">SNP-dists on GitHub</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-<details class="task">
 <summary><code>augur tree</code>: Phylogenetic Tree Reconstruction</summary>
 <p>The <code>augur tree</code> command generates a phylogenetic tree using either IQ-TREE 2, FastTree, or RAxML. By default, the tree will be generated by IQ-TREE 2. FastTree can result in significant performance improvements at the cost of phylogenetic resolution if the alignment contains 100s of sequences and computational throughput is a priority. Additionally, the task defaults to using a GTR evolutionary model, which can be modified via the <code>substitution_model</code> input.</p>
 <div class="admonition techdetails">
@@ -8499,28 +8597,6 @@
 <tr>
 <td>Original Publication(s)</td>
 <td><a href="https://doi.org/10.1093/bioinformatics/bty407">Nextstrain: real-time tracking of pathogen evolution</a><br><a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0009490">FastTree 2 - Approximately Maximum-Likelihood Trees for Large Alignments</a><br><a href="https://doi.org/10.1093/molbev/msaa015">New models and efficient methods for phylogenetic inference in the genomic era</a><br><a href="https://doi.org/10.1093/bib/bbn013">RAxML Version 8: A tool for Phylogenetic Analysis and Post-Analysis of Large Phylogenies</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-<details class="task">
-<summary><code>reorder_matrix</code>: Matrix Reorder and Phylogenetic Tree Rooting</summary>
-<p>Reorder Matrix will reorder a TSV matrix file's entries in the same order as the tips of a provided phylogenetic tree. The phylogenetic tree can be rooted at the midpoint via <code>midpoint_root_tree</code>, or via an outgroup tip via a specified <code>outgroup_root</code>. The provided outgroup tip must be an exact match for a sequence input into the phylogenetic tree.</p>
-<p>Please note that phylogenetic tree tip names are derived from the alignment FASTA file headers in PHB, and may deviate from <code>samplename</code> inputs.</p>
-<div class="admonition techdetails">
-<p class="admonition-title">Reorder Matrix Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_reorder_matrix.wdl">task_reorder_matrix.wdl</a></td>
 </tr>
 </tbody>
 </table>
@@ -8775,6 +8851,57 @@
 <tr>
 <td>Original Publication(s)</td>
 <td><a href="https://doi.org/10.1093/bioinformatics/bty407">Nextstrain: real-time tracking of pathogen evolution</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>SNP-dists</code>: Pairwise SNP Distance Calculation</summary>
+<p>SNP-dists computes pairwise SNP distances using a multifasta alignment, and returns a matrix of those distances.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">SNP-dists Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_snp_dists.wdl">task_snp_dists.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/tseemann/snp-dists">SNP-dists on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/tseemann/snp-dists">SNP-dists on GitHub</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>reorder_matrix</code>: Matrix Reorder and Phylogenetic Tree Rooting</summary>
+<p>Reorder Matrix will reorder a TSV matrix file's entries in the same order as the tips of a provided phylogenetic tree. The phylogenetic tree can be rooted at the midpoint via <code>midpoint_root_tree</code>, or via an outgroup tip via a specified <code>outgroup_root</code>. The provided outgroup tip must be an exact match for a sequence input into the phylogenetic tree.</p>
+<p>Please note that phylogenetic tree tip names are derived from the alignment FASTA file headers in PHB, and may deviate from <code>samplename</code> inputs.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Reorder Matrix Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_reorder_matrix.wdl">task_reorder_matrix.wdl</a></td>
 </tr>
 </tbody>
 </table>

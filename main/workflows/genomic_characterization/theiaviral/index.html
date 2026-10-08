@@ -9254,7 +9254,7 @@
 <td><strong>nextclade_custom_input_dataset</strong></td>
 <td>File</td>
 <td>For H5N1 flu samples only. A custom Nextclade dataset in JSON format. If provided, this dataset will be used to process any H5N1 flu samples. If not provided, a custom dataset will be selected depending on the GenoFLU Genotype.</td>
-<td>Defaults are GenoFLU Genotype specific. Please find these default values here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
+<td>Defaults are GenoFLU Genotype specific and are available for B3.13 and D1.1; please find these default values here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11040,7 +11040,7 @@
 <td><strong>nextclade_custom_input_dataset</strong></td>
 <td>File</td>
 <td>For H5N1 flu samples only. A custom Nextclade dataset in JSON format. If provided, this dataset will be used to process any H5N1 flu samples. If not provided, a custom dataset will be selected depending on the GenoFLU Genotype.</td>
-<td>Defaults are GenoFLU Genotype specific. Please find these default values here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
+<td>Defaults are GenoFLU Genotype specific and are available for B3.13 and D1.1; please find these default values here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12537,7 +12537,7 @@
 <td>kraken2_clean</td>
 <td><strong>classified_out</strong></td>
 <td>String</td>
-<td>Internal component, do not modify</td>
+<td>Allows user to rename classified FASTQ files output. Must include .fastq as the suffix</td>
 <td>classified#.fastq</td>
 <td>Optional</td>
 </tr>
@@ -12593,7 +12593,7 @@
 <td>kraken2_clean</td>
 <td><strong>unclassified_out</strong></td>
 <td>String</td>
-<td>Internal component, do not modify</td>
+<td>Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix</td>
 <td>unclassified#.fastq</td>
 <td>Optional</td>
 </tr>
@@ -12609,7 +12609,7 @@
 <td>kraken2_raw</td>
 <td><strong>classified_out</strong></td>
 <td>String</td>
-<td>Internal component, do not modify</td>
+<td>Allows user to rename classified FASTQ files output. Must include .fastq as the suffix</td>
 <td>classified#.fastq</td>
 <td>Optional</td>
 </tr>
@@ -12665,7 +12665,7 @@
 <td>kraken2_raw</td>
 <td><strong>unclassified_out</strong></td>
 <td>String</td>
-<td>Internal component, do not modify</td>
+<td>Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix</td>
 <td>unclassified#.fastq</td>
 <td>Optional</td>
 </tr>
@@ -12689,7 +12689,7 @@
 <td>kraken2_taxon</td>
 <td><strong>classified_out</strong></td>
 <td>String</td>
-<td>Internal component, do not modify</td>
+<td>Allows user to rename classified FASTQ files output. Must include .fastq as the suffix</td>
 <td>classified#.fastq</td>
 <td>Optional</td>
 </tr>
@@ -12737,7 +12737,7 @@
 <td>kraken2_taxon</td>
 <td><strong>unclassified_out</strong></td>
 <td>String</td>
-<td>Internal component, do not modify</td>
+<td>Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix</td>
 <td>unclassified#.fastq</td>
 <td>Optional</td>
 </tr>

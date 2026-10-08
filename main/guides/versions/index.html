@@ -7929,6 +7929,12 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>legsta_docker_image</strong></td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/legsta:0.5.1--hdfd78af_2</td>
+<td>TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>lissero_docker_image</strong></td>
 <td>us-docker.pkg.dev/general-theiagen/biocontainers/lissero:0.4.9--py_0</td>
 <td>TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT</td>
@@ -8213,7 +8219,7 @@
 <td>organism_parameters</td>
 <td><strong>pangolin_docker_image</strong></td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.4-pdata-1.39</td>
-<td>Augur, TheiaCoV_ClearLabs, TheiaCoV_FASTA</td>
+<td>TheiaCoV_ClearLabs, TheiaCoV_FASTA</td>
 </tr>
 <tr>
 <td>pan_iqtree</td>
@@ -8759,7 +8765,7 @@
 <td><strong>reference_fasta</strong></td>
 <td>File</td>
 <td>The reference FASTA file used to align the genomes and build the trees</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, a reference fasta file must be provided otherwise the workflow fails.</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_augur_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_augur_parameters.wdl</a>. For an organism without set defaults, a reference fasta file must be provided otherwise the workflow fails.</td>
 <td>Augur</td>
 </tr>
 <tr>
@@ -8767,7 +8773,7 @@
 <td><strong>reference_genbank</strong></td>
 <td>File</td>
 <td>The GenBank .gb file for the same reference genome used for the reference_fasta</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>.</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_augur_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_augur_parameters.wdl</a>.</td>
 <td>Augur</td>
 </tr>
 <tr>
@@ -8857,6 +8863,78 @@
 <td>The reference assembly for clade 6</td>
 <td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade6_GCA_032714025.1_ASM3271402v1_genomic.fasta</td>
 <td>Cauris_CladeTyper</td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>flu_h1_ha_ref</strong></td>
+<td>File</td>
+<td>The reference fasta for the H1 HA segment in influenza</td>
+<td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1_ha.fasta</td>
+<td>TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT</td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>flu_h1n1_m2_ref</strong></td>
+<td>File</td>
+<td>The reference fasta for the H1N1 M2 segment in influenza</td>
+<td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1_m2.fasta</td>
+<td>TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT</td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>flu_h3_ha_ref</strong></td>
+<td>File</td>
+<td>The reference fasta for the H3 HA segment in influenza</td>
+<td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3_ha.fasta</td>
+<td>TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT</td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>flu_h3n2_m2_ref</strong></td>
+<td>File</td>
+<td>The reference fasta for the H3N2 M2 segment in influenza</td>
+<td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_m2.fasta</td>
+<td>TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT</td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>flu_n1_na_ref</strong></td>
+<td>File</td>
+<td>The reference fasta for the N1 NA segment in influenza</td>
+<td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_n1_na.fasta</td>
+<td>TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT</td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>flu_n2_na_ref</strong></td>
+<td>File</td>
+<td>The reference fasta for the N2 NA segment in influenza</td>
+<td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_n2_na.fasta</td>
+<td>TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT</td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>flu_pa_ref</strong></td>
+<td>File</td>
+<td>The reference fasta for the PA segment in influenza</td>
+<td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_pa.fasta</td>
+<td>TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT</td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>flu_pb1_ref</strong></td>
+<td>File</td>
+<td>The reference fasta for the PB1 segment in influenza</td>
+<td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_pb1.fasta</td>
+<td>TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT</td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>flu_pb2_ref</strong></td>
+<td>File</td>
+<td>The reference fasta for the PB2 segment in influenza</td>
+<td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_pb2.fasta</td>
+<td>TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT</td>
 </tr>
 <tr>
 <td>medea_magic</td>
@@ -9016,7 +9094,7 @@
 <td>File</td>
 <td>Reference GFF file for the organism being analyzed</td>
 <td>Default provided for mpox ("gs://theiagen-public-resources-rp/reference_data/viral/mpox/Mpox-MT903345.1.reference.gff3") and HIV (primer versions 1 ["gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3"] and 2 ["gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3"])</td>
-<td>Augur, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_ONT</td>
+<td>TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_ONT</td>
 </tr>
 </tbody>
 </table>

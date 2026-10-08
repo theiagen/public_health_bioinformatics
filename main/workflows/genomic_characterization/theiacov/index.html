@@ -7134,14 +7134,6 @@
 </tr>
 <tr>
 <td>flu_track</td>
-<td><strong>assembly_fasta</strong></td>
-<td>File</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>flu_track</td>
 <td><strong>assembly_metrics_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -7176,7 +7168,7 @@
 <td>flu_track</td>
 <td><strong>flu_h1_ha_ref</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
+<td>The reference fasta for the H1 HA segment in influenza</td>
 <td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1_ha.fasta</td>
 <td>Optional</td>
 </tr>
@@ -7184,7 +7176,7 @@
 <td>flu_track</td>
 <td><strong>flu_h1n1_m2_ref</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
+<td>The reference fasta for the H1N1 M2 segment in influenza</td>
 <td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1_m2.fasta</td>
 <td>Optional</td>
 </tr>
@@ -7192,7 +7184,7 @@
 <td>flu_track</td>
 <td><strong>flu_h3_ha_ref</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
+<td>The reference fasta for the H3 HA segment in influenza</td>
 <td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3_ha.fasta</td>
 <td>Optional</td>
 </tr>
@@ -7200,7 +7192,7 @@
 <td>flu_track</td>
 <td><strong>flu_h3n2_m2_ref</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
+<td>The reference fasta for the H3N2 M2 segment in influenza</td>
 <td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_m2.fasta</td>
 <td>Optional</td>
 </tr>
@@ -7208,7 +7200,7 @@
 <td>flu_track</td>
 <td><strong>flu_n1_na_ref</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
+<td>The reference fasta for the N1 NA segment in influenza</td>
 <td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_n1_na.fasta</td>
 <td>Optional</td>
 </tr>
@@ -7216,7 +7208,7 @@
 <td>flu_track</td>
 <td><strong>flu_n2_na_ref</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
+<td>The reference fasta for the N2 NA segment in influenza</td>
 <td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_n2_na.fasta</td>
 <td>Optional</td>
 </tr>
@@ -7224,7 +7216,7 @@
 <td>flu_track</td>
 <td><strong>flu_pa_ref</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
+<td>The reference fasta for the PA segment in influenza</td>
 <td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_pa.fasta</td>
 <td>Optional</td>
 </tr>
@@ -7232,7 +7224,7 @@
 <td>flu_track</td>
 <td><strong>flu_pb1_ref</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
+<td>The reference fasta for the PB1 segment in influenza</td>
 <td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_pb1.fasta</td>
 <td>Optional</td>
 </tr>
@@ -7240,7 +7232,7 @@
 <td>flu_track</td>
 <td><strong>flu_pb2_ref</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
+<td>The reference fasta for the PB2 segment in influenza</td>
 <td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_pb2.fasta</td>
 <td>Optional</td>
 </tr>
@@ -7352,7 +7344,7 @@
 <td>flu_track</td>
 <td><strong>irma_min_avg_consensus_allele_quality</strong></td>
 <td>Int</td>
-<td>Minimum allele coverage depth to call plurality consensus, otherwise calls 'N'. Setting this value too high can negatively impact final amended consensus.</td>
+<td>Minimum allele coverage depth to call plurality consensus, otherwise calls "N". Setting this value too high can negatively impact final amended consensus.</td>
 <td>10</td>
 <td>Optional</td>
 </tr>
@@ -7434,14 +7426,6 @@
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>flu_track</td>
-<td><strong>vadr_outputs_tgz</strong></td>
-<td>File</td>
-<td>Internal component, do not modify</td>
-<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7696,7 +7680,7 @@
 <td>morgana_magic</td>
 <td><strong>genoflu_cross_reference</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
+<td>An Excel file to cross-reference BLAST findings; probably useful if novel genotypes are not in the default file used by genoflu.py</td>
 <td></td>
 <td>Optional</td>
 </tr>
@@ -7720,8 +7704,8 @@
 <td>morgana_magic</td>
 <td><strong>nextclade_custom_input_dataset</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
-<td>Defaults are GenoFLU Genotype specific. Please find these default values here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
+<td>For H5N1 flu samples only. A custom Nextclade dataset in JSON format. If provided, this dataset will be used to process any H5N1 flu samples. If not provided, a custom dataset will be selected depending on the GenoFLU Genotype.</td>
+<td>Defaults are GenoFLU Genotype specific and are available for B3.13 and D1.1; please find these default values here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7958,30 +7942,6 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
-<td><strong>auspice_config</strong></td>
-<td>File</td>
-<td>Auspice config file for customizing visualizations in the Augur_PHB workflow; takes priority over the other customization values available for augur_export. Defaults are set for various organisms &amp; flu segments. A minimal auspice config file is set in cases where organism is not specified and user does not provide an optional input config file.</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>clades_tsv</strong></td>
-<td>File</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>flu_genoflu_genotype</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td>N/A</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
 <td><strong>flu_segment</strong></td>
 <td>String</td>
 <td>Influenza genome segment being analyzed. Options: "HA" or "NA". Automatically determined. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
@@ -8000,56 +7960,8 @@
 <td>organism_parameters</td>
 <td><strong>hiv_primer_version</strong></td>
 <td>String</td>
-<td>The version of HIV primers used. Options are <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L156">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L156</a> and <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L164">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L164</a>. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
+<td>The version of HIV primers used. Options are "v1" (HIV-1 originating from Oregon) and "v2" (HIV-1 originating from Southern Africa); each version sets its own reference genome, reference GFF, and primer BED file, which can be found in <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
 <td>v1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>min_date</strong></td>
-<td>Float</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>min_num_unambig</strong></td>
-<td>Int</td>
-<td>Minimum number of called bases in genome to pass prefilter</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default value is 0</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>narrow_bandwidth</strong></td>
-<td>Float</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>pivot_interval</strong></td>
-<td>Int</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>proportion_wide</strong></td>
-<td>Float</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>reference_genbank</strong></td>
-<td>File</td>
-<td>Internal component, do not modify</td>
-<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8770,7 +8682,7 @@
 <td>consensus_qc</td>
 <td><strong>genome_length</strong></td>
 <td>Int</td>
-<td>Internal component, do not modify</td>
+<td>The length of the genome in order to calculate the assembly's average percent coverage</td>
 <td></td>
 <td>Optional</td>
 </tr>
@@ -9040,14 +8952,6 @@
 </tr>
 <tr>
 <td>morgana_magic</td>
-<td><strong>genoflu_cross_reference</strong></td>
-<td>File</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>morgana_magic</td>
 <td><strong>nextclade_auspice_reference_tree_json</strong></td>
 <td>File</td>
 <td>An Auspice JSON phylogenetic reference tree which serves as a target for phylogenetic placement.</td>
@@ -9060,14 +8964,6 @@
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
 <td>2</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>morgana_magic</td>
-<td><strong>nextclade_custom_input_dataset</strong></td>
-<td>File</td>
-<td>Internal component, do not modify</td>
-<td>Defaults are GenoFLU Genotype specific. Please find these default values here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9312,30 +9208,6 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
-<td><strong>auspice_config</strong></td>
-<td>File</td>
-<td>Auspice config file for customizing visualizations in the Augur_PHB workflow; takes priority over the other customization values available for augur_export. Defaults are set for various organisms &amp; flu segments. A minimal auspice config file is set in cases where organism is not specified and user does not provide an optional input config file.</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>clades_tsv</strong></td>
-<td>File</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>flu_genoflu_genotype</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td>N/A</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
 <td><strong>flu_segment</strong></td>
 <td>String</td>
 <td>Influenza genome segment being analyzed. Options: "HA" or "NA". Automatically determined. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
@@ -9354,7 +9226,7 @@
 <td>organism_parameters</td>
 <td><strong>hiv_primer_version</strong></td>
 <td>String</td>
-<td>The version of HIV primers used. Options are <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L156">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L156</a> and <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L164">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L164</a>. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
+<td>The version of HIV primers used. Options are "v1" (HIV-1 originating from Oregon) and "v2" (HIV-1 originating from Southern Africa); each version sets its own reference genome, reference GFF, and primer BED file, which can be found in <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
 <td>v1</td>
 <td>Optional</td>
 </tr>
@@ -9364,54 +9236,6 @@
 <td>String</td>
 <td>The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database.</td>
 <td>Default provided for mpox (Monkeypox virus), WNV (West Nile virus), and HIV (Human immunodeficiency virus 1)</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>min_date</strong></td>
-<td>Float</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>min_num_unambig</strong></td>
-<td>Int</td>
-<td>Minimum number of called bases in genome to pass prefilter</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default value is 0</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>narrow_bandwidth</strong></td>
-<td>Float</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>pivot_interval</strong></td>
-<td>Int</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>proportion_wide</strong></td>
-<td>Float</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>reference_genbank</strong></td>
-<td>File</td>
-<td>Internal component, do not modify</td>
-<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10170,14 +9994,6 @@
 </tr>
 <tr>
 <td>flu_track</td>
-<td><strong>assembly_fasta</strong></td>
-<td>File</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>flu_track</td>
 <td><strong>assembly_metrics_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -10212,7 +10028,7 @@
 <td>flu_track</td>
 <td><strong>flu_h1_ha_ref</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
+<td>The reference fasta for the H1 HA segment in influenza</td>
 <td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1_ha.fasta</td>
 <td>Optional</td>
 </tr>
@@ -10220,7 +10036,7 @@
 <td>flu_track</td>
 <td><strong>flu_h1n1_m2_ref</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
+<td>The reference fasta for the H1N1 M2 segment in influenza</td>
 <td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1_m2.fasta</td>
 <td>Optional</td>
 </tr>
@@ -10228,7 +10044,7 @@
 <td>flu_track</td>
 <td><strong>flu_h3_ha_ref</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
+<td>The reference fasta for the H3 HA segment in influenza</td>
 <td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3_ha.fasta</td>
 <td>Optional</td>
 </tr>
@@ -10236,7 +10052,7 @@
 <td>flu_track</td>
 <td><strong>flu_h3n2_m2_ref</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
+<td>The reference fasta for the H3N2 M2 segment in influenza</td>
 <td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_m2.fasta</td>
 <td>Optional</td>
 </tr>
@@ -10244,7 +10060,7 @@
 <td>flu_track</td>
 <td><strong>flu_n1_na_ref</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
+<td>The reference fasta for the N1 NA segment in influenza</td>
 <td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_n1_na.fasta</td>
 <td>Optional</td>
 </tr>
@@ -10252,7 +10068,7 @@
 <td>flu_track</td>
 <td><strong>flu_n2_na_ref</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
+<td>The reference fasta for the N2 NA segment in influenza</td>
 <td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_n2_na.fasta</td>
 <td>Optional</td>
 </tr>
@@ -10260,7 +10076,7 @@
 <td>flu_track</td>
 <td><strong>flu_pa_ref</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
+<td>The reference fasta for the PA segment in influenza</td>
 <td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_pa.fasta</td>
 <td>Optional</td>
 </tr>
@@ -10268,7 +10084,7 @@
 <td>flu_track</td>
 <td><strong>flu_pb1_ref</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
+<td>The reference fasta for the PB1 segment in influenza</td>
 <td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_pb1.fasta</td>
 <td>Optional</td>
 </tr>
@@ -10276,7 +10092,7 @@
 <td>flu_track</td>
 <td><strong>flu_pb2_ref</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
+<td>The reference fasta for the PB2 segment in influenza</td>
 <td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_pb2.fasta</td>
 <td>Optional</td>
 </tr>
@@ -10388,7 +10204,7 @@
 <td>flu_track</td>
 <td><strong>irma_min_avg_consensus_allele_quality</strong></td>
 <td>Int</td>
-<td>Minimum allele coverage depth to call plurality consensus, otherwise calls 'N'. Setting this value too high can negatively impact final amended consensus.</td>
+<td>Minimum allele coverage depth to call plurality consensus, otherwise calls "N". Setting this value too high can negatively impact final amended consensus.</td>
 <td>10</td>
 <td>Optional</td>
 </tr>
@@ -10481,14 +10297,6 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>flu_track</td>
-<td><strong>vadr_outputs_tgz</strong></td>
-<td>File</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
 <td>morgana_magic</td>
 <td><strong>gene_coverage_cpu</strong></td>
 <td>Int</td>
@@ -10540,7 +10348,7 @@
 <td>morgana_magic</td>
 <td><strong>genoflu_cross_reference</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
+<td>An Excel file to cross-reference BLAST findings; probably useful if novel genotypes are not in the default file used by genoflu.py</td>
 <td></td>
 <td>Optional</td>
 </tr>
@@ -10564,8 +10372,8 @@
 <td>morgana_magic</td>
 <td><strong>nextclade_custom_input_dataset</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
-<td>Defaults are GenoFLU Genotype specific. Please find these default values here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
+<td>For H5N1 flu samples only. A custom Nextclade dataset in JSON format. If provided, this dataset will be used to process any H5N1 flu samples. If not provided, a custom dataset will be selected depending on the GenoFLU Genotype.</td>
+<td>Defaults are GenoFLU Genotype specific and are available for B3.13 and D1.1; please find these default values here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10890,30 +10698,6 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
-<td><strong>auspice_config</strong></td>
-<td>File</td>
-<td>Auspice config file for customizing visualizations in the Augur_PHB workflow; takes priority over the other customization values available for augur_export. Defaults are set for various organisms &amp; flu segments. A minimal auspice config file is set in cases where organism is not specified and user does not provide an optional input config file.</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>clades_tsv</strong></td>
-<td>File</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>flu_genoflu_genotype</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td>N/A</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
 <td><strong>flu_segment</strong></td>
 <td>String</td>
 <td>Influenza genome segment being analyzed. Options: "HA" or "NA". Automatically determined. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
@@ -10932,56 +10716,8 @@
 <td>organism_parameters</td>
 <td><strong>hiv_primer_version</strong></td>
 <td>String</td>
-<td>The version of HIV primers used. Options are <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L156">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L156</a> and <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L164">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L164</a>. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
+<td>The version of HIV primers used. Options are "v1" (HIV-1 originating from Oregon) and "v2" (HIV-1 originating from Southern Africa); each version sets its own reference genome, reference GFF, and primer BED file, which can be found in <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
 <td>v1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>min_date</strong></td>
-<td>Float</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>min_num_unambig</strong></td>
-<td>Int</td>
-<td>Minimum number of called bases in genome to pass prefilter</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default value is 0</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>narrow_bandwidth</strong></td>
-<td>Float</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>pivot_interval</strong></td>
-<td>Int</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>proportion_wide</strong></td>
-<td>Float</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>reference_genbank</strong></td>
-<td>File</td>
-<td>Internal component, do not modify</td>
-<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11788,41 +11524,9 @@
 </tr>
 <tr>
 <td>flu_track</td>
-<td><strong>assembly_metrics_cpu</strong></td>
-<td>Int</td>
-<td>Internal component, do not modify</td>
-<td>2</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>flu_track</td>
-<td><strong>assembly_metrics_disk_size</strong></td>
-<td>Int</td>
-<td>Internal component, do not modify</td>
-<td>100</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>flu_track</td>
-<td><strong>assembly_metrics_docker</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/samtools:1.23</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>flu_track</td>
-<td><strong>assembly_metrics_memory</strong></td>
-<td>Int</td>
-<td>Internal component, do not modify</td>
-<td>8</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>flu_track</td>
 <td><strong>flu_h1_ha_ref</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
+<td>The reference fasta for the H1 HA segment in influenza</td>
 <td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1_ha.fasta</td>
 <td>Optional</td>
 </tr>
@@ -11830,7 +11534,7 @@
 <td>flu_track</td>
 <td><strong>flu_h1n1_m2_ref</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
+<td>The reference fasta for the H1N1 M2 segment in influenza</td>
 <td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1_m2.fasta</td>
 <td>Optional</td>
 </tr>
@@ -11838,7 +11542,7 @@
 <td>flu_track</td>
 <td><strong>flu_h3_ha_ref</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
+<td>The reference fasta for the H3 HA segment in influenza</td>
 <td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3_ha.fasta</td>
 <td>Optional</td>
 </tr>
@@ -11846,7 +11550,7 @@
 <td>flu_track</td>
 <td><strong>flu_h3n2_m2_ref</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
+<td>The reference fasta for the H3N2 M2 segment in influenza</td>
 <td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_m2.fasta</td>
 <td>Optional</td>
 </tr>
@@ -11854,7 +11558,7 @@
 <td>flu_track</td>
 <td><strong>flu_n1_na_ref</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
+<td>The reference fasta for the N1 NA segment in influenza</td>
 <td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_n1_na.fasta</td>
 <td>Optional</td>
 </tr>
@@ -11862,7 +11566,7 @@
 <td>flu_track</td>
 <td><strong>flu_n2_na_ref</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
+<td>The reference fasta for the N2 NA segment in influenza</td>
 <td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_n2_na.fasta</td>
 <td>Optional</td>
 </tr>
@@ -11870,7 +11574,7 @@
 <td>flu_track</td>
 <td><strong>flu_pa_ref</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
+<td>The reference fasta for the PA segment in influenza</td>
 <td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_pa.fasta</td>
 <td>Optional</td>
 </tr>
@@ -11878,7 +11582,7 @@
 <td>flu_track</td>
 <td><strong>flu_pb1_ref</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
+<td>The reference fasta for the PB1 segment in influenza</td>
 <td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_pb1.fasta</td>
 <td>Optional</td>
 </tr>
@@ -11886,7 +11590,7 @@
 <td>flu_track</td>
 <td><strong>flu_pb2_ref</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
+<td>The reference fasta for the PB2 segment in influenza</td>
 <td>gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_pb2.fasta</td>
 <td>Optional</td>
 </tr>
@@ -11936,78 +11640,6 @@
 <td>Float</td>
 <td>Percent identity threshold used for calling matches for each genome segment that make up the final GenoFlu genotype</td>
 <td>98</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>flu_track</td>
-<td><strong>irma_cpu</strong></td>
-<td>Int</td>
-<td>Internal component, do not modify</td>
-<td>4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>flu_track</td>
-<td><strong>irma_disk_size</strong></td>
-<td>Int</td>
-<td>Internal component, do not modify</td>
-<td>100</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>flu_track</td>
-<td><strong>irma_docker_image</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/irma:1.3.1-20260507</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>flu_track</td>
-<td><strong>irma_keep_ref_deletions</strong></td>
-<td>Boolean</td>
-<td>Internal component, do not modify</td>
-<td>True</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>flu_track</td>
-<td><strong>irma_memory</strong></td>
-<td>Int</td>
-<td>Internal component, do not modify</td>
-<td>16</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>flu_track</td>
-<td><strong>irma_min_ambiguous_threshold</strong></td>
-<td>Float</td>
-<td>Internal component, do not modify</td>
-<td>0.25</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>flu_track</td>
-<td><strong>irma_min_avg_consensus_allele_quality</strong></td>
-<td>Int</td>
-<td>Internal component, do not modify</td>
-<td>10</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>flu_track</td>
-<td><strong>irma_min_consensus_support</strong></td>
-<td>Int</td>
-<td>Internal component, do not modify</td>
-<td>50</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>flu_track</td>
-<td><strong>irma_min_read_length</strong></td>
-<td>Int</td>
-<td>Internal component, do not modify</td>
-<td>75</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12158,7 +11790,7 @@
 <td>morgana_magic</td>
 <td><strong>genoflu_cross_reference</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
+<td>An Excel file to cross-reference BLAST findings; probably useful if novel genotypes are not in the default file used by genoflu.py</td>
 <td></td>
 <td>Optional</td>
 </tr>
@@ -12182,8 +11814,8 @@
 <td>morgana_magic</td>
 <td><strong>nextclade_custom_input_dataset</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
-<td>Defaults are GenoFLU Genotype specific. Please find these default values here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
+<td>For H5N1 flu samples only. A custom Nextclade dataset in JSON format. If provided, this dataset will be used to process any H5N1 flu samples. If not provided, a custom dataset will be selected depending on the GenoFLU Genotype.</td>
+<td>Defaults are GenoFLU Genotype specific and are available for B3.13 and D1.1; please find these default values here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12404,14 +12036,6 @@
 </tr>
 <tr>
 <td>morgana_magic</td>
-<td><strong>reference_gene_locations_bed</strong></td>
-<td>File</td>
-<td>Use to provide locations of interest where average coverage will be calculated</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>morgana_magic</td>
 <td><strong>vadr_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -12444,30 +12068,6 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
-<td><strong>auspice_config</strong></td>
-<td>File</td>
-<td>Auspice config file for customizing visualizations in the Augur_PHB workflow; takes priority over the other customization values available for augur_export. Defaults are set for various organisms &amp; flu segments. A minimal auspice config file is set in cases where organism is not specified and user does not provide an optional input config file.</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>clades_tsv</strong></td>
-<td>File</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>flu_genoflu_genotype</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td>N/A</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
 <td><strong>gene_locations_bed_file</strong></td>
 <td>File</td>
 <td>Use to provide locations of interest where average coverage will be calculated</td>
@@ -12478,7 +12078,7 @@
 <td>organism_parameters</td>
 <td><strong>hiv_primer_version</strong></td>
 <td>String</td>
-<td>The version of HIV primers used. Options are <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L156">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L156</a> and <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L164">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L164</a>. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
+<td>The version of HIV primers used. Options are "v1" (HIV-1 originating from Oregon) and "v2" (HIV-1 originating from Southern Africa); each version sets its own reference genome, reference GFF, and primer BED file, which can be found in <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
 <td>v1</td>
 <td>Optional</td>
 </tr>
@@ -12492,30 +12092,6 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
-<td><strong>min_date</strong></td>
-<td>Float</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>min_num_unambig</strong></td>
-<td>Int</td>
-<td>Minimum number of called bases in genome to pass prefilter</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default value is 0</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>narrow_bandwidth</strong></td>
-<td>Float</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
 <td><strong>pangolin_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
@@ -12524,34 +12100,10 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
-<td><strong>pivot_interval</strong></td>
-<td>Int</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
 <td><strong>primer_bed_file</strong></td>
 <td>File</td>
 <td>The bed file containing the primers used when sequencing was performed</td>
 <td>REQUIRED FOR SARS-CoV-2, MPOX, WNV, RSV-A &amp; RSV-B. Provided by default only for HIV primer versions 1 ("gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed" and 2 ("gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed")</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>proportion_wide</strong></td>
-<td>Float</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>reference_genbank</strong></td>
-<td>File</td>
-<td>Internal component, do not modify</td>
-<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12824,7 +12376,7 @@
 <td>consensus_qc</td>
 <td><strong>genome_length</strong></td>
 <td>Int</td>
-<td>Internal component, do not modify</td>
+<td>The length of the genome in order to calculate the assembly's average percent coverage</td>
 <td></td>
 <td>Optional</td>
 </tr>
@@ -12920,7 +12472,7 @@
 <td>kraken2_dehosted</td>
 <td><strong>classified_out</strong></td>
 <td>String</td>
-<td>Internal component, do not modify</td>
+<td>Allows user to rename classified FASTQ files output. Must include .fastq as the suffix</td>
 <td>classified#.fastq</td>
 <td>Optional</td>
 </tr>
@@ -12984,7 +12536,7 @@
 <td>kraken2_dehosted</td>
 <td><strong>unclassified_out</strong></td>
 <td>String</td>
-<td>Internal component, do not modify</td>
+<td>Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix</td>
 <td>unclassified#.fastq</td>
 <td>Optional</td>
 </tr>
@@ -13008,7 +12560,7 @@
 <td>kraken2_raw</td>
 <td><strong>classified_out</strong></td>
 <td>String</td>
-<td>Internal component, do not modify</td>
+<td>Allows user to rename classified FASTQ files output. Must include .fastq as the suffix</td>
 <td>classified#.fastq</td>
 <td>Optional</td>
 </tr>
@@ -13072,7 +12624,7 @@
 <td>kraken2_raw</td>
 <td><strong>unclassified_out</strong></td>
 <td>String</td>
-<td>Internal component, do not modify</td>
+<td>Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix</td>
 <td>unclassified#.fastq</td>
 <td>Optional</td>
 </tr>
@@ -13126,14 +12678,6 @@
 </tr>
 <tr>
 <td>morgana_magic</td>
-<td><strong>genoflu_cross_reference</strong></td>
-<td>File</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>morgana_magic</td>
 <td><strong>nextclade_auspice_reference_tree_json</strong></td>
 <td>File</td>
 <td>An Auspice JSON phylogenetic reference tree which serves as a target for phylogenetic placement.</td>
@@ -13146,14 +12690,6 @@
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
 <td>2</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>morgana_magic</td>
-<td><strong>nextclade_custom_input_dataset</strong></td>
-<td>File</td>
-<td>Internal component, do not modify</td>
-<td>Defaults are GenoFLU Genotype specific. Please find these default values here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13430,30 +12966,6 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
-<td><strong>auspice_config</strong></td>
-<td>File</td>
-<td>Auspice config file for customizing visualizations in the Augur_PHB workflow; takes priority over the other customization values available for augur_export. Defaults are set for various organisms &amp; flu segments. A minimal auspice config file is set in cases where organism is not specified and user does not provide an optional input config file.</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>clades_tsv</strong></td>
-<td>File</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>flu_genoflu_genotype</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td>N/A</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
 <td><strong>flu_segment</strong></td>
 <td>String</td>
 <td>Influenza genome segment being analyzed. Options: "HA" or "NA". Automatically determined. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
@@ -13481,39 +12993,15 @@
 <td><strong>genome_length_input</strong></td>
 <td>Int</td>
 <td>Use to specify the expected genome length; provided by default for all supported organisms</td>
-<td>Default provided for SARS-CoV-2 (29903), mpox (197200), WNV (11000), flu (13000), RSV-A (16000), RSV-B (16000), HIV (primer versions 1 [9181] and 2 [9840])</td>
+<td>Default provided for SARS-CoV-2 (29903), mpox (197200), WNV (11000), flu (13500), RSV-A (15500), RSV-B (15500), HIV (primer versions 1 [9181] and 2 [9840]), measles (16000), mumps (15300), rubella (9800)</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>organism_parameters</td>
 <td><strong>hiv_primer_version</strong></td>
 <td>String</td>
-<td>The version of HIV primers used. Options are <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L156">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L156</a> and <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L164">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L164</a>. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
+<td>The version of HIV primers used. Options are "v1" (HIV-1 originating from Oregon) and "v2" (HIV-1 originating from Southern Africa); each version sets its own reference genome, reference GFF, and primer BED file, which can be found in <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
 <td>v1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>min_date</strong></td>
-<td>Float</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>min_num_unambig</strong></td>
-<td>Int</td>
-<td>Minimum number of called bases in genome to pass prefilter</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default value is 0</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>narrow_bandwidth</strong></td>
-<td>Float</td>
-<td>Internal component, do not modify</td>
-<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13526,34 +13014,10 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
-<td><strong>pivot_interval</strong></td>
-<td>Int</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
 <td><strong>primer_bed_file</strong></td>
 <td>File</td>
 <td>The bed file containing the primers used when sequencing was performed</td>
 <td>REQUIRED FOR SARS-CoV-2, MPOX, WNV, RSV-A &amp; RSV-B. Provided by default only for HIV primer versions 1 ("gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed" and 2 ("gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed")</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>proportion_wide</strong></td>
-<td>Float</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>reference_genbank</strong></td>
-<td>File</td>
-<td>Internal component, do not modify</td>
-<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13976,14 +13440,6 @@
 </tr>
 <tr>
 <td>morgana_magic</td>
-<td><strong>genoflu_cross_reference</strong></td>
-<td>File</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>morgana_magic</td>
 <td><strong>nextclade_auspice_reference_tree_json</strong></td>
 <td>File</td>
 <td>An Auspice JSON phylogenetic reference tree which serves as a target for phylogenetic placement.</td>
@@ -13996,14 +13452,6 @@
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
 <td>2</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>morgana_magic</td>
-<td><strong>nextclade_custom_input_dataset</strong></td>
-<td>File</td>
-<td>Internal component, do not modify</td>
-<td>Defaults are GenoFLU Genotype specific. Please find these default values here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -14092,14 +13540,6 @@
 <td>String</td>
 <td>other options are: "off" , "error" , "info" , "debug" , and "trace" (highest level of verbosity)</td>
 <td>warn</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>morgana_magic</td>
-<td><strong>number_ATCG</strong></td>
-<td>Int</td>
-<td>Internal component, do not modify</td>
-<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -14312,30 +13752,6 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
-<td><strong>auspice_config</strong></td>
-<td>File</td>
-<td>Auspice config file for customizing visualizations in the Augur_PHB workflow; takes priority over the other customization values available for augur_export. Defaults are set for various organisms &amp; flu segments. A minimal auspice config file is set in cases where organism is not specified and user does not provide an optional input config file.</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>clades_tsv</strong></td>
-<td>File</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>flu_genoflu_genotype</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td>N/A</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
 <td><strong>flu_segment</strong></td>
 <td>String</td>
 <td>Influenza genome segment being analyzed. Options: "HA" or "NA". Automatically determined. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
@@ -14363,14 +13779,14 @@
 <td><strong>genome_length_input</strong></td>
 <td>Int</td>
 <td>Use to specify the expected genome length; provided by default for all supported organisms</td>
-<td>Default provided for SARS-CoV-2 (29903), mpox (197200), WNV (11000), flu (13000), RSV-A (16000), RSV-B (16000), HIV (primer versions 1 [9181] and 2 [9840])</td>
+<td>Default provided for SARS-CoV-2 (29903), mpox (197200), WNV (11000), flu (13500), RSV-A (15500), RSV-B (15500), HIV (primer versions 1 [9181] and 2 [9840]), measles (16000), mumps (15300), rubella (9800)</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>organism_parameters</td>
 <td><strong>hiv_primer_version</strong></td>
 <td>String</td>
-<td>The version of HIV primers used. Options are <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L156">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L156</a> and <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L164">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L164</a>. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
+<td>The version of HIV primers used. Options are "v1" (HIV-1 originating from Oregon) and "v2" (HIV-1 originating from Southern Africa); each version sets its own reference genome, reference GFF, and primer BED file, which can be found in <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
 <td>v1</td>
 <td>Optional</td>
 </tr>
@@ -14384,58 +13800,10 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
-<td><strong>min_date</strong></td>
-<td>Float</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>min_num_unambig</strong></td>
-<td>Int</td>
-<td>Minimum number of called bases in genome to pass prefilter</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default value is 0</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>narrow_bandwidth</strong></td>
-<td>Float</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>pivot_interval</strong></td>
-<td>Int</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
 <td><strong>primer_bed_file</strong></td>
 <td>File</td>
 <td>The bed file containing the primers used when sequencing was performed</td>
 <td>REQUIRED FOR SARS-CoV-2, MPOX, WNV, RSV-A &amp; RSV-B. Provided by default only for HIV primer versions 1 ("gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed" and 2 ("gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed")</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>proportion_wide</strong></td>
-<td>Float</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>reference_genbank</strong></td>
-<td>File</td>
-<td>Internal component, do not modify</td>
-<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -14805,7 +14173,7 @@
 <tr>
 <td>vadr_mem</td>
 <td>WNV</td>
-<td><code>8</code></td>
+<td><code>16</code></td>
 <td></td>
 </tr>
 <tr>
@@ -15177,7 +14545,7 @@
 <tr>
 <td>genome_length_input</td>
 <td>rsv_a</td>
-<td><code>16000</code></td>
+<td><code>15500</code></td>
 </tr>
 <tr>
 <td>kraken_target_organism_input</td>
@@ -15242,7 +14610,7 @@
 <tr>
 <td>genome_length_input</td>
 <td>rsv_b</td>
-<td><code>16000</code></td>
+<td><code>15500</code></td>
 </tr>
 <tr>
 <td>kraken_target_organism_input</td>
@@ -15310,6 +14678,12 @@
 <td>HIV</td>
 <td><code>"Human immunodeficiency virus 1"</code></td>
 <td></td>
+</tr>
+<tr>
+<td>hiv_primer_version</td>
+<td>HIV</td>
+<td><code>"v1"</code></td>
+<td>Selects which set of HIV defaults is used; options are <code>"v1"</code> and <code>"v2"</code>. Ignored by TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
 </tr>
 <tr>
 <td>genome_length_input</td>
@@ -15529,6 +14903,23 @@
 </div>
 </div>
 </div>
+</div>
+<div class="admonition techdetails">
+<p class="admonition-title">Organism Parameters Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">wf_organism_parameters.wdl</a></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <h3 id="core-tasks">Core Tasks<a class="headerlink" href="#core-tasks" title="Permanent link">&para;</a></h3>
