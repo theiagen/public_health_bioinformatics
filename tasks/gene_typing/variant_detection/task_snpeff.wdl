@@ -80,8 +80,8 @@ task snpeff {
     # zcat -f decompresses bgzipped input and passes plain text through unchanged
     variant_count=$(zcat -f "${snpeff_vcf}" | grep -v "^#" | grep -c "[^[:space:]]" || true)
 
-    # only build the database and annotate when the VCF holds at least one variant;
-    # otherwise SnpEff has nothing to work on, so warn and skip
+    # only build the database, annotate and report when the VCF holds at least one
+    # variant; otherwise SnpEff has nothing to work on, so warn and skip
     if [ "${variant_count}" -gt 0 ]; then
       # build the SnpEff database from the GFF3 and reference *genome* FASTA
       snpeff build \
@@ -104,8 +104,39 @@ task snpeff {
         "${genome_id}" \
         "${snpeff_vcf}" \
         > ~{samplename}_~{vcf_scope}_snpeff.vcf
+
+      # render the annotations into a gene-labelled report TSV, resolving each
+      # against the GFF the database was built from
+      theiagene report_variants \
+        --vcf ~{samplename}_~{vcf_scope}_snpeff.vcf \
+        --reference_gff "${data_dir}/${genome_id}/genes.gff" \
+        ~{'--query_genes "' + query_genes + '"'} \
+        ~{"--bedfile " + bedfile} \
+        ~{if exact_match then "--exact_match" else ""} \
+        --feature_qualifier "~{feature_qualifier}" \
+        --output ~{samplename}_~{vcf_scope}_variant_report.tsv
+
+      # join each record into one comma-delimited string: the full REPORT column (the
+      # last), and an abbreviated GENE:AA, falling back to GENE:NT for a record with
+      # no protein change
+      grep -v "^#" ~{samplename}_~{vcf_scope}_variant_report.tsv | awk -F'\t' '{print $NF}' | paste -sd, - > VARIANT_REPORT || true
+      grep -v "^#" ~{samplename}_~{vcf_scope}_variant_report.tsv | awk -F'\t' '{print $1 ":" ($5 != "NA" ? $5 : $4)}' | paste -sd, - > VARIANT_REPORT_ABBREVIATED || true
     else
       echo "WARNING: no variants detected in ~{vcf_scope} VCF" >&2
+      touch VARIANT_REPORT VARIANT_REPORT_ABBREVIATED
+    fi
+
+    # report the queried genes, else the bedfile basename, else a generic message
+    # when no variant was reported
+    if [ ! -s VARIANT_REPORT ]; then
+      if [ -n "~{query_genes}" ]; then
+        no_variants="No variants detected: ~{query_genes}"
+      elif [ -n "~{bedfile}" ]; then
+        no_variants="No variants detected: $(basename ~{bedfile})"
+      else
+        no_variants="No variants detected"
+      fi
+      echo "${no_variants}" | tee VARIANT_REPORT > VARIANT_REPORT_ABBREVIATED
     fi
   >>>
   output {
@@ -113,6 +144,9 @@ task snpeff {
     File? snpeff_annotated_vcf = "~{samplename}_~{vcf_scope}_snpeff.vcf"
     File? snpeff_summary_html = "~{samplename}_~{vcf_scope}_snpeff_summary.html"
     File? snpeff_genes_txt = "~{samplename}_~{vcf_scope}_snpeff_summary.genes.txt"
+    File? snpeff_variant_report_tsv = "~{samplename}_~{vcf_scope}_variant_report.tsv"
+    String snpeff_variant_report = read_string("VARIANT_REPORT")
+    String snpeff_variant_report_abbreviated = read_string("VARIANT_REPORT_ABBREVIATED")
   }
   runtime {
     docker: docker
