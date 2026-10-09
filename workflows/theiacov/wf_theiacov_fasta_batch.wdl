@@ -30,7 +30,8 @@ workflow theiacov_fasta_batch {
       organism = organism,
       nextclade_dataset_tag_input = nextclade_dataset_tag,
       nextclade_dataset_name_input = nextclade_dataset_name,
-      pangolin_docker_image = pangolin_docker
+      pangolin_docker_image = pangolin_docker,
+      flu_genoflu_genotype = ""
   }
   call concatenate.cat_files_fasta {
     input:
@@ -47,17 +48,20 @@ workflow theiacov_fasta_batch {
       nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
       pangolin_docker_image = organism_parameters.pangolin_docker,
       seq_method = "NA",
-      # Setting flu_track related inputs to default values as they are not utilized in TheiaCov, decreasing external input bloat
+      # hiding internal components to decrease input bloat
       assembly_metrics_cpu = 0,
       assembly_metrics_disk_size = 0,
       assembly_metrics_docker = "",
       assembly_metrics_memory = 0,
+      nextclade_custom_input_dataset = "gs://theiagen-public-resources-rp/empty_files/empty.txt",
+      number_ATCG = 0,
       irma_cpu = 0,
       irma_disk_size = 0,
       irma_docker_image = "",
       irma_keep_ref_deletions = false,
       irma_memory = 0,
       genoflu_cpu = 0,
+      genoflu_cross_reference = "gs://theiagen-public-resources-rp/empty_files/empty.fasta",
       genoflu_disk_size = 0,
       genoflu_docker = "",
       genoflu_memory = 0,
