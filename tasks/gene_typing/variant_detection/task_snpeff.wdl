@@ -10,6 +10,7 @@ task snpeff {
     String? query_genes # comma-delimited list of strings
     File? bedfile
     File vcf
+    Int? translation_table # NCBI translation table number; detected dynamically from the GFF transl_table attribute when unset
 
     String feature_qualifier = "product,locus_tag" # comma-delimited GFF feature qualifier(s) to use for comparison to query gene
     Boolean exact_match = false # use an exact match for qualifier mapping (always case-sensitive)
@@ -37,24 +38,21 @@ task snpeff {
     # SnpEff genome IDs become config keys, so restrict the samplename to safe characters
     genome_id=$(echo "~{samplename}" | sed 's/[^A-Za-z0-9._-]/_/g')
     data_dir="$(pwd)/snpeff_data"
-    mkdir -p "${data_dir}/${genome_id}"
 
-    # build a config from the container's default (retaining its codon tables and
-    # settings), pointing data.dir at the local database directory and registering
-    # the sample's genome under the organism name
+    # write the GFF's annotation section to the database directory and a config
+    # derived from the container's default (retaining its codon tables and
+    # settings) that registers the sample's genome and its codon table(s): the
+    # translation_table input genome-wide if given, else each contig's
+    # transl_table from the GFF
     snpeff_dir=$(dirname "$(command -v snpeff)")
-    sed "s|^data.dir *=.*|data.dir = ${data_dir}/|" "${snpeff_dir}/snpEff.config" > snpEff.config
-    echo "${genome_id}.genome : ~{organism}" >> snpEff.config
-
-    # strip any embedded ##FASTA section from the GFF; SnpEff reads the sequences
-    # from the reference FASTA instead
-    python3 <<CODE
-    with open("~{reference_gff}") as fh, open("${data_dir}/${genome_id}/genes.gff", "w") as out:
-        for line in fh:
-            if line.strip().lower() in {'##fasta', '## fasta'}:
-                break
-            out.write(line)
-    CODE
+    theiagene prepare_snpeff \
+      --reference_gff ~{reference_gff} \
+      --template_config "${snpeff_dir}/snpEff.config" \
+      --data_dir "${data_dir}" \
+      --genome_id "${genome_id}" \
+      --organism "~{organism}" \
+      ~{"--translation_table " + translation_table} \
+      --output snpEff.config
 
     # stage the reference FASTA where SnpEff expects it; zcat -f decompresses
     # gzipped input and passes plain text through unchanged
@@ -123,6 +121,6 @@ task snpeff {
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     preemptible: 0
-    maxRetries: 3
+    maxRetries: 1
   }
 }
