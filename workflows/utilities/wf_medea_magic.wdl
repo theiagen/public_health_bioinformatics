@@ -9,7 +9,7 @@ import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/gene_typing/variant_detection/task_clair3_variants.wdl" as clair3_task
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
 import "../../tasks/quality_control/basic_statistics/task_gene_coverage.wdl" as gene_coverage_task
-import "../../tasks/gene_typing/variant_detection/task_variant_annotate.wdl" as variant_annotate_task
+import "../../tasks/gene_typing/variant_detection/task_snpeff.wdl" as snpeff_task
 
 workflow medea_magic {
   meta {
@@ -255,9 +255,10 @@ workflow medea_magic {
           query_check_hard_fail = true
       }
       if (resolved_query_genes != "" && defined(resolved_vcf) && select_first([resolved_reference_gff, ""]) != "") {
-        call variant_annotate_task.variant_annotate as gene_variants {
+        call snpeff_task.snpeff as snpeff_gene_variants {
           input:
             samplename = samplename,
+            organism = medea_tag,
             reference_fasta = resolved_reference_fasta,
             reference_gff = select_first([resolved_reference_gff]),
             query_genes = resolved_query_genes,
@@ -343,10 +344,13 @@ workflow medea_magic {
     Map[String, String]? gene_coverage_reads_by_gene = gene_coverage.reads_by_gene
     String? gene_coverage_query_check = gene_coverage.gene_coverage_query_check
     String? gene_coverage_query_check_status = gene_coverage.gene_coverage_query_check_status
-    File? gene_variants_warnings = gene_variants.variant_annotation_warnings
-    File? gene_variants_summary = gene_variants.variant_annotation_html
-    File? gene_variants_vcf = gene_variants.variant_annotation_gene_vcf
-    File? gene_variants_tsv = gene_variants.variant_annotation_tsv
-    String? gene_variants_annotations = gene_variants.variant_annotation
+    # snpeff gene variant annotation
+    String? snpeff_gene_variants_version = snpeff_gene_variants.snpeff_version
+    File? snpeff_gene_variants_vcf = snpeff_gene_variants.snpeff_annotated_vcf
+    File? snpeff_gene_variants_summary_html = snpeff_gene_variants.snpeff_summary_html
+    File? snpeff_gene_variants_genes_txt = snpeff_gene_variants.snpeff_genes_txt
+    File? snpeff_gene_variants_report_tsv = snpeff_gene_variants.snpeff_variant_report_tsv
+    String? snpeff_gene_variants_report = snpeff_gene_variants.snpeff_variant_report
+    String? snpeff_gene_variants_report_abbreviated = snpeff_gene_variants.snpeff_variant_report_abbreviated
   }
 }
