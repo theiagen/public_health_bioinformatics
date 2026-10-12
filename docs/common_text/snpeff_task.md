@@ -3,14 +3,14 @@ title: Task Fragment `snpeff_gene_variants`
 fragment: true
 ---
 ??? task "`snpeff_gene_variants`: Variant Effect Annotation"
-    This task annotates variants in regions-of-interest using SnpEff by reporting the predicted consequence of each variant (e.g. `missense_variant`, `frameshift_variant`) alongside its pseudo-[HGVS](https://hgvs-nomenclature.org/stable/) coding (`c.`) and protein (`p.`) notation. A custom SnpEff database is built for each sample from the reference FASTA and GFF, so no pre-built SnpEff database is required.
+    This task annotates variants in regions-of-interest using SnpEff by reporting the predicted consequence of each variant (e.g. `missense_variant`, `frameshift_variant`) alongside its [HGVS](https://hgvs-nomenclature.org/stable/)-like abbreviation.
 
     The task proceeds in four steps:
 
-    1. **Database preparation** - the annotation section of the reference GFF (dropping any embedded `##FASTA` section) and the reference genome FASTA are staged as a custom SnpEff database. Each contig is assigned the codon table its GFF features declare via the `transl_table` attribute; contigs declaring none fall back to SnpEff's default (Standard) table.
-    2. **Variant extraction** - when `query_genes` and/or `query_genes_bed` are supplied, the variants overlapping the CDS coordinates of those genes are extracted into a sub-VCF, and each retained record is tagged with the overlapping gene name(s) in a `GENE` INFO field. Without either input, the full VCF is annotated.
-    3. **Annotation** - SnpEff builds the database and annotates the VCF against it. Upstream/downstream annotations are disabled, so only variants overlapping annotated features are annotated. When the VCF holds no variants, the build and annotation are skipped.
-    4. **Reporting** - the SnpEff `ANN` entries are rendered into a gene-labelled report, where each entry is resolved back to its CDS product name through the reference GFF feature hierarchy.
+    1. **Database preparation** - reference GFF annotations and the reference genome FASTA are used to generate a custom SnpEff database.     
+    2. **Variant extraction** - variants that overlap the CDS coordinates of `query_genes`/`query_genes_bed` are extracted into a sub-VCF, and each gene record is tagged with the in a `GENE` INFO field.
+    3. **Annotation** - SnpEff annotates the consequences of gene variants. Only variants overlapping annotated features are annotated. When the VCF holds no variants, the build and annotation are skipped.
+    4. **Reporting** - the SnpEff VCF `ANN` entries are transformed into a gene-labelled report
 
     Each entry of the `snpeff_gene_variants_report` output takes the form:
 
@@ -24,11 +24,11 @@ fragment: true
     ERG11: "lanosterol 14-alpha demethylase" (missense_variant c.428A>G p.Lys143Arg; T:0 C:562)
     ```
 
-    `<query>` is the `query_genes`/`query_genes_bed` term that selected the gene. When no query was supplied (the whole VCF is annotated) or no query matches the annotated feature, the product name is normalized into the label instead (`lanosterol.14-alpha.demethylase`). The product is quoted because product names frequently contain commas, which would otherwise be indistinguishable from the delimiter separating entries. The trailing per-allele read depths are taken from the VCF's `AD` (else `RO`/`AO`) field and are omitted when the record carries neither.
+    `<query>` is the `query_genes`/`query_genes_bed` term that selects the gene. When no query matches the annotated feature, the product name is normalized into the label (`lanosterol.14-alpha.demethylase`). The product is quoted because product names frequently contain commas. The per-allele read depths are taken from the VCF's `AD` field primarily and are omitted when the record carries neither - otherwise `RO`/`AO` are used.
 
     The `snpeff_gene_variants_report_abbreviated` output condenses each entry into `<query>:<amino acid change>` using one-letter residue codes (e.g. `ERG11:K143R`), falling back to `<query>:<nucleotide change>` (e.g. `ERG11:428A>G`) for a variant with no protein change. When no variants are reported, both outputs read `No variants detected: <query_genes>`.
 
-    Entries that are not annotated against a transcript (e.g. `intergenic_region`), entries that resolve to neither a coding nor a protein change, and entries whose variant cannot be traced back to a gene product in the reference GFF are omitted from the report. A transcript SnpEff flags as incomplete or lacking a start codon is treated as noncoding, so its protein change is not reported. The full set of annotations is retained in `snpeff_gene_variants_vcf`, alongside SnpEff's HTML summary (`snpeff_gene_variants_summary_html`) and per-gene effect counts (`snpeff_gene_variants_genes_txt`). Every reported entry is also tabulated in `snpeff_gene_variants_report_tsv`:
+    Entries are omitted if: they are not annotated against a transcript (e.g. `intergenic_region`, incomplete transcript, or lacking a stop codon), resolve to neither a coding nor a protein change, and if the variant cannot be traced back to a gene product in the reference GFF. The full set of annotations is retained in `snpeff_gene_variants_vcf`, alongside SnpEff's HTML summary (`snpeff_gene_variants_summary_html`) and per-gene effect counts (`snpeff_gene_variants_genes_txt`). Every reported entry is also tabulated in `snpeff_gene_variants_report_tsv` as follows:
 
     | Column | Content | Example |
     | --- | --- | --- |
@@ -48,11 +48,14 @@ fragment: true
         - `query_genes_bed` supplies gene names from the fourth column of the BED file when `query_genes` is not supplied; coordinates are always taken from the reference GFF
         - If neither is supplied, the entire VCF is annotated
 
+    ??? dna "Codon translation tables"
+        By default, each contig is assigned the codon table its GFF features declare via the `transl_table` attribute. Contigs without a translation to SnpEff's default (Standard) table, and contigs with multiple translation tables raise an error. A genome-wide translation table can be used based on the `translation_table` input.
+
     ??? dna "Depth annotation with complementary nucleotides"
         Depths are annotated with the reference and alternate nucleotides as they appear in the VCF (forward strand). When the query region is annotated on the negative strand, these are the complements of the nucleotides in the HGVS coding notation (e.g. `c.428A>G` with depths `T:0 C:562`).
 
     ??? dna "Deviations from HGVS"
-        HGVS strings are SnpEff's, so reported changes follow the [HGVS recommendations](https://hgvs-nomenclature.org/stable/) except where noted below. One-letter amino acid codes, `*` for a stop codon, and the short frameshift form (`p.Lys128fs`) are permitted by HGVS and are not deviations.
+        HGVS strings are primarily derived from SnpEff's reporting, so most reported changes follow the [HGVS recommendations](https://hgvs-nomenclature.org/stable/) except where noted below.
 
         | Deviation | HGVS | Reported |
         | --- | --- | --- |
