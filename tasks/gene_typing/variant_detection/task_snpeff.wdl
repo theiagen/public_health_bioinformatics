@@ -16,7 +16,7 @@ task snpeff {
     Boolean exact_match = false # use an exact match for qualifier mapping (always case-sensitive)
     Boolean ambiguous_contig = false # relate bedfile to GFF and FASTA ambiguous
 
-    String docker = "us-docker.pkg.dev/general-theiagen/snpeff:5.4c"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/snpeff:5.4c-dev"
     Int disk_size = 100
     Int memory = 8
     Int cpu = 2
