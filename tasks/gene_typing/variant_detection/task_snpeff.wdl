@@ -40,10 +40,9 @@ task snpeff {
     data_dir="$(pwd)/snpeff_data"
 
     # write the GFF's annotation section to the database directory and a config
-    # derived from the container's default (retaining its codon tables and
-    # settings) that registers the sample's genome and its codon table(s): the
-    # translation_table input genome-wide if given, else each contig's
-    # transl_table from the GFF
+    # that registers the sample's genome and its codon table(s): the
+    # translation_table input is genome-wide if given, otherwise each contig's
+    # transl_table is from the GFF (multiple translation_tables/contig raises an error)
     snpeff_dir=$(dirname "$(command -v snpeff)")
     theiagene prepare_snpeff \
       --reference_gff ~{reference_gff} \
@@ -54,12 +53,10 @@ task snpeff {
       ~{"--translation_table " + translation_table} \
       --output snpEff.config
 
-    # stage the reference FASTA where SnpEff expects it; zcat -f decompresses
-    # gzipped input and passes plain text through unchanged
+    # stage the reference FASTA where SnpEff expects it
     zcat -f ~{reference_fasta} > "${data_dir}/${genome_id}/sequences.fa"
 
-    # extract a sub-VCF only when a subset of genes/regions is requested, then
-    # annotate that extracted subset instead of the full VCF
+    # extract a sub-VCF only when a subset of genes/regions is requested 
     if ~{extract}; then
       theiagene extract_variants \
         --vcf ~{vcf} \
@@ -76,8 +73,7 @@ task snpeff {
       snpeff_vcf="~{vcf}"
     fi
 
-    # count variant records (non-header, non-empty lines) in the VCF to annotate;
-    # zcat -f decompresses bgzipped input and passes plain text through unchanged
+    # count variant records (non-header, non-empty lines) in the VCF to annotate
     variant_count=$(zcat -f "${snpeff_vcf}" | grep -v "^#" | grep -c "[^[:space:]]" || true)
 
     # only build the database, annotate and report when the VCF holds at least one
