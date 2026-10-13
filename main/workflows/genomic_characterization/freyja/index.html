@@ -12719,7 +12719,7 @@
 <summary><code>qc_check</code>: Check QC Metrics Against User-Defined Thresholds (optional)</summary>
 <p>To activate this task, provide a <code>qc_check_table</code> as input.</p>
 <p>The QC Check task compares generated QC metrics against user-defined thresholds for each metric. This task will run if the user provides a <code>qc_check_table</code> TSV file. If all QC metrics meet the threshold, the <code>qc_check</code> output variable will read <code>QC_PASS</code>. Otherwise, the output will read <code>QC_NA</code> if the task could not proceed or <code>QC_ALERT</code> followed by a string indicating what metric failed.</p>
-<p>Thresholds for percent human classified reads and percent human classified dehosted reads are noted as "classified_human" and "classified_human_dehosted" respectively. In other workflows, these QC check columns are named "kraken_human<em>" or "metabuli_human</em>", but Freyja uses the "classified_" prefix because the classification software used will vary depending on read type (kraken2 for Illumina, Metabuli for ONT).</p>
+<p>Thresholds for percent human classified reads and percent human classified dehosted reads are noted as "classified_human" and "classified_human_dehosted" respectively. In other workflows, these QC check columns are named "kraken_human*" or "metabuli_human*", but Freyja uses the "classified_" prefix because the classification software used will vary depending on read type (kraken2 for Illumina, Metabuli for ONT).</p>
 <details class="toggle">
 <summary>Formatting the <em>qc_check_table.tsv</em></summary>
 <ul>
@@ -13444,7 +13444,7 @@
 <summary><code>qc_check</code>: Check QC Metrics Against User-Defined Thresholds (optional)</summary>
 <p>To activate this task, provide a <code>qc_check_table</code> as input.</p>
 <p>The QC Check task compares generated QC metrics against user-defined thresholds for each metric. This task will run if the user provides a <code>qc_check_table</code> TSV file. If all QC metrics meet the threshold, the <code>qc_check</code> output variable will read <code>QC_PASS</code>. Otherwise, the output will read <code>QC_NA</code> if the task could not proceed or <code>QC_ALERT</code> followed by a string indicating what metric failed.</p>
-<p>Thresholds for percent human classified reads and percent human classified dehosted reads are noted as "classified_human" and "classified_human_dehosted" respectively. In other workflows, these QC check columns are named "kraken_human<em>" or "metabuli_human</em>", but Freyja uses the "classified_" prefix because the classification software used will vary depending on read type (kraken2 for Illumina, Metabuli for ONT).</p>
+<p>Thresholds for percent human classified reads and percent human classified dehosted reads are noted as "classified_human" and "classified_human_dehosted" respectively. In other workflows, these QC check columns are named "kraken_human*" or "metabuli_human*", but Freyja uses the "classified_" prefix because the classification software used will vary depending on read type (kraken2 for Illumina, Metabuli for ONT).</p>
 <details class="toggle">
 <summary>Formatting the <em>qc_check_table.tsv</em></summary>
 <ul>
@@ -13720,7 +13720,7 @@
 <summary><code>qc_check</code>: Check QC Metrics Against User-Defined Thresholds (optional)</summary>
 <p>To activate this task, provide a <code>qc_check_table</code> as input.</p>
 <p>The QC Check task compares generated QC metrics against user-defined thresholds for each metric. This task will run if the user provides a <code>qc_check_table</code> TSV file. If all QC metrics meet the threshold, the <code>qc_check</code> output variable will read <code>QC_PASS</code>. Otherwise, the output will read <code>QC_NA</code> if the task could not proceed or <code>QC_ALERT</code> followed by a string indicating what metric failed.</p>
-<p>Thresholds for percent human classified reads and percent human classified dehosted reads are noted as "classified_human" and "classified_human_dehosted" respectively. In other workflows, these QC check columns are named "kraken_human<em>" or "metabuli_human</em>", but Freyja uses the "classified_" prefix because the classification software used will vary depending on read type (kraken2 for Illumina, Metabuli for ONT).</p>
+<p>Thresholds for percent human classified reads and percent human classified dehosted reads are noted as "classified_human" and "classified_human_dehosted" respectively. In other workflows, these QC check columns are named "kraken_human*" or "metabuli_human*", but Freyja uses the "classified_" prefix because the classification software used will vary depending on read type (kraken2 for Illumina, Metabuli for ONT).</p>
 <details class="toggle">
 <summary>Formatting the <em>qc_check_table.tsv</em></summary>
 <ul>
