@@ -50,11 +50,10 @@ task gambit {
     (item,) = data['items']
     predicted = item['predicted_taxon']
     next_taxon = item['next_taxon']
-    closest = item.get('closest_genomes', [None])[0]
+    closest = item['closest_genomes'][0]
 
     with open('CLOSEST_DISTANCE', 'w') as f:
-      if closest is not None:
-        f.write(fmt_dist(closest['distance']))
+      f.write(fmt_dist(closest['distance']))
 
     # output-writing function to reduce redunancy
     def write_output(file, search_item, column, empty_value):
