@@ -112,13 +112,17 @@ task metabuli {
         # Metabuli doesn't have a built-in option for extracting unclassified reads
         if [[ ~{extract_unclassified} == "true" ]]; then
           echo "DEBUG: Extracting unclassified reads"
-          grep -P "^0\t" output_dir/~{samplename}_classifications.tsv | cut -f 2 > unclassified_reads.txt
-          seqkit grep -f unclassified_reads.txt ~{read1} | gzip > ~{samplename}_unclassified_1.fq.gz
-          zcat ${read1_basename}_~{taxon_id}.fq.gz ~{samplename}_unclassified_1.fq.gz | gzip > ~{samplename}_~{taxon_id}_extracted_1.fq.gz
-          if [[ ~{if defined(read2) then "true" else "false"} == "true" ]]; then
-            seqkit grep -f unclassified_reads.txt ~{read2} | gzip > ~{samplename}_unclassified_2.fq.gz
-            zcat ${read2_basename}_~{taxon_id}.fq.gz ~{samplename}_unclassified_2.fq.gz | gzip > ~{samplename}_~{taxon_id}_extracted_2.fq.gz
-          fi
+          grep -P "^0\t" output_dir/~{samplename}_classifications.tsv | cut -f 2 > unclassified_reads.txt || true
+
+          if [[ -s unclassified_reads.txt ]]; then
+            seqkit grep -f unclassified_reads.txt ~{read1} | gzip > ~{samplename}_unclassified_1.fq.gz
+            zcat ${read1_basename}_~{taxon_id}.fq.gz ~{samplename}_unclassified_1.fq.gz | gzip > ~{samplename}_~{taxon_id}_extracted_1.fq.gz
+            if [[ ~{if defined(read2) then "true" else "false"} == "true" ]]; then
+              seqkit grep -f unclassified_reads.txt ~{read2} | gzip > ~{samplename}_unclassified_2.fq.gz
+              zcat ${read2_basename}_~{taxon_id}.fq.gz ~{samplename}_unclassified_2.fq.gz | gzip > ~{samplename}_~{taxon_id}_extracted_2.fq.gz
+            fi
+          else
+            echo "DEBUG: No unclassified reads found"
         fi
 
       else

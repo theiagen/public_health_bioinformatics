@@ -32,27 +32,38 @@ task midas {
     import pandas as pd
 
     df = pd.read_csv('~{samplename}/species/~{samplename}_species_profile.tsv',sep="\t", header=0)
-    # round relative abundance to 4 decimal places
-    df = df.round(4)
-    # sort by relative abundance
-    sorted_df = df.sort_values(by=['relative_abundance'], ascending=False)
-    # split species_id column
-    sorted_df[['genus','species','strain']] = sorted_df['species_id'].str.split(pat = '_',expand=True,n=2)
-    # capture primary genus
-    primary_genus = sorted_df.genus.iloc[0]
-    # remove rows where genus is primary_genus
-    filtered_df = sorted_df[sorted_df['genus'].str.contains(str(primary_genus))==False ]
-    # re-sort by relative abundance, just in case
-    filtered_sorted_df = filtered_df.sort_values(by=['relative_abundance'], ascending=False)
-    # capture secondary genus
-    secondary_genus = filtered_sorted_df.genus.iloc[0]
-    # capture relative abundance of secondary genus
-    secondary_genus_abundance = filtered_sorted_df.relative_abundance.iloc[0]
-    # if secondary genus abundance is less than one, replace genus with text indicating no secondary genus detected
-    if secondary_genus_abundance < 0.01:
-      secondary_genus="No secondary genus detected (>1% relative abundance)"
-    # capture absolute coverage of secondary genus
-    secondary_genus_coverage = filtered_sorted_df.coverage.iloc[0]
+
+    # check if the file has content
+    if df.empty:
+      primary_genus = "No genus detected"
+      secondary_genus = "No secondary genus detected (>1% relative abundance)"
+      secondary_genus_abundance = None
+      secondary_genus_coverage = None
+    else:
+      # round relative abundance to 4 decimal places
+      df = df.round(4)
+      # sort by relative abundance
+      sorted_df = df.sort_values(by=['relative_abundance'], ascending=False)
+      # split species_id column
+      sorted_df[['genus','species','strain']] = sorted_df['species_id'].str.split(pat = '_',expand=True,n=2)
+      # capture primary genus
+      primary_genus = sorted_df.genus.iloc[0]
+      # remove rows where genus is primary_genus
+      filtered_df = sorted_df[sorted_df['genus'].str.contains(str(primary_genus))==False ]
+      # re-sort by relative abundance, just in case
+      filtered_sorted_df = filtered_df.sort_values(by=['relative_abundance'], ascending=False)
+
+      # capture secondary genus
+      if filtered_sorted_df.empty or filtered_sorted_df.relative_abundance.iloc[0] < 0.01:
+        secondary_genus = "No secondary genus detected (>1% relative abundance)"
+        secondary_genus_abundance = None
+        secondary_genus_coverage = None
+      else:
+        secondary_genus = filtered_sorted_df.genus.iloc[0]
+        # capture relative abundance of secondary genus
+        secondary_genus_abundance = filtered_sorted_df.relative_abundance.iloc[0]
+        # capture absolute coverage of secondary genus
+        secondary_genus_coverage = filtered_sorted_df.coverage.iloc[0]
 
     # write text files
     with open("PRIMARY_GENUS", 'wt') as pg:
