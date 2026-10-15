@@ -291,19 +291,26 @@ task check_reads_se {
                   M="-m 1"
                 fi
 
-                mash sketch -o test -k 31 ${M} -r ~{read1} > mash-output.txt 2>&1
-                grep "Estimated genome size:" mash-output.txt | \
-                  awk '{if($4){printf("%d", $4)}} END {if (!NR) print "0"}' > genome_length_output
-                grep "Estimated coverage:" mash-output.txt | \
-                  awk '{if($3){printf("%d", $3)}} END {if (!NR) print "0"}' > coverage_output
+                mash sketch -o test -k 31 ${M} -r ~{read1} > mash-output.txt 2>&1 || true
+                if [ ! -f test.msh ]; then
+                  fail_log+="; mash failed - cannot estimate genome length and coverage"
+                  estimated_coverage=0
+                  estimated_genome_length=0
+                  rm mash-output.txt
+                else
+                  grep "Estimated genome size:" mash-output.txt | \
+                    awk '{if($4){printf("%d", $4)}} END {if (!NR) print "0"}' > genome_length_output
+                  grep "Estimated coverage:" mash-output.txt | \
+                    awk '{if($3){printf("%d", $3)}} END {if (!NR) print "0"}' > coverage_output
 
-                # remove mash outputs
-                rm -rf test.msh
-                rm -rf mash-output.txt
+                  # remove mash outputs
+                  rm -rf test.msh
+                  rm -rf mash-output.txt
+
+                  estimated_genome_length=`head -n1 genome_length_output`
+                  estimated_coverage=`head -n1 coverage_output`
+                fi
               fi
-
-              estimated_genome_length=`head -n1 genome_length_output`
-              estimated_coverage=`head -n1 coverage_output`
             fi
           fi
 
