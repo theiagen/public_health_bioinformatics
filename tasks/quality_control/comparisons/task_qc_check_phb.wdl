@@ -220,21 +220,22 @@ task qc_check_phb {
               # yield to the operator from "min" / "max" suffixes if present
               if not obs_operator:
                 obs_operator = qc_check_criteria[base_metric]["operator"]
-            # special exemption we want to avoid as much as possible
-            if base_metric == "busco_completeness":
-              cast_val = parse_busco(obs_val):
-              if cast_val is None:
-                qc_note += f"{base_metric} ({obs_val}) could not be parsed; "
+              # special exemptions we want to avoid as much as possible
+              if base_metric == "busco_completeness":
+                cast_val = parse_busco(obs_val)
+                if cast_val is None:
+                  qc_note += f"{base_metric} ({obs_val}) could not be parsed; "
+                else:
+                  qc_note = compare(qc_note, metric, cast_val, obs_operator, float(taxon_df[metric][0]))
+              elif base_metric == "vadr_num_alerts" and str(obs_val).startswith("VADR skipped"):
+                qc_note += f"{base_metric} not evaluated ({obs_val}); "
               else:
-                qc_note = compare(qc_note, metric, float(busco_completeness), obs_operator, float(taxon_df[metric][0]))
-            else:
-              cast_val = safe_cast(obs_val, val_type)
-              if cast_val is None:
-                qc_note += f"{base_metric} ({obs_val}) could not be cast to {val_type}; "
-              else:
-                qc_note = compare(qc_note, metric, cast_val, obs_operator, val_type(taxon_df[metric][0]))
-            qc_check_metrics.remove(metric)
-            qc_check_metrics.remove(metric)
+                cast_val = safe_cast(obs_val, val_type)
+                if cast_val is None:
+                  qc_note += f"{base_metric} ({obs_val}) could not be cast to {val_type}; "
+                else:
+                  qc_note = compare(qc_note, metric, cast_val, obs_operator, val_type(taxon_df[metric][0]))
+              qc_check_metrics.remove(metric)
 
         # check segment-level qc metrics via the irma_qc_table if it exists
         if "~{irma_qc_table}":
