@@ -113,6 +113,25 @@ task qc_check_phb {
 
       return qc_note
 
+    def safe_cast(value, val_type):
+      # returns None if the value cannot be cast (e.g., VADR writes a string)
+      try:
+        if val_type == int:
+          try:
+            return int(value)
+          except (ValueError, TypeError):
+            return int(float(value))  # handles "3.0"
+        return val_type(value)
+      except (ValueError, TypeError, OverflowError):
+        return None
+
+    def parse_busco(value):
+      # extracts completeness from "C:98.5%[...]"; returns None for "BUSCO FAILED" etc.
+      try:
+        return float(str(value).split("C:")[1].split("%")[0])
+      except (IndexError, ValueError):
+        return None
+
     # create empty variable for results to be added to
     qc_status, qc_note = "", ""
 
@@ -203,21 +222,18 @@ task qc_check_phb {
                 obs_operator = qc_check_criteria[base_metric]["operator"]
             # special exemption we want to avoid as much as possible
             if base_metric == "busco_completeness":
-              busco_completeness = qc_check_inputs[base_metric].split("C:")[1].split("%")[0]
-              qc_note = compare(qc_note, metric, float(busco_completeness), obs_operator, float(taxon_df[metric][0]))
+              cast_val = parse_busco(obs_val):
+              if cast_val is None:
+                qc_note += f"{base_metric} ({obs_val}) could not be parsed; "
+              else:
+                qc_note = compare(qc_note, metric, float(busco_completeness), obs_operator, float(taxon_df[metric][0]))
             else:
-              # catch casting errors, particularly for VADR
-              try:
-                qc_note = compare(qc_note, metric, val_type(obs_val), obs_operator, val_type(taxon_df[metric][0]))
-              except:
-                # casting a string float to an int will fail directly unless casted to a float first
-                if val_type == int:
-                  try:
-                    qc_note = compare(qc_note, metric, int(float(obs_val)), obs_operator, val_type(taxon_df[metric][0]))
-                  except ValueError:
-                    qc_note += f"{base_metric} ({obs_val}) could not be cast to {val_type}; "
-                else:
-                  qc_note += f"{base_metric} ({obs_val}) could not be cast to {val_type}; "
+              cast_val = safe_cast(obs_val, val_type)
+              if cast_val is None:
+                qc_note += f"{base_metric} ({obs_val}) could not be cast to {val_type}; "
+              else:
+                qc_note = compare(qc_note, metric, cast_val, obs_operator, val_type(taxon_df[metric][0]))
+            qc_check_metrics.remove(metric)
             qc_check_metrics.remove(metric)
 
         # check segment-level qc metrics via the irma_qc_table if it exists
@@ -247,20 +263,20 @@ task qc_check_phb {
               full_var_name = f"{segment_name}_{var}"
               gen_var_name = f"segment_{var}"
               seg_qc_note = ""
-              # prioritize segment-specific thresholds
+              # prioritize segment-specific thresholds over generic segment thresholds
               if full_var_name in qc_check_metrics:
-                try:
-                  seg_qc_note = compare(seg_qc_note, full_var_name, val_type(obs_val), obs_operator, val_type(taxon_df[full_var_name][0]))
-                # cast to a float if initial cast fails, usually due to NaNs
-                except ValueError:
-                  seg_qc_note = compare(seg_qc_note, full_var_name, float(obs_val), obs_operator, val_type(taxon_df[full_var_name][0]))
-                to_rm.add(full_var_name)
+                threshold_col = full_var_name
               elif gen_var_name in qc_check_metrics:
-                try:
-                  seg_qc_note = compare(seg_qc_note, full_var_name, val_type(obs_val), obs_operator, val_type(taxon_df[gen_var_name][0]))
-                except ValueError:
-                  seg_qc_note = compare(seg_qc_note, full_var_name, float(obs_val), obs_operator, val_type(taxon_df[gen_var_name][0]))
-                to_rm.add(gen_var_name)
+                threshold_col = gen_var_name
+              else:
+                threshold_col = None
+              if threshold_col:
+                cast_val = safe_cast(obs_val, val_type)
+                if cast_val is None:
+                  seg_qc_note = f"{full_var_name} ({obs_val}) could not be cast to {val_type.__name__}; "
+                else:
+                  seg_qc_note = compare(seg_qc_note, full_var_name, cast_val, obs_operator, val_type(taxon_df[threshold_col][0]))
+                to_rm.add(threshold_col)
               seg2qc_note[segment_name][var] = seg_qc_note
 
           # compile segment qc notes to qc note
@@ -278,17 +294,16 @@ task qc_check_phb {
         if qc_note:
           qc_status = "QC_ALERT"
 
-      # qc_check population is nested and a failure will be caused if no matching taxon is found
-      # if a soft-fail is desired, populate qc_check and write one indent back
-      if qc_status:
-        qc_check = qc_status + ": " + qc_note
-        qc_check = qc_check.rstrip('; ')
-      else:
-        qc_status = "QC_PASS"
-        qc_check = qc_status
+    # always write QC_CHECK so the task reports QC_NA instead of failing on a missing file
+    if qc_status:
+      qc_check = qc_status + ": " + qc_note
+      qc_check = qc_check.rstrip('; ')
+    else:
+      qc_status = "QC_PASS"
+      qc_check = qc_status
 
-      with open("QC_CHECK", 'wt') as out:
-        out.write(qc_check)
+    with open("QC_CHECK", 'wt') as out:
+      out.write(qc_check)
     CODE
   >>>
   output {
