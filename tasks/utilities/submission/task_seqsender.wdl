@@ -5,19 +5,21 @@ task seqsender_build_and_prep {
     String project_name
     String workspace_name
     String table_name
+    File seqsender_config # NCBI password already encrypted with `seqsender.py load_credentials`
     Array[String] sample_ids
 
-    File seqsender_config # NCBI password already encrypted with `seqsender.py load_credentials`
     String bioproject
+    Array[File]? assembly_fastas # required for GENBANK
+    Array[File]? read1_fastqs # required for SRA
+    Array[File]? read2_fastqs # optional for SRA (single-end)
     String? sra_transfer_gcp_bucket # NCBI-readable bucket the passing samples' reads are copied to
+
     String organism
     Boolean submit_to_biosample
     Boolean submit_to_sra
     Boolean submit_to_genbank
 
-    Array[File]? assembly_fastas # required for GENBANK
-    Array[File]? read1_fastqs # required for SRA
-    Array[File]? read2_fastqs # optional for SRA (single-end)
+    Boolean prep_only
 
     File? input_table # for command line testing only; used instead of downloading the Terra table
 
@@ -54,18 +56,19 @@ task seqsender_build_and_prep {
     # builds a metadata.csv (and FASTA) for every sample, validates each sample on its own with `seqsender prep`,
     # and combines the samples that pass into the 'submit' directory seqsender submits from.
     build_and_prep.py \
+      --metadata_file "~{table_name}.tsv" \
+      --config_file "~{seqsender_config}" \
       --sample_ids "${SAMPLE_IDS[@]}" \
       ~{"--bioproject " + bioproject} \
       --assembly_fastas "${ASSEMBLY_FASTAS[@]}" \
       --read1_fastqs "${READ1_FASTQS[@]}" \
       --read2_fastqs "${READ2_FASTQS[@]}" \
-      --metadata_file "~{table_name}.tsv" \
-      --organism "~{organism}" \
-      --config_file "~{seqsender_config}" \
       ~{"--sra_transfer_bucket " + sra_transfer_gcp_bucket} \
+      ~{"--organism " + organism} \
       ~{if submit_to_biosample then '--biosample' else ''} \
       ~{if submit_to_sra then '--sra' else ''} \
-      ~{if submit_to_genbank then '--genbank' else ''}
+      ~{if submit_to_genbank then '--genbank' else ''} \
+      ~{if prep_only then '--prep_only' else ''}
   >>>
   output {
     File? combined_metadata = "submit/metadata.csv"

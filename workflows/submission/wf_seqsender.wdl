@@ -40,17 +40,18 @@ workflow seqsender {
         project_name = project_name,
         workspace_name = workspace_name,
         table_name = table_name,
-        sample_ids = sample_ids,
         seqsender_config = seqsender_config,
+        sample_ids = sample_ids,
         bioproject = bioproject,
+        assembly_fastas = assembly_fastas,
+        read1_fastqs = read1_fastqs,
+        read2_fastqs = read2_fastqs,
         sra_transfer_gcp_bucket = sra_transfer_gcp_bucket,
         organism = organism,
         submit_to_biosample = submit_to_biosample,
         submit_to_sra = submit_to_sra,
         submit_to_genbank = submit_to_genbank,
-        assembly_fastas = assembly_fastas,
-        read1_fastqs = read1_fastqs,
-        read2_fastqs = read2_fastqs,
+        prep_only = prep_only,
         input_table = input_table
     }
     # the tarball is only written if at least one sample passed prep
