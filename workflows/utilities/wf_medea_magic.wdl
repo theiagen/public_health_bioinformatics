@@ -79,12 +79,12 @@ workflow medea_magic {
         max_distance = cladetyper_max_distance,
         docker = cauris_cladetyper_docker_image
     }
-    # only run snippy if cladetyper retrieves an annotated_reference (e.g. non-functional for clade VI)
-    if (cladetyper.annotated_reference != "None") {
+    # only run snippy when cladetyper returns an annotation (none by default for Clade VI)
+    if (defined(cladetyper.annotated_reference)) {
       if (!assembly_only) {
         call snippy.snippy_variants as snippy_cauris { # no ONT support right now
           input:
-            reference_genome_file = cladetyper.annotated_reference,
+            reference_genome_file = select_first([cladetyper.annotated_reference]),
             read1 = select_first([read1]),
             read2 = read2,
             samplename = samplename,
@@ -100,7 +100,7 @@ workflow medea_magic {
       if (assembly_only) {
         call snippy.snippy_variants as snippy_cauris_assembly {
           input:
-            reference_genome_file = cladetyper.annotated_reference,
+            reference_genome_file = select_first([cladetyper.annotated_reference]),
             assembly_fasta = assembly,
             samplename = samplename,
             map_qual = snippy_map_qual,
@@ -274,7 +274,7 @@ workflow medea_magic {
     String? clade_type = cladetyper.gambit_cladetype
     String? cladetyper_version = cladetyper.gambit_version
     String? cladetyper_docker_image = cladetyper.gambit_cladetyper_docker_image
-    String? cladetype_annotated_ref = cladetyper.annotated_reference
+    File? cladetype_annotated_ref = cladetyper.annotated_reference
     # snippy variants
     String snippy_variants_reference_genome = select_first([snippy_cauris.snippy_variants_reference_genome, snippy_cauris_assembly.snippy_variants_reference_genome, snippy_afumigatus.snippy_variants_reference_genome, snippy_afumigatus_assembly.snippy_variants_reference_genome, snippy_crypto.snippy_variants_reference_genome, snippy_crypto_assembly.snippy_variants_reference_genome, "gs://theiagen-public-resources-rp/empty_files/no_match_detected.txt"])
     String snippy_variants_version = select_first([snippy_cauris.snippy_variants_version, snippy_cauris_assembly.snippy_variants_version,snippy_afumigatus.snippy_variants_version, snippy_afumigatus_assembly.snippy_variants_version, snippy_crypto.snippy_variants_version, snippy_crypto_assembly.snippy_variants_version, "No matching taxon detected"])
