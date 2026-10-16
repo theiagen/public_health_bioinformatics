@@ -8,6 +8,7 @@ task seqsender_build_and_prep {
     Array[String] sample_ids
 
     File seqsender_config # NCBI password already encrypted with `seqsender.py load_credentials`
+    String bioproject
     String organism
     Boolean submit_to_biosample
     Boolean submit_to_sra
@@ -53,6 +54,7 @@ task seqsender_build_and_prep {
     # and combines the samples that pass into the 'submit' directory seqsender submits from.
     build_and_prep.py \
       --sample_ids "${SAMPLE_IDS[@]}" \
+      ~{"--bioproject " + bioproject} \
       --assembly_fastas "${ASSEMBLY_FASTAS[@]}" \
       --read1_fastqs "${READ1_FASTQS[@]}" \
       --read2_fastqs "${READ2_FASTQS[@]}" \

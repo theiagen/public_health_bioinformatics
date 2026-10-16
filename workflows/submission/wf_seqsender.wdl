@@ -12,6 +12,7 @@ workflow seqsender {
     String seqsender_key # the key that encrypted the password in seqsender_config
     Array[String] sample_ids
 
+    String bioproject
     Array[File]? assembly_fastas # required for GENBANK
     Array[File]? read1_fastqs # required for SRA
     Array[File]? read2_fastqs # optional for SRA (single-end)
@@ -40,6 +41,7 @@ workflow seqsender {
         table_name = table_name,
         sample_ids = sample_ids,
         seqsender_config = seqsender_config,
+        bioproject = bioproject,
         organism = organism,
         submit_to_biosample = submit_to_biosample,
         submit_to_sra = submit_to_sra,
