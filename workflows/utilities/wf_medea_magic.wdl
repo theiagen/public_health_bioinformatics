@@ -79,6 +79,35 @@ workflow medea_magic {
         max_distance = cladetyper_max_distance,
         docker = cauris_cladetyper_docker_image
     }
+    # default queries: product names where one gene resolves in every clade reference, otherwise
+    # the matched clade reference's locus tags (FLO8, FLO8 N-terminus, MEC3, ERG3, PSK74852; from kzm-gatk-dev)
+    # gene_coverage (pysam:1.23.1) matches a single qualifier literally, so it queries locus tags only
+    String cauris_product_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,sterol.24-C-methyltransferase"
+    if (cladetyper.gambit_cladetype == "Clade1") {
+      String cauris_clade1_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,sterol.24-C-methyltransferase,B9J08_02359,B9J08_02360,B9J08_00960,B9J08_01595,B9J08_04226"
+      String cauris_clade1_coverage_genes = "B9J08_02922,B9J08_03698,B9J08_01933,B9J08_04223,B9J08_02359,B9J08_02360,B9J08_00960,B9J08_01595,B9J08_04226"
+    }
+    # Clade II, IV and V annotate FLO8 as a single gene
+    if (cladetyper.gambit_cladetype == "Clade2") {
+      String cauris_clade2_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,sterol.24-C-methyltransferase,CJI96_0001121,CJI96_0001637,CJI96_0002270,CJI96_0004130"
+      String cauris_clade2_coverage_genes = "CJI96_0001351,CJI96_0001197,CJI96_0002603,CJI96_0004127,CJI96_0001121,CJI96_0001637,CJI96_0002270,CJI96_0004130"
+    }
+    if (cladetyper.gambit_cladetype == "Clade3") {
+      String cauris_clade3_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,sterol.24-C-methyltransferase,CJI97_000401,CJI97_000402,CJI97_003175,CJI97_003811,CJI97_005426"
+      String cauris_clade3_coverage_genes = "CJI97_000983,CJI97_001156,CJI97_004144,CJI97_005423,CJI97_000401,CJI97_000402,CJI97_003175,CJI97_003811,CJI97_005426"
+    }
+    if (cladetyper.gambit_cladetype == "Clade4") {
+      String cauris_clade4_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,sterol.24-C-methyltransferase,CJJ07_003930,CJJ07_005307,CJJ07_003685,CJJ07_003405"
+      String cauris_clade4_coverage_genes = "CJJ07_005267,CJJ07_004981,CJJ07_000827,CJJ07_003408,CJJ07_003930,CJJ07_005307,CJJ07_003685,CJJ07_003405"
+    }
+    if (cladetyper.gambit_cladetype == "Clade5") {
+      String cauris_clade5_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,sterol.24-C-methyltransferase,FDK38_002567,FDK38_000935,FDK38_001564,FDK38_004143"
+      String cauris_clade5_coverage_genes = "FDK38_002011,FDK38_003627,FDK38_001898,FDK38_004140,FDK38_002567,FDK38_000935,FDK38_001564,FDK38_004143"
+    }
+    String cauris_query_genes = select_first([cauris_clade1_query_genes, cauris_clade2_query_genes, cauris_clade3_query_genes, cauris_clade4_query_genes, cauris_clade5_query_genes, cauris_product_query_genes])
+    String cauris_coverage_genes = select_first([cauris_clade1_coverage_genes, cauris_clade2_coverage_genes, cauris_clade3_coverage_genes, cauris_clade4_coverage_genes, cauris_clade5_coverage_genes, cauris_product_query_genes])
+    # a user-supplied (e.g. Clade VI) annotation has unknown locus tags, so fall back to product matching
+    String cauris_coverage_qualifier = if cauris_coverage_genes == cauris_product_query_genes then "product" else "locus_tag"
     # only run snippy when cladetyper returns an annotation (none by default for Clade VI)
     if (defined(cladetyper.annotated_reference)) {
       if (!assembly_only) {
@@ -117,7 +146,7 @@ workflow medea_magic {
           samplename = samplename,
           snippy_variants_results = select_first([snippy_cauris.snippy_variants_results, snippy_cauris_assembly.snippy_variants_results]),
           reference = cladetyper.annotated_reference,
-          query_gene = select_first([query_genes, "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,B9J08_005340,B9J08_000401,B9J08_003102,B9J08_003737,B9J08_005343"]),
+          query_gene = select_first([query_genes, cauris_query_genes]),
           docker = snippy_gene_query_docker_image
       }
       call gene_coverage_task.gene_coverage as gene_coverage_cauris {
@@ -126,15 +155,18 @@ workflow medea_magic {
           bam = select_first([snippy_cauris.snippy_variants_bam, snippy_cauris_assembly.snippy_variants_bam]),
           bai = select_first([snippy_cauris.snippy_variants_bai, snippy_cauris_assembly.snippy_variants_bai]),
           reference_gbff = cladetyper.annotated_reference,
-          query_genes = select_first([query_genes, "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,B9J08_005340,B9J08_000401,B9J08_003102,B9J08_003737,B9J08_005343"]),
+          query_genes = select_first([query_genes, cauris_coverage_genes]),
           feature_type = gene_coverage_feature_type,
-          feature_qualifier = gene_coverage_feature_qualifier,
+          feature_qualifier = select_first([gene_coverage_feature_qualifier, if defined(query_genes) then "product" else cauris_coverage_qualifier]),
           min_depth = gene_coverage_min_depth,
           min_quality = gene_coverage_min_quality
       }
     }
   }
   if (medea_tag == "Aspergillus fumigatus") {
+    # locus tags keep the search specific (from kzm-gatk-dev):
+    # AFUA_4G06890 = cyp51A, AFUA_6G05300 = hapE, AFUA_4G08340 = cox10
+    String afumigatus_query_genes = "AFUA_4G06890,AFUA_6G05300,AFUA_4G08340"
     if (!assembly_only) {
       call snippy.snippy_variants as snippy_afumigatus {
         input:
@@ -171,7 +203,7 @@ workflow medea_magic {
         samplename = samplename,
         snippy_variants_results = select_first([snippy_afumigatus.snippy_variants_results, snippy_afumigatus_assembly.snippy_variants_results]),
         reference = afumigatus_reference_gbff,
-        query_gene = select_first([query_genes, "Cyp51A,HapE,AFUA_4G08340"]), # AFUA_4G08340 is COX10 according to MARDy
+        query_gene = select_first([query_genes, afumigatus_query_genes]),
         docker = snippy_gene_query_docker_image
     }
     call gene_coverage_task.gene_coverage as gene_coverage_afumigatus {
@@ -180,9 +212,9 @@ workflow medea_magic {
         bam = select_first([snippy_afumigatus.snippy_variants_bam, snippy_afumigatus_assembly.snippy_variants_bam]),
         bai = select_first([snippy_afumigatus.snippy_variants_bai, snippy_afumigatus_assembly.snippy_variants_bai]),
         reference_gbff = afumigatus_reference_gbff,
-        query_genes = select_first([query_genes, "Cyp51A,HapE,AFUA_4G08340"]),
+        query_genes = select_first([query_genes, afumigatus_query_genes]),
         feature_type = gene_coverage_feature_type,
-        feature_qualifier = gene_coverage_feature_qualifier,
+        feature_qualifier = select_first([gene_coverage_feature_qualifier, if defined(query_genes) then "product" else "locus_tag"]),
         min_depth = gene_coverage_min_depth,
         min_quality = gene_coverage_min_quality
     }
@@ -235,7 +267,7 @@ workflow medea_magic {
         reference_gbff = cryptoneo_reference_gbff,
         query_genes = select_first([query_genes, "CNA00300"]),
         feature_type = gene_coverage_feature_type,
-        feature_qualifier = gene_coverage_feature_qualifier,
+        feature_qualifier = select_first([gene_coverage_feature_qualifier, if defined(query_genes) then "product" else "locus_tag"]),
         min_depth = gene_coverage_min_depth,
         min_quality = gene_coverage_min_quality
     }
