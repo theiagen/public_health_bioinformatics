@@ -38,18 +38,22 @@ fragment: true
 <!-- endif -->
 
 <!-- if: theiaeuk -->
-    ??? dna "GBFF and BED file usage"
-        For fungal pathogens, either a GBFF or a BED file may be used for gene coverage coordinate selection.
+    In TheiaEuk, gene coverage is calculated with theiagene on the GFF that Snippy derives from the reference GBFF, so gene coordinates always match the Snippy alignment, including for a user-supplied annotation.
 
-        - If a GBFF is used, a comma-delimited `query_genes` list must be provided (for example: `geneA,geneB,geneC`) to extract gene coordinates
-        - If a BED is used, gene names can be taken from the BED entries; if `query_genes` is supplied, particular regions will be extracted
+    ??? dna "Query gene matching"
+        By default, each organism's queries are the strings in its "Default gene queries" table below. A comma-delimited `query_genes` list (for example: `geneA,geneB,geneC`) overrides them. Queries are matched against the reference's CDS features as follows:
 
-        The following query genes are used by default:
+        - Queries match the `product` and `locus_tag` attributes (set by `gene_coverage_feature_qualifier`)
+        - A `.` stands in for a space, so `lanosterol.14-alpha.demethylase` matches the product "lanosterol 14-alpha demethylase"
+        - Matching is a case-insensitive substring match, so `FKS1` matches "1,3-beta-glucan synthase component FKS1"
+        - A `_` is literal, so it only matches a `_` in the annotation
+        - Output keys are the query strings. A query that matches several genes is split into one `<query>.<gene>` key per gene.
 
-        - _Aspergillus fumigatus_: `Cyp51A`, `HapE`, `AFUA_4G08340` (COX10 in the default reference)
-        - _Candidozyma auris_: `FKS1`, `lanosterol.14-alpha.demethylase`, `uracil.phosphoribosyltransferase`, `B9J08_005340`, `B9J08_000401`, `B9J08_003102`, `B9J08_003737`, `B9J08_005343`
-        - _Cryptococcus neoformans_: `CNA00300` (ERG11 in the default reference)
+        !!! warning "Gene coverage and Snippy match queries differently"
+            The Snippy gene query is a case-sensitive `grep` of the Snippy results, in which `.` matches any character. A query can resolve in one task and not the other.
 <!-- endif -->
+
+<!-- if: viral -->
 
     !!! techdetails "Gene Coverage Technical Details"
         |  | Links |
@@ -58,3 +62,14 @@ fragment: true
         | Software Source Code | [samtools on GitHub](https://github.com/samtools/samtools) |
         | Software Documentation | [samtools Manual](https://www.htslib.org/doc/samtools.html) |
         | Original Publication(s) | [Twelve years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |
+<!-- endif -->
+<!-- if: theiaeuk -->
+
+    !!! techdetails "Gene Coverage Technical Details"
+        |  | Links |
+        | --- | --- |
+        | Task | [task_gene_coverage_theiagene.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/v4.3.1/tasks/quality_control/basic_statistics/task_gene_coverage_theiagene.wdl) |
+        | Software Source Code | [theiagene on GitHub](https://github.com/theiagen/theiagene) |
+        | Software Documentation | [samtools Manual](https://www.htslib.org/doc/samtools.html) |
+        | Original Publication(s) | [Twelve years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |
+<!-- endif -->

@@ -47,44 +47,33 @@ fragment: true
 <!-- endif -->
 <!-- endif -->
 
-<!-- if: cauris|calbicans|afumigatus|cneoformans -->
+<!-- if: cauris|afumigatus|cneoformans -->
 ??? task "`Snippy_Variants`: Antifungal Resistance Detection"
-    To detect mutations that may confer antifungal resistance, Snippy is used to find all variants relative to the clade-specific reference, then these variants are queried for product names associated with resistance. It's important to note that unlike AMRSearch, this task reports all variants found in the searched targets.
+    To detect mutations that may confer antifungal resistance, Snippy is used to find all variants relative to the clade-specific reference, then these variants are queried for product names or locus tags associated with resistance. It's important to note that unlike AMRSearch, this task reports all variants found in the searched targets.
 
 <!-- if: cauris -->
     - FKS1
     - ERG11 (lanosterol 14-alpha demethylase)
     - FUR1 (uracil phosphoribosyltransferase)
-<!-- endif -->
-<!-- if: calbicans -->
-    - ERG11
-    - GCS1 (FKS1)
-    - FUR1
-    - RTA2
+    - ERG6 (sterol 24-C-methyltransferase)
+    - FLO8
+    - FLO8 N-terminus
+    - MEC3
+    - ERG3
+    - PSK74852
 <!-- endif -->
 <!-- if: afumigatus -->
-    - Cyp51A
-    - HapE
+    - cyp51A (AFUA_4G06890)
+    - hapE (AFUA_6G05300)
     - COX10 (AFUA_4G08340)
 <!-- endif -->
 <!-- if: cneoformans -->
     - ERG11 (CNA00300)
 <!-- endif -->
 
-    Snippy results are queried to see if any mutations were identified in those genes. By default, the following loci are automatically checked (which can be overwritten by the user). You will find the mutations next to the locus tag in the `theiaeuk_snippy_variants_hits` column corresponding gene name (see below):
+    Snippy results are queried to see if any mutations were identified in those genes. The default query strings, which the user can override with `query_genes`, are listed with their genes in the **Default gene queries** table above. You will find the mutations next to the matching query string in the `theiaeuk_snippy_variants_hits` column.
 
 <!-- if: cauris -->
-    | **TheiaEuk Search Term** | **Corresponding Gene Name** |
-    |---|---|
-    | B9J08_005340 | ERG6 |
-    | B9J08_000401 | FLO8 |
-    | B9J08_005343 | Hypothetical protein (PSK74852) |
-    | B9J08_003102 | MEC3 |
-    | B9J08_003737 | ERG3 |
-    | lanosterol.14-alpha.demethylase | ERG11 |
-    | uracil.phosphoribosyltransferase | FUR1 |
-    | FKS1 | FKS1 |  
-
     ??? toggle "Known resistance-conferring mutations for _Candidozyma auris_"
         Mutations in these genes that are known to confer resistance are shown below
 
@@ -101,35 +90,15 @@ fragment: true
         | Candidozyma auris | Human | FKS1 |  | S639F | Anidulafungin | [A multicentre study of antifungal susceptibility patterns among 350 _Candida auris_ isolates (2009–17) in India: role of the ERG11 and FKS1 genes in azole and echinocandin resistance](https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718) |
         | Candidozyma auris | Human | FUR1 | CAMJ_004922 | F211I | 5-flucytosine | [Genomic epidemiology of the UK outbreak of the emerging human fungal pathogen Candida auris](https://doi.org/10.1038/s41426-018-0045-x) |
 <!-- endif -->
-<!-- if: calbicans -->
-    | **TheiaEuk Search Term** | **Corresponding Gene Name** |
-    |---|---|
-    | ERG11 | ERG11 |
-    | GCS1 | FKS1 |
-    | FUR1 | FUR1 |
-    | RTA2 | RTA2 |
-<!-- endif -->
-<!-- if: afumigatus -->
-    | **TheiaEuk Search Term** | **Corresponding Gene Name** |
-    |---|---|
-    | Cyp51A | Cyp51A |
-    | HapE | HapE |
-    | AFUA_4G08340 | COX10 |
-<!-- endif -->
-<!-- if: cneoformans -->
-    | **TheiaEuk Search Term** | **Corresponding Gene Name** |
-    |---|---|
-    | CNA00300 | ERG11 |
-<!-- endif -->
 
     ??? toggle "Example Output Interpretation"
         For example, one sample may have the following output for the `theiaeuk_snippy_variants_hits` column:
 
         ```plaintext
-        lanosterol.14-alpha.demethylase: lanosterol 14-alpha demethylase (missense_variant c.428A>G p.Lys143Arg; C:266 T:0),B9J08_000401: hypothetical protein (stop_gained c.424C>T p.Gln142*; A:70 G:0)
+        lanosterol.14-alpha.demethylase: lanosterol 14-alpha demethylase (missense_variant c.428A>G p.Lys143Arg; C:266 T:0),B9J08_02359: hypothetical protein (stop_gained c.424C>T p.Gln142*; A:70 G:0)
         ```
 
-        Based on this, we can tell that ERG11 has a missense variant at position 143 (Lysine to Arginine) and B9J08_000401 (which is FLO8) has a stop-gained variant at position 142 (Glutamine to Stop).
+        Based on this, we can tell that ERG11 has a missense variant at position 143 (Lysine to Arginine) and B9J08_02359 (which is FLO8) has a stop-gained variant at position 142 (Glutamine to Stop).
 <!-- endif -->
 
     !!! techdetails "Snippy Variants Technical Details"
