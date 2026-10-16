@@ -23,7 +23,7 @@ task seqsender_build_and_prep {
 
     File? input_table # for command line testing only; used instead of downloading the Terra table
 
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/seqsender:1.5.2"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/seqsender:1.5.2-dev"
     Int cpu = 2
     Int memory = 8
     Int disk_size = 25
@@ -103,7 +103,7 @@ task seqsender_submit {
     Boolean submit_to_sra
     Boolean submit_to_genbank
 
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/seqsender:1.5.2"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/seqsender:1.5.2-dev"
     Int cpu = 2
     Int memory = 4
     Int disk_size = 100
