@@ -14,7 +14,7 @@ task seqsender_build_and_prep {
     Array[File]? read2_fastqs # optional for SRA (single-end)
     String? sra_transfer_gcp_bucket # NCBI-readable bucket the passing samples' reads are copied to
 
-    String organism
+    String seqsender_organism_tag
     Boolean submit_to_biosample
     Boolean submit_to_sra
     Boolean submit_to_genbank
@@ -64,7 +64,7 @@ task seqsender_build_and_prep {
       --read1_fastqs "${READ1_FASTQS[@]}" \
       --read2_fastqs "${READ2_FASTQS[@]}" \
       ~{"--sra_transfer_bucket " + sra_transfer_gcp_bucket} \
-      ~{"--organism " + organism} \
+      ~{"--organism " + seqsender_organism_tag} \
       ~{if submit_to_biosample then '--biosample' else ''} \
       ~{if submit_to_sra then '--sra' else ''} \
       ~{if submit_to_genbank then '--genbank' else ''} \
@@ -98,7 +98,7 @@ task seqsender_submit {
     String seqsender_key # the key that encrypted the password in seqsender_config
     Boolean submit_to_production
 
-    String organism
+    String seqsender_organism_tag
     Boolean submit_to_biosample
     Boolean submit_to_sra
     Boolean submit_to_genbank
@@ -117,7 +117,7 @@ task seqsender_submit {
     # 'submit/' directory holds 'metadata.csv', 'sequence.fasta', 'config.yaml', and 'raw_reads/' when the reads are uploaded over FTP
     tar -xzf "~{submission_tarball}"
 
-    NAME="seqsender_submit_$(date -u +%Y%m%d_%H%M%S)_~{organism}"
+    NAME="seqsender_submit_$(date -u +%Y%m%d_%H%M%S)_~{seqsender_organism_tag}"
     echo "${NAME}" | tee SUBMISSION_NAME
 
     RETURN_CODE=0
@@ -125,7 +125,7 @@ task seqsender_submit {
       ~{if submit_to_biosample then '--biosample' else ''} \
       ~{if submit_to_sra then '--sra' else ''} \
       ~{if submit_to_genbank then '--genbank' else ''} \
-      --organism "~{organism}" \
+      --organism "~{seqsender_organism_tag}" \
       --submission_dir submit \
       --submission_name "${NAME}" \
       --config_file submit/config.yaml \
