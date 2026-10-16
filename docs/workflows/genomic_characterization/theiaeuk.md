@@ -103,7 +103,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 ??? toggle "_Candidozyma auris_ (also known as _Candida auris_)"
     Three tools can be deployed when _Candidozyma auris_/_Candida auris_ is identified.
 
-    **Default gene queries:** Snippy results and gene coverage are searched by product name where a single gene matches in every clade reference, otherwise by the matched clade's locus tags. Variant calling and gene queries are skipped for Clade VI unless the user supplies `cladetyper_ref_clade6_annotated`.
+    **Default gene queries:** Snippy results and gene coverage are searched by the protein product name or by locus tags. Variant calling and gene queries are skipped for Clade VI unless the user supplies `cladetyper_ref_clade6_annotated`.
 
     | Gene | Clade I | Clade II | Clade III | Clade IV | Clade V |
     |---|---|---|---|---|---|
@@ -119,10 +119,8 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 
     \* _FLO8_ is annotated as a single gene in the Clade II, IV and V references.
 
-    - Each query string is both the label in `theiaeuk_snippy_variants_hits` and the key in the `gene_coverage` outputs.
     - The Clade II reference writes products with `_` in place of spaces, so its _ERG11_, _FUR1_ and _ERG6_ queries use `_`.
-    - Clade III uses the RefSeq record (`GCF_002775015.1`), so some hit products differ from other clades: "uncharacterized protein" for _FLO8_/_MEC3_/_PSK74852_, and "C-5 sterol desaturase" for _ERG3_.
-    - With a user-supplied annotation (for example, Clade VI), only the four product names (the `.`-delimited _FKS1_, _ERG11_, _FUR1_ and _ERG6_ queries) are queried. To query more genes, set `query_genes`.
+    - With a user-supplied annotation, only the four product names (the `.`-delimited _FKS1_, _ERG11_, _FUR1_ and _ERG6_ queries) are queried. To query more genes, set `query_genes`, which overwrites the default list.
 
 {{ include_md("common_text/cauris_cladetyper.md", indent=4) }}
 {{ include_md("common_text/amr_search_task.md", indent=4, condition="theiaeuk") }}
