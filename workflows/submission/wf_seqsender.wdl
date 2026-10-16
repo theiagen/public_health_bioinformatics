@@ -59,7 +59,7 @@ workflow seqsender {
           submission_tarball = select_first([seqsender_build_and_prep.tarball]),
           seqsender_key = seqsender_key,
           submit_to_production = submit_to_production,
-          organism = organism,
+          seqsender_organism_tag = seqsender_organism_tag,
           submit_to_biosample = submit_to_biosample,
           submit_to_sra = submit_to_sra,
           submit_to_genbank = submit_to_genbank,
