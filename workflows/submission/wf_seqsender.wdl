@@ -16,6 +16,7 @@ workflow seqsender {
     Array[File]? assembly_fastas # required for GENBANK
     Array[File]? read1_fastqs # required for SRA
     Array[File]? read2_fastqs # optional for SRA (single-end)
+    String? sra_transfer_gcp_bucket # NCBI-readable bucket the passing samples' reads are copied to
 
     String organism = "FLU" # options: "FLU", "COV", "OTHER"
     Boolean submit_to_biosample = true
@@ -42,6 +43,7 @@ workflow seqsender {
         sample_ids = sample_ids,
         seqsender_config = seqsender_config,
         bioproject = bioproject,
+        sra_transfer_gcp_bucket = sra_transfer_gcp_bucket,
         organism = organism,
         submit_to_biosample = submit_to_biosample,
         submit_to_sra = submit_to_sra,

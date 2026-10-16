@@ -9,6 +9,7 @@ task seqsender_build_and_prep {
 
     File seqsender_config # NCBI password already encrypted with `seqsender.py load_credentials`
     String bioproject
+    String? sra_transfer_gcp_bucket # NCBI-readable bucket the passing samples' reads are copied to
     String organism
     Boolean submit_to_biosample
     Boolean submit_to_sra
@@ -61,6 +62,7 @@ task seqsender_build_and_prep {
       --metadata_file "~{table_name}.tsv" \
       --organism "~{organism}" \
       --config_file "~{seqsender_config}" \
+      ~{"--sra_transfer_bucket " + sra_transfer_gcp_bucket} \
       ~{if submit_to_biosample then '--biosample' else ''} \
       ~{if submit_to_sra then '--sra' else ''} \
       ~{if submit_to_genbank then '--genbank' else ''}
@@ -109,7 +111,7 @@ task seqsender_submit {
   command <<<
     set -euo pipefail
 
-    # 'submit/' directory holds 'metadata.csv', 'sequence.fasta', 'raw_reads/' and 'config.yaml'
+    # 'submit/' directory holds 'metadata.csv', 'sequence.fasta', 'config.yaml', and 'raw_reads/' when the reads are uploaded over FTP
     tar -xzf "~{submission_tarball}"
 
     NAME="seqsender_submit_$(date -u +%Y%m%d_%H%M%S)_~{organism}"
