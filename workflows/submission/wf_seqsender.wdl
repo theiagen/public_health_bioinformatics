@@ -5,9 +5,9 @@ import "../../tasks/utilities/submission/task_seqsender.wdl" as seqsender_tasks
 
 workflow seqsender {
   input {
-    String project_name
-    String workspace_name
-    String table_name
+    String terra_project_name
+    String terra_workspace_name
+    String terra_table_name
     File seqsender_config # NCBI password already encrypted with `seqsender.py load_credentials`
     String seqsender_key # the key that encrypted the password in seqsender_config
     Array[String] sample_ids
@@ -37,9 +37,9 @@ workflow seqsender {
   if (!defined(resume_submission_tarball)) {
     call seqsender_tasks.seqsender_build_and_prep {
       input:
-        project_name = project_name,
-        workspace_name = workspace_name,
-        table_name = table_name,
+        terra_project_name = terra_project_name,
+        terra_workspace_name = terra_workspace_name,
+        terra_table_name = terra_table_name,
         seqsender_config = seqsender_config,
         sample_ids = sample_ids,
         bioproject = bioproject,

@@ -2,9 +2,9 @@ version 1.0
 
 task seqsender_build_and_prep {
   input {
-    String project_name
-    String workspace_name
-    String table_name
+    String terra_project_name
+    String terra_workspace_name
+    String terra_table_name
     File seqsender_config # NCBI password already encrypted with `seqsender.py load_credentials`
     Array[String] sample_ids
 
@@ -43,20 +43,20 @@ task seqsender_build_and_prep {
     READ1_FASTQS=(~{sep=' ' read1_fastqs})
     READ2_FASTQS=(~{sep=' ' read2_fastqs})
 
-    # download the Terra {table_name}.tsv and reduce it to only the selected samples
+    # download the Terra {terra_table_name}.tsv and reduce it to only the selected samples
     if [ -n "~{input_table}" ]; then
-      cp "~{input_table}" "~{table_name}.tsv"
+      cp "~{input_table}" "~{terra_table_name}.tsv"
     else
-      bioforklift download "~{table_name}" \
-        --project "~{project_name}" \
-        --workspace "~{workspace_name}" \
+      bioforklift download "~{terra_table_name}" \
+        --project "~{terra_project_name}" \
+        --workspace "~{terra_workspace_name}" \
         --samples "${SAMPLE_IDS[@]}"
     fi
 
     # builds a metadata.csv (and FASTA) for every sample, validates each sample on its own with `seqsender prep`,
     # and combines the samples that pass into the 'submit' directory seqsender submits from.
     build_and_prep.py \
-      --metadata_file "~{table_name}.tsv" \
+      --metadata_file "~{terra_table_name}.tsv" \
       --config_file "~{seqsender_config}" \
       --sample_ids "${SAMPLE_IDS[@]}" \
       ~{"--bioproject " + bioproject} \
