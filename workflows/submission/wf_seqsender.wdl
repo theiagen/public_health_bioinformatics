@@ -27,6 +27,7 @@ workflow seqsender {
     File? resume_submission_tarball # seqsender_state_tarball from an earlier run; skips build_and_prep and submit, and only polls
 
     File? input_table # for command line testing only; skips the Terra download
+
   }
   call versioning.version_capture {
     input:
