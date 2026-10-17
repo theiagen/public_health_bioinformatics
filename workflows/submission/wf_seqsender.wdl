@@ -18,14 +18,16 @@ workflow seqsender {
     Array[File]? read2_fastqs # optional for SRA (single-end)
     String? sra_transfer_gcp_bucket # NCBI-readable bucket the passing samples' reads are copied to
 
-    String seqsender_organism_tag = "FLU" # options: "FLU", "COV", "OTHER"
-    Boolean submit_to_biosample = true
-    Boolean submit_to_sra = true
-    Boolean submit_to_genbank = true
+    String seqsender_organism_tag # options: "FLU", "COV", "OTHER"
+    Boolean submit_to_biosample
+    Boolean submit_to_sra
+    Boolean submit_to_genbank
 
     Boolean submit_to_production = false
     Boolean prep_only = false
     File? resume_submission_tarball # seqsender_state_tarball from an earlier run; skips build_and_prep and submit, and only polls
+    Float max_wait_hours = 48
+    Float poll_interval_minutes = 10
 
     File? input_table # for command line testing only; skips the Terra download
   }
@@ -66,6 +68,17 @@ workflow seqsender {
       }
     }
   }
+  # poll a new submission, or resume polling an earlier one
+  File? state_tarball = if defined(resume_submission_tarball) then resume_submission_tarball else seqsender_submit.tarball
+  if (defined(state_tarball)) {
+    call seqsender_tasks.seqsender_poll_and_wait {
+      input:
+        state_tarball = select_first([state_tarball]),
+        seqsender_key = seqsender_key,
+        max_wait_hours = max_wait_hours,
+        poll_interval_minutes = poll_interval_minutes
+    }
+  }
   output {
     # Version Capture
     String seqsender_wf_version = version_capture.phb_version
@@ -82,6 +95,16 @@ workflow seqsender {
     String? seqsender_docker = seqsender_build_and_prep.seqsender_docker
     # Submit - skipped when resuming or with prep_only
     String? seqsender_submit_status = seqsender_submit.status
-    File? seqsender_submit_log = seqsender_submit.log
+    # Poll - use `seqsender_state_tarball` with `resume_submission_tarball`
+    File? seqsender_poll_tarball = seqsender_poll_and_wait.tarball
+    String? seqsender_submission_name = seqsender_poll_and_wait.submission_name
+    String? seqsender_final_status = seqsender_poll_and_wait.final_status
+    String? seqsender_database_statuses = seqsender_poll_and_wait.database_statuses
+    File? seqsender_poll_log = seqsender_poll_and_wait.log
+    File? seqsender_submission_log = seqsender_poll_and_wait.submission_log
+    File? seqsender_submission_status_report = seqsender_poll_and_wait.submission_status_report
+    File? seqsender_biosample_report = seqsender_poll_and_wait.biosample_xml_report
+    File? seqsender_sra_report = seqsender_poll_and_wait.sra_xml_report
+    File? seqsender_genbank_report = seqsender_poll_and_wait.genbank_xml_report
   }
 }

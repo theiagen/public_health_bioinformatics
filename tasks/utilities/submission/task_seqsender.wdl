@@ -166,3 +166,59 @@ task seqsender_submit {
     maxRetries: 0
   }
 }
+
+task seqsender_poll_and_wait {
+  input {
+    File state_tarball # `tarball` from seqsender_submit or the newest seqsender_poll_and_wait
+    String seqsender_key # the key that encrypted the password in seqsender_config
+    Float max_wait_hours
+    Float poll_interval_minutes
+
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/seqsender:1.5.2-dev"
+    Int cpu = 1
+    Int memory = 2
+    Int disk_size = 10
+  }
+  meta {
+    volatile: true
+  }
+  command <<<
+    set -euo pipefail
+
+    # 'submit/' directory holds the submission files and the submission_log.csv seqsender uses to track progress
+    tar -xzf "~{state_tarball}"
+
+    # checks NCBI ftp until every database is processed, one has an error, or max_wait_hours is reached
+    RETURN_CODE=0
+    poll_and_wait.py \
+      --submit_dir submit \
+      --key "~{seqsender_key}" \
+      --max_wait_hours ~{max_wait_hours} \
+      --poll_interval_minutes ~{poll_interval_minutes} || RETURN_CODE=$?
+
+    # saved even if polling stopped early
+    tar -czf seqsender_state.tar.gz submit
+    exit "${RETURN_CODE}"
+  >>>
+  output {
+    File tarball = "seqsender_state.tar.gz"
+    String submission_name = read_string("SUBMISSION_NAME")
+    String final_status = read_string("FINAL_STATUS")
+    String database_statuses = read_string("DATABASE_STATUSES")
+    File log = "seqsender_poll_and_wait.log"
+    File submission_log = "submit/submission_log.csv"
+    File? submission_status_report = "submit/~{submission_name}/submission_files/submission_status_report.csv"
+    File? biosample_xml_report = "submit/~{submission_name}/submission_files/BIOSAMPLE/report.xml"
+    File? sra_xml_report = "submit/~{submission_name}/submission_files/SRA/report.xml"
+    File? genbank_xml_report = "submit/~{submission_name}/submission_files/GENBANK/report.xml"
+  }
+  runtime {
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    preemptible: 0
+    maxRetries: 0
+  }
+}
