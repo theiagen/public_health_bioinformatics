@@ -133,9 +133,9 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 
     | Gene | locus_tag | Product | Query (Snippy hit label and gene coverage key) |
     |---|---|---|---|
-    | _cyp51A_ | `AFUA_4G06890` | cytochrome P450 | `AFUA_4G06890` |
+    | _cyp51A_ | `AFUA_4G06890` | 14-alpha sterol demethylase Cyp51A | `AFUA_4G06890` |
     | _hapE_ | `AFUA_6G05300` | CCAAT-binding factor complex subunit HapE | `AFUA_6G05300` |
-    | _cox10_ | `AFUA_4G08340` | protoheme IX farnesyltransferase | `AFUA_4G08340` |
+    | _cox10_ | `AFUA_4G08340` | heme a biosynthesis protein, putative | `AFUA_4G08340` |
 
     Reference: `GCF_000002655.1` (ASM265v1). Locus tags are queried in place of gene or product names to keep the search specific; variants are reported under the locus tag.
 
