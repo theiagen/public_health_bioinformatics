@@ -120,7 +120,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
     \* _FLO8_ is annotated as a single gene in the Clade II, IV and V references.
 
     - The Clade II reference writes products with `_` in place of spaces, so its _ERG11_, _FUR1_ and _ERG6_ queries use `_`.
-    - With a user-supplied annotation, only the four product names (the `.`-delimited _FKS1_, _ERG11_, _FUR1_ and _ERG6_ queries) are queried. To query more genes, set `query_genes`, which overwrites the default list.
+    - With a user-supplied Clade VI annotation, only the four product names (the `.`-delimited _FKS1_, _ERG11_, _FUR1_ and _ERG6_ queries) are queried; a user-supplied annotation for Clades I-V still uses that clade's queries above. To query more genes, set `query_genes`, which overwrites the default list.
 
 {{ include_md("common_text/cauris_cladetyper.md", indent=4) }}
 {{ include_md("common_text/amr_search_task.md", indent=4, condition="theiaeuk") }}
