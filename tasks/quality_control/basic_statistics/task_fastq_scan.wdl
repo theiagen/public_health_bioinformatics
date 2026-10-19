@@ -56,7 +56,7 @@ task fastq_scan_pe {
       jq -r .qc_stats.qual_mean ~{read2_name}_fastq-scan.json > READ2_MEAN_QUALITY
       echo "DEBUG: mean read quality in $(basename ~{read2}): $(cat READ2_MEAN_QUALITY)"
     else
-      echo 0 | tee READ1_SEQS READ1_MEAN_LENGTH READ1_MEAN_QUALITY
+      echo 0 | tee READ2_SEQS READ2_MEAN_LENGTH READ2_MEAN_QUALITY
     fi
 
     read1_seqs=$(cat READ1_SEQS)
