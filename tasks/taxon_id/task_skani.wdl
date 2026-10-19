@@ -122,8 +122,6 @@ task skani {
     else
       echo "N/A" > TOP_TAXON
     fi
-  fi
-
   >>>
   output{
     File? skani_report = "~{samplename}_skani_results_sorted.tsv"
