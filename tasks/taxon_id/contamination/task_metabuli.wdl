@@ -123,6 +123,7 @@ task metabuli {
             fi
           else
             echo "DEBUG: No unclassified reads found"
+          fi
         fi
 
       else

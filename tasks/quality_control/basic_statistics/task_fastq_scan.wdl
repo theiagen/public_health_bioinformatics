@@ -39,8 +39,7 @@ task fastq_scan_pe {
       jq -r .qc_stats.qual_mean ~{read1_name}_fastq-scan.json > READ1_MEAN_QUALITY
       echo "DEBUG: mean read quality in $(basename ~{read1}): $(cat READ1_MEAN_QUALITY)"
     else
-      cat 0 > READ1_SEQS
-      touch READ1_MEAN_LENGTH READ1_MEAN_QUALITY
+      echo 0 | tee READ1_SEQS READ1_MEAN_LENGTH READ1_MEAN_QUALITY
     fi
 
     # capture reverse read stats
@@ -57,8 +56,7 @@ task fastq_scan_pe {
       jq -r .qc_stats.qual_mean ~{read2_name}_fastq-scan.json > READ2_MEAN_QUALITY
       echo "DEBUG: mean read quality in $(basename ~{read2}): $(cat READ2_MEAN_QUALITY)"
     else
-      cat 0 > READ2_SEQS
-      touch READ2_MEAN_LENGTH READ2_MEAN_QUALITY
+      echo 0 | tee READ1_SEQS READ1_MEAN_LENGTH READ1_MEAN_QUALITY
     fi
 
     read1_seqs=$(cat READ1_SEQS)
@@ -137,8 +135,7 @@ task fastq_scan_se {
       jq -r .qc_stats.qual_mean ~{read1_name}_fastq-scan.json > READ1_MEAN_QUALITY
       echo "DEBUG: mean read quality in $(basename ~{read1}): $(cat READ1_MEAN_QUALITY)"
     else
-      cat 0 > READ1_SEQS
-      touch READ1_MEAN_LENGTH READ1_MEAN_QUALITY
+      echo 0 | tee READ1_SEQS READ1_MEAN_LENGTH READ1_MEAN_QUALITY
     fi
   >>>
   output {

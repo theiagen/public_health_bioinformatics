@@ -37,8 +37,8 @@ task midas {
     if df.empty:
       primary_genus = "No genus detected"
       secondary_genus = "No secondary genus detected (>1% relative abundance)"
-      secondary_genus_abundance = None
-      secondary_genus_coverage = None
+      secondary_genus_abundance = 0
+      secondary_genus_coverage = 0
     else:
       # round relative abundance to 4 decimal places
       df = df.round(4)
@@ -56,8 +56,8 @@ task midas {
       # capture secondary genus
       if filtered_sorted_df.empty or filtered_sorted_df.relative_abundance.iloc[0] < 0.01:
         secondary_genus = "No secondary genus detected (>1% relative abundance)"
-        secondary_genus_abundance = None
-        secondary_genus_coverage = None
+        secondary_genus_abundance = 0
+        secondary_genus_coverage = 0
       else:
         secondary_genus = filtered_sorted_df.genus.iloc[0]
         # capture relative abundance of secondary genus
