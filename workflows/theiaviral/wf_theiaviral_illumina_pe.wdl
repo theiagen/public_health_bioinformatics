@@ -77,7 +77,7 @@ workflow theiaviral_illumina_pe {
           read1 = read1,
           read2 = read2
       }
-      if (ncbi_scrub_pe.status == "PASS") {
+      if (ncbi_scrub_pe.ncbi_scrub_status == "PASS") {
         # adapter + read trimming
         call fastp_task.fastp {
           input:
@@ -132,7 +132,12 @@ workflow theiaviral_illumina_pe {
       }
     }
   }
-  if (! defined(genome_length)) {
+  # true when ete4 resolved the taxon, or when QC (and ete4) was skipped
+  Boolean taxon_resolved = select_first([ete4_identify.ete4_status, "PASS"]) == "PASS"
+  # true when the raw reads passed scrubbing, or when scrubbing was not run
+  Boolean reads_scrubbed = select_first([ncbi_scrub_pe.ncbi_scrub_status, "PASS"]) == "PASS"
+  Boolean qc_passed = taxon_resolved && reads_scrubbed
+  if (! defined(genome_length) && taxon_resolved) {
     # get average genome length for the taxon
     call genome_length_task.datasets_genome_length as est_genome_length {
       input:
@@ -142,7 +147,7 @@ workflow theiaviral_illumina_pe {
         refseq = true
     }
   }
-  if (!skip_qc) {
+  if (!skip_qc && qc_passed) {
     if (!skip_rasusa) {
       # downsample reads to a specific coverage
       call rasusa_task.rasusa as rasusa {
@@ -161,7 +166,7 @@ workflow theiaviral_illumina_pe {
     }
   }
   # clean read screening
-  if (! skip_screen) {
+  if (! skip_screen && qc_passed) {
     call read_screen_task.check_reads as clean_check_reads {
       input:
         read1 = select_first([rasusa.read1_subsampled, cat_lanes.read1_concatenated, kraken2_extract.extracted_read1, read1]),
@@ -170,7 +175,7 @@ workflow theiaviral_illumina_pe {
         expected_genome_length = select_first([est_genome_length.avg_genome_length, genome_length])
     }
   }
-  if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
+  if (qc_passed && (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen)) {
     # run de novo if no reference genome is provided so we can select a reference
     if (! defined(reference_fasta)) {
       # de novo assembly - prioritize metaviralspades

@@ -104,35 +104,53 @@ task ncbi_scrub_se {
     # date and version control
     date | tee DATE
 
-    # unzip fwd file as scrub tool does not take in .gz fastq files
-    if [[ "~{read1}" == *.gz ]]
-    then
-      echo "DEGUB: Gzipped input reads detected"
-      echo "Unzipping reads to r1.fastq"
-      gunzip -c ~{read1} > r1.fastq
-      read1_unzip=r1.fastq
-    else
-      read1_unzip=~{read1}
+    status="PASS"
+
+    # corrupt/truncated gzip
+    if ! zcat -f "~{read1}" > read1.fastq 2>/dev/null; then
+      status="FAIL: corrupt or truncated gzip: $(basename "~{read1}")"
+    fi
+
+    if [[ "$status" == "PASS" ]]; then
+      r1_lines=$(wc -l < read1.fastq)
+      echo "DEBUG: R1 reads: $((r1_lines / 4))"
+
+      if (( r1_lines == 0 )); then
+        status="FAIL: empty input (R1 lines: $r1_lines)"
+      elif (( r1_lines % 4 != 0 )); then
+        status="FAIL: truncated FASTQ (R1 lines: $r1_lines)"
+      fi
+    fi
+
+    echo "$status" | tee STATUS
+
+    if [[ "$status" != "PASS" ]]; then
+      echo "ERROR: $status" >&2
+      echo 0 > SPOTS_REMOVED
+      # make empty files
+      echo -n "" | gzip > ~{samplename}_R1_dehosted.fastq.gz
+      exit 0
     fi
 
     # dehost reads
     # -x Remove spots instead of default 'N' replacement.
     # |& tail -n1 | awk -F" " '{print $1}' > SPOTS_REMOVED ; capture the number of spots removed by fetching the first item on the last line of stderr
     echo "DEGUB: Running HRRT..."
-    echo "DEBUG: /opt/scrubber/scripts/scrub.sh -p ~{cpu} -x -i ${read1_unzip}"
-    /opt/scrubber/scripts/scrub.sh -p ~{cpu} -x -i ${read1_unzip} > STDOUT 2> STDERR
+    echo "DEBUG: /opt/scrubber/scripts/scrub.sh -p ~{cpu} -x -i read1.fastq"
+    /opt/scrubber/scripts/scrub.sh -p ~{cpu} -x -i read1.fastq > STDOUT 2> STDERR
 
     #tail -n1 STDERR | awk -F" " '{print $1}' > SPOTS_REMOVED ; capture the number of spots removed by fetching the first item on the last line of stderr
     tail -n1 STDERR | awk -F" " '{print $1}' > SPOTS_REMOVED
 
     # gzip dehosted reads
     echo "DEGUB: Renaming dehosted reads..."
-    gzip ${read1_unzip}.clean -c > ~{samplename}_R1_dehosted.fastq.gz
+    gzip read1.fastq.clean -c > ~{samplename}_R1_dehosted.fastq.gz
   >>>
   output {
     File read1_dehosted = "~{samplename}_R1_dehosted.fastq.gz"
     Int human_spots_removed = read_int("SPOTS_REMOVED")
     String ncbi_scrub_docker = docker
+    String ncbi_scrub_status = read_string("STATUS")
   }
   runtime {
     docker: "~{docker}"
