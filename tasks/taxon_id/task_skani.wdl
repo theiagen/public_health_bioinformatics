@@ -104,11 +104,10 @@ task skani {
     fi
 
     # acquire the path of the best hit assembly
-    touch TOP_ASSEMBLY
     if [[ $(cat TOP_ACCESSION) != "N/A" ]]; then
       echo ~{fasta_dir}$(cat TOP_ACCESSION).fna > TOP_ASSEMBLY
     else
-      # write an empty fasta to TOP_ASSEMBLY instead of the non-existant N/A.fna
+      # write an empty fasta to TOP_ASSEMBLY instead of the non-existent N/A.fna
       echo "gs://theiagen-public-resources-rp/empty_files/empty.fasta" > TOP_ASSEMBLY
     fi
 
