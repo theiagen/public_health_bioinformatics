@@ -30,33 +30,31 @@ task skani {
     # check if the fasta has contigs greater than 500 bp (otherwise skani will fail)
     echo "DEBUG: Checking assembly for contigs > 500 bp"
 
-    if awk '/^>/ {if (len > 500) found=1; len=0; next}
-             {len += length($0)}
-             END {if (len > 500) found=1; exit !found}' "~{assembly_fasta}"; then
-        compatible_fasta=1
-        echo "DEBUG: Found contigs > 500 bp"
-        touch SKANI_WARNING
-        assembly_fasta="~{assembly_fasta}"
+    # save the max single-contig length and total length of all contigs combined in a single file read
+    read -r max_len total_len < <(awk '
+      /^>/ {if (len > max) max = len; len = 0; next}
+            {len += length($0); total += length($0)}
+      END  {if (len > max) max = len; print max+0, total+0}' "~{assembly_fasta}")
+
+    assembly_fasta="~{assembly_fasta}"
+
+    if (( max_len > 500 )); then
+      echo "DEBUG: Found contigs > 500 bp"
+      touch SKANI_WARNING
     else
-        compatible_fasta=0
-        echo "DEBUG: No contigs > 500 bp; concatenating contigs"
-        echo "All contigs < 500 bp" > SKANI_WARNING
+      echo "DEBUG: No contigs > 500 bp; concatenating contigs"
+      echo "All contigs < 500 bp" > SKANI_WARNING
+
+      if (( total_len > 500 )); then
+        echo "DEBUG: Combined contig length exceeds 500 bp (${total_len} bp)"
 
         # skani needs at least one contig > 500 bp, so stitch everything into one sequence
-        {
-            echo ">concatenated_supercontig"
-            awk '!/^>/' "~{assembly_fasta}"
-        } > concatenated.fasta
+        { echo ">concatenated_supercontig"; awk '!/^>/' "$assembly_fasta"; } > concatenated.fasta
         assembly_fasta="concatenated.fasta"
-
-        fa_length=$(awk '!/^>/ {total += length($0)} END {print total+0}' "$assembly_fasta")
-
-        if (( fa_length > 500 )); then
-            echo "DEBUG: Combined contig length exceeds 500 bp (${fa_length} bp)"
-        else
-            echo "ERROR: Combined contig length is less than or equal to 500 bp (${fa_length} bp)"
-            echo "FAIL" | tee SKANI_STATUS
-        fi
+      else
+        echo "ERROR: Combined contig length is less than or equal to 500 bp (${total_len} bp)"
+        echo "FAIL" | tee SKANI_STATUS
+      fi
     fi
 
     # initialize output files
@@ -109,6 +107,9 @@ task skani {
     touch TOP_ASSEMBLY
     if [[ $(cat TOP_ACCESSION) != "N/A" ]]; then
       echo ~{fasta_dir}$(cat TOP_ACCESSION).fna > TOP_ASSEMBLY
+    else
+      # write an empty fasta to TOP_ASSEMBLY instead of the non-existant N/A.fna
+      echo "gs://theiagen-public-resources-rp/empty_files/empty.fasta" > TOP_ASSEMBLY
     fi
 
     # acquire the taxon of the best hit, if possible
