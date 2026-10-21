@@ -523,11 +523,6 @@ gene_coverage_query_check_status	String	PASS if every gene query was found in th
 gene_coverage_reads_by_gene	Map[String,String]	A JSON map relating gene queries to the number of reads mapped	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 gene_coverage_reads_mapped	String	Number of reads mapped to query genes	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 gene_coverage_stats	File	A tab-delimited table depicting gene coverage depth and breadth on a gene-by-gene basis	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
-gene_variants_annotations	String	A comma-delimited list of variant annotations detected in the query gene regions	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-gene_variants_summary	File	An HTML report summarizing the annotated variants in the query gene regions	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-gene_variants_tsv	File	A TSV file depicting VEP variant reporting	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-gene_variants_vcf	File	VCF of variant calls overlapping the query gene regions	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-gene_variants_warnings	File	Warnings emitted by VEP during variant annotation	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 generated_accessions	File	Text file mapping the BioSample accession with its sample name.	Terra_2_NCBI
 genoflu_all_segments	String	The genotypes for each individual flu segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 genoflu_genotype	String	The genotype of the whole genome, based off of the individual segments types	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
@@ -1221,6 +1216,13 @@ snippy_wg_snp_matrix	File	CSV file of whole genome pairwise SNP distances betwee
 snp_sites_docker	String	Docker file used for SNP-sites	Core_Gene_SNP
 snp_sites_multifasta	File	Post-processed multifasta output by SNP-sites	Core_Gene_SNP
 snp_sites_version	String	Version of SNP-sites used	Core_Gene_SNP
+snpeff_gene_variants_genes_txt	File	SnpEff per-gene summary of variant effect counts in the query gene regions	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+snpeff_gene_variants_report	String	A comma-delimited list of SnpEff variant annotations detected in the query gene regions	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+snpeff_gene_variants_report_abbreviated	String	A comma-delimited list of abbreviated SnpEff variant annotations (GENE:protein change, else GENE:nucleotide change) detected in the query gene regions	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+snpeff_gene_variants_report_tsv	File	A TSV file depicting SnpEff variant reporting for the query gene regions	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+snpeff_gene_variants_summary_html	File	SnpEff HTML summary of the annotated variants in the query gene regions	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+snpeff_gene_variants_vcf	File	SnpEff-annotated VCF of variant calls overlapping the query gene regions	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+snpeff_gene_variants_version	String	Version of SnpEff used for gene variant annotation	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 sonneityping_final_genotype	String	Final genotype call from Mykrobe, via sonneityper	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 sonneityping_final_report_tsv	File	Detailed TSV report from mykrobe, via sonneityper (see <https://github.com/katholt/sonneityping#example-output>)	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 sonneityping_genotype_confidence	String	Confidence in the final genotype call from sonneityper	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT

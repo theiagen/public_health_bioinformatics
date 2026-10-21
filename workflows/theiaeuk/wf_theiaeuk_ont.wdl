@@ -256,10 +256,12 @@ workflow theiaeuk_ont {
     Map[String, String]? gene_coverage_reads_by_gene = medea_magic.gene_coverage_reads_by_gene
     String? gene_coverage_query_check = medea_magic.gene_coverage_query_check
     String? gene_coverage_query_check_status = medea_magic.gene_coverage_query_check_status
-    File? gene_variants_vcf = medea_magic.gene_variants_vcf
-    File? gene_variants_warnings = medea_magic.gene_variants_warnings
-    File? gene_variants_summary = medea_magic.gene_variants_summary
-    File? gene_variants_tsv = medea_magic.gene_variants_tsv
-    String? gene_variants_annotations = medea_magic.gene_variants_annotations
+    String? snpeff_gene_variants_version = medea_magic.snpeff_gene_variants_version
+    File? snpeff_gene_variants_vcf = medea_magic.snpeff_gene_variants_vcf
+    File? snpeff_gene_variants_summary_html = medea_magic.snpeff_gene_variants_summary_html
+    File? snpeff_gene_variants_genes_txt = medea_magic.snpeff_gene_variants_genes_txt
+    File? snpeff_gene_variants_report_tsv = medea_magic.snpeff_gene_variants_report_tsv
+    String? snpeff_gene_variants_report = medea_magic.snpeff_gene_variants_report
+    String? snpeff_gene_variants_report_abbreviated = medea_magic.snpeff_gene_variants_report_abbreviated
   }
 }
