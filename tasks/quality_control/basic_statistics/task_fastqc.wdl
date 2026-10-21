@@ -8,7 +8,7 @@ task fastqc {
     Int memory = 4
     Int cpu = 2
     Int disk_size = 100
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/fastqc:0.12.1"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/fastqc:0.13.0"
   }
   String read1_name = basename(basename(basename(read1, ".gz"), ".fastq"), ".fq")
   String read2_name = basename(basename(basename(read2, ".gz"), ".fastq"), ".fq")
@@ -69,7 +69,7 @@ task fastqc_se {
     Int memory = 4
     Int cpu = 2
     Int disk_size = 100
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/fastqc:0.12.1"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/fastqc:0.13.0"
   }
   String read1_name = basename(basename(basename(read1, ".gz"), ".fastq"), ".fq")
   command <<<
