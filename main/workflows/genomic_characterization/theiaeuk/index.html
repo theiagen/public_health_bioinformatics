@@ -9500,7 +9500,7 @@
 <td>theiaeuk_ont</td>
 <td><strong>max_genome_length</strong></td>
 <td>Int</td>
-<td>Maximum genome size able to pass read screening</td>
+<td>Maximum genome size able to pass read screening; only applied when <code>skip_mash</code> is false</td>
 <td>178000000</td>
 <td>Optional</td>
 </tr>
@@ -9516,7 +9516,7 @@
 <td>theiaeuk_ont</td>
 <td><strong>min_coverage</strong></td>
 <td>Int</td>
-<td>Minimum genome coverage able to pass read screening</td>
+<td>Minimum genome coverage able to pass read screening; only applied when <code>skip_mash</code> is false</td>
 <td>5</td>
 <td>Optional</td>
 </tr>
@@ -9524,7 +9524,7 @@
 <td>theiaeuk_ont</td>
 <td><strong>min_genome_length</strong></td>
 <td>Int</td>
-<td>Minimum genome size able to pass read screening</td>
+<td>Minimum genome size able to pass read screening; only applied when <code>skip_mash</code> is false</td>
 <td>9000000</td>
 <td>Optional</td>
 </tr>
@@ -9540,7 +9540,7 @@
 <td>theiaeuk_ont</td>
 <td><strong>skip_mash</strong></td>
 <td>Boolean</td>
-<td>If true, skips estimation of genome size and coverage using mash in read screening steps. As a result, providing true also prevents screening using these parameters.</td>
+<td>If true, skips the genome size and coverage checks in read screening. If false, coverage is calculated from <code>genome_length</code> when provided; otherwise genome size and coverage are estimated with Mash</td>
 <td>True</td>
 <td>Optional</td>
 </tr>
@@ -9550,14 +9550,6 @@
 <td>Boolean</td>
 <td>Option to skip the read screening prior to analysis; if setting to true, please provide a value for the theiaeuk_pe genome_length optional input, OR set call_rasusa to false. Otherwise RASUSA will attempt to downsample to an expected genome size of 0 bp, and the workflow will fail.</td>
 <td>False</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>theiaeuk_ont</td>
-<td><strong>workflow_series</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td>theiaeuk</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10608,6 +10600,7 @@
 </ol>
 <p>Read screening is undertaken on both the raw and cleaned reads. The task may be skipped by setting the <code>skip_screen</code> variable to <code>true</code>.</p>
 <p>Default values vary between the PE, SE, and ONT workflows. The rationale for these default values can be found below. If two default values are shown, the first is for Illumina workflows and the second is for ONT.</p>
+<p>Genome size and coverage are not screened by default (<code>skip_mash</code> is <code>true</code>). If <code>skip_mash</code> is set to <code>false</code>, coverage is calculated from <code>genome_length</code> when provided; otherwise genome size and coverage are estimated with Mash. The <code>min_genome_length</code>, <code>max_genome_length</code>, and <code>min_coverage</code> thresholds are only applied when <code>skip_mash</code> is <code>false</code>.</p>
 <table>
 <thead>
 <tr>
@@ -10624,8 +10617,8 @@
 </tr>
 <tr>
 <td><code>genome_length</code></td>
-<td>50000000</td>
-<td>An average genome length to avoid erroneous estimated genome length calculations. It is recommended to provide the expected genome length if available.</td>
+<td></td>
+<td>No default. When provided, it is used to calculate coverage during read screening (only when <code>skip_mash</code> is <code>false</code>). It is recommended to provide the expected genome length if available.</td>
 </tr>
 <tr>
 <td><code>min_reads</code></td>
