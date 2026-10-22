@@ -27,7 +27,7 @@ task limsport {
       --delimiter "~{output_delimiter}" \
       ~{true="--allow-file-parsing" false="" allow_file_parsing} \
       ~{"--max-file-parsing-failures " + max_file_parsing_failures} \
-      --output "~{output_prefix}.txt  " \
+      --output "~{output_prefix}.txt" \
       --qc-report "~{output_prefix}_qc_report.tsv"
   >>>
   output {
