@@ -13,7 +13,6 @@ task skani {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/skani:0.2.2"
   }
   command <<<
-    # pipefail, but not in the middle of pipes
     set -euo pipefail
 
     # extract skani db
