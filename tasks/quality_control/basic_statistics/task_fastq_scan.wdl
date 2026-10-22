@@ -5,7 +5,7 @@ task fastq_scan_pe {
     File read1
     File read2
     Int disk_size = 50
-    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/fastq-scan:1.0.1-seqkit"
     Int memory = 4
     Int cpu = 1
   }
@@ -17,6 +17,7 @@ task fastq_scan_pe {
 
     # capture version
     fastq-scan -v | tee VERSION
+    seqkit version | tee SEQKIT_VERSION
 
     # set cat command based on compression
     if [[ "~{read1}" == *".gz" ]] ; then
@@ -65,6 +66,15 @@ task fastq_scan_pe {
     # use simple redirect so STDOUT is not confusing
     echo "$read_pairs" > READ_PAIRS
     echo "DEBUG: number of read pairs: $(cat READ_PAIRS)"
+
+    # capture GC content; seqkit reports one row per file in input order
+    echo "DEBUG: running seqkit stats on $(basename ~{read1}) and $(basename ~{read2})"
+    seqkit stats -a -T -j ~{cpu} ~{read1} ~{read2} | tee seqkit_stats.tsv
+    # locate the GC column by header name since its position differs between seqkit versions
+    awk -F'\t' 'NR==1 {for (i=1; i<=NF; i++) if ($i=="GC(%)") col=i} NR==2 {print $col}' seqkit_stats.tsv > READ1_GC_PERCENT
+    awk -F'\t' 'NR==1 {for (i=1; i<=NF; i++) if ($i=="GC(%)") col=i} NR==3 {print $col}' seqkit_stats.tsv > READ2_GC_PERCENT
+    echo "DEBUG: GC content in $(basename ~{read1}): $(cat READ1_GC_PERCENT)"
+    echo "DEBUG: GC content in $(basename ~{read2}): $(cat READ2_GC_PERCENT)"
   >>>
   output {
     File read1_fastq_scan_json = "~{read1_name}_fastq-scan.json"
@@ -75,8 +85,11 @@ task fastq_scan_pe {
     Float read2_mean_length = read_float("READ2_MEAN_LENGTH")
     Float read1_mean_quality = read_float("READ1_MEAN_QUALITY")
     Float read2_mean_quality = read_float("READ2_MEAN_QUALITY")
+    Float read1_gc_percent = read_float("READ1_GC_PERCENT")
+    Float read2_gc_percent = read_float("READ2_GC_PERCENT")
     String read_pairs = read_string("READ_PAIRS")
     String version = read_string("VERSION")
+    String seqkit_version = read_string("SEQKIT_VERSION")
     String fastq_scan_docker = docker
   }
   runtime {
@@ -96,7 +109,7 @@ task fastq_scan_se {
     Int disk_size = 50
     Int memory = 2
     Int cpu = 1
-    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/fastq-scan:1.0.1-seqkit"
   }
   String read1_name = basename(basename(basename(read1, ".gz"), ".fastq"), ".fq")
   command <<<
@@ -105,6 +118,7 @@ task fastq_scan_se {
 
     # capture version
     fastq-scan -v | tee VERSION
+    seqkit version | tee SEQKIT_VERSION
 
     # set cat command based on compression
     if [[ "~{read1}" == *".gz" ]] ; then
@@ -125,13 +139,22 @@ task fastq_scan_se {
 
     jq -r .qc_stats.qual_mean ~{read1_name}_fastq-scan.json > READ1_MEAN_QUALITY
     echo "DEBUG: mean read quality in $(basename ~{read1}): $(cat READ1_MEAN_QUALITY)"
+
+    # capture GC content
+    echo "DEBUG: running seqkit stats on $(basename ~{read1})"
+    seqkit stats -a -T -j ~{cpu} ~{read1} | tee seqkit_stats.tsv
+    # locate the GC column by header name since its position differs between seqkit versions
+    awk -F'\t' 'NR==1 {for (i=1; i<=NF; i++) if ($i=="GC(%)") col=i} NR==2 {print $col}' seqkit_stats.tsv > READ1_GC_PERCENT
+    echo "DEBUG: GC content in $(basename ~{read1}): $(cat READ1_GC_PERCENT)"
   >>>
   output {
     File fastq_scan_json = "~{read1_name}_fastq-scan.json"
     Int read1_seq = read_int("READ1_SEQS")
     Float read1_mean_length = read_float("READ1_MEAN_LENGTH")
     Float read1_mean_quality = read_float("READ1_MEAN_QUALITY")
+    Float read1_gc_percent = read_float("READ1_GC_PERCENT")
     String version = read_string("VERSION")
+    String seqkit_version = read_string("SEQKIT_VERSION")
     String fastq_scan_docker = docker
   }
   runtime {
