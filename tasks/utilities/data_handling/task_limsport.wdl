@@ -31,7 +31,7 @@ task limsport {
       --qc-report "~{output_prefix}_qc_report.tsv"
   >>>
   output {
-    File limsport_table = "~{output_prefix}.tsv"
+    File limsport_table = "~{output_prefix}.txt"
     File limsport_qc_report = "~{output_prefix}_qc_report.tsv"
     String limsport_version = read_string("VERSION")
     String limsport_docker = docker
