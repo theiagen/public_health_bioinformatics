@@ -246,8 +246,13 @@ workflow read_QC_trim_pe {
     Float? fastq_scan_r2_mean_readlength_raw = fastq_scan_raw.read2_mean_length
     Float? fastq_scan_r1_mean_q_raw = fastq_scan_raw.read1_mean_quality
     Float? fastq_scan_r2_mean_q_raw = fastq_scan_raw.read2_mean_quality
+    Float? fastq_scan_mean_q_raw = fastq_scan_raw.total_mean_quality
+    Float? fastq_scan_r1_gc_percent_raw = fastq_scan_raw.read1_gc_percent
+    Float? fastq_scan_r2_gc_percent_raw = fastq_scan_raw.read2_gc_percent
+    Float? fastq_scan_gc_percent_raw = fastq_scan_raw.total_gc_percent
     String? fastq_scan_raw_pairs = fastq_scan_raw.read_pairs
     String? fastq_scan_version = fastq_scan_raw.fastq_scan_version
+    String? seqkit_version = fastq_scan_raw.seqkit_version
     String? fastq_scan_docker = fastq_scan_raw.fastq_scan_docker
     File? fastq_scan_raw1_json = fastq_scan_raw.read1_fastq_scan_json
     File? fastq_scan_raw2_json = fastq_scan_raw.read2_fastq_scan_json
@@ -277,6 +282,10 @@ workflow read_QC_trim_pe {
     Float? fastq_scan_r2_mean_readlength_clean = fastq_scan_clean.read2_mean_length
     Float? fastq_scan_r1_mean_q_clean = fastq_scan_clean.read1_mean_quality
     Float? fastq_scan_r2_mean_q_clean = fastq_scan_clean.read2_mean_quality
+    Float? fastq_scan_mean_q_clean = fastq_scan_clean.total_mean_quality
+    Float? fastq_scan_r1_gc_percent_clean = fastq_scan_clean.read1_gc_percent
+    Float? fastq_scan_r2_gc_percent_clean = fastq_scan_clean.read2_gc_percent
+    Float? fastq_scan_gc_percent_clean = fastq_scan_clean.total_gc_percent
     String? fastq_scan_clean_pairs = fastq_scan_clean.read_pairs
     File? fastq_scan_clean1_json = fastq_scan_clean.read1_fastq_scan_json
     File? fastq_scan_clean2_json = fastq_scan_clean.read2_fastq_scan_json

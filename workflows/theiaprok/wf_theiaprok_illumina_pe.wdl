@@ -492,12 +492,20 @@ workflow theiaprok_illumina_pe {
                 "fastp_version": read_QC_trim.fastp_version,
                 "fastq_scan_clean1_json": read_QC_trim.fastq_scan_clean1_json,
                 "fastq_scan_clean2_json": read_QC_trim.fastq_scan_clean2_json,
+                "fastq_scan_gc_percent_clean": read_QC_trim.fastq_scan_gc_percent_clean,
+                "fastq_scan_gc_percent_raw": read_QC_trim.fastq_scan_gc_percent_raw,
+                "fastq_scan_mean_q_clean": read_QC_trim.fastq_scan_mean_q_clean,
+                "fastq_scan_mean_q_raw": read_QC_trim.fastq_scan_mean_q_raw,
                 "fastq_scan_num_reads_clean1": read_QC_trim.fastq_scan_clean1,
                 "fastq_scan_num_reads_clean2": read_QC_trim.fastq_scan_clean2,
                 "fastq_scan_num_reads_clean_pairs": read_QC_trim.fastq_scan_clean_pairs,
                 "fastq_scan_num_reads_raw1": read_QC_trim.fastq_scan_raw1,
                 "fastq_scan_num_reads_raw2": read_QC_trim.fastq_scan_raw2,
                 "fastq_scan_num_reads_raw_pairs": read_QC_trim.fastq_scan_raw_pairs,
+                "fastq_scan_r1_gc_percent_clean": read_QC_trim.fastq_scan_r1_gc_percent_clean,
+                "fastq_scan_r1_gc_percent_raw": read_QC_trim.fastq_scan_r1_gc_percent_raw,
+                "fastq_scan_r2_gc_percent_clean": read_QC_trim.fastq_scan_r2_gc_percent_clean,
+                "fastq_scan_r2_gc_percent_raw": read_QC_trim.fastq_scan_r2_gc_percent_raw,
                 "fastq_scan_raw1_json": read_QC_trim.fastq_scan_raw1_json,
                 "fastq_scan_raw2_json": read_QC_trim.fastq_scan_raw2_json,
                 "fastq_scan_version": read_QC_trim.fastq_scan_version,
@@ -683,6 +691,7 @@ workflow theiaprok_illumina_pe {
                 "resfinder_version": resfinder_task.resfinder_version,
                 "run_id": run_id,
                 "seq_platform": seq_method,
+                "seqkit_version": read_QC_trim.seqkit_version,
                 "seqsero2s_note": merlin_magic.seqsero2s_note,
                 "seqsero2s_predicted_antigenic_profile": merlin_magic.seqsero2s_predicted_antigenic_profile,
                 "seqsero2s_predicted_contamination": merlin_magic.seqsero2s_predicted_contamination,
@@ -861,10 +870,19 @@ workflow theiaprok_illumina_pe {
     Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
     Int? fastq_scan_num_reads_raw2 = read_QC_trim.fastq_scan_raw2
     String? fastq_scan_num_reads_raw_pairs = read_QC_trim.fastq_scan_raw_pairs
+    Float? fastq_scan_mean_q_raw = read_QC_trim.fastq_scan_mean_q_raw
+    Float? fastq_scan_r1_gc_percent_raw = read_QC_trim.fastq_scan_r1_gc_percent_raw
+    Float? fastq_scan_r2_gc_percent_raw = read_QC_trim.fastq_scan_r2_gc_percent_raw
+    Float? fastq_scan_gc_percent_raw = read_QC_trim.fastq_scan_gc_percent_raw
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
+    String? seqkit_version = read_QC_trim.seqkit_version
     Int? fastq_scan_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
     Int? fastq_scan_num_reads_clean2 = read_QC_trim.fastq_scan_clean2
     String? fastq_scan_num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
+    Float? fastq_scan_mean_q_clean = read_QC_trim.fastq_scan_mean_q_clean
+    Float? fastq_scan_r1_gc_percent_clean = read_QC_trim.fastq_scan_r1_gc_percent_clean
+    Float? fastq_scan_r2_gc_percent_clean = read_QC_trim.fastq_scan_r2_gc_percent_clean
+    Float? fastq_scan_gc_percent_clean = read_QC_trim.fastq_scan_gc_percent_clean
     File? fastq_scan_raw1_json = read_QC_trim.fastq_scan_raw1_json
     File? fastq_scan_raw2_json = read_QC_trim.fastq_scan_raw2_json
     File? fastq_scan_clean1_json = read_QC_trim.fastq_scan_clean1_json
