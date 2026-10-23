@@ -390,6 +390,10 @@ fastq_scan_clean1_json	String	The JSON file output from `fastq-scan` containing 
 fastq_scan_clean2_json	File	The JSON file output from `fastq-scan` containing summary stats about clean reverse read quality and length	Freyja_FASTQ, TBProfiler_tNGS, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastq_scan_clean_pairs	String	Number of read pairs after cleaning	TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastq_scan_docker	String	The Docker image of fastq_scan	TBProfiler_tNGS, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastq_scan_gc_percent_clean	Float	Percent GC content across all clean reads as calculated by seqkit	TheiaEuk_Illumina_PE
+fastq_scan_gc_percent_raw	Float	Percent GC content across all raw reads as calculated by seqkit	TheiaEuk_Illumina_PE
+fastq_scan_mean_q_clean	Float	Mean base quality score across all clean reads as calculated by fastq_scan	TheiaEuk_Illumina_PE
+fastq_scan_mean_q_raw	Float	Mean base quality score all raw reads as calculated by fastq_scan	TheiaEuk_Illumina_PE
 fastq_scan_num_reads_clean1	Int	The number of forward reads after cleaning as calculated by fastq_scan	TBProfiler_tNGS, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastq_scan_num_reads_clean1	String	The number of forward reads after cleaning as calculated by fastq_scan	Freyja_FASTQ
 fastq_scan_num_reads_clean2	Int	The number of reverse reads after cleaning as calculated by fastq_scan	Freyja_FASTQ, TBProfiler_tNGS, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
@@ -398,10 +402,14 @@ fastq_scan_num_reads_raw1	Int	The number of input forward reads as calculated by
 fastq_scan_num_reads_raw1	String	The number of input forward reads as calculated by fastq_scan	Freyja_FASTQ
 fastq_scan_num_reads_raw2	Int	The number of input reserve reads as calculated by fastq_scan	Freyja_FASTQ, TBProfiler_tNGS, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastq_scan_num_reads_raw_pairs	String	The number of input read pairs as calculated by fastq_scan	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
+fastq_scan_r1_gc_percent_clean	Float	Percent GC content of forward reads after cleaning as calculated by seqkit	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastq_scan_r1_gc_percent_raw	Float	Percent GC content of input forward reads as calculated by seqkit	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastq_scan_r1_mean_q_clean	Float	The average quality of forward reads after cleaning as calculated by fastq_scan	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 fastq_scan_r1_mean_q_raw	Float	The average quality of forward reads as calculated by fastq_scan	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 fastq_scan_r1_mean_readlength_clean	Float	The average read length of forward reads after cleaning as calculated by fastq_scan	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 fastq_scan_r1_mean_readlength_raw	Float	The average read length of forward reads as calculated by fastq_scan	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
+fastq_scan_r2_gc_percent_clean	Float	Percent GC content of reverse reads after cleaning as calculated by seqkit	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastq_scan_r2_gc_percent_raw	Float	Percent GC concent of input reverse reads as calculated by seqkit	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastq_scan_r2_mean_q_clean	Float	The average quality of reverse reads after cleaning as calculated by fastq_scan	TheiaCoV_Illumina_PE
 fastq_scan_r2_mean_q_raw	Float	The average quality of reverse reads as calculated by fastq_scan	TheiaCoV_Illumina_PE
 fastq_scan_r2_mean_readlength_clean	Float	The average read length of reverse reads after cleaning as calculated by fastq_scan	TheiaCoV_Illumina_PE
