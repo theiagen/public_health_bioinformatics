@@ -71,7 +71,7 @@ workflow read_QC_trim_pe {
     }
   }
   if (read_qc == "fastq_scan") {
-    call fastq_scan.fastq_scan_pe as fastq_scan_raw {
+    call fastq_scan.fastq_scan as fastq_scan_raw {
       input:
         read1 = read1,
         read2 = read2,
@@ -223,7 +223,7 @@ workflow read_QC_trim_pe {
     }
   }
   if (read_qc == "fastq_scan") {
-    call fastq_scan.fastq_scan_pe as fastq_scan_clean {
+    call fastq_scan.fastq_scan as fastq_scan_clean {
       input:
         read1 = bbduk.read1_clean,
         read2 = bbduk.read2_clean

@@ -65,7 +65,7 @@ workflow theiaviral_illumina_pe {
     }
     if (ete4_identify.ete4_status == "PASS") {
       # read QC, classification, extraction, and trimming
-      call fastq_scan_task.fastq_scan_pe as fastq_scan_raw {
+      call fastq_scan_task.fastq_scan as fastq_scan_raw {
         input:
           read1 = read1,
           read2 = read2
@@ -152,7 +152,7 @@ workflow theiaviral_illumina_pe {
       }
     }
     # clean read stat gathering
-    call fastq_scan_task.fastq_scan_pe as fastq_scan_clean {
+    call fastq_scan_task.fastq_scan as fastq_scan_clean {
       input:
         read1 = select_first([rasusa.read1_subsampled, cat_lanes.read1_concatenated, kraken2_extract.extracted_read1]),
         read2 = select_first([rasusa.read2_subsampled, cat_lanes.read2_concatenated, kraken2_extract.extracted_read2])

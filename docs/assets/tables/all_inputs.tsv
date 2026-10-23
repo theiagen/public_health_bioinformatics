@@ -751,7 +751,7 @@ fastq_scan_clean	memory	Int	Amount of memory (in GB) to allocate to the task	4	O
 fastq_scan_clean_reads	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaCoV_ClearLabs	runtime	
 fastq_scan_clean_reads	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaCoV_ClearLabs	runtime	
 fastq_scan_clean_reads	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/fastq-scan:1.0.1-seqkit	Optional	TheiaCoV_ClearLabs	docker	
-fastq_scan_clean_reads	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaCoV_ClearLabs	runtime	
+fastq_scan_clean_reads	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaCoV_ClearLabs	runtime	
 fastq_scan_raw	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
 fastq_scan_raw	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
 fastq_scan_raw	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/fastq-scan:1.0.1-seqkit	Optional	TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel	docker	
@@ -759,7 +759,7 @@ fastq_scan_raw	memory	Int	Amount of memory (in GB) to allocate to the task	4	Opt
 fastq_scan_raw_reads	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaCoV_ClearLabs	runtime	
 fastq_scan_raw_reads	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaCoV_ClearLabs	runtime	
 fastq_scan_raw_reads	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/fastq-scan:1.0.1-seqkit	Optional	TheiaCoV_ClearLabs	docker	
-fastq_scan_raw_reads	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaCoV_ClearLabs	runtime	
+fastq_scan_raw_reads	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaCoV_ClearLabs	runtime	
 fetch_bs	cpu	Int	Number of CPUs to allocate to the task	2	Optional	BaseSpace_Fetch	runtime	
 fetch_bs	disk_size	Int	Amount of storage (in GB) to allocate to the task	250	Optional	BaseSpace_Fetch	runtime	
 fetch_bs	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/bioforklift:0.5.4	Optional	BaseSpace_Fetch	docker	
