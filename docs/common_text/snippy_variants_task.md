@@ -61,6 +61,26 @@ fragment: true
     - MEC3
     - ERG3
     - PSK74852
+
+    **Default gene queries:** Snippy results and gene coverage are searched by the protein product name or by locus tags. Variant calling and gene queries are skipped for Clade VI unless the user supplies `cladetyper_ref_clade6_annotated`.
+
+    | Gene | Clade I | Clade II | Clade III | Clade IV | Clade V |
+    |---|---|---|---|---|---|
+    | _FKS1_ | `FKS1` | `FKS1` | `FKS1` | `FKS1` | `FKS1` |
+    | _ERG11_ | `lanosterol.14-alpha.demethylase` | `lanosterol_14-alpha_demethylase` | `lanosterol.14-alpha.demethylase` | `lanosterol.14-alpha.demethylase` | `lanosterol.14-alpha.demethylase` |
+    | _FUR1_ | `uracil.phosphoribosyltransferase` | `uracil_phosphoribosyltransferase` | `uracil.phosphoribosyltransferase` | `uracil.phosphoribosyltransferase` | `uracil.phosphoribosyltransferase` |
+    | _ERG6_ | `sterol.24-C-methyltransferase` | `sterol_24-C-methyltransferase` | `sterol.24-C-methyltransferase` | `sterol.24-C-methyltransferase` | `sterol.24-C-methyltransferase` |
+    | _FLO8_ | `B9J08_02359` | `CJI96_0001121`\* | `CJI97_000401` | `CJJ07_003930`\* | `FDK38_002567`\* |
+    | _FLO8_ N-terminus | `B9J08_02360` | \* | `CJI97_000402` | \* | \* |
+    | _MEC3_ | `B9J08_00960` | `CJI96_0001637` | `CJI97_003175` | `CJJ07_005307` | `FDK38_000935` |
+    | _ERG3_ | `B9J08_01595` | `CJI96_0002270` | `CJI97_003811` | `CJJ07_003685` | `FDK38_001564` |
+    | _PSK74852_ | `B9J08_04226` | `CJI96_0004130` | `CJI97_005426` | `CJJ07_003405` | `FDK38_004143` |
+
+    \* _FLO8_ is annotated as a single gene in the Clade II, IV and V references.
+
+    - The Clade II reference writes products with `_` in place of spaces, so its _ERG11_, _FUR1_ and _ERG6_ queries use `_`.
+    - With a user-supplied Clade VI annotation, only the four product names (the `.`-delimited _FKS1_, _ERG11_, _FUR1_ and _ERG6_ queries) are queried; a user-supplied annotation for Clades I-V still uses that clade's queries above. To query more genes, set `query_genes`, which overwrites the default list.
+
 <!-- endif -->
 <!-- if: afumigatus -->
     - cyp51A (AFUA_4G06890)
