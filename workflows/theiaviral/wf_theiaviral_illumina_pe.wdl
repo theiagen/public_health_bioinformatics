@@ -77,60 +77,67 @@ workflow theiaviral_illumina_pe {
           read1 = read1,
           read2 = read2
       }
-      # adapter + read trimming
-      call fastp_task.fastp {
-        input:
-          samplename = samplename,
-          read1 = ncbi_scrub_pe.read1_dehosted,
-          read2 = ncbi_scrub_pe.read2_dehosted
-      }
-      call bbduk_task.bbduk {
-        input:
-          samplename = samplename,
-          read1 = fastp.read1_trimmed,
-          read2 = select_first([fastp.read2_trimmed])
-      }
-      # host read decontamination
-      if (defined(host)) {
-        call host_decontaminate_wf.read_decontaminate as host_decontaminate {
+      if (ncbi_scrub_pe.ncbi_scrub_status == "PASS") {
+        # adapter + read trimming
+        call fastp_task.fastp {
           input:
             samplename = samplename,
-            read1 = bbduk.read1_clean,
-            read2 = bbduk.read2_clean,
-            contaminant = select_first([host])
+            read1 = ncbi_scrub_pe.read1_dehosted,
+            read2 = ncbi_scrub_pe.read2_dehosted
         }
-      }
-      # taxon-based read extraction
-      call kraken2_task.kraken2 {
-        input:
-          samplename = samplename,
-          read1 = select_first([host_decontaminate.decontaminate_read1, bbduk.read1_clean]),
-          read2 = select_first([host_decontaminate.decontaminate_read2, bbduk.read2_clean]),
-          kraken2_db = kraken2_db,
-          target_organism = ete4_identify.taxon_id
-      }
-      call krakentools_task.extract_kraken_reads as kraken2_extract {
-        input:
-          read1 = kraken2.kraken2_classified_read1,
-          read2 = select_first([kraken2.kraken2_classified_read2]),
-          taxon_id = ete4_identify.taxon_id,
-          kraken2_output = kraken2.kraken2_classified_report,
-          kraken2_report = kraken2.kraken2_report
-      }
-      # inclusion of unclassified reads
-      if (extract_unclassified) {
-        call cat_lanes_task.cat_lanes {
+        call bbduk_task.bbduk {
           input:
             samplename = samplename,
-            read1_lane1 = kraken2.kraken2_unclassified_read1,
-            read1_lane2 = select_first([kraken2_extract.extracted_read1]),
-            read2_lane1 = kraken2.kraken2_unclassified_read2,
-            read2_lane2 = select_first([kraken2_extract.extracted_read2])
+            read1 = fastp.read1_trimmed,
+            read2 = select_first([fastp.read2_trimmed])
+        }
+        # host read decontamination
+        if (defined(host)) {
+          call host_decontaminate_wf.read_decontaminate as host_decontaminate {
+            input:
+              samplename = samplename,
+              read1 = bbduk.read1_clean,
+              read2 = bbduk.read2_clean,
+              contaminant = select_first([host])
+          }
+        }
+        # taxon-based read extraction
+        call kraken2_task.kraken2 {
+          input:
+            samplename = samplename,
+            read1 = select_first([host_decontaminate.decontaminate_read1, bbduk.read1_clean]),
+            read2 = select_first([host_decontaminate.decontaminate_read2, bbduk.read2_clean]),
+            kraken2_db = kraken2_db,
+            target_organism = ete4_identify.taxon_id
+        }
+        call krakentools_task.extract_kraken_reads as kraken2_extract {
+          input:
+            read1 = kraken2.kraken2_classified_read1,
+            read2 = select_first([kraken2.kraken2_classified_read2]),
+            taxon_id = ete4_identify.taxon_id,
+            kraken2_output = kraken2.kraken2_classified_report,
+            kraken2_report = kraken2.kraken2_report
+        }
+        # inclusion of unclassified reads
+        if (extract_unclassified) {
+          call cat_lanes_task.cat_lanes {
+            input:
+              samplename = samplename,
+              read1_lane1 = kraken2.kraken2_unclassified_read1,
+              read1_lane2 = select_first([kraken2_extract.extracted_read1]),
+              read2_lane1 = kraken2.kraken2_unclassified_read2,
+              read2_lane2 = select_first([kraken2_extract.extracted_read2])
+          }
         }
       }
     }
   }
-  if (! defined(genome_length)) {
+  # true when ete4 resolved the taxon, or when QC (and ete4) was skipped
+  Boolean taxon_resolved = select_first([ete4_identify.ete4_status, "PASS"]) == "PASS"
+  # true when the raw reads passed scrubbing, or when scrubbing was not run
+  Boolean reads_scrubbed = select_first([ncbi_scrub_pe.ncbi_scrub_status, "PASS"]) == "PASS"
+  Boolean qc_passed = taxon_resolved && reads_scrubbed
+  if (! defined(genome_length) && taxon_resolved) {
     # get average genome length for the taxon
     call genome_length_task.datasets_genome_length as est_genome_length {
       input:
@@ -140,7 +147,7 @@ workflow theiaviral_illumina_pe {
         refseq = true
     }
   }
-  if (!skip_qc) {
+  if (!skip_qc && qc_passed) {
     if (!skip_rasusa) {
       # downsample reads to a specific coverage
       call rasusa_task.rasusa as rasusa {
@@ -159,7 +166,7 @@ workflow theiaviral_illumina_pe {
     }
   }
   # clean read screening
-  if (! skip_screen) {
+  if (! skip_screen && qc_passed) {
     call read_screen_task.check_reads as clean_check_reads {
       input:
         read1 = select_first([rasusa.read1_subsampled, cat_lanes.read1_concatenated, kraken2_extract.extracted_read1, read1]),
@@ -168,7 +175,7 @@ workflow theiaviral_illumina_pe {
         expected_genome_length = select_first([est_genome_length.avg_genome_length, genome_length])
     }
   }
-  if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
+  if (qc_passed && (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen)) {
     # run de novo if no reference genome is provided so we can select a reference
     if (! defined(reference_fasta)) {
       # de novo assembly - prioritize metaviralspades
@@ -313,6 +320,7 @@ workflow theiaviral_illumina_pe {
     File? ncbi_scrub_read2_dehosted = ncbi_scrub_pe.read2_dehosted
     Int? ncbi_scrub_human_spots_removed = ncbi_scrub_pe.human_spots_removed
     String? ncbi_scrub_docker = ncbi_scrub_pe.ncbi_scrub_docker
+    String? ncbi_scrub_status = ncbi_scrub_pe.ncbi_scrub_status
     # host decontamination outputs
     File? dehost_wf_dehost_read1 = host_decontaminate.decontaminate_read1
     File? dehost_wf_dehost_read2 = host_decontaminate.decontaminate_read2
