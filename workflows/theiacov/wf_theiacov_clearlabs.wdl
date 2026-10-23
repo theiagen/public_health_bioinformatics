@@ -176,6 +176,8 @@ workflow theiacov_clearlabs {
     # Read QC - fastq_scan outputs
     Int fastq_scan_num_reads_raw1 = fastq_scan_raw_reads.read1_seq
     Int fastq_scan_num_reads_clean1 = fastq_scan_clean_reads.read1_seq
+    Float fastq_scan_r1_gc_percent_raw = fastq_scan_raw_reads.read1_gc_percent
+    Float fastq_scan_r1_gc_percent_clean = fastq_scan_clean_reads.read1_gc_percent
     String fastq_scan_version = fastq_scan_raw_reads.fastq_scan_version
     File fastq_scan_raw1_json = fastq_scan_raw_reads.read1_fastq_scan_json
     File fastq_scan_clean1_json = fastq_scan_clean_reads.read1_fastq_scan_json

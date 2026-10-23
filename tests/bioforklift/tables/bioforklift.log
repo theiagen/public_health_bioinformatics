@@ -1,0 +1,24 @@
+2026-10-23 19:07:27,225 - bioforklift.terra.terra_entities - INFO - list_entity_types - Retrieved entity types from Terra workspace
+2026-10-23 19:07:27,243 - bioforklift.terra.terra_entities - INFO - upload_entities - Entities formatted for upload to freyja_fastq
+2026-10-23 19:07:27,457 - bioforklift.terra.terra_entities - INFO - upload_entities - Successfully uploaded 32 entities to Terra
+2026-10-23 19:07:27,458 - bioforklift.scripts.upload - INFO - upload - Uploaded data from 'freyja_fastq.tsv' to table 'freyja_fastq' in workspace 'theiagen-training-workspaces/Theiagen_Konkel_Sandbox'
+2026-10-23 19:08:02,134 - bioforklift.terra.terra_entities - INFO - list_entity_types - Retrieved entity types from Terra workspace
+2026-10-23 19:08:02,140 - bioforklift.terra.terra_entities - INFO - upload_entities - Entities formatted for upload to tbprofiler_tngs
+2026-10-23 19:08:02,339 - bioforklift.terra.terra_entities - INFO - upload_entities - Successfully uploaded 2 entities to Terra
+2026-10-23 19:08:02,340 - bioforklift.scripts.upload - INFO - upload - Uploaded data from 'tbprofiler_tngs.tsv' to table 'tbprofiler_tngs' in workspace 'theiagen-training-workspaces/Theiagen_Konkel_Sandbox'
+2026-10-23 19:08:43,043 - bioforklift.terra.terra_entities - INFO - list_entity_types - Retrieved entity types from Terra workspace
+2026-10-23 19:08:43,049 - bioforklift.terra.terra_entities - INFO - upload_entities - Entities formatted for upload to theiacov_clearlabs
+2026-10-23 19:08:43,646 - bioforklift.terra.terra_entities - INFO - upload_entities - Successfully uploaded 25 entities to Terra
+2026-10-23 19:08:43,646 - bioforklift.scripts.upload - INFO - upload - Uploaded data from 'theiacov_clearlabs.tsv' to table 'theiacov_clearlabs' in workspace 'theiagen-training-workspaces/Theiagen_Konkel_Sandbox'
+2026-10-23 19:10:06,628 - bioforklift.terra.terra_entities - INFO - list_entity_types - Retrieved entity types from Terra workspace
+2026-10-23 19:10:06,636 - bioforklift.terra.terra_entities - INFO - upload_entities - Entities formatted for upload to theiaprok_illumina_se
+2026-10-23 19:10:06,791 - bioforklift.terra.terra_entities - INFO - upload_entities - Successfully uploaded 70 entities to Terra
+2026-10-23 19:10:06,791 - bioforklift.scripts.upload - INFO - upload - Uploaded data from 'theiaprok_illumina_se.tsv' to table 'theiaprok_illumina_se' in workspace 'theiagen-training-workspaces/Theiagen_Konkel_Sandbox'
+2026-10-23 19:11:07,041 - bioforklift.terra.terra_entities - INFO - list_entity_types - Retrieved entity types from Terra workspace
+2026-10-23 19:11:07,047 - bioforklift.terra.terra_entities - INFO - upload_entities - Entities formatted for upload to theiaviral_illumina_pe
+2026-10-23 19:11:07,276 - bioforklift.terra.terra_entities - INFO - upload_entities - Successfully uploaded 31 entities to Terra
+2026-10-23 19:11:07,276 - bioforklift.scripts.upload - INFO - upload - Uploaded data from 'theiaviral_illumina_pe.tsv' to table 'theiaviral_illumina_pe' in workspace 'theiagen-training-workspaces/Theiagen_Konkel_Sandbox'
+2026-10-23 19:11:13,123 - bioforklift.terra.terra_entities - INFO - list_entity_types - Retrieved entity types from Terra workspace
+2026-10-23 19:11:13,129 - bioforklift.terra.terra_entities - INFO - upload_entities - Entities formatted for upload to theiaviral_panel
+2026-10-23 19:11:13,398 - bioforklift.terra.terra_entities - INFO - upload_entities - Successfully uploaded 24 entities to Terra
+2026-10-23 19:11:13,398 - bioforklift.scripts.upload - INFO - upload - Uploaded data from 'theiaviral_panel.tsv' to table 'theiaviral_panel' in workspace 'theiagen-training-workspaces/Theiagen_Konkel_Sandbox'

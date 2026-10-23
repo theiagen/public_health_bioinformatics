@@ -81,24 +81,21 @@ task fastq_scan {
       echo "DEBUG: GC content in $(basename ~{read2}): $(cat READ2_GC_PERCENT)"
     fi
 
-    # capture mean quality and GC content across all reads, weighted by the number of reads in each file
+    # capture mean quality across all reads, weighted by the number of reads in each file
     if [[ -n "~{read2}" ]]; then
       read2_mean_quality=$(cat READ2_MEAN_QUALITY)
-      read2_gc_percent=$(cat READ2_GC_PERCENT)
     else
       read2_seqs=0
       read2_mean_quality=0
-      read2_gc_percent=0
     fi
-
-    # define function for calculating mean weighted by read number
-    weighted_mean() {
-      awk -v n1="${read1_seqs}" -v v1="$1" -v n2="${read2_seqs}" -v v2="$2" \
-        'BEGIN {n = n1 + n2; if (n > 0) print (n1 * v1 + n2 * v2) / n; else print 0}'
-    }
-    weighted_mean "$(cat READ1_MEAN_QUALITY)" "${read2_mean_quality}" > COMBINED_MEAN_QUALITY
+    awk -v n1="${read1_seqs}" -v v1="$(cat READ1_MEAN_QUALITY)" -v n2="${read2_seqs}" -v v2="${read2_mean_quality}" \
+      'BEGIN {n = n1 + n2; if (n > 0) print (n1 * v1 + n2 * v2) / n; else print 0}' > COMBINED_MEAN_QUALITY
     echo "DEBUG: mean read quality across all reads: $(cat COMBINED_MEAN_QUALITY)"
-    weighted_mean "$(cat READ1_GC_PERCENT)" "${read2_gc_percent}" > COMBINED_GC_PERCENT
+
+    # capture GC content across all reads, weighted by the number of bases in each file
+    awk -F'\t' 'NR==1 {for (i=1; i<=NF; i++) {if ($i=="GC(%)") gc=i; if ($i=="sum_len") len=i}}
+      NR>1 {bases += $len; gc_bases += $len * $gc}
+      END {if (bases > 0) print gc_bases / bases; else print 0}' seqkit_stats.tsv > COMBINED_GC_PERCENT
     echo "DEBUG: GC content across all reads: $(cat COMBINED_GC_PERCENT)"
   >>>
   output {
