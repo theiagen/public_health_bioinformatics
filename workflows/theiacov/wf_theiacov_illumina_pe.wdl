@@ -269,7 +269,6 @@ workflow theiacov_illumina_pe {
     Float? fastq_scan_r2_gc_percent_raw = read_QC_trim.fastq_scan_r2_gc_percent_raw
     Float? fastq_scan_gc_percent_raw = read_QC_trim.fastq_scan_gc_percent_raw
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
-    String? seqkit_version = read_QC_trim.seqkit_version
     String? fastq_scan_docker = read_QC_trim.fastq_scan_docker
     File? fastq_scan_raw1_json = read_QC_trim.fastq_scan_raw1_json
     File? fastq_scan_raw2_json = read_QC_trim.fastq_scan_raw2_json

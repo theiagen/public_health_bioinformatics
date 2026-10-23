@@ -211,7 +211,6 @@ workflow freyja_fastq {
     String fastq_scan_raw1_json = select_first([read_QC_trim_pe.fastq_scan_raw1_json, read_QC_trim_se.fastq_scan_raw1_json, ""])
     File? fastq_scan_raw2_json = read_QC_trim_pe.fastq_scan_raw2_json
     String fastq_scan_version = select_first([read_QC_trim_pe.fastq_scan_version, read_QC_trim_se.fastq_scan_version, ""])
-    String? seqkit_version = read_QC_trim_pe.seqkit_version
     String fastq_scan_num_reads_clean1 = select_first([read_QC_trim_pe.fastq_scan_clean1, read_QC_trim_se.fastq_scan_clean1, ""])
     Int? fastq_scan_num_reads_clean2 = read_QC_trim_pe.fastq_scan_clean2
     String? fastq_scan_num_reads_clean_pairs = read_QC_trim_pe.fastq_scan_clean_pairs

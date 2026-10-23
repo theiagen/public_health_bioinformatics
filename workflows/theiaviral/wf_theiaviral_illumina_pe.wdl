@@ -309,7 +309,6 @@ workflow theiaviral_illumina_pe {
     Float? fastq_scan_r2_gc_percent_raw = fastq_scan_raw.read2_gc_percent
     Float? fastq_scan_gc_percent_raw = fastq_scan_raw.total_gc_percent
     String? fastq_scan_version = fastq_scan_raw.fastq_scan_version
-    String? seqkit_version = fastq_scan_raw.seqkit_version
     String? fastq_scan_docker = fastq_scan_raw.fastq_scan_docker
     File? fastq_scan_raw1_json = fastq_scan_raw.read1_fastq_scan_json
     File? fastq_scan_raw2_json = fastq_scan_raw.read2_fastq_scan_json

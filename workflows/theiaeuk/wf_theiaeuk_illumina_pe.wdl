@@ -224,7 +224,6 @@ workflow theiaeuk_illumina_pe {
     Float? fastq_scan_r2_gc_percent_raw = read_QC_trim.fastq_scan_r2_gc_percent_raw
     Float? fastq_scan_gc_percent_raw = read_QC_trim.fastq_scan_gc_percent_raw
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
-    String? seqkit_version = read_QC_trim.seqkit_version
     Int? fastq_scan_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
     Int? fastq_scan_num_reads_clean2 = read_QC_trim.fastq_scan_clean2
     String? fastq_scan_num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
