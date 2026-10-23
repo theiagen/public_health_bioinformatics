@@ -65,7 +65,7 @@ workflow theiaviral_illumina_pe {
     }
     if (ete4_identify.ete4_status == "PASS") {
       # read QC, classification, extraction, and trimming
-      call fastq_scan_task.fastq_scan_pe as fastq_scan_raw {
+      call fastq_scan_task.fastq_scan as fastq_scan_raw {
         input:
           read1 = read1,
           read2 = read2
@@ -152,7 +152,7 @@ workflow theiaviral_illumina_pe {
       }
     }
     # clean read stat gathering
-    call fastq_scan_task.fastq_scan_pe as fastq_scan_clean {
+    call fastq_scan_task.fastq_scan as fastq_scan_clean {
       input:
         read1 = select_first([rasusa.read1_subsampled, cat_lanes.read1_concatenated, kraken2_extract.extracted_read1]),
         read2 = select_first([rasusa.read2_subsampled, cat_lanes.read2_concatenated, kraken2_extract.extracted_read2])
@@ -304,7 +304,9 @@ workflow theiaviral_illumina_pe {
     Int? fastq_scan_num_reads_raw1 = fastq_scan_raw.read1_seq
     Int? fastq_scan_num_reads_raw2 = fastq_scan_raw.read2_seq
     String? fastq_scan_raw_pairs = fastq_scan_raw.read_pairs
-    String? fastq_scan_version = fastq_scan_raw.version
+    Float? fastq_scan_r1_gc_percent_raw = fastq_scan_raw.read1_gc_percent
+    Float? fastq_scan_r2_gc_percent_raw = fastq_scan_raw.read2_gc_percent
+    String? fastq_scan_version = fastq_scan_raw.fastq_scan_version
     String? fastq_scan_docker = fastq_scan_raw.fastq_scan_docker
     File? fastq_scan_raw1_json = fastq_scan_raw.read1_fastq_scan_json
     File? fastq_scan_raw2_json = fastq_scan_raw.read2_fastq_scan_json
@@ -353,6 +355,8 @@ workflow theiaviral_illumina_pe {
     Int? fastq_scan_num_reads_clean1 = fastq_scan_clean.read1_seq
     Int? fastq_scan_num_reads_clean2 = fastq_scan_clean.read2_seq
     String? fastq_scan_clean_pairs = fastq_scan_clean.read_pairs
+    Float? fastq_scan_r1_gc_percent_clean = fastq_scan_clean.read1_gc_percent
+    Float? fastq_scan_r2_gc_percent_clean = fastq_scan_clean.read2_gc_percent
     File? fastq_scan_clean1_json = fastq_scan_clean.read1_fastq_scan_json
     File? fastq_scan_clean2_json = fastq_scan_clean.read2_fastq_scan_json
     # subsampled reads

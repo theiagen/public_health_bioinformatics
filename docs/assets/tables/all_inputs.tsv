@@ -746,20 +746,22 @@ fastplong	fastplong_window_size	Int	Sliding window size for surveying read quali
 fastplong	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Metabuli	runtime	
 fastq_scan_clean	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
 fastq_scan_clean	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
-fastq_scan_clean	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3	Optional	TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel	docker	
+fastq_scan_clean	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/fastq-scan:1.0.1-seqkit	Optional	TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel	docker	
 fastq_scan_clean	memory	Int	Amount of memory (in GB) to allocate to the task	4	Optional	TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
 fastq_scan_clean_reads	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaCoV_ClearLabs	runtime	
 fastq_scan_clean_reads	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaCoV_ClearLabs	runtime	
-fastq_scan_clean_reads	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3	Optional	TheiaCoV_ClearLabs	docker	
-fastq_scan_clean_reads	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaCoV_ClearLabs	runtime	
+fastq_scan_clean_reads	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/fastq-scan:1.0.1-seqkit	Optional	TheiaCoV_ClearLabs	docker	
+fastq_scan_clean_reads	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaCoV_ClearLabs	runtime	
+fastq_scan_clean_reads	read2	File	Internal component, do not modify		Optional	TheiaCoV_ClearLabs	general	
 fastq_scan_raw	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
 fastq_scan_raw	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
-fastq_scan_raw	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3	Optional	TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel	docker	
+fastq_scan_raw	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/fastq-scan:1.0.1-seqkit	Optional	TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel	docker	
 fastq_scan_raw	memory	Int	Amount of memory (in GB) to allocate to the task	4	Optional	TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
 fastq_scan_raw_reads	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaCoV_ClearLabs	runtime	
 fastq_scan_raw_reads	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaCoV_ClearLabs	runtime	
-fastq_scan_raw_reads	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3	Optional	TheiaCoV_ClearLabs	docker	
-fastq_scan_raw_reads	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaCoV_ClearLabs	runtime	
+fastq_scan_raw_reads	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/fastq-scan:1.0.1-seqkit	Optional	TheiaCoV_ClearLabs	docker	
+fastq_scan_raw_reads	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaCoV_ClearLabs	runtime	
+fastq_scan_raw_reads	read2	File	Internal component, do not modify		Optional	TheiaCoV_ClearLabs	general	
 fetch_bs	cpu	Int	Number of CPUs to allocate to the task	2	Optional	BaseSpace_Fetch	runtime	
 fetch_bs	disk_size	Int	Amount of storage (in GB) to allocate to the task	250	Optional	BaseSpace_Fetch	runtime	
 fetch_bs	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/bioforklift:0.5.4	Optional	BaseSpace_Fetch	docker	
@@ -1325,7 +1327,7 @@ merlin_magic	abricate_vibrio_min_percent_identity	Int	Minimum DNA percent identi
 merlin_magic	agrvate_agr_typing_only	Boolean	Set to true to skip agr operon extraction and frameshift detection	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	agrvate_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/agrvate:1.0.2--hdfd78af_0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
 merlin_magic	allele_calling_blast_db	File	The BLAST database to use		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	allele_calling_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/allele_calling:1.0.0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	allele_calling_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/allele-calling:1.0.0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
 merlin_magic	amr_search_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 merlin_magic	amr_search_disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 merlin_magic	amr_search_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/amrsearch:0.2.1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
