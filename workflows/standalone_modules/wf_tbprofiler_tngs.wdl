@@ -70,10 +70,10 @@ workflow tbprofiler_tngs {
   output {
     # fastq_scan raw (per read stats)
     Int fastq_scan_num_reads_raw1 = fastq_scan_raw.read1_seq
-    Int? fastq_scan_num_reads_raw2 = fastq_scan_raw.read2_seq
-    String? fastq_scan_raw_pairs = fastq_scan_raw.read_pairs
+    Int fastq_scan_num_reads_raw2 = fastq_scan_raw.read2_seq
+    String fastq_scan_raw_pairs = fastq_scan_raw.read_pairs
     File fastq_scan_raw1_json = fastq_scan_raw.read1_fastq_scan_json
-    File? fastq_scan_raw2_json = fastq_scan_raw.read2_fastq_scan_json
+    File fastq_scan_raw2_json = select_first([fastq_scan_raw.read2_fastq_scan_json])
     String fastq_scan_version = fastq_scan_raw.fastq_scan_version
     String fastq_scan_docker = fastq_scan_raw.fastq_scan_docker
     # fastq_scan clean (per read stats)
