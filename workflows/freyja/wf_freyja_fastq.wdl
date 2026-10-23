@@ -205,8 +205,6 @@ workflow freyja_fastq {
     Int? fastq_scan_num_reads_raw2 = read_QC_trim_pe.fastq_scan_raw2
     String? fastq_scan_num_reads_raw_pairs = read_QC_trim_pe.fastq_scan_raw_pairs
     Float? fastq_scan_mean_q_raw = read_QC_trim_pe.fastq_scan_mean_q_raw
-    Float? fastq_scan_r1_gc_percent_raw = read_QC_trim_pe.fastq_scan_r1_gc_percent_raw
-    Float? fastq_scan_r2_gc_percent_raw = read_QC_trim_pe.fastq_scan_r2_gc_percent_raw
     Float? fastq_scan_gc_percent_raw = read_QC_trim_pe.fastq_scan_gc_percent_raw
     String fastq_scan_raw1_json = select_first([read_QC_trim_pe.fastq_scan_raw1_json, read_QC_trim_se.fastq_scan_raw1_json, ""])
     File? fastq_scan_raw2_json = read_QC_trim_pe.fastq_scan_raw2_json
@@ -215,8 +213,6 @@ workflow freyja_fastq {
     Int? fastq_scan_num_reads_clean2 = read_QC_trim_pe.fastq_scan_clean2
     String? fastq_scan_num_reads_clean_pairs = read_QC_trim_pe.fastq_scan_clean_pairs
     Float? fastq_scan_mean_q_clean = read_QC_trim_pe.fastq_scan_mean_q_clean
-    Float? fastq_scan_r1_gc_percent_clean = read_QC_trim_pe.fastq_scan_r1_gc_percent_clean
-    Float? fastq_scan_r2_gc_percent_clean = read_QC_trim_pe.fastq_scan_r2_gc_percent_clean
     Float? fastq_scan_gc_percent_clean = read_QC_trim_pe.fastq_scan_gc_percent_clean
     String fastq_scan_clean1_json = select_first([read_QC_trim_pe.fastq_scan_clean1_json, read_QC_trim_se.fastq_scan_clean1_json, ""])
     File? fastq_scan_clean2_json = read_QC_trim_pe.fastq_scan_clean2_json

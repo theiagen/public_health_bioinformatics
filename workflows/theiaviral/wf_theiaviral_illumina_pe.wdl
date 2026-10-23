@@ -305,8 +305,6 @@ workflow theiaviral_illumina_pe {
     Int? fastq_scan_num_reads_raw2 = fastq_scan_raw.read2_seq
     String? fastq_scan_raw_pairs = fastq_scan_raw.read_pairs
     Float? fastq_scan_mean_q_raw = fastq_scan_raw.total_mean_quality
-    Float? fastq_scan_r1_gc_percent_raw = fastq_scan_raw.read1_gc_percent
-    Float? fastq_scan_r2_gc_percent_raw = fastq_scan_raw.read2_gc_percent
     Float? fastq_scan_gc_percent_raw = fastq_scan_raw.total_gc_percent
     String? fastq_scan_version = fastq_scan_raw.fastq_scan_version
     String? fastq_scan_docker = fastq_scan_raw.fastq_scan_docker
@@ -358,8 +356,6 @@ workflow theiaviral_illumina_pe {
     Int? fastq_scan_num_reads_clean2 = fastq_scan_clean.read2_seq
     String? fastq_scan_clean_pairs = fastq_scan_clean.read_pairs
     Float? fastq_scan_mean_q_clean = fastq_scan_clean.total_mean_quality
-    Float? fastq_scan_r1_gc_percent_clean = fastq_scan_clean.read1_gc_percent
-    Float? fastq_scan_r2_gc_percent_clean = fastq_scan_clean.read2_gc_percent
     Float? fastq_scan_gc_percent_clean = fastq_scan_clean.total_gc_percent
     File? fastq_scan_clean1_json = fastq_scan_clean.read1_fastq_scan_json
     File? fastq_scan_clean2_json = fastq_scan_clean.read2_fastq_scan_json
