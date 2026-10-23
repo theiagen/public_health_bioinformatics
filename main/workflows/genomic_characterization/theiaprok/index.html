@@ -7256,6 +7256,10 @@
 <li>ONT sequencing (<strong>TheiaProk_ONT</strong>)</li>
 <li>Genome assemblies (<strong>TheiaProk_FASTA</strong>)</li>
 </ol>
+<div class="admonition warning">
+<p class="admonition-title">Breaking change: <code>skip_screen</code> split into <code>skip_screen_raw</code> and <code>skip_screen_clean</code></p>
+<p>TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, and TheiaProk_ONT no longer accept a <code>skip_screen</code> input. The raw and cleaned read screens are now gated independently by <code>skip_screen_raw</code> and <code>skip_screen_clean</code>, both defaulting to <code>false</code>.</p>
+</div>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="theiaprok_illumina_pe" name="__tabbed_1" type="radio" /><input id="theiaprok_ont" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="theiaprok_illumina_pe">TheiaProk_Illumina_PE</label><label for="theiaprok_ont">TheiaProk_ONT</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -9871,9 +9875,17 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
-<td><strong>expected_contaminants</strong></td>
+<td><strong>expected_spike_ins</strong></td>
 <td>String</td>
-<td>Comma-delimited list of expected contaminant sequences to trigger status check. These must match "read_decontaminate_fasta" sequence headers</td>
+<td>Comma-delimited list of expected spike-in sequences to trigger the spike-in status check. Alternatively, this can be a key into the expected_spike_ins_json mapping. These must match "spike_in_fasta" sequence headers. Optional; if not provided, all detected spike-in sequences are considered unexpected</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>expected_spike_ins_json</strong></td>
+<td>File</td>
+<td>A JSON map relating spike-in sequence sets to their spike-in sequence headers, e.g. "{SET_NAME: [seq1, seq2, seqn]}"</td>
 <td></td>
 <td>Optional</td>
 </tr>
@@ -9919,10 +9931,18 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
-<td><strong>max_unexpected_contaminants</strong></td>
+<td><strong>mapped_read_removal_fasta</strong></td>
+<td>File</td>
+<td>FASTA of contaminant sequences to map against; mapped reads are removed prior to downstream analysis</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>mapped_read_removal_memory</strong></td>
 <td>Int</td>
-<td>Maximum unexpected sequences detected from contaminant FASTA to pass status check</td>
-<td>0</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>32</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9931,38 +9951,6 @@
 <td>File</td>
 <td>The database used by the MIDAS task in .tar.gz format</td>
 <td>gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>min_contaminant_coverage</strong></td>
-<td>Float</td>
-<td>Minimum breadth of coverage to identify a contaminant sequence within the status check (does not affect read cleaning)</td>
-<td>0</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>min_contaminant_depth</strong></td>
-<td>Int</td>
-<td>Minimum depth to identify a contaminant sequence within the status check (does not affect read cleaning)</td>
-<td>0</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>min_contaminant_reads_mapped</strong></td>
-<td>Int</td>
-<td>Minimum number of reads mapped to identify a contaminant sequence within the status check (does not affect read cleaning)</td>
-<td>0</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>min_expected_contaminants</strong></td>
-<td>Int</td>
-<td>Minimum expected sequences detected from contaminant FASTA to pass status check</td>
-<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10039,22 +10027,6 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
-<td><strong>read_decontaminate_fasta</strong></td>
-<td>File</td>
-<td>FASTA of contaminat sequences to map and remove reads against</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>read_decontaminate_memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>32</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
 <td><strong>read_processing</strong></td>
 <td>String</td>
 <td>The name of the tool to perform basic read processing; options: "trimmomatic" or "fastp"</td>
@@ -10067,6 +10039,62 @@
 <td>String</td>
 <td>The tool used for quality control (QC) of reads. Options are "fastq_scan" (default) and "fastqc"</td>
 <td>fastq_scan</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>spike_in_fasta</strong></td>
+<td>File</td>
+<td>FASTA of spike-in sequences to screen reads against; reads that map are removed prior to downstream analysis. Providing this input activates spike-in screening</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>spike_in_max_unexpected_sequences</strong></td>
+<td>Int</td>
+<td>Maximum unexpected sequences detected from the spike-in FASTA to pass the spike-in status check</td>
+<td>0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>spike_in_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>32</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>spike_in_min_coverage</strong></td>
+<td>Float</td>
+<td>Minimum breadth of coverage to identify a spike-in sequence within the status check</td>
+<td>0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>spike_in_min_depth</strong></td>
+<td>Int</td>
+<td>Minimum depth to identify a spike-in sequence within the status check</td>
+<td>0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>spike_in_min_expected_sequences</strong></td>
+<td>Int</td>
+<td>Minimum expected sequences detected from the spike-in FASTA to pass the spike-in status check</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>spike_in_min_reads_mapped</strong></td>
+<td>Int</td>
+<td>Minimum number of reads mapped to identify a spike-in sequence within the status check</td>
+<td>0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10463,9 +10491,17 @@
 </tr>
 <tr>
 <td>theiaprok_illumina_pe</td>
-<td><strong>skip_screen</strong></td>
+<td><strong>skip_screen_clean</strong></td>
 <td>Boolean</td>
-<td>Set to True to skip the read screening prior to analysis</td>
+<td>Set to "true" to skip the read screening of the cleaned reads</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>skip_screen_raw</strong></td>
+<td>Boolean</td>
+<td>Set to "true" to skip the read screening of the raw reads</td>
 <td>False</td>
 <td>Optional</td>
 </tr>
@@ -13721,9 +13757,17 @@
 </tr>
 <tr>
 <td>theiaprok_illumina_se</td>
-<td><strong>skip_screen</strong></td>
+<td><strong>skip_screen_clean</strong></td>
 <td>Boolean</td>
-<td>Set to True to skip the read screening prior to analysis</td>
+<td>Set to "true" to skip the read screening of the cleaned reads</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>skip_screen_raw</strong></td>
+<td>Boolean</td>
+<td>Set to "true" to skip the read screening of the raw reads</td>
 <td>False</td>
 <td>Optional</td>
 </tr>
@@ -17195,9 +17239,17 @@
 </tr>
 <tr>
 <td>theiaprok_ont</td>
-<td><strong>skip_screen</strong></td>
+<td><strong>skip_screen_clean</strong></td>
 <td>Boolean</td>
-<td>Set to True to skip the read screening prior to analysis</td>
+<td>Set to "true" to skip the read screening of the cleaned reads</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
+<td><strong>skip_screen_raw</strong></td>
+<td>Boolean</td>
+<td>Set to "true" to skip the read screening of the raw reads</td>
 <td>False</td>
 <td>Optional</td>
 </tr>
@@ -19568,8 +19620,13 @@
 <li>Estimated genome size:  A sample will fail the read screening if the estimated genome size is smaller than <code>min_genome_length</code> or bigger than <code>max_genome_length</code>.</li>
 <li>Estimated genome coverage: A sample will fail the read screening if the estimated genome coverage is less than the <code>min_coverage</code>.</li>
 </ol>
-<p>Read screening is undertaken on both the raw and cleaned reads. The task may be skipped by setting the <code>skip_screen</code> variable to <code>true</code>.</p>
-<p>Default values vary between the PE, SE, and ONT workflows. The rationale for these default values can be found below. If two default values are shown, the first is for Illumina workflows and the second is for ONT.</p>
+<p>Read screening is undertaken on both the raw and cleaned reads. Each screen has its own gate: set <code>skip_screen_raw</code> to <code>true</code> to skip the screen on the raw reads, and <code>skip_screen_clean</code> to <code>true</code> to skip the screen on the cleaned reads. The two are independent, so you can screen the raw reads only, the cleaned reads only, both, or neither.</p>
+<p>Default values vary between the Illumina and ONT workflows. The rationale for these default values can be found below. If two default values are shown, the first is for Illumina workflows and the second is for ONT.</p>
+<div class="admonition warning">
+<p class="admonition-title">Breaking change: <code>skip_screen</code> has been replaced</p>
+<p>The single <code>skip_screen</code> input has been split into <code>skip_screen_raw</code> and <code>skip_screen_clean</code>, and <code>skip_screen</code> is no longer a recognized input for any TheiaCoV or TheiaProk read-based workflow.</p>
+<p>Existing workspace configurations and input JSONs that set <code>skip_screen</code> will <strong>not</strong> carry over. The value is silently dropped, both screens fall back to their <code>false</code> default, and samples that previously bypassed screening will now be screened and may terminate at the screen task. Replace <code>skip_screen</code> with <code>skip_screen_raw</code> and/or <code>skip_screen_clean</code> before rerunning. Other workflow series (TheiaEuk, TheiaViral) are unaffected and keep the single <code>skip_screen</code> input.</p>
+</div>
 <table>
 <thead>
 <tr>
@@ -19580,9 +19637,14 @@
 </thead>
 <tbody>
 <tr>
-<td><code>skip_screen</code></td>
+<td><code>skip_screen_raw</code></td>
 <td>false</td>
-<td>Set to true to skip the read screen from running</td>
+<td>Set to true to skip the read screen on the raw reads. For the Illumina workflows, <code>est_genome_length</code> is then not estimated, so provide <code>genome_length</code> explicitly when <code>call_rasusa</code> is enabled</td>
+</tr>
+<tr>
+<td><code>skip_screen_clean</code></td>
+<td>false</td>
+<td>Set to true to skip the read screen on the cleaned reads</td>
 </tr>
 <tr>
 <td><code>min_reads</code></td>
@@ -19706,9 +19768,16 @@
 </details>
 </div>
 <details class="task">
-<summary><code>read_decontaminate</code>: Mapping-based Read Decontamination (optional)</summary>
-<p>Activate this task by providing a <code>read_decontaminate_fasta</code>.</p>
-<p>Known contaminant genetic data can be removed by mapping directly to an input <code>read_decontaminate_fasta</code>. This input can be a host genome, common microbial contaminant genome, or intentionally spiked sequences. The mapping statistics and aligned reads to the contaminant FASTA are output in JSON-formatted mappings, while downstream quality control tasks will input the decontaminated reads. An optional "pass/fail" status can be output based on identification of expected/unexpected sequences if the <code>expected_contaminants</code> input is populated with a comma-delimited string of expected sequence headers - <code>expected_contaminants</code> must exactly match sequence headers in the input.</p>
+<summary><code>mapped_read_removal</code>: Mapping-based Read Removal (optional)</summary>
+<p>Activate this task by providing a <code>mapped_read_removal_fasta</code>.</p>
+<p>Known contaminant genetic data can be removed by mapping directly to a provided <code>mapped_read_removal_fasta</code>. This input can be a host genome or a common microbial contaminant genome. The mapping statistics and aligned reads to the provided FASTA are created in JSON-formatted mappings, while downstream quality control tasks will input the reads that did not map. To additionally report a "pass/fail" status from expected/unexpected sequences, use <code>spike_in_screen</code>.</p>
+</details>
+<details class="task">
+<summary><code>spike_in_screen</code>: Mapping-based Spike-in Screening and Removal (optional)</summary>
+<p>Activate this task by providing a <code>spike_in_fasta</code>. <code>expected_spike_ins</code> is optional.</p>
+<p>Intentionally spiked sequences can be screened for by mapping directly to a provided <code>spike_in_fasta</code>. Reads that map to the <code>spike_in_fasta</code> are removed, and the remaining reads are created as <code>spike_in_removed_read1</code>/<code>spike_in_removed_read2</code> and passed to downstream quality control tasks. The mapping statistics and aligned reads to the spike-in FASTA are created in JSON-formatted mappings, alongside a "pass/fail" status based on identification of expected/unexpected sequences. <code>expected_spike_ins</code> is a comma-delimited string of expected sequence headers that must exactly match sequence headers in the <code>spike_in_fasta</code>.</p>
+<p>If <code>expected_spike_ins</code> is not provided, every spike-in sequence detected above the thresholds is considered unexpected, so the status will fail if more than <code>spike_in_max_unexpected_sequences</code> (default: 0) spike-in sequences are detected.</p>
+<p>If <code>mapped_read_removal</code> is also activated, <code>spike_in_screen</code> runs on the reads that <code>mapped_read_removal</code> left behind, so both sets of reads are removed before downstream analysis.</p>
 <p>The detailed steps and tasks are as follows:</p>
 <details class="task">
 <summary><code>Minimap2</code>: Read Alignment</summary>
@@ -19813,7 +19882,9 @@
 </details>
 <details class="task">
 <summary><code>Contaminant_Check</code>: Contaminant Sequence Status Check</summary>
-<p>The Contaminant Check task outputs a pass/fail status based on if contaminant/host sequences pass thresholds for breadth of coverage, depth of coverage, and number of reads mapped. This task is activated by inputting a comma-delimited string of <code>expected_sequences</code>, which match sequence headers in the provided contaminant/host FASTA. Each sequence from the previously provided contaminant/host FASTA is checked for sufficient read mapping statistics.</p>
+<p>The Contaminant Check task outputs a pass/fail status based on if contaminant/host sequences pass thresholds for breadth of coverage, depth of coverage, and number of reads mapped. This task is activated by providing a comma-delimited string of <code>expected_sequences</code>, which match sequence headers in the provided contaminant/host FASTA, and always runs during spike-in screening. If no <code>expected_sequences</code> are provided, all detected sequences are considered unexpected. Alternatively, a JSON, <code>expected_sequences_json</code>, can be provided, which relates contaminant sequence set names to a list of contaminant sequences; in this instance, <code>expected_sequences</code> is populated with the set name. <code>expected_sequences_json</code> must be formatted as follows:</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span><span class="nt">"&lt;SET_NAME1&gt;"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"&lt;CONTAMINANT_SEQUENCE_1&gt;"</span><span class="p">,</span><span class="w"> </span><span class="s2">"&lt;CONTAMINANT_SEQUENCE_n&gt;"</span><span class="p">]}</span>
+</span></code></pre></div>
 <p>The composite status, <code>contaminant_check_status</code>, will report <code>"PASS"</code> if expected and unexpected sequences are identified within the <code>min_expected_seq</code> and <code>max_unexpected_seq</code> thresholds; if not, <code>"FAIL ..."</code> is reported depicting which <code>expected_sequences</code> failed and why, along with which unexpected sequences were identified.</p>
 <p>Additionally, the coverage, depth, and number of reads mapped are reported in JSON mappings for the sets of expected and unexpected sequences.</p>
 <div class="admonition techdetails">
@@ -19963,22 +20034,22 @@
 <p>Read processing is available via Trimmomatic by default.</p>
 <p>Trimmomatic trims low-quality regions of Illumina paired-end or single-end reads with a sliding window (with a default window size of 4, specified with <code>trim_window_size</code>), cutting once the average quality within the window falls below the <code>trimmomatic_window_quality</code> (default of 30 for both paired-end and single-end). The read is discarded if it is trimmed below <code>trimmomatic_min_length</code> (default of 75 for paired-end, 25 for single-end).</p>
 <p>Adapter trimming with Trimmomatic is disabled by default. It can be enabled by setting <code>trimmomatic_trim_adapters=true</code>. When enabled, Trimmomatic uses its default adapter sequences, <a href="https://github.com/usadellab/Trimmomatic/tree/main/adapters"><code>TruSeq3-PE-2.fa</code></a> (for paired-end) or <a href="https://github.com/usadellab/Trimmomatic/tree/main/adapters"><code>TruSeq3-SE.fa</code></a> (for single-end) with default adapter clipping settings equivalent to:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ILLUMINACLIP:&lt;adapter_fasta&gt;:2:30:10
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>2 = seed mismatches
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>30 = palindrome clip threshold
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>10 = simple clip threshold
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>ILLUMINACLIP:&lt;adapter_fasta&gt;:2:30:10
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>2 = seed mismatches
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>30 = palindrome clip threshold
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>10 = simple clip threshold
 </span></code></pre></div>
 <p>Users can optionally provide a custom adapter file or modify adapter trimming parameters using the <code>trimmomatic_adapter_fasta</code> and <code>trimmomatic_adapter_trim_args</code> respectively. See the <a href="https://github.com/usadellab/Trimmomatic?tab=readme-ov-file#the-adapter-fasta-files">Trimmomatic adapter documentation</a> for more details. The <code>trimmomatic_adapter_fasta</code> parameter should just include the path to your fasta file. The <code>trimmomatic_adapter_trim_args</code> parameter should only contain the colon-delimited values that come after the adapter fasta file in the <code>ILLUMINACLIP</code> argument. Example usage:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>trimmomatic_adapter_fasta="path/to/my_custom_adapters.fa"
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>trimmomatic_adapter_trim_args="2:30:10"
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>trimmomatic_adapter_fasta="path/to/my_custom_adapters.fa"
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>trimmomatic_adapter_trim_args="2:30:10"
 </span></code></pre></div>
 <p>Trimmomatic's automatic detection of the phred quality score encoding is not always reliable, particularly for older or SRA-Lite-formatted FASTQ files. PHB explicitly sets <code>"-phred33"</code> as the default via <code>trimmomatic_quality_encoding</code>, since the vast majority of modern FASTQ files use <code>"-phred33"</code> encoding. The accepted values for <code>trimmomatic_quality_encoding</code> are <code>"-phred33"</code>, <code>"-phred64"</code>, and <code>""</code> (an empty string, which restores Trimmomatic's auto-detection). Note that the leading dash is required and <code>"-phred64"</code> should only be used for genuinely pre-2011 Illumina data.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>trimmomatic_quality_encoding="-phred33"
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>trimmomatic_quality_encoding="-phred33"
 </span></code></pre></div>
 <p>For more advanced configurations, there are options to override the default trimming parameters via <code>trimmomatic_override_args</code>. Note that when using <code>trimmomatic_override_args</code>, the user is responsible for specifying all desired trimming steps and their order, as the default trimming steps will be ignored. Adapter trimming and the quality score encoding are configured separately and are not affected. See the <a href="https://github.com/usadellab/Trimmomatic?tab=readme-ov-file#step-options">Trimmomatic documentation</a> for more details on available trimming steps and their parameters.</p>
 <p>Advanced Configuration Example Usage:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>trimmomatic_override_args="LEADING:30 TRAILING:30 AVGQUAL:36 SLIDINGWINDOW:4:33 MINLEN:75"
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>trimmomatic_override_args="LEADING:30 TRAILING:30 AVGQUAL:36 SLIDINGWINDOW:4:33 MINLEN:75"
 </span></code></pre></div></p>
 <div class="admonition techdetails">
 <p class="admonition-title">Trimmomatic Technical Details</p>
@@ -20622,8 +20693,13 @@
 <li>Estimated genome size:  A sample will fail the read screening if the estimated genome size is smaller than <code>min_genome_length</code> or bigger than <code>max_genome_length</code>.</li>
 <li>Estimated genome coverage: A sample will fail the read screening if the estimated genome coverage is less than the <code>min_coverage</code>.</li>
 </ol>
-<p>Read screening is undertaken on both the raw and cleaned reads. The task may be skipped by setting the <code>skip_screen</code> variable to <code>true</code>.</p>
-<p>Default values vary between the PE, SE, and ONT workflows. The rationale for these default values can be found below. If two default values are shown, the first is for Illumina workflows and the second is for ONT.</p>
+<p>Read screening is undertaken on both the raw and cleaned reads. Each screen has its own gate: set <code>skip_screen_raw</code> to <code>true</code> to skip the screen on the raw reads, and <code>skip_screen_clean</code> to <code>true</code> to skip the screen on the cleaned reads. The two are independent, so you can screen the raw reads only, the cleaned reads only, both, or neither.</p>
+<p>Default values vary between the Illumina and ONT workflows. The rationale for these default values can be found below. If two default values are shown, the first is for Illumina workflows and the second is for ONT.</p>
+<div class="admonition warning">
+<p class="admonition-title">Breaking change: <code>skip_screen</code> has been replaced</p>
+<p>The single <code>skip_screen</code> input has been split into <code>skip_screen_raw</code> and <code>skip_screen_clean</code>, and <code>skip_screen</code> is no longer a recognized input for any TheiaCoV or TheiaProk read-based workflow.</p>
+<p>Existing workspace configurations and input JSONs that set <code>skip_screen</code> will <strong>not</strong> carry over. The value is silently dropped, both screens fall back to their <code>false</code> default, and samples that previously bypassed screening will now be screened and may terminate at the screen task. Replace <code>skip_screen</code> with <code>skip_screen_raw</code> and/or <code>skip_screen_clean</code> before rerunning. Other workflow series (TheiaEuk, TheiaViral) are unaffected and keep the single <code>skip_screen</code> input.</p>
+</div>
 <table>
 <thead>
 <tr>
@@ -20634,9 +20710,14 @@
 </thead>
 <tbody>
 <tr>
-<td><code>skip_screen</code></td>
+<td><code>skip_screen_raw</code></td>
 <td>false</td>
-<td>Set to true to skip the read screen from running</td>
+<td>Set to true to skip the read screen on the raw reads. For the Illumina workflows, <code>est_genome_length</code> is then not estimated, so provide <code>genome_length</code> explicitly when <code>call_rasusa</code> is enabled</td>
+</tr>
+<tr>
+<td><code>skip_screen_clean</code></td>
+<td>false</td>
+<td>Set to true to skip the read screen on the cleaned reads</td>
 </tr>
 <tr>
 <td><code>min_reads</code></td>
@@ -20760,9 +20841,16 @@
 </details>
 </div>
 <details class="task">
-<summary><code>read_decontaminate</code>: Mapping-based Read Decontamination (optional)</summary>
-<p>Activate this task by providing a <code>read_decontaminate_fasta</code>.</p>
-<p>Known contaminant genetic data can be removed by mapping directly to an input <code>read_decontaminate_fasta</code>. This input can be a host genome, common microbial contaminant genome, or intentionally spiked sequences. The mapping statistics and aligned reads to the contaminant FASTA are output in JSON-formatted mappings, while downstream quality control tasks will input the decontaminated reads. An optional "pass/fail" status can be output based on identification of expected/unexpected sequences if the <code>expected_contaminants</code> input is populated with a comma-delimited string of expected sequence headers - <code>expected_contaminants</code> must exactly match sequence headers in the input.</p>
+<summary><code>mapped_read_removal</code>: Mapping-based Read Removal (optional)</summary>
+<p>Activate this task by providing a <code>mapped_read_removal_fasta</code>.</p>
+<p>Known contaminant genetic data can be removed by mapping directly to a provided <code>mapped_read_removal_fasta</code>. This input can be a host genome or a common microbial contaminant genome. The mapping statistics and aligned reads to the provided FASTA are created in JSON-formatted mappings, while downstream quality control tasks will input the reads that did not map. To additionally report a "pass/fail" status from expected/unexpected sequences, use <code>spike_in_screen</code>.</p>
+</details>
+<details class="task">
+<summary><code>spike_in_screen</code>: Mapping-based Spike-in Screening and Removal (optional)</summary>
+<p>Activate this task by providing a <code>spike_in_fasta</code>. <code>expected_spike_ins</code> is optional.</p>
+<p>Intentionally spiked sequences can be screened for by mapping directly to a provided <code>spike_in_fasta</code>. Reads that map to the <code>spike_in_fasta</code> are removed, and the remaining reads are created as <code>spike_in_removed_read1</code>/<code>spike_in_removed_read2</code> and passed to downstream quality control tasks. The mapping statistics and aligned reads to the spike-in FASTA are created in JSON-formatted mappings, alongside a "pass/fail" status based on identification of expected/unexpected sequences. <code>expected_spike_ins</code> is a comma-delimited string of expected sequence headers that must exactly match sequence headers in the <code>spike_in_fasta</code>.</p>
+<p>If <code>expected_spike_ins</code> is not provided, every spike-in sequence detected above the thresholds is considered unexpected, so the status will fail if more than <code>spike_in_max_unexpected_sequences</code> (default: 0) spike-in sequences are detected.</p>
+<p>If <code>mapped_read_removal</code> is also activated, <code>spike_in_screen</code> runs on the reads that <code>mapped_read_removal</code> left behind, so both sets of reads are removed before downstream analysis.</p>
 <p>The detailed steps and tasks are as follows:</p>
 <details class="task">
 <summary><code>Minimap2</code>: Read Alignment</summary>
@@ -20867,7 +20955,9 @@
 </details>
 <details class="task">
 <summary><code>Contaminant_Check</code>: Contaminant Sequence Status Check</summary>
-<p>The Contaminant Check task outputs a pass/fail status based on if contaminant/host sequences pass thresholds for breadth of coverage, depth of coverage, and number of reads mapped. This task is activated by inputting a comma-delimited string of <code>expected_sequences</code>, which match sequence headers in the provided contaminant/host FASTA. Each sequence from the previously provided contaminant/host FASTA is checked for sufficient read mapping statistics.</p>
+<p>The Contaminant Check task outputs a pass/fail status based on if contaminant/host sequences pass thresholds for breadth of coverage, depth of coverage, and number of reads mapped. This task is activated by providing a comma-delimited string of <code>expected_sequences</code>, which match sequence headers in the provided contaminant/host FASTA, and always runs during spike-in screening. If no <code>expected_sequences</code> are provided, all detected sequences are considered unexpected. Alternatively, a JSON, <code>expected_sequences_json</code>, can be provided, which relates contaminant sequence set names to a list of contaminant sequences; in this instance, <code>expected_sequences</code> is populated with the set name. <code>expected_sequences_json</code> must be formatted as follows:</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span><span class="nt">"&lt;SET_NAME1&gt;"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"&lt;CONTAMINANT_SEQUENCE_1&gt;"</span><span class="p">,</span><span class="w"> </span><span class="s2">"&lt;CONTAMINANT_SEQUENCE_n&gt;"</span><span class="p">]}</span>
+</span></code></pre></div>
 <p>The composite status, <code>contaminant_check_status</code>, will report <code>"PASS"</code> if expected and unexpected sequences are identified within the <code>min_expected_seq</code> and <code>max_unexpected_seq</code> thresholds; if not, <code>"FAIL ..."</code> is reported depicting which <code>expected_sequences</code> failed and why, along with which unexpected sequences were identified.</p>
 <p>Additionally, the coverage, depth, and number of reads mapped are reported in JSON mappings for the sets of expected and unexpected sequences.</p>
 <div class="admonition techdetails">
@@ -21017,22 +21107,22 @@
 <p>Read processing is available via Trimmomatic by default.</p>
 <p>Trimmomatic trims low-quality regions of Illumina paired-end or single-end reads with a sliding window (with a default window size of 4, specified with <code>trim_window_size</code>), cutting once the average quality within the window falls below the <code>trimmomatic_window_quality</code> (default of 30 for both paired-end and single-end). The read is discarded if it is trimmed below <code>trimmomatic_min_length</code> (default of 75 for paired-end, 25 for single-end).</p>
 <p>Adapter trimming with Trimmomatic is disabled by default. It can be enabled by setting <code>trimmomatic_trim_adapters=true</code>. When enabled, Trimmomatic uses its default adapter sequences, <a href="https://github.com/usadellab/Trimmomatic/tree/main/adapters"><code>TruSeq3-PE-2.fa</code></a> (for paired-end) or <a href="https://github.com/usadellab/Trimmomatic/tree/main/adapters"><code>TruSeq3-SE.fa</code></a> (for single-end) with default adapter clipping settings equivalent to:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>ILLUMINACLIP:&lt;adapter_fasta&gt;:2:30:10
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>2 = seed mismatches
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>30 = palindrome clip threshold
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>10 = simple clip threshold
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>ILLUMINACLIP:&lt;adapter_fasta&gt;:2:30:10
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>2 = seed mismatches
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>30 = palindrome clip threshold
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>10 = simple clip threshold
 </span></code></pre></div>
 <p>Users can optionally provide a custom adapter file or modify adapter trimming parameters using the <code>trimmomatic_adapter_fasta</code> and <code>trimmomatic_adapter_trim_args</code> respectively. See the <a href="https://github.com/usadellab/Trimmomatic?tab=readme-ov-file#the-adapter-fasta-files">Trimmomatic adapter documentation</a> for more details. The <code>trimmomatic_adapter_fasta</code> parameter should just include the path to your fasta file. The <code>trimmomatic_adapter_trim_args</code> parameter should only contain the colon-delimited values that come after the adapter fasta file in the <code>ILLUMINACLIP</code> argument. Example usage:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>trimmomatic_adapter_fasta="path/to/my_custom_adapters.fa"
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>trimmomatic_adapter_trim_args="2:30:10"
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>trimmomatic_adapter_fasta="path/to/my_custom_adapters.fa"
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>trimmomatic_adapter_trim_args="2:30:10"
 </span></code></pre></div>
 <p>Trimmomatic's automatic detection of the phred quality score encoding is not always reliable, particularly for older or SRA-Lite-formatted FASTQ files. PHB explicitly sets <code>"-phred33"</code> as the default via <code>trimmomatic_quality_encoding</code>, since the vast majority of modern FASTQ files use <code>"-phred33"</code> encoding. The accepted values for <code>trimmomatic_quality_encoding</code> are <code>"-phred33"</code>, <code>"-phred64"</code>, and <code>""</code> (an empty string, which restores Trimmomatic's auto-detection). Note that the leading dash is required and <code>"-phred64"</code> should only be used for genuinely pre-2011 Illumina data.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>trimmomatic_quality_encoding="-phred33"
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>trimmomatic_quality_encoding="-phred33"
 </span></code></pre></div>
 <p>For more advanced configurations, there are options to override the default trimming parameters via <code>trimmomatic_override_args</code>. Note that when using <code>trimmomatic_override_args</code>, the user is responsible for specifying all desired trimming steps and their order, as the default trimming steps will be ignored. Adapter trimming and the quality score encoding are configured separately and are not affected. See the <a href="https://github.com/usadellab/Trimmomatic?tab=readme-ov-file#step-options">Trimmomatic documentation</a> for more details on available trimming steps and their parameters.</p>
 <p>Advanced Configuration Example Usage:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>trimmomatic_override_args="LEADING:30 TRAILING:30 AVGQUAL:36 SLIDINGWINDOW:4:33 MINLEN:75"
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>trimmomatic_override_args="LEADING:30 TRAILING:30 AVGQUAL:36 SLIDINGWINDOW:4:33 MINLEN:75"
 </span></code></pre></div></p>
 <div class="admonition techdetails">
 <p class="admonition-title">Trimmomatic Technical Details</p>
@@ -21654,8 +21744,13 @@
 <li>Estimated genome size:  A sample will fail the read screening if the estimated genome size is smaller than <code>min_genome_length</code> or bigger than <code>max_genome_length</code>.</li>
 <li>Estimated genome coverage: A sample will fail the read screening if the estimated genome coverage is less than the <code>min_coverage</code>.</li>
 </ol>
-<p>Read screening is undertaken on both the raw and cleaned reads. The task may be skipped by setting the <code>skip_screen</code> variable to <code>true</code>.</p>
-<p>Default values vary between the PE, SE, and ONT workflows. The rationale for these default values can be found below. If two default values are shown, the first is for Illumina workflows and the second is for ONT.</p>
+<p>Read screening is undertaken on both the raw and cleaned reads. Each screen has its own gate: set <code>skip_screen_raw</code> to <code>true</code> to skip the screen on the raw reads, and <code>skip_screen_clean</code> to <code>true</code> to skip the screen on the cleaned reads. The two are independent, so you can screen the raw reads only, the cleaned reads only, both, or neither.</p>
+<p>Default values vary between the Illumina and ONT workflows. The rationale for these default values can be found below. If two default values are shown, the first is for Illumina workflows and the second is for ONT.</p>
+<div class="admonition warning">
+<p class="admonition-title">Breaking change: <code>skip_screen</code> has been replaced</p>
+<p>The single <code>skip_screen</code> input has been split into <code>skip_screen_raw</code> and <code>skip_screen_clean</code>, and <code>skip_screen</code> is no longer a recognized input for any TheiaCoV or TheiaProk read-based workflow.</p>
+<p>Existing workspace configurations and input JSONs that set <code>skip_screen</code> will <strong>not</strong> carry over. The value is silently dropped, both screens fall back to their <code>false</code> default, and samples that previously bypassed screening will now be screened and may terminate at the screen task. Replace <code>skip_screen</code> with <code>skip_screen_raw</code> and/or <code>skip_screen_clean</code> before rerunning. Other workflow series (TheiaEuk, TheiaViral) are unaffected and keep the single <code>skip_screen</code> input.</p>
+</div>
 <table>
 <thead>
 <tr>
@@ -21666,9 +21761,14 @@
 </thead>
 <tbody>
 <tr>
-<td><code>skip_screen</code></td>
+<td><code>skip_screen_raw</code></td>
 <td>false</td>
-<td>Set to true to skip the read screen from running</td>
+<td>Set to true to skip the read screen on the raw reads. For the Illumina workflows, <code>est_genome_length</code> is then not estimated, so provide <code>genome_length</code> explicitly when <code>call_rasusa</code> is enabled</td>
+</tr>
+<tr>
+<td><code>skip_screen_clean</code></td>
+<td>false</td>
+<td>Set to true to skip the read screen on the cleaned reads</td>
 </tr>
 <tr>
 <td><code>min_reads</code></td>
@@ -23886,22 +23986,22 @@
 <details class="toggle">
 <summary>Serogroup Decision Tree</summary>
 <p>The following decision tree is used to determine the serogroup for the sample.
-<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>if not Prs:
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    stop
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>elif lmo0737 and not (ORF2819 or ORF2110):
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    if lmo1118:
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>        Serogroup 1/2c, 3c
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>    else:
-</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>        Serogroup 1/2a, 3a
-</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>elif ORF2819 and not (lmo0737 or lmo1118):
-</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>    if ORF2110:
-</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>        Serogroup 4b, 4d, 4e
-</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>    else:
-</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>        Serogroup 1/2b, 3b, 7
-</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>elif lmo0737 and ORF2819 and ORF2110:
-</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>    Serogroup 4b, 4d, 4e*
-</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>else:
-</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>    Nontypable
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>if not Prs:
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    stop
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>elif lmo0737 and not (ORF2819 or ORF2110):
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>    if lmo1118:
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>        Serogroup 1/2c, 3c
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>    else:
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>        Serogroup 1/2a, 3a
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>elif ORF2819 and not (lmo0737 or lmo1118):
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>    if ORF2110:
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>        Serogroup 4b, 4d, 4e
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>    else:
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>        Serogroup 1/2b, 3b, 7
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>elif lmo0737 and ORF2819 and ORF2110:
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>    Serogroup 4b, 4d, 4e*
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>else:
+</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>    Nontypable
 </span></code></pre></div></p>
 </details>
 <div class="admonition techdetails">
@@ -25499,96 +25599,6 @@
 <td>Mean read length for the combined raw reads</td>
 </tr>
 <tr>
-<td>contaminant_bai</td>
-<td>File</td>
-<td>Index of reads aligned to the contaminant FASTA</td>
-</tr>
-<tr>
-<td>contaminant_bam</td>
-<td>File</td>
-<td>Reads aligned to the contaminant FASTA</td>
-</tr>
-<tr>
-<td>contaminant_cov_hist</td>
-<td>File</td>
-<td>Coverage histogram of reads mapped to contaminant FASTA</td>
-</tr>
-<tr>
-<td>contaminant_coverage</td>
-<td>Float</td>
-<td>Mean coverage of reads mapped to contaminant FASTA</td>
-</tr>
-<tr>
-<td>contaminant_coverage_by_sequence</td>
-<td>Map[String,Float]</td>
-<td>A JSON map relating identified contaminant sequence headers to read mapping coverage</td>
-</tr>
-<tr>
-<td>contaminant_depth_by_sequence</td>
-<td>Map[String,Float]</td>
-<td>A JSON map relating identified contaminant sequence headers to read mapping depth</td>
-</tr>
-<tr>
-<td>contaminant_expected_coverage_by_sequence</td>
-<td>Map[String,Float]</td>
-<td>A JSON map relating expected contaminant sequences to the read mapping coverage</td>
-</tr>
-<tr>
-<td>contaminant_expected_depth_by_sequence</td>
-<td>Map[String,Float]</td>
-<td>A JSON map relating expected contaminant sequences to the read mapping depth</td>
-</tr>
-<tr>
-<td>contaminant_expected_reads_by_sequence</td>
-<td>Map[String,Float]</td>
-<td>A JSON map relating expected contaminant sequences to the number of reads mapped</td>
-</tr>
-<tr>
-<td>contaminant_mapping_flagstat</td>
-<td>File</td>
-<td>samtools flagstat of reads mapped to contaminant FASTA</td>
-</tr>
-<tr>
-<td>contaminant_mapping_stats</td>
-<td>File</td>
-<td>samtools statistics of reads mapped to contaminant FASTA</td>
-</tr>
-<tr>
-<td>contaminant_mean_depth</td>
-<td>Float</td>
-<td>Mean depth of reads mapped to contaminant FASTA</td>
-</tr>
-<tr>
-<td>contaminant_percent_mapped_reads</td>
-<td>Float</td>
-<td>Percent of reads mapped to contaminant FASTA</td>
-</tr>
-<tr>
-<td>contaminant_reads_by_sequence</td>
-<td>Map[String,Float]</td>
-<td>A JSON map relating contaminant sequences to the number of reads mapped</td>
-</tr>
-<tr>
-<td>contaminant_status</td>
-<td>String</td>
-<td>Status of identification of contaminant sequence based on sequence-based and overall thresholds</td>
-</tr>
-<tr>
-<td>contaminant_unexpected_coverage_by_sequence</td>
-<td>Map[String,Float]</td>
-<td>A JSON map relating unexpected contaminant sequences to the read mapping coverage</td>
-</tr>
-<tr>
-<td>contaminant_unexpected_depth_by_sequence</td>
-<td>Map[String,Float]</td>
-<td>A JSON map relating unexpected contaminant sequences to the read mapping depth</td>
-</tr>
-<tr>
-<td>contaminant_unexpected_reads_by_sequence</td>
-<td>Map[String,Float]</td>
-<td>A JSON map relating unexpected contaminant sequences to the number of reads mapped</td>
-</tr>
-<tr>
 <td>contigs_gfa</td>
 <td>File</td>
 <td>Assembly graph output generated by SPAdes (Illumina: PE, SE) or Flye (ONT), used to visualize and evaluate genome assembly results.</td>
@@ -26152,6 +26162,61 @@
 <td>lissero_version</td>
 <td>String</td>
 <td>Version of LisSero used</td>
+</tr>
+<tr>
+<td>mapped_read_removal_bai</td>
+<td>File</td>
+<td>Index of reads aligned to the contaminant FASTA</td>
+</tr>
+<tr>
+<td>mapped_read_removal_bam</td>
+<td>File</td>
+<td>Reads aligned to the contaminant FASTA</td>
+</tr>
+<tr>
+<td>mapped_read_removal_cov_hist</td>
+<td>File</td>
+<td>Coverage histogram of reads mapped to contaminant FASTA</td>
+</tr>
+<tr>
+<td>mapped_read_removal_coverage</td>
+<td>Float</td>
+<td>Mean coverage of reads mapped to contaminant FASTA</td>
+</tr>
+<tr>
+<td>mapped_read_removal_coverage_by_sequence</td>
+<td>Map[String,Float]</td>
+<td>A JSON map relating identified contaminant sequence headers to read mapping coverage</td>
+</tr>
+<tr>
+<td>mapped_read_removal_depth_by_sequence</td>
+<td>Map[String,Float]</td>
+<td>A JSON map relating identified contaminant sequence headers to read mapping depth</td>
+</tr>
+<tr>
+<td>mapped_read_removal_mapping_flagstat</td>
+<td>File</td>
+<td>samtools flagstat of reads mapped to contaminant FASTA</td>
+</tr>
+<tr>
+<td>mapped_read_removal_mapping_stats</td>
+<td>File</td>
+<td>samtools statistics of reads mapped to contaminant FASTA</td>
+</tr>
+<tr>
+<td>mapped_read_removal_mean_depth</td>
+<td>Float</td>
+<td>Mean depth of reads mapped to contaminant FASTA</td>
+</tr>
+<tr>
+<td>mapped_read_removal_percent_mapped_reads</td>
+<td>Float</td>
+<td>Percent of reads mapped to contaminant FASTA</td>
+</tr>
+<tr>
+<td>mapped_read_removal_reads_by_sequence</td>
+<td>Map[String,Float]</td>
+<td>A JSON map relating contaminant sequences to the number of reads mapped</td>
 </tr>
 <tr>
 <td>meningotype_BAST</td>
@@ -27072,6 +27137,91 @@
 <td>spatyper_version</td>
 <td>String</td>
 <td>spatyper version used</td>
+</tr>
+<tr>
+<td>spike_in_bai</td>
+<td>File</td>
+<td>Index of reads aligned to the spike-in FASTA</td>
+</tr>
+<tr>
+<td>spike_in_bam</td>
+<td>File</td>
+<td>Reads aligned to the spike-in FASTA</td>
+</tr>
+<tr>
+<td>spike_in_cov_hist</td>
+<td>File</td>
+<td>Coverage histogram of reads mapped to spike-in FASTA</td>
+</tr>
+<tr>
+<td>spike_in_coverage_by_sequence</td>
+<td>Map[String,Float]</td>
+<td>A JSON map relating identified spike-in sequence headers to read mapping coverage</td>
+</tr>
+<tr>
+<td>spike_in_depth_by_sequence</td>
+<td>Map[String,Float]</td>
+<td>A JSON map relating identified spike-in sequence headers to read mapping depth</td>
+</tr>
+<tr>
+<td>spike_in_expected_coverage_by_sequence</td>
+<td>Map[String,Float]</td>
+<td>A JSON map relating expected spike-in sequences to the read mapping coverage</td>
+</tr>
+<tr>
+<td>spike_in_expected_depth_by_sequence</td>
+<td>Map[String,Float]</td>
+<td>A JSON map relating expected spike-in sequences to the read mapping depth</td>
+</tr>
+<tr>
+<td>spike_in_expected_reads_by_sequence</td>
+<td>Map[String,Float]</td>
+<td>A JSON map relating expected spike-in sequences to the number of reads mapped</td>
+</tr>
+<tr>
+<td>spike_in_mapping_flagstat</td>
+<td>File</td>
+<td>samtools flagstat of reads mapped to spike-in FASTA</td>
+</tr>
+<tr>
+<td>spike_in_mapping_stats</td>
+<td>File</td>
+<td>samtools statistics of reads mapped to spike-in FASTA</td>
+</tr>
+<tr>
+<td>spike_in_reads_by_sequence</td>
+<td>Map[String,Float]</td>
+<td>A JSON map relating spike-in sequences to the number of reads mapped</td>
+</tr>
+<tr>
+<td>spike_in_removed_read1</td>
+<td>File</td>
+<td>Read1 after reads mapping to the spike-in FASTA were removed</td>
+</tr>
+<tr>
+<td>spike_in_removed_read2</td>
+<td>File</td>
+<td>Read2 after reads mapping to the spike-in FASTA were removed</td>
+</tr>
+<tr>
+<td>spike_in_status</td>
+<td>String</td>
+<td>Status of identification of spike-in sequence based on sequence-based and overall thresholds</td>
+</tr>
+<tr>
+<td>spike_in_unexpected_coverage_by_sequence</td>
+<td>Map[String,Float]</td>
+<td>A JSON map relating unexpected spike-in sequences to the read mapping coverage</td>
+</tr>
+<tr>
+<td>spike_in_unexpected_depth_by_sequence</td>
+<td>Map[String,Float]</td>
+<td>A JSON map relating unexpected spike-in sequences to the read mapping depth</td>
+</tr>
+<tr>
+<td>spike_in_unexpected_reads_by_sequence</td>
+<td>Map[String,Float]</td>
+<td>A JSON map relating unexpected spike-in sequences to the number of reads mapped</td>
 </tr>
 <tr>
 <td>srst2_vibrio_biotype</td>

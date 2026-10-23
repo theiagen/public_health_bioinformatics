@@ -8078,9 +8078,17 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
-<td><strong>expected_contaminants</strong></td>
+<td><strong>expected_spike_ins</strong></td>
 <td>String</td>
-<td>Comma-delimited list of expected contaminant sequences to trigger status check. These must match "read_decontaminate_fasta" sequence headers</td>
+<td>Comma-delimited list of expected spike-in sequences to trigger the spike-in status check. Alternatively, this can be a key into the expected_spike_ins_json mapping. These must match "spike_in_fasta" sequence headers. Optional; if not provided, all detected spike-in sequences are considered unexpected</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>expected_spike_ins_json</strong></td>
+<td>File</td>
+<td>A JSON map relating spike-in sequence sets to their spike-in sequence headers, e.g. "{SET_NAME: [seq1, seq2, seqn]}"</td>
 <td></td>
 <td>Optional</td>
 </tr>
@@ -8126,10 +8134,18 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
-<td><strong>max_unexpected_contaminants</strong></td>
+<td><strong>mapped_read_removal_fasta</strong></td>
+<td>File</td>
+<td>FASTA of contaminant sequences to map against; mapped reads are removed prior to downstream analysis</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>mapped_read_removal_memory</strong></td>
 <td>Int</td>
-<td>Maximum unexpected sequences detected from contaminant FASTA to pass status check</td>
-<td>0</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>32</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8138,38 +8154,6 @@
 <td>File</td>
 <td>Internal component, do not modify</td>
 <td>gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>min_contaminant_coverage</strong></td>
-<td>Float</td>
-<td>Minimum breadth of coverage to identify a contaminant sequence within the status check (does not affect read cleaning)</td>
-<td>0</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>min_contaminant_depth</strong></td>
-<td>Int</td>
-<td>Minimum depth to identify a contaminant sequence within the status check (does not affect read cleaning)</td>
-<td>0</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>min_contaminant_reads_mapped</strong></td>
-<td>Int</td>
-<td>Minimum number of reads mapped to identify a contaminant sequence within the status check (does not affect read cleaning)</td>
-<td>0</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>min_expected_contaminants</strong></td>
-<td>Int</td>
-<td>Minimum expected sequences detected from contaminant FASTA to pass status check</td>
-<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8238,22 +8222,6 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
-<td><strong>read_decontaminate_fasta</strong></td>
-<td>File</td>
-<td>FASTA of contaminat sequences to map and remove reads against</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>read_decontaminate_memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>32</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
 <td><strong>read_processing</strong></td>
 <td>String</td>
 <td>The name of the tool to perform basic read processing; options: "trimmomatic" or "fastp"</td>
@@ -8266,6 +8234,62 @@
 <td>String</td>
 <td>The tool used for quality control (QC) of reads. Options are "fastq_scan" (default) and "fastqc"</td>
 <td>fastq_scan</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>spike_in_fasta</strong></td>
+<td>File</td>
+<td>FASTA of spike-in sequences to screen reads against; reads that map are removed prior to downstream analysis. Providing this input activates spike-in screening</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>spike_in_max_unexpected_sequences</strong></td>
+<td>Int</td>
+<td>Maximum unexpected sequences detected from the spike-in FASTA to pass the spike-in status check</td>
+<td>0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>spike_in_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>32</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>spike_in_min_coverage</strong></td>
+<td>Float</td>
+<td>Minimum breadth of coverage to identify a spike-in sequence within the status check</td>
+<td>0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>spike_in_min_depth</strong></td>
+<td>Int</td>
+<td>Minimum depth to identify a spike-in sequence within the status check</td>
+<td>0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>spike_in_min_expected_sequences</strong></td>
+<td>Int</td>
+<td>Minimum expected sequences detected from the spike-in FASTA to pass the spike-in status check</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>spike_in_min_reads_mapped</strong></td>
+<td>Int</td>
+<td>Minimum number of reads mapped to identify a spike-in sequence within the status check</td>
+<td>0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8472,7 +8496,7 @@
 <td>theiacov_illumina_pe</td>
 <td><strong>skip_screen_clean</strong></td>
 <td>Boolean</td>
-<td>Set to True to skip the read screening of the cleaned reads</td>
+<td>Set to "true" to skip the read screening of the cleaned reads</td>
 <td>False</td>
 <td>Optional</td>
 </tr>
@@ -8480,7 +8504,7 @@
 <td>theiacov_illumina_pe</td>
 <td><strong>skip_screen_raw</strong></td>
 <td>Boolean</td>
-<td>Set to True to skip the read screening of the raw reads</td>
+<td>Set to "true" to skip the read screening of the raw reads</td>
 <td>False</td>
 <td>Optional</td>
 </tr>
@@ -9690,7 +9714,7 @@
 <td>theiacov_illumina_se</td>
 <td><strong>skip_screen_clean</strong></td>
 <td>Boolean</td>
-<td>Set to True to skip the read screening of the cleaned reads</td>
+<td>Set to "true" to skip the read screening of the cleaned reads</td>
 <td>False</td>
 <td>Optional</td>
 </tr>
@@ -9698,7 +9722,7 @@
 <td>theiacov_illumina_se</td>
 <td><strong>skip_screen_raw</strong></td>
 <td>Boolean</td>
-<td>Set to True to skip the read screening of the raw reads</td>
+<td>Set to "true" to skip the read screening of the raw reads</td>
 <td>False</td>
 <td>Optional</td>
 </tr>
@@ -11300,7 +11324,7 @@
 <td>theiacov_ont</td>
 <td><strong>skip_screen_clean</strong></td>
 <td>Boolean</td>
-<td>Set to True to skip the read screening of the cleaned reads</td>
+<td>Set to "true" to skip the read screening of the cleaned reads</td>
 <td>False</td>
 <td>Optional</td>
 </tr>
@@ -11308,7 +11332,7 @@
 <td>theiacov_ont</td>
 <td><strong>skip_screen_raw</strong></td>
 <td>Boolean</td>
-<td>Set to True to skip the read screening of the raw reads</td>
+<td>Set to "true" to skip the read screening of the raw reads</td>
 <td>False</td>
 <td>Optional</td>
 </tr>
@@ -14965,8 +14989,8 @@
 <p>Read screening is undertaken on both the raw and cleaned reads. Each screen has its own gate: set <code>skip_screen_raw</code> to <code>true</code> to skip the screen on the raw reads, and <code>skip_screen_clean</code> to <code>true</code> to skip the screen on the cleaned reads. The two are independent, so you can screen the raw reads only, the cleaned reads only, both, or neither.</p>
 <div class="admonition warning">
 <p class="admonition-title">Breaking change: <code>skip_screen</code> has been replaced</p>
-<p>The single <code>skip_screen</code> input has been split into <code>skip_screen_raw</code> and <code>skip_screen_clean</code>, and <code>skip_screen</code> is no longer a recognized input for TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, or TheiaCoV_ONT.</p>
-<p>Existing workspace configurations and input JSONs that set <code>skip_screen</code> will <strong>not</strong> carry over. The value is silently dropped, both screens fall back to their <code>false</code> default, and samples that previously bypassed screening will now be screened and may terminate at the screen task. Replace <code>skip_screen</code> with <code>skip_screen_raw</code> and/or <code>skip_screen_clean</code> before rerunning. Other workflow series (TheiaProk, TheiaEuk, TheiaViral) are unaffected and keep the single <code>skip_screen</code> input.</p>
+<p>The single <code>skip_screen</code> input has been split into <code>skip_screen_raw</code> and <code>skip_screen_clean</code>, and <code>skip_screen</code> is no longer a recognized input for any TheiaCoV or TheiaProk read-based workflow.</p>
+<p>Existing workspace configurations and input JSONs that set <code>skip_screen</code> will <strong>not</strong> carry over. The value is silently dropped, both screens fall back to their <code>false</code> default, and samples that previously bypassed screening will now be screened and may terminate at the screen task. Replace <code>skip_screen</code> with <code>skip_screen_raw</code> and/or <code>skip_screen_clean</code> before rerunning. Other workflow series (TheiaEuk, TheiaViral) are unaffected and keep the single <code>skip_screen</code> input.</p>
 </div>
 <table>
 <thead>
@@ -15106,9 +15130,16 @@
 </details>
 </div>
 <details class="task">
-<summary><code>read_decontaminate</code>: Mapping-based Read Decontamination (optional)</summary>
-<p>Activate this task by providing a <code>read_decontaminate_fasta</code>.</p>
-<p>Known contaminant genetic data can be removed by mapping directly to an input <code>read_decontaminate_fasta</code>. This input can be a host genome, common microbial contaminant genome, or intentionally spiked sequences. The mapping statistics and aligned reads to the contaminant FASTA are output in JSON-formatted mappings, while downstream quality control tasks will input the decontaminated reads. An optional "pass/fail" status can be output based on identification of expected/unexpected sequences if the <code>expected_contaminants</code> input is populated with a comma-delimited string of expected sequence headers - <code>expected_contaminants</code> must exactly match sequence headers in the input.</p>
+<summary><code>mapped_read_removal</code>: Mapping-based Read Removal (optional)</summary>
+<p>Activate this task by providing a <code>mapped_read_removal_fasta</code>.</p>
+<p>Known contaminant genetic data can be removed by mapping directly to a provided <code>mapped_read_removal_fasta</code>. This input can be a host genome or a common microbial contaminant genome. The mapping statistics and aligned reads to the provided FASTA are created in JSON-formatted mappings, while downstream quality control tasks will input the reads that did not map. To additionally report a "pass/fail" status from expected/unexpected sequences, use <code>spike_in_screen</code>.</p>
+</details>
+<details class="task">
+<summary><code>spike_in_screen</code>: Mapping-based Spike-in Screening and Removal (optional)</summary>
+<p>Activate this task by providing a <code>spike_in_fasta</code>. <code>expected_spike_ins</code> is optional.</p>
+<p>Intentionally spiked sequences can be screened for by mapping directly to a provided <code>spike_in_fasta</code>. Reads that map to the <code>spike_in_fasta</code> are removed, and the remaining reads are created as <code>spike_in_removed_read1</code>/<code>spike_in_removed_read2</code> and passed to downstream quality control tasks. The mapping statistics and aligned reads to the spike-in FASTA are created in JSON-formatted mappings, alongside a "pass/fail" status based on identification of expected/unexpected sequences. <code>expected_spike_ins</code> is a comma-delimited string of expected sequence headers that must exactly match sequence headers in the <code>spike_in_fasta</code>.</p>
+<p>If <code>expected_spike_ins</code> is not provided, every spike-in sequence detected above the thresholds is considered unexpected, so the status will fail if more than <code>spike_in_max_unexpected_sequences</code> (default: 0) spike-in sequences are detected.</p>
+<p>If <code>mapped_read_removal</code> is also activated, <code>spike_in_screen</code> runs on the reads that <code>mapped_read_removal</code> left behind, so both sets of reads are removed before downstream analysis.</p>
 <p>The detailed steps and tasks are as follows:</p>
 <details class="task">
 <summary><code>Minimap2</code>: Read Alignment</summary>
@@ -15213,7 +15244,9 @@
 </details>
 <details class="task">
 <summary><code>Contaminant_Check</code>: Contaminant Sequence Status Check</summary>
-<p>The Contaminant Check task outputs a pass/fail status based on if contaminant/host sequences pass thresholds for breadth of coverage, depth of coverage, and number of reads mapped. This task is activated by inputting a comma-delimited string of <code>expected_sequences</code>, which match sequence headers in the provided contaminant/host FASTA. Each sequence from the previously provided contaminant/host FASTA is checked for sufficient read mapping statistics.</p>
+<p>The Contaminant Check task outputs a pass/fail status based on if contaminant/host sequences pass thresholds for breadth of coverage, depth of coverage, and number of reads mapped. This task is activated by providing a comma-delimited string of <code>expected_sequences</code>, which match sequence headers in the provided contaminant/host FASTA, and always runs during spike-in screening. If no <code>expected_sequences</code> are provided, all detected sequences are considered unexpected. Alternatively, a JSON, <code>expected_sequences_json</code>, can be provided, which relates contaminant sequence set names to a list of contaminant sequences; in this instance, <code>expected_sequences</code> is populated with the set name. <code>expected_sequences_json</code> must be formatted as follows:</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span><span class="nt">"&lt;SET_NAME1&gt;"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"&lt;CONTAMINANT_SEQUENCE_1&gt;"</span><span class="p">,</span><span class="w"> </span><span class="s2">"&lt;CONTAMINANT_SEQUENCE_n&gt;"</span><span class="p">]}</span>
+</span></code></pre></div>
 <p>The composite status, <code>contaminant_check_status</code>, will report <code>"PASS"</code> if expected and unexpected sequences are identified within the <code>min_expected_seq</code> and <code>max_unexpected_seq</code> thresholds; if not, <code>"FAIL ..."</code> is reported depicting which <code>expected_sequences</code> failed and why, along with which unexpected sequences were identified.</p>
 <p>Additionally, the coverage, depth, and number of reads mapped are reported in JSON mappings for the sets of expected and unexpected sequences.</p>
 <div class="admonition techdetails">
@@ -15393,22 +15426,22 @@
 <p>Read processing is available via Trimmomatic by default.</p>
 <p>Trimmomatic trims low-quality regions of Illumina paired-end or single-end reads with a sliding window (with a default window size of 4, specified with <code>trim_window_size</code>), cutting once the average quality within the window falls below the <code>trimmomatic_window_quality</code> (default of 30 for both paired-end and single-end). The read is discarded if it is trimmed below <code>trimmomatic_min_length</code> (default of 75 for paired-end, 25 for single-end).</p>
 <p>Adapter trimming with Trimmomatic is disabled by default. It can be enabled by setting <code>trimmomatic_trim_adapters=true</code>. When enabled, Trimmomatic uses its default adapter sequences, <a href="https://github.com/usadellab/Trimmomatic/tree/main/adapters"><code>TruSeq3-PE-2.fa</code></a> (for paired-end) or <a href="https://github.com/usadellab/Trimmomatic/tree/main/adapters"><code>TruSeq3-SE.fa</code></a> (for single-end) with default adapter clipping settings equivalent to:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ILLUMINACLIP:&lt;adapter_fasta&gt;:2:30:10
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>2 = seed mismatches
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>30 = palindrome clip threshold
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>10 = simple clip threshold
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>ILLUMINACLIP:&lt;adapter_fasta&gt;:2:30:10
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>2 = seed mismatches
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>30 = palindrome clip threshold
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>10 = simple clip threshold
 </span></code></pre></div>
 <p>Users can optionally provide a custom adapter file or modify adapter trimming parameters using the <code>trimmomatic_adapter_fasta</code> and <code>trimmomatic_adapter_trim_args</code> respectively. See the <a href="https://github.com/usadellab/Trimmomatic?tab=readme-ov-file#the-adapter-fasta-files">Trimmomatic adapter documentation</a> for more details. The <code>trimmomatic_adapter_fasta</code> parameter should just include the path to your fasta file. The <code>trimmomatic_adapter_trim_args</code> parameter should only contain the colon-delimited values that come after the adapter fasta file in the <code>ILLUMINACLIP</code> argument. Example usage:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>trimmomatic_adapter_fasta="path/to/my_custom_adapters.fa"
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>trimmomatic_adapter_trim_args="2:30:10"
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>trimmomatic_adapter_fasta="path/to/my_custom_adapters.fa"
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>trimmomatic_adapter_trim_args="2:30:10"
 </span></code></pre></div>
 <p>Trimmomatic's automatic detection of the phred quality score encoding is not always reliable, particularly for older or SRA-Lite-formatted FASTQ files. PHB explicitly sets <code>"-phred33"</code> as the default via <code>trimmomatic_quality_encoding</code>, since the vast majority of modern FASTQ files use <code>"-phred33"</code> encoding. The accepted values for <code>trimmomatic_quality_encoding</code> are <code>"-phred33"</code>, <code>"-phred64"</code>, and <code>""</code> (an empty string, which restores Trimmomatic's auto-detection). Note that the leading dash is required and <code>"-phred64"</code> should only be used for genuinely pre-2011 Illumina data.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>trimmomatic_quality_encoding="-phred33"
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>trimmomatic_quality_encoding="-phred33"
 </span></code></pre></div>
 <p>For more advanced configurations, there are options to override the default trimming parameters via <code>trimmomatic_override_args</code>. Note that when using <code>trimmomatic_override_args</code>, the user is responsible for specifying all desired trimming steps and their order, as the default trimming steps will be ignored. Adapter trimming and the quality score encoding are configured separately and are not affected. See the <a href="https://github.com/usadellab/Trimmomatic?tab=readme-ov-file#step-options">Trimmomatic documentation</a> for more details on available trimming steps and their parameters.</p>
 <p>Advanced Configuration Example Usage:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>trimmomatic_override_args="LEADING:30 TRAILING:30 AVGQUAL:36 SLIDINGWINDOW:4:33 MINLEN:75"
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>trimmomatic_override_args="LEADING:30 TRAILING:30 AVGQUAL:36 SLIDINGWINDOW:4:33 MINLEN:75"
 </span></code></pre></div></p>
 <div class="admonition techdetails">
 <p class="admonition-title">Trimmomatic Technical Details</p>
@@ -15873,8 +15906,8 @@
 <p>Read screening is undertaken on both the raw and cleaned reads. Each screen has its own gate: set <code>skip_screen_raw</code> to <code>true</code> to skip the screen on the raw reads, and <code>skip_screen_clean</code> to <code>true</code> to skip the screen on the cleaned reads. The two are independent, so you can screen the raw reads only, the cleaned reads only, both, or neither.</p>
 <div class="admonition warning">
 <p class="admonition-title">Breaking change: <code>skip_screen</code> has been replaced</p>
-<p>The single <code>skip_screen</code> input has been split into <code>skip_screen_raw</code> and <code>skip_screen_clean</code>, and <code>skip_screen</code> is no longer a recognized input for TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, or TheiaCoV_ONT.</p>
-<p>Existing workspace configurations and input JSONs that set <code>skip_screen</code> will <strong>not</strong> carry over. The value is silently dropped, both screens fall back to their <code>false</code> default, and samples that previously bypassed screening will now be screened and may terminate at the screen task. Replace <code>skip_screen</code> with <code>skip_screen_raw</code> and/or <code>skip_screen_clean</code> before rerunning. Other workflow series (TheiaProk, TheiaEuk, TheiaViral) are unaffected and keep the single <code>skip_screen</code> input.</p>
+<p>The single <code>skip_screen</code> input has been split into <code>skip_screen_raw</code> and <code>skip_screen_clean</code>, and <code>skip_screen</code> is no longer a recognized input for any TheiaCoV or TheiaProk read-based workflow.</p>
+<p>Existing workspace configurations and input JSONs that set <code>skip_screen</code> will <strong>not</strong> carry over. The value is silently dropped, both screens fall back to their <code>false</code> default, and samples that previously bypassed screening will now be screened and may terminate at the screen task. Replace <code>skip_screen</code> with <code>skip_screen_raw</code> and/or <code>skip_screen_clean</code> before rerunning. Other workflow series (TheiaEuk, TheiaViral) are unaffected and keep the single <code>skip_screen</code> input.</p>
 </div>
 <table>
 <thead>
@@ -16014,9 +16047,16 @@
 </details>
 </div>
 <details class="task">
-<summary><code>read_decontaminate</code>: Mapping-based Read Decontamination (optional)</summary>
-<p>Activate this task by providing a <code>read_decontaminate_fasta</code>.</p>
-<p>Known contaminant genetic data can be removed by mapping directly to an input <code>read_decontaminate_fasta</code>. This input can be a host genome, common microbial contaminant genome, or intentionally spiked sequences. The mapping statistics and aligned reads to the contaminant FASTA are output in JSON-formatted mappings, while downstream quality control tasks will input the decontaminated reads. An optional "pass/fail" status can be output based on identification of expected/unexpected sequences if the <code>expected_contaminants</code> input is populated with a comma-delimited string of expected sequence headers - <code>expected_contaminants</code> must exactly match sequence headers in the input.</p>
+<summary><code>mapped_read_removal</code>: Mapping-based Read Removal (optional)</summary>
+<p>Activate this task by providing a <code>mapped_read_removal_fasta</code>.</p>
+<p>Known contaminant genetic data can be removed by mapping directly to a provided <code>mapped_read_removal_fasta</code>. This input can be a host genome or a common microbial contaminant genome. The mapping statistics and aligned reads to the provided FASTA are created in JSON-formatted mappings, while downstream quality control tasks will input the reads that did not map. To additionally report a "pass/fail" status from expected/unexpected sequences, use <code>spike_in_screen</code>.</p>
+</details>
+<details class="task">
+<summary><code>spike_in_screen</code>: Mapping-based Spike-in Screening and Removal (optional)</summary>
+<p>Activate this task by providing a <code>spike_in_fasta</code>. <code>expected_spike_ins</code> is optional.</p>
+<p>Intentionally spiked sequences can be screened for by mapping directly to a provided <code>spike_in_fasta</code>. Reads that map to the <code>spike_in_fasta</code> are removed, and the remaining reads are created as <code>spike_in_removed_read1</code>/<code>spike_in_removed_read2</code> and passed to downstream quality control tasks. The mapping statistics and aligned reads to the spike-in FASTA are created in JSON-formatted mappings, alongside a "pass/fail" status based on identification of expected/unexpected sequences. <code>expected_spike_ins</code> is a comma-delimited string of expected sequence headers that must exactly match sequence headers in the <code>spike_in_fasta</code>.</p>
+<p>If <code>expected_spike_ins</code> is not provided, every spike-in sequence detected above the thresholds is considered unexpected, so the status will fail if more than <code>spike_in_max_unexpected_sequences</code> (default: 0) spike-in sequences are detected.</p>
+<p>If <code>mapped_read_removal</code> is also activated, <code>spike_in_screen</code> runs on the reads that <code>mapped_read_removal</code> left behind, so both sets of reads are removed before downstream analysis.</p>
 <p>The detailed steps and tasks are as follows:</p>
 <details class="task">
 <summary><code>Minimap2</code>: Read Alignment</summary>
@@ -16121,7 +16161,9 @@
 </details>
 <details class="task">
 <summary><code>Contaminant_Check</code>: Contaminant Sequence Status Check</summary>
-<p>The Contaminant Check task outputs a pass/fail status based on if contaminant/host sequences pass thresholds for breadth of coverage, depth of coverage, and number of reads mapped. This task is activated by inputting a comma-delimited string of <code>expected_sequences</code>, which match sequence headers in the provided contaminant/host FASTA. Each sequence from the previously provided contaminant/host FASTA is checked for sufficient read mapping statistics.</p>
+<p>The Contaminant Check task outputs a pass/fail status based on if contaminant/host sequences pass thresholds for breadth of coverage, depth of coverage, and number of reads mapped. This task is activated by providing a comma-delimited string of <code>expected_sequences</code>, which match sequence headers in the provided contaminant/host FASTA, and always runs during spike-in screening. If no <code>expected_sequences</code> are provided, all detected sequences are considered unexpected. Alternatively, a JSON, <code>expected_sequences_json</code>, can be provided, which relates contaminant sequence set names to a list of contaminant sequences; in this instance, <code>expected_sequences</code> is populated with the set name. <code>expected_sequences_json</code> must be formatted as follows:</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span><span class="nt">"&lt;SET_NAME1&gt;"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"&lt;CONTAMINANT_SEQUENCE_1&gt;"</span><span class="p">,</span><span class="w"> </span><span class="s2">"&lt;CONTAMINANT_SEQUENCE_n&gt;"</span><span class="p">]}</span>
+</span></code></pre></div>
 <p>The composite status, <code>contaminant_check_status</code>, will report <code>"PASS"</code> if expected and unexpected sequences are identified within the <code>min_expected_seq</code> and <code>max_unexpected_seq</code> thresholds; if not, <code>"FAIL ..."</code> is reported depicting which <code>expected_sequences</code> failed and why, along with which unexpected sequences were identified.</p>
 <p>Additionally, the coverage, depth, and number of reads mapped are reported in JSON mappings for the sets of expected and unexpected sequences.</p>
 <div class="admonition techdetails">
@@ -16301,22 +16343,22 @@
 <p>Read processing is available via Trimmomatic by default.</p>
 <p>Trimmomatic trims low-quality regions of Illumina paired-end or single-end reads with a sliding window (with a default window size of 4, specified with <code>trim_window_size</code>), cutting once the average quality within the window falls below the <code>trimmomatic_window_quality</code> (default of 30 for both paired-end and single-end). The read is discarded if it is trimmed below <code>trimmomatic_min_length</code> (default of 75 for paired-end, 25 for single-end).</p>
 <p>Adapter trimming with Trimmomatic is disabled by default. It can be enabled by setting <code>trimmomatic_trim_adapters=true</code>. When enabled, Trimmomatic uses its default adapter sequences, <a href="https://github.com/usadellab/Trimmomatic/tree/main/adapters"><code>TruSeq3-PE-2.fa</code></a> (for paired-end) or <a href="https://github.com/usadellab/Trimmomatic/tree/main/adapters"><code>TruSeq3-SE.fa</code></a> (for single-end) with default adapter clipping settings equivalent to:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>ILLUMINACLIP:&lt;adapter_fasta&gt;:2:30:10
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>2 = seed mismatches
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>30 = palindrome clip threshold
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>10 = simple clip threshold
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>ILLUMINACLIP:&lt;adapter_fasta&gt;:2:30:10
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>2 = seed mismatches
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>30 = palindrome clip threshold
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>10 = simple clip threshold
 </span></code></pre></div>
 <p>Users can optionally provide a custom adapter file or modify adapter trimming parameters using the <code>trimmomatic_adapter_fasta</code> and <code>trimmomatic_adapter_trim_args</code> respectively. See the <a href="https://github.com/usadellab/Trimmomatic?tab=readme-ov-file#the-adapter-fasta-files">Trimmomatic adapter documentation</a> for more details. The <code>trimmomatic_adapter_fasta</code> parameter should just include the path to your fasta file. The <code>trimmomatic_adapter_trim_args</code> parameter should only contain the colon-delimited values that come after the adapter fasta file in the <code>ILLUMINACLIP</code> argument. Example usage:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>trimmomatic_adapter_fasta="path/to/my_custom_adapters.fa"
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>trimmomatic_adapter_trim_args="2:30:10"
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>trimmomatic_adapter_fasta="path/to/my_custom_adapters.fa"
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>trimmomatic_adapter_trim_args="2:30:10"
 </span></code></pre></div>
 <p>Trimmomatic's automatic detection of the phred quality score encoding is not always reliable, particularly for older or SRA-Lite-formatted FASTQ files. PHB explicitly sets <code>"-phred33"</code> as the default via <code>trimmomatic_quality_encoding</code>, since the vast majority of modern FASTQ files use <code>"-phred33"</code> encoding. The accepted values for <code>trimmomatic_quality_encoding</code> are <code>"-phred33"</code>, <code>"-phred64"</code>, and <code>""</code> (an empty string, which restores Trimmomatic's auto-detection). Note that the leading dash is required and <code>"-phred64"</code> should only be used for genuinely pre-2011 Illumina data.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>trimmomatic_quality_encoding="-phred33"
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>trimmomatic_quality_encoding="-phred33"
 </span></code></pre></div>
 <p>For more advanced configurations, there are options to override the default trimming parameters via <code>trimmomatic_override_args</code>. Note that when using <code>trimmomatic_override_args</code>, the user is responsible for specifying all desired trimming steps and their order, as the default trimming steps will be ignored. Adapter trimming and the quality score encoding are configured separately and are not affected. See the <a href="https://github.com/usadellab/Trimmomatic?tab=readme-ov-file#step-options">Trimmomatic documentation</a> for more details on available trimming steps and their parameters.</p>
 <p>Advanced Configuration Example Usage:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>trimmomatic_override_args="LEADING:30 TRAILING:30 AVGQUAL:36 SLIDINGWINDOW:4:33 MINLEN:75"
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>trimmomatic_override_args="LEADING:30 TRAILING:30 AVGQUAL:36 SLIDINGWINDOW:4:33 MINLEN:75"
 </span></code></pre></div></p>
 <div class="admonition techdetails">
 <p class="admonition-title">Trimmomatic Technical Details</p>
@@ -16743,8 +16785,8 @@
 <p>Read screening is undertaken on both the raw and cleaned reads. Each screen has its own gate: set <code>skip_screen_raw</code> to <code>true</code> to skip the screen on the raw reads, and <code>skip_screen_clean</code> to <code>true</code> to skip the screen on the cleaned reads. The two are independent, so you can screen the raw reads only, the cleaned reads only, both, or neither.</p>
 <div class="admonition warning">
 <p class="admonition-title">Breaking change: <code>skip_screen</code> has been replaced</p>
-<p>The single <code>skip_screen</code> input has been split into <code>skip_screen_raw</code> and <code>skip_screen_clean</code>, and <code>skip_screen</code> is no longer a recognized input for TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, or TheiaCoV_ONT.</p>
-<p>Existing workspace configurations and input JSONs that set <code>skip_screen</code> will <strong>not</strong> carry over. The value is silently dropped, both screens fall back to their <code>false</code> default, and samples that previously bypassed screening will now be screened and may terminate at the screen task. Replace <code>skip_screen</code> with <code>skip_screen_raw</code> and/or <code>skip_screen_clean</code> before rerunning. Other workflow series (TheiaProk, TheiaEuk, TheiaViral) are unaffected and keep the single <code>skip_screen</code> input.</p>
+<p>The single <code>skip_screen</code> input has been split into <code>skip_screen_raw</code> and <code>skip_screen_clean</code>, and <code>skip_screen</code> is no longer a recognized input for any TheiaCoV or TheiaProk read-based workflow.</p>
+<p>Existing workspace configurations and input JSONs that set <code>skip_screen</code> will <strong>not</strong> carry over. The value is silently dropped, both screens fall back to their <code>false</code> default, and samples that previously bypassed screening will now be screened and may terminate at the screen task. Replace <code>skip_screen</code> with <code>skip_screen_raw</code> and/or <code>skip_screen_clean</code> before rerunning. Other workflow series (TheiaEuk, TheiaViral) are unaffected and keep the single <code>skip_screen</code> input.</p>
 </div>
 <table>
 <thead>
@@ -16989,8 +17031,8 @@
 <div class="admonition info">
 <p class="admonition-title">Primer BED formatting</p>
 <p>ARTIC has stringent primer BED formatting standards that are briefly depicted in <a href="https://chrisgkent.github.io/primalbedtools/">the primalbedtools documentation</a> and fully described in <a href="https://github.com/artic-network/primerscheme-specs/blob/main/pdf/primerscheme.pdf">the ARTIC primer-scheme specification</a>. The "sequence" and "primerAttributes" fields are NOT necessary for this task, though a comprehensive example is depicted here:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a># chrom     start   end     primername              pool    strand  sequence            primerAttributes
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>MN908947.3  47      78      SARS-CoV-2_1_LEFT_1     1       +       CTCTTGTAGATCTT...   pw=1.0;ps=100
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a># chrom     start   end     primername              pool    strand  sequence            primerAttributes
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>MN908947.3  47      78      SARS-CoV-2_1_LEFT_1     1       +       CTCTTGTAGATCTT...   pw=1.0;ps=100
 </span></code></pre></div>
 <p>Some other noteworthy formatting standards include:</p>
 <ul>
@@ -17222,8 +17264,8 @@
 <div class="admonition info">
 <p class="admonition-title">Primer BED formatting</p>
 <p>ARTIC has stringent primer BED formatting standards that are briefly depicted in <a href="https://chrisgkent.github.io/primalbedtools/">the primalbedtools documentation</a> and fully described in <a href="https://github.com/artic-network/primerscheme-specs/blob/main/pdf/primerscheme.pdf">the ARTIC primer-scheme specification</a>. The "sequence" and "primerAttributes" fields are NOT necessary for this task, though a comprehensive example is depicted here:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a># chrom     start   end     primername              pool    strand  sequence            primerAttributes
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>MN908947.3  47      78      SARS-CoV-2_1_LEFT_1     1       +       CTCTTGTAGATCTT...   pw=1.0;ps=100
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a># chrom     start   end     primername              pool    strand  sequence            primerAttributes
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>MN908947.3  47      78      SARS-CoV-2_1_LEFT_1     1       +       CTCTTGTAGATCTT...   pw=1.0;ps=100
 </span></code></pre></div>
 <p>Some other noteworthy formatting standards include:</p>
 <ul>
@@ -17639,16 +17681,16 @@
 <p>This task calculates average read depth and the percent of a region (typically genes) covered above a minimum depth and quality using samtools (Pysam) and basic arithmetic.</p>
 <p>Outputs are reported as JSON-based "maps" that relate gene names to their breadth and depth of coverage. For example:</p>
 <p><code>percent_coverage_by_gene</code>:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>{
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    "GENE1": 99.5,
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    "GENE2": 10
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>{
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>    "GENE1": 99.5,
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>    "GENE2": 10
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>}
 </span></code></pre></div></p>
 <p><code>depth_by_gene</code>:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>{
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>    "GENE1": 10,
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>    "GENE2": 1
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>{
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>    "GENE1": 10,
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>    "GENE2": 1
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>}
 </span></code></pre></div></p>
 <p>By default, this task runs for SARS-CoV-2 and Mpox.</p>
 <div class="admonition warning">
@@ -17769,16 +17811,16 @@
 <p>This task calculates average read depth and the percent of a region (typically genes) covered above a minimum depth and quality using samtools (Pysam) and basic arithmetic.</p>
 <p>Outputs are reported as JSON-based "maps" that relate gene names to their breadth and depth of coverage. For example:</p>
 <p><code>percent_coverage_by_gene</code>:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>{
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>    "GENE1": 99.5,
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>    "GENE2": 10
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>{
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>    "GENE1": 99.5,
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>    "GENE2": 10
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>}
 </span></code></pre></div></p>
 <p><code>depth_by_gene</code>:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>{
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>    "GENE1": 10,
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>    "GENE2": 1
-</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>{
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>    "GENE1": 10,
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>    "GENE2": 1
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>}
 </span></code></pre></div></p>
 <p>By default, this task runs for SARS-CoV-2 and Mpox.</p>
 <div class="admonition warning">
@@ -17865,16 +17907,16 @@
 <p>This task calculates average read depth and the percent of a region (typically genes) covered above a minimum depth and quality using samtools (Pysam) and basic arithmetic.</p>
 <p>Outputs are reported as JSON-based "maps" that relate gene names to their breadth and depth of coverage. For example:</p>
 <p><code>percent_coverage_by_gene</code>:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>{
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>    "GENE1": 99.5,
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>    "GENE2": 10
-</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>{
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>    "GENE1": 99.5,
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>    "GENE2": 10
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>}
 </span></code></pre></div></p>
 <p><code>depth_by_gene</code>:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>{
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>    "GENE1": 10,
-</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>    "GENE2": 1
-</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>{
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>    "GENE1": 10,
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>    "GENE2": 1
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>}
 </span></code></pre></div></p>
 <p>By default, this task runs for SARS-CoV-2 and Mpox.</p>
 <div class="admonition warning">
@@ -18193,136 +18235,6 @@
 <p>This task calculates average read depth and the percent of a region (typically genes) covered above a minimum depth and quality using samtools (Pysam) and basic arithmetic.</p>
 <p>Outputs are reported as JSON-based "maps" that relate gene names to their breadth and depth of coverage. For example:</p>
 <p><code>percent_coverage_by_gene</code>:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>{
-</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>    "GENE1": 99.5,
-</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>    "GENE2": 10
-</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>}
-</span></code></pre></div></p>
-<p><code>depth_by_gene</code>:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>{
-</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>    "GENE1": 10,
-</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>    "GENE2": 1
-</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>}
-</span></code></pre></div></p>
-<p>By default, this task runs for SARS-CoV-2 and Mpox.</p>
-<div class="admonition warning">
-<p class="admonition-title">Region coordinates must be relevant to the reference genome</p>
-<p>Please note that default BEDfiles contain gene coordinates that may not directly match user-provided or dynamically-selected reference genomes (TheiaViral).</p>
-</div>
-<details class="dna">
-<summary>BED file usage</summary>
-<p>In viral characterization workflows, gene coverage regions are supplied with a BED file.</p>
-<ul>
-<li>To extract custom regions of interest, populate the <code>reference_gene_locations_bed</code> input (task <code>theiacov</code> / <code>morgana_magic</code>)</li>
-<li>If no custom BED is provided, organism defaults are used when available</li>
-<li>BED files should include a gene name in column 4 to label output</li>
-</ul>
-</details>
-<div class="admonition techdetails">
-<p class="admonition-title">Gene Coverage Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_gene_coverage.wdl">task_gene_coverage.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/samtools/samtools">samtools on GitHub</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://www.htslib.org/doc/samtools.html">samtools Manual</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td><a href="https://doi.org/10.1093/gigascience/giab008">Twelve years of SAMtools and BCFtools</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-</div>
-<div class="tabbed-block">
-<details class="task">
-<summary><code>Nextclade</code>: Clade Assignment</summary>
-<p>Nextclade is an open-source project used to analyze viral genomes, particularly for clade assignment and mutation calling. Simply, Nextclade works by aligning viral genomes to a reference genome, calling variants between the two sequences, and then assigning clades based on those identified mutations.</p>
-<p>Clade assignment is performed via <em>phylogenetic placement</em>. Phylogenetic placement compares the mutations of the provided sequence to the mutations of each node found in a reference tree, where the root of that tree is the reference genome. The node that is most similar to the sample is used to both assign a clade designation and calculate where the sample should be placed in the phylogenetic tree.</p>
-<div class="admonition techdetails">
-<p class="admonition-title">Nextclade Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_nextclade.wdl">task_nextclade.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/nextstrain/nextclade">https://github.com/nextstrain/nextclade</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://docs.nextstrain.org/projects/nextclade/en/stable/">Nextclade</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td><a href="https://doi.org/10.21105/joss.03773">Nextclade: clade assignment, mutation calling and quality control for viral genomes.</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-<details class="task">
-<summary><code>VADR</code>: Assembly Validation and Annotation</summary>
-<p>VADR (Viral Annotation DefineR) annotates and validates completed assembly files. For details on VADR default models/parameters, see the <a href="../theiacov/#org-specific"><em>organism-specific parameters and logic</em> section</a>. It was primarily developed to test viral sequences to confirm they would be accepted to NCBI's GenBank data repository, but has found wide usage in general sequence validation and annotation.</p>
-<p>As part of the analysis of the assemblies, more than 70 types of unexpected characteristics, also known as <em>alerts</em>, can be reported. Any identified alerts can be found in the <code>vadr_alerts_list</code> output. Fatal alerts indicate that the sample is unlikely to be accepted to GenBank; non-fatal alerts are designated as passing sequences, but may still require further investigation. A full description of the potential alerts can be found on the <a href="https://github.com/ncbi/vadr/blob/master/documentation/alerts.md">VADR alerts documentation</a>, including details on how to allow sequences to pass despite having fatal alerts.</p>
-<div class="admonition techdetails">
-<p class="admonition-title">VADR Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/advanced_metrics/task_vadr.wdl">task_vadr.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/ncbi/vadr">https://github.com/ncbi/vadr</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://github.com/ncbi/vadr/wiki">https://github.com/ncbi/vadr/wiki</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td>For SARS-CoV-2: <a href="https://doi.org/10.1093/nargab/lqad002"><em>Faster SARS-CoV-2 sequence validation and annotation for GenBank using VADR</em></a><br> For non-SARS-CoV-2: <a href="https://doi.org/10.1186/s12859-020-3537-3"><em>VADR: validation and annotation of virus sequence submissions to GenBank</em></a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-<details class="task">
-<summary><code>gene_coverage</code>: Depth and Breadth of Coverage Calculations</summary>
-<p>This task calculates average read depth and the percent of a region (typically genes) covered above a minimum depth and quality using samtools (Pysam) and basic arithmetic.</p>
-<p>Outputs are reported as JSON-based "maps" that relate gene names to their breadth and depth of coverage. For example:</p>
-<p><code>percent_coverage_by_gene</code>:
 <div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>{
 </span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>    "GENE1": 99.5,
 </span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>    "GENE2": 10
@@ -18511,6 +18423,136 @@
 </div>
 <div class="tabbed-block">
 <details class="task">
+<summary><code>Nextclade</code>: Clade Assignment</summary>
+<p>Nextclade is an open-source project used to analyze viral genomes, particularly for clade assignment and mutation calling. Simply, Nextclade works by aligning viral genomes to a reference genome, calling variants between the two sequences, and then assigning clades based on those identified mutations.</p>
+<p>Clade assignment is performed via <em>phylogenetic placement</em>. Phylogenetic placement compares the mutations of the provided sequence to the mutations of each node found in a reference tree, where the root of that tree is the reference genome. The node that is most similar to the sample is used to both assign a clade designation and calculate where the sample should be placed in the phylogenetic tree.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Nextclade Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_nextclade.wdl">task_nextclade.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/nextstrain/nextclade">https://github.com/nextstrain/nextclade</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://docs.nextstrain.org/projects/nextclade/en/stable/">Nextclade</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.21105/joss.03773">Nextclade: clade assignment, mutation calling and quality control for viral genomes.</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>VADR</code>: Assembly Validation and Annotation</summary>
+<p>VADR (Viral Annotation DefineR) annotates and validates completed assembly files. For details on VADR default models/parameters, see the <a href="../theiacov/#org-specific"><em>organism-specific parameters and logic</em> section</a>. It was primarily developed to test viral sequences to confirm they would be accepted to NCBI's GenBank data repository, but has found wide usage in general sequence validation and annotation.</p>
+<p>As part of the analysis of the assemblies, more than 70 types of unexpected characteristics, also known as <em>alerts</em>, can be reported. Any identified alerts can be found in the <code>vadr_alerts_list</code> output. Fatal alerts indicate that the sample is unlikely to be accepted to GenBank; non-fatal alerts are designated as passing sequences, but may still require further investigation. A full description of the potential alerts can be found on the <a href="https://github.com/ncbi/vadr/blob/master/documentation/alerts.md">VADR alerts documentation</a>, including details on how to allow sequences to pass despite having fatal alerts.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">VADR Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/advanced_metrics/task_vadr.wdl">task_vadr.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/ncbi/vadr">https://github.com/ncbi/vadr</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/ncbi/vadr/wiki">https://github.com/ncbi/vadr/wiki</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td>For SARS-CoV-2: <a href="https://doi.org/10.1093/nargab/lqad002"><em>Faster SARS-CoV-2 sequence validation and annotation for GenBank using VADR</em></a><br> For non-SARS-CoV-2: <a href="https://doi.org/10.1186/s12859-020-3537-3"><em>VADR: validation and annotation of virus sequence submissions to GenBank</em></a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>gene_coverage</code>: Depth and Breadth of Coverage Calculations</summary>
+<p>This task calculates average read depth and the percent of a region (typically genes) covered above a minimum depth and quality using samtools (Pysam) and basic arithmetic.</p>
+<p>Outputs are reported as JSON-based "maps" that relate gene names to their breadth and depth of coverage. For example:</p>
+<p><code>percent_coverage_by_gene</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>{
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>    "GENE1": 99.5,
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>    "GENE2": 10
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>}
+</span></code></pre></div></p>
+<p><code>depth_by_gene</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>{
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>    "GENE1": 10,
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>    "GENE2": 1
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>}
+</span></code></pre></div></p>
+<p>By default, this task runs for SARS-CoV-2 and Mpox.</p>
+<div class="admonition warning">
+<p class="admonition-title">Region coordinates must be relevant to the reference genome</p>
+<p>Please note that default BEDfiles contain gene coordinates that may not directly match user-provided or dynamically-selected reference genomes (TheiaViral).</p>
+</div>
+<details class="dna">
+<summary>BED file usage</summary>
+<p>In viral characterization workflows, gene coverage regions are supplied with a BED file.</p>
+<ul>
+<li>To extract custom regions of interest, populate the <code>reference_gene_locations_bed</code> input (task <code>theiacov</code> / <code>morgana_magic</code>)</li>
+<li>If no custom BED is provided, organism defaults are used when available</li>
+<li>BED files should include a gene name in column 4 to label output</li>
+</ul>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">Gene Coverage Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_gene_coverage.wdl">task_gene_coverage.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/samtools/samtools">samtools on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://www.htslib.org/doc/samtools.html">samtools Manual</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1093/gigascience/giab008">Twelve years of SAMtools and BCFtools</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</div>
+<div class="tabbed-block">
+<details class="task">
 <summary><code>Quasitools</code>: HIV Characterization</summary>
 <p>Quasitools performs genomic characterization for HIV by using the HyDRA module for identifying drug resistance mutations in HIV-1 samples based on the <a href="https://hivdb.stanford.edu/">Stanford HIV Drug Resistance Database</a> and the <a href="https://hivdb.stanford.edu/page/who-sdrm-list/">2009 WHO list for Surveillance of Transmitted HIVDR</a>; see also the papers linked below.</p>
 <p>The HyDRA module in Quasitools maps the sample sequence against an annotated HIV-1 reference and performs variant calling. Those variants are compared to the databases described above, and any matches are reported, along with the complete list of variants.</p>
@@ -18549,16 +18591,16 @@
 <p>This task calculates average read depth and the percent of a region (typically genes) covered above a minimum depth and quality using samtools (Pysam) and basic arithmetic.</p>
 <p>Outputs are reported as JSON-based "maps" that relate gene names to their breadth and depth of coverage. For example:</p>
 <p><code>percent_coverage_by_gene</code>:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>{
-</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>    "GENE1": 99.5,
-</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>    "GENE2": 10
-</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>{
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>    "GENE1": 99.5,
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>    "GENE2": 10
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>}
 </span></code></pre></div></p>
 <p><code>depth_by_gene</code>:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>{
-</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>    "GENE1": 10,
-</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>    "GENE2": 1
-</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>{
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>    "GENE1": 10,
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>    "GENE2": 1
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>}
 </span></code></pre></div></p>
 <p>By default, this task runs for SARS-CoV-2 and Mpox.</p>
 <div class="admonition warning">
@@ -18640,102 +18682,6 @@
 </table>
 </div>
 </details>
-<details class="task">
-<summary><code>VADR</code>: Assembly Validation and Annotation</summary>
-<p>VADR (Viral Annotation DefineR) annotates and validates completed assembly files. For details on VADR default models/parameters, see the <a href="../theiacov/#org-specific"><em>organism-specific parameters and logic</em> section</a>. It was primarily developed to test viral sequences to confirm they would be accepted to NCBI's GenBank data repository, but has found wide usage in general sequence validation and annotation.</p>
-<p>As part of the analysis of the assemblies, more than 70 types of unexpected characteristics, also known as <em>alerts</em>, can be reported. Any identified alerts can be found in the <code>vadr_alerts_list</code> output. Fatal alerts indicate that the sample is unlikely to be accepted to GenBank; non-fatal alerts are designated as passing sequences, but may still require further investigation. A full description of the potential alerts can be found on the <a href="https://github.com/ncbi/vadr/blob/master/documentation/alerts.md">VADR alerts documentation</a>, including details on how to allow sequences to pass despite having fatal alerts.</p>
-<div class="admonition techdetails">
-<p class="admonition-title">VADR Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/advanced_metrics/task_vadr.wdl">task_vadr.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/ncbi/vadr">https://github.com/ncbi/vadr</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://github.com/ncbi/vadr/wiki">https://github.com/ncbi/vadr/wiki</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td>For SARS-CoV-2: <a href="https://doi.org/10.1093/nargab/lqad002"><em>Faster SARS-CoV-2 sequence validation and annotation for GenBank using VADR</em></a><br> For non-SARS-CoV-2: <a href="https://doi.org/10.1186/s12859-020-3537-3"><em>VADR: validation and annotation of virus sequence submissions to GenBank</em></a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-<details class="task">
-<summary><code>gene_coverage</code>: Depth and Breadth of Coverage Calculations</summary>
-<p>This task calculates average read depth and the percent of a region (typically genes) covered above a minimum depth and quality using samtools (Pysam) and basic arithmetic.</p>
-<p>Outputs are reported as JSON-based "maps" that relate gene names to their breadth and depth of coverage. For example:</p>
-<p><code>percent_coverage_by_gene</code>:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>{
-</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>    "GENE1": 99.5,
-</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>    "GENE2": 10
-</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>}
-</span></code></pre></div></p>
-<p><code>depth_by_gene</code>:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>{
-</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>    "GENE1": 10,
-</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>    "GENE2": 1
-</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>}
-</span></code></pre></div></p>
-<p>By default, this task runs for SARS-CoV-2 and Mpox.</p>
-<div class="admonition warning">
-<p class="admonition-title">Region coordinates must be relevant to the reference genome</p>
-<p>Please note that default BEDfiles contain gene coordinates that may not directly match user-provided or dynamically-selected reference genomes (TheiaViral).</p>
-</div>
-<details class="dna">
-<summary>BED file usage</summary>
-<p>In viral characterization workflows, gene coverage regions are supplied with a BED file.</p>
-<ul>
-<li>To extract custom regions of interest, populate the <code>reference_gene_locations_bed</code> input (task <code>theiacov</code> / <code>morgana_magic</code>)</li>
-<li>If no custom BED is provided, organism defaults are used when available</li>
-<li>BED files should include a gene name in column 4 to label output</li>
-</ul>
-</details>
-<div class="admonition techdetails">
-<p class="admonition-title">Gene Coverage Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_gene_coverage.wdl">task_gene_coverage.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/samtools/samtools">samtools on GitHub</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://www.htslib.org/doc/samtools.html">samtools Manual</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td><a href="https://doi.org/10.1093/gigascience/giab008">Twelve years of SAMtools and BCFtools</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-</div>
-<div class="tabbed-block">
 <details class="task">
 <summary><code>VADR</code>: Assembly Validation and Annotation</summary>
 <p>VADR (Viral Annotation DefineR) annotates and validates completed assembly files. For details on VADR default models/parameters, see the <a href="../theiacov/#org-specific"><em>organism-specific parameters and logic</em> section</a>. It was primarily developed to test viral sequences to confirm they would be accepted to NCBI's GenBank data repository, but has found wide usage in general sequence validation and annotation.</p>
@@ -18927,6 +18873,102 @@
 </div>
 </details>
 </div>
+<div class="tabbed-block">
+<details class="task">
+<summary><code>VADR</code>: Assembly Validation and Annotation</summary>
+<p>VADR (Viral Annotation DefineR) annotates and validates completed assembly files. For details on VADR default models/parameters, see the <a href="../theiacov/#org-specific"><em>organism-specific parameters and logic</em> section</a>. It was primarily developed to test viral sequences to confirm they would be accepted to NCBI's GenBank data repository, but has found wide usage in general sequence validation and annotation.</p>
+<p>As part of the analysis of the assemblies, more than 70 types of unexpected characteristics, also known as <em>alerts</em>, can be reported. Any identified alerts can be found in the <code>vadr_alerts_list</code> output. Fatal alerts indicate that the sample is unlikely to be accepted to GenBank; non-fatal alerts are designated as passing sequences, but may still require further investigation. A full description of the potential alerts can be found on the <a href="https://github.com/ncbi/vadr/blob/master/documentation/alerts.md">VADR alerts documentation</a>, including details on how to allow sequences to pass despite having fatal alerts.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">VADR Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/advanced_metrics/task_vadr.wdl">task_vadr.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/ncbi/vadr">https://github.com/ncbi/vadr</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/ncbi/vadr/wiki">https://github.com/ncbi/vadr/wiki</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td>For SARS-CoV-2: <a href="https://doi.org/10.1093/nargab/lqad002"><em>Faster SARS-CoV-2 sequence validation and annotation for GenBank using VADR</em></a><br> For non-SARS-CoV-2: <a href="https://doi.org/10.1186/s12859-020-3537-3"><em>VADR: validation and annotation of virus sequence submissions to GenBank</em></a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>gene_coverage</code>: Depth and Breadth of Coverage Calculations</summary>
+<p>This task calculates average read depth and the percent of a region (typically genes) covered above a minimum depth and quality using samtools (Pysam) and basic arithmetic.</p>
+<p>Outputs are reported as JSON-based "maps" that relate gene names to their breadth and depth of coverage. For example:</p>
+<p><code>percent_coverage_by_gene</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>{
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>    "GENE1": 99.5,
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>    "GENE2": 10
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>}
+</span></code></pre></div></p>
+<p><code>depth_by_gene</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>{
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>    "GENE1": 10,
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>    "GENE2": 1
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>}
+</span></code></pre></div></p>
+<p>By default, this task runs for SARS-CoV-2 and Mpox.</p>
+<div class="admonition warning">
+<p class="admonition-title">Region coordinates must be relevant to the reference genome</p>
+<p>Please note that default BEDfiles contain gene coordinates that may not directly match user-provided or dynamically-selected reference genomes (TheiaViral).</p>
+</div>
+<details class="dna">
+<summary>BED file usage</summary>
+<p>In viral characterization workflows, gene coverage regions are supplied with a BED file.</p>
+<ul>
+<li>To extract custom regions of interest, populate the <code>reference_gene_locations_bed</code> input (task <code>theiacov</code> / <code>morgana_magic</code>)</li>
+<li>If no custom BED is provided, organism defaults are used when available</li>
+<li>BED files should include a gene name in column 4 to label output</li>
+</ul>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">Gene Coverage Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_gene_coverage.wdl">task_gene_coverage.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/samtools/samtools">samtools on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://www.htslib.org/doc/samtools.html">samtools Manual</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1093/gigascience/giab008">Twelve years of SAMtools and BCFtools</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</div>
 </div>
 </div>
 <h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
@@ -19057,61 +19099,6 @@
 <td>consensus_stats</td>
 <td>File</td>
 <td>Output from the <code>samtools stats</code> command to assess quality of the alignment file (BAM)</td>
-</tr>
-<tr>
-<td>contaminant_bai</td>
-<td>File</td>
-<td>Index of reads aligned to the contaminant FASTA</td>
-</tr>
-<tr>
-<td>contaminant_bam</td>
-<td>File</td>
-<td>Reads aligned to the contaminant FASTA</td>
-</tr>
-<tr>
-<td>contaminant_cov_hist</td>
-<td>File</td>
-<td>Coverage histogram of reads mapped to contaminant FASTA</td>
-</tr>
-<tr>
-<td>contaminant_coverage</td>
-<td>Float</td>
-<td>Mean coverage of reads mapped to contaminant FASTA</td>
-</tr>
-<tr>
-<td>contaminant_coverage_by_sequence</td>
-<td>Map[String,Float]</td>
-<td>A JSON map relating identified contaminant sequence headers to read mapping coverage</td>
-</tr>
-<tr>
-<td>contaminant_depth_by_sequence</td>
-<td>Map[String,Float]</td>
-<td>A JSON map relating identified contaminant sequence headers to read mapping depth</td>
-</tr>
-<tr>
-<td>contaminant_mapping_flagstat</td>
-<td>File</td>
-<td>samtools flagstat of reads mapped to contaminant FASTA</td>
-</tr>
-<tr>
-<td>contaminant_mapping_stats</td>
-<td>File</td>
-<td>samtools statistics of reads mapped to contaminant FASTA</td>
-</tr>
-<tr>
-<td>contaminant_mean_depth</td>
-<td>Float</td>
-<td>Mean depth of reads mapped to contaminant FASTA</td>
-</tr>
-<tr>
-<td>contaminant_percent_mapped_reads</td>
-<td>Float</td>
-<td>Percent of reads mapped to contaminant FASTA</td>
-</tr>
-<tr>
-<td>contaminant_status</td>
-<td>String</td>
-<td>Status of identification of contaminant sequence based on sequence-based and overall thresholds</td>
 </tr>
 <tr>
 <td>est_percent_gene_coverage_tsv</td>
@@ -19572,6 +19559,56 @@
 <td>kraken_version</td>
 <td>String</td>
 <td>Version of Kraken software used</td>
+</tr>
+<tr>
+<td>mapped_read_removal_bai</td>
+<td>File</td>
+<td>Index of reads aligned to the contaminant FASTA</td>
+</tr>
+<tr>
+<td>mapped_read_removal_bam</td>
+<td>File</td>
+<td>Reads aligned to the contaminant FASTA</td>
+</tr>
+<tr>
+<td>mapped_read_removal_cov_hist</td>
+<td>File</td>
+<td>Coverage histogram of reads mapped to contaminant FASTA</td>
+</tr>
+<tr>
+<td>mapped_read_removal_coverage</td>
+<td>Float</td>
+<td>Mean coverage of reads mapped to contaminant FASTA</td>
+</tr>
+<tr>
+<td>mapped_read_removal_coverage_by_sequence</td>
+<td>Map[String,Float]</td>
+<td>A JSON map relating identified contaminant sequence headers to read mapping coverage</td>
+</tr>
+<tr>
+<td>mapped_read_removal_depth_by_sequence</td>
+<td>Map[String,Float]</td>
+<td>A JSON map relating identified contaminant sequence headers to read mapping depth</td>
+</tr>
+<tr>
+<td>mapped_read_removal_mapping_flagstat</td>
+<td>File</td>
+<td>samtools flagstat of reads mapped to contaminant FASTA</td>
+</tr>
+<tr>
+<td>mapped_read_removal_mapping_stats</td>
+<td>File</td>
+<td>samtools statistics of reads mapped to contaminant FASTA</td>
+</tr>
+<tr>
+<td>mapped_read_removal_mean_depth</td>
+<td>Float</td>
+<td>Mean depth of reads mapped to contaminant FASTA</td>
+</tr>
+<tr>
+<td>mapped_read_removal_percent_mapped_reads</td>
+<td>Float</td>
+<td>Percent of reads mapped to contaminant FASTA</td>
 </tr>
 <tr>
 <td>meanbaseq_trim</td>

@@ -6398,9 +6398,16 @@
 
 <!-- if: read_qc_trim -->
 <details class="task">
-<summary><code>read_decontaminate</code>: Mapping-based Read Decontamination (optional)</summary>
-<p>Activate this task by providing a <code>read_decontaminate_fasta</code>.</p>
-<p>Known contaminant genetic data can be removed by mapping directly to an input <code>read_decontaminate_fasta</code>. This input can be a host genome, common microbial contaminant genome, or intentionally spiked sequences. The mapping statistics and aligned reads to the contaminant FASTA are output in JSON-formatted mappings, while downstream quality control tasks will input the decontaminated reads. An optional "pass/fail" status can be output based on identification of expected/unexpected sequences if the <code>expected_contaminants</code> input is populated with a comma-delimited string of expected sequence headers - <code>expected_contaminants</code> must exactly match sequence headers in the input.</p>
+<summary><code>mapped_read_removal</code>: Mapping-based Read Removal (optional)</summary>
+<p>Activate this task by providing a <code>mapped_read_removal_fasta</code>.</p>
+<p>Known contaminant genetic data can be removed by mapping directly to a provided <code>mapped_read_removal_fasta</code>. This input can be a host genome or a common microbial contaminant genome. The mapping statistics and aligned reads to the provided FASTA are created in JSON-formatted mappings, while downstream quality control tasks will input the reads that did not map. To additionally report a "pass/fail" status from expected/unexpected sequences, use <code>spike_in_screen</code>.</p>
+</details>
+<details class="task">
+<summary><code>spike_in_screen</code>: Mapping-based Spike-in Screening and Removal (optional)</summary>
+<p>Activate this task by providing a <code>spike_in_fasta</code>. <code>expected_spike_ins</code> is optional.</p>
+<p>Intentionally spiked sequences can be screened for by mapping directly to a provided <code>spike_in_fasta</code>. Reads that map to the <code>spike_in_fasta</code> are removed, and the remaining reads are created as <code>spike_in_removed_read1</code>/<code>spike_in_removed_read2</code> and passed to downstream quality control tasks. The mapping statistics and aligned reads to the spike-in FASTA are created in JSON-formatted mappings, alongside a "pass/fail" status based on identification of expected/unexpected sequences. <code>expected_spike_ins</code> is a comma-delimited string of expected sequence headers that must exactly match sequence headers in the <code>spike_in_fasta</code>.</p>
+<p>If <code>expected_spike_ins</code> is not provided, every spike-in sequence detected above the thresholds is considered unexpected, so the status will fail if more than <code>spike_in_max_unexpected_sequences</code> (default: 0) spike-in sequences are detected.</p>
+<p>If <code>mapped_read_removal</code> is also activated, <code>spike_in_screen</code> runs on the reads that <code>mapped_read_removal</code> left behind, so both sets of reads are removed before downstream analysis.</p>
 <p>The detailed steps and tasks are as follows:</p>
 </details>
 <!-- endif -->
@@ -6450,7 +6457,11 @@
         | Original Publication(s) | [The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)&lt;br&gt;[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |
 
 ??? task "`Contaminant_Check`: Contaminant Sequence Status Check"
-    The Contaminant Check task outputs a pass/fail status based on if contaminant/host sequences pass thresholds for breadth of coverage, depth of coverage, and number of reads mapped. This task is activated by inputting a comma-delimited string of `expected_sequences`, which match sequence headers in the provided contaminant/host FASTA. Each sequence from the previously provided contaminant/host FASTA is checked for sufficient read mapping statistics.
+    The Contaminant Check task outputs a pass/fail status based on if contaminant/host sequences pass thresholds for breadth of coverage, depth of coverage, and number of reads mapped. This task is activated by providing a comma-delimited string of `expected_sequences`, which match sequence headers in the provided contaminant/host FASTA, and always runs during spike-in screening. If no `expected_sequences` are provided, all detected sequences are considered unexpected. Alternatively, a JSON, `expected_sequences_json`, can be provided, which relates contaminant sequence set names to a list of contaminant sequences; in this instance, `expected_sequences` is populated with the set name. `expected_sequences_json` must be formatted as follows:
+
+    ```json
+    {"&lt;SET_NAME1&gt;": ["&lt;CONTAMINANT_SEQUENCE_1&gt;", "&lt;CONTAMINANT_SEQUENCE_n&gt;"]}
+    ```
 
     The composite status, `contaminant_check_status`, will report `"PASS"` if expected and unexpected sequences are identified within the `min_expected_seq` and `max_unexpected_seq` thresholds; if not, `"FAIL ..."` is reported depicting which `expected_sequences` failed and why, along with which unexpected sequences were identified.
 
