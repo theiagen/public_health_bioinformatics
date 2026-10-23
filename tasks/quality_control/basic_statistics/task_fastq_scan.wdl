@@ -70,6 +70,7 @@ task fastq_scan {
     fi
 
     # capture GC content; seqkit reports one row per file in input order
+    # Not adding these to JSON because it is currently beyond scope
     echo "DEBUG: running seqkit stats on $(basename -a ~{read1} ~{read2} | paste -sd ' ')"
     seqkit stats -a -T -j ~{cpu} ~{read1} ~{read2} | tee seqkit_stats.tsv
     # locate the GC column by header name since its position differs between seqkit versions
@@ -79,11 +80,32 @@ task fastq_scan {
       awk -F'\t' 'NR==1 {for (i=1; i<=NF; i++) if ($i=="GC(%)") col=i} NR==3 {print $col}' seqkit_stats.tsv > READ2_GC_PERCENT
       echo "DEBUG: GC content in $(basename ~{read2}): $(cat READ2_GC_PERCENT)"
     fi
+
+    # capture mean quality and GC content across all reads, weighted by the number of reads in each file
+    if [[ -n "~{read2}" ]]; then
+      read2_mean_quality=$(cat READ2_MEAN_QUALITY)
+      read2_gc_percent=$(cat READ2_GC_PERCENT)
+    else
+      read2_seqs=0
+      read2_mean_quality=0
+      read2_gc_percent=0
+    fi
+
+    # define function for calculating mean weighted by read number
+    weighted_mean() {
+      awk -v n1="${read1_seqs}" -v v1="$1" -v n2="${read2_seqs}" -v v2="$2" \
+        'BEGIN {n = n1 + n2; if (n > 0) print (n1 * v1 + n2 * v2) / n; else print 0}'
+    }
+    weighted_mean "$(cat READ1_MEAN_QUALITY)" "${read2_mean_quality}" > COMBINED_MEAN_QUALITY
+    echo "DEBUG: mean read quality across all reads: $(cat COMBINED_MEAN_QUALITY)"
+    weighted_mean "$(cat READ1_GC_PERCENT)" "${read2_gc_percent}" > COMBINED_GC_PERCENT
+    echo "DEBUG: GC content across all reads: $(cat COMBINED_GC_PERCENT)"
   >>>
   output {
     File read1_fastq_scan_json = "~{read1_name}_fastq-scan.json"
     File? read2_fastq_scan_json = "~{read2_name}_fastq-scan.json"
     Int read1_seq = read_int("READ1_SEQS")
+    # 0 Values for non-existent read2 because they are not propagated in SE/ONT tasks
     Int? read2_seq = if defined(read2) then read_int("READ2_SEQS") else 0
     Float read1_mean_length = read_float("READ1_MEAN_LENGTH")
     Float? read2_mean_length = if defined(read2) then read_float("READ2_MEAN_LENGTH") else 0.0
@@ -91,8 +113,10 @@ task fastq_scan {
     Float? read2_mean_quality = if defined(read2) then read_float("READ2_MEAN_QUALITY") else 0.0
     Float read1_gc_percent = read_float("READ1_GC_PERCENT")
     Float? read2_gc_percent = if defined(read2) then read_float("READ2_GC_PERCENT") else 0.0
-    String? read_pairs = if defined(read2) then read_string("READ_PAIRS") else "NA"
-    String version = read_string("VERSION")
+    Float total_mean_quality = read_float("COMBINED_MEAN_QUALITY")
+    Float total_gc_percent = read_float("COMBINED_GC_PERCENT")
+    String? read_pairs =if defined(read2) then read_string("READ_PAIRS") else "NA"
+    String fastq_scan_version = read_string("VERSION")
     String seqkit_version = read_string("SEQKIT_VERSION")
     String fastq_scan_docker = docker
   }

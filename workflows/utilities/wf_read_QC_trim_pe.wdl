@@ -247,7 +247,7 @@ workflow read_QC_trim_pe {
     Float? fastq_scan_r1_mean_q_raw = fastq_scan_raw.read1_mean_quality
     Float? fastq_scan_r2_mean_q_raw = fastq_scan_raw.read2_mean_quality
     String? fastq_scan_raw_pairs = fastq_scan_raw.read_pairs
-    String? fastq_scan_version = fastq_scan_raw.version
+    String? fastq_scan_version = fastq_scan_raw.fastq_scan_version
     String? fastq_scan_docker = fastq_scan_raw.fastq_scan_docker
     File? fastq_scan_raw1_json = fastq_scan_raw.read1_fastq_scan_json
     File? fastq_scan_raw2_json = fastq_scan_raw.read2_fastq_scan_json

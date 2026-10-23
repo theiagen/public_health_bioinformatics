@@ -74,7 +74,7 @@ workflow tbprofiler_tngs {
     String? fastq_scan_raw_pairs = fastq_scan_raw.read_pairs
     File fastq_scan_raw1_json = fastq_scan_raw.read1_fastq_scan_json
     File? fastq_scan_raw2_json = fastq_scan_raw.read2_fastq_scan_json
-    String fastq_scan_version = fastq_scan_raw.version
+    String fastq_scan_version = fastq_scan_raw.fastq_scan_version
     String fastq_scan_docker = fastq_scan_raw.fastq_scan_docker
     # fastq_scan clean (per read stats)
     Int? fastq_scan_num_reads_clean1 = fastq_scan_clean.read1_seq
