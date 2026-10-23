@@ -83,7 +83,9 @@ workflow theiacov_illumina_pe {
       vadr_mem = vadr_memory,
       primer_bed_file = primer_bed,
       pangolin_docker_image = pangolin_docker_image,
-      kraken_target_organism_input = target_organism
+      kraken_target_organism_input = target_organism,
+      # hiding parameters from terra to avoid input bloat
+      flu_genoflu_genotype = ""
   }
   if (! skip_screen_raw) {
     call screen.check_reads as raw_check_reads {
@@ -158,7 +160,10 @@ workflow theiacov_illumina_pe {
             samplename = samplename,
             standardized_organism = organism_parameters.standardized_organism,
             seq_method = seq_method,
-            irma_min_consensus_support = select_first([min_depth, 30])
+            irma_min_consensus_support = select_first([min_depth, 30]),
+            # hiding parameters from terra to avoid input bloat
+            assembly_fasta = "gs://theiagen-public-resources-rp/empty_files/empty.fasta",
+            vadr_outputs_tgz = "gs://theiagen-public-resources-rp/empty_files/empty.txt"
         }
       }
       if (defined(ivar_consensus.assembly_fasta) || defined(flu_track.irma_assembly_fasta)) {
@@ -186,7 +191,7 @@ workflow theiacov_illumina_pe {
             nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
             nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
             pangolin_docker_image = organism_parameters.pangolin_docker,
-            # Setting flu_track related inputs to default values as they are not utilized in TheiaCov, decreasing external input bloat
+            # hiding internal components to decrease input bloat
             seq_method = "",
             assembly_metrics_cpu = 0,
             assembly_metrics_disk_size = 0,

@@ -88,10 +88,12 @@ fragment: true
 <!-- endif -->
 
 <!-- if: theiaeukont -->
+    Genome size and coverage are not screened by default (`skip_mash` is `true`). If `skip_mash` is set to `false`, coverage is calculated from `genome_length` when provided; otherwise genome size and coverage are estimated with Mash. The `min_genome_length`, `max_genome_length`, and `min_coverage` thresholds are only applied when `skip_mash` is `false`.
+
     | Variable  | Default Value | Rationale |
     | --- | --- | --- |
     | `skip_screen` | false | Set to true to skip the read screen from running. |
-    | `genome_length` | 50000000 | An average genome length to avoid erroneous estimated genome length calculations. It is recommended to provide the expected genome length if available. |
+    | `genome_length` | | No default. When provided, it is used to calculate coverage during read screening (only when `skip_mash` is `false`). It is recommended to provide the expected genome length if available. |
     | `min_reads` | 5000 | Calculated from the minimum number of base pairs required for 20x coverage of the _Hansenula polymorpha_ genome, the smallest fungal genome as of 2015-04-02 (8.97 Mbp), divided by 1800 |
     | `min_basepairs` | 45000000 | Should be greater than 10x coverage of _Hansenula polymorpha_, the smallest fungal genome as of 2015-04-02 (8.97 Mbp)  |
     | `min_genome_length` | 9000000 | Based on the _Hansenula polymorpha_  genome - the smallest fungal genome as of 2015-04-02 (8.97 Mbp) |

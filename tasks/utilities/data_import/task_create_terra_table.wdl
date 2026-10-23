@@ -11,7 +11,7 @@ task create_terra_table {
     String terra_project
     String terra_workspace
 
-    String responsible_workflow = "Create_Terra_Table_PHB"
+    String responsible_workflow
 
     Int disk_size = 25
     Int cpu = 1

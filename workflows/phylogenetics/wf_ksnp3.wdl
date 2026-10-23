@@ -12,7 +12,6 @@ workflow ksnp3_workflow {
     Array[File] assembly_fasta
     Array[String] samplename
     String cluster_name
-    String cluster_name_updated = sub(cluster_name, " ", "_")
     String? data_summary_terra_project
     String? data_summary_terra_workspace
     String? data_summary_terra_table
@@ -20,6 +19,7 @@ workflow ksnp3_workflow {
     Boolean midpoint_root_tree = true
     Boolean phandango_coloring = false
   }
+  String cluster_name_updated = sub(cluster_name, " ", "_")
   call ksnp3.ksnp3 as ksnp3_task {
     input:
       assembly_fasta = assembly_fasta,

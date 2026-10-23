@@ -63,7 +63,6 @@ nav:
               - Public Data Sharing:
                   - Mercury_Prep_N_Batch: workflows/public_data_sharing/mercury_prep_n_batch.md
                   - Terra_2_ENA: workflows/public_data_sharing/terra_2_ena.md
-                  - Terra_2_GISAID: workflows/public_data_sharing/terra_2_gisaid.md
                   - Terra_2_NCBI: workflows/public_data_sharing/terra_2_ncbi.md
               - Exporting Data from Terra:
                   - Concatenate_Column_Content: workflows/data_export/concatenate_column_content.md
@@ -149,7 +148,6 @@ nav:
                   - Pangolin_Update: workflows/genomic_characterization/pangolin_update.md
                   - Snippy_Variants: workflows/phylogenetic_construction/snippy_variants.md
                   - Terra_2_ENA: workflows/public_data_sharing/terra_2_ena.md
-                  - Terra_2_GISAID: workflows/public_data_sharing/terra_2_gisaid.md
                   - Terra_2_NCBI: workflows/public_data_sharing/terra_2_ncbi.md
                   - TheiaCoV™ Workflow Series: workflows/genomic_characterization/theiacov.md
                   - TheiaViral™ Workflow Series: workflows/genomic_characterization/theiaviral.md
@@ -196,7 +194,6 @@ nav:
               - SRA_Fetch: workflows/data_import/sra_fetch.md
               - TBProfiler_tNGS: workflows/standalone/tbprofiler_tngs.md
               - Terra_2_ENA: workflows/public_data_sharing/terra_2_ena.md
-              - Terra_2_GISAID: workflows/public_data_sharing/terra_2_gisaid.md
               - Terra_2_NCBI: workflows/public_data_sharing/terra_2_ncbi.md
               - TheiaCoV™ Workflow Series: workflows/genomic_characterization/theiacov.md
               - TheiaEuk™ Workflow Series: workflows/genomic_characterization/theiaeuk.md

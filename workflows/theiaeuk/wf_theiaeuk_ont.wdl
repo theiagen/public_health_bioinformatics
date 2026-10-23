@@ -15,7 +15,6 @@ workflow theiaeuk_ont {
     File read1
     String samplename
     Int? genome_length
-    String workflow_series = "theiaeuk"
     Int busco_memory = 24
     String busco_docker_image = "us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.3.2_cv1"
     File gambit_db_genomes = "gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-metadata-1.0.0-20241213.gdb"
@@ -42,7 +41,8 @@ workflow theiaeuk_ont {
         max_genome_length = max_genome_length,
         min_coverage = min_coverage,
         skip_mash = skip_mash,
-        expected_genome_length = genome_length
+        expected_genome_length = genome_length,
+        workflow_series = "theiaeuk"
     }
   }
   if (select_first([raw_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
@@ -51,7 +51,7 @@ workflow theiaeuk_ont {
         read1 = read1,
         samplename = samplename,
         genome_length = genome_length,
-        workflow_series = workflow_series
+        workflow_series = "theiaeuk"
     }
     if (! skip_screen) {
       call screen_task.check_reads_se as clean_check_reads {
@@ -63,7 +63,8 @@ workflow theiaeuk_ont {
           max_genome_length = max_genome_length,
           min_coverage = min_coverage,
           skip_mash = skip_mash,
-          expected_genome_length = genome_length
+          expected_genome_length = genome_length,
+          workflow_series = "theiaeuk"
       }
     }
     if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {

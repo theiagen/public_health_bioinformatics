@@ -26,7 +26,7 @@ task genoflu {
       --fasta ~{assembly_fasta} \
       --sample_name ~{samplename} \
       ~{"--pident_threshold " + min_percent_identity} \
-      ~{"--cross_reference" + cross_reference} > genoflu.output.txt
+      ~{"--cross_reference " + cross_reference} > genoflu.output.txt
 
     GENOTYPE=$(grep "~{samplename} Genotype" genoflu.output.txt | cut -d ">" -f2 | cut -d " " -f2 | cut -d ":" -f1)
     ALL_SEGMENTS=$(grep "~{samplename} Genotype" genoflu.output.txt | cut -d ">" -f2 | cut -d " " -f3-)

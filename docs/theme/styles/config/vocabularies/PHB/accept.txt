@@ -511,6 +511,10 @@ reference_genome
 render_tsv_table
 renderers
 replicons
+requeue
+requeued
+requeues
+requeuing
 resid
 resizable
 rosea
@@ -569,4 +573,11 @@ vadr_model_file
 vadr_opts
 virulence
 wgMLST
+<<<<<<< HEAD
 whipplei
+=======
+Hansenula
+polymorpha
+Cenococcum
+geophilum
+>>>>>>> origin/main
