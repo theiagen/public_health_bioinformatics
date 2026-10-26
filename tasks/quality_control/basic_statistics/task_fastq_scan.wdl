@@ -70,15 +70,19 @@ task fastq_scan {
     fi
 
     # capture GC content; seqkit reports one row per file in input order
-    # Not adding these to JSON because it is currently beyond scope
     echo "DEBUG: running seqkit stats on $(basename -a ~{read1} ~{read2} | paste -sd ' ')"
     seqkit stats -a -T -j ~{cpu} ~{read1} ~{read2} | tee seqkit_stats.tsv
     # column 18 is GC(%) in seqkit v2.14.0 `stats -a -T` output; revisit if the docker's seqkit version changes
     awk -F'\t' 'NR==2 {print $18}' seqkit_stats.tsv > READ1_GC_PERCENT
     echo "DEBUG: GC content in $(basename ~{read1}): $(cat READ1_GC_PERCENT)"
+    # add GC content to the fastq-scan json alongside the other qc_stats
+    jq --argjson gc "$(cat READ1_GC_PERCENT)" '.qc_stats.gc_percent = $gc' ~{read1_name}_fastq-scan.json > tmp.json
+    mv tmp.json ~{read1_name}_fastq-scan.json
     if [[ -n "~{read2}" ]]; then
       awk -F'\t' 'NR==3 {print $18}' seqkit_stats.tsv > READ2_GC_PERCENT
       echo "DEBUG: GC content in $(basename ~{read2}): $(cat READ2_GC_PERCENT)"
+      jq --argjson gc "$(cat READ2_GC_PERCENT)" '.qc_stats.gc_percent = $gc' ~{read2_name}_fastq-scan.json > tmp.json
+      mv tmp.json ~{read2_name}_fastq-scan.json
     fi
 
     # capture mean quality across all reads, weighted by the number of reads in each file
