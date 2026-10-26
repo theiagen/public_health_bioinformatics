@@ -2409,14 +2409,13 @@ theiaeuk_ont	busco_memory	Int	Amount of memory/RAM (in GB) to allocate to the ta
 theiaeuk_ont	gambit_db_genomes	File	User-provided database of assembled query genomes; requires complementary signatures file. If not provided, uses default database, "/gambit-db"	gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-metadata-1.0.0-20241213.gdb	Optional	TheiaEuk_ONT	database	
 theiaeuk_ont	gambit_db_signatures	File	User-provided signatures file; requires complementary genomes file. If not specified, the file from the docker container will be used.	gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-signatures-1.0.0-20241213.gs	Optional	TheiaEuk_ONT	database	
 theiaeuk_ont	genome_length	Int	User-specified expected genome length to be used in genome statistics calculations		Optional	TheiaEuk_ONT	general	
-theiaeuk_ont	max_genome_length	Int	Maximum genome size able to pass read screening	178000000	Optional	TheiaEuk_ONT	general	
+theiaeuk_ont	max_genome_length	Int	Maximum genome size able to pass read screening; only applied when `skip_mash` is false	178000000	Optional	TheiaEuk_ONT	general	
 theiaeuk_ont	min_basepairs	Int	Minimum number of base pairs able to pass read screening	45000000	Optional	TheiaEuk_ONT	general	
-theiaeuk_ont	min_coverage	Int	Minimum genome coverage able to pass read screening	5	Optional	TheiaEuk_ONT	general	
-theiaeuk_ont	min_genome_length	Int	Minimum genome size able to pass read screening	9000000	Optional	TheiaEuk_ONT	general	
+theiaeuk_ont	min_coverage	Int	Minimum genome coverage able to pass read screening; only applied when `skip_mash` is false	5	Optional	TheiaEuk_ONT	general	
+theiaeuk_ont	min_genome_length	Int	Minimum genome size able to pass read screening; only applied when `skip_mash` is false	9000000	Optional	TheiaEuk_ONT	general	
 theiaeuk_ont	min_reads	Int	Minimum number of reads to pass read screening	5000	Optional	TheiaEuk_ONT	general	
-theiaeuk_ont	skip_mash	Boolean	If true, skips estimation of genome size and coverage using mash in read screening steps. As a result, providing true also prevents screening using these parameters.	True	Optional	TheiaEuk_ONT	general	
+theiaeuk_ont	skip_mash	Boolean	If true, skips the genome size and coverage checks in read screening. If false, coverage is calculated from `genome_length` when provided; otherwise genome size and coverage are estimated with Mash	True	Optional	TheiaEuk_ONT	general	
 theiaeuk_ont	skip_screen	Boolean	Option to skip the read screening prior to analysis; if setting to true, please provide a value for the theiaeuk_pe genome_length optional input, OR set call_rasusa to false. Otherwise RASUSA will attempt to downsample to an expected genome size of 0 bp, and the workflow will fail.	False	Optional	TheiaEuk_ONT	general	
-theiaeuk_ont	workflow_series	String	Internal component, do not modify	theiaeuk	Optional	TheiaEuk_ONT	general	
 theiameta_illumina_pe	call_bracken	Boolean	Call Bracken kraken2 report refinement	False	Optional	TheiaMeta_Illumina_PE	general	
 theiameta_illumina_pe	kraken2_db	File	A Kraken2 database in .tar.gz format	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_standard_08gb_20230605.tar.gz	Optional	TheiaMeta_Illumina_PE	database	
 theiameta_illumina_pe	output_additional_files	Boolean	Output additional files such as aligned and unaligned reads to reference	False	Optional	TheiaMeta_Illumina_PE	general	

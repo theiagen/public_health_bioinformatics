@@ -567,3 +567,7 @@ vadr_model_file
 vadr_opts
 virulence
 wgMLST
+Hansenula
+polymorpha
+Cenococcum
+geophilum
