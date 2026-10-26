@@ -73,11 +73,11 @@ task fastq_scan {
     # Not adding these to JSON because it is currently beyond scope
     echo "DEBUG: running seqkit stats on $(basename -a ~{read1} ~{read2} | paste -sd ' ')"
     seqkit stats -a -T -j ~{cpu} ~{read1} ~{read2} | tee seqkit_stats.tsv
-    # locate the GC column by header name since its position differs between seqkit versions
-    awk -F'\t' 'NR==1 {for (i=1; i<=NF; i++) if ($i=="GC(%)") col=i} NR==2 {print $col}' seqkit_stats.tsv > READ1_GC_PERCENT
+    # column 18 is GC(%) in seqkit v2.14.0 `stats -a -T` output; revisit if the docker's seqkit version changes
+    awk -F'\t' 'NR==2 {print $18}' seqkit_stats.tsv > READ1_GC_PERCENT
     echo "DEBUG: GC content in $(basename ~{read1}): $(cat READ1_GC_PERCENT)"
     if [[ -n "~{read2}" ]]; then
-      awk -F'\t' 'NR==1 {for (i=1; i<=NF; i++) if ($i=="GC(%)") col=i} NR==3 {print $col}' seqkit_stats.tsv > READ2_GC_PERCENT
+      awk -F'\t' 'NR==3 {print $18}' seqkit_stats.tsv > READ2_GC_PERCENT
       echo "DEBUG: GC content in $(basename ~{read2}): $(cat READ2_GC_PERCENT)"
     fi
 
@@ -93,8 +93,8 @@ task fastq_scan {
     echo "DEBUG: mean read quality across all reads: $(cat COMBINED_MEAN_QUALITY)"
 
     # capture GC content across all reads, weighted by the number of bases in each file
-    awk -F'\t' 'NR==1 {for (i=1; i<=NF; i++) {if ($i=="GC(%)") gc=i; if ($i=="sum_len") len=i}}
-      NR>1 {bases += $len; gc_bases += $len * $gc}
+    # column 5 is sum_len and column 18 is GC(%) in seqkit v2.14.0
+    awk -F'\t' 'NR>1 {bases += $5; gc_bases += $5 * $18}
       END {if (bases > 0) print gc_bases / bases; else print 0}' seqkit_stats.tsv > COMBINED_GC_PERCENT
     echo "DEBUG: GC content across all reads: $(cat COMBINED_GC_PERCENT)"
   >>>
