@@ -229,3 +229,94 @@ task seqsender_poll_and_wait {
     maxRetries: 0
   }
 }
+
+task seqsender_upload_accessions {
+  input {
+    String terra_project_name
+    String terra_workspace_name
+
+    File submission_status_report # `submission_status_report` from seqsender_poll_and_wait
+    File submission_metadata # `submission_metadata` from seqsender_poll_and_wait; links each sample name to its Terra row
+
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/seqsender:1.5.2-dev"
+    Int cpu = 1
+    Int memory = 2
+    Int disk_size = 10
+  }
+  meta {
+    volatile: true
+  }
+  command <<<
+    set -euo pipefail
+
+    # adds each database's accession column on the submitted rows only; all other columns/rows untouched
+    python3 <<CODE
+    import json
+    import pandas as pd
+    from bioforklift.terra import Terra
+
+    accession_columns = {
+      "bs-sample_name": "biosample_accession",
+      "sra-sample_name": "sra_accession",
+      "gb-sample_name": "genbank_accession"
+    }
+
+    status_df = pd.read_csv("~{submission_status_report}", dtype=str, keep_default_na=False)
+    metadata_df = pd.read_csv("~{submission_metadata}", dtype=str, keep_default_na=False)
+
+    # the 'metadata.csv' file used for submission keeps the original Terra table's 'entity:{table_name}_id' column
+    entity_column = next(column for column in metadata_df.columns if column.startswith("entity:"))
+    table_name = entity_column.removeprefix("entity:").removesuffix("_id")
+
+    terra = Terra(
+      source_workspace="~{terra_workspace_name}",
+      source_project="~{terra_project_name}",
+      destination_workspace="~{terra_workspace_name}",
+      destination_project="~{terra_project_name}"
+    )
+
+    # one row per submitted sample; database accession headers will be added where applicable
+    upload_df = metadata_df[[entity_column]].drop_duplicates()
+
+    # seqsender will only list accession headers for databases it attempts to submit to
+    for name_column, accession_column in accession_columns.items():
+      if name_column not in status_df:
+        continue
+
+      # flu samples have one row per segment; the BioSample and SRA accessions will repeat; GenBank accessions should be unique
+      df = status_df.loc[status_df[accession_column] != "", [name_column, accession_column]].drop_duplicates()
+      df = df.merge(metadata_df[[entity_column, name_column]].drop_duplicates(), on=name_column)
+      if df.empty:
+        print(f"No {accession_column} values to upload")
+        continue
+
+      if accession_column == "genbank_accession":
+        # one JSON map of "gb-sample_name": "genbank_accession" per sample
+        accessions_df = (
+          df.groupby(entity_column, sort=False)[[name_column, accession_column]]
+          .apply(lambda records: json.dumps(dict(records.values)))
+        )
+      else:
+        # one BioSample/SRA accession per sample
+        accessions_df = df.set_index(entity_column)[accession_column]
+      upload_df[accession_column] = upload_df[entity_column].map(accessions_df)
+      print(f"Found {len(accessions_df)} {accession_column} values")
+
+    # a sample missing an accession gets a blank cell, which Terra skips rather than clearing the existing value
+    if len(upload_df.columns) == 1:
+      print("No accessions to upload")
+    else:
+      terra.entities.upload_entities(data=upload_df, target=table_name)
+      print(f"Uploaded {', '.join(upload_df.columns[1:])} for {len(upload_df)} samples to {table_name}")
+    CODE
+  >>>
+  runtime {
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    preemptible: 0
+    maxRetries: 0
+  }
+}

@@ -79,6 +79,16 @@ workflow seqsender {
         poll_interval_minutes = poll_interval_minutes
     }
   }
+  # skipped when testing with input_table, since the samples aren't in a Terra table
+  if (!defined(input_table) && defined(polling.submission_status_report)) {
+    call seqsender_tasks.seqsender_upload_accessions {
+      input:
+        terra_project_name = terra_project_name,
+        terra_workspace_name = terra_workspace_name,
+        submission_status_report = select_first([polling.submission_status_report]),
+        submission_metadata = select_first([polling.submission_metadata])
+    }
+  }
   output {
     # Version Capture
     String seqsender_wf_version = version_capture.phb_version
