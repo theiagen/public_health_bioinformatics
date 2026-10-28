@@ -13,8 +13,7 @@ task skani {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/skani:0.2.2"
   }
   command <<<
-    # pipefail, but not in the middle of pipes
-    set -eu pipefail
+    set -euo pipefail
 
     # extract skani db
     echo "DEBUG: Decompressing Skani DB"
@@ -29,57 +28,33 @@ task skani {
 
     # check if the fasta has contigs greater than 500 bp (otherwise skani will fail)
     echo "DEBUG: Checking assembly for contigs > 500 bp"
-    sed -E 's/^>([^ ]+).*$/>\1/' ~{assembly_fasta} | \
-      awk -F "|" '/^>/ {close(F); ID=$1; gsub("^>", "", ID); F=ID"_extracted.fasta"} {print >> F}'
-    compatible_fasta=0
-    for fasta in *_extracted.fasta; do
-      fa_length=$(grep -v '^>' $fasta | tr -d '\n' | wc -m)
-      if [[ $fa_length -gt 500 ]]; then
-        compatible_fasta=1
-        echo "DEBUG: fasta has contigs > 500 bp"
-        touch SKANI_WARNING
-        break
-      fi
-    done
 
-    # concatenate all contigs to spoof skani
-    if [[ $compatible_fasta -eq 0 ]]; then
-      echo "DEBUG: No contigs greater than 500 bp; concatenating supercontig for search"
+    # save the max single-contig length and total length of all contigs combined in a single file read
+    read -r max_len total_len < <(awk '
+      /^>/ {if (len > max) max = len; len = 0; next}
+            {len += length($0); total += length($0)}
+      END  {if (len > max) max = len; print max+0, total+0}' "~{assembly_fasta}")
+
+    assembly_fasta="~{assembly_fasta}"
+
+    if (( max_len > 500 )); then
+      echo "DEBUG: Found contigs > 500 bp"
+      touch SKANI_WARNING
+    else
+      echo "DEBUG: No contigs > 500 bp; concatenating contigs"
       echo "All contigs < 500 bp" > SKANI_WARNING
-      echo ">concatenated_supercontig" > concatenated.fasta
-      for fasta in *_extracted.fasta; do
-        grep -v '^>' $fasta >> concatenated.fasta
-      done
-      assembly_fasta="concatenated.fasta"
 
-      # check if supercontig is greater than 500 bp
-      fa_length=$(grep -v '^>' concatenated.fasta | tr -d '\n' | wc -m)
-      if [[ $fa_length -gt 500 ]]; then
-        echo "DEBUG: The combined length of the contigs exceeds 500 bp. (${fa_length} bp)"
+      if (( total_len > 500 )); then
+        echo "DEBUG: Combined contig length exceeds 500 bp (${total_len} bp)"
+
+        # skani needs at least one contig > 500 bp, so stitch everything into one sequence
+        { echo ">concatenated_supercontig"; awk '!/^>/' "$assembly_fasta"; } > concatenated.fasta
+        assembly_fasta="concatenated.fasta"
       else
-        echo "ERROR: The combined length of the contigs is less than 500 bp. (${fa_length} bp)"
+        echo "ERROR: Combined contig length is less than or equal to 500 bp (${total_len} bp)"
         echo "FAIL" | tee SKANI_STATUS
       fi
-    else
-      assembly_fasta=~{assembly_fasta}
     fi
-
-    # run skani
-    echo "DEBUG: Running Skani"
-    skani search \
-      -d ${untarred_skani_db} \
-      -q ${assembly_fasta} \
-      -s 50 \
-      --no-learned-ani \
-      --robust \
-      --detailed \
-      --ci \
-      --no-marker-index \
-      -o ~{samplename}_skani_results.tsv
-
-    # add new column header
-    echo "DEBUG: Extracting Skani results"
-    new_header=$(awk 'NR==1 {OFS="\t"; print $0, "ANI_x_Query_Coverage"}' ~{samplename}_skani_results.tsv)
 
     # initialize output files
     echo "N/A" > TOP_ACCESSION
@@ -87,43 +62,68 @@ task skani {
     echo 0 > TOP_QUERY_COVERAGE
     echo 0 > TOP_SCORE
 
-    # create a new column and sort by the product of ANI (col 3) and Align_fraction_query (col 5)
-    awk -F'\t' 'NR > 1 {OFS="\t"; new_col = sprintf("%.5f", $3 * $5 / 100); print $0, new_col}' ~{samplename}_skani_results.tsv | \
-      sort -t$'\t' -k21,21nr | \
-      { echo "$new_header"; cat -; } > ~{samplename}_skani_results_sorted.tsv
+    if [[ $(cat SKANI_STATUS) == "PASS" ]]; then
+      # run skani
+      echo "DEBUG: Running Skani"
+      skani search \
+        -d ${untarred_skani_db} \
+        -q ${assembly_fasta} \
+        -s 50 \
+        --no-learned-ani \
+        --robust \
+        --detailed \
+        --ci \
+        --no-marker-index \
+        -o ~{samplename}_skani_results.tsv
 
-    if [[ $(wc -l < ~{samplename}_skani_results_sorted.tsv) -lt 2 ]]; then
-      echo "ERROR: No hits found in skani results"
-      echo "FAIL" | tee SKANI_STATUS
+      # add new column header
+      echo "DEBUG: Extracting Skani results"
+      new_header=$(awk 'NR==1 {OFS="\t"; print $0, "ANI_x_Query_Coverage"}' ~{samplename}_skani_results.tsv)
+
+      # create a new column and sort by the product of ANI (col 3) and Align_fraction_query (col 5)
+      awk -F'\t' 'NR > 1 {OFS="\t"; new_col = sprintf("%.5f", $3 * $5 / 100); print $0, new_col}' ~{samplename}_skani_results.tsv | \
+        sort -t$'\t' -k21,21nr | \
+        { echo "$new_header"; cat -; } > ~{samplename}_skani_results_sorted.tsv
+
+      if [[ $(wc -l < ~{samplename}_skani_results_sorted.tsv) -lt 2 ]]; then
+        echo "ERROR: No hits found in skani results"
+        echo "FAIL" | tee SKANI_STATUS
+      else
+        # get the file name for the top hit in sorted skani results: 1st column, 2nd line in file
+        top_hit_name=$(basename $(awk 'NR == 2 {print $1}' ~{samplename}_skani_results_sorted.tsv))
+
+        # get accession number from file name (and version number if it exists)
+        echo $top_hit_name | awk -F'[.]' '{print $1 ($2 ~ /^[0-9]+$/ ? "."$2 : "")}' | tee TOP_ACCESSION
+        head -n 2 ~{samplename}_skani_results_sorted.tsv | tail -n 1 | cut -f 3 | tee TOP_ANI
+        head -n 2 ~{samplename}_skani_results_sorted.tsv | tail -n 1 | cut -f 5 | tee TOP_QUERY_COVERAGE
+        head -n 2 ~{samplename}_skani_results_sorted.tsv | tail -n 1 | cut -f 21 | tee TOP_SCORE
+      fi
     else
-      # get the file name for the top hit in sorted skani results: 1st column, 2nd line in file
-      top_hit_name=$(basename $(awk 'NR == 2 {print $1}' ~{samplename}_skani_results_sorted.tsv))
-
-      # get accession number from file name (and version number if it exists)
-      echo $top_hit_name | awk -F'[.]' '{print $1 ($2 ~ /^[0-9]+$/ ? "."$2 : "")}' | tee TOP_ACCESSION
-      head -n 2 ~{samplename}_skani_results_sorted.tsv | tail -n 1 | cut -f 3 | tee TOP_ANI
-      head -n 2 ~{samplename}_skani_results_sorted.tsv | tail -n 1 | cut -f 5 | tee TOP_QUERY_COVERAGE
-      head -n 2 ~{samplename}_skani_results_sorted.tsv | tail -n 1 | cut -f 21 | tee TOP_SCORE
+      echo "DEBUG: Skipping Skani; combined contig length is too short"
     fi
 
-  # acquire the path of the best hit assembly
-  echo ~{fasta_dir}$(cat TOP_ACCESSION).fna > TOP_ASSEMBLY
+    # acquire the path of the best hit assembly
+    if [[ $(cat TOP_ACCESSION) != "N/A" ]]; then
+      echo ~{fasta_dir}$(cat TOP_ACCESSION).fna > TOP_ASSEMBLY
+    else
+      # write an empty fasta to TOP_ASSEMBLY instead of the non-existent N/A.fna
+      echo "gs://theiagen-public-resources-rp/empty_files/empty.fasta" > TOP_ASSEMBLY
+    fi
 
-  # acquire the taxon of the best hit, if possible
-  if [ -f ~{acc2taxon_map} ]; then
-    top_taxon=$(grep -wFf TOP_ACCESSION ~{acc2taxon_map} | cut -f 2 || true)
-    if [ -n "$top_taxon" ]; then
-      echo "$top_taxon" > TOP_TAXON
+    # acquire the taxon of the best hit, if possible
+    if [ -f ~{acc2taxon_map} ]; then
+      top_taxon=$(grep -wFf TOP_ACCESSION ~{acc2taxon_map} | cut -f 2 || true)
+      if [ -n "$top_taxon" ]; then
+        echo "$top_taxon" > TOP_TAXON
+      else
+        echo "N/A" > TOP_TAXON
+      fi
     else
       echo "N/A" > TOP_TAXON
     fi
-  else
-    echo "N/A" > TOP_TAXON
-  fi
-
   >>>
   output{
-    File skani_report = "~{samplename}_skani_results_sorted.tsv"
+    File? skani_report = "~{samplename}_skani_results_sorted.tsv"
     String skani_top_accession = read_string("TOP_ACCESSION")
     Float skani_top_ani = read_float("TOP_ANI")
     Float skani_top_query_coverage = read_float("TOP_QUERY_COVERAGE")
