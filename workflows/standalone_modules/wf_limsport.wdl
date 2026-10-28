@@ -38,7 +38,8 @@ workflow limsport_wf {
     # LIMSport
     String limsport_version = limsport.limsport_version
     String limsport_docker = limsport.limsport_docker
-    File limsport_table = limsport.limsport_table
-    File limsport_qc_report = limsport.limsport_qc_report
+    File limsport_lims_report = limsport.limsport_lims_report
+    File limsport_qc_fail_report = limsport.limsport_qc_fail_report
+    File limsport_qc_summary = limsport.limsport_qc_summary
   }
 }
