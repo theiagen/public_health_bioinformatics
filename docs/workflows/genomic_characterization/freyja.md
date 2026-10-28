@@ -148,6 +148,9 @@ This workflow runs on the sample level.
         | Software Source Code | <https://github.com/andersen-lab/Freyja> |
         | Software Documentation | <https://andersen-lab.github.io/Freyja/index.html#> |
 
+!!! warning "Samples without target organism reads"
+    If no reads align to the reference genome, the workflow completes successfully but skips primer trimming, Freyja, gene coverage, Qualimap, and the Freyja long-format output. `bwa_warning` (Illumina) or `minimap2_warning` (ONT) reads "ERROR: no reads mapped to the provided reference sequence", and the Freyja output columns are empty. Remove these samples from the set before running **Freyja_Plot_PHB** or **Freyja_Dashboard_PHB**, which require a `freyja_demixed` file for every sample.
+
 #### Outputs
 
 The main output file used in subsequent Freyja workflows is found under the `freyja_demixed` column. This TSV file takes on the following format:

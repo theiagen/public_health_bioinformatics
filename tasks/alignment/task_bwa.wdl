@@ -57,6 +57,15 @@ task bwa {
       -o ~{samplename}.sorted.aligned.bam \
       ~{samplename}.sorted.sam
 
+    # soft-fail signal for downstream tasks when no reads aligned
+    mapped_count=$(samtools view -c ~{samplename}.sorted.aligned.bam)
+    echo "DEBUG: ${mapped_count} mapped records"
+    if [[ "${mapped_count}" -eq 0 ]]; then
+      echo "ERROR: no reads mapped to the provided reference sequence" | tee BWA_WARNING
+    else
+      touch BWA_WARNING
+    fi
+
     # create a separate BAM that only includes aligned reads (no secondary or supplementary alignments) for creating aligned FASTQ files
     ## 0x904 = 4 (unaligned) + 100 (secondary) + 800 (supplementary)
     # FYI the default filtering is 0x900 (secondary and supplemental) so when we previously specified -F 4, we were only filtering out unaligned reads, and keeping secondary and supplemental alignments
@@ -144,6 +153,7 @@ task bwa {
     File? read2_unaligned = "~{samplename}_unaligned_R2.fastq.gz"
     File sorted_bam_unaligned = "~{samplename}.sorted.unaligned-reads.bam"
     File sorted_bam_unaligned_bai = "~{samplename}.sorted.unaligned-reads.bam.bai"
+    String bwa_warning = read_string("BWA_WARNING")
   }
   runtime {
     docker: docker
