@@ -21,9 +21,8 @@ task gene_coverage_theiagene {
     Int min_depth = 10 # minimum depth to count a base in breadth of coverage calculations
     Int min_quality = 0 # minimum base quality to count a base in breadth of coverage calculations
 
-    # ensembl-vep:116.0 as published 2026-09-11 (theiagene 1.0.1, pysam 0.24.1); pinned by digest because
-    # the 116.0 tag is rebuilt whenever theiagene is bumped
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/ensembl-vep@sha256:d452689a44acf538f5471c300d16d5ad3fa67ddf8a5eb0d83191862bb19676cf"
+    # ensembl-vep:116.0 as published 2026-09-11 (theiagene 1.0.1, pysam 0.24.1)
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/ensembl-vep:116.0"
     Int disk_size = 100
     Int memory = 8
     Int cpu = 2
