@@ -24,8 +24,8 @@ workflow seqsender {
     Boolean submit_to_genbank
 
     Boolean submit_to_production = false
-    Boolean prep_only = false
-    File? resume_submission_tarball # seqsender_state_tarball from an earlier run; skips build_and_prep and submit, and only polls
+    Boolean validation_only = false
+    File? resume_checkpoint_tarball # checkpoint_tarball from an earlier run; skips build_and_prep and submit, and only polls
     Float max_wait_hours = 48
     Float poll_interval_minutes = 10
 
@@ -34,8 +34,8 @@ workflow seqsender {
   call versioning.version_capture {
     input:
   }
-  if (!defined(resume_submission_tarball)) {
-    call seqsender_tasks.seqsender_build_and_prep {
+  if (!defined(resume_checkpoint_tarball)) {
+    call seqsender_tasks.seqsender_build_and_prep as validation {
       input:
         terra_project_name = terra_project_name,
         terra_workspace_name = terra_workspace_name,
@@ -51,14 +51,14 @@ workflow seqsender {
         submit_to_biosample = submit_to_biosample,
         submit_to_sra = submit_to_sra,
         submit_to_genbank = submit_to_genbank,
-        prep_only = prep_only,
+        validation_only = validation_only,
         input_table = input_table
     }
     # the tarball is only written if at least one sample passed prep
-    if (!prep_only && defined(seqsender_build_and_prep.tarball)) {
-      call seqsender_tasks.seqsender_submit {
+    if (!validation_only && defined(validation.tarball)) {
+      call seqsender_tasks.seqsender_submit as submission {
         input:
-          submission_tarball = select_first([seqsender_build_and_prep.tarball]),
+          submission_tarball = select_first([validation.tarball]),
           seqsender_key = seqsender_key,
           submit_to_production = submit_to_production,
           seqsender_organism_tag = seqsender_organism_tag,
@@ -69,11 +69,11 @@ workflow seqsender {
     }
   }
   # poll a new submission, or resume polling an earlier one
-  File? state_tarball = if defined(resume_submission_tarball) then resume_submission_tarball else seqsender_submit.tarball
-  if (defined(state_tarball)) {
-    call seqsender_tasks.seqsender_poll_and_wait {
+  File? latest_tarball = if defined(resume_checkpoint_tarball) then resume_checkpoint_tarball else submission.tarball
+  if (defined(latest_tarball)) {
+    call seqsender_tasks.seqsender_poll_and_wait as polling {
       input:
-        state_tarball = select_first([state_tarball]),
+        checkpoint_tarball = select_first([latest_tarball]),
         seqsender_key = seqsender_key,
         max_wait_hours = max_wait_hours,
         poll_interval_minutes = poll_interval_minutes
@@ -83,28 +83,26 @@ workflow seqsender {
     # Version Capture
     String seqsender_wf_version = version_capture.phb_version
     String seqsender_wf_analysis_date = version_capture.date
+    String? seqsender_version = select_first([validation.seqsender_version, polling.seqsender_version])
+    String? seqsender_docker = select_first([validation.seqsender_docker, polling.seqsender_docker])
+    # Submitted files - from the checkpoint when polling ran (incl. resuming), otherwise from validation; both are null when no sample passed
+    File? submission_metadata = if defined(polling.submission_metadata) then polling.submission_metadata else validation.combined_metadata
+    File? submission_fasta = if defined(polling.submission_fasta) then polling.submission_fasta else validation.combined_fasta
     # Build and Prep - skipped when resuming
-    File? seqsender_metadata = seqsender_build_and_prep.combined_metadata
-    File? seqsender_fasta = seqsender_build_and_prep.combined_fasta
-    File? seqsender_build_and_prep_tarball = seqsender_build_and_prep.tarball
-    File? seqsender_validation_summary = seqsender_build_and_prep.validation_summary
-    Int? seqsender_num_samples_passed = seqsender_build_and_prep.num_samples_passed
-    Int? seqsender_num_samples_failed = seqsender_build_and_prep.num_samples_failed
-    File? seqsender_build_and_prep_log = seqsender_build_and_prep.log
-    String? seqsender_version = seqsender_build_and_prep.seqsender_version
-    String? seqsender_docker = seqsender_build_and_prep.seqsender_docker
-    # Submit - skipped when resuming or with prep_only
-    String? seqsender_submit_status = seqsender_submit.status
-    # Poll - use `seqsender_state_tarball` with `resume_submission_tarball`
-    File? seqsender_poll_tarball = seqsender_poll_and_wait.tarball
-    String? seqsender_submission_name = seqsender_poll_and_wait.submission_name
-    String? seqsender_final_status = seqsender_poll_and_wait.final_status
-    String? seqsender_database_statuses = seqsender_poll_and_wait.database_statuses
-    File? seqsender_poll_log = seqsender_poll_and_wait.log
-    File? seqsender_submission_log = seqsender_poll_and_wait.submission_log
-    File? seqsender_submission_status_report = seqsender_poll_and_wait.submission_status_report
-    File? seqsender_biosample_report = seqsender_poll_and_wait.biosample_xml_report
-    File? seqsender_sra_report = seqsender_poll_and_wait.sra_xml_report
-    File? seqsender_genbank_report = seqsender_poll_and_wait.genbank_xml_report
+    Int? validation_samples_passed = validation.num_samples_passed
+    Int? validation_samples_failed = validation.num_samples_failed
+    File? validation_summary = validation.validation_summary
+    # Poll - use `checkpoint_tarball` with `resume_checkpoint_tarball`
+    File? checkpoint_tarball = polling.tarball
+    String? seqsender_final_status = polling.final_status
+    File? seqsender_database_status = polling.submission_log_csv
+    File? seqsender_submission_status = polling.submission_status_report
+    File? seqsender_report_xml_biosample = polling.report_xml_biosample
+    File? seqsender_report_xml_sra = polling.report_xml_sra
+    File? seqsender_report_xml_genbank = polling.report_xml_genbank
+    # Logs from each task
+    File? log_validation = validation.log
+    File? log_submission = submission.log
+    File? log_polling = polling.log
   }
 }

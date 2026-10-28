@@ -19,7 +19,7 @@ task seqsender_build_and_prep {
     Boolean submit_to_sra
     Boolean submit_to_genbank
 
-    Boolean prep_only
+    Boolean validation_only
 
     File? input_table # for command line testing only; used instead of downloading the Terra table
 
@@ -68,7 +68,7 @@ task seqsender_build_and_prep {
       ~{if submit_to_biosample then '--biosample' else ''} \
       ~{if submit_to_sra then '--sra' else ''} \
       ~{if submit_to_genbank then '--genbank' else ''} \
-      ~{if prep_only then '--prep_only' else ''}
+      ~{if validation_only then '--validation_only' else ''}
   >>>
   output {
     File? combined_metadata = "submit/metadata.csv"
@@ -147,11 +147,11 @@ task seqsender_submit {
       echo "ERROR"
     fi | tee SUBMIT_STATUS
 
-    # the reads are only used by `seqsender submit`, so the `seqsender_state` for polling leaves them out
-    tar -czf seqsender_state.tar.gz --exclude=submit/raw_reads submit
+    # the reads are only used by `seqsender submit`, so the checkpoint for polling leaves them out
+    tar -czf seqsender_checkpoint.tar.gz --exclude=submit/raw_reads submit
   >>>
   output {
-    File tarball = "seqsender_state.tar.gz"
+    File tarball = "seqsender_checkpoint.tar.gz"
     String submission_name = read_string("SUBMISSION_NAME")
     String status = read_string("SUBMIT_STATUS")
     File log = "seqsender_submit.log"
@@ -169,7 +169,7 @@ task seqsender_submit {
 
 task seqsender_poll_and_wait {
   input {
-    File state_tarball # `tarball` from seqsender_submit or the newest seqsender_poll_and_wait
+    File checkpoint_tarball # `tarball` from seqsender_submit or the newest seqsender_poll_and_wait
     String seqsender_key # the key that encrypted the password in seqsender_config
     Float max_wait_hours
     Float poll_interval_minutes
@@ -185,8 +185,11 @@ task seqsender_poll_and_wait {
   command <<<
     set -euo pipefail
 
+    micromamba run -n seqsender \
+    seqsender.py version | grep -o "[0-9][0-9.]*[0-9]" | head -n 1 | tee VERSION || true
+
     # 'submit/' directory holds the submission files and the submission_log.csv seqsender uses to track progress
-    tar -xzf "~{state_tarball}"
+    tar -xzf "~{checkpoint_tarball}"
 
     # checks NCBI ftp until every database is processed, one has an error, or max_wait_hours is reached
     RETURN_CODE=0
@@ -197,20 +200,24 @@ task seqsender_poll_and_wait {
       --poll_interval_minutes ~{poll_interval_minutes} || RETURN_CODE=$?
 
     # saved even if polling stopped early
-    tar -czf seqsender_state.tar.gz submit
+    tar -czf seqsender_checkpoint.tar.gz submit
     exit "${RETURN_CODE}"
   >>>
   output {
-    File tarball = "seqsender_state.tar.gz"
+    File tarball = "seqsender_checkpoint.tar.gz"
     String submission_name = read_string("SUBMISSION_NAME")
     String final_status = read_string("FINAL_STATUS")
     String database_statuses = read_string("DATABASE_STATUSES")
     File log = "seqsender_poll_and_wait.log"
-    File submission_log = "submit/submission_log.csv"
+    File submission_metadata = "submit/metadata.csv"
+    File? submission_fasta = "submit/sequence.fasta"
+    File submission_log_csv = "submit/submission_log.csv"
     File? submission_status_report = "submit/~{submission_name}/submission_files/submission_status_report.csv"
-    File? biosample_xml_report = "submit/~{submission_name}/submission_files/BIOSAMPLE/report.xml"
-    File? sra_xml_report = "submit/~{submission_name}/submission_files/SRA/report.xml"
-    File? genbank_xml_report = "submit/~{submission_name}/submission_files/GENBANK/report.xml"
+    File? report_xml_biosample = "submit/~{submission_name}/submission_files/BIOSAMPLE/report.xml"
+    File? report_xml_sra = "submit/~{submission_name}/submission_files/SRA/report.xml"
+    File? report_xml_genbank = "submit/~{submission_name}/submission_files/GENBANK/report.xml"
+    String seqsender_version = read_string("VERSION")
+    String seqsender_docker = docker
   }
   runtime {
     docker: docker
