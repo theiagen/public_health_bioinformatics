@@ -119,8 +119,7 @@ workflow freyja_fastq {
     }
   }
   # soft-fail: skip every module downstream of alignment when no reads mapped to the reference
-  String alignment_warning = select_first([minimap2.minimap2_warning, bwa.bwa_warning])
-  if (alignment_warning == "") {
+  if (select_first([minimap2.minimap2_warning, bwa.bwa_warning]) == "") {
     # Called when the primer_bed file is present, primers are trimmed and trimmed bam is passed to freyja
     if (defined(primer_bed)){
       call trim_primers.primer_trim {
