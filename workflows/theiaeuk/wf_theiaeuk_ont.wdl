@@ -203,7 +203,7 @@ workflow theiaeuk_ont {
     String? cladetyper_clade = medea_magic.clade_type
     String? cladetyper_version = medea_magic.cladetyper_version
     String? cladetyper_docker_image = medea_magic.cladetyper_docker_image
-    String? cladetype_annotated_ref = medea_magic.cladetype_annotated_ref
+    File? cladetype_annotated_ref = medea_magic.cladetype_annotated_ref
     # AMR Search outputs
     File? amr_search_results = medea_magic.amr_search_results
     File? amr_search_csv = medea_magic.amr_results_csv
