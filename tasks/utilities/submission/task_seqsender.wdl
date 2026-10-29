@@ -201,6 +201,15 @@ task seqsender_poll_and_wait {
 
     # saved even if polling stopped early
     tar -czf seqsender_checkpoint.tar.gz submit
+
+    # output a copy of the latest '*_report.xml' and 'submission_status_report.csv' files
+    SUBMISSION_FILES="submit/$(cat SUBMISSION_NAME)/submission_files"
+    cp "${SUBMISSION_FILES}/submission_status_report.csv" .
+    for DATABASE in BIOSAMPLE SRA GENBANK; do
+      if [[ -f "${SUBMISSION_FILES}/${DATABASE}/report.xml" ]]; then
+        cp "${SUBMISSION_FILES}/${DATABASE}/report.xml" "${DATABASE}_report.xml"
+      fi
+    done
     exit "${RETURN_CODE}"
   >>>
   output {
@@ -212,10 +221,10 @@ task seqsender_poll_and_wait {
     File submission_metadata = "submit/metadata.csv"
     File? submission_fasta = "submit/sequence.fasta"
     File submission_log_csv = "submit/submission_log.csv"
-    File? submission_status_report = "submit/~{submission_name}/submission_files/submission_status_report.csv"
-    File? report_xml_biosample = "submit/~{submission_name}/submission_files/BIOSAMPLE/report.xml"
-    File? report_xml_sra = "submit/~{submission_name}/submission_files/SRA/report.xml"
-    File? report_xml_genbank = "submit/~{submission_name}/submission_files/GENBANK/report.xml"
+    File submission_status_report = "submission_status_report.csv"
+    File? report_xml_biosample = "BIOSAMPLE_report.xml"
+    File? report_xml_sra = "SRA_report.xml"
+    File? report_xml_genbank = "GENBANK_report.xml"
     String seqsender_version = read_string("VERSION")
     String seqsender_docker = docker
   }

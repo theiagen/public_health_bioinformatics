@@ -95,7 +95,7 @@ workflow seqsender {
     String seqsender_wf_analysis_date = version_capture.date
     String? seqsender_version = select_first([validation.seqsender_version, polling.seqsender_version])
     String? seqsender_docker = select_first([validation.seqsender_docker, polling.seqsender_docker])
-    # Submitted files - from the checkpoint when polling ran (incl. resuming), otherwise from validation; both are null when no sample passed
+    # Submitted files - from the `checkpoint_tarball` or from validation; null when no sample passed
     File? submission_metadata = if defined(polling.submission_metadata) then polling.submission_metadata else validation.combined_metadata
     File? submission_fasta = if defined(polling.submission_fasta) then polling.submission_fasta else validation.combined_fasta
     # Build and Prep - skipped when resuming
