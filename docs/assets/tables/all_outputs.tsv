@@ -469,7 +469,6 @@ freyja_resid	String	Residual of the weighted least absolute deviation problem us
 freyja_summarized	String	Sum of all lineage abundances in a particular WHO designation identified by Freyja and parsed from freyja_demixed file	Freyja_FASTQ
 freyja_variants	File	The TSV file containing the variants identified by Freyja	Freyja_FASTQ
 freyja_version	String	version of Freyja used	Freyja_FASTQ
-freyja_warning	String	Populated with an error if Freyja called no variants against the reference genome; when populated, Freyja demixing, bootstrapping, and Freyja long-format are skipped; freyja_coverage is still calculated from freyja_depths	Freyja_FASTQ
 gambit_closest_genomes	File	CSV file listing genomes in the GAMBIT database that are most similar to the query assembly	Gambit_Query, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 gambit_closest_genomes_file	File	CSV file listing genomes in the GAMBIT database that are most similar to the query assembly	TheiaEuk_ONT
 gambit_db_version	String	Version of the GAMBIT database used	Gambit_Query, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
