@@ -78,7 +78,7 @@ task freyja_one_sample {
   variant_count=$(awk 'NR > 1 && NF {n++} END {print n + 0}' ~{samplename}_freyja_variants.tsv)
   echo "DEBUG: ${variant_count} variant calls"
   if [[ -f ~{samplename}_freyja_variants.tsv && "${variant_count}" -eq 0 ]]; then
-    echo "WARNING: no variants called against the provided reference sequence" | tee FREYJA_WARNING
+    echo "WARNING: no variants called against the provided reference sequence; demix will not run" | tee FREYJA_WARNING
     touch COVERAGE RESID SUMMARIZED LINEAGES ABUNDANCES
   elif [[ ! -f ~{samplename}_freyja_variants.tsv ]]; then
     echo "ERROR: freyja variants failed" | tee FREYJA_WARNING
