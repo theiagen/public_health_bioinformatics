@@ -78,10 +78,12 @@ task freyja_one_sample {
   variant_count=$(awk 'NR > 1 && NF {n++} END {print n + 0}' ~{samplename}_freyja_variants.tsv)
   echo "DEBUG: ${variant_count} variant calls"
   if [[ -f ~{samplename}_freyja_variants.tsv && "${variant_count}" -eq 0 ]]; then
-    echo "ERROR: no variants called against the provided reference sequence" | tee FREYJA_WARNING
+    echo "WARNING: no variants called against the provided reference sequence" | tee FREYJA_WARNING
     # report coverage as freyja demix does: percent of sites with depth >= 10 (the --covcut default)
     awk '$4 >= 10 {n++} END {printf "%.15g\n", (NR ? 100 * n / NR : 0)}' ~{samplename}_freyja_depths.tsv > COVERAGE
     touch RESID SUMMARIZED LINEAGES ABUNDANCES
+  elif [[ ! -f ~{samplename}_freyja_variants.tsv ]]; then
+    echo "ERROR: freyja variants failed" | tee FREYJA_WARNING
   else
     touch FREYJA_WARNING
   fi
