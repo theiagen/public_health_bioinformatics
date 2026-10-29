@@ -58,7 +58,7 @@ task bwa {
       ~{samplename}.sorted.sam
 
     # soft-fail signal for downstream tasks when no reads aligned
-    mapped_count=$(samtools view -c ~{samplename}.sorted.aligned.bam)
+    mapped_count=$(samtools view -c -F 0x904 ~{samplename}.sorted.aligned.bam)
     echo "DEBUG: ${mapped_count} mapped records"
     if [[ "${mapped_count}" -eq 0 ]]; then
       echo "ERROR: no reads mapped to the provided reference sequence" | tee BWA_WARNING
