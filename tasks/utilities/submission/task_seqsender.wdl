@@ -73,7 +73,7 @@ task seqsender_build_and_prep {
   output {
     File? combined_metadata = "submit/metadata.csv"
     File? combined_fasta = "submit/sequence.fasta"
-    File? tarball = "seqsender_build_and_prep.tar.gz"
+    File? tarball = "seqsender_post_validation_checkpoint.tar.gz"
     File validation_summary = "validation_summary.tsv"
     Int num_samples_passed = read_int("NUM_PASSED")
     Int num_samples_failed = read_int("NUM_FAILED")
@@ -94,7 +94,7 @@ task seqsender_build_and_prep {
 
 task seqsender_submit {
   input {
-    File submission_tarball # `tarball` (seqsender_build_and_prep.tar.gz) from seqsender_build_and_prep
+    File submission_tarball # `tarball` (seqsender_post_validation_checkpoint.tar.gz) from seqsender_build_and_prep
     String seqsender_key # the key that encrypted the password in seqsender_config
     Boolean submit_to_production
 
@@ -148,10 +148,10 @@ task seqsender_submit {
     fi | tee SUBMIT_STATUS
 
     # the reads are only used by `seqsender submit`, so the checkpoint for polling leaves them out
-    tar -czf seqsender_checkpoint.tar.gz --exclude=submit/raw_reads submit
+    tar -czf seqsender_post_submission_checkpoint.tar.gz --exclude=submit/raw_reads submit
   >>>
   output {
-    File tarball = "seqsender_checkpoint.tar.gz"
+    File tarball = "seqsender_post_submission_checkpoint.tar.gz"
     String submission_name = read_string("SUBMISSION_NAME")
     String status = read_string("SUBMIT_STATUS")
     File log = "seqsender_submit.log"
@@ -200,7 +200,7 @@ task seqsender_poll_and_wait {
       --poll_interval_minutes ~{poll_interval_minutes} || RETURN_CODE=$?
 
     # saved even if polling stopped early
-    tar -czf seqsender_checkpoint.tar.gz submit
+    tar -czf seqsender_post_polling_checkpoint.tar.gz submit
 
     # output a copy of the latest '*_report.xml' and 'submission_status_report.csv' files
     SUBMISSION_FILES="submit/$(cat SUBMISSION_NAME)/submission_files"
@@ -213,7 +213,7 @@ task seqsender_poll_and_wait {
     exit "${RETURN_CODE}"
   >>>
   output {
-    File tarball = "seqsender_checkpoint.tar.gz"
+    File tarball = "seqsender_post_polling_checkpoint.tar.gz"
     String submission_name = read_string("SUBMISSION_NAME")
     String final_status = read_string("FINAL_STATUS")
     String database_statuses = read_string("DATABASE_STATUSES")
