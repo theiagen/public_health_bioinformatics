@@ -74,8 +74,22 @@ task freyja_one_sample {
     --depths ~{samplename}_freyja_depths.tsv \
     --ref ~{reference_genome}
 
+  # soft-fail: freyja boot/demix fail on a variants file with no calls (e.g., reads identical to the reference)
+  variant_count=$(awk 'NR > 1 && NF {n++} END {print n + 0}' ~{samplename}_freyja_variants.tsv)
+  echo "DEBUG: ${variant_count} variant calls"
+  if [[ -f ~{samplename}_freyja_variants.tsv && "${variant_count}" -eq 0 ]]; then
+    echo "WARNING: no variants called against the provided reference sequence" | tee FREYJA_WARNING
+    # report coverage as freyja demix does: percent of sites with depth >= 10 (the --covcut default)
+    awk '$4 >= 10 {n++} END {printf "%.15g\n", (NR ? 100 * n / NR : 0)}' ~{samplename}_freyja_depths.tsv > COVERAGE
+    touch RESID SUMMARIZED LINEAGES ABUNDANCES
+  elif [[ ! -f ~{samplename}_freyja_variants.tsv ]]; then
+    echo "ERROR: freyja variants failed" | tee FREYJA_WARNING
+  else
+    touch FREYJA_WARNING
+  fi
+
   # Calculate Boostraps, if specified
-  if ~{bootstrap}; then
+  if ~{bootstrap} && [[ ! -s FREYJA_WARNING ]]; then
     freyja boot \
     ~{"--pathogen " + freyja_pathogen} \
     ~{"--eps " + eps} \
@@ -92,24 +106,26 @@ task freyja_one_sample {
     --boxplot pdf
   fi
 
-  # Demix variants
-  echo "Running: freyja demix --eps ~{eps} ${freyja_barcode} ${freyja_metadata} ~{samplename}_freyja_variants.tsv ~{samplename}_freyja_depths.tsv --output ~{samplename}_freyja_demixed.tmp"
-  freyja demix \
-    ~{"--pathogen " + freyja_pathogen} \
-    ~{'--eps ' + eps} \
-    ~{'--meta ' + freyja_lineage_metadata} \
-    ~{'--lineageyml ' + freyja_lineage_yml} \
-    ~{'--barcodes ' + freyja_barcodes} \
-    ~{'--depthcutoff ' + depth_cutoff} \
-    ~{true='--confirmedonly' false='' confirmed_only} \
-    ~{if auto_adapt then '--autoadapt' else '--adapt ' + adapt} \
-    ~{samplename}_freyja_variants.tsv \
-    ~{samplename}_freyja_depths.tsv \
-    --output ~{samplename}_freyja_demixed.tmp
+  if [[ ! -s FREYJA_WARNING ]]; then
+    # Demix variants
+    echo "Running: freyja demix --eps ~{eps} ${freyja_barcode} ${freyja_metadata} ~{samplename}_freyja_variants.tsv ~{samplename}_freyja_depths.tsv --output ~{samplename}_freyja_demixed.tmp"
+    freyja demix \
+      ~{"--pathogen " + freyja_pathogen} \
+      ~{'--eps ' + eps} \
+      ~{'--meta ' + freyja_lineage_metadata} \
+      ~{'--lineageyml ' + freyja_lineage_yml} \
+      ~{'--barcodes ' + freyja_barcodes} \
+      ~{'--depthcutoff ' + depth_cutoff} \
+      ~{true='--confirmedonly' false='' confirmed_only} \
+      ~{if auto_adapt then '--autoadapt' else '--adapt ' + adapt} \
+      ~{samplename}_freyja_variants.tsv \
+      ~{samplename}_freyja_depths.tsv \
+      --output ~{samplename}_freyja_demixed.tmp
 
-  # Adjust output header
-  echo -e "\t/~{samplename}" > ~{samplename}_freyja_demixed.tsv
-  tail -n+2 ~{samplename}_freyja_demixed.tmp >> ~{samplename}_freyja_demixed.tsv
+    # Adjust output header
+    echo -e "\t/~{samplename}" > ~{samplename}_freyja_demixed.tsv
+    tail -n+2 ~{samplename}_freyja_demixed.tmp >> ~{samplename}_freyja_demixed.tsv
+  fi
 
   if [ "~{freyja_pathogen}" == "SARS-CoV-2" ]; then
     if [ -f /opt/conda/envs/freyja-env/lib/python3.12/site-packages/freyja/data/usher_barcodes.feather ]; then
@@ -124,7 +140,13 @@ task freyja_one_sample {
   #Output QC values to the Terra data table
   python <<CODE
   import csv
+  import os
+  import sys
   import pandas as pd
+
+  # no demix output to parse when no variants were called
+  if os.path.getsize("FREYJA_WARNING") > 0:
+    sys.exit(0)
 
   dataf = pd.read_csv("~{samplename}_freyja_demixed.tsv", sep="\t", header=None)
   dataf.columns = ["Attribute", "~{samplename}"]
@@ -168,7 +190,7 @@ task freyja_one_sample {
   output {
     File freyja_variants = "~{samplename}_freyja_variants.tsv"
     File freyja_depths = "~{samplename}_freyja_depths.tsv"
-    File freyja_demixed = "~{samplename}_freyja_demixed.tsv"
+    File? freyja_demixed = "~{samplename}_freyja_demixed.tsv"
     Float freyja_coverage = read_float("COVERAGE")
     File? freyja_update_log = "freyja_update.log"
     File? freyja_bootstrap_lineages = "~{samplename}_lineages.csv"
@@ -181,11 +203,12 @@ task freyja_one_sample {
     String freyja_barcode_version = read_string("FREYJA_BARCODES")
     String freyja_metadata_version = read_string("FREYJA_METADATA")
     String freyja_version = read_string("FREYJA_VERSION")
-    File freyja_demixed_parsed = "~{samplename}_freyja_demixed_parsed.tsv"
+    File? freyja_demixed_parsed = "~{samplename}_freyja_demixed_parsed.tsv"
     String freyja_resid = read_string("RESID")
     String freyja_summarized = read_string("SUMMARIZED")
     String freyja_lineages = read_string("LINEAGES")
     String freyja_abundances = read_string("ABUNDANCES")
+    String freyja_warning = read_string("FREYJA_WARNING")
   }
   runtime {
     memory: "~{memory} GB"

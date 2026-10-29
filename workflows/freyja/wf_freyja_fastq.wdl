@@ -158,7 +158,8 @@ workflow freyja_fastq {
           bam_file = select_first([primer_trim.trim_sorted_bam, sam_to_sorted_bam.bam, bwa.sorted_bam])
       }
     }
-    if (defined(collection_date) && defined(collection_site)) {
+    # skip long format when freyja soft-fails without variant calls
+    if (defined(collection_date) && defined(collection_site) && freyja.freyja_warning == "") {
       call freyja_long_format.freyja_long_format_single as freyja_long_format {
         input:
           samplename = samplename,
@@ -318,6 +319,7 @@ workflow freyja_fastq {
     String? freyja_summarized = freyja.freyja_summarized
     String? freyja_lineages = freyja.freyja_lineages
     String? freyja_abundances = freyja.freyja_abundances
+    String? freyja_warning = freyja.freyja_warning
     # Gene Coverage outputs - SARS-CoV-2 only
     Map[String, Float]? gene_coverage_depth_by_gene = select_first([gene_coverage.depth_by_gene, {"": 0}])
     Map[String, Float]? gene_coverage_percent_coverage_by_gene = select_first([gene_coverage.breadth_by_gene, {"": 0}])
