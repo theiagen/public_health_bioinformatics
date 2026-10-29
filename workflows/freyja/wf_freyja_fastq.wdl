@@ -118,35 +118,61 @@ workflow freyja_fastq {
         read2 = select_first([read_QC_trim_pe.read2_clean, read2])
     }
   }
-  # Called when the primer_bed file is present, primers are trimmed and trimmed bam is passed to freyja
-  if (defined(primer_bed)){
-    call trim_primers.primer_trim {
-      input:
-        samplename = samplename,
-        primer_bed = select_first([primer_bed]),
-        bamfile = select_first([sam_to_sorted_bam.bam, bwa.sorted_bam])
+  # soft-fail: skip every module downstream of alignment when no reads mapped to the reference
+  if (select_first([minimap2.minimap2_warning, bwa.bwa_warning]) == "") {
+    # Called when the primer_bed file is present, primers are trimmed and trimmed bam is passed to freyja
+    if (defined(primer_bed)){
+      call trim_primers.primer_trim {
+        input:
+          samplename = samplename,
+          primer_bed = select_first([primer_bed]),
+          bamfile = select_first([sam_to_sorted_bam.bam, bwa.sorted_bam])
+      }
     }
-  }
-  call freyja_task.freyja_one_sample as freyja {
-    input:
-      bamfile = select_first([primer_trim.trim_sorted_bam, sam_to_sorted_bam.bam, bwa.sorted_bam]),
-      freyja_pathogen = freyja_pathogen,
-      freyja_barcodes = freyja_barcodes,
-      freyja_lineage_metadata = freyja_lineage_metadata,
-      samplename = samplename,
-      reference_genome = reference_genome,
-      reference_gff = reference_gff,
-      depth_cutoff = depth_cutoff
-  }
-  if (freyja_pathogen == "SARS-CoV-2") {
-    call gene_coverage_task.gene_coverage {
+    call freyja_task.freyja_one_sample as freyja {
       input:
-        bam = select_first([primer_trim.trim_sorted_bam, sam_to_sorted_bam.bam, bwa.sorted_bam]),
-        bai = select_first([primer_trim.trim_sorted_bai, sam_to_sorted_bam.bai, bwa.sorted_bai]),
-        bedfile = sc2_gene_bed,
-        ambiguous_contig = true,
+        bamfile = select_first([primer_trim.trim_sorted_bam, sam_to_sorted_bam.bam, bwa.sorted_bam]),
+        freyja_pathogen = freyja_pathogen,
+        freyja_barcodes = freyja_barcodes,
+        freyja_lineage_metadata = freyja_lineage_metadata,
         samplename = samplename,
-        organism = freyja_pathogen
+        reference_genome = reference_genome,
+        reference_gff = reference_gff,
+        depth_cutoff = depth_cutoff
+    }
+    if (freyja_pathogen == "SARS-CoV-2") {
+      call gene_coverage_task.gene_coverage {
+        input:
+          bam = select_first([primer_trim.trim_sorted_bam, sam_to_sorted_bam.bam, bwa.sorted_bam]),
+          bai = select_first([primer_trim.trim_sorted_bai, sam_to_sorted_bam.bai, bwa.sorted_bai]),
+          bedfile = sc2_gene_bed,
+          ambiguous_contig = true,
+          samplename = samplename,
+          organism = freyja_pathogen
+      }
+    }
+    if (run_qualimap) {
+      call qualimap_task.qualimap as qualimap {
+        input:
+          samplename = samplename,
+          bam_file = select_first([primer_trim.trim_sorted_bam, sam_to_sorted_bam.bam, bwa.sorted_bam])
+      }
+    }
+    # skip long format when freyja soft-fails without variant calls
+    if (defined(collection_date) && defined(collection_site) && freyja.freyja_warning == "") {
+      call freyja_long_format.freyja_long_format_single as freyja_long_format {
+        input:
+          samplename = samplename,
+          freyja_lineages = freyja.freyja_lineages,
+          freyja_abundances = freyja.freyja_abundances,
+          freyja_coverage = freyja.freyja_coverage,
+          collection_date = collection_date,
+          collection_site = collection_site,
+          latitude = latitude,
+          longitude = longitude,
+          mincov = freyja_min_coverage,
+          docker = freyja_long_format_docker
+      }
     }
   }
   if (defined(qc_check_table)) {
@@ -167,28 +193,6 @@ workflow freyja_fastq {
           "sc2_s_gene_mean_coverage": gene_coverage.sc2_s_gene_depth,
           "sc2_s_gene_percent_coverage": gene_coverage.sc2_s_gene_coverage
         }
-    }
-  }
-  if (run_qualimap) {
-    call qualimap_task.qualimap as qualimap {
-      input:
-        samplename = samplename,
-        bam_file = select_first([primer_trim.trim_sorted_bam, sam_to_sorted_bam.bam, bwa.sorted_bam])
-    }
-  }
-  if (defined(collection_date) && defined(collection_site)) {
-    call freyja_long_format.freyja_long_format_single as freyja_long_format {
-      input:
-        samplename = samplename,
-        freyja_lineages = freyja.freyja_lineages,
-        freyja_abundances = freyja.freyja_abundances,
-        freyja_coverage = freyja.freyja_coverage,
-        collection_date = collection_date,
-        collection_site = collection_site,
-        latitude = latitude,
-        longitude = longitude,
-        mincov = freyja_min_coverage,
-        docker = freyja_long_format_docker
     }
   }
   call versioning.version_capture {
@@ -280,10 +284,12 @@ workflow freyja_fastq {
     String? metabuli_report_dehosted = read_QC_trim_ont.metabuli_report_dehosted
     # Read Alignment - bwa outputs
     String? bwa_version = bwa.bwa_version
+    String? bwa_warning = bwa.bwa_warning
     String? alignment_method = alignment_method_technology
     # Read Alignment - minimap2 outputs
     String? minimap2_version = minimap2.minimap2_version
     String? minimap2_docker = minimap2.minimap2_docker
+    String? minimap2_warning = minimap2.minimap2_warning
     # Read Alignment - samtools
     String samtools_version = select_first([sam_to_sorted_bam.samtools_version, bwa.sam_version])
     # Read Alignment - bam and bai files
@@ -295,24 +301,25 @@ workflow freyja_fastq {
     String? samtools_version_primtrim = primer_trim.samtools_version
     String? primer_bed_name = primer_trim.primer_bed_name
     # Freyja Analysis outputs
-    String freyja_version = freyja.freyja_version
-    File freyja_variants = freyja.freyja_variants
-    File freyja_depths = freyja.freyja_depths
-    File freyja_demixed = freyja.freyja_demixed
-    Float freyja_coverage = freyja.freyja_coverage
+    String? freyja_version = freyja.freyja_version
+    File? freyja_variants = freyja.freyja_variants
+    File? freyja_depths = freyja.freyja_depths
+    File? freyja_demixed = freyja.freyja_demixed
+    String? freyja_coverage = freyja.freyja_coverage
     String freyja_barcode_file = select_first([freyja_barcodes, freyja.freyja_sc2_barcode_file, ""])
     String freyja_lineage_metadata_file = select_first([freyja_lineage_metadata, freyja.freyja_sc2_lineage_metadata_file, ""])
-    String freyja_barcode_version = freyja.freyja_barcode_version
-    String freyja_metadata_version = freyja.freyja_metadata_version
+    String? freyja_barcode_version = freyja.freyja_barcode_version
+    String? freyja_metadata_version = freyja.freyja_metadata_version
     String? freyja_bootstrap_lineages = freyja.freyja_bootstrap_lineages
     String? freyja_bootstrap_lineages_pdf = freyja.freyja_bootstrap_lineages_pdf
     String? freyja_bootstrap_summary = freyja.freyja_bootstrap_summary
     String? freyja_bootstrap_summary_pdf = freyja.freyja_bootstrap_summary_pdf
-    File freyja_demixed_parsed = freyja.freyja_demixed_parsed
-    String freyja_resid = freyja.freyja_resid
-    String freyja_summarized = freyja.freyja_summarized
-    String freyja_lineages = freyja.freyja_lineages
-    String freyja_abundances = freyja.freyja_abundances
+    File? freyja_demixed_parsed = freyja.freyja_demixed_parsed
+    String? freyja_resid = freyja.freyja_resid
+    String? freyja_summarized = freyja.freyja_summarized
+    String? freyja_lineages = freyja.freyja_lineages
+    String? freyja_abundances = freyja.freyja_abundances
+    String? freyja_warning = freyja.freyja_warning
     # Gene Coverage outputs - SARS-CoV-2 only
     Map[String, Float]? gene_coverage_depth_by_gene = select_first([gene_coverage.depth_by_gene, {"": 0}])
     Map[String, Float]? gene_coverage_percent_coverage_by_gene = select_first([gene_coverage.breadth_by_gene, {"": 0}])

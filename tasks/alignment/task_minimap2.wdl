@@ -37,11 +37,25 @@ task minimap2 {
       "~{reference}" \
       ${INPUT_QUERY} > "~{samplename}"_minimap2.out
 
+    # count mapped records: SAM records without the unmapped flag (4), or any PAF line
+    if ~{output_sam}; then
+      mapped_count=$(awk -F'\t' '!/^@/ && int($2 / 4) % 2 == 0 {n++} END {print n + 0}' "~{samplename}"_minimap2.out)
+    else
+      mapped_count=$(awk 'NF {n++} END {print n + 0}' "~{samplename}"_minimap2.out)
+    fi
+    echo "DEBUG: ${mapped_count} mapped records"
+    if [[ "${mapped_count}" -eq 0 ]]; then
+      echo "ERROR: no reads mapped to the provided reference sequence" | tee MINIMAP2_WARNING
+    else
+      touch MINIMAP2_WARNING
+    fi
+
   >>>
   output {
     File minimap2_out = "~{samplename}_minimap2.out"
     String minimap2_version = read_string("VERSION")
     String minimap2_docker = "~{docker}"
+    String minimap2_warning = read_string("MINIMAP2_WARNING")
   }
   runtime {
     docker: "~{docker}"

@@ -209,6 +209,7 @@ bwa_sorted_bam	File	Sorted BAM file of reads aligned to reference	TheiaViral_Ill
 bwa_sorted_bam_unaligned	File	A BAM file that only contains reads that did not align to the reference	TheiaViral_Illumina_PE
 bwa_sorted_bam_unaligned_bai	File	Index companion file to a BAM file that only contains reads that did not align to the reference	TheiaViral_Illumina_PE
 bwa_version	String	Version of BWA software used	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_Illumina_PE
+bwa_warning	String	Populated with an error if no reads aligned to the reference genome with BWA; when populated, primer trimming, Freyja, gene coverage, Qualimap, and Freyja long-format are skipped	Freyja_FASTQ
 cauris_cladetyper_wf_analysis_date	String	Date of analysis	Cauris_CladeTyper
 cauris_cladetyper_wf_version	String	Version of PHB used for the analysis	Cauris_CladeTyper
 cg_pipeline_docker	String	Docker file used for running CG-Pipeline on cleaned reads	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
@@ -440,7 +441,7 @@ freyja_bootstrap_lineages	String	A CSV that contains the 0.025, 0.05, 0.25, 0.5 
 freyja_bootstrap_lineages_pdf	String	A boxplot of the bootstrap lineages CSV file	Freyja_FASTQ
 freyja_bootstrap_summary	String	A CSV that contains the 0.025, 0.05, 0.25, 0.5 (median), 0.75, 0.95, and 0.975 percentiles for each WHO designated VOI/VOC	Freyja_FASTQ
 freyja_bootstrap_summary_pdf	String	A boxplot of the bootstrap summary CSV file	Freyja_FASTQ
-freyja_coverage	Float	Coverage identified by Freyja and parsed from freyja_demixed file	Freyja_FASTQ
+freyja_coverage	String	Coverage identified by Freyja and parsed from freyja_demixed file	Freyja_FASTQ
 freyja_dashboard	File	The HTML file of the dashboard created	Freyja_Dashboard
 freyja_dashboard_metadata	File	The metadata used to create the dashboard	Freyja_Dashboard
 freyja_dashboard_version	String	The version of Freyja used	Freyja_Dashboard
@@ -468,6 +469,7 @@ freyja_resid	String	Residual of the weighted least absolute deviation problem us
 freyja_summarized	String	Sum of all lineage abundances in a particular WHO designation identified by Freyja and parsed from freyja_demixed file	Freyja_FASTQ
 freyja_variants	File	The TSV file containing the variants identified by Freyja	Freyja_FASTQ
 freyja_version	String	version of Freyja used	Freyja_FASTQ
+freyja_warning	String	Populated with a warning if Freyja called no variants against the reference genome; when populated, Freyja demixing, bootstrapping, and Freyja long-format are skipped and freyja_coverage is not reported	Freyja_FASTQ
 gambit_closest_genomes	File	CSV file listing genomes in the GAMBIT database that are most similar to the query assembly	Gambit_Query, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 gambit_closest_genomes_file	File	CSV file listing genomes in the GAMBIT database that are most similar to the query assembly	TheiaEuk_ONT
 gambit_db_version	String	Version of the GAMBIT database used	Gambit_Query, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
@@ -752,6 +754,7 @@ midas_secondary_genus_coverage	Float	Absolute coverage of secondary genus	TheiaP
 minimap2_docker	String	The Docker image of minimap2	Freyja_FASTQ, TheiaMeta_Illumina_PE, TheiaViral_ONT
 minimap2_out	File	Output file from Minimap2 alignment	TheiaViral_ONT
 minimap2_version	String	The version of minimap2	Freyja_FASTQ, TheiaMeta_Illumina_PE, TheiaViral_ONT
+minimap2_warning	String	Populated with an error if no reads aligned to the reference genome with Minimap2; when populated, primer trimming, Freyja, gene coverage, Qualimap, and Freyja long-format are skipped	Freyja_FASTQ
 morgana_magic_organism	String	Standardized organism name used for characterization	TheiaViral_Illumina_PE, TheiaViral_ONT
 n50_value	Int	N50 of assembly calculated by QUAST	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 nanoplot_docker	String	Docker image for nanoplot	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT
