@@ -1,0 +1,5 @@
+2026-10-29 17:47:28,719 - bioforklift.terra.terra_entities - INFO - list_entity_types - Retrieved entity types from Terra workspace
+2026-10-29 17:47:36,595 - bioforklift.terra.terra_entities - INFO - list_entity_types - Retrieved entity types from Terra workspace
+2026-10-29 17:47:36,608 - bioforklift.terra.terra_entities - INFO - upload_entities - Entities formatted for upload to freyja_fastq
+2026-10-29 17:47:36,987 - bioforklift.terra.terra_entities - INFO - upload_entities - Successfully uploaded 32 entities to Terra
+2026-10-29 17:47:36,988 - bioforklift.scripts.upload - INFO - upload - Uploaded data from 'freyja_fastq.tsv' to table 'freyja_fastq' in workspace 'theiagen-training-workspaces/Theiagen_Konkel_Sandbox'
