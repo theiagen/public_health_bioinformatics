@@ -773,6 +773,7 @@ nanoplot_r1_n50_clean	Float	N50 of clean forward reads	Freyja_FASTQ, TheiaCoV_ON
 nanoplot_r1_n50_raw	Float	N50 of raw forward reads	Freyja_FASTQ, TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT
 nanoplot_r1_stdev_readlength_clean	Float	Standard deviation read length of clean forward reads	Freyja_FASTQ, TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT
 nanoplot_r1_stdev_readlength_raw	Float	Standard deviation read length of raw forward reads	Freyja_FASTQ, TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT
+nanoplot_status	String	Pass/Fail status if nanoplot completed successfully	TheiaViral_ONT
 nanoplot_tsv_clean	File	A TSV report describing the clean reads	Freyja_FASTQ, TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT
 nanoplot_tsv_raw	File	A TSV report describing the raw reads	Freyja_FASTQ, TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT
 nanoplot_version	String	Version of nanoplot used for analysis	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT
@@ -787,6 +788,7 @@ ncbi_scrub_read1_dehosted	File	Dehosted reads after NCBI scrub	TheiaViral_Illumi
 ncbi_scrub_read2_dehosted	File	Dehosted reads after NCBI scrub	TheiaViral_Illumina_PE, TheiaViral_Panel
 ncbi_scrub_se_analysis_date	String	Date of analysis	NCBI_Scrub_SE
 ncbi_scrub_se_version	String	Version of HRRT software used	NCBI_Scrub_SE
+ncbi_scrub_status	String	Pass/Fail status if ncbi_scrub completed successfully	NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaViral_Illumina_PE, TheiaViral_ONT
 ncbi_taxon_id	String	NCBI taxonomy ID of inputted organism following rank extraction	Metabuli, TheiaViral_Illumina_PE, TheiaViral_ONT
 ncbi_taxon_name	String	NCBI taxonomy name of inputted taxon following rank extraction	Metabuli, TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_aa_dels	String	Amino-acid deletions as detected by NextClade. Will be blank for Flu	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
