@@ -165,13 +165,13 @@ workflow theiacov_ont {
         input:
           read1 = read1,
           samplename = samplename,
-          est_genome_length = select_first([genome_length, organism_parameters.genome_length])
+          est_genome_length = select_first([genome_length, flu_track.flu_genome_length, organism_parameters.genome_length])
       }
       call nanoplot_task.nanoplot as nanoplot_clean {
         input:
           read1 = read_QC_trim.read1_clean,
           samplename = samplename,
-          est_genome_length = select_first([genome_length, organism_parameters.genome_length])
+          est_genome_length = select_first([genome_length, flu_track.flu_genome_length, organism_parameters.genome_length])
       }
       # consensus QC check
       if (defined(flu_track.irma_assembly_fasta) || defined(consensus.consensus_seq)) {
