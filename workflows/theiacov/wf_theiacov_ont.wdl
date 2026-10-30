@@ -179,7 +179,7 @@ workflow theiacov_ont {
           input:
             assembly_fasta =  select_first([flu_track.irma_assembly_fasta, consensus.consensus_seq]),
             reference_genome = organism_parameters.reference,
-            genome_length = organism_parameters.genome_length
+            genome_length = select_first([genome_length, flu_track.flu_genome_length, organism_parameters.genome_length])
         }
         # run organism-specific typing
         call morgana_magic_wf.morgana_magic {

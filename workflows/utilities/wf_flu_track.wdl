@@ -160,6 +160,14 @@ workflow flu_track {
         docker = abricate_flu_docker,
         disk_size = abricate_flu_disk_size
     }
+    # check if abricate type returned
+    if (abricate_flu.abricate_flu_type != "") {
+      call set_organism_defaults.organism_parameters as set_flu_genome_length {
+        input:
+                organism = standardized_organism,
+        flu_type = abricate_flu.abricate_flu_type
+      }
+    }
     # check IRMA subtype content if IRMA was run
     if (defined(irma.irma_subtype)) {
       # if IRMA cannot predict a subtype (like with Flu B samples), then set the flu_subtype to the abricate_flu_subtype String output (e.g. "Victoria" for Flu B)
@@ -336,6 +344,8 @@ workflow flu_track {
     String? ha_na_assembly_coverage = ha_na_assembly_coverage_string
     # calulate mapped reads percentage for flu samples
     String? percentage_mapped_reads = ha_na_percentage_mapped_reads
+    # return type based genome length
+    Int? flu_genome_length = set_flu_genome_length.genome_length
     # GenoFLU outputs
     String? genoflu_version = genoflu.genoflu_version
     String? genoflu_genotype = genoflu.genoflu_genotype
