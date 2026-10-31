@@ -43,26 +43,32 @@ task fastq_scan {
       echo 0 | tee READ1_SEQS READ1_MEAN_LENGTH READ1_MEAN_QUALITY
     fi
 
-    # capture reverse read stats
-    echo "DEBUG: running fastq-scan on $(basename ~{read2})"
-    eval "${cat_reads} ~{read2}" | fastq-scan | tee ~{read2_name}_fastq-scan.json
-    if [[ -s ~{read2_name}_fastq-scan.json ]]; then
-      # using simple redirect so STDOUT is not confusing
-      jq .qc_stats.read_total ~{read2_name}_fastq-scan.json > READ2_SEQS
-      echo "DEBUG: number of reads in $(basename ~{read2}): $(cat READ2_SEQS)"
+    if [[ -n "~{read2}" ]]; then
+      # capture reverse read stats
+      echo "DEBUG: running fastq-scan on $(basename ~{read2})"
+      eval "${cat_reads} ~{read2}" | fastq-scan | tee ~{read2_name}_fastq-scan.json
+      if [[ -s ~{read2_name}_fastq-scan.json ]]; then
+        # using simple redirect so STDOUT is not confusing
+        jq .qc_stats.read_total ~{read2_name}_fastq-scan.json > READ2_SEQS
+        echo "DEBUG: number of reads in $(basename ~{read2}): $(cat READ2_SEQS)"
 
-      jq -r .qc_stats.read_mean ~{read2_name}_fastq-scan.json > READ2_MEAN_LENGTH
-      echo "DEBUG: mean read length in $(basename ~{read2}): $(cat READ2_MEAN_LENGTH)"
+        jq -r .qc_stats.read_mean ~{read2_name}_fastq-scan.json > READ2_MEAN_LENGTH
+        echo "DEBUG: mean read length in $(basename ~{read2}): $(cat READ2_MEAN_LENGTH)"
 
-      jq -r .qc_stats.qual_mean ~{read2_name}_fastq-scan.json > READ2_MEAN_QUALITY
-      echo "DEBUG: mean read quality in $(basename ~{read2}): $(cat READ2_MEAN_QUALITY)"
+        jq -r .qc_stats.qual_mean ~{read2_name}_fastq-scan.json > READ2_MEAN_QUALITY
+        echo "DEBUG: mean read quality in $(basename ~{read2}): $(cat READ2_MEAN_QUALITY)"
+      else
+        echo 0 | tee READ2_SEQS READ2_MEAN_LENGTH READ2_MEAN_QUALITY
+      fi
     else
-      echo 0 | tee READ2_SEQS READ2_MEAN_LENGTH READ2_MEAN_QUALITY
+      # 0 values for non-existent read2 so the outputs can be read unconditionally
+      echo 0 | tee READ2_SEQS READ2_MEAN_LENGTH READ2_MEAN_QUALITY READ2_GC_PERCENT
     fi
 
     read1_seqs=$(cat READ1_SEQS)
     read2_seqs=$(cat READ2_SEQS)
 
+    if [[ -n "~{read2}" ]]; then
       # capture number of read pairs
       if [ "${read1_seqs}" == "${read2_seqs}" ]; then
         read_pairs=${read1_seqs}
@@ -73,6 +79,8 @@ task fastq_scan {
       # use simple redirect so STDOUT is not confusing
       echo "$read_pairs" > READ_PAIRS
       echo "DEBUG: number of read pairs: $(cat READ_PAIRS)"
+    else
+      echo "NA" > READ_PAIRS
     fi
 
     # capture GC content; seqkit reports one row per file in input order
@@ -91,14 +99,7 @@ task fastq_scan {
       mv tmp.json ~{read2_name}_fastq-scan.json
     fi
 
-    # capture mean quality across all reads, weighted by the number of reads in each file
-    if [[ -n "~{read2}" ]]; then
-      read2_mean_quality=$(cat READ2_MEAN_QUALITY)
-    else
-      read2_seqs=0
-      read2_mean_quality=0
-    fi
-    awk -v n1="${read1_seqs}" -v v1="$(cat READ1_MEAN_QUALITY)" -v n2="${read2_seqs}" -v v2="${read2_mean_quality}" \
+    awk -v n1="${read1_seqs}" -v v1="$(cat READ1_MEAN_QUALITY)" -v n2="${read2_seqs}" -v v2="$(cat READ2_MEAN_QUALITY)" \
       'BEGIN {n = n1 + n2; if (n > 0) print (n1 * v1 + n2 * v2) / n; else print 0}' > COMBINED_MEAN_QUALITY
     echo "DEBUG: mean read quality across all reads: $(cat COMBINED_MEAN_QUALITY)"
 
@@ -122,7 +123,7 @@ task fastq_scan {
     Float read2_gc_percent = read_float("READ2_GC_PERCENT")
     Float total_mean_quality = read_float("COMBINED_MEAN_QUALITY")
     Float total_gc_percent = read_float("COMBINED_GC_PERCENT")
-    String read_pairs = if defined(read2) then read_string("READ_PAIRS") else "NA"
+    String read_pairs = read_string("READ_PAIRS")
     String fastq_scan_version = read_string("VERSION")
     String seqkit_version = read_string("SEQKIT_VERSION")
     String fastq_scan_docker = docker
