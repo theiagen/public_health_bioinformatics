@@ -113,13 +113,13 @@ task fastq_scan {
     File? read2_fastq_scan_json = "~{read2_name}_fastq-scan.json"
     Int read1_seq = read_int("READ1_SEQS")
     # 0 Values for non-existent read2 because they are not propagated in SE/ONT tasks
-    Int read2_seq = if defined(read2) then read_int("READ2_SEQS") else 0
+    Int read2_seq = read_int("READ2_SEQS")
     Float read1_mean_length = read_float("READ1_MEAN_LENGTH")
-    Float read2_mean_length = if defined(read2) then read_float("READ2_MEAN_LENGTH") else 0.0
+    Float read2_mean_length = read_float("READ2_MEAN_LENGTH")
     Float read1_mean_quality = read_float("READ1_MEAN_QUALITY")
-    Float read2_mean_quality = if defined(read2) then read_float("READ2_MEAN_QUALITY") else 0.0
+    Float read2_mean_quality = read_float("READ2_MEAN_QUALITY")
     Float read1_gc_percent = read_float("READ1_GC_PERCENT")
-    Float read2_gc_percent = if defined(read2) then read_float("READ2_GC_PERCENT") else 0.0
+    Float read2_gc_percent = read_float("READ2_GC_PERCENT")
     Float total_mean_quality = read_float("COMBINED_MEAN_QUALITY")
     Float total_gc_percent = read_float("COMBINED_GC_PERCENT")
     String read_pairs = if defined(read2) then read_string("READ_PAIRS") else "NA"
