@@ -113,7 +113,6 @@ task fastq_scan {
     File read1_fastq_scan_json = "~{read1_name}_fastq-scan.json"
     File? read2_fastq_scan_json = "~{read2_name}_fastq-scan.json"
     Int read1_seq = read_int("READ1_SEQS")
-    # 0 Values for non-existent read2 because they are not propagated in SE/ONT tasks
     Int read2_seq = read_int("READ2_SEQS")
     Float read1_mean_length = read_float("READ1_MEAN_LENGTH")
     Float read2_mean_length = read_float("READ2_MEAN_LENGTH")
