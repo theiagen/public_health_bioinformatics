@@ -6321,13 +6321,13 @@
 <details class="task">
 <summary><code>fastq-scan</code>: Read Quantification (default)</summary>
 <p>Read quantification is available via fastq-scan by default.</p>
-<p>fastq-scan quantifies the forward and reverse reads in FASTQ files. For paired-end data, it also provides the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
+<p>fastq-scan quantifies the forward and reverse reads in FASTQ files. For paired-end data, it also provides the total number of read pairs, read quality, and GC content (calculated with SeqKit). This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
 </details>
 <!-- endif -->
 <!-- if: clearlabs -->
 <details class="task">
 <summary><code>fastq-scan</code>: Read Quantification</summary>
-<p>fastq-scan quantifies the reads in the FASTQ files. This task is run once with raw reads as input and once with dehosted reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> dehosted (or "clean") reads than raw reads.</p>
+<p>fastq-scan quantifies the reads, quality, and GC content in the FASTQ files. This task is run once with raw reads as input and once with dehosted reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> dehosted (or "clean") reads than raw reads.</p>
 </details>
 <!-- endif -->
 

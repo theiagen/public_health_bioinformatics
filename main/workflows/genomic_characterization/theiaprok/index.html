@@ -8390,7 +8390,7 @@
 <td><strong>allele_calling_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/allele_calling:1.0.0</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/allele-calling:1.0.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11800,7 +11800,7 @@
 <td><strong>allele_calling_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/allele_calling:1.0.0</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/allele-calling:1.0.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -15162,7 +15162,7 @@
 <td><strong>allele_calling_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/allele_calling:1.0.0</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/allele-calling:1.0.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -18052,7 +18052,7 @@
 <td><strong>allele_calling_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/allele_calling:1.0.0</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/allele-calling:1.0.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19708,7 +19708,7 @@
 <details class="task">
 <summary><code>fastq-scan</code>: Read Quantification (default)</summary>
 <p>Read quantification is available via fastq-scan by default.</p>
-<p>fastq-scan quantifies the forward and reverse reads in FASTQ files. For paired-end data, it also provides the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
+<p>fastq-scan quantifies the forward and reverse reads in FASTQ files. For paired-end data, it also provides the total number of read pairs, read quality, and GC content (calculated with SeqKit). This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">fastq-scan Technical Details</p>
 <table>
@@ -20781,7 +20781,7 @@
 <details class="task">
 <summary><code>fastq-scan</code>: Read Quantification (default)</summary>
 <p>Read quantification is available via fastq-scan by default.</p>
-<p>fastq-scan quantifies the forward and reverse reads in FASTQ files. For paired-end data, it also provides the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
+<p>fastq-scan quantifies the forward and reverse reads in FASTQ files. For paired-end data, it also provides the total number of read pairs, read quality, and GC content (calculated with SeqKit). This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">fastq-scan Technical Details</p>
 <table>
@@ -25774,6 +25774,26 @@
 <td>The number of input read pairs as calculated by fastq_scan</td>
 </tr>
 <tr>
+<td>fastq_scan_r1_gc_percent_clean</td>
+<td>Float</td>
+<td>Percent GC content of forward reads after cleaning as calculated by seqkit</td>
+</tr>
+<tr>
+<td>fastq_scan_r1_gc_percent_raw</td>
+<td>Float</td>
+<td>Percent GC content of input forward reads as calculated by seqkit</td>
+</tr>
+<tr>
+<td>fastq_scan_r2_gc_percent_clean</td>
+<td>Float</td>
+<td>Percent GC content of reverse reads after cleaning as calculated by seqkit</td>
+</tr>
+<tr>
+<td>fastq_scan_r2_gc_percent_raw</td>
+<td>Float</td>
+<td>Percent GC content of input reverse reads as calculated by seqkit</td>
+</tr>
+<tr>
 <td>fastq_scan_raw1_json</td>
 <td>File</td>
 <td>The JSON file output from <code>fastq-scan</code> containing summary stats about raw forward read quality and length</td>
@@ -28227,6 +28247,16 @@
 <td>fastq_scan_num_reads_raw1</td>
 <td>Int</td>
 <td>The number of input forward reads as calculated by fastq_scan</td>
+</tr>
+<tr>
+<td>fastq_scan_r1_gc_percent_clean</td>
+<td>Float</td>
+<td>Percent GC content of forward reads after cleaning as calculated by seqkit</td>
+</tr>
+<tr>
+<td>fastq_scan_r1_gc_percent_raw</td>
+<td>Float</td>
+<td>Percent GC content of input forward reads as calculated by seqkit</td>
 </tr>
 <tr>
 <td>fastq_scan_raw1_json</td>
