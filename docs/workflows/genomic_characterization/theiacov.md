@@ -248,7 +248,7 @@ We've provided the following information to help you set up the workflow for eac
         |---|---|---|---|---|---|
         | flu_segment | flu | all | all | N/A | TheiaCoV will attempt to automatically assign a flu segment  |
         | flu_subtype | flu | all | all | N/A | TheiaCoV will attempt to automatically assign a flu subtype |
-        | genome_length_input | flu | all | all | `13500` |  |
+        | genome_length_input | flu | all | all | `13500` | TheiaCoV_Illumina_PE and TheiaCoV_ONT use 13164 (Type A) or 13779 (Type B), based on the ABRicate flu type, when calculating `percent_reference_coverage` (and NanoPlot estimated coverage on ONT). 13500 is used for read screening and when no type is found. |
         | vadr_max_length | flu | all | all | `13500` |  |
         | vadr_skip_length | flu | all | all | `500` |  |
         | vadr_mem | flu | all | all | `8` |  |
