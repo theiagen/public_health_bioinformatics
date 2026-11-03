@@ -82,6 +82,8 @@ task freyja_one_sample {
     touch COVERAGE RESID SUMMARIZED LINEAGES ABUNDANCES
   elif [[ ! -f ~{samplename}_freyja_variants.tsv ]]; then
     echo "ERROR: freyja variants failed" | tee FREYJA_WARNING
+    # hard-fail due to freyja failing for a different reason
+    exit 1
   else
     touch FREYJA_WARNING
   fi
