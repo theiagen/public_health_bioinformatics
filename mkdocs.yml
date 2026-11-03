@@ -62,6 +62,7 @@ nav:
                   - Usher: workflows/phylogenetic_placement/usher.md
               - Public Data Sharing:
                   - Mercury_Prep_N_Batch: workflows/public_data_sharing/mercury_prep_n_batch.md
+                  - SeqSender: workflows/public_data_sharing/seqsender.md
                   - Terra_2_ENA: workflows/public_data_sharing/terra_2_ena.md
                   - Terra_2_GISAID: workflows/public_data_sharing/terra_2_gisaid.md
                   - Terra_2_NCBI: workflows/public_data_sharing/terra_2_ncbi.md
@@ -189,6 +190,7 @@ nav:
               - PhyloCompare: workflows/standalone/phylocompare.md
               - RASUSA: workflows/standalone/rasusa.md
               - Rename_FASTQ: workflows/standalone/rename_fastq.md
+              - SeqSender: workflows/public_data_sharing/seqsender.md
               - Snippy_Streamline: workflows/phylogenetic_construction/snippy_streamline.md
               - Snippy_Streamline_FASTA: workflows/phylogenetic_construction/snippy_streamline_fasta.md
               - Snippy_Tree: workflows/phylogenetic_construction/snippy_tree.md
