@@ -52,7 +52,7 @@ def build_config(encrypted_password):
                     "Street": value("street"),
                     "City": value("city"),
                     "Sub": value("sub"),
-                    "Postal_Code": value("postal_code"),
+                    "Postal_Code": int(value("postal_code")),
                     "Country": value("country"),
                     "Email": value("email"),
                     "Phone": value("phone"),
