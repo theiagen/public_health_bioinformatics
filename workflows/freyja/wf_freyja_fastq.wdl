@@ -109,13 +109,13 @@ workflow freyja_fastq {
         sam = minimap2.minimap2_out
     }
   }
-  if (! ont){
+  if (! ont) {
     call align.bwa {
       input:
         samplename = samplename,
         reference_genome = reference_genome,
         read1 = select_first([read_QC_trim_pe.read1_clean, read_QC_trim_se.read1_clean, read1]),
-        read2 = select_first([read_QC_trim_pe.read2_clean, read2])
+        read2 = if defined(read2) then select_first([read_QC_trim_pe.read2_clean, read2]) else read2
     }
   }
   # soft-fail: skip every module downstream of alignment when no reads mapped to the reference
