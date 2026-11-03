@@ -213,8 +213,8 @@ checkv_denovo_total_genes	String	Number of genes detected in de novo assembly by
 checkv_denovo_version	String	Version of CheckV used for de novo assembly	TheiaViral_Illumina_PE, TheiaViral_ONT
 checkv_denovo_weighted_completeness	String	Weighted completeness score for de novo assembly from CheckV	TheiaViral_Illumina_PE, TheiaViral_ONT
 checkv_denovo_weighted_contamination	String	Weighted contamination score for de novo assembly from CheckV	TheiaViral_Illumina_PE, TheiaViral_ONT
-cladetype_annotated_ref	String	The annotated reference file for the identified clade, "None" if no clade was identified/no annotation is inputted	TheiaEuk_ONT
-cladetyper_annotated_reference	String	The annotated reference file for the identified clade, "None" if no clade was identified/no annotation is inputted	Cauris_CladeTyper, TheiaEuk_Illumina_PE
+cladetype_annotated_ref	File	The annotated reference (GBFF) for the identified clade; empty if no clade was identified or no annotation is available	TheiaEuk_ONT
+cladetyper_annotated_reference	File	The annotated reference (GBFF) for the identified clade; empty if no clade was identified or no annotation is available	Cauris_CladeTyper, TheiaEuk_Illumina_PE
 cladetyper_clade	String	The clade assigned to the input assembly	Cauris_CladeTyper, TheiaEuk_Illumina_PE, TheiaEuk_ONT
 cladetyper_docker_image	String	The Docker container used for the task	Cauris_CladeTyper, TheiaEuk_Illumina_PE, TheiaEuk_ONT
 cladetyper_gambit_version	String	The version of GAMBIT used for the analysis	Cauris_CladeTyper, TheiaEuk_Illumina_PE
@@ -1291,7 +1291,7 @@ theiaeuk_snippy_variants_num_reads_aligned	String	Number of reads that aligned t
 theiaeuk_snippy_variants_num_variants	String	Number of variants detected between sample and reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 theiaeuk_snippy_variants_outdir_tarball	String	A compressed file containing the whole directory of snippy output files. This is used when running Snippy_Tree	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 theiaeuk_snippy_variants_percent_ref_coverage	String	Proportion of the reference genome covered by reads with a depth greater than or equal to the `min_coverage` threshold (default is 10).	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-theiaeuk_snippy_variants_query	String	Gene query strings specified by the user when running the workflow	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+theiaeuk_snippy_variants_query	String	Gene query strings used (user-specified or organism default)	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 theiaeuk_snippy_variants_query_check	String	Verification that query strings are found in the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 theiaeuk_snippy_variants_reference_genome	String	The reference genome used in the alignment and variant calling	TheiaEuk_Illumina_PE
 theiaeuk_snippy_variants_results	String	CSV file detailing results for all mutations identified relative to the reference	TheiaEuk_Illumina_PE, TheiaEuk_ONT

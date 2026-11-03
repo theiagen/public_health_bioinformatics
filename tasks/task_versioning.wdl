@@ -9,7 +9,7 @@ task version_capture {
     volatile: true
   }
   command <<<
-    VERSION_TAG="v4.3.0"
+    VERSION_TAG="v4.3.1"
     echo "PHB ${VERSION_TAG}" > PHB_VERSION
 
     export TZ=~{timezone}

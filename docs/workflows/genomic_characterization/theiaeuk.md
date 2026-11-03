@@ -107,18 +107,31 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 {{ include_md("common_text/amr_search_task.md", indent=4, condition="theiaeuk") }}
 {{ include_md("common_text/snippy_variants_task.md", indent=4, condition="cauris") }}
 
-??? toggle "_Candida albicans_"
-    When this species is detected by the taxon ID tool, an antifungal resistance detection task is deployed.
-
-{{ include_md("common_text/snippy_variants_task.md", indent=4, condition="calbicans") }}
-
 ??? toggle "_Aspergillus fumigatus_"
     When this species is detected by the taxon ID tool, an antifungal resistance detection task is deployed.
+
+    **Default gene queries:**
+
+    | Gene | locus_tag | Product | Query (Snippy hit label and gene coverage key) |
+    |---|---|---|---|
+    | _cyp51A_ | `AFUA_4G06890` | 14-alpha sterol demethylase Cyp51A | `AFUA_4G06890` |
+    | _hapE_ | `AFUA_6G05300` | CCAAT-binding factor complex subunit HapE | `AFUA_6G05300` |
+    | _cox10_ | `AFUA_4G08340` | heme a biosynthesis protein, putative | `AFUA_4G08340` |
+
+    Reference: `GCF_000002655.1` (ASM265v1). Locus tags are queried in place of gene or product names to keep the search specific; variants are reported under the locus tag.
 
 {{ include_md("common_text/snippy_variants_task.md", indent=4, condition="afumigatus") }}
 
 ??? toggle "_Cryptococcus neoformans_"
     When this species is detected by the taxon ID tool, an antifungal resistance detection task is deployed.
+
+    **Default gene queries:**
+
+    | Gene | locus_tag | Product | Query (Snippy hit label and gene coverage key) |
+    |---|---|---|---|
+    | _ERG11_ | `CNA00300` | sterol 14-demethylase, putative | `CNA00300` |
+
+    Reference: `GCF_000091045.1` (ASM9104v1).
 
 {{ include_md("common_text/snippy_variants_task.md", indent=4, condition="cneoformans") }}
 
