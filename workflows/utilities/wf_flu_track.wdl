@@ -164,8 +164,8 @@ workflow flu_track {
     if (abricate_flu.abricate_flu_type != "") {
       call set_organism_defaults.organism_parameters as set_flu_genome_length {
         input:
-                organism = standardized_organism,
-        flu_type = abricate_flu.abricate_flu_type
+          organism = standardized_organism,
+          flu_type = abricate_flu.abricate_flu_type
       }
     }
     # check IRMA subtype content if IRMA was run
