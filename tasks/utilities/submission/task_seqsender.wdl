@@ -75,6 +75,7 @@ task seqsender_build_and_prep {
     File? combined_fasta = "submit/sequence.fasta"
     File? tarball = "seqsender_post_validation_checkpoint.tar.gz"
     File validation_summary = "validation_summary.tsv"
+    File metadata_template = "~{terra_table_name}_template.tsv"
     Int num_samples_passed = read_int("NUM_PASSED")
     Int num_samples_failed = read_int("NUM_FAILED")
     File log = "seqsender_build_and_prep.log"

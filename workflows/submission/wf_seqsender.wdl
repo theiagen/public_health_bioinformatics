@@ -102,6 +102,7 @@ workflow seqsender {
     Int? validation_samples_passed = validation.num_samples_passed
     Int? validation_samples_failed = validation.num_samples_failed
     File? validation_summary = validation.validation_summary
+    File? validation_metadata_template = validation.metadata_template
     # Poll - use `checkpoint_tarball` with `resume_checkpoint_tarball`
     File? checkpoint_tarball = polling.tarball
     String? seqsender_final_status = polling.final_status
