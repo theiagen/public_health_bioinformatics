@@ -18,7 +18,7 @@ task freyja_one_sample {
     Boolean bootstrap = false
     Int number_bootstraps = 100 # set to mirror v1.5.3 default
     Int? depth_cutoff
-    Int memory = 8
+    Int memory = 16
     Int cpu = 2
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.3"
     Int disk_size = 100
