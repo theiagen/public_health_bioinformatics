@@ -550,7 +550,6 @@ taxon
 taxonomic
 tbp-parser
 techdetails
-theiagene
 tooltip
 tooltips
 tuberculosis
