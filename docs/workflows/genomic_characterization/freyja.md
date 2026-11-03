@@ -151,6 +151,9 @@ This workflow runs on the sample level.
 !!! warning "Samples without target organism reads"
     If no reads align to the reference genome, the workflow will complete successfully on Terra, but skip primer trimming, Freyja, gene coverage, Qualimap, and the Freyja long-format output. `bwa_warning` (Illumina) or `minimap2_warning` (ONT) reads "ERROR: no reads mapped to the provided reference sequence", and the Freyja output columns are empty. These samples cannot be run on **Freyja_Plot_PHB** or **Freyja_Dashboard_PHB** because these downstream workflows require a `freyja_demixed` file for every sample.
 
+!!! warning "Samples without alignments after primer trimming"
+    If reads align but no alignments remain after primer trimming (only when a `primer_bed` is provided), the workflow will complete successfully on Terra, but skip Freyja, gene coverage, Qualimap, and the Freyja long-format output. `primer_trim_warning` reads "ERROR: no alignments remain following trimming", and the Freyja output columns are empty. These samples also cannot be run on **Freyja_Plot_PHB** or **Freyja_Dashboard_PHB**.
+
 !!! warning "Samples without variant calls"
     If reads align but Freyja calls no variants against the reference genome (for example, when every aligned read matches the reference), the workflow will complete successfully on Terra, but skip Freyja demixing, bootstrapping, and the Freyja long-format output. `freyja_warning` reads "WARNING: no variants called against the provided reference sequence", and the coverage, lineage, abundance, and `freyja_demixed` columns are empty. These samples also cannot be run on **Freyja_Plot_PHB** or **Freyja_Dashboard_PHB**.
 

@@ -129,7 +129,7 @@ workflow freyja_fastq {
           bamfile = select_first([sam_to_sorted_bam.bam, bwa.sorted_bam])
       }
     }
-    if (primer_trim.primer_trim_warning == "") {
+    if (select_first([primer_trim.primer_trim_warning, ""]) == "") {
       call freyja_task.freyja_one_sample as freyja {
         input:
           bamfile = select_first([primer_trim.trim_sorted_bam, sam_to_sorted_bam.bam, bwa.sorted_bam]),

@@ -924,6 +924,7 @@ porechop_trimmed_read1	File	Trimmed reads from Porechop	TheiaViral_ONT
 porechop_version	String	Version of Porechop used	TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT
 prepped_ena_data	File	Prepared data formatted for ENA submission	Terra_2_ENA
 primer_bed_name	String	Name of the primer bed files used for primer trimming	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
+primer_trim_warning	String	Populated with an error if no alignments remain after iVar primer trimming; when populated, Freyja, gene coverage, Qualimap, and Freyja long-format are skipped	Freyja_FASTQ
 primer_trimmed_read_percent	Float	Percentage of read data with primers trimmed as determined by iVar trim	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 prokka_gbk	File	GenBank file produced from Prokka annotation of input FASTA	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 prokka_gff	File	Prokka output GFF3 file containing sequence and annotation (you can view this in IGV)	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
