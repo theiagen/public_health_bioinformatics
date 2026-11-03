@@ -38,7 +38,7 @@ task primer_trim {
 
     # soft-fail signal for downstream tasks when no reads aligned
     # we aren't filtering secondary and supplementary alignments because those are included
-    # downstream dependencies that convert to dependencies will have to account for this
+    # downstream dependencies that convert to reads will have to account for this
     mapped_count=$(samtools view -c ~{samplename}.primertrim.sorted.bam)
     echo "DEBUG: ${mapped_count} mapped records"
     if [[ "${mapped_count}" -eq 0 ]]; then
