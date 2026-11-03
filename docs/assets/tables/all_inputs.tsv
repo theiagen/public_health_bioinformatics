@@ -921,7 +921,7 @@ freyja	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optio
 freyja	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.3	Optional	Freyja_FASTQ	docker	
 freyja	eps	Float	The minimum lineage abundance cut-off value	0.001	Optional	Freyja_FASTQ	general	
 freyja	freyja_lineage_yml	File	Lineage hierarchy file in yaml format used in conjunction with `depth_cutoff`		Optional	Freyja_FASTQ	general	
-freyja	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime	
+freyja	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	Freyja_FASTQ	runtime	
 freyja	number_bootstraps	Int	The number of bootstraps to perform (only used if bootstrap = true)	100	Optional	Freyja_FASTQ	general	
 freyja	update_db	Boolean	Updates the Freyja reference files (the usher barcodes and lineage metadata files) but will not save them as output (use Freyja_Update for that purpose). If set to true, the freyja_lineage_metadata and freyja_barcodes files are not required.	False	Optional	Freyja_FASTQ	general	True
 freyja_dashboard	dashboard_intro_text	File	A file containing the text to be contained at the top of the dashboard.	SARS-CoV-2 lineage de-convolution performed by the Freyja workflow (<https://github.com/andersen-lab/Freyja>).	Optional	Freyja_Dashboard	general	True
