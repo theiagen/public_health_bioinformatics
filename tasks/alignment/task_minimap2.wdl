@@ -38,6 +38,7 @@ task minimap2 {
       ${INPUT_QUERY} > "~{samplename}"_minimap2.out
 
     # count mapped records: SAM records without the unmapped flag (4), or any PAF line
+    # includes secondary and supplementary reads
     if ~{output_sam}; then
       mapped_count=$(awk -F'\t' '!/^@/ && int($2 / 4) % 2 == 0 {n++} END {print n + 0}' "~{samplename}"_minimap2.out)
     else
