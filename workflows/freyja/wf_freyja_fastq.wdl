@@ -184,9 +184,9 @@ workflow freyja_fastq {
         expected_taxon = freyja_pathogen,
         qc_check_inputs = {
           # Read counts - handle differences between ONT (Int from nanoplot) and Illumina (Int from fastq_scan)
-          "num_reads_raw1": select_first([nanoplot_raw.num_reads, read_QC_trim_pe.fastq_scan_raw1, read_QC_trim_pe.fastqc_raw1, read_QC_trim_se.fastq_scan_raw1]),
+          "num_reads_raw1": select_first([nanoplot_raw.num_reads, read_QC_trim_pe.fastq_scan_raw1, read_QC_trim_pe.fastqc_raw1, read_QC_trim_se.fastq_scan_raw1, read_QC_trim_se.fastqc_raw1]),
           "num_reads_raw2": if defined(read2) then select_first([read_QC_trim_pe.fastq_scan_raw2, read_QC_trim_pe.fastqc_raw2]) else read_QC_trim_pe.fastq_scan_raw2,
-          "num_reads_clean1": select_first([nanoplot_clean.num_reads, read_QC_trim_pe.fastq_scan_clean1, read_QC_trim_pe.fastqc_clean1, read_QC_trim_se.fastq_scan_clean1]),
+          "num_reads_clean1": select_first([nanoplot_clean.num_reads, read_QC_trim_pe.fastq_scan_clean1, read_QC_trim_pe.fastqc_clean1, read_QC_trim_se.fastq_scan_clean1, read_QC_trim_se.fastqc_clean1]),
           "num_reads_clean2": if defined(read2) then select_first([read_QC_trim_pe.fastq_scan_clean2, read_QC_trim_pe.fastqc_clean2]) else read_QC_trim_pe.fastq_scan_clean2,
           # Kraken2/Metabuli metrics - available from all three read QC workflows
           "classified_human": select_first([read_QC_trim_pe.kraken2_human, read_QC_trim_se.kraken2_human, read_QC_trim_ont.metabuli_percent_human]),
