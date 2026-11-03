@@ -79,7 +79,7 @@ task cauris_cladetyper {
                       "~{ref_clade3}": ["~{ref_clade3_annotated}", "Clade3"],
                       "~{ref_clade4}": ["~{ref_clade4_annotated}", "Clade4"],
                       "~{ref_clade5}": ["~{ref_clade5_annotated}", "Clade5"],
-                      "~{ref_clade6}": ["~{default='' ref_clade6_annotated}", "Clade6"]}
+                      "~{ref_clade6}": ["~{ref_clade6_annotated}", "Clade6"]}
     claderef, cladetype = "", ""
     for ref, annotation in ref2annotation.items():
         if ref.endswith('/'):
