@@ -16,7 +16,7 @@ task limsport {
     Int cpu = 1
     Int memory = 2
     Int disk_size = 100
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/limsport:0.1.0-dev"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/limsport:0.1.1-dev"
   }
   # limsport picks the output extension from the delimiter
   String extension = if output_delimiter == "," then "csv" else if output_delimiter == "\t" then "tsv" else "txt"
