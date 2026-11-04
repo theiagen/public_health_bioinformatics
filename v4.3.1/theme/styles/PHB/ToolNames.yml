@@ -1,0 +1,36 @@
+extends: substitution
+message: "Inconsistent tool/product name: use '%s' instead of '%s'."
+level: warning
+# Match the exact (wrong) casing on the left; RE2 word boundaries keep us from
+# matching inside larger words. Code spans, code blocks, macros, and URLs are
+# already masked by .vale.ini, so these fire only in prose.
+ignorecase: false
+action:
+  name: replace
+swap:
+  # left = incorrect form seen in the docs, right = canonical spelling
+  'RaxML': 'RAxML'
+  'RAXML': 'RAxML'
+  'SAMtools': 'samtools'
+  'Samtools': 'samtools'
+  'BEDtools': 'bedtools'
+  'Bedtools': 'bedtools'
+  'BCFtools': 'bcftools'
+  'Bcftools': 'bcftools'
+  'IQTREE': 'IQ-TREE'
+  'IQTree': 'IQ-TREE'
+  'IQ-Tree': 'IQ-TREE'
+  'PBPTyper': 'PBPtyper'
+  'Stxtyper': 'StxTyper'
+  'STXtyper': 'StxTyper'
+  'Skani': 'skani'
+  'github': 'GitHub'
+  'Github': 'GitHub'
+  'GitHUB': 'GitHub'
+  'Basespace': 'BaseSpace'
+  'miniWDL': 'miniwdl'
+  'MiniWDL': 'miniwdl'
+  'Model Finder': 'ModelFinder'
+  'NextClade': 'Nextclade'
+  'NextStrain': 'Nextstrain'
+  'gubbins': 'Gubbins'
