@@ -43,7 +43,8 @@ workflow theiaprok_ont {
     String terra_project = "NA"
     String terra_workspace = "NA"
     # read screen parameters
-    Boolean skip_screen = false
+    Boolean skip_screen_raw = false
+    Boolean skip_screen_clean = false
     Boolean skip_mash = true
     Int min_reads = 5000 # reduced from 7472 because less reads are needed to get to higher coverage due to longer read length
     Int min_basepairs = 2241820
@@ -72,7 +73,7 @@ workflow theiaprok_ont {
   call versioning_task.version_capture {
     input:
   }
-  if (! skip_screen) {
+  if (! skip_screen_raw) {
     call screen_task.check_reads_se as raw_check_reads {
       input:
         read1 = read1,
@@ -86,7 +87,7 @@ workflow theiaprok_ont {
         workflow_series = "theiaprok"
     }
   }
-  if (select_first([raw_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
+  if (select_first([raw_check_reads.read_screen, ""]) == "PASS" || skip_screen_raw) {
     call read_qc_workflow.read_QC_trim_ont as read_QC_trim {
       input:
         samplename = samplename,
@@ -94,7 +95,7 @@ workflow theiaprok_ont {
         genome_length = genome_length,
         workflow_series = "theiaprok"
     }
-    if (! skip_screen) {
+    if (! skip_screen_clean) {
       call screen_task.check_reads_se as clean_check_reads {
         input:
           read1 = read_QC_trim.read1_clean,
@@ -108,7 +109,7 @@ workflow theiaprok_ont {
           workflow_series = "theiaprok"
       }
     }
-    if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
+    if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen_clean) {
       call flye_workflow.flye_denovo {
         input:
           read1 = read_QC_trim.read1_clean,
@@ -264,7 +265,12 @@ workflow theiaprok_ont {
               samplename = samplename,
               gambit_predicted_taxon = gambit.gambit_predicted_taxon,
               read1 = read_QC_trim.read1_clean,
-              ont_data = true
+              ont_data = true,
+              # hiding these inputs from terra to avoid input bloat
+              vibecheck_docker_image = "",
+              vibecheck_lineage_barcodes = "gs://theiagen-public-resources-rp/empty_files/empty.txt",
+              vibecheck_skip_subsampling = false,
+              vibecheck_subsampling_fraction = 0.0
           }
           if (call_arln_stats) {
             call arln_stats.arln_stats {
@@ -286,6 +292,7 @@ workflow theiaprok_ont {
                 gambit_predicted_taxon = gambit.gambit_predicted_taxon,
                 taxon_table = taxon_tables,
                 samplename = samplename,
+                theiaviral_panel = false,
                 columns_to_export = {
                   "abricate_abaum_database": merlin_magic.abricate_abaum_database,
                   "abricate_abaum_docker": merlin_magic.abricate_abaum_docker,

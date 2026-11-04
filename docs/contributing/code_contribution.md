@@ -377,13 +377,13 @@ Pull requests into `main` are merged by the merge bot (the `theiagen-version-mer
 
 **_Branch Version Tags_**
 
-- Every push to a branch (other than `main` and `gh-pages`) adds a `ci: stamp branch version tag` commit that writes the branch name into `BRANCH_TAG` in `tasks/task_versioning.wdl`. Workflows run from that branch report it in their `phb_version` output:
+- The first push to a branch (other than `main` and `gh-pages`) adds a `ci: stamp branch version tag` commit that writes the branch name into `BRANCH_TAG` in `tasks/task_versioning.wdl`; later pushes leave it alone. Workflows run from that branch report it in their `phb_version` output:
 
     ```text
     PHB v4.3.0; branch: smw-my-feature-dev
     ```
 
-- Because the stamp commit lands immediately after your push, pull before pushing again (`git pull --rebase`) or your next push will be rejected.
+- Because the stamp commit lands immediately after that first push, pull before pushing again (`git pull --rebase`) or your next push will be rejected.
 - **Do not edit `BRANCH_TAG` manually.** It is managed entirely by CI.
 
 **_Using the Merge Bot_**

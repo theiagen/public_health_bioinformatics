@@ -51,7 +51,8 @@ workflow theiaprok_illumina_se {
     String terra_project="NA"
     String terra_workspace="NA"
     # read screen paramaters
-    Boolean skip_screen = false
+    Boolean skip_screen_raw = false
+    Boolean skip_screen_clean = false
     Boolean skip_mash = false
     Int min_reads = 7472
     Int min_basepairs = 2241820
@@ -97,7 +98,7 @@ workflow theiaprok_illumina_se {
         read1_lane4 = read1_lane4
     }
   }
-  if (! skip_screen) {
+  if (! skip_screen_raw) {
     call screen.check_reads_se as raw_check_reads {
       input:
         read1 = select_first([concatenate_illumina_lanes.read1_concatenated, read1]),
@@ -111,7 +112,7 @@ workflow theiaprok_illumina_se {
         workflow_series = "theiaprok"
     }
   }
-  if (select_first([raw_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
+  if (select_first([raw_check_reads.read_screen, ""]) == "PASS" || skip_screen_raw) {
     call read_qc.read_QC_trim_se as read_QC_trim {
       input:
         samplename = samplename,
@@ -124,7 +125,7 @@ workflow theiaprok_illumina_se {
         rasusa_downsampling_coverage = rasusa_downsampling_coverage,
         rasusa_genome_length = select_first([genome_length, raw_check_reads.est_genome_length, 0]),
     }
-    if (! skip_screen) {
+    if (! skip_screen_clean) {
       call screen.check_reads_se as clean_check_reads {
         input:
           read1 = read_QC_trim.read1_clean,
@@ -138,7 +139,7 @@ workflow theiaprok_illumina_se {
           workflow_series = "theiaprok"
       }
     }
-    if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
+    if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen_clean) {
       call digger_denovo.digger_denovo {
         input:
           samplename = samplename,
@@ -295,7 +296,12 @@ workflow theiaprok_illumina_se {
             samplename = samplename,
             gambit_predicted_taxon = gambit.gambit_predicted_taxon,
             read1 = read_QC_trim.read1_clean,
-            paired_end = false
+            paired_end = false,
+            # hiding these inputs from terra to avoid input bloat
+            vibecheck_docker_image = "",
+            vibecheck_lineage_barcodes = "gs://theiagen-public-resources-rp/empty_files/empty.txt",
+            vibecheck_skip_subsampling = false,
+            vibecheck_subsampling_fraction = 0.0
         }
         if (call_arln_stats) {
           call arln_stats.arln_stats {
@@ -317,6 +323,7 @@ workflow theiaprok_illumina_se {
               gambit_predicted_taxon = gambit.gambit_predicted_taxon,
               taxon_table = taxon_tables,
               samplename = samplename,
+              theiaviral_panel = false,
               columns_to_export = {
                 "abricate_abaum_database": merlin_magic.abricate_abaum_database,
                 "abricate_abaum_docker": merlin_magic.abricate_abaum_docker,
@@ -445,6 +452,8 @@ workflow theiaprok_illumina_se {
                 "fastq_scan_clean1_json": read_QC_trim.fastq_scan_clean1_json,
                 "fastq_scan_num_reads_clean1": read_QC_trim.fastq_scan_clean1,
                 "fastq_scan_num_reads_raw1": read_QC_trim.fastq_scan_raw1,
+                "fastq_scan_r1_gc_percent_clean": read_QC_trim.fastq_scan_r1_gc_percent_clean,
+                "fastq_scan_r1_gc_percent_raw": read_QC_trim.fastq_scan_r1_gc_percent_raw,
                 "fastq_scan_raw1_json": read_QC_trim.fastq_scan_raw1_json,
                 "fastq_scan_version": read_QC_trim.fastq_scan_version,
                 "fastqc_clean1_html": read_QC_trim.fastqc_clean1_html,
@@ -776,8 +785,10 @@ workflow theiaprok_illumina_se {
     File? read_screen_clean_tsv = clean_check_reads.read_screen_tsv
     # Read QC - fastq_scan outputs
     Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
+    Float? fastq_scan_r1_gc_percent_raw = read_QC_trim.fastq_scan_r1_gc_percent_raw
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
     Int? fastq_scan_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
+    Float? fastq_scan_r1_gc_percent_clean = read_QC_trim.fastq_scan_r1_gc_percent_clean
     File? fastq_scan_raw1_json = read_QC_trim.fastq_scan_raw1_json
     File? fastq_scan_clean1_json = read_QC_trim.fastq_scan_clean1_json
     # Read QC - fastqc outputs

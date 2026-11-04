@@ -20,7 +20,7 @@ Briefly, the main _genomic characterization_  workflows are split by pathogen ty
 
 1. **Viral** (**_TheiaCoV_** & **_TheiaViral_** workflows)
 2. **Bacterial** (**_TheiaProk_** workflows)
-3. **Fungal** (**_TheiaEuk_**™ workflows)
+3. **Fungal** (**_TheiaEuk_** workflows)
 
 Many more workflows are available, and are documented in detail in the [Theiagen Public Resources Documentation](https://theiagen.github.io/public_health_bioinformatics/latest/).
 

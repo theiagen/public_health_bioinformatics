@@ -83,7 +83,9 @@ workflow theiacov_illumina_pe {
       vadr_mem = vadr_memory,
       primer_bed_file = primer_bed,
       pangolin_docker_image = pangolin_docker_image,
-      kraken_target_organism_input = target_organism
+      kraken_target_organism_input = target_organism,
+      # hiding parameters from terra to avoid input bloat
+      flu_genoflu_genotype = ""
   }
   if (! skip_screen_raw) {
     call screen.check_reads as raw_check_reads {
@@ -158,7 +160,10 @@ workflow theiacov_illumina_pe {
             samplename = samplename,
             standardized_organism = organism_parameters.standardized_organism,
             seq_method = seq_method,
-            irma_min_consensus_support = select_first([min_depth, 30])
+            irma_min_consensus_support = select_first([min_depth, 30]),
+            # hiding parameters from terra to avoid input bloat
+            assembly_fasta = "gs://theiagen-public-resources-rp/empty_files/empty.fasta",
+            vadr_outputs_tgz = "gs://theiagen-public-resources-rp/empty_files/empty.txt"
         }
       }
       if (defined(ivar_consensus.assembly_fasta) || defined(flu_track.irma_assembly_fasta)) {
@@ -186,7 +191,7 @@ workflow theiacov_illumina_pe {
             nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
             nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
             pangolin_docker_image = organism_parameters.pangolin_docker,
-            # Setting flu_track related inputs to default values as they are not utilized in TheiaCov, decreasing external input bloat
+            # hiding internal components to decrease input bloat
             seq_method = "",
             assembly_metrics_cpu = 0,
             assembly_metrics_disk_size = 0,
@@ -259,22 +264,23 @@ workflow theiacov_illumina_pe {
     Float? fastq_scan_r2_mean_readlength_raw = read_QC_trim.fastq_scan_r2_mean_readlength_raw
     Float? fastq_scan_r1_mean_q_raw = read_QC_trim.fastq_scan_r1_mean_q_raw
     Float? fastq_scan_r2_mean_q_raw = read_QC_trim.fastq_scan_r2_mean_q_raw
+    Float? fastq_scan_r1_gc_percent_raw = read_QC_trim.fastq_scan_r1_gc_percent_raw
+    Float? fastq_scan_r2_gc_percent_raw = read_QC_trim.fastq_scan_r2_gc_percent_raw
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
     String? fastq_scan_docker = read_QC_trim.fastq_scan_docker
     File? fastq_scan_raw1_json = read_QC_trim.fastq_scan_raw1_json
     File? fastq_scan_raw2_json = read_QC_trim.fastq_scan_raw2_json
-    # Read QC - decontaminate outputs
-    File? contaminant_bam = read_QC_trim.contaminant_bam
-    File? contaminant_bai = read_QC_trim.contaminant_bai
-    Float? contaminant_coverage = read_QC_trim.contaminant_coverage
-    Float? contaminant_mean_depth = read_QC_trim.contaminant_mean_depth
-    File? contaminant_mapping_stats = read_QC_trim.contaminant_mapping_stats
-    File? contaminant_cov_hist = read_QC_trim.contaminant_cov_hist
-    File? contaminant_mapping_flagstat = read_QC_trim.contaminant_mapping_flagstat
-    Float? contaminant_percent_mapped_reads = read_QC_trim.contaminant_percent_mapped_reads
-    Map[String, Float]? contaminant_coverage_by_sequence = read_QC_trim.contaminant_sequence_coverage
-    Map[String, Float]? contaminant_depth_by_sequence = read_QC_trim.contaminant_sequence_depth
-    String? contaminant_status = read_QC_trim.contaminant_status
+    # Read QC - mapped read removal outputs
+    File? mapped_read_removal_bam = read_QC_trim.mapped_read_removal_bam
+    File? mapped_read_removal_bai = read_QC_trim.mapped_read_removal_bai
+    Float? mapped_read_removal_coverage = read_QC_trim.mapped_read_removal_coverage
+    Float? mapped_read_removal_mean_depth = read_QC_trim.mapped_read_removal_mean_depth
+    File? mapped_read_removal_mapping_stats = read_QC_trim.mapped_read_removal_mapping_stats
+    File? mapped_read_removal_cov_hist = read_QC_trim.mapped_read_removal_cov_hist
+    File? mapped_read_removal_mapping_flagstat = read_QC_trim.mapped_read_removal_mapping_flagstat
+    Float? mapped_read_removal_percent_mapped_reads = read_QC_trim.mapped_read_removal_percent_mapped_reads
+    Map[String, Float]? mapped_read_removal_coverage_by_sequence = read_QC_trim.mapped_read_removal_sequence_coverage
+    Map[String, Float]? mapped_read_removal_depth_by_sequence = read_QC_trim.mapped_read_removal_sequence_depth
     # Read QC - fastq_scan clean outputs
     Int? fastq_scan_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
     Int? fastq_scan_num_reads_clean2 = read_QC_trim.fastq_scan_clean2
@@ -283,6 +289,8 @@ workflow theiacov_illumina_pe {
     Float? fastq_scan_r2_mean_readlength_clean = read_QC_trim.fastq_scan_r2_mean_readlength_clean
     Float? fastq_scan_r1_mean_q_clean = read_QC_trim.fastq_scan_r1_mean_q_clean
     Float? fastq_scan_r2_mean_q_clean = read_QC_trim.fastq_scan_r2_mean_q_clean
+    Float? fastq_scan_r1_gc_percent_clean = read_QC_trim.fastq_scan_r1_gc_percent_clean
+    Float? fastq_scan_r2_gc_percent_clean = read_QC_trim.fastq_scan_r2_gc_percent_clean
     File? fastq_scan_clean1_json = read_QC_trim.fastq_scan_clean1_json
     File? fastq_scan_clean2_json = read_QC_trim.fastq_scan_clean2_json
     # Read QC - fastqc outputs

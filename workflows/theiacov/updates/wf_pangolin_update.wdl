@@ -23,6 +23,7 @@ workflow pangolin_update {
       # including these to block from terra
       flu_segment = "",
       flu_subtype = "",
+      flu_genoflu_genotype = "",
       reference_gff_file = "gs://theiagen-public-resources-rp/empty_files/empty.gff3",
       reference_genome = "gs://theiagen-public-resources-rp/empty_files/empty.fasta",
       genome_length_input = 0,
