@@ -110,14 +110,14 @@ rename_fastq_files	read1	File	FASTQ file containing read1 sequences		Required	Re
 seqsender	bioproject	String	The NCBI BioProject accession that every submitted sample is linked to		Required	SeqSender	general	
 seqsender	sample_ids	Array[String]	The IDs of the samples in your Terra table to validate and submit		Required	SeqSender	general	
 seqsender	seqsender_config	File	The SeqSender config YAML file containing your NCBI account credentials and submission details		Required	SeqSender	general	
-seqsender	seqsender_key	String	The key generated for decrypting your NCBI password in your `seqsender_config`		Required	SeqSender	general
+seqsender	seqsender_key	String	The key generated for decrypting your NCBI password in your `seqsender_config`		Required	SeqSender	general	
 seqsender	seqsender_organism_tag	String	The SeqSender organism type, which determines the required metadata and submission format; options: `FLU`, `COV`, or `OTHER`		Required	SeqSender	general	
-seqsender	submit_to_biosample	Boolean	Set to true to submit samples to the BioSample database		Required	SeqSender	general
+seqsender	submit_to_biosample	Boolean	Set to true to submit samples to the BioSample database		Required	SeqSender	general	
 seqsender	submit_to_genbank	Boolean	Set to true to submit samples (assemblies) to the GenBank database		Required	SeqSender	general	
-seqsender	submit_to_sra	Boolean	Set to true to submit samples (reads) to the SRA database		Required	SeqSender	general
-seqsender	terra_project_name	String	The name of the Terra project where your sample data table is located		Required	SeqSender	general
+seqsender	submit_to_sra	Boolean	Set to true to submit samples (reads) to the SRA database		Required	SeqSender	general	
+seqsender	terra_project_name	String	The name of the Terra project where your sample data table is located		Required	SeqSender	general	
 seqsender	terra_table_name	String	The name of the Terra data table where your samples/metadata can be found		Required	SeqSender	general	
-seqsender	terra_workspace_name	String	The name of the Terra workspace where your sample data table is located		Required	SeqSender	general
+seqsender	terra_workspace_name	String	The name of the Terra workspace where your sample data table is located		Required	SeqSender	general	
 shared_variants_wf	concatenated_file_name	String	String of your choice to prefix output files		Required	Find_Shared_Variants	general	
 shared_variants_wf	samplenames	Array[String]	The names of the samples being analyzed		Required	Find_Shared_Variants	general	
 shared_variants_wf	variants_to_cat	Array[File]	The result file from the Snippy_Variants workflow		Required	Find_Shared_Variants	general	
@@ -2112,7 +2112,7 @@ seqsender	max_wait_hours	Float	The maximum number of hours to wait for NCBI to p
 seqsender	poll_interval_minutes	Float	The number of minutes between each check of the submission's status with NCBI	10	Optional	SeqSender	general	
 seqsender	read1_fastqs	Array[File]	The read1 FASTQ files, one per sample in the same order as `sample_ids`; required when `submit_to_sra` is true		Optional	SeqSender	general	
 seqsender	read2_fastqs	Array[File]	The read2 FASTQ files for paired-end reads, one per sample in the same order as `sample_ids`; leave empty for single-end reads		Optional	SeqSender	general	
-seqsender	resume_checkpoint_tarball	File	The `checkpoint_tarball` output from an earlier incomplete submission; skips validation and re-submission and resumes polling NCBI for that submission's status		Optional	SeqSender	general
+seqsender	resume_checkpoint_tarball	File	The `checkpoint_tarball` output from an earlier incomplete submission; skips validation and re-submission and resumes polling NCBI for that submission's status		Optional	SeqSender	general	
 seqsender	sra_transfer_gcp_bucket	String	A `gs://` bucket path that NCBI can read from; when provided, the passing samples' reads are copied there for NCBI to fetch instead of being uploaded over FTP (not copied when `validation_only` is true)		Optional	SeqSender	general	
 seqsender	submit_to_production	Boolean	Set to true to submit to NCBI's production environment; by default, samples are submitted to NCBI's Test environment and nothing is released	False	Optional	SeqSender	general	
 seqsender	validation_only	Boolean	Set to true to only validate each sample and write the `validation_metadata_template`, without submitting anything to NCBI	False	Optional	SeqSender	general	
