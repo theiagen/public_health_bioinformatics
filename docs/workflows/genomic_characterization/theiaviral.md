@@ -482,6 +482,8 @@ The TheiaViral workflows activate taxa-specific sub-workflows after the identifi
     - `kraken2_extraction_status`: No reads could be extracted, likely because no reads correspond to the input taxon. Check the `kraken2_report`.
     - `read_screen_clean`: Reads did not pass the imposed thresholds. Either the reads are poor quality or the thresholds are too stringent, in which case the thresholds can be relaxed or `skip_screen` can be set to "true".
     - `dehost_wf_download_status`: A host genome could not be retrieved for decontamination. See the `host` input explanation for more information and review the `download_accession`/`download_taxonomy` task output logs for advanced error parsing.
+    - `ncbi_scrub_status`: The reads passed to the NCBI scrubber were empty, truncated, or not valid gzip, or (TheiaViral Illumina PE only) R1 and R2 had different read counts. Re-upload or re-download the read files if they are truncated or corrupt. For TheiaViral ONT, an empty input here usually means nanoq removed every read; check the raw read lengths and qualities in the NanoPlot raw report and relax the `nanoq` filtering thresholds if appropriate.
+    - `nanoplot_status`: (TheiaViral ONT only) The raw read file contains no reads. This is expected for negative controls such as reagent blanks.
     - `ete4_status`: A refined taxon ID could not be retrieved for the provided `taxon`. Ensure the taxon name is a valid, complete name/Taxon ID listed in [NCBI's Taxonomy Browser](https://www.ncbi.nlm.nih.gov/datasets/taxonomy/tree/) and the `read_extraction_rank` is a taxonomic rank above the provided `taxon`.
 
 ??? warning "Known errors associated with read quality"
