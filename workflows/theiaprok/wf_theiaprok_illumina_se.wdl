@@ -452,6 +452,8 @@ workflow theiaprok_illumina_se {
                 "fastq_scan_clean1_json": read_QC_trim.fastq_scan_clean1_json,
                 "fastq_scan_num_reads_clean1": read_QC_trim.fastq_scan_clean1,
                 "fastq_scan_num_reads_raw1": read_QC_trim.fastq_scan_raw1,
+                "fastq_scan_r1_gc_percent_clean": read_QC_trim.fastq_scan_r1_gc_percent_clean,
+                "fastq_scan_r1_gc_percent_raw": read_QC_trim.fastq_scan_r1_gc_percent_raw,
                 "fastq_scan_raw1_json": read_QC_trim.fastq_scan_raw1_json,
                 "fastq_scan_version": read_QC_trim.fastq_scan_version,
                 "fastqc_clean1_html": read_QC_trim.fastqc_clean1_html,
@@ -783,8 +785,10 @@ workflow theiaprok_illumina_se {
     File? read_screen_clean_tsv = clean_check_reads.read_screen_tsv
     # Read QC - fastq_scan outputs
     Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
+    Float? fastq_scan_r1_gc_percent_raw = read_QC_trim.fastq_scan_r1_gc_percent_raw
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
     Int? fastq_scan_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
+    Float? fastq_scan_r1_gc_percent_clean = read_QC_trim.fastq_scan_r1_gc_percent_clean
     File? fastq_scan_raw1_json = read_QC_trim.fastq_scan_raw1_json
     File? fastq_scan_clean1_json = read_QC_trim.fastq_scan_clean1_json
     # Read QC - fastqc outputs
