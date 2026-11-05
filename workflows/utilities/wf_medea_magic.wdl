@@ -9,6 +9,7 @@ import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/gene_typing/variant_detection/task_clair3_variants.wdl" as clair3_task
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
 import "../../tasks/quality_control/basic_statistics/task_gene_coverage.wdl" as gene_coverage_task
+import "../../tasks/quality_control/basic_statistics/task_mapping_stats.wdl" as mapping_stats_task
 import "../../tasks/gene_typing/variant_detection/task_snpeff.wdl" as snpeff_task
 
 workflow medea_magic {
@@ -234,6 +235,14 @@ workflow medea_magic {
     File resolved_bam = select_first([bwa_variant_calling.sorted_bam, ont_bam_sorting.bam])
     File resolved_bai = select_first([bwa_variant_calling.sorted_bai, ont_bam_sorting.bai])
     File resolved_vcf = select_first([gatk_filter.gatk_selected_vcf, clair3_variant_calling.clair3_variants_vcf])
+    # genome-wide read mapping statistics against the resolved reference
+    call mapping_stats_task.mapping_stats {
+      input:
+        bamfile = resolved_bam,
+        samplename = samplename,
+        read1 = select_first([read1]),
+        read2 = read2
+    }
   }
 
   # GENE-CENTRIC COVERAGE CALCULATIONS AND VARIANT ANNOTATION
@@ -334,6 +343,15 @@ workflow medea_magic {
     File? clair3_variants_gvcf = clair3_variant_calling.clair3_variants_gvcf
     String? clair3_variants_docker = clair3_variant_calling.clair3_variants_docker_image
     String? clair3_model_used = clair3_variant_calling.clair3_model_used
+    # read mapping statistics
+    String? mapping_stats_samtools_version = mapping_stats.samtools_version
+    Float? mapping_stats_percentage_mapped_reads = mapping_stats.percentage_mapped_reads
+    Float? mapping_stats_depth = mapping_stats.depth
+    Float? mapping_stats_coverage = mapping_stats.coverage
+    File? mapping_stats_stats = mapping_stats.stats
+    File? mapping_stats_cov_hist = mapping_stats.cov_hist
+    File? mapping_stats_cov_stats = mapping_stats.cov_stats
+    File? mapping_stats_flagstat = mapping_stats.flagstat
     # gene coverage
     File? gene_coverage_stats = gene_coverage.gene_coverage_stats
     String? gene_coverage_reads_mapped = gene_coverage.num_reads_aligned_to_genes

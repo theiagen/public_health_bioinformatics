@@ -346,6 +346,15 @@ workflow theiaeuk_illumina_pe {
     File? gatk_filtered_vcf = medea_magic.gatk_filtered_vcf
     File? gatk_selected_vcf = medea_magic.gatk_selected_vcf
     Float? gatk_percent_passing_variants = medea_magic.gatk_percent_passing_variants
+    # read mapping statistics
+    String? mapping_stats_samtools_version = medea_magic.mapping_stats_samtools_version
+    Float? mapping_stats_percentage_mapped_reads = medea_magic.mapping_stats_percentage_mapped_reads
+    Float? mapping_stats_depth = medea_magic.mapping_stats_depth
+    Float? mapping_stats_coverage = medea_magic.mapping_stats_coverage
+    File? mapping_stats_stats = medea_magic.mapping_stats_stats
+    File? mapping_stats_cov_hist = medea_magic.mapping_stats_cov_hist
+    File? mapping_stats_cov_stats = medea_magic.mapping_stats_cov_stats
+    File? mapping_stats_flagstat = medea_magic.mapping_stats_flagstat
     # Gene Coverage Outputs
     File? gene_coverage_stats = medea_magic.gene_coverage_stats
     String? gene_coverage_reads_mapped = medea_magic.gene_coverage_reads_mapped

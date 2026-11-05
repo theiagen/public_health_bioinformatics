@@ -246,6 +246,15 @@ workflow theiaeuk_ont {
     File? clair3_variants_gvcf = medea_magic.clair3_variants_gvcf
     String? clair3_docker = medea_magic.clair3_variants_docker
     String? clair3_model_used = medea_magic.clair3_model_used
+    # read mapping statistics
+    String? mapping_stats_samtools_version = medea_magic.mapping_stats_samtools_version
+    Float? mapping_stats_percentage_mapped_reads = medea_magic.mapping_stats_percentage_mapped_reads
+    Float? mapping_stats_depth = medea_magic.mapping_stats_depth
+    Float? mapping_stats_coverage = medea_magic.mapping_stats_coverage
+    File? mapping_stats_stats = medea_magic.mapping_stats_stats
+    File? mapping_stats_cov_hist = medea_magic.mapping_stats_cov_hist
+    File? mapping_stats_cov_stats = medea_magic.mapping_stats_cov_stats
+    File? mapping_stats_flagstat = medea_magic.mapping_stats_flagstat
     # Gene Coverage Outputs
     File? gene_coverage_stats = medea_magic.gene_coverage_stats
     String? gene_coverage_reads_mapped = medea_magic.gene_coverage_reads_mapped
