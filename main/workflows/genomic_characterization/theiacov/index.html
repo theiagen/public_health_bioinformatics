@@ -7313,7 +7313,7 @@
 <td><strong>irma_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/irma:1.3.1-20260507</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/irma:1.3.1-helper-1.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10197,7 +10197,7 @@
 <td><strong>irma_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/irma:1.3.1-20260507</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/irma:1.3.1-helper-1.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -15873,7 +15873,7 @@
 <p><strong><em>If influenza</em></strong></p>
 <details class="task">
 <summary><code>IRMA</code>: Influenza Assembly and Characterization</summary>
-<p>Cleaned reads are assembled using IRMA which stands for Iterative Refinement Meta-Assembler. IRMA first sorts reads to Flu genome segments using LABEL, then iteratively maps reads to a collection of reference sequences (in this case for Influenza virus) and iteratively edits the references to account for high population diversity and mutational rates that are characteristic of Influenza genomes. Assemblies produced by IRMA will be ordered from largest to smallest assembled flu segment. IRMA also performs typing and subtyping as part of the assembly process. Note: IRMA does not differentiate between Flu B Victoria and Yamagata lineages. For determining this information, please review the ABRicate task outputs which will provide this information.</p>
+<p>Cleaned reads are assembled using IRMA which stands for Iterative Refinement Meta-Assembler. IRMA first sorts reads to Flu genome segments using LABEL, then iteratively maps reads to a collection of reference sequences (in this case for Influenza virus) and iteratively edits the references to account for high population diversity and mutational rates that are characteristic of Influenza genomes. Assemblies produced by IRMA will be ordered by segment numbering rather than largest to smallest for each assembled flu segment. IRMA also performs typing and subtyping as part of the assembly process. Note: IRMA does not differentiate between Flu B Victoria and Yamagata lineages. For determining this information, please review the ABRicate task outputs which will provide this information.</p>
 <p>Due to the segmented nature of the Influenza genome and the various downstream bioinformatics tools that require the genome assembly, the IRMA task &amp; TheiaCoV workflows output various genome assembly files. Briefly they are:</p>
 <ul>
 <li><code>assembly_fasta</code> - The full genome assembly in FASTA format, with 1 FASTA entry per genome segment. There should be 8 segments in total, but depending on the quality and depth of sequence data, some segments may not be assembled nor present in this output file.</li>
@@ -17090,7 +17090,7 @@
 <p><strong><em>If influenza</em></strong></p>
 <details class="task">
 <summary><code>IRMA</code>: Influenza Assembly and Characterization</summary>
-<p>Cleaned reads are assembled using IRMA which stands for Iterative Refinement Meta-Assembler. IRMA first sorts reads to Flu genome segments using LABEL, then iteratively maps reads to a collection of reference sequences (in this case for Influenza virus) and iteratively edits the references to account for high population diversity and mutational rates that are characteristic of Influenza genomes. Assemblies produced by IRMA will be ordered from largest to smallest assembled flu segment. IRMA also performs typing and subtyping as part of the assembly process. Note: IRMA does not differentiate between Flu B Victoria and Yamagata lineages. For determining this information, please review the ABRicate task outputs which will provide this information.</p>
+<p>Cleaned reads are assembled using IRMA which stands for Iterative Refinement Meta-Assembler. IRMA first sorts reads to Flu genome segments using LABEL, then iteratively maps reads to a collection of reference sequences (in this case for Influenza virus) and iteratively edits the references to account for high population diversity and mutational rates that are characteristic of Influenza genomes. Assemblies produced by IRMA will be ordered by segment numbering rather than largest to smallest for each assembled flu segment. IRMA also performs typing and subtyping as part of the assembly process. Note: IRMA does not differentiate between Flu B Victoria and Yamagata lineages. For determining this information, please review the ABRicate task outputs which will provide this information.</p>
 <p>Due to the segmented nature of the Influenza genome and the various downstream bioinformatics tools that require the genome assembly, the IRMA task &amp; TheiaCoV workflows output various genome assembly files. Briefly they are:</p>
 <ul>
 <li><code>assembly_fasta</code> - The full genome assembly in FASTA format, with 1 FASTA entry per genome segment. There should be 8 segments in total, but depending on the quality and depth of sequence data, some segments may not be assembled nor present in this output file.</li>
@@ -18072,7 +18072,7 @@
 </details>
 <details class="task">
 <summary><code>IRMA</code>: Influenza Assembly and Characterization</summary>
-<p>Cleaned reads are assembled using IRMA which stands for Iterative Refinement Meta-Assembler. IRMA first sorts reads to Flu genome segments using LABEL, then iteratively maps reads to a collection of reference sequences (in this case for Influenza virus) and iteratively edits the references to account for high population diversity and mutational rates that are characteristic of Influenza genomes. Assemblies produced by IRMA will be ordered from largest to smallest assembled flu segment. IRMA also performs typing and subtyping as part of the assembly process. Note: IRMA does not differentiate between Flu B Victoria and Yamagata lineages. For determining this information, please review the ABRicate task outputs which will provide this information.</p>
+<p>Cleaned reads are assembled using IRMA which stands for Iterative Refinement Meta-Assembler. IRMA first sorts reads to Flu genome segments using LABEL, then iteratively maps reads to a collection of reference sequences (in this case for Influenza virus) and iteratively edits the references to account for high population diversity and mutational rates that are characteristic of Influenza genomes. Assemblies produced by IRMA will be ordered by segment numbering rather than largest to smallest for each assembled flu segment. IRMA also performs typing and subtyping as part of the assembly process. Note: IRMA does not differentiate between Flu B Victoria and Yamagata lineages. For determining this information, please review the ABRicate task outputs which will provide this information.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">IRMA Technical Details</p>
 <table>
