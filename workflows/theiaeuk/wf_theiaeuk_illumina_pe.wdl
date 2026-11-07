@@ -353,6 +353,15 @@ workflow theiaeuk_illumina_pe {
     File? gatk_filtered_vcf = medea_magic.gatk_filtered_vcf
     File? gatk_selected_vcf = medea_magic.gatk_selected_vcf
     Float? gatk_percent_passing_variants = medea_magic.gatk_percent_passing_variants
+    # read mapping statistics
+    String? mapping_stats_samtools_version = medea_magic.mapping_stats_samtools_version
+    Float? mapping_stats_percentage_mapped_reads = medea_magic.mapping_stats_percentage_mapped_reads
+    Float? mapping_stats_depth = medea_magic.mapping_stats_depth
+    Float? mapping_stats_coverage = medea_magic.mapping_stats_coverage
+    File? mapping_stats_out = medea_magic.mapping_stats_stats
+    File? mapping_stats_cov_hist = medea_magic.mapping_stats_cov_hist
+    File? mapping_stats_cov_stats = medea_magic.mapping_stats_cov_stats
+    File? mapping_stats_flagstat = medea_magic.mapping_stats_flagstat
     # Gene Coverage Outputs
     File? gene_coverage_stats = medea_magic.gene_coverage_stats
     String? gene_coverage_reads_mapped = medea_magic.gene_coverage_reads_mapped
@@ -363,10 +372,12 @@ workflow theiaeuk_illumina_pe {
     Map[String, String]? gene_coverage_reads_by_gene = medea_magic.gene_coverage_reads_by_gene
     String? gene_coverage_query_check = medea_magic.gene_coverage_query_check
     String? gene_coverage_query_check_status = medea_magic.gene_coverage_query_check_status
-    File? gene_variants_vcf = medea_magic.gene_variants_vcf
-    File? gene_variants_warnings = medea_magic.gene_variants_warnings
-    File? gene_variants_summary = medea_magic.gene_variants_summary
-    File? gene_variants_tsv = medea_magic.gene_variants_tsv
-    String? gene_variants_annotations = medea_magic.gene_variants_annotations
+    String? snpeff_gene_variants_version = medea_magic.snpeff_gene_variants_version
+    File? snpeff_gene_variants_vcf = medea_magic.snpeff_gene_variants_vcf
+    File? snpeff_gene_variants_summary_html = medea_magic.snpeff_gene_variants_summary_html
+    File? snpeff_gene_variants_genes_txt = medea_magic.snpeff_gene_variants_genes_txt
+    File? snpeff_gene_variants_report_tsv = medea_magic.snpeff_gene_variants_report_tsv
+    String? snpeff_gene_variants_report = medea_magic.snpeff_gene_variants_report
+    String? snpeff_gene_variants_report_abbreviated = medea_magic.snpeff_gene_variants_report_abbreviated
   }
 }

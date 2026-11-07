@@ -67,8 +67,8 @@ columns:
     method: percent_diff
     threshold: 0.01
     type: float
-  gene_variants_annotations:
-    mappings: ["theiaeuk_snippy_variants_hits"] # <= 4.3.0 compatibility
+  snpeff_gene_variants_report:
+    mappings: ["gene_variants_annotations", "theiaeuk_snippy_variants_hits"] # <= 4.3.0 compatibility
     method: exact
     type: set[str]
     delimiter: ","
