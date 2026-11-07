@@ -111,11 +111,11 @@ workflow read_QC_trim_se {
       phix = phix
   }
   if (read_qc == "fastq_scan") {
-    call fastq_scan.fastq_scan_se as fastq_scan_raw {
+    call fastq_scan.fastq_scan as fastq_scan_raw {
       input:
         read1 = read1
     }
-    call fastq_scan.fastq_scan_se as fastq_scan_clean {
+    call fastq_scan.fastq_scan as fastq_scan_clean {
       input:
         read1 = bbduk_se.read1_clean
     }
@@ -198,15 +198,17 @@ workflow read_QC_trim_se {
     Int? fastq_scan_raw1 = fastq_scan_raw.read1_seq
     Float? fastq_scan_r1_mean_readlength_raw = fastq_scan_raw.read1_mean_length
     Float? fastq_scan_r1_mean_q_raw = fastq_scan_raw.read1_mean_quality
-    String? fastq_scan_version = fastq_scan_raw.version
+    Float? fastq_scan_r1_gc_percent_raw = fastq_scan_raw.read1_gc_percent
+    String? fastq_scan_version = fastq_scan_raw.fastq_scan_version
     String? fastq_scan_docker = fastq_scan_raw.fastq_scan_docker
-    File? fastq_scan_raw1_json = fastq_scan_raw.fastq_scan_json
+    File? fastq_scan_raw1_json = fastq_scan_raw.read1_fastq_scan_json
 
     # fastq_scan clean (per read stats)
     Int? fastq_scan_clean1 = fastq_scan_clean.read1_seq
     Float? fastq_scan_r1_mean_readlength_clean = fastq_scan_clean.read1_mean_length
     Float? fastq_scan_r1_mean_q_clean = fastq_scan_clean.read1_mean_quality
-    File? fastq_scan_clean1_json = fastq_scan_clean.fastq_scan_json
+    Float? fastq_scan_r1_gc_percent_clean = fastq_scan_clean.read1_gc_percent
+    File? fastq_scan_clean1_json = fastq_scan_clean.read1_fastq_scan_json
 
     # fastqc
     Int? fastqc_raw1 = fastqc_raw.read1_seq

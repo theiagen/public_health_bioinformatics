@@ -21,6 +21,7 @@ Anson
 Artic
 Aspergillus
 Assembly_Fetch
+ASsessment
 Augur
 Augur_Prep
 Auspice
@@ -104,6 +105,7 @@ Haemophilus
 Halstead
 ICE_Kp_
 INSDC
+INSide
 IQ-TREE
 IRMA
 Illumina
@@ -132,6 +134,7 @@ Listeria
 Lumpe
 Lyssavirus
 markdown_extensions
+MAGs
 MEASLESgenome
 MEGAHIT
 MEGARES
@@ -181,6 +184,7 @@ ONT
 ONT_Barcode_Concatenation
 Otieno
 Outgroups
+PAst
 PATRIC
 PBPtyper
 PCR
@@ -204,9 +208,11 @@ Polypolish
 PopPUNK
 Porechop
 Prokka
+PRs
 Pseudomonas
 Pysam
 QC
+QUality
 QUAST
 Qualimap
 Quasitools
@@ -573,3 +579,7 @@ vadr_opts
 virulence
 wgMLST
 whipplei
+Hansenula
+polymorpha
+Cenococcum
+geophilum
