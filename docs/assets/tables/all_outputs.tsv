@@ -32,10 +32,10 @@ agrvate_docker	String	The docker used for AgrVATE	TheiaProk_FASTA, TheiaProk_Ill
 agrvate_results	File	A gzipped tarball of all results	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 agrvate_summary	File	The summary file produced	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 agrvate_version	String	The version of AgrVATE used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-aligned_bai	String	Index companion file to the bam file generated during the consensus assembly process	Freyja_FASTQ, TheiaCoV_Illumina_PE
-aligned_bai	File	Index companion file to the bam file generated during the consensus assembly process	TheiaCoV_ClearLabs, TheiaCoV_Illumina_SE, TheiaCoV_ONT
-aligned_bam	String	Sorted BAM file containing the alignments of reads to the reference genome	Freyja_FASTQ, TheiaCoV_Illumina_PE
-aligned_bam	File	Sorted BAM file containing the alignments of reads to the reference genome	TheiaCoV_ClearLabs, TheiaCoV_Illumina_SE, TheiaCoV_ONT
+aligned_bai	String	Index companion file to the aligned BAM file	TheiaCoV_Illumina_PE
+aligned_bai	File	Index companion file to the aligned BAM file	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_SE, TheiaCoV_ONT
+aligned_bam	String	Sorted BAM file containing the alignments of reads to the reference genome	TheiaCoV_Illumina_PE
+aligned_bam	File	Sorted BAM file containing the alignments of reads to the reference genome	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 alignment_method	String	The method used to generate the alignment	Freyja_FASTQ
 allele_calling_accessory_count	Int	The number of accessory loci detected	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 allele_calling_accessory_percentage	Float	The percentage of accessory loci detected	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
@@ -269,24 +269,6 @@ consensus_qc_number_N	Int	Number of N bases in consensus assembly	TheiaViral_Ill
 consensus_qc_number_Total	Int	Total number of bases in consensus assembly	TheiaViral_Illumina_PE, TheiaViral_ONT
 consensus_qc_percent_reference_coverage	Float	Percent of reference genome covered in consensus assembly	TheiaViral_Illumina_PE, TheiaViral_ONT
 consensus_stats	File	Output from the `samtools stats` command to assess quality of the alignment file (BAM)	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
-contaminant_bai	File	Index of reads aligned to the contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
-contaminant_bam	File	Reads aligned to the contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
-contaminant_cov_hist	File	Coverage histogram of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
-contaminant_coverage	Float	Mean coverage of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
-contaminant_coverage_by_sequence	Map[String,Float]	A JSON map relating identified contaminant sequence headers to read mapping coverage	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
-contaminant_depth_by_sequence	Map[String,Float]	A JSON map relating identified contaminant sequence headers to read mapping depth	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
-contaminant_expected_coverage_by_sequence	Map[String,Float]	A JSON map relating expected contaminant sequences to the read mapping coverage 	TheiaProk_Illumina_PE
-contaminant_expected_depth_by_sequence	Map[String,Float]	A JSON map relating expected contaminant sequences to the read mapping depth	TheiaProk_Illumina_PE
-contaminant_expected_reads_by_sequence	Map[String,Float]	A JSON map relating expected contaminant sequences to the number of reads mapped	TheiaProk_Illumina_PE
-contaminant_mapping_flagstat	File	samtools flagstat of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
-contaminant_mapping_stats	File	samtools statistics of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
-contaminant_mean_depth	Float	Mean depth of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
-contaminant_percent_mapped_reads	Float	Percent of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
-contaminant_reads_by_sequence	Map[String,Float]	A JSON map relating contaminant sequences to the number of reads mapped	TheiaProk_Illumina_PE
-contaminant_status	String	Status of identification of contaminant sequence based on sequence-based and overall thresholds	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
-contaminant_unexpected_coverage_by_sequence	Map[String,Float]	A JSON map relating unexpected contaminant sequences to the read mapping coverage	TheiaProk_Illumina_PE
-contaminant_unexpected_depth_by_sequence	Map[String,Float]	A JSON map relating unexpected contaminant sequences to the read mapping depth	TheiaProk_Illumina_PE
-contaminant_unexpected_reads_by_sequence	Map[String,Float]	A JSON map relating unexpected contaminant sequences to the number of reads mapped	TheiaProk_Illumina_PE
 contig_number	Int	The number of contigs in the assembly_fasta (see description for `assembly_fasta`)	TheiaMeta_Illumina_PE
 contigs_gfa	File	Assembly graph output generated by SPAdes (Illumina: PE, SE) or Flye (ONT), used to visualize and evaluate genome assembly results.	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 cophylogeny_plot	File	A cophylogeny plot depicting branching order differences between two phylogenies without branch lengths	PhyloCompare
@@ -390,6 +372,10 @@ fastq_scan_clean1_json	String	The JSON file output from `fastq-scan` containing 
 fastq_scan_clean2_json	File	The JSON file output from `fastq-scan` containing summary stats about clean reverse read quality and length	Freyja_FASTQ, TBProfiler_tNGS, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastq_scan_clean_pairs	String	Number of read pairs after cleaning	TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastq_scan_docker	String	The Docker image of fastq_scan	TBProfiler_tNGS, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastq_scan_gc_percent_clean	Float	Percent GC content across all clean reads as calculated by seqkit	TheiaEuk_Illumina_PE
+fastq_scan_gc_percent_raw	Float	Percent GC content across all raw reads as calculated by seqkit	TheiaEuk_Illumina_PE
+fastq_scan_mean_q_clean	Float	Mean per-read quality score across clean reads as calculated by fastq_scan	TheiaEuk_Illumina_PE
+fastq_scan_mean_q_raw	Float	Mean per-read quality score across raw reads as calculated by fastq_scan	TheiaEuk_Illumina_PE
 fastq_scan_num_reads_clean1	Int	The number of forward reads after cleaning as calculated by fastq_scan	TBProfiler_tNGS, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastq_scan_num_reads_clean1	String	The number of forward reads after cleaning as calculated by fastq_scan	Freyja_FASTQ
 fastq_scan_num_reads_clean2	Int	The number of reverse reads after cleaning as calculated by fastq_scan	Freyja_FASTQ, TBProfiler_tNGS, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
@@ -398,10 +384,14 @@ fastq_scan_num_reads_raw1	Int	The number of input forward reads as calculated by
 fastq_scan_num_reads_raw1	String	The number of input forward reads as calculated by fastq_scan	Freyja_FASTQ
 fastq_scan_num_reads_raw2	Int	The number of input reserve reads as calculated by fastq_scan	Freyja_FASTQ, TBProfiler_tNGS, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastq_scan_num_reads_raw_pairs	String	The number of input read pairs as calculated by fastq_scan	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
+fastq_scan_r1_gc_percent_clean	Float	Percent GC content of forward reads after cleaning as calculated by seqkit	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastq_scan_r1_gc_percent_raw	Float	Percent GC content of input forward reads as calculated by seqkit	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastq_scan_r1_mean_q_clean	Float	The average quality of forward reads after cleaning as calculated by fastq_scan	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 fastq_scan_r1_mean_q_raw	Float	The average quality of forward reads as calculated by fastq_scan	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 fastq_scan_r1_mean_readlength_clean	Float	The average read length of forward reads after cleaning as calculated by fastq_scan	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 fastq_scan_r1_mean_readlength_raw	Float	The average read length of forward reads as calculated by fastq_scan	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
+fastq_scan_r2_gc_percent_clean	Float	Percent GC content of reverse reads after cleaning as calculated by seqkit	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastq_scan_r2_gc_percent_raw	Float	Percent GC content of input reverse reads as calculated by seqkit	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastq_scan_r2_mean_q_clean	Float	The average quality of reverse reads after cleaning as calculated by fastq_scan	TheiaCoV_Illumina_PE
 fastq_scan_r2_mean_q_raw	Float	The average quality of reverse reads as calculated by fastq_scan	TheiaCoV_Illumina_PE
 fastq_scan_r2_mean_readlength_clean	Float	The average read length of reverse reads after cleaning as calculated by fastq_scan	TheiaCoV_Illumina_PE
@@ -703,6 +693,17 @@ lyveset_pooled_snps_vcf	File	SNPs vcf	Lyve_SET
 lyveset_raxml_tree	File	RAxML-generated tree in newick format	Lyve_SET
 lyveset_wf_analysis_date	String	Date analysis was run	Lyve_SET
 lyveset_wf_version	String	Version of PHB used when running Lyveset_PHB	Lyve_SET
+mapped_read_removal_bai	File	Index of reads aligned to the contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
+mapped_read_removal_bam	File	Reads aligned to the contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
+mapped_read_removal_cov_hist	File	Coverage histogram of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
+mapped_read_removal_coverage	Float	Mean coverage of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
+mapped_read_removal_coverage_by_sequence	Map[String,Float]	A JSON map relating identified contaminant sequence headers to read mapping coverage	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
+mapped_read_removal_depth_by_sequence	Map[String,Float]	A JSON map relating identified contaminant sequence headers to read mapping depth	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
+mapped_read_removal_mapping_flagstat	File	samtools flagstat of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
+mapped_read_removal_mapping_stats	File	samtools statistics of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
+mapped_read_removal_mean_depth	Float	Mean depth of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
+mapped_read_removal_percent_mapped_reads	Float	Percent of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
+mapped_read_removal_reads_by_sequence	Map[String,Float]	A JSON map relating contaminant sequences to the number of reads mapped	TheiaProk_Illumina_PE
 mashtree_docker	String	The Docker image used to run the mashtree task	MashTree_FASTA
 mashtree_filtered_metadata	File	Optional output file with filtered metadata that is only produced if the optional `summarize_data` task is used	MashTree_FASTA
 mashtree_matrix	File	The distance matrix made	MashTree_FASTA
@@ -1237,6 +1238,23 @@ spatyper_repeats	String	order of identified repeats	TheiaProk_FASTA, TheiaProk_I
 spatyper_tsv	File	TSV report with spatyper results	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 spatyper_type	String	spa type	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 spatyper_version	String	spatyper version used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+spike_in_bai	File	Index of reads aligned to the spike-in FASTA	TheiaProk_Illumina_PE
+spike_in_bam	File	Reads aligned to the spike-in FASTA	TheiaProk_Illumina_PE
+spike_in_cov_hist	File	Coverage histogram of reads mapped to spike-in FASTA	TheiaProk_Illumina_PE
+spike_in_coverage_by_sequence	Map[String,Float]	A JSON map relating identified spike-in sequence headers to read mapping coverage	TheiaProk_Illumina_PE
+spike_in_depth_by_sequence	Map[String,Float]	A JSON map relating identified spike-in sequence headers to read mapping depth	TheiaProk_Illumina_PE
+spike_in_expected_coverage_by_sequence	Map[String,Float]	A JSON map relating expected spike-in sequences to the read mapping coverage 	TheiaProk_Illumina_PE
+spike_in_expected_depth_by_sequence	Map[String,Float]	A JSON map relating expected spike-in sequences to the read mapping depth	TheiaProk_Illumina_PE
+spike_in_expected_reads_by_sequence	Map[String,Float]	A JSON map relating expected spike-in sequences to the number of reads mapped	TheiaProk_Illumina_PE
+spike_in_mapping_flagstat	File	samtools flagstat of reads mapped to spike-in FASTA	TheiaProk_Illumina_PE
+spike_in_mapping_stats	File	samtools statistics of reads mapped to spike-in FASTA	TheiaProk_Illumina_PE
+spike_in_reads_by_sequence	Map[String,Float]	A JSON map relating spike-in sequences to the number of reads mapped	TheiaProk_Illumina_PE
+spike_in_removed_read1	File	Read1 after reads mapping to the spike-in FASTA were removed	TheiaProk_Illumina_PE
+spike_in_removed_read2	File	Read2 after reads mapping to the spike-in FASTA were removed	TheiaProk_Illumina_PE
+spike_in_status	String	Status of identification of spike-in sequence based on sequence-based and overall thresholds	TheiaProk_Illumina_PE
+spike_in_unexpected_coverage_by_sequence	Map[String,Float]	A JSON map relating unexpected spike-in sequences to the read mapping coverage	TheiaProk_Illumina_PE
+spike_in_unexpected_depth_by_sequence	Map[String,Float]	A JSON map relating unexpected spike-in sequences to the read mapping depth	TheiaProk_Illumina_PE
+spike_in_unexpected_reads_by_sequence	Map[String,Float]	A JSON map relating unexpected spike-in sequences to the number of reads mapped	TheiaProk_Illumina_PE
 sra_fetch_analysis_date	String	The date the workflow was run	SRA_Fetch
 sra_fetch_version	String	The version of the repository the SRA_Fetch workflow is in	SRA_Fetch
 sra_metadata	File	SRA metadata TSV file for upload	Mercury_Prep_N_Batch
