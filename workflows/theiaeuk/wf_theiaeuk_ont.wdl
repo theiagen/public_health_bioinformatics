@@ -250,7 +250,7 @@ workflow theiaeuk_ont {
     Float? mapping_stats_percentage_mapped_reads = medea_magic.mapping_stats_percentage_mapped_reads
     Float? mapping_stats_depth = medea_magic.mapping_stats_depth
     Float? mapping_stats_coverage = medea_magic.mapping_stats_coverage
-    File? mapping_stats_stats = medea_magic.mapping_stats_stats
+    File? mapping_stats_out = medea_magic.mapping_stats_stats
     File? mapping_stats_cov_hist = medea_magic.mapping_stats_cov_hist
     File? mapping_stats_cov_stats = medea_magic.mapping_stats_cov_stats
     File? mapping_stats_flagstat = medea_magic.mapping_stats_flagstat
