@@ -699,6 +699,14 @@ mapped_read_removal_mapping_stats	File	samtools statistics of reads mapped to co
 mapped_read_removal_mean_depth	Float	Mean depth of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
 mapped_read_removal_percent_mapped_reads	Float	Percent of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
 mapped_read_removal_reads_by_sequence	Map[String,Float]	A JSON map relating contaminant sequences to the number of reads mapped	TheiaProk_Illumina_PE
+mapping_stats_cov_hist	File	DESCRIPTION	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+mapping_stats_cov_stats	File	DESCRIPTION	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+mapping_stats_coverage	Float	DESCRIPTION	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+mapping_stats_depth	Float	DESCRIPTION	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+mapping_stats_flagstat	File	DESCRIPTION	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+mapping_stats_percentage_mapped_reads	Float	DESCRIPTION	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+mapping_stats_samtools_version	String	DESCRIPTION	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+mapping_stats_stats	File	DESCRIPTION	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 mashtree_docker	String	The Docker image used to run the mashtree task	MashTree_FASTA
 mashtree_filtered_metadata	File	Optional output file with filtered metadata that is only produced if the optional `summarize_data` task is used	MashTree_FASTA
 mashtree_matrix	File	The distance matrix made	MashTree_FASTA
