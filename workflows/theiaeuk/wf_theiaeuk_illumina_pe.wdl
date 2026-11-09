@@ -155,9 +155,12 @@ workflow theiaeuk_illumina_pe {
           memory = busco_memory,
           docker = busco_docker_image
       }
+      # a user-provided expected_taxon overrides the GAMBIT taxonomic assignment; underscores are
+      # converted to spaces to match the "Genus species" format of GAMBIT's merlin_tag
+      String resolved_medea_tag = sub(select_first([expected_taxon, gambit.merlin_tag]), "_", " ")
       call medea_magic_workflow.medea_magic {
         input:
-          medea_tag = gambit.merlin_tag,
+          medea_tag = resolved_medea_tag,
           assembly = digger_denovo.assembly_fasta,
           samplename = samplename,
           read1 = read_QC_trim.read1_clean,
@@ -335,6 +338,7 @@ workflow theiaeuk_illumina_pe {
     String? gambit_version = gambit.gambit_version
     String? gambit_db_version = gambit.gambit_db_version
     String? gambit_docker = gambit.gambit_docker
+    String? medea_tag = resolved_medea_tag
     # QC_Check Results
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard

@@ -727,7 +727,7 @@ meanmapq_trim	String	Mean quality of the mapped reads to the reference genome af
 meanmapq_trim	Float	Mean quality of the mapped reads to the reference genome after primer trimming	TheiaCoV_ClearLabs, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 medaka_model	String	Model used by Medaka	TheiaEuk_ONT, TheiaProk_ONT
 medaka_version	String	Version of Medaka used	TheiaEuk_ONT, TheiaProk_ONT
-medea_tag	String	Curated name of GAMBIT predicted taxon	TheiaEuk_ONT
+medea_tag	String	Taxon used to activate taxon-specific submodules: the user-provided expected_taxon if provided, otherwise the curated name of the GAMBIT predicted taxon	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 megahit_docker	String	Docker image used for MEGAHIT	TheiaViral_Illumina_PE
 megahit_status	String	Status of the MEGAHIT assembly	TheiaViral_Illumina_PE
 megahit_version	String	Version of MEGAHIT used	TheiaViral_Illumina_PE

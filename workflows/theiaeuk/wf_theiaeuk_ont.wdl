@@ -117,12 +117,15 @@ workflow theiaeuk_ont {
             gambit_db_genomes = gambit_db_genomes,
             gambit_db_signatures = gambit_db_signatures
         }
+        # a user-provided expected_taxon overrides the GAMBIT taxonomic assignment; underscores are
+        # converted to spaces to match the "Genus species" format of GAMBIT's merlin_tag
+        String resolved_medea_tag = sub(select_first([expected_taxon, gambit.merlin_tag]), "_", " ")
         # call medea magic for cladetyper, AMR search, and read-based variant calling
         # (minimap2 + Clair3) and gene coverage, feeding the cleaned long reads
         call medea_magic_workflow.medea_magic {
           input:
             samplename = samplename,
-            medea_tag = gambit.merlin_tag,
+            medea_tag = resolved_medea_tag,
             assembly = select_first([flye_denovo.assembly_fasta]),
             read1 = read_QC_trim.read1_clean,
             ont_data = true,
@@ -253,7 +256,7 @@ workflow theiaeuk_ont {
     String? gambit_next_taxon_rank = gambit.gambit_next_taxon_rank
     String? gambit_version = gambit.gambit_version
     String? gambit_db_version = gambit.gambit_db_version
-    String? medea_tag = gambit.merlin_tag
+    String? medea_tag = resolved_medea_tag
     String? gambit_docker = gambit.gambit_docker
     # QC_Check Results
     String? qc_check = qc_check_task.qc_check
