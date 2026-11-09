@@ -10,7 +10,7 @@ task vadr {
     File vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-sarscov2-1.6.3-1.tar.gz"
     Int assembly_length_unambiguous
     Int skip_length = 10000
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.4"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.7.2-slim"
     Int min_length = 50
     Int max_length = 30000
     Int cpu = 4
@@ -66,6 +66,7 @@ task vadr {
       # skip vadr if the trimmed fasta is empty
       if [[ ! -s "~{out_base}_trimmed.fasta" ]]; then
         echo "VADR skipped; no sequence within ~{min_length}-~{max_length} bp after trimming terminal ambiguous bases" > NUM_ALERTS
+        echo "VADR alerts list not queried" > NUM_FRAMESHIFT_STOP_CODON_ALERTS
       else
         # run VADR
         # --split and --cpu must be used in conjuction
@@ -89,21 +90,31 @@ task vadr {
         cut -f 5 "~{out_base}/~{out_base}.vadr.alt.list" | tail -n +2 > "~{out_base}.vadr.alerts.tsv"
         cat "~{out_base}.vadr.alerts.tsv" | wc -l > NUM_ALERTS
 
+        # count instances of FRAMESHIFT or STOP_CODON in alerts list
+        # include `|| true` to write a 0 if there are no matches
+        grep -iEc "FRAMESHIFT|STOP_CODON" "~{out_base}.vadr.alerts.tsv" > NUM_FRAMESHIFT_STOP_CODON_ALERTS || true
+
         # rename sequence classification summary file to end in txt
         mv -v "~{out_base}/~{out_base}.vadr.sqc" "~{out_base}/~{out_base}.vadr.sqc.txt"
+        # rename all *.tbl files to end in tsv
+        mv -v "~{out_base}/~{out_base}.vadr.pass.tbl" "~{out_base}/~{out_base}.vadr.pass.tbl.txt"
+        mv -v "~{out_base}/~{out_base}.vadr.fail.tbl" "~{out_base}/~{out_base}.vadr.fail.tbl.txt"
+        mv -v "~{out_base}/~{out_base}.vadr.alt.list" "~{out_base}/~{out_base}.vadr.alt.list.tsv"
       fi
 
     else
       echo "VADR skipped due to poor assembly; assembly length (unambiguous) = ~{assembly_length_unambiguous}" > NUM_ALERTS
+      echo "VADR alerts list not queried" > NUM_FRAMESHIFT_STOP_CODON_ALERTS
     fi
 
   >>>
   output {
-    File? feature_tbl_pass = "~{out_base}/~{out_base}.vadr.pass.tbl"
-    File? feature_tbl_fail = "~{out_base}/~{out_base}.vadr.fail.tbl"
+    File? feature_tbl_pass = "~{out_base}/~{out_base}.vadr.pass.tbl.txt"
+    File? feature_tbl_fail = "~{out_base}/~{out_base}.vadr.fail.tbl.txt"
     File? classification_summary_file = "~{out_base}/~{out_base}.vadr.sqc.txt"
     String num_alerts = read_string("NUM_ALERTS")
-    File? alerts_list = "~{out_base}/~{out_base}.vadr.alt.list"
+    String frameshift_stop_codon_num_alerts = read_string("NUM_FRAMESHIFT_STOP_CODON_ALERTS")
+    File? alerts_list = "~{out_base}/~{out_base}.vadr.alt.list.tsv"
     File? outputs_tgz = "~{out_base}.vadr.tar.gz"
     File? vadr_fastas_zip_archive = "~{out_base}_vadr-fasta-files.zip"
     String vadr_docker = docker

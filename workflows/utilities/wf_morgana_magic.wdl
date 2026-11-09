@@ -273,6 +273,7 @@ workflow morgana_magic {
     # VADR outputs
     File? vadr_alerts_list = vadr.alerts_list
     String? vadr_num_alerts = vadr.num_alerts
+    String? vadr_frameshift_stop_codon_num_alerts = vadr.frameshift_stop_codon_num_alerts
     File? vadr_feature_tbl_pass = vadr.feature_tbl_pass
     File? vadr_feature_tbl_fail = vadr.feature_tbl_fail
     File? vadr_classification_summary_file = vadr.classification_summary_file

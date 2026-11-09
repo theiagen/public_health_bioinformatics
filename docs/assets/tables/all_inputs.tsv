@@ -1590,7 +1590,7 @@ morgana_magic	read2	File	Internal component, do not modify		Optional	TheiaCoV_Cl
 morgana_magic	reference_gene_locations_bed	File	Use to provide locations of interest where average coverage will be calculated		Optional	TheiaCoV_FASTA_Batch	general	
 morgana_magic	vadr_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 morgana_magic	vadr_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
-morgana_magic	vadr_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.4	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	docker	
+morgana_magic	vadr_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/vadr:1.7.2-slim	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	docker	
 morgana_magic	vadr_max_length	Int	Maximum length for the fasta-trim-terminal-ambigs.pl VADR script		Optional	TheiaCoV_FASTA_Batch, TheiaViral_Illumina_PE, TheiaViral_ONT	general	
 morgana_magic	vadr_memory	Int	Amount of memory/RAM (in GB) to allocate to the task		Optional	TheiaCoV_FASTA_Batch, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	True
 morgana_magic	vadr_min_length	Int	Minimum length for the fasta-trim-terminal-ambigs.pl VADR script	50	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general	
@@ -2667,7 +2667,7 @@ usher	reference_genome	File	Required for organisms other than sars-cov-2, mpox, 
 usher	subtree_size	Int	Indicates how many of the closest-related samples you want to show in a subtree; more subtrees are made if there is more sequence diversity in the set of input samples (multiple subtrees are only generated if this workflow is run on the set level).	20	Optional	Usher	general	
 vadr	cpu	Int	Number of CPUs to allocate to the task	4	Optional	VADR_Update	runtime	
 vadr	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	VADR_Update	runtime	
-vadr	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.4	Optional	VADR_Update	docker	
+vadr	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/vadr:1.7.2-slim	Optional	VADR_Update	docker	
 vadr	min_length	Int	Minimum length subsequence to possibly replace Ns for the fasta-trim-terminal-ambigs.pl VADR script	50	Optional	VADR_Update	general	
 vadr_update	organism	String	Target organism for VADR	sars-cov-2	Optional	VADR_Update	general	
 vadr_update	vadr_max_length	Int	Maximum length for the fasta-trim-terminal-ambigs.pl VADR script	30000	Optional	VADR_Update	general	True

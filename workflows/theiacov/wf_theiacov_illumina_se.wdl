@@ -201,7 +201,8 @@ workflow theiacov_illumina_se {
               "assembly_length_unambiguous": consensus_qc.number_ATCG,
               "number_Degenerate":  consensus_qc.number_Degenerate,
               "percent_reference_coverage":  consensus_qc.percent_reference_coverage,
-              "vadr_num_alerts": morgana_magic.vadr_num_alerts
+              "vadr_num_alerts": morgana_magic.vadr_num_alerts,
+              "vadr_frameshift_stop_codon_num_alerts": morgana_magic.vadr_frameshift_stop_codon_num_alerts
             }
         }
       }
@@ -343,6 +344,7 @@ workflow theiacov_illumina_se {
     File? vadr_classification_summary_file = morgana_magic.vadr_classification_summary_file
     File? vadr_all_outputs_tar_gz = morgana_magic.vadr_all_outputs_tar_gz
     String? vadr_num_alerts = morgana_magic.vadr_num_alerts
+    String? vadr_frameshift_stop_codon_num_alerts = morgana_magic.vadr_frameshift_stop_codon_num_alerts
     String? vadr_docker = morgana_magic.vadr_docker
     File? vadr_fastas_zip_archive = morgana_magic.vadr_fastas_zip_archive
     # QC_Check Results

@@ -240,7 +240,8 @@ workflow theiacov_ont {
               "assembly_length_unambiguous": consensus_qc.number_ATCG,
               "number_Degenerate":  consensus_qc.number_Degenerate,
               "percent_reference_coverage":  consensus_qc.percent_reference_coverage,
-              "vadr_num_alerts": morgana_magic.vadr_num_alerts
+              "vadr_num_alerts": morgana_magic.vadr_num_alerts,
+              "vadr_frameshift_stop_codon_num_alerts": morgana_magic.vadr_frameshift_stop_codon_num_alerts
             }
         }
       }
@@ -386,6 +387,7 @@ workflow theiacov_ont {
     # VADR Annotation QC
     File? vadr_alerts_list = morgana_magic.vadr_alerts_list
     String? vadr_num_alerts = morgana_magic.vadr_num_alerts
+    String? vadr_frameshift_stop_codon_num_alerts = morgana_magic.vadr_frameshift_stop_codon_num_alerts
     File? vadr_feature_tbl_pass = morgana_magic.vadr_feature_tbl_pass
     File? vadr_feature_tbl_fail = morgana_magic.vadr_feature_tbl_fail
     File? vadr_classification_summary_file = morgana_magic.vadr_classification_summary_file
