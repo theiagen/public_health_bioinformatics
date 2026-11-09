@@ -67,7 +67,7 @@ workflow organism_parameters {
     Int mpox_vadr_max_length = 210000
     Int mpox_vadr_skip_length = 65480
     Int mpox_vadr_memory = 8
-    File mpox_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-mpxv-1.4.2-1.tar.gz"
+    File mpox_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-mpxv-1.7-2.tar.gz"
     Int mpox_genome_len = 197200
   }
   if (organism == "WNV" || organism == "wnv" || organism == "West Nile virus" || organism == "11082") {
@@ -93,7 +93,7 @@ workflow organism_parameters {
     Int flu_vadr_max_length = 13500
     Int flu_vadr_skip_length = 500
     Int flu_vadr_memory = 8
-    File flu_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-flu-1.6.3-2.tar.gz"
+    File flu_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-flu-1.7-2.tar.gz"
 
     # setting nextclade parameters
     if (flu_segment == "HA") {
@@ -164,7 +164,7 @@ workflow organism_parameters {
     Int rsv_a_vadr_max_length = 15500
     Int rsv_a_vadr_skip_length = 5000
     Int rsv_a_vadr_memory = 32
-    File rsv_a_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-rsv-1.5-2.tar.gz"
+    File rsv_a_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-rsv-1.7-1.tar.gz"
   }
   if (organism == "rsv_b" || organism == "rsv-b" || organism == "RSV-B" || organism == "RSV_B" || organism == "208895") {
     String rsv_b_org_name = "rsv_b"
@@ -177,7 +177,7 @@ workflow organism_parameters {
     Int rsv_b_vadr_max_length = 15500
     Int rsv_b_vadr_skip_length = 5000
     Int rsv_b_vadr_memory = 32
-    File rsv_b_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-rsv-1.5-2.tar.gz"
+    File rsv_b_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-rsv-1.7-1.tar.gz"
   }
   if (organism == "HIV" || organism == "11676" || organism == "11709") {
     String hiv_org_name = "HIV"

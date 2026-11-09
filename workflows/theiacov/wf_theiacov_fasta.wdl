@@ -133,7 +133,8 @@ workflow theiacov_fasta {
           "assembly_length_unambiguous": consensus_qc.number_ATCG,
           "number_Degenerate": consensus_qc.number_Degenerate,
           "percent_reference_coverage":  consensus_qc.percent_reference_coverage,
-          "vadr_num_alerts": morgana_magic.vadr_num_alerts
+          "vadr_num_alerts": morgana_magic.vadr_num_alerts,
+          "vadr_frameshift_stop_codon_num_alerts": morgana_magic.vadr_frameshift_stop_codon_num_alerts
         }
     }
   }
@@ -183,6 +184,7 @@ workflow theiacov_fasta {
     String? vadr_docker = morgana_magic.vadr_docker
     File? vadr_fastas_zip_archive = morgana_magic.vadr_fastas_zip_archive
     String? vadr_num_alerts = morgana_magic.vadr_num_alerts
+    String? vadr_frameshift_stop_codon_num_alerts = morgana_magic.vadr_frameshift_stop_codon_num_alerts
     # VADR Annotation QC for flu
     File? vadr_flu_segment_concatenated_fasta = flu_track.flu_assembly_fasta_concatenated
     File? vadr_flu_ha_segment_fasta = flu_track.flu_ha_segment_fasta
