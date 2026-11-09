@@ -33,6 +33,8 @@ workflow medea_magic {
     String? cauris_cladetyper_docker_image
     Int? cladetyper_kmer_size
     Float? cladetyper_max_distance
+    # C. auris only: use the hosted Clade I reference and gene query instead of the cladetyper-selected clade
+    Boolean force_clade1 = false
     # user-supplied reference fasta; when provided, overrides the hosted/organism reference
     File? reference_fasta
     File? reference_gff
@@ -88,13 +90,19 @@ workflow medea_magic {
         max_distance = cladetyper_max_distance,
         docker = cauris_cladetyper_docker_image
     }
+    # hosted Clade I reference supersedes the cladetyper reference; user-supplied references still take precedence
+    if (force_clade1) {
+      File cauris_clade1_reference_fasta = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.fasta"
+      File cauris_clade1_reference_gff = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.gff"
+    }
     # a user-supplied GFF has unknown locus tags, so only product names are queried
     if (defined(reference_gff)) {
       String cauris_custom_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,sterol.24-C-methyltransferase"
     }
     # clade reference defaults: product names where they resolve a single gene, otherwise the
     # clade reference's ortholog locus tags (FLO8, FLO8 N-terminus, MEC3, ERG3, PSK74852)
-    if (cladetyper.gambit_cladetype == "Clade1") {
+    # force_clade1 also defines the Clade I set, which precedes the other clade sets in resolved_query_genes
+    if (force_clade1 || cladetyper.gambit_cladetype == "Clade1") {
       String cauris_clade1_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,sterol.24-C-methyltransferase,B9J08_02359,B9J08_02360,B9J08_00960,B9J08_01595,B9J08_04226"
     }
     # Clade II writes products with "_" and annotates FLO8 as a single gene
@@ -125,15 +133,15 @@ workflow medea_magic {
 
   # RESOLVE MULTI-SOURCE DOWNSTREAM INPUTS
   # a user-supplied fasta takes precedence, otherwise the organism-specific reference is used
-  # (cladetyper fasta for C. auris, hosted fasta for A. fumigatus and C. neoformans).
-  # resolve the reference once; visible below (and in outputs) as File?
-  String resolved_reference_fasta = select_first([reference_fasta, cladetyper.assembly_reference, afumigatus_variant_fasta, cryptoneo_reference_fasta, ""])
+  # (hosted Clade I fasta if force_clade1, otherwise cladetyper fasta for C. auris; hosted fasta
+  # for A. fumigatus and C. neoformans). resolve the reference once; visible below (and in outputs) as File?
+  String resolved_reference_fasta = select_first([reference_fasta, cauris_clade1_reference_fasta, cladetyper.assembly_reference, afumigatus_variant_fasta, cryptoneo_reference_fasta, ""])
   # Species-agnostic GFF resolution. A user-supplied reference_gff takes precedence,
-  # otherwise the organism-specific reference is used (cladetyper outputs for
-  # C. auris when a clade matches, hosted references for A. fumigatus and C. neoformans).
+  # otherwise the organism-specific reference is used (hosted Clade I GFF if force_clade1, otherwise
+  # cladetyper outputs for C. auris when a clade matches; hosted references for A. fumigatus and C. neoformans).
   # user cannot supply one reference file and not the other for GFF tasks to be functional
   if ((defined(reference_gff) && defined(reference_fasta)) || (! defined(reference_gff) && ! defined(reference_fasta))) {
-    String resolved_reference_gff = select_first([reference_gff, cladetyper.annotated_reference_gff, afumigatus_reference_gff, cryptoneo_reference_gff, ""])
+    String resolved_reference_gff = select_first([reference_gff, cauris_clade1_reference_gff, cladetyper.annotated_reference_gff, afumigatus_reference_gff, cryptoneo_reference_gff, ""])
   }
   # The user-supplied query_genes takes priority; otherwise the organism-specific default
   # set (if any) is used, with the C. auris user-supplied GFF set preceding the clade sets.

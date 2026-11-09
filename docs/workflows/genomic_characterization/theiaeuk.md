@@ -149,6 +149,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
     When this species is detected by GAMBIT, clade typing determines the clade the genome belongs to. Reference-based variant calling is performed against the clade-specific reference, and AMR detection is conducted.
 
     - Default reference genome and annotation: a clade-specific reference is selected by the `cladetyper` task. NOTE: Gene-specific variant calling is skipped for Clade VI because a reference gene annotation is not present for this lineage.
+    - Set `force_clade1` to "true" to use the Clade I reference genome, annotation, and gene query regardless of the clade assigned by `cladetyper` (clade typing still runs and is reported). A user-supplied `reference_fasta`, `reference_gff`, or `query_genes` still takes precedence.
     - Default gene query: product IDs for genes with a unique product annotation, plus clade-specific locus tags for genes annotated only as "hypothetical protein" (the Clade II reference delimits product IDs with "_")
 
         | Gene | Clade I | Clade II | Clade III | Clade IV | Clade V |

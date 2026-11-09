@@ -1251,6 +1251,7 @@ medea_magic	clair3_include_all_contigs	Boolean	Call variants on all contigs, sho
 medea_magic	clair3_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaEuk_ONT	runtime	
 medea_magic	clair3_model	String	Model name for Clair3 variant calling (see supported models for available options)	r1041_e82_400bps_sup_v500	Optional	TheiaEuk_ONT	general	
 medea_magic	clair3_variant_quality	Int	Minimum variant quality score for Clair3	2	Optional	TheiaEuk_ONT	general	
+medea_magic	force_clade1	Boolean	Set to true to use the Clade I reference FASTA, GFF, and default gene query for Candidozyma auris samples instead of the cladetyper-selected clade reference; user-supplied reference_fasta, reference_gff, and query_genes still take precedence. Has no effect on other organisms	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	gatk_cpu	Int	Number of CPUs to allocate to the task	8	Optional	TheiaEuk_Illumina_PE	runtime	
 medea_magic	gatk_decompress	Boolean	Output uncompressed GATK VCFs (.vcf with a .idx index) instead of bgzipped VCFs (.vcf.gz with a .tbi index)	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	gatk_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_Illumina_PE	runtime	
