@@ -9,6 +9,7 @@ import "../../tasks/quality_control/basic_statistics/task_nanoplot.wdl" as nanop
 import "../../tasks/quality_control/basic_statistics/task_quast.wdl" as quast_task
 import "../../tasks/quality_control/advanced_metrics/task_busco.wdl" as busco_task
 import "../../tasks/quality_control/comparisons/task_screen.wdl" as screen_task
+import "../../tasks/quality_control/comparisons/task_qc_check_phb.wdl" as qc_check
 
 workflow theiaeuk_ont {
   input {
@@ -17,6 +18,8 @@ workflow theiaeuk_ont {
     Int? genome_length
     Int busco_memory = 24
     String busco_docker_image = "us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.3.2_cv1"
+    File? qc_check_table
+    String? expected_taxon
     File gambit_db_genomes = "gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-metadata-1.0.0-20241213.gdb"
     File gambit_db_signatures = "gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-signatures-1.0.0-20241213.gs"
     # read screen parameters
@@ -137,6 +140,34 @@ workflow theiaeuk_ont {
             gatk_filter_max_strand_odds_ratio = 0.0,
             gatk_filter_expression = ""
         }
+        if (defined(qc_check_table)) {
+          call qc_check.qc_check_phb as qc_check_task {
+            input:
+              qc_check_table = qc_check_table,
+              expected_taxon = expected_taxon,
+              gambit_predicted_taxon = gambit.gambit_predicted_taxon,
+              qc_check_inputs = {
+                "num_reads_raw1": nanoplot_raw.num_reads,
+                "num_reads_clean1": nanoplot_clean.num_reads,
+                "r1_mean_q_raw": nanoplot_raw.mean_q,
+                "r1_mean_readlength_raw": nanoplot_raw.mean_readlength,
+                "r1_mean_q_clean": nanoplot_clean.mean_q,
+                "r1_mean_readlength_clean": nanoplot_clean.mean_readlength,
+                "r1_gc_percent_raw": nanoplot_raw.gc_percent,
+                "r1_gc_percent_clean": nanoplot_clean.gc_percent,
+                "est_coverage_raw": nanoplot_raw.est_coverage,
+                "est_coverage_clean": nanoplot_clean.est_coverage,
+                "assembly_length": quast.genome_length,
+                "number_contigs": quast.number_contigs,
+                "n50_value": quast.n50_value,
+                "quast_gc_percent": quast.gc_percent,
+                "busco_completeness": busco.busco_results,
+                "mapping_stats_coverage": medea_magic.mapping_stats_coverage,
+                "mapping_stats_depth": medea_magic.mapping_stats_depth,
+                "mapping_stats_percentage_mapped_reads": medea_magic.mapping_stats_percentage_mapped_reads
+              }
+          }
+        }
       }
     }
   }
@@ -224,6 +255,9 @@ workflow theiaeuk_ont {
     String? gambit_db_version = gambit.gambit_db_version
     String? medea_tag = gambit.merlin_tag
     String? gambit_docker = gambit.gambit_docker
+    # QC_Check Results
+    String? qc_check = qc_check_task.qc_check
+    File? qc_standard = qc_check_task.qc_standard
     # C. auris specific outputs for cladetyper
     String? cladetyper_clade = medea_magic.clade_type
     String? cladetyper_version = medea_magic.cladetyper_version

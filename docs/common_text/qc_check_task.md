@@ -19,6 +19,10 @@ fragment: true
 <!-- if: theiaprok|theiaeuk -->
     The QC Check applies quality thresholds according to the sample taxa. The sample taxa is taken from the `gambit_predicted_taxon` value inferred by the GAMBIT module OR can be manually provided by the user using the `expected_taxon` workflow input.
 <!-- endif -->
+<!-- if: theiaeuk -->
+
+    Read GC content thresholds are checked against the `fastq_scan` GC percentages (`r1_gc_percent_*`, `r2_gc_percent_*`, and `combined_gc_percent_*`) in TheiaEuk_Illumina_PE and against the `NanoPlot` GC percentages (`r1_gc_percent_*`) in TheiaEuk_ONT. The `mapping_stats_coverage`, `mapping_stats_depth`, and `mapping_stats_percentage_mapped_reads` thresholds are checked against the reference-based read mapping statistics, which are only generated for taxa with an organism-specific reference or when a reference is provided by the user (see the [Organism-specific characterization](#organism-specific-characterization) section); leave these columns blank for other taxa.
+<!-- endif -->
 
     ??? toggle "Formatting the _qc_check_table.tsv_"
         - The first column of the qc_check_table lists the `organism` that the task will assess and the header of this column must be "**taxon**".
@@ -38,6 +42,7 @@ fragment: true
 <!-- endif -->
 <!-- if: theiaeuk -->
         - TheiaEuk_Illumina_PE_PHB: [theiaeuk_qc_check_template.tsv](../../assets/files/TheiaEuk_qc_check_template.tsv)
+        - TheiaEuk_ONT_PHB: [theiaeuk_ont_qc_check_template.tsv](../../assets/files/TheiaEuk_ONT_qc_check_template.tsv)
 <!-- endif -->
 <!-- if: freyja -->
         - Freyja_FASTQ: [freyja_qc_check_template.tsv](../../assets/files/Freyja_FASTQ_qc_check_template.tsv)

@@ -155,6 +155,27 @@ workflow theiaeuk_illumina_pe {
           memory = busco_memory,
           docker = busco_docker_image
       }
+      call medea_magic_workflow.medea_magic {
+        input:
+          medea_tag = gambit.merlin_tag,
+          assembly = digger_denovo.assembly_fasta,
+          samplename = samplename,
+          read1 = read_QC_trim.read1_clean,
+          read2 = read_QC_trim.read2_clean,
+          ont_data = false,
+          # mask ONT-specific inputs from the user
+          clair3_model = "",
+          clair3_variant_quality = 0,
+          clair3_include_all_contigs = false,
+          clair3_enable_haploid_precise = false,
+          clair3_disable_phasing = false,
+          clair3_enable_gvcf = false,
+          clair3_enable_long_indel = false,
+          clair3_docker = "",
+          clair3_cpu = 0,
+          clair3_memory = 0,
+          clair3_disk_size = 0
+      }
       if (defined(qc_check_table)) {
         call qc_check.qc_check_phb as qc_check_task {
           input:
@@ -180,34 +201,22 @@ workflow theiaeuk_illumina_pe {
               "combined_mean_readlength_clean": cg_pipeline_clean.combined_mean_readlength,
               "est_coverage_raw": cg_pipeline_raw.est_coverage,
               "est_coverage_clean": cg_pipeline_clean.est_coverage,
+              "r1_gc_percent_raw": read_QC_trim.fastq_scan_r1_gc_percent_raw,
+              "r2_gc_percent_raw": read_QC_trim.fastq_scan_r2_gc_percent_raw,
+              "combined_gc_percent_raw": read_QC_trim.fastq_scan_gc_percent_raw,
+              "r1_gc_percent_clean": read_QC_trim.fastq_scan_r1_gc_percent_clean,
+              "r2_gc_percent_clean": read_QC_trim.fastq_scan_r2_gc_percent_clean,
+              "combined_gc_percent_clean": read_QC_trim.fastq_scan_gc_percent_clean,
               "assembly_length": quast.genome_length,
               "number_contigs": quast.number_contigs,
               "n50_value": quast.n50_value,
               "quast_gc_percent": quast.gc_percent,
-              "busco_completeness": busco.busco_results
+              "busco_completeness": busco.busco_results,
+              "mapping_stats_coverage": medea_magic.mapping_stats_coverage,
+              "mapping_stats_depth": medea_magic.mapping_stats_depth,
+              "mapping_stats_percentage_mapped_reads": medea_magic.mapping_stats_percentage_mapped_reads
             }
         }
-      }
-      call medea_magic_workflow.medea_magic {
-        input:
-          medea_tag = gambit.merlin_tag,
-          assembly = digger_denovo.assembly_fasta,
-          samplename = samplename,
-          read1 = read_QC_trim.read1_clean,
-          read2 = read_QC_trim.read2_clean,
-          ont_data = false,
-          # mask ONT-specific inputs from the user
-          clair3_model = "",
-          clair3_variant_quality = 0,
-          clair3_include_all_contigs = false,
-          clair3_enable_haploid_precise = false,
-          clair3_disable_phasing = false,
-          clair3_enable_gvcf = false,
-          clair3_enable_long_indel = false,
-          clair3_docker = "",
-          clair3_cpu = 0,
-          clair3_memory = 0,
-          clair3_disk_size = 0
       }
     }
   }
