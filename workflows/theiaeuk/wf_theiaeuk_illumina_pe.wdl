@@ -363,6 +363,7 @@ workflow theiaeuk_illumina_pe {
     File? mapping_stats_cov_stats = medea_magic.mapping_stats_cov_stats
     File? mapping_stats_flagstat = medea_magic.mapping_stats_flagstat
     # Gene Coverage Outputs
+    String? gene_query = medea_magic.gene_query
     File? gene_coverage_stats = medea_magic.gene_coverage_stats
     String? gene_coverage_reads_mapped = medea_magic.gene_coverage_reads_mapped
     String? gene_coverage_mean_percent_coverage = medea_magic.gene_coverage_mean_breadth

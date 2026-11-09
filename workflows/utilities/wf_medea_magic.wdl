@@ -352,6 +352,8 @@ workflow medea_magic {
     File? mapping_stats_cov_hist = mapping_stats.cov_hist
     File? mapping_stats_cov_stats = mapping_stats.cov_stats
     File? mapping_stats_flagstat = mapping_stats.flagstat
+    # gene query actually used (user-supplied or organism-derived)
+    String gene_query = resolved_query_genes
     # gene coverage
     File? gene_coverage_stats = gene_coverage.gene_coverage_stats
     String? gene_coverage_reads_mapped = gene_coverage.num_reads_aligned_to_genes

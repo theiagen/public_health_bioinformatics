@@ -513,6 +513,7 @@ gene_coverage_query_check_status	String	PASS if every gene query was found in th
 gene_coverage_reads_by_gene	Map[String,String]	A JSON map relating gene queries to the number of reads mapped	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 gene_coverage_reads_mapped	String	Number of reads mapped to query genes	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 gene_coverage_stats	File	A tab-delimited table depicting gene coverage depth and breadth on a gene-by-gene basis	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+gene_query	String	Comma-delimited gene query used for gene coverage and gene variant annotation (user-supplied query_genes, else the organism-specific default)	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 generated_accessions	File	Text file mapping the BioSample accession with its sample name.	Terra_2_NCBI
 genoflu_all_segments	String	The genotypes for each individual flu segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 genoflu_genotype	String	The genotype of the whole genome, based off of the individual segments types	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
