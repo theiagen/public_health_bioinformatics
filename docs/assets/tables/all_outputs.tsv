@@ -769,6 +769,8 @@ nanoplot_num_reads_clean1	Int	Number of clean reads	Freyja_FASTQ, TheiaCoV_ONT, 
 nanoplot_num_reads_raw1	Int	Number of raw reads	Freyja_FASTQ, TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT
 nanoplot_r1_est_coverage_clean	Float	Estimated coverage on the clean reads by nanoplot	Freyja_FASTQ, TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT
 nanoplot_r1_est_coverage_raw	Float	Estimated coverage on the raw reads by nanoplot	Freyja_FASTQ, TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT
+nanoplot_r1_gc_percent_clean	Float	Percent GC content of clean reads as calculated by seqkit	Freyja_FASTQ, TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT
+nanoplot_r1_gc_percent_raw	Float	Percent GC content of raw reads as calculated by seqkit	Freyja_FASTQ, TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT
 nanoplot_r1_mean_q_clean	Float	Mean quality score of clean forward reads	Freyja_FASTQ, TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT
 nanoplot_r1_mean_q_raw	Float	Mean quality score of raw forward reads	Freyja_FASTQ, TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT
 nanoplot_r1_mean_readlength_clean	Float	Mean read length of clean forward reads	Freyja_FASTQ, TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT
