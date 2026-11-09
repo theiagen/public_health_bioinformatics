@@ -377,7 +377,7 @@ workflow theiaeuk_illumina_pe {
     File? snpeff_gene_variants_summary_html = medea_magic.snpeff_gene_variants_summary_html
     File? snpeff_gene_variants_genes_txt = medea_magic.snpeff_gene_variants_genes_txt
     File? snpeff_gene_variants_report_tsv = medea_magic.snpeff_gene_variants_report_tsv
-    String? snpeff_gene_variants_report = medea_magic.snpeff_gene_variants_report
-    String? snpeff_gene_variants_report_abbreviated = medea_magic.snpeff_gene_variants_report_abbreviated
+    String? snpeff_gene_variants_hits = medea_magic.snpeff_gene_variants_hits
+    String? snpeff_gene_variants_hits_abbreviated = medea_magic.snpeff_gene_variants_hits_abbreviated
   }
 }

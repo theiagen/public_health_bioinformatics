@@ -12,7 +12,7 @@ fragment: true
     3. **Annotation** - SnpEff annotates the consequences of gene variants. Only variants overlapping annotated features are annotated. When the VCF holds no variants, the build and annotation are skipped.
     4. **Reporting** - the SnpEff VCF `ANN` entries are transformed into a gene-labelled report
 
-    Each entry of the `snpeff_gene_variants_report` output takes the form:
+    Each entry of the `snpeff_gene_variants_hits` output takes the form:
 
     ```
     <query>: "<product>" (<consequence> <HGVSc> <HGVSp>; <ref>:<ref depth> <alt>:<alt depth>)
@@ -26,7 +26,7 @@ fragment: true
 
     `<query>` is the `query_genes`/`query_genes_bed` term that selects the gene. When no query matches the annotated feature, the product name is normalized into the label (`lanosterol.14-alpha.demethylase`). The product is quoted because product names frequently contain commas. The per-allele read depths are taken from the VCF's `AD` field primarily and are omitted when the record carries neither - otherwise `RO`/`AO` are used.
 
-    The `snpeff_gene_variants_report_abbreviated` output condenses each entry into `<query>:<amino acid change>` using one-letter residue codes (e.g. `ERG11:K143R`), falling back to `<query>:<nucleotide change>` (e.g. `ERG11:428A>G`) for a variant with no protein change. When no variants are reported, both outputs read `No variants detected: <query_genes>`.
+    The `snpeff_gene_variants_hits_abbreviated` output condenses each entry into `<query>:<amino acid change>` using one-letter residue codes (e.g. `ERG11:K143R`), falling back to `<query>:<nucleotide change>` (e.g. `ERG11:428A>G`) for a variant with no protein change. When no variants are reported, both outputs read `No variants detected: <query_genes>`.
 
     Entries are omitted if: they are not annotated against a transcript (e.g. `intergenic_region`, incomplete transcript, or lacking a stop codon), resolve to neither a coding nor a protein change, and if the variant cannot be traced back to a gene product in the reference GFF. The full set of annotations is retained in `snpeff_gene_variants_vcf`, alongside SnpEff's HTML summary (`snpeff_gene_variants_summary_html`) and per-gene effect counts (`snpeff_gene_variants_genes_txt`). Every reported entry is also tabulated in `snpeff_gene_variants_report_tsv` as follows:
 

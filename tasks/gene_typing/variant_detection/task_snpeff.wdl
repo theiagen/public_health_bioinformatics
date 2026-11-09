@@ -141,8 +141,8 @@ task snpeff {
     File? snpeff_summary_html = "~{samplename}_~{vcf_scope}_snpeff_summary.html"
     File? snpeff_genes_txt = "~{samplename}_~{vcf_scope}_snpeff_summary.genes.txt"
     File? snpeff_variant_report_tsv = "~{samplename}_~{vcf_scope}_variant_report.tsv"
-    String snpeff_variant_report = read_string("VARIANT_REPORT")
-    String snpeff_variant_report_abbreviated = read_string("VARIANT_REPORT_ABBREVIATED")
+    String snpeff_variant_hits = read_string("VARIANT_REPORT")
+    String snpeff_variant_hits_abbreviated = read_string("VARIANT_REPORT_ABBREVIATED")
   }
   runtime {
     docker: docker
