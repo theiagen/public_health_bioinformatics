@@ -97,7 +97,7 @@ workflow organism_parameters {
     File flu_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-flu-1.6.3-2.tar.gz"
 
     # assign genome length based on type returned from abricate
-    # lengths were obtained by the average of irma segment lengths for the subtypes
+    # lengths are the summed IRMA reference segment lengths (Type A uses the H1N1 total)
     if (flu_type == "Type_A") {
       Int type_a_genome_len = 13164
     }
