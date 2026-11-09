@@ -3,7 +3,7 @@ title: Task Fragment `nanoplot`
 fragment: true
 ---
 ??? task "`NanoPlot`: Read Quantification"
-    NanoPlot is used for the determination of mean quality scores, read lengths, and number of reads. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect **fewer** clean reads than raw reads.
+    NanoPlot is used for the determination of mean quality scores, read lengths, and number of reads. GC content is calculated with SeqKit. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect **fewer** clean reads than raw reads.
 
 <!-- if: ont -->
     While this task currently is run _outside_ of the `read_QC_trim_ont` workflow, it is being included here as it calculates statistics on the read data. This is done so that the actual assembly genome lengths can be used (if an estimated genome length is not provided by the user) to ensure the estimated coverage statistics are accurate.
