@@ -450,6 +450,7 @@ workflow theiaviral_ont {
     # VADR outputs
     File? vadr_alerts_list = morgana_magic.vadr_alerts_list
     String? vadr_num_alerts = morgana_magic.vadr_num_alerts
+    String? vadr_frameshift_stop_codon_num_alerts = morgana_magic.vadr_frameshift_stop_codon_num_alerts
     File? vadr_feature_tbl_pass = morgana_magic.vadr_feature_tbl_pass
     File? vadr_feature_tbl_fail = morgana_magic.vadr_feature_tbl_fail
     File? vadr_classification_summary_file = morgana_magic.vadr_classification_summary_file
