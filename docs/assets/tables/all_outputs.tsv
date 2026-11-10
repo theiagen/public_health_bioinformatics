@@ -494,7 +494,6 @@ gamma_fasta	File	The FASTA file reporting gene matches if boolean was set to tru
 gamma_gff	File	The GFF file reporting gene matches if boolean was set to true	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 gamma_results	File	The .gamma file reporting gene matches	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 gamma_version	String	The version of GAMMA used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-gatk_filtered_vcf	File	VCF annotated following GATK VariantFiltration with applied filter flags - contains entries that failed filtration	TheiaEuk_Illumina_PE
 gatk_genotype_vcf	File	VCF annotated with the raw, unfiltered variant calls	TheiaEuk_Illumina_PE
 gatk_genotype_vcf_index	File	VCF index for the raw, unfiltered variant calls	TheiaEuk_Illumina_PE
 gatk_percent_passing_variants	Float	Percent of variant records that passed filtering	TheiaEuk_Illumina_PE
@@ -505,13 +504,10 @@ genbank_metadata	File	**Only for SARS-CoV-2 submission**: GenBank metadata for u
 gene_coverage_breadth_by_gene	Map[String,String]	A JSON map relating gene queries to their percent breadth of coverage	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 gene_coverage_depth_by_gene	Map[String,Float]	A JSON map relating gene queries to their depth of coverage	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 gene_coverage_depth_by_gene	Map[String,String]	A JSON map relating gene queries to their depth of coverage	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-gene_coverage_mean_depth	String	Mean depth of coverage across the query genes	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-gene_coverage_mean_percent_coverage	String	Mean breadth of coverage across the query genes	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 gene_coverage_percent_coverage_by_gene	Map[String,Float]	A JSON map relating gene queries to their percent breadth of coverage	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 gene_coverage_query_check	String	Comma-delimited report of whether each gene query was found in the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 gene_coverage_query_check_status	String	PASS if every gene query was found in the reference genome, else FAIL	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 gene_coverage_reads_by_gene	Map[String,String]	A JSON map relating gene queries to the number of reads mapped	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-gene_coverage_reads_mapped	String	Number of reads mapped to query genes	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 gene_coverage_stats	File	A tab-delimited table depicting gene coverage depth and breadth on a gene-by-gene basis	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 gene_query	String	Comma-delimited gene query used for gene coverage and gene variant annotation	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 generated_accessions	File	Text file mapping the BioSample accession with its sample name.	Terra_2_NCBI
@@ -1228,7 +1224,6 @@ snippy_wg_snp_matrix	File	CSV file of whole genome pairwise SNP distances betwee
 snp_sites_docker	String	Docker file used for SNP-sites	Core_Gene_SNP
 snp_sites_multifasta	File	Post-processed multifasta output by SNP-sites	Core_Gene_SNP
 snp_sites_version	String	Version of SNP-sites used	Core_Gene_SNP
-snpeff_gene_variants_genes_txt	File	SnpEff per-gene summary of variant effect counts in the query gene regions	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 snpeff_gene_variants_hits	String	A comma-delimited list of SnpEff variant annotations detected in the query gene regions	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 snpeff_gene_variants_hits_abbreviated	String	A comma-delimited list of abbreviated SnpEff variant annotations (GENE:protein change, else GENE:nucleotide change) detected in the query gene regions	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 snpeff_gene_variants_report_tsv	File	A TSV file depicting SnpEff variant reporting for the query gene regions	TheiaEuk_Illumina_PE, TheiaEuk_ONT

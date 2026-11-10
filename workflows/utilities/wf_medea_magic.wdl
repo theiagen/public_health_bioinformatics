@@ -329,8 +329,6 @@ workflow medea_magic {
     String? gatk_version = gatk_variants.gatk_version
     File? gatk_genotype_vcf = gatk_variants.gatk_genotype_vcf
     File? gatk_genotype_vcf_index = gatk_variants.gatk_genotype_vcf_index
-    File? gatk_filtered_vcf = gatk_filter.gatk_filtered_vcf
-    File? gatk_filtered_vcf_index = gatk_filter.gatk_filtered_vcf_index
     File? gatk_selected_vcf = gatk_filter.gatk_selected_vcf
     File? gatk_selected_vcf_index = gatk_filter.gatk_selected_vcf_index
     Float? gatk_percent_passing_variants = gatk_filter.gatk_percent_passing
@@ -356,9 +354,6 @@ workflow medea_magic {
     String gene_query = resolved_query_genes
     # gene coverage
     File? gene_coverage_stats = gene_coverage.gene_coverage_stats
-    String? gene_coverage_reads_mapped = gene_coverage.num_reads_aligned_to_genes
-    String? gene_coverage_mean_breadth = gene_coverage.mean_breadth
-    String? gene_coverage_mean_depth = gene_coverage.mean_depth
     Map[String, String]? gene_coverage_depth_by_gene = gene_coverage.depth_by_gene
     Map[String, String]? gene_coverage_breadth_by_gene = gene_coverage.breadth_by_gene
     Map[String, String]? gene_coverage_reads_by_gene = gene_coverage.reads_by_gene
@@ -368,7 +363,6 @@ workflow medea_magic {
     String? snpeff_gene_variants_version = snpeff_gene_variants.snpeff_version
     File? snpeff_gene_variants_vcf = snpeff_gene_variants.snpeff_annotated_vcf
     File? snpeff_gene_variants_summary_html = snpeff_gene_variants.snpeff_summary_html
-    File? snpeff_gene_variants_genes_txt = snpeff_gene_variants.snpeff_genes_txt
     File? snpeff_gene_variants_report_tsv = snpeff_gene_variants.snpeff_variant_report_tsv
     String? snpeff_gene_variants_hits = snpeff_gene_variants.snpeff_variant_hits
     String? snpeff_gene_variants_hits_abbreviated = snpeff_gene_variants.snpeff_variant_hits_abbreviated
