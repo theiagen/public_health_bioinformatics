@@ -888,3 +888,7 @@ div.searchable-table .table-reset-button:hover,
 .md-typeset .config-builder .cb-key-note {
   font-size: 0.7rem;
 }
+
+.md-typeset .grid.cards.four-row {
+  grid-template-columns: repeat(4, 1fr);
+}
