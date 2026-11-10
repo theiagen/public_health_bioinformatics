@@ -67,21 +67,21 @@ task mapping_stats {
 
     # report total stats
     with open("COVERAGE", "w") as f:
-      f.write(str(total_breadth))
+      f.write(f"{total_breadth:.2f}")
     with open("DEPTH", "w") as f:
-      f.write(str(total_depth))
+      f.write(f"{total_depth:.2f}")
     with open("MEANBASEQ", "w") as f:
-      f.write(str(total_meanbaseq))
+      f.write(f"{total_meanbaseq:.2f}")
     with open("MEANMAPQ", "w") as f:
-      f.write(str(total_meanmapq))
+      f.write(f"{total_meanmapq:.2f}")
 
     # report sequence specific mapping stats
     cov_dict = {}
     depth_dict = {}
     read_dict = {}
     for seq, part in seq2data.items():
-      cov_dict[seq] = part["coverage"]
-      depth_dict[seq] = part["meandepth"]
+      cov_dict[seq] = round(part["coverage"], 2)
+      depth_dict[seq] = round(part["meandepth"], 2)
       read_dict[seq] = part["reads"]
     with open("SEQ2COVERAGE.json", "w") as f:
       json.dump(cov_dict, f, indent=4)
@@ -110,7 +110,7 @@ task mapping_stats {
     percentage_mapped_reads=$(awk "BEGIN {printf \"%.2f\", ($mapped_reads / $total_reads) * 100}")
 
     # If the percentage calculation fails, default to 0.0
-    if [ -z "$percentage_mapped_reads" ]; then percentage_mapped_reads="0.0"; fi
+    if [ -z "$percentage_mapped_reads" ]; then percentage_mapped_reads="0.00"; fi
 
     # Output the result
     echo $percentage_mapped_reads | tee PERCENTAGE_MAPPED_READS
