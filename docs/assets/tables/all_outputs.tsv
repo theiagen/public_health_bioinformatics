@@ -494,11 +494,11 @@ gamma_fasta	File	The FASTA file reporting gene matches if boolean was set to tru
 gamma_gff	File	The GFF file reporting gene matches if boolean was set to true	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 gamma_results	File	The .gamma file reporting gene matches	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 gamma_version	String	The version of GAMMA used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-gatk_genotype_vcf	File	VCF annotated with the raw, unfiltered variant calls	TheiaEuk_Illumina_PE
-gatk_genotype_vcf_index	File	VCF index for the raw, unfiltered variant calls	TheiaEuk_Illumina_PE
+gatk_genome_variants_unfiltered_vcf	File	VCF annotated with the raw, unfiltered variant calls	TheiaEuk_Illumina_PE
+gatk_genome_variants_unfiltered_vcf_index	File	VCF index for the raw, unfiltered variant calls	TheiaEuk_Illumina_PE
+gatk_genome_variants_version	String	Version of GATK used for variant calling and filtering	TheiaEuk_Illumina_PE
 gatk_percent_passing_variants	Float	Percent of variant records that passed filtering	TheiaEuk_Illumina_PE
 gatk_selected_vcf	File	Records extracted from the filtered VCF by GATK SelectVariants - removes entries that failed filtration	TheiaEuk_Illumina_PE
-gatk_version	String	Version of GATK used for variant calling and filtering	TheiaEuk_Illumina_PE
 genbank_fasta	File	**Only for SARS-CoV-2 submission**: GenBank fasta file for upload	Mercury_Prep_N_Batch
 genbank_metadata	File	**Only for SARS-CoV-2 submission**: GenBank metadata for upload	Mercury_Prep_N_Batch
 gene_coverage_breadth_by_gene	Map[String,String]	A JSON map relating gene queries to their percent breadth of coverage	TheiaEuk_Illumina_PE, TheiaEuk_ONT

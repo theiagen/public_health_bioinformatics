@@ -156,7 +156,7 @@ workflow medea_magic {
           disk_size = read_aligner_disk_size,
           docker = read_aligner_docker
       }
-      call gatk_variants_task.gatk_variants as gatk_variants {
+      call gatk_variants_task.gatk_variants as gatk_genome_variants {
         input:
           samplename = samplename,
           bam = bwa_variant_calling.sorted_bam,
@@ -173,8 +173,8 @@ workflow medea_magic {
         input:
           samplename = samplename,
           reference_genome = resolved_reference_fasta,
-          vcf = gatk_variants.gatk_genotype_vcf,
-          vcf_index = gatk_variants.gatk_genotype_vcf_index,
+          vcf = gatk_genome_variants.gatk_genotype_vcf,
+          vcf_index = gatk_genome_variants.gatk_genotype_vcf_index,
           min_variant_quality = gatk_filter_min_variant_quality,
           min_depth = gatk_filter_min_depth,
           min_map_quality = gatk_filter_min_map_quality,
@@ -326,9 +326,9 @@ workflow medea_magic {
     File? reference_gff_used = used_reference_gff
     # variant calling - illumina (bwa alignment + gatk)
     String? bwa_version = bwa_variant_calling.bwa_version
-    String? gatk_version = gatk_variants.gatk_version
-    File? gatk_genotype_vcf = gatk_variants.gatk_genotype_vcf
-    File? gatk_genotype_vcf_index = gatk_variants.gatk_genotype_vcf_index
+    String? gatk_genome_variants_version = gatk_genome_variants.gatk_version
+    File? gatk_genome_variants_genotype_vcf = gatk_genome_variants.gatk_genotype_vcf
+    File? gatk_genome_variants_genotype_vcf_index = gatk_genome_variants.gatk_genotype_vcf_index
     File? gatk_selected_vcf = gatk_filter.gatk_selected_vcf
     File? gatk_selected_vcf_index = gatk_filter.gatk_selected_vcf_index
     Float? gatk_percent_passing_variants = gatk_filter.gatk_percent_passing

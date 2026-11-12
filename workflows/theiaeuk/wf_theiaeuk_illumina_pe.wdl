@@ -360,9 +360,9 @@ workflow theiaeuk_illumina_pe {
     String? bwa_version = medea_magic.bwa_version
     File? variant_calling_bam = medea_magic.variant_calling_bam
     File? variant_calling_bai = medea_magic.variant_calling_bai
-    String? gatk_version = medea_magic.gatk_version
-    File? gatk_unfiltered_vcf = medea_magic.gatk_genotype_vcf
-    File? gatk_unfiltered_vcf_index = medea_magic.gatk_genotype_vcf_index
+    String? gatk_genome_variants_version = medea_magic.gatk_genome_variants_version
+    File? gatk_genome_variants_unfiltered_vcf = medea_magic.gatk_genome_variants_genotype_vcf
+    File? gatk_genome_variants_unfiltered_vcf_index = medea_magic.gatk_genome_variants_genotype_vcf_index
     # filtered here is the SELECTED variants, whereas medea_magic.gatk_filtered_vcf is simply an annotated VCF
     File? gatk_filtered_vcf = medea_magic.gatk_selected_vcf
     Float? gatk_percent_passing_variants = medea_magic.gatk_percent_passing_variants
