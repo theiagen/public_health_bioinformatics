@@ -709,6 +709,7 @@ mapping_stats_depth	Float	Mean depth of coverage of the reference genome	TheiaEu
 mapping_stats_flagstat	File	samtools flagstat from read mapping to the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 mapping_stats_percentage_mapped_reads	Float	Percent of cleaned reads mapped to the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 mapping_stats_samtools_version	String	samtools version used	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+mapping_stats_total_snps	Int	Number of SNP records in the filtered (PASS) VCF called against the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 mapping_stats_output	File	Statistics file from read mapping to the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 mashtree_docker	String	The Docker image used to run the mashtree task	MashTree_FASTA
 mashtree_filtered_metadata	File	Optional output file with filtered metadata that is only produced if the optional `summarize_data` task is used	MashTree_FASTA

@@ -6,6 +6,7 @@ task mapping_stats {
     String samplename
     File read1
     File? read2
+    File? vcf # variants called against the mapped reference (bgzipped or uncompressed); enables total_snps
     Int disk_size = 100
     Int memory = 8
     Int cpu = 2
@@ -91,6 +92,34 @@ task mapping_stats {
       json.dump(read_dict, f, indent=4)
     CODE
 
+    # count SNPs in the optional VCF; TOTAL_SNPS is only written when a VCF is provided
+    python3 <<'CODE'
+    import gzip
+
+    vcf_path = "~{default="" vcf}"
+    if vcf_path:
+      # detect bgzip/gzip compression from the magic number rather than the extension
+      with open(vcf_path, "rb") as f:
+        is_gzipped = f.read(2) == b"\x1f\x8b"
+      opener = gzip.open if is_gzipped else open
+
+      # count records with a single-base REF and at least one single-base ALT; multi-allelic
+      # records count once, while indels, MNPs, and spanning deletions ("*") are excluded
+      total_snps = 0
+      with opener(vcf_path, "rt") as f:
+        for line in f:
+          if line.startswith("#") or not line.strip():
+            continue
+          ref, alts = line.split("\t", 5)[3:5]
+          if len(ref) != 1:
+            continue
+          if any(len(alt) == 1 and alt.upper() in "ACGT" and alt.upper() != ref.upper() for alt in alts.split(",")):
+            total_snps += 1
+
+      with open("TOTAL_SNPS", "w") as f:
+        f.write(str(total_snps))
+    CODE
+
     # parse inputted reads for total read count
     read1_count=$(samtools view -c ~{read1} 2>/dev/null || echo 0)
     if [ ~{if defined(read2) then "true" else "false"} == "true" ]; then
@@ -133,6 +162,7 @@ task mapping_stats {
     Float meanbaseq = read_string("MEANBASEQ")
     Float meanmapq = read_string("MEANMAPQ")
     Float percentage_mapped_reads = read_string("PERCENTAGE_MAPPED_READS")
+    Int? total_snps = read_int("TOTAL_SNPS")
   }
   runtime {
     docker: docker

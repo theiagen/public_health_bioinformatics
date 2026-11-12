@@ -371,6 +371,7 @@ workflow theiaeuk_illumina_pe {
     Float? mapping_stats_percentage_mapped_reads = medea_magic.mapping_stats_percentage_mapped_reads
     Float? mapping_stats_depth = medea_magic.mapping_stats_depth
     Float? mapping_stats_percent_coverage = medea_magic.mapping_stats_coverage
+    Int? mapping_stats_total_snps = medea_magic.mapping_stats_total_snps
     File? mapping_stats_cov_hist = medea_magic.mapping_stats_cov_hist
     File? mapping_stats_cov_stats = medea_magic.mapping_stats_cov_stats
     # Gene Coverage Outputs
