@@ -64,7 +64,7 @@ task seqsender_build_and_prep {
       --read1_fastqs "${READ1_FASTQS[@]}" \
       --read2_fastqs "${READ2_FASTQS[@]}" \
       ~{"--sra_transfer_bucket " + sra_transfer_gcp_bucket} \
-      ~{"--organism " + seqsender_organism_tag} \
+      ~{"--seqsender_organism_tag " + seqsender_organism_tag} \
       ~{if submit_to_biosample then '--biosample' else ''} \
       ~{if submit_to_sra then '--sra' else ''} \
       ~{if submit_to_genbank then '--genbank' else ''} \
