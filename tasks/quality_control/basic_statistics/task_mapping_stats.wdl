@@ -103,21 +103,31 @@ task mapping_stats {
         is_gzipped = f.read(2) == b"\x1f\x8b"
       opener = gzip.open if is_gzipped else open
 
-      # count records with a single-base REF and at least one single-base ALT; multi-allelic
-      # records count once, while indels, MNPs, and spanning deletions ("*") are excluded
-      total_snps = 0
+      # collect the (contig, position) of each SNP so a site counts once, even when its alleles
+      # are split across records (e.g. iVar writes one record per ALT allele)
+      snp_sites = set()
       with opener(vcf_path, "rt") as f:
         for line in f:
           if line.startswith("#") or not line.strip():
             continue
-          ref, alts = line.split("\t", 5)[3:5]
-          if len(ref) != 1:
+          chrom, pos, _, ref, alts, _, filt = line.split("\t", 8)[:7]
+          # skip records that did not pass filtering (FILTER of PASS or unfiltered ".")
+          if filt not in ("PASS", "."):
             continue
-          if any(len(alt) == 1 and alt.upper() in "ACGT" and alt.upper() != ref.upper() for alt in alts.split(",")):
-            total_snps += 1
+          ref = ref.upper()
+          for alt in alts.upper().split(","):
+            # require a same-length allele of unambiguous bases; excludes indels, spanning
+            # deletions ("*"), missing (".") and symbolic ("<...>") alleles
+            if len(alt) != len(ref) or not set(alt) <= set("ACGT"):
+              continue
+            # a SNP differs from REF at exactly one base (more is an MNP); the offset locates SNPs
+            # padded to a longer REF in records shared with a deletion (e.g. REF=AT ALT=A,GT)
+            diffs = [i for i, (r, a) in enumerate(zip(ref, alt)) if r != a]
+            if len(diffs) == 1:
+              snp_sites.add((chrom, int(pos) + diffs[0]))
 
       with open("TOTAL_SNPS", "w") as f:
-        f.write(str(total_snps))
+        f.write(str(len(snp_sites)))
     CODE
 
     # parse inputted reads for total read count

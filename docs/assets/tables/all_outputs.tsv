@@ -709,7 +709,7 @@ mapping_stats_depth	Float	Mean depth of coverage of the reference genome	TheiaEu
 mapping_stats_flagstat	File	samtools flagstat from read mapping to the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 mapping_stats_percentage_mapped_reads	Float	Percent of cleaned reads mapped to the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 mapping_stats_samtools_version	String	samtools version used	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-mapping_stats_total_snps	Int	Number of SNP records in the filtered (PASS/".") VCF called against the reference genome. Excludes VCF records with multiple reference bases, such as indels, and ambiguous nucleotides.	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+mapping_stats_total_snps	Int	Number of SNP positions among passing (PASS/".") records of the VCF called against the reference genome. Excludes indels, multi-nucleotide variants, and alleles with ambiguous nucleotides.	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 mapping_stats_output	File	Statistics file from read mapping to the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 mashtree_docker	String	The Docker image used to run the mashtree task	MashTree_FASTA
 mashtree_filtered_metadata	File	Optional output file with filtered metadata that is only produced if the optional `summarize_data` task is used	MashTree_FASTA
@@ -1045,6 +1045,7 @@ read_mapping_meanmapq	Float	Mean mapping quality from read mapping	TheiaViral_Il
 read_mapping_percentage_mapped_reads	Float	Percentage of clean reads that mapped to the reference genome	TheiaViral_Illumina_PE, TheiaViral_ONT
 read_mapping_samtools_version	String	Version of samtools used in read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT
 read_mapping_statistics	File	Statistics file from read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT
+read_mapping_total_snps	Int	Number of SNP positions among passing (PASS/".") records of the VCF called against the reference genome. Excludes indels, multi-nucleotide variants, and alleles with ambiguous nucleotides.	TheiaViral_Illumina_PE, TheiaViral_ONT
 read_screen_clean	String	PASS or FAIL result from clean read screening; FAIL accompanied by the reason(s) for failure	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 read_screen_clean_tsv	File	Clean read screening report TSV depicting read counts, total read base pairs, and estimated genome length	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 read_screen_raw	String	PASS or FAIL result from raw read screening; FAIL accompanied by the reason(s) for failure	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT

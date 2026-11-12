@@ -254,6 +254,7 @@ workflow theiaviral_illumina_pe {
             samplename = samplename,
             read1 = select_first([rasusa.read1_subsampled, cat_lanes.read1_concatenated, kraken2_extract.extracted_read1, read1]),
             read2 = select_first([rasusa.read2_subsampled, cat_lanes.read2_concatenated, kraken2_extract.extracted_read2, read2]),
+            vcf = ivar_variants.sample_variants_vcf
         }
         # quality control metrics for consensus (ie. number of bases, degenerate bases, genome length)
         call consensus_qc_task.consensus_qc as consensus_qc {
@@ -427,6 +428,7 @@ workflow theiaviral_illumina_pe {
     Float? read_mapping_meanbaseq = read_mapping_stats.meanbaseq
     Float? read_mapping_meanmapq = read_mapping_stats.meanmapq
     Float? read_mapping_percentage_mapped_reads = read_mapping_stats.percentage_mapped_reads
+    Int? read_mapping_total_snps = read_mapping_stats.total_snps
     String? read_mapping_date = read_mapping_stats.date
     String? read_mapping_samtools_version = read_mapping_stats.samtools_version
     # Read Alignment - variant call outputs
