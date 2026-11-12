@@ -279,11 +279,11 @@ workflow theiaeuk_ont {
     String? minimap2_version = medea_magic.minimap2_version
     File? variant_calling_bam = medea_magic.variant_calling_bam
     File? variant_calling_bai = medea_magic.variant_calling_bai
-    String? clair3_version = medea_magic.clair3_version
-    File? clair3_variants_vcf = medea_magic.clair3_variants_vcf
-    File? clair3_variants_gvcf = medea_magic.clair3_variants_gvcf
-    String? clair3_docker = medea_magic.clair3_variants_docker
-    String? clair3_model_used = medea_magic.clair3_model_used
+    String? clair3_genome_variants_version = medea_magic.clair3_genome_variants_version
+    File? clair3_genome_variants_vcf = medea_magic.clair3_genome_variants_vcf
+    File? clair3_genome_variants_gvcf = medea_magic.clair3_genome_variants_gvcf
+    String? clair3_genome_variants_docker = medea_magic.clair3_genome_variants_docker
+    String? clair3_genome_variants_model_used = medea_magic.clair3_genome_variants_model_used
     # read mapping statistics
     String? mapping_stats_samtools_version = medea_magic.mapping_stats_samtools_version
     Float? mapping_stats_percentage_mapped_reads = medea_magic.mapping_stats_percentage_mapped_reads
