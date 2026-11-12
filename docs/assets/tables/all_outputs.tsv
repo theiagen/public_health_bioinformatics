@@ -236,7 +236,6 @@ cladetyper_gambit_version	String	The version of GAMBIT used for the analysis	Cau
 cladetyper_version	String	The version of Cladetyper used for the analysis	TheiaEuk_ONT
 clair3_aligned_bai	File	Index companion file to the bam file generated during the consensus assembly process	Clair3_Variants_ONT
 clair3_aligned_bam	File	Sorted BAM file containing the alignments of reads to the reference genome	Clair3_Variants_ONT
-clair3_aligned_fai	File	Index file for the reference genome	Clair3_Variants_ONT
 clair3_docker	String	Docker image used for Clair3	TheiaViral_ONT
 clair3_docker_image	String	Version of the Docker container used for Clair3 variant calling	Clair3_Variants_ONT
 clair3_genome_variants_docker	String	Docker image used for Clair3	TheiaEuk_ONT
@@ -248,6 +247,7 @@ clair3_genome_variants_version	String	Clair3 Version being used	TheiaEuk_ONT
 clair3_gvcf	File	Genomic VCF file from Clair3	TheiaViral_ONT
 clair3_model	String	Model used for Clair3 variant calling	TheiaViral_ONT
 clair3_model_used	String	Name of the Clair3 model used for variant calling	Clair3_Variants_ONT
+clair3_selected_vcf	File	Records from the Clair3 VCF with a PASS (or unset) FILTER - removes RefCall and LowQual entries	Clair3_Variants_ONT
 clair3_variants_gvcf	File	Optional genome VCF file containing information about all genomic positions, including non-variant sites	Clair3_Variants_ONT
 clair3_variants_vcf	File	Final merged VCF file containing high-confidence variant calls, combining results from both pileup and full-alignment approaches	Clair3_Variants_ONT
 clair3_variants_wf_version	String	Version of the PHB workflow used	Clair3_Variants_ONT
@@ -785,7 +785,7 @@ midas_secondary_genus_abundance	Float	Relative abundance of secondary genus	Thei
 midas_secondary_genus_coverage	Float	Absolute coverage of secondary genus	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 minimap2_docker	String	The Docker image of minimap2	Freyja_FASTQ, TheiaMeta_Illumina_PE, TheiaViral_ONT
 minimap2_out	File	Output file from Minimap2 alignment	TheiaViral_ONT
-minimap2_version	String	The version of minimap2	Freyja_FASTQ, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaViral_ONT
+minimap2_version	String	The version of minimap2	Clair3_Variants_ONT, Freyja_FASTQ, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaViral_ONT
 morgana_magic_organism	String	Standardized organism name used for characterization	TheiaViral_Illumina_PE, TheiaViral_ONT
 n50_value	Int	N50 of assembly calculated by QUAST	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 nanoplot_docker	String	Docker image for nanoplot	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT

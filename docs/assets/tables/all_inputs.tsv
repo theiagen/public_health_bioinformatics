@@ -524,6 +524,10 @@ clair3_variants_ont	clair3_include_all_contigs	Boolean	Call variants on all cont
 clair3_variants_ont	clair3_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Clair3_Variants_ONT	runtime	
 clair3_variants_ont	clair3_model	String	Model name for variant calling (see supported models for available options)	r1041_e82_400bps_sup_v500	Optional	Clair3_Variants_ONT	general	
 clair3_variants_ont	clair3_variant_quality	Int	Minimum variant quality score	2	Optional	Clair3_Variants_ONT	general	
+clair3_variants_ont	minimap2_cpu	Int	Number of CPUs to allocate to the minimap2 task	2	Optional	Clair3_Variants_ONT	runtime	
+clair3_variants_ont	minimap2_disk_size	Int	Amount of storage (in GB) to allocate to the minimap2 task	100	Optional	Clair3_Variants_ONT	runtime	
+clair3_variants_ont	minimap2_docker	String	The Docker container to use for the minimap2 task	us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22	Optional	Clair3_Variants_ONT	docker	
+clair3_variants_ont	minimap2_memory	Int	Amount of memory/RAM (in GB) to allocate to the minimap2 task	8	Optional	Clair3_Variants_ONT	runtime	
 clean_check_reads	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 clean_check_reads	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 clean_check_reads	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	docker	
@@ -1509,10 +1513,10 @@ metaspades_pe	kmers	String	Kmers to use for the task		Optional	TheiaMeta_Illumin
 metaspades_pe	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaMeta_Illumina_PE	runtime	
 metaspades_pe	metaspades_opts	String	Metaspades optional parameters		Optional	TheiaMeta_Illumina_PE	general	
 metaspades_pe	phred_offset	Int	Phred offset to use for the task	33	Optional	TheiaMeta_Illumina_PE	general	
-minimap2	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Clair3_Variants_ONT, Freyja_FASTQ, TheiaViral_ONT	runtime	
-minimap2	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Clair3_Variants_ONT, Freyja_FASTQ, TheiaViral_ONT	runtime	
-minimap2	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22	Optional	Clair3_Variants_ONT, Freyja_FASTQ, TheiaViral_ONT	docker	
-minimap2	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Clair3_Variants_ONT, Freyja_FASTQ, TheiaViral_ONT	runtime	
+minimap2	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Freyja_FASTQ, TheiaViral_ONT	runtime	
+minimap2	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ, TheiaViral_ONT	runtime	
+minimap2	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22	Optional	Freyja_FASTQ, TheiaViral_ONT	docker	
+minimap2	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ, TheiaViral_ONT	runtime	
 minimap2	query2	File	Internal component, do not modify		Optional	Clair3_Variants_ONT, Freyja_FASTQ, TheiaViral_ONT	general	
 minimap2_assembly	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaMeta_Illumina_PE	runtime	
 minimap2_assembly	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaMeta_Illumina_PE	runtime	
@@ -2083,10 +2087,6 @@ sam_to_sorted_bam	disk_size	Int	Amount of storage (in GB) to allocate to the tas
 sam_to_sorted_bam	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17	Optional	Clair3_Variants_ONT, Freyja_FASTQ, TheiaMeta_Illumina_PE	docker	
 sam_to_sorted_bam	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Clair3_Variants_ONT, Freyja_FASTQ, TheiaMeta_Illumina_PE	runtime	
 sam_to_sorted_bam	min_qual	Int	Minimum quality score for reads to be included in the analysis		Optional	Clair3_Variants_ONT, Freyja_FASTQ, TheiaMeta_Illumina_PE	general	
-samtools_faidx	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Clair3_Variants_ONT	runtime	
-samtools_faidx	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Clair3_Variants_ONT	runtime	
-samtools_faidx	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17	Optional	Clair3_Variants_ONT	docker	
-samtools_faidx	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Clair3_Variants_ONT	runtime	
 semibin	cpu	Int	Number of CPUs to allocate to the task	6	Optional	TheiaMeta_Illumina_PE	runtime	
 semibin	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaMeta_Illumina_PE	runtime	
 semibin	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/semibin:2.0.2--pyhdfd78af_0	Optional	TheiaMeta_Illumina_PE	docker	

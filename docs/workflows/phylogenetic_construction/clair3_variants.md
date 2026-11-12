@@ -67,21 +67,9 @@ The `Clair3_Variants` workflow processes Oxford Nanopore Technologies (ONT) sequ
         | Software Documentation | [samtools](https://www.htslib.org/doc/samtools.html) |
         | Original Publication(s) | [The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)<br>[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |
 
-??? task "`samtools faidx`: Reference Genome Indexing"
-
-    `samtools faidx` creates necessary index files for the reference. This indexing step is essential for enabling efficient random access to the reference sequence during variant calling.
-
-    !!! techdetails "samtools Technical Details"
-        | | Links |
-        |---|---|
-        | Task | [task_parse_mapping.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl) |
-        | Software Source Code | [samtools on GitHub](https://github.com/samtools/samtools) |
-        | Software Documentation | [samtools](https://www.htslib.org/doc/samtools.html) |
-        | Original Publication(s) | [The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)<br>[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |
-
 ??? task "`Clair3`: Variant Calling"
 
-    `Clair3` performs deep learning-based variant detection using a multi-stage approach. The process begins with pileup-based calling for initial variant identification, followed by full-alignment analysis for comprehensive variant detection. Results are merged into a final high-confidence call set.
+    `Clair3` performs deep learning-based variant detection using a multi-stage approach. The reference genome is indexed with `samtools faidx` within the task prior to variant calling. The process begins with pileup-based calling for initial variant identification, followed by full-alignment analysis for comprehensive variant detection. Results are merged into a final high-confidence call set.
 
     The variant calling pipeline employs specialized neural networks trained on ONT data to accurately identify:
     - Single nucleotide variants (SNVs)

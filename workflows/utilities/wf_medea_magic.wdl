@@ -5,12 +5,10 @@ import "../../tasks/gene_typing/drug_resistance/task_amr_search.wdl" as amr_sear
 import "../../tasks/alignment/task_bwa.wdl" as bwa_task
 import "../../tasks/gene_typing/variant_detection/task_gatk_variants.wdl" as gatk_variants_task
 import "../../tasks/gene_typing/variant_detection/task_gatk_filter.wdl" as gatk_filter_task
-import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
-import "../../tasks/gene_typing/variant_detection/task_clair3_variants.wdl" as clair3_task
-import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
 import "../../tasks/quality_control/basic_statistics/task_gene_coverage.wdl" as gene_coverage_task
 import "../../tasks/quality_control/basic_statistics/task_mapping_stats.wdl" as mapping_stats_task
 import "../../tasks/gene_typing/variant_detection/task_snpeff.wdl" as snpeff_task
+import "../standalone_modules/wf_clair3_variants_ont.wdl" as clair3_variants_ont_workflow
 
 workflow medea_magic {
   meta {
@@ -190,51 +188,33 @@ workflow medea_magic {
           disk_size = gatk_disk_size
       }
     }
-    # ONT long-read track: minimap2 alignment + Clair3 variant calling
+    # ONT long-read track: minimap2 alignment + Clair3 variant calling (Clair3_Variants_ONT)
     if (ont_data) {
-      call minimap2_task.minimap2 as minimap2_variant_calling {
+      call clair3_variants_ont_workflow.clair3_variants_ont as clair3_genome_variants {
         input:
-          query1 = select_first([read1]),
-          reference = resolved_reference_fasta,
-          samplename = samplename,
-          mode = "map-ont",
-          output_sam = true,
-          long_read_flags = true,
-          docker = read_aligner_docker,
-          cpu = read_aligner_cpu,
-          memory = read_aligner_memory,
-          disk_size = read_aligner_disk_size
-      }
-      # convert the minimap2 SAM to the sorted, indexed BAM Clair3 expects
-      call parse_mapping_task.sam_to_sorted_bam as ont_bam_sorting {
-        input:
-          sam = minimap2_variant_calling.minimap2_out,
-          samplename = samplename
-      }
-      # variant calling
-      call clair3_task.clair3_variants as clair3_genome_variants {
-        input:
-          alignment_bam_file = ont_bam_sorting.bam,
-          alignment_bam_file_index = ont_bam_sorting.bai,
+          read1 = select_first([read1]),
           reference_genome_file = resolved_reference_fasta,
-          sequencing_platform = "ont",
           samplename = samplename,
+          minimap2_docker = read_aligner_docker,
+          minimap2_cpu = read_aligner_cpu,
+          minimap2_memory = read_aligner_memory,
+          minimap2_disk_size = read_aligner_disk_size,
           clair3_model = clair3_model,
-          variant_quality = clair3_variant_quality,
-          include_all_contigs = clair3_include_all_contigs,
-          enable_haploid_precise = clair3_enable_haploid_precise,
-          disable_phasing = clair3_disable_phasing,
-          enable_gvcf = clair3_enable_gvcf,
-          enable_long_indel = clair3_enable_long_indel,
-          docker = clair3_docker,
-          memory = clair3_memory,
-          cpu = clair3_cpu,
-          disk_size = clair3_disk_size
+          clair3_variant_quality = clair3_variant_quality,
+          clair3_include_all_contigs = clair3_include_all_contigs,
+          clair3_enable_haploid_precise = clair3_enable_haploid_precise,
+          clair3_disable_phasing = clair3_disable_phasing,
+          clair3_enable_gvcf = clair3_enable_gvcf,
+          clair3_enable_long_indel = clair3_enable_long_indel,
+          clair3_docker = clair3_docker,
+          clair3_memory = clair3_memory,
+          clair3_cpu = clair3_cpu,
+          clair3_disk_size = clair3_disk_size
       }
     }
     # Resolve newly-generated alignment files for downstream use
-    File resolved_bam = select_first([bwa_variant_calling.sorted_bam, ont_bam_sorting.bam])
-    File resolved_bai = select_first([bwa_variant_calling.sorted_bai, ont_bam_sorting.bai])
+    File resolved_bam = select_first([bwa_variant_calling.sorted_bam, clair3_genome_variants.clair3_aligned_bam])
+    File resolved_bai = select_first([bwa_variant_calling.sorted_bai, clair3_genome_variants.clair3_aligned_bai])
     File resolved_vcf = select_first([gatk_filter.gatk_selected_vcf, clair3_genome_variants.clair3_selected_vcf])
     # genome-wide read mapping statistics against the resolved reference
     call mapping_stats_task.mapping_stats {
@@ -336,14 +316,14 @@ workflow medea_magic {
     File? gatk_genome_variants_selected_vcf_index = gatk_filter.gatk_selected_vcf_index
     Float? gatk_genome_variants_percent_passing = gatk_filter.gatk_percent_passing
     # variant calling - ont (minimap2 alignment + clair3)
-    String? minimap2_version = minimap2_variant_calling.minimap2_version
+    String? minimap2_version = clair3_genome_variants.minimap2_version
     File? variant_calling_bam = resolved_bam
     File? variant_calling_bai = resolved_bai
     String? clair3_genome_variants_version = clair3_genome_variants.clair3_version
     File? clair3_genome_variants_vcf = clair3_genome_variants.clair3_variants_vcf
     File? clair3_genome_variants_selected_vcf = clair3_genome_variants.clair3_selected_vcf
     File? clair3_genome_variants_gvcf = clair3_genome_variants.clair3_variants_gvcf
-    String? clair3_genome_variants_docker = clair3_genome_variants.clair3_variants_docker_image
+    String? clair3_genome_variants_docker = clair3_genome_variants.clair3_docker_image
     String? clair3_genome_variants_model_used = clair3_genome_variants.clair3_model_used
     # read mapping statistics
     String? mapping_stats_samtools_version = mapping_stats.samtools_version
