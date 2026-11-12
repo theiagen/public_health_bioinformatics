@@ -8,7 +8,7 @@ task freyja_long_format_single {
     String samplename
     String freyja_lineages
     String freyja_abundances
-    Float freyja_coverage
+    String freyja_coverage
     String? collection_date
     String? collection_site
     Float? latitude

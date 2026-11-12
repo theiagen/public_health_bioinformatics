@@ -921,7 +921,7 @@ freyja	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optio
 freyja	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.3	Optional	Freyja_FASTQ	docker	
 freyja	eps	Float	The minimum lineage abundance cut-off value	0.001	Optional	Freyja_FASTQ	general	
 freyja	freyja_lineage_yml	File	Lineage hierarchy file in yaml format used in conjunction with `depth_cutoff`		Optional	Freyja_FASTQ	general	
-freyja	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime	
+freyja	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	Freyja_FASTQ	runtime	
 freyja	number_bootstraps	Int	The number of bootstraps to perform (only used if bootstrap = true)	100	Optional	Freyja_FASTQ	general	
 freyja	update_db	Boolean	Updates the Freyja reference files (the usher barcodes and lineage metadata files) but will not save them as output (use Freyja_Update for that purpose). If set to true, the freyja_lineage_metadata and freyja_barcodes files are not required.	False	Optional	Freyja_FASTQ	general	True
 freyja_dashboard	dashboard_intro_text	File	A file containing the text to be contained at the top of the dashboard.	SARS-CoV-2 lineage de-convolution performed by the Freyja workflow (<https://github.com/andersen-lab/Freyja>).	Optional	Freyja_Dashboard	general	True
@@ -934,7 +934,7 @@ freyja_dashboard_task	memory	Int	Amount of memory/RAM (in GB) to allocate to the
 freyja_dashboard_task	mincov	Float	The minimum genome coverage used as a cut-off of data to include in the dashboard. Default is set to 60 by the freyja command-line tool (not a WDL task default, per se)		Optional	Freyja_Dashboard	general	
 freyja_dashboard_task	scale_by_viral_load	Boolean	If set to true, averages samples taken the same day while taking viral load into account	False	Optional	Freyja_Dashboard	general	
 freyja_dashboard_task	thresh	Float	The minimum lineage abundance cut-off value		Optional	Freyja_Dashboard	general	
-freyja_fastq	call_read_qc_trim	Boolean	When false QC steps will be skipped	True	Optional	Freyja_FASTQ	general	
+freyja_fastq	call_read_qc_trim	Boolean	When false QC steps will be skipped. Setting to false is incompatible with providing a qc_check_table	True	Optional	Freyja_FASTQ	general	
 freyja_fastq	collection_date	String	Collection date of wastewater sample (YYYY-MM-DD)		Optional	Freyja_FASTQ	general	
 freyja_fastq	collection_site	String	Collection site of wastewater sample		Optional	Freyja_FASTQ	general	
 freyja_fastq	depth_cutoff	Int	The minimum coverage depth with which to exclude sites below this value and group identical barcodes -- THIS MAY NOT WORK FOR NON-SARS-COV-2 ORGANISMS!		Optional	Freyja_FASTQ	general	
@@ -948,7 +948,7 @@ freyja_fastq	latitude	Float	Latitude of wastewater sample collection site		Optio
 freyja_fastq	longitude	Float	Longitude of wastewater sample collection site		Optional	Freyja_FASTQ	general	
 freyja_fastq	ont	Boolean	Indicates if the input data is derived from an ONT instrument.	False	Optional	Freyja_FASTQ	general	
 freyja_fastq	primer_bed	File	The bed file containing the primers used when sequencing was performed		Optional	Freyja_FASTQ	general	
-freyja_fastq	qc_check_table	File	TSV containing values to check quality control metrics		Optional	Freyja_FASTQ	general	
+freyja_fastq	qc_check_table	File	TSV containing values to check quality control metrics. Incompatible with setting call_read_qc_trim to false		Optional	Freyja_FASTQ	general	
 freyja_fastq	read2	File	Illumina reverse read file in FASTQ file format (compression optional)		Optional	Freyja_FASTQ	general	
 freyja_fastq	reference_gff	File	The GFF file for reference; should match the reference used for alignment (Wuhan-Hu-1)		Optional	Freyja_FASTQ	general	
 freyja_fastq	run_qualimap	Boolean	When set to true, will run qualimap and provide custom visuals	True	Optional	Freyja_FASTQ	general	
