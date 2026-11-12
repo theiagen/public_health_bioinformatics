@@ -71,6 +71,7 @@ workflow medea_magic {
     Int? clair3_disk_size
     # gene coverage options; user-supplied inputs take priority
     String? query_genes
+    String? suppressed_variants # comma-delimited string of suppressed variants
     File? query_genes_bed
     Boolean query_exact_match = false
     Int min_gene_coverage_depth = 10 # mirror Snippy variants v4.6.0
@@ -272,6 +273,7 @@ workflow medea_magic {
             reference_gff = select_first([resolved_reference_gff]),
             query_genes = resolved_query_genes,
             exact_match = query_exact_match,
+            suppress = suppressed_variants,
             vcf = select_first([resolved_vcf]),
             bedfile = query_genes_bed
         }

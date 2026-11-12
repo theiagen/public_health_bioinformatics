@@ -28,7 +28,7 @@ fragment: true
 
     The `snpeff_gene_variants_hits_abbreviated` output condenses each entry into `<query>:<amino acid change>` using one-letter residue codes (e.g. `ERG11:K143R`), falling back to `<query>:<nucleotide change>` (e.g. `ERG11:428A>G`) for a variant with no protein change. When no variants are reported, both outputs read `No variants detected: <query_genes>`.
 
-    Entries are omitted if: they are not annotated against a transcript (e.g. `intergenic_region`, incomplete transcript, or lacking a stop codon), resolve to neither a coding nor a protein change, and if the variant cannot be traced back to a gene product in the reference GFF. The full set of annotations is retained in `snpeff_gene_variants_vcf`, alongside SnpEff's HTML summary (`snpeff_gene_variants_summary_html`). Every reported entry is also tabulated in `snpeff_gene_variants_report_tsv` as follows:
+    Entries are omitted if: any of their consequence terms are listed in `suppressed_variants` (see below), they are not annotated against a transcript (e.g. `intergenic_region`, incomplete transcript, or lacking a stop codon), resolve to neither a coding nor a protein change, and if the variant cannot be traced back to a gene product in the reference GFF. The full set of annotations is retained in `snpeff_gene_variants_vcf`, alongside SnpEff's HTML summary (`snpeff_gene_variants_summary_html`). Every reported entry is also tabulated in `snpeff_gene_variants_report_tsv` as follows:
 
     | Column | Content | Example |
     | --- | --- | --- |
@@ -48,6 +48,11 @@ fragment: true
         - `query_genes_bed` supplies gene names from the fourth column of the BED file when `query_genes` is not supplied; coordinates are always taken from the reference GFF
         - If neither is supplied, the entire VCF is annotated
 
+    ??? dna "`suppressed_variants` input parameter"
+        `suppressed_variants` is a comma-delimited list of [SnpEff consequence terms](https://pcingola.github.io/SnpEff/snpeff/inputoutput/) (e.g. `synonymous_variant,inframe_insertion`) whose annotations are excluded from `snpeff_gene_variants_hits`, `snpeff_gene_variants_hits_abbreviated`, and `snpeff_gene_variants_report_tsv`. An annotation is excluded if any of its consequence terms are listed. By default, `upstream_gene_variant`, `downstream_gene_variant`, and `synonymous_variant` are suppressed. Suppressed annotations are still retained in `snpeff_gene_variants_vcf`.
+
+        Supplying `suppressed_variants` replaces the defaults rather than adding to them, so re-list any defaults (e.g. `synonymous_variant`) that should still be excluded.
+
     ??? dna "Codon translation tables"
         By default, each contig is assigned the codon table its GFF features declare via the `transl_table` attribute. Contigs without a translation to SnpEff's default (Standard) table, and contigs with multiple translation tables raise an error. A genome-wide translation table can be used based on the `translation_table` input.
 
@@ -61,7 +66,7 @@ fragment: true
         | --- | --- | --- |
         | reference sequence identifier dropped (the gene label stands in for it) | `NM_000001.1:c.428A>G` | `c.428A>G` |
         | parentheses around predicted protein changes absent | `p.(Lys143Arg)` | `p.Lys143Arg` |
-        | synonymous change repeats the reference residue instead of using `=` | `p.Asp164=` | `p.Asp164Asp`, `D164D` |
+        | synonymous change repeats the reference residue instead of using `=` (reported only when `synonymous_variant` is not suppressed) | `p.Asp164=` | `p.Asp164Asp`, `D164D` |
         | deleted/duplicated bases listed | `c.383del` | `c.383delA` |
         | protein-level duplication described as an insertion | `p.Gly294_Ser297dup` | `p.Ala292_Ser293insSerGlySerAla` |
         | protein-level indel not shifted 3′ through a repeat | `p.Gln444_Gly448del` | `p.Phe432_Gly436del` |

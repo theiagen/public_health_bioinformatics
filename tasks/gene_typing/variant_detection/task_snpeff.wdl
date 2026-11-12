@@ -12,6 +12,7 @@ task snpeff {
     File vcf
     Int? translation_table # NCBI translation table number; detected dynamically from the GFF transl_table attribute when unset
 
+    String suppress = "upstream_gene_variant,downstream_gene_variant,synonymous_variant" # default theiagene suppression in addition to synonymous
     String feature_qualifier = "product,locus_tag" # comma-delimited GFF feature qualifier(s) to use for comparison to query gene
     Boolean exact_match = false # use an exact match for qualifier mapping (always case-sensitive)
     Boolean ambiguous_contig = false # relate bedfile to GFF and FASTA ambiguous
@@ -110,7 +111,8 @@ task snpeff {
         ~{"--bedfile " + bedfile} \
         ~{if exact_match then "--exact_match" else ""} \
         --feature_qualifier "~{feature_qualifier}" \
-        --output ~{samplename}_~{vcf_scope}_variant_report.tsv
+        --suppress ~{suppress} \
+        --output ~{samplename}_~{vcf_scope}_variant_report.tsv \
 
       # join each record into one comma-delimited string: the full REPORT column (the
       # last), and an abbreviated GENE:AA, falling back to GENE:NT for a record with
