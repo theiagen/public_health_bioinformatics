@@ -49,7 +49,7 @@ fragment: true
         - If neither is supplied, the entire VCF is annotated
 
     ??? dna "`suppressed_variants` input parameter"
-        `suppressed_variants` is a comma-delimited list of [SnpEff consequence terms](https://pcingola.github.io/SnpEff/snpeff/inputoutput/) (e.g. `synonymous_variant,inframe_insertion`) whose annotations are excluded from `snpeff_gene_variants_hits`, `snpeff_gene_variants_hits_abbreviated`, and `snpeff_gene_variants_report_tsv`. An annotation is excluded if any of its consequence terms are listed. By default, `upstream_gene_variant`, `downstream_gene_variant`, and `synonymous_variant` are suppressed. Suppressed annotations are still retained in `snpeff_gene_variants_vcf`.
+        `suppressed_variants` is a comma-delimited list of [SnpEff consequence terms](https://pcingola.github.io/SnpEff/snpeff/inputoutput/) (e.g. `upstream_gene_variant,downstream_gene_variant,synonymous_variant`) whose annotations are excluded from `snpeff_gene_variants_hits`, `snpeff_gene_variants_hits_abbreviated`, and `snpeff_gene_variants_report_tsv`. An annotation is excluded if any of its consequence terms are listed. By default, `upstream_gene_variant`, `downstream_gene_variant`, and `synonymous_variant` are suppressed. Suppressed annotations are still retained in `snpeff_gene_variants_vcf`.
 
         Supplying `suppressed_variants` replaces the defaults rather than adding to them, so re-list any defaults (e.g. `synonymous_variant`) that should still be excluded.
 
@@ -66,7 +66,7 @@ fragment: true
         | --- | --- | --- |
         | reference sequence identifier dropped (the gene label stands in for it) | `NM_000001.1:c.428A>G` | `c.428A>G` |
         | parentheses around predicted protein changes absent | `p.(Lys143Arg)` | `p.Lys143Arg` |
-        | synonymous change repeats the reference residue instead of using `=` (reported only when `synonymous_variant` is not suppressed) | `p.Asp164=` | `p.Asp164Asp`, `D164D` |
+        | synonymous change repeats the reference residue instead of using `=` (`synonymous_variant`s are suppressed by default) | `p.Asp164=` | `p.Asp164Asp`, `D164D` |
         | deleted/duplicated bases listed | `c.383del` | `c.383delA` |
         | protein-level duplication described as an insertion | `p.Gly294_Ser297dup` | `p.Ala292_Ser293insSerGlySerAla` |
         | protein-level indel not shifted 3′ through a repeat | `p.Gln444_Gly448del` | `p.Phe432_Gly436del` |
