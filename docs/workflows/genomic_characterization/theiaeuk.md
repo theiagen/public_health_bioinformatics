@@ -102,7 +102,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 ??? toggle "Reference-based variant calling"
     After taxonomic identification, TheiaEuk performs reference-based variant calling whenever a `reference_fasta` is provided or a default organism is selected (user input takes precedence). The resulting variants are summarized with respect to target regions if a `reference_gff` and `query_genes`/`query_genes_bed` are populated.
 
-    Default values are depicted for default organisms in their respective sections below.
+    Default values are depicted for default organisms in their respective sections below. _Candidozyma auris_ additionally calls variants against a standardized AMR reference for gene-level characterization (see its section below).
 
     Two data-type-specific tracks are supported:
 
@@ -121,6 +121,9 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
             The reference FASTA and GFF must use the same assembly. If a custom `reference_fasta` is provided, an associated `reference_gff` must also be provided (and vice versa).
 
             If only one of these inputs is provided, gene coverage calculations and gene-centric variant reporting will not run under the assumption there is a discrepancy.
+
+        !!! info "_C. auris_ uses a separate AMR reference"
+            For _C. auris_, gene coverage and gene-centric variant reporting use `cauris_amr_fasta` and `cauris_amr_gff` instead, so `reference_gff` is only used when `reference_fasta` matches `cauris_amr_fasta` (see the _Candidozyma auris_ section below).
 
 
     ??? dna "`query_genes` and `query_genes_bed` input parameter"
@@ -147,10 +150,34 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 {{ include_md("common_text/snpeff_task.md", indent=4) }}
 
 ??? toggle "_Candidozyma auris_ (also known as _Candida auris_)"
-    When this species is detected by GAMBIT, clade typing determines the clade the genome belongs to. Reference-based variant calling is performed against the clade-specific reference, and AMR detection is conducted.
+    When this species is detected by GAMBIT, clade typing determines the clade the genome belongs to, and AMR detection is conducted. Reads are aligned and variants called against two references, each fit for its purpose:
 
-    - Default reference genome and annotation: a clade-specific reference is selected by the `cladetyper` task. NOTE: Gene-specific variant calling is skipped for Clade VI because a reference gene annotation is not present for this lineage.
-    - Default gene query: product IDs for genes with a unique product annotation, plus clade-specific locus tags for genes annotated only as "hypothetical protein" (the Clade II reference delimits product IDs with "_")
+    | Track | Reference | Reported outputs |
+    |---|---|---|
+    | Genome-wide (phylogenetics) | `reference_fasta` if supplied, otherwise the clade-specific reference selected by `cladetyper` | Alignment (`variant_calling_bam`), genome-wide VCFs, and `mapping_stats` |
+    | Gene-level AMR | `cauris_amr_fasta` and `cauris_amr_gff` (default: Clade I strain B11205, `GCA_016772135.1`) | `gene_coverage` and `snpeff_gene_variants` only; the AMR alignment and genome-wide VCFs are not exposed |
+
+    - Standardizing on a single AMR reference reports AMR gene variants in the same coordinates for every clade, including Clade VI and genomes without a clade match, which lack a clade reference annotation.
+    - `reference_fasta_used` reports the genome-wide reference, while `reference_gff_used` and `gene_query` report the GFF and query used by the gene-level modules (i.e., `cauris_amr_gff` when the AMR track runs). A `query_genes_bed` must use `cauris_amr_fasta` coordinates.
+    - If `cauris_amr_fasta` matches the genome-wide reference (compared by file name), variant calling runs only once and the gene-level modules use the genome-wide reference, its GFF (`reference_gff` or the `cladetyper` GFF), and the clade-specific gene query below.
+    - Default gene query (AMR track): product IDs for genes with a unique product annotation, plus B11205 locus tags for genes annotated only as "hypothetical protein". A user-supplied `query_genes` takes precedence.
+
+        | Gene | B11205 (`cauris_amr_gff`) |
+        |---|---|
+        | _FKS1_ | `FKS1` |
+        | _ERG11_ | `lanosterol.14-alpha.demethylase` |
+        | _FUR1_ | `uracil.phosphoribosyltransferase` |
+        | _ERG6_ | `sterol.24-C-methyltransferase` |
+        | _FLO8_ | `CJI82_02621`\* |
+        | _MEC3_ | `CJI82_01006` |
+        | _ERG3_ | `CJI82_00364` |
+        | _PSK74852_ | `CJI82_03986` |
+
+        \* _FLO8_ is annotated as a single gene in the B11205 reference
+
+        NOTE: If a non-default `cauris_amr_gff` is supplied, only the product IDs (_FKS1_, _ERG11_, _FUR1_, and _ERG6_ rows) are queried by default. To include the remaining genes, supply their locus tags in `query_genes` alongside the product IDs.
+
+    - Clade-specific gene query (only used when `cauris_amr_fasta` matches the genome-wide reference): the Clade II reference delimits product IDs with "_"
 
         | Gene | Clade I | Clade II | Clade III | Clade IV | Clade V |
         |---|---|---|---|---|---|
@@ -168,7 +195,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 
         NOTE: Variants derived from locus tag searches will be reported with respect to the locus tag name, not the gene name
 
-        NOTE: If a `reference_gff` is supplied, only the product IDs (_FKS1_, _ERG11_, _FUR1_, and _ERG6_ rows; "." delimited) are queried by default. To include the remaining genes above, supply their locus tags in `query_genes` alongside the product IDs.
+        NOTE: If a `reference_gff` is supplied alongside a `reference_fasta` that matches `cauris_amr_fasta`, only the product IDs (_FKS1_, _ERG11_, _FUR1_, and _ERG6_ rows; "." delimited) are queried by default. To include the remaining genes above, supply their locus tags in `query_genes` alongside the product IDs.
 
 {{ include_md("common_text/cauris_cladetyper.md", indent=4) }}
 {{ include_md("common_text/amr_search_task.md", indent=4, condition="theiaeuk") }}

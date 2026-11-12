@@ -45,6 +45,7 @@ task cauris_cladetyper {
 
     # create empty files for clade reference and clade type
     echo "" > CLADETYPE
+    echo "" > CLADE_REFERENCE_BASENAME
 
     python3 <<CODE
     import os
@@ -98,6 +99,9 @@ task cauris_cladetyper {
         shutil.copy(cladegff, "CAURIS_REFERENCE.gff")
     if cladefa:
         shutil.copy(cladefa, "CAURIS_REFERENCE.fasta")
+        # the copied reference is renamed, so report the original basename for reference comparisons
+        with open("CLADE_REFERENCE_BASENAME", 'w') as basename_file:
+            basename_file.write(os.path.basename(cladefa))
     with open("CLADETYPE", 'w') as cladetype_file:
         cladetype_file.write(cladetype)
     CODE
@@ -107,6 +111,7 @@ task cauris_cladetyper {
     String gambit_cladetype = read_string("CLADETYPE")
     File? annotated_reference_gff = "CAURIS_REFERENCE.gff"
     File? assembly_reference = "CAURIS_REFERENCE.fasta"
+    String assembly_reference_basename = read_string("CLADE_REFERENCE_BASENAME")
     String gambit_cladetyper_docker_image = docker
   }
   runtime {

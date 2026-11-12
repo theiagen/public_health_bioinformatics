@@ -1050,7 +1050,7 @@ read_screen_clean	String	PASS or FAIL result from clean read screening; FAIL acc
 read_screen_clean_tsv	File	Clean read screening report TSV depicting read counts, total read base pairs, and estimated genome length	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 read_screen_raw	String	PASS or FAIL result from raw read screening; FAIL accompanied by the reason(s) for failure	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 read_screen_raw_tsv	File	Raw read screening report TSV depicting read counts, total read base pairs, and estimated genome length	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-reference_fasta_used	String	Reference FASTA used in variant calling	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+reference_fasta_used	String	Reference FASTA used in genome-wide variant calling; C. auris gene-level AMR results are instead called against cauris_amr_fasta unless the two references match	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 reference_gff_used	String	Reference GFF used in gene variant annotation and coverage calculations	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 rename_fastq_files_analysis_date	String	Date of analysis	Rename_FASTQ
 rename_fastq_files_version	String	Version of PHB used for the analysis	Rename_FASTQ

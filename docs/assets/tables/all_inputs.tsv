@@ -1241,6 +1241,8 @@ medea_magic	amr_search_cpu	Int	Number of CPUs to allocate to the task	2	Optional
 medea_magic	amr_search_disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	runtime	
 medea_magic	amr_search_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/amrsearch:0.2.1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	docker	
 medea_magic	amr_search_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	runtime	
+medea_magic	cauris_amr_fasta	File	C. auris reference FASTA for gene-level AMR variant calling (gene_coverage and snpeff_gene_variants); independent of the genome-wide cladetyper/user reference	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1-B11205_GCA_016772135.1_ASM1677213v1_genomic.fasta	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
+medea_magic	cauris_amr_gff	File	C. auris reference GFF matching cauris_amr_fasta, used for gene coordinate extraction and AMR variant annotation	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1-B11205_GCA_016772135.1_ASM1677213v1_genomic.gff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
 medea_magic	cauris_cladetyper_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	docker	
 medea_magic	cladetyper_kmer_size	Int	Kmer size for GAMBIT classification	11	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	cladetyper_max_distance	Float	The maximum GAMBIT distance to report a clade hit	0.1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	

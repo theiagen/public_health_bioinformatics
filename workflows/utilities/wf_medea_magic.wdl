@@ -32,6 +32,10 @@ workflow medea_magic {
     # user-supplied reference fasta; when provided, overrides the hosted/organism reference
     File? reference_fasta
     File? reference_gff
+    # C. auris gene-level AMR characterization is standardized to this reference, independent of the
+    # genome-wide (cladetyper-selected or user-supplied) reference
+    File cauris_amr_fasta = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1-B11205_GCA_016772135.1_ASM1677213v1_genomic.fasta"
+    File cauris_amr_gff = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1-B11205_GCA_016772135.1_ASM1677213v1_genomic.gff"
     # shared compute for the read_aligners (bwa for illumina, minimap2 for ont);
     String? read_aligner_docker
     Int? read_aligner_cpu
@@ -86,9 +90,13 @@ workflow medea_magic {
         docker = cauris_cladetyper_docker_image
     }
     # a user-supplied GFF has unknown locus tags, so only product names are queried
+    String cauris_product_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,sterol.24-C-methyltransferase"
     if (defined(reference_gff)) {
-      String cauris_custom_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,sterol.24-C-methyltransferase"
+      String cauris_custom_query_genes = cauris_product_query_genes
     }
+    # AMR reference defaults: product names plus the B11205 ortholog locus tags (FLO8 [single gene], MEC3, ERG3,
+    # PSK74852); a non-default cauris_amr_gff has unknown locus tags, so only product names are queried
+    String cauris_amr_query_genes = if basename(cauris_amr_gff) == "Cauris_Clade1-B11205_GCA_016772135.1_ASM1677213v1_genomic.gff" then cauris_product_query_genes + ",CJI82_02621,CJI82_01006,CJI82_00364,CJI82_03986" else cauris_product_query_genes
     # clade reference defaults: product names where they resolve a single gene, otherwise the
     # clade reference's ortholog locus tags (FLO8, FLO8 N-terminus, MEC3, ERG3, PSK74852)
     if (cladetyper.gambit_cladetype == "Clade1") {
@@ -207,35 +215,115 @@ workflow medea_magic {
     }
   }
 
+  # C. AURIS AMR VARIANT CALLING
+  # C. auris gene-level AMR characterization is standardized to cauris_amr_fasta (B11205 by default), so reads
+  # are additionally called against it unless it matches the genome-wide reference resolved above. References
+  # are compared by basename because cladetyper renames the reference it selects. These outputs are only used
+  # by the gene-centric modules; the genome-wide variant files are not exposed.
+  if (medea_tag == "Candidozyma auris" || medea_tag == "Candida auris") {
+    if (defined(reference_fasta)) {
+      String user_reference_basename = basename(select_first([reference_fasta]))
+    }
+    String resolved_reference_basename = select_first([user_reference_basename, cladetyper.assembly_reference_basename, ""])
+    if (basename(cauris_amr_fasta) != resolved_reference_basename && defined(read1) && (ont_data || defined(read2))) {
+      if (!ont_data) {
+        call gatk_variants_illumina_workflow.gatk_variants_illumina as cauris_amr_gatk_variants {
+          input:
+            read1 = select_first([read1]),
+            read2 = select_first([read2]),
+            reference_genome_file = cauris_amr_fasta,
+            samplename = samplename,
+            bwa_docker = read_aligner_docker,
+            bwa_cpu = read_aligner_cpu,
+            bwa_memory = read_aligner_memory,
+            bwa_disk_size = read_aligner_disk_size,
+            gatk_ploidy = gatk_ploidy,
+            gatk_decompress = gatk_decompress,
+            gatk_filter_min_variant_quality = gatk_filter_min_variant_quality,
+            gatk_filter_min_depth = gatk_filter_min_depth,
+            gatk_filter_min_map_quality = gatk_filter_min_map_quality,
+            gatk_filter_min_quality_by_depth = gatk_filter_min_quality_by_depth,
+            gatk_filter_max_fisher_strand_bias = gatk_filter_max_fisher_strand_bias,
+            gatk_filter_max_strand_odds_ratio = gatk_filter_max_strand_odds_ratio,
+            gatk_filter_expression = gatk_filter_expression,
+            gatk_docker = gatk_docker,
+            gatk_cpu = gatk_cpu,
+            gatk_memory = gatk_memory,
+            gatk_disk_size = gatk_disk_size
+        }
+      }
+      if (ont_data) {
+        call clair3_variants_ont_workflow.clair3_variants_ont as cauris_amr_clair3_variants {
+          input:
+            read1 = select_first([read1]),
+            reference_genome_file = cauris_amr_fasta,
+            samplename = samplename,
+            minimap2_docker = read_aligner_docker,
+            minimap2_cpu = read_aligner_cpu,
+            minimap2_memory = read_aligner_memory,
+            minimap2_disk_size = read_aligner_disk_size,
+            clair3_model = clair3_model,
+            clair3_variant_quality = clair3_variant_quality,
+            clair3_include_all_contigs = clair3_include_all_contigs,
+            clair3_enable_haploid_precise = clair3_enable_haploid_precise,
+            clair3_disable_phasing = clair3_disable_phasing,
+            clair3_enable_gvcf = clair3_enable_gvcf,
+            clair3_enable_long_indel = clair3_enable_long_indel,
+            clair3_docker = clair3_docker,
+            clair3_memory = clair3_memory,
+            clair3_cpu = clair3_cpu,
+            clair3_disk_size = clair3_disk_size
+        }
+      }
+      # bundle the AMR inputs so the gene-centric modules never mix references
+      File cauris_amr_bam = select_first([cauris_amr_gatk_variants.gatk_aligned_bam, cauris_amr_clair3_variants.clair3_aligned_bam])
+      File cauris_amr_bai = select_first([cauris_amr_gatk_variants.gatk_aligned_bai, cauris_amr_clair3_variants.clair3_aligned_bai])
+      File cauris_amr_vcf = select_first([cauris_amr_gatk_variants.gatk_selected_vcf, cauris_amr_clair3_variants.clair3_selected_vcf])
+      File cauris_amr_reference_fasta = cauris_amr_fasta
+      File cauris_amr_reference_gff = cauris_amr_gff
+      String cauris_amr_resolved_query_genes = select_first([query_genes, cauris_amr_query_genes])
+    }
+  }
+
+  # GENE-CENTRIC INPUT RESOLUTION
+  # the C. auris AMR variant calling outputs take priority when generated; otherwise (other organisms and
+  # C. auris samples whose AMR reference matches the genome-wide reference) the genome-wide outputs are used
+  String gene_reference_fasta = select_first([cauris_amr_reference_fasta, resolved_reference_fasta])
+  String gene_reference_gff = select_first([cauris_amr_reference_gff, resolved_reference_gff, ""])
+  String gene_query_genes = select_first([cauris_amr_resolved_query_genes, resolved_query_genes])
+  if (gene_reference_gff != "") {
+    File used_reference_gff = gene_reference_gff
+  }
+
   # GENE-CENTRIC COVERAGE CALCULATIONS AND VARIANT ANNOTATION
   # Terra can pass empty strings, so check for empty strings as well
-  if ((select_first([resolved_reference_gff, ""]) != "" && resolved_query_genes != "") || defined(query_genes_bed)) {
-    if (defined(resolved_bam)) {
+  if ((gene_reference_gff != "" && gene_query_genes != "") || defined(query_genes_bed)) {
+    if (defined(cauris_amr_bam) || defined(resolved_bam)) {
       call gene_coverage_task.gene_coverage {
         input:
-          bam = select_first([resolved_bam]),
-          bai = select_first([resolved_bai]),
+          bam = select_first([cauris_amr_bam, resolved_bam]),
+          bai = select_first([cauris_amr_bai, resolved_bai]),
           samplename = samplename,
-          reference_gff = resolved_reference_gff,
+          reference_gff = used_reference_gff,
           bedfile = query_genes_bed,
-          query_genes = resolved_query_genes,
+          query_genes = gene_query_genes,
           exact_match = query_exact_match,
           min_map_quality = min_gene_coverage_map_quality,
           min_base_quality = min_gene_coverage_base_quality,
           min_depth = min_gene_coverage_depth,
           query_check_hard_fail = true
       }
-      if (resolved_query_genes != "" && defined(resolved_vcf) && select_first([resolved_reference_gff, ""]) != "") {
+      if (gene_query_genes != "" && (defined(cauris_amr_vcf) || defined(resolved_vcf)) && gene_reference_gff != "") {
         call snpeff_task.snpeff as snpeff_gene_variants {
           input:
             samplename = samplename,
             organism = medea_tag,
-            reference_fasta = resolved_reference_fasta,
-            reference_gff = select_first([resolved_reference_gff]),
-            query_genes = resolved_query_genes,
+            reference_fasta = gene_reference_fasta,
+            reference_gff = gene_reference_gff,
+            query_genes = gene_query_genes,
             exact_match = query_exact_match,
             suppress = suppressed_variants,
-            vcf = select_first([resolved_vcf]),
+            vcf = select_first([cauris_amr_vcf, resolved_vcf]),
             bedfile = query_genes_bed
         }
       }
@@ -268,9 +356,6 @@ workflow medea_magic {
   if (resolved_reference_fasta != "") {
     File used_reference_fasta = resolved_reference_fasta
   }
-  if (select_first([resolved_reference_gff, ""]) != "") {
-    File used_reference_gff = select_first([resolved_reference_gff])
-  }
   output {
     # AMR_Search
     File? amr_search_results = amr_search.amr_search_json_output
@@ -284,8 +369,9 @@ workflow medea_magic {
     String? clade_type = cladetyper.gambit_cladetype
     String? cladetyper_version = cladetyper.gambit_version
     String? cladetyper_docker_image = cladetyper.gambit_cladetyper_docker_image
-    # species-agnostic reference actually used (user-supplied or organism-derived)
+    # species-agnostic genome-wide reference actually used (user-supplied or organism-derived)
     File? reference_fasta_used = used_reference_fasta
+    # GFF used by the gene-centric modules (cauris_amr_gff for C. auris when its AMR variant calling runs)
     File? reference_gff_used = used_reference_gff
     # variant calling - illumina (bwa alignment + gatk)
     String? bwa_version = gatk_genome_variants.bwa_version
@@ -316,7 +402,7 @@ workflow medea_magic {
     File? mapping_stats_cov_stats = mapping_stats.cov_stats
     File? mapping_stats_flagstat = mapping_stats.flagstat
     # gene query actually used (user-supplied or organism-derived)
-    String gene_query = resolved_query_genes
+    String gene_query = gene_query_genes
     # gene coverage
     File? gene_coverage_stats = gene_coverage.gene_coverage_stats
     Map[String, String]? gene_coverage_depth_by_gene = gene_coverage.depth_by_gene
