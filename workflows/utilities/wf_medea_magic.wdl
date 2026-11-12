@@ -46,7 +46,7 @@ workflow medea_magic {
     Int? gatk_cpu
     Int? gatk_memory
     Int? gatk_disk_size
-    Boolean? gatk_decompress # output uncompressed GATK VCFs instead of bgzipped VCFs
+    Boolean? gatk_decompress # output uncompressed GATK genotype/filtered VCFs instead of bgzipped VCFs; the selected VCF is always uncompressed
     # gatk-specific variant-calling options (illumina)
     Int? gatk_ploidy
     # gatk-specific filtering options (illumina)
