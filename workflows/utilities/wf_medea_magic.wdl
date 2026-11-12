@@ -235,7 +235,7 @@ workflow medea_magic {
     # Resolve newly-generated alignment files for downstream use
     File resolved_bam = select_first([bwa_variant_calling.sorted_bam, ont_bam_sorting.bam])
     File resolved_bai = select_first([bwa_variant_calling.sorted_bai, ont_bam_sorting.bai])
-    File resolved_vcf = select_first([gatk_filter.gatk_selected_vcf, clair3_genome_variants.clair3_variants_vcf])
+    File resolved_vcf = select_first([gatk_filter.gatk_selected_vcf, clair3_genome_variants.clair3_selected_vcf])
     # genome-wide read mapping statistics against the resolved reference
     call mapping_stats_task.mapping_stats {
       input:
@@ -340,6 +340,7 @@ workflow medea_magic {
     File? variant_calling_bai = resolved_bai
     String? clair3_genome_variants_version = clair3_genome_variants.clair3_version
     File? clair3_genome_variants_vcf = clair3_genome_variants.clair3_variants_vcf
+    File? clair3_genome_variants_selected_vcf = clair3_genome_variants.clair3_selected_vcf
     File? clair3_genome_variants_gvcf = clair3_genome_variants.clair3_variants_gvcf
     String? clair3_genome_variants_docker = clair3_genome_variants.clair3_variants_docker_image
     String? clair3_genome_variants_model_used = clair3_genome_variants.clair3_model_used

@@ -140,7 +140,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 
     === "TheiaEuk_ONT"
 {{ include_md("common_text/minimap2_task.md", indent=8, condition="long_read_flags") }}
-{{ include_md("common_text/clair3_task.md", indent=8) }}
+{{ include_md("common_text/clair3_task.md", indent=8, condition="theiaeuk") }}
 
 {{ include_md("common_text/mapping_stats_task.md", indent=4) }}
 {{ include_md("common_text/gene_coverage_task.md", indent=4, condition="theiaeuk") }}
