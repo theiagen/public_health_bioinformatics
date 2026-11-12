@@ -234,7 +234,6 @@ workflow theiaviral_ont {
                 samplename = samplename
             }
             # quality control metrics for reads mapping to reference (ie. coverage, depth, base/map quality)
-            # and SNPs among the depth/frequency-filtered variants used for the consensus
             call mapping_stats_task.mapping_stats as read_mapping_stats {
               input:
                 bamfile = parse_mapping.bam,
