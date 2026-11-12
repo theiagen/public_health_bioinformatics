@@ -2,13 +2,11 @@ version 1.0
 
 import "../../tasks/species_typing/candidozyma/task_cauris_cladetyper.wdl" as cauris_cladetyper
 import "../../tasks/gene_typing/drug_resistance/task_amr_search.wdl" as amr_search_task
-import "../../tasks/alignment/task_bwa.wdl" as bwa_task
-import "../../tasks/gene_typing/variant_detection/task_gatk_variants.wdl" as gatk_variants_task
-import "../../tasks/gene_typing/variant_detection/task_gatk_filter.wdl" as gatk_filter_task
 import "../../tasks/quality_control/basic_statistics/task_gene_coverage.wdl" as gene_coverage_task
 import "../../tasks/quality_control/basic_statistics/task_mapping_stats.wdl" as mapping_stats_task
 import "../../tasks/gene_typing/variant_detection/task_snpeff.wdl" as snpeff_task
 import "../standalone_modules/wf_clair3_variants_ont.wdl" as clair3_variants_ont_workflow
+import "wf_gatk_variants_illumina.wdl" as gatk_variants_illumina_workflow
 
 workflow medea_magic {
   meta {
@@ -140,52 +138,34 @@ workflow medea_magic {
   String resolved_query_genes = select_first([query_genes, cauris_custom_query_genes, cauris_clade1_query_genes, cauris_clade2_query_genes, cauris_clade3_query_genes, cauris_clade4_query_genes, cauris_clade5_query_genes, afumigatus_query_genes, cryptoneo_query_genes, ""])
 
   # REFERENCE-BASED VARIANT CALLING
-  # variant calling runs automatically whenever a reference fasta and read1 are available
-  if (resolved_reference_fasta != "" && defined(read1)) {
-    # Illumina short-read track: BWA alignment + GATK variant calling
+  # variant calling runs automatically whenever a reference fasta and read1 are available;
+  # Illumina data additionally requires read2, as only paired-end reads are supported
+  if (resolved_reference_fasta != "" && defined(read1) && (ont_data || defined(read2))) {
+    # Illumina paired-end track: BWA alignment + GATK variant calling (gatk_variants_illumina)
     if (!ont_data) {
-      call bwa_task.bwa as bwa_variant_calling {
+      call gatk_variants_illumina_workflow.gatk_variants_illumina as gatk_genome_variants {
         input:
           read1 = select_first([read1]),
-          read2 = read2,
+          read2 = select_first([read2]),
+          reference_genome_file = resolved_reference_fasta,
           samplename = samplename,
-          reference_genome = resolved_reference_fasta,
-          cpu = read_aligner_cpu,
-          memory = read_aligner_memory,
-          disk_size = read_aligner_disk_size,
-          docker = read_aligner_docker
-      }
-      call gatk_variants_task.gatk_variants as gatk_genome_variants {
-        input:
-          samplename = samplename,
-          bam = bwa_variant_calling.sorted_bam,
-          bai = bwa_variant_calling.sorted_bai,
-          reference_genome = resolved_reference_fasta,
-          ploidy = gatk_ploidy,
-          decompress = gatk_decompress,
-          docker = gatk_docker,
-          cpu = gatk_cpu,
-          memory = gatk_memory,
-          disk_size = gatk_disk_size
-      }
-      call gatk_filter_task.gatk_filter as gatk_filter {
-        input:
-          samplename = samplename,
-          reference_genome = resolved_reference_fasta,
-          vcf = gatk_genome_variants.gatk_genotype_vcf,
-          vcf_index = gatk_genome_variants.gatk_genotype_vcf_index,
-          min_variant_quality = gatk_filter_min_variant_quality,
-          min_depth = gatk_filter_min_depth,
-          min_map_quality = gatk_filter_min_map_quality,
-          min_quality_by_depth = gatk_filter_min_quality_by_depth,
-          max_fisher_strand_bias = gatk_filter_max_fisher_strand_bias,
-          max_strand_odds_ratio = gatk_filter_max_strand_odds_ratio,
-          filter_expression = gatk_filter_expression,
-          decompress = gatk_decompress,
-          docker = gatk_docker,
-          cpu = gatk_cpu,
-          memory = gatk_memory,
-          disk_size = gatk_disk_size
+          bwa_docker = read_aligner_docker,
+          bwa_cpu = read_aligner_cpu,
+          bwa_memory = read_aligner_memory,
+          bwa_disk_size = read_aligner_disk_size,
+          gatk_ploidy = gatk_ploidy,
+          gatk_decompress = gatk_decompress,
+          gatk_filter_min_variant_quality = gatk_filter_min_variant_quality,
+          gatk_filter_min_depth = gatk_filter_min_depth,
+          gatk_filter_min_map_quality = gatk_filter_min_map_quality,
+          gatk_filter_min_quality_by_depth = gatk_filter_min_quality_by_depth,
+          gatk_filter_max_fisher_strand_bias = gatk_filter_max_fisher_strand_bias,
+          gatk_filter_max_strand_odds_ratio = gatk_filter_max_strand_odds_ratio,
+          gatk_filter_expression = gatk_filter_expression,
+          gatk_docker = gatk_docker,
+          gatk_cpu = gatk_cpu,
+          gatk_memory = gatk_memory,
+          gatk_disk_size = gatk_disk_size
       }
     }
     # ONT long-read track: minimap2 alignment + Clair3 variant calling (Clair3_Variants_ONT)
@@ -213,9 +193,9 @@ workflow medea_magic {
       }
     }
     # Resolve newly-generated alignment files for downstream use
-    File resolved_bam = select_first([bwa_variant_calling.sorted_bam, clair3_genome_variants.clair3_aligned_bam])
-    File resolved_bai = select_first([bwa_variant_calling.sorted_bai, clair3_genome_variants.clair3_aligned_bai])
-    File resolved_vcf = select_first([gatk_filter.gatk_selected_vcf, clair3_genome_variants.clair3_selected_vcf])
+    File resolved_bam = select_first([gatk_genome_variants.gatk_aligned_bam, clair3_genome_variants.clair3_aligned_bam])
+    File resolved_bai = select_first([gatk_genome_variants.gatk_aligned_bai, clair3_genome_variants.clair3_aligned_bai])
+    File resolved_vcf = select_first([gatk_genome_variants.gatk_selected_vcf, clair3_genome_variants.clair3_selected_vcf])
     # genome-wide read mapping statistics against the resolved reference
     call mapping_stats_task.mapping_stats {
       input:
@@ -308,13 +288,13 @@ workflow medea_magic {
     File? reference_fasta_used = used_reference_fasta
     File? reference_gff_used = used_reference_gff
     # variant calling - illumina (bwa alignment + gatk)
-    String? bwa_version = bwa_variant_calling.bwa_version
+    String? bwa_version = gatk_genome_variants.bwa_version
     String? gatk_genome_variants_version = gatk_genome_variants.gatk_version
     File? gatk_genome_variants_genotype_vcf = gatk_genome_variants.gatk_genotype_vcf
     File? gatk_genome_variants_genotype_vcf_index = gatk_genome_variants.gatk_genotype_vcf_index
-    File? gatk_genome_variants_selected_vcf = gatk_filter.gatk_selected_vcf
-    File? gatk_genome_variants_selected_vcf_index = gatk_filter.gatk_selected_vcf_index
-    Float? gatk_genome_variants_percent_passing = gatk_filter.gatk_percent_passing
+    File? gatk_genome_variants_selected_vcf = gatk_genome_variants.gatk_selected_vcf
+    File? gatk_genome_variants_selected_vcf_index = gatk_genome_variants.gatk_selected_vcf_index
+    Float? gatk_genome_variants_percent_passing = gatk_genome_variants.gatk_percent_passing
     # variant calling - ont (minimap2 alignment + clair3)
     String? minimap2_version = clair3_genome_variants.minimap2_version
     File? variant_calling_bam = resolved_bam
