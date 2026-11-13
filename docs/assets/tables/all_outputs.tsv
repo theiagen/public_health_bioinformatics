@@ -214,6 +214,7 @@ cauris_cladetyper_wf_version	String	Version of PHB used for the analysis	Cauris_
 cg_pipeline_docker	String	Docker file used for running CG-Pipeline on cleaned reads	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 cg_pipeline_report_clean	File	TSV file of read metrics from clean reads, including average read length, number of reads, and estimated genome coverage	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 cg_pipeline_report_raw	File	TSV file of read metrics from raw reads, including average read length, number of reads, and estimated genome coverage	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+checkpoint_tarball	File	The SeqSender submission directory after polling, holding the submitted files and status logs; provide it to `resume_checkpoint_tarball` in a new run to continue polling	SeqSender
 checkv_consensus_contamination	File	Contamination estimate for consensus assembly from CheckV	TheiaViral_Illumina_PE, TheiaViral_ONT
 checkv_consensus_status	String	CheckV runtime status	TheiaViral_Illumina_PE, TheiaViral_ONT
 checkv_consensus_summary	File	Summary report from CheckV for consensus assembly	TheiaViral_Illumina_PE, TheiaViral_ONT
@@ -663,6 +664,9 @@ legsta_version	String	Version of legsta used	TheiaProk_FASTA, TheiaProk_Illumina
 lissero_results	File	TSV results file from LisSero (see <https://github.com/MDU-PHL/LisSero#example-output>)	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 lissero_serotype	String	Serotype predicted by LisSero	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 lissero_version	String	Version of LisSero used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+log_polling	File	Log from polling NCBI for the submission's status	SeqSender
+log_submission	File	Log from SeqSender uploading the submission to NCBI	SeqSender
+log_validation	File	Log from building and validating each sample's submission files	SeqSender
 lyveset_alignment_fasta	File	The output alignment file in fasta format	Lyve_SET
 lyveset_docker_image	String	Lyve_SET docker image used for analysis	Lyve_SET
 lyveset_log	File	Lyve_SET task log file	Lyve_SET
@@ -1050,6 +1054,16 @@ semibin_bins	Array[File]	An array of binned metagenomic assembled genome files	T
 semibin_docker	String	The Docker image of semibin	TheiaMeta_Illumina_PE
 semibin_version	String	The version of Semibin used	TheiaMeta_Illumina_PE
 seq_platform	String	Description of the sequencing methodology used to generate the input read data	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+seqsender_database_status	File	SeqSender's `submission_log.csv`, listing each database's latest submission status (e.g., `PROCESSING`, `PROCESSED`, `ERROR`)	SeqSender
+seqsender_docker	String	Docker image used to run SeqSender	SeqSender
+seqsender_final_status	String	Overall status when polling stopped: `COMPLETE`, `PENDING`, or `ERROR`	SeqSender
+seqsender_report_xml_biosample	File	XML file containing the latest response from NCBI regarding your BioSample submission	SeqSender
+seqsender_report_xml_genbank	File	XML file containing the latest response from NCBI regarding your GenBank submission	SeqSender
+seqsender_report_xml_sra	File	XML file containing the latest response from NCBI regarding your SRA submission	SeqSender
+seqsender_submission_status	File	SeqSender's `submission_status_report.csv`, listing each sample's status, accession, and any NCBI message for each database	SeqSender
+seqsender_version	String	Version of SeqSender used	SeqSender
+seqsender_wf_analysis_date	String	Date of analysis	SeqSender
+seqsender_wf_version	String	Version of PHB used for analysis	SeqSender
 seqsero2s_note	String	Additional notes produced by SeqSero2S	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 seqsero2s_predicted_antigenic_profile	String	Antigenic profile predicted for Salmonella spp. by SeqSero2S	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 seqsero2s_predicted_contamination	String	Indicates whether contamination between Salmonella with different serotypes was predicted by SeqSero2S	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
@@ -1263,6 +1277,8 @@ stxtyper_partial_hits	String	Possible outputs "stx1", "stx2", or "stx1,stx2". Te
 stxtyper_report	File	Raw results TSV file produced by StxTyper	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 stxtyper_stx_frameshifts_or_internal_stop_hits	String	Comma-separated list of matches that have the OPERON output of "FRAMESHIFT" or "INTERNAL_STOP". Possible outputs "stx1", "stx2", or "stx1,stx2"	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 stxtyper_version	String	Version of StxTyper used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+submission_fasta	File	FASTA file of the passing samples' assemblies, combined for submission to GenBank	SeqSender
+submission_metadata	File	SeqSender metadata CSV of the passing samples, combined for submission to NCBI	SeqSender
 taxon_avg_genome_length	String	Average genome length for taxon obtained from NCBI datasets summary	TheiaViral_Illumina_PE, TheiaViral_ONT
 taxon_table_status	String	Status of the taxon table upload	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 tbp_parser_average_genome_depth	Float	The mean depth of coverage across all target regions included in the analysis	TBProfiler_tNGS, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
@@ -1403,6 +1419,10 @@ vadr_flu_segment_concatenated_fasta	File	Assembly FASTA file of all Influenza ge
 vadr_num_alerts	String	Number of fatal alerts as determined by VADR	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, VADR_Update
 vadr_update_analysis_date	String	Date of analysis	VADR_Update
 vadr_update_version	String	Version of the Public Health Bioinformatics (PHB) repository used	VADR_Update
+validation_metadata_template	File	TSV of the selected samples with a column for every metadata field required for the chosen databases and organism; values already in your Terra table are filled in; missing values are denoted by descriptions within angled brackets (`<...>`)	SeqSender
+validation_samples_failed	Int	Number of samples that failed validation; see `validation_summary` for the reasons	SeqSender
+validation_samples_passed	Int	Number of samples that passed validation and are included in the submission	SeqSender
+validation_summary	File	TSV listing each sample's validation status (`PASS` or `FAIL`) and the reason for any failure	SeqSender
 variants_from_ref_vcf	File	Number of variants relative to the reference genome	TheiaCoV_ClearLabs
 vibecheck_classification_notes	String	Additional information provided by Vibecheck during classification	TheiaProk_Illumina_PE
 vibecheck_confidence	Float	How confidence lineage assignment is. 0 - uncertain; 100 - Very certain	TheiaProk_Illumina_PE

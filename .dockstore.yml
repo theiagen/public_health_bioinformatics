@@ -330,3 +330,8 @@ workflows:
     primaryDescriptorPath: /workflows/phylogenetics/wf_allele_clustering.wdl
     testParameterFiles:
       - /tests/inputs/empty.json
+  - name: SeqSender_PHB
+    subclass: WDL
+    primaryDescriptorPath: /workflows/submission/wf_seqsender.wdl
+    testParameterFiles:
+      - /tests/inputs/empty.json

@@ -107,6 +107,17 @@ rasusa_workflow	read1	File	FASTQ file containing read1 sequences		Required	RASUS
 rasusa_workflow	samplename	String	The name of the sample being analyzed		Required	RASUSA	general	
 rename_fastq_files	new_filename	String	New name for the FASTQ file(s)		Required	Rename_FASTQ	general	
 rename_fastq_files	read1	File	FASTQ file containing read1 sequences		Required	Rename_FASTQ	general	
+seqsender	bioproject	String	The NCBI BioProject accession that every submitted sample is linked to		Required	SeqSender	general	
+seqsender	sample_ids	Array[String]	The IDs of the samples in your Terra table to validate and submit		Required	SeqSender	general	
+seqsender	seqsender_config	File	The SeqSender config YAML file containing your NCBI account credentials and submission details		Required	SeqSender	general	
+seqsender	seqsender_key	String	The key generated for decrypting your NCBI password in your `seqsender_config`		Required	SeqSender	general	
+seqsender	seqsender_organism_tag	String	The SeqSender organism type, which determines the required metadata and submission format; options: `FLU`, `COV`, or `OTHER`		Required	SeqSender	general	
+seqsender	submit_to_biosample	Boolean	Set to true to submit samples to the BioSample database		Required	SeqSender	general	
+seqsender	submit_to_genbank	Boolean	Set to true to submit samples (assemblies) to the GenBank database		Required	SeqSender	general	
+seqsender	submit_to_sra	Boolean	Set to true to submit samples (reads) to the SRA database		Required	SeqSender	general	
+seqsender	terra_project_name	String	The name of the Terra project where your sample data table is located		Required	SeqSender	general	
+seqsender	terra_table_name	String	The name of the Terra data table where your samples/metadata can be found		Required	SeqSender	general	
+seqsender	terra_workspace_name	String	The name of the Terra workspace where your sample data table is located		Required	SeqSender	general	
 shared_variants_wf	concatenated_file_name	String	String of your choice to prefix output files		Required	Find_Shared_Variants	general	
 shared_variants_wf	samplenames	Array[String]	The names of the samples being analyzed		Required	Find_Shared_Variants	general	
 shared_variants_wf	variants_to_cat	Array[File]	The result file from the Snippy_Variants workflow		Required	Find_Shared_Variants	general	
@@ -1735,6 +1746,10 @@ plasmidfinder	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	
 plasmidfinder	method_path	String	Path to files for a user-specified method to use (blast or kma)		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 plasmidfinder	min_percent_coverage	Float	Threshold for minimum coverage, default threshold from PlasmidFinder CLI tool is used (0.60)	0.6	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 plasmidfinder	min_percent_identity	Float	Threshold for mininum blast identity, default threshold from PlasmidFinder CLI tool is used (0.90). This default differs from the default of the PlasmidFinder webtool (0.95)	0.9	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+polling	cpu	Int	Number of CPUs to allocate to the task	1	Optional	SeqSender	runtime	
+polling	disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	SeqSender	runtime	
+polling	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/seqsender:1.5.2-dev	Optional	SeqSender	docker	
+polling	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	SeqSender	runtime	
 porechop	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_ONT	runtime	
 porechop	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_ONT	runtime	
 porechop	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/porechop:0.2.4	Optional	TheiaViral_ONT	docker	
@@ -2086,6 +2101,20 @@ semibin	environment	String	Environment model to use. Options:• human_gut• do
 semibin	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaMeta_Illumina_PE	runtime	
 semibin	min_length	Int	Minimum contig length for binning	1000	Optional	TheiaMeta_Illumina_PE	general	
 semibin	ratio	Float	If the ratio of the number of base pairs of contigs between 1000-2500 bp smaller than this value, the minimal length will be set as 1000bp, otherwise 2500bp.	0.05	Optional	TheiaMeta_Illumina_PE	general	
+seqsender	assembly_fastas	Array[File]	The assembly FASTA files, one per sample in the same order as `sample_ids`; required when `submit_to_genbank` is true		Optional	SeqSender	general	
+seqsender	input_table	File	**For command-line testing only**		Optional	SeqSender	general	
+seqsender	max_wait_hours	Float	The maximum number of hours to wait for NCBI to process the submission;	48	Optional	SeqSender	general	
+seqsender	poll_interval_minutes	Float	The number of minutes between each check of the submission's status with NCBI	10	Optional	SeqSender	general	
+seqsender	read1_fastqs	Array[File]	The read1 FASTQ files, one per sample in the same order as `sample_ids`; required when `submit_to_sra` is true		Optional	SeqSender	general	
+seqsender	read2_fastqs	Array[File]	The read2 FASTQ files for paired-end reads, one per sample in the same order as `sample_ids`; leave empty for single-end reads		Optional	SeqSender	general	
+seqsender	resume_checkpoint_tarball	File	The `checkpoint_tarball` output from an earlier incomplete submission; skips validation and re-submission and resumes polling NCBI for that submission's status		Optional	SeqSender	general	
+seqsender	sra_transfer_gcp_bucket	String	A `gs://` bucket path that NCBI can read from; when provided, the passing samples' reads are copied there for NCBI to fetch instead of being uploaded over FTP (not copied when `validation_only` is true)		Optional	SeqSender	general	
+seqsender	submit_to_production	Boolean	Set to true to submit to NCBI's production environment; by default, samples are submitted to NCBI's Test environment and nothing is released	False	Optional	SeqSender	general	
+seqsender	validation_only	Boolean	Set to true to only validate each sample and write the `validation_metadata_template`, without submitting anything to NCBI	False	Optional	SeqSender	general	
+seqsender_upload_accessions	cpu	Int	Number of CPUs to allocate to the task	1	Optional	SeqSender	runtime	
+seqsender_upload_accessions	disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	SeqSender	runtime	
+seqsender_upload_accessions	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/seqsender:1.5.2-dev	Optional	SeqSender	docker	
+seqsender_upload_accessions	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	SeqSender	runtime	
 shared_variants	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Find_Shared_Variants, Snippy_Tree	runtime	
 shared_variants	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Find_Shared_Variants, Snippy_Tree	runtime	
 shared_variants	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16	Optional	Find_Shared_Variants, Snippy_Tree	docker	
@@ -2191,6 +2220,10 @@ stats_n_coverage_primtrim	disk_size	Int	Amount of storage (in GB) to allocate to
 stats_n_coverage_primtrim	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.23	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	docker	
 stats_n_coverage_primtrim	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	runtime	
 stats_n_coverage_primtrim	read2	File	Internal component, do not modify		Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	general	
+submission	cpu	Int	Number of CPUs to allocate to the task	2	Optional	SeqSender	runtime	
+submission	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	SeqSender	runtime	
+submission	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/seqsender:1.5.2-dev	Optional	SeqSender	docker	
+submission	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	SeqSender	runtime	
 submit_ena_data	bam_column	String	Column name containing BAM file paths	bam_file	Optional	Terra_2_ENA	general	
 submit_ena_data	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Terra_2_ENA	runtime	
 submit_ena_data	cram_column	String	Column name containing CRAM file paths	cram_file	Optional	Terra_2_ENA	general	
@@ -2670,8 +2703,12 @@ vadr_update	vadr_memory	Int	Amount of memory/RAM (in GB) to allocate to the task
 vadr_update	vadr_model_file	File	Path to the a tar + gzipped VADR model file	gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-sarscov2-1.6.3-1.tar.gz	Optional	VADR_Update	database	True
 vadr_update	vadr_opts	String	Options for the v-annotate.pl VADR script	--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta	Optional	VADR_Update	general	True
 vadr_update	vadr_skip_length	Int	Minimum assembly length (unambiguous) to run VADR	10000	Optional	VADR_Update	general	True
-version_capture	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0	Optional	AMRFinderPlus, AMR_Search, Allele_Clustering, Assembly_Fetch, Augur, Augur_Prep, BaseSpace_Fetch, Cauris_CladeTyper, Clair3_Variants_ONT, Concatenate_Column_Content, Concatenate_Illumina_Lanes, Core_Gene_SNP, Dorado_Basecalling, Fetch_SRR_Accession, Find_Shared_Variants, Freyja_Dashboard, Freyja_FASTQ, Freyja_Plot, Gambit_Query, Kraken_PE, Kraken_SE, Lyve_SET, MashTree_FASTA, Mercury_Prep_N_Batch, Metabuli, NCBI_Scrub_PE, NCBI_Scrub_SE, Nextclade_Batch, Pangolin_Update, PhyloCompare, RASUSA, Rename_FASTQ, SRA_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree, Snippy_Variants, TBProfiler_tNGS, Terra_2_ENA, Terra_2_NCBI, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaValidate, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel, Transfer_Column_Content, Usher, VADR_Update, Zip_Column_Content, kSNP3, kSNP4	docker	
-version_capture	timezone	String	Set the time zone to get an accurate date of analysis (uses UTC by default)		Optional	AMRFinderPlus, AMR_Search, Allele_Clustering, Assembly_Fetch, Augur, Augur_Prep, BaseSpace_Fetch, Cauris_CladeTyper, Clair3_Variants_ONT, Concatenate_Column_Content, Concatenate_Illumina_Lanes, Core_Gene_SNP, Dorado_Basecalling, Fetch_SRR_Accession, Find_Shared_Variants, Freyja_Dashboard, Freyja_FASTQ, Freyja_Plot, Gambit_Query, Kraken_PE, Kraken_SE, Lyve_SET, MashTree_FASTA, Mercury_Prep_N_Batch, Metabuli, NCBI_Scrub_PE, NCBI_Scrub_SE, Nextclade_Batch, Pangolin_Update, PhyloCompare, RASUSA, Rename_FASTQ, SRA_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree, Snippy_Variants, TBProfiler_tNGS, Terra_2_ENA, Terra_2_NCBI, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaValidate, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel, Transfer_Column_Content, Usher, VADR_Update, Zip_Column_Content, kSNP3, kSNP4	general	
+validation	cpu	Int	Number of CPUs to allocate to the task	2	Optional	SeqSender	runtime	
+validation	disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	SeqSender	runtime	
+validation	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/seqsender:1.5.2-dev	Optional	SeqSender	docker	
+validation	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	SeqSender	runtime	
+version_capture	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0	Optional	AMRFinderPlus, AMR_Search, Allele_Clustering, Assembly_Fetch, Augur, Augur_Prep, BaseSpace_Fetch, Cauris_CladeTyper, Clair3_Variants_ONT, Concatenate_Column_Content, Concatenate_Illumina_Lanes, Core_Gene_SNP, Dorado_Basecalling, Fetch_SRR_Accession, Find_Shared_Variants, Freyja_Dashboard, Freyja_FASTQ, Freyja_Plot, Gambit_Query, Kraken_PE, Kraken_SE, Lyve_SET, MashTree_FASTA, Mercury_Prep_N_Batch, Metabuli, NCBI_Scrub_PE, NCBI_Scrub_SE, Nextclade_Batch, Pangolin_Update, PhyloCompare, RASUSA, Rename_FASTQ, SRA_Fetch, SeqSender, Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree, Snippy_Variants, TBProfiler_tNGS, Terra_2_ENA, Terra_2_NCBI, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaValidate, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel, Transfer_Column_Content, Usher, VADR_Update, Zip_Column_Content, kSNP3, kSNP4	docker	
+version_capture	timezone	String	Set the time zone to get an accurate date of analysis (uses UTC by default)		Optional	AMRFinderPlus, AMR_Search, Allele_Clustering, Assembly_Fetch, Augur, Augur_Prep, BaseSpace_Fetch, Cauris_CladeTyper, Clair3_Variants_ONT, Concatenate_Column_Content, Concatenate_Illumina_Lanes, Core_Gene_SNP, Dorado_Basecalling, Fetch_SRR_Accession, Find_Shared_Variants, Freyja_Dashboard, Freyja_FASTQ, Freyja_Plot, Gambit_Query, Kraken_PE, Kraken_SE, Lyve_SET, MashTree_FASTA, Mercury_Prep_N_Batch, Metabuli, NCBI_Scrub_PE, NCBI_Scrub_SE, Nextclade_Batch, Pangolin_Update, PhyloCompare, RASUSA, Rename_FASTQ, SRA_Fetch, SeqSender, Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree, Snippy_Variants, TBProfiler_tNGS, Terra_2_ENA, Terra_2_NCBI, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaValidate, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel, Transfer_Column_Content, Usher, VADR_Update, Zip_Column_Content, kSNP3, kSNP4	general	
 wf_microreact_export	access_token	String	Users token used to upload projects to their Microreact account		Optional	Microreact_Export	general	
 wf_microreact_export	date_column	String	Column within the input Terra table to be used as the date designation		Optional	Microreact_Export	general	
 wf_microreact_export	download_table	Boolean	When true, will download th specified Terra table	True	Optional	Microreact_Export	general	

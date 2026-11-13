@@ -1,0 +1,152 @@
+<link rel="stylesheet" href="https://pyscript.net/releases/2026.7.3/core.css">
+<script type="module" src="https://pyscript.net/releases/2026.7.3/core.js"></script>
+
+<div class="config-builder">
+  <form id="cb-form" autocomplete="off">
+    <fieldset>
+      <div class="cb-groups">
+        <fieldset class="cb-narrow">
+          <legend>NCBI FTP account</legend>
+          <label>Username
+            <input id="cb-username" required>
+            <span class="cb-tip">The username for your NCBI FTP account (not your NCBI account).</span>
+          </label>
+          <label>SPUID namespace
+            <input id="cb-spuid_namespace" required>
+            <span class="cb-tip">NCBI gives you this when you set up your FTP submission account.</span>
+          </label>
+          <label>Password
+            <input id="cb-password" spellcheck="false" required>
+            <span class="cb-tip">The password for your NCBI FTP account. It's encrypted in your browser before it goes into the config file, and isn't sent anywhere.</span>
+          </label>
+          <label>Existing key (optional)
+            <input id="cb-key" spellcheck="false">
+            <span class="cb-tip">Leave blank to generate a new key, or enter an existing key to reuse it across multiple config files.</span>
+          </label>
+        </fieldset>
+        <fieldset class="cb-wide">
+          <legend>Databases</legend>
+          <fieldset>
+            <p>Select every database you plan to submit to.</p>
+            <label><input id="cb-biosample" class="cb-database" type="checkbox" checked> BioSample</label>
+            <label><input id="cb-sra" class="cb-database" type="checkbox" checked> SRA</label>
+            <label><input id="cb-genbank" class="cb-database" type="checkbox" checked> GenBank</label>
+          </fieldset>
+          <fieldset>
+            <legend>Submission</legend>
+            <fieldset id="cb-biosample-fields" class="cb-plain">
+              <label>BioSample package name
+                <input id="cb-biosample_package" value="Pathogen.cl.1.0" required>
+                <span class="cb-tip">Chosen from <a href="https://www.ncbi.nlm.nih.gov/biosample/docs/packages/">NCBI BioSample Packages</a>.</span>
+              </label>
+            </fieldset>
+            <fieldset id="cb-genbank-fields" class="cb-plain">
+              <label>Publication title
+                <input id="cb-publication_title" required>
+                <span class="cb-tip">Provide the title and relevant publication details (volume, issue, etc.) of a paper that discusses this submission. Alternatively, use a title that describes the submissions you'll make with this config file.</span>
+              </label>
+              <label>Publication status
+                <select id="cb-publication_status">
+                  <option>Unpublished</option>
+                  <option>In-press</option>
+                  <option>Published</option>
+                </select>
+                <span class="cb-tip">In-press or Published if a paper goes with your samples; otherwise Unpublished.</span>
+              </label>
+              <label>
+                <input id="cb-definition_line_accessions" type="checkbox">
+                Set the BioProject, BioSample and SRA accessions in each sequence's FASTA header
+                <span class="cb-tip">The BioProject always goes in GenBank's source table (<code>source.src</code>); this adds it to each sequence's FASTA header too. BioSample and SRA accessions are only added when the box below is ticked.</span>
+              </label>
+              <label>
+                <input id="cb-link_samples" type="checkbox">
+                Link GenBank records to each sample's BioSample/SRA records
+                <span class="cb-tip">Not required for valid GenBank submissions. Submitting all three at once, GenBank submissions are contingent on successful BioSample/SRA processing: SeqSender holds GenBank until NCBI has fully processed BioSample and SRA, and GenBank isn't submitted if either fails/stalls. Submitting only GenBank, the workflow uses the <code>biosample_accession</code> and <code>sra_accession</code> already in your Terra table; samples without them are submitted unlinked.</span>
+              </label>
+            </fieldset>
+          </fieldset>
+        </fieldset>
+        <fieldset class="cb-wide">
+          <legend>Organization</legend>
+          <div class="cb-grid">
+            <div>
+              <label>Role
+                <input id="cb-role" required>
+                <span class="cb-tip">Use the value NCBI gave you with your FTP account.</span>
+              </label>
+              <label>Type
+                <input id="cb-type" required>
+                <span class="cb-tip">Use the value NCBI gave you with your FTP account.</span>
+              </label>
+              <label>Name
+                <input id="cb-organization" required>
+                <span class="cb-tip">Your submitting group's name.</span>
+              </label>
+              <label>Affiliation
+                <input id="cb-affil" required>
+                <span class="cb-tip">Your organization's full name.</span>
+              </label>
+              <label>Division
+                <input id="cb-div" required>
+                <span class="cb-tip">Your department or laboratory.</span>
+              </label>
+              <label>Street
+                <input id="cb-street" required>
+              </label>
+            </div>
+            <div>
+              <label>City
+                <input id="cb-city" required>
+              </label>
+              <label>State or province
+                <input id="cb-sub" required>
+              </label>
+              <label>Postal code
+                <input id="cb-postal_code" inputmode="numeric" pattern="[0-9]+" required>
+              </label>
+              <label>Country
+                <input id="cb-country" required>
+              </label>
+              <label>Email
+                <input id="cb-email" type="email" required>
+                <span class="cb-tip">Where people with questions about your samples can reach you.</span>
+              </label>
+              <label>Phone
+                <input id="cb-phone" type="tel" required>
+                <span class="cb-tip">A number people with questions about your samples can call.</span>
+              </label>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset class="cb-narrow">
+          <legend>Submitter</legend>
+          <label>First name
+            <input id="cb-first_name" required>
+          </label>
+          <label>Last name
+            <input id="cb-last_name" required>
+          </label>
+          <label>Email
+            <input id="cb-submitter_email" type="email" required>
+            <span class="cb-tip">Where NCBI contacts you about problems with a submission.</span>
+          </label>
+          <label>Second email (optional)
+            <input id="cb-submitter_alt_email" type="email">
+            <span class="cb-tip">Another address NCBI can contact about problems with a submission.</span>
+          </label>
+        </fieldset>
+      </div>
+      <p class="cb-center"><button id="cb-create" class="md-button md-button--primary" type="submit" disabled>Create config file</button> <span id="cb-loading">Loading the builder; this takes a few seconds the first time…</span></p>
+    </fieldset>
+  </form>
+  <div id="cb-error" class="admonition failure" hidden><p></p></div>
+  <div id="cb-result" class="admonition success" hidden>
+    <p class="admonition-title">Your config file is ready</p>
+    <p class="cb-center cb-key-title"><strong>Your SeqSender Key:</strong></p>
+    <p class="cb-center"><code id="cb-key-output" class="cb-key"></code> <button id="cb-copy-key" class="md-button" type="button">Copy key</button></p>
+    <p class="cb-center cb-key-note">Save this key in a password manager. It can't be recovered, and every submission with this config file needs it.<br>Note your key will change every time you create a new config file, even with the same password, unless you specify an <code>Existing key</code> beforehand.</p>
+    <p class="cb-center"><a id="cb-download" class="md-button md-button--primary" download="seqsender_config.yaml">Download config file</a></p>
+  </div>
+</div>
+
+<script type="py" src="seqsender_config_builder.py" config='{"packages": ["cryptography", "pyyaml"]}'></script>

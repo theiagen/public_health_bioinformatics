@@ -726,3 +726,169 @@ div.searchable-table .table-reset-button:hover,
   border-color: var(--md-default-fg-color--light);
   background-color: var(--table-header-hover);
 }
+
+
+/* SEQSENDER CONFIG BUILDER FORMATTING */
+
+/*
+ * The config file builder on workflows/public_data_sharing/seqsender.md (also uses
+ * seqsender_config_builder.py, next to that file).
+ */
+
+/* the form's text size; the description bubbles (.cb-tip) and the error/result boxes set their own */
+.md-typeset .config-builder {
+  font-size: 0.7rem;
+}
+
+/* the outer box around the whole form */
+.md-typeset .config-builder form > fieldset {
+  padding: 1rem;
+  border: 2px solid var(--md-default-fg-color--lighter);
+  border-radius: 0.2rem;
+  background-color: var(--md-code-bg-color);
+}
+
+/* the groups (NCBI FTP account, Databases, Organization, and Submitter) */
+.md-typeset .config-builder fieldset {
+  margin: 0 0 1rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 0.2rem;
+  background-color: var(--md-default-bg-color);
+}
+
+/*
+ * the groups in a grid of three equal columns, filled left to right:
+ * NCBI FTP account (one column) and Databases (two), then Organization (two) and Submitter (one)
+ */
+.md-typeset .config-builder .cb-groups {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 1rem;
+}
+
+/* a group's title (NCBI FTP account, Databases, Organization, and Submitter) */
+.md-typeset .config-builder legend {
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+/* a one column wide group in the .cb-groups grid: (NCBI FTP account and Submitter) */
+.md-typeset .config-builder .cb-narrow {
+  grid-column: span 1;
+}
+
+/* a two column wide group in the .cb-groups grid: (Databases and Organization) */
+.md-typeset .config-builder .cb-wide {
+  grid-column: span 2;
+}
+
+/* columns side by side, one per <div>: the Organization group's fields */
+.md-typeset .config-builder .cb-grid {
+  display: grid; /* lay out its <div>s in a grid */
+  grid-template-columns: repeat(2, minmax(0, 24rem)); /* two columns, each as wide as the boxes (24rem), or narrower if the page is too narrow for both */
+  column-gap: 2rem; /* space between the columns */
+}
+
+/* a field: its name, with its box below inside the form */
+.md-typeset .config-builder label {
+  display: block;
+  position: relative; /* the anchor for its description bubble (.cb-tip), so the bubble sits beside this field's box */
+  max-width: 24rem;
+  margin: 0.4rem 0;
+}
+
+/* input checkboxes */
+.md-typeset .config-builder input[type="checkbox"] {
+  accent-color: var(--brand-green);
+}
+
+/* all input fields except the checkboxes (includes the text boxes and the dropdowns) */
+.md-typeset .config-builder input:not([type="checkbox"]),
+.md-typeset .config-builder select {
+  width: 100%;
+  padding: 0.25rem 0.4rem;
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 0.2rem;
+  background-color: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+  font: inherit; /* the page's font and size, instead of the browser's small form font */
+}
+
+/* turns the border of the input field being typed in green */
+.md-typeset .config-builder input:not([type="checkbox"]):focus,
+.md-typeset .config-builder select:focus {
+  outline: none; /* drop the browser's own focus ring */
+  border-color: var(--brand-green);
+}
+
+/* a field's description: a bubble to the right of its box, hidden until the rule below shows it */
+.md-typeset .config-builder .cb-tip {
+  display: none;
+  position: absolute;
+  left: 100%;
+  margin-left: 0.5rem;
+  bottom: 0;
+  z-index: 1;
+  width: max-content;
+  max-width: 15rem;
+  /* the rest copies the theme's own tooltips */
+  padding: 0.8rem;
+  border-radius: 0.1rem;
+  box-shadow: var(--md-shadow-z2);
+  background-color: var(--md-default-bg-color);
+  font-size: 0.64rem;
+}
+/*
+ * a field's description: hidden until the field is hovered or typed in, then shown in a bubble to the right of its box;
+ * hovering only shows the tip while nothing in the form has focus, that way description bubbles don't overlap.
+ */
+.md-typeset .config-builder:not(:focus-within) label:hover .cb-tip,
+.md-typeset .config-builder label:focus-within .cb-tip {
+  display: block;
+}
+/* an invisible bridge over the gap between a field and its description, so the mouse can cross to the description (to click a link in it) without leaving the field */
+.md-typeset .config-builder .cb-tip::before {
+  content: "";
+  position: absolute;
+  right: 100%;
+  top: 0;
+  bottom: 0;
+  width: 0.5rem;
+}
+
+/*
+ * a fieldset that groups fields without a box of its own:
+ * includes the BioSample and GenBank settings in the Submission group so we can hide the options until the relevant Database is selected
+ */
+.md-typeset .config-builder .cb-plain {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+/* the Python disables an unticked database's group, and hides the error and result boxes until they're needed */
+.md-typeset .config-builder fieldset:disabled,
+.md-typeset .config-builder [hidden] {
+  display: none;
+}
+
+/* centered across the form: the Create config file button, and the result box's key heading, key, save message and Download config file button */
+.md-typeset .config-builder .cb-center {
+  text-align: center; /* center each line's contents, e.g. the Create button and the loading message beside it until it's hidden */
+}
+
+/* the result box's "Your SeqSender Key:" heading */
+.md-typeset .config-builder .cb-key-title {
+  font-size: 0.8rem;
+}
+
+/* the result box's key, and the message about saving it */
+.md-typeset .config-builder .cb-key,
+.md-typeset .config-builder .cb-key-note {
+  font-size: 0.7rem;
+}
+
+.md-typeset .grid.cards.four-row {
+  grid-template-columns: repeat(4, 1fr);
+}
