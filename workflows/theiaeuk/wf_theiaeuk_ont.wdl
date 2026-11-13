@@ -277,8 +277,8 @@ workflow theiaeuk_ont {
     String? reference_gff_used = medea_magic.reference_gff_used
     String? reference_fasta_used = medea_magic.reference_fasta_used
     String? minimap2_version = medea_magic.minimap2_version
-    File? variant_calling_bam = medea_magic.variant_calling_bam
-    File? variant_calling_bai = medea_magic.variant_calling_bai
+    File? minimap2_genome_variants_bam = medea_magic.variant_calling_bam
+    File? minimap2_genome_variants_bai = medea_magic.variant_calling_bai
     String? clair3_genome_variants_version = medea_magic.clair3_genome_variants_version
     File? clair3_genome_variants_unfiltered_vcf = medea_magic.clair3_genome_variants_vcf
     File? clair3_genome_variants_selected_vcf = medea_magic.clair3_genome_variants_selected_vcf
@@ -286,13 +286,13 @@ workflow theiaeuk_ont {
     String? clair3_genome_variants_docker = medea_magic.clair3_genome_variants_docker
     String? clair3_genome_variants_model_used = medea_magic.clair3_genome_variants_model_used
     # read mapping statistics
-    String? mapping_stats_samtools_version = medea_magic.mapping_stats_samtools_version
-    Float? mapping_stats_percentage_mapped_reads = medea_magic.mapping_stats_percentage_mapped_reads
-    Float? mapping_stats_depth = medea_magic.mapping_stats_depth
-    Float? mapping_stats_percent_coverage = medea_magic.mapping_stats_coverage
-    Int? mapping_stats_total_snps = medea_magic.mapping_stats_total_snps
-    File? mapping_stats_cov_hist = medea_magic.mapping_stats_cov_hist
-    File? mapping_stats_cov_stats = medea_magic.mapping_stats_cov_stats
+    String? genome_mapping_samtools_version = medea_magic.mapping_stats_samtools_version
+    Float? genome_mapping_percentage_mapped_reads = medea_magic.mapping_stats_percentage_mapped_reads
+    Float? genome_mapping_depth = medea_magic.mapping_stats_depth
+    Float? genome_mapping_percent_coverage = medea_magic.mapping_stats_coverage
+    Int? genome_mapping_total_snps = medea_magic.mapping_stats_total_snps
+    File? genome_mapping_cov_hist = medea_magic.mapping_stats_cov_hist
+    File? genome_mapping_cov_stats = medea_magic.mapping_stats_cov_stats
     # Gene Coverage Outputs
     String? gene_query = medea_magic.gene_query
     File? gene_coverage_stats = medea_magic.gene_coverage_stats

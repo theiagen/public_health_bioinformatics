@@ -154,11 +154,12 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 
     | Track | Reference | Reported outputs |
     |---|---|---|
-    | Genome-wide (phylogenetics) | `reference_fasta` if supplied, otherwise the clade-specific reference selected by `cladetyper` | Alignment (`variant_calling_bam`), genome-wide VCFs, and `mapping_stats` |
-    | Gene-level AMR | Clade I strain B11205 (`GCA_016772135.1`) and its annotation | `gene_coverage` and `snpeff_gene_variants` only; the AMR alignment and genome-wide VCFs are not exposed |
+    | Genome-wide (phylogenetics) | `reference_fasta` if supplied, otherwise the clade-specific reference selected by `cladetyper` | Genome-wide read alignment, genome-wide VCFs, and reference genome mapping stats |
+    | Gene-level AMR | Clade I strain B11205 (`GCA_016772135.1`) and its annotation | `gene_coverage` and `snpeff_gene_variants` only |
 
-    - Standardizing on a single AMR reference reports AMR gene variants in the same coordinates for every clade, including Clade VI and genomes without a clade match, which lack a clade reference annotation.
-    - `reference_fasta_used` reports the genome-wide reference, while `reference_gff_used` and `gene_query` report the GFF and query used by the gene-level modules (i.e., the B11205 GFF when the AMR track runs). A `query_genes_bed` must use B11205 coordinates while the tracks are bifurcated.
+    - Genome-wide variant calling with respect to a clade-specific reference increases the quality of downstream phylogenetic analysis
+    - Reporting AMR variants with respect to the B11205 reference ensures coordinates are the same for every clade and standardized with the broader field
+    - `reference_fasta_used` reports the genome-wide reference, while `reference_gff_used` and `gene_query` report the GFF and query used by the gene-level modules (i.e., the B11205 GFF when the AMR track runs).
     - Default gene query: product IDs for genes with a unique product annotation, plus B11205 locus tags for genes annotated only as "hypothetical protein". A user-supplied `query_genes` takes precedence.
 
     !!! info "Providing `reference_fasta` and `reference_gff` consolidates the two tracks"
@@ -191,11 +192,11 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
     - Default reference genome and annotation: `GCF_000002655.1` (ASM265v1)
     - Default gene query: locus tags are queried instead of product names to maintain search specificity
 
-        | Gene | Locus tag | Product |
-        |---|---|---|
-        | _CYP51A_ | `AFUA_4G06890` | cytochrome P450 |
-        | _HAPE_ | `AFUA_6G05300` | CCAAT-binding factor complex subunit HapE |
-        | _COX10_ | `AFUA_4G08340` | protoheme IX farnesyltransferase |
+        | Gene | Locus tag |
+        |---|---|
+        | _CYP51A_ | `AFUA_4G06890` |
+        | _HAPE_ | `AFUA_6G05300` |
+        | _COX10_ | `AFUA_4G08340` |
 
         NOTE: Variants derived from locus tag searches will be reported with respect to the locus tag name, not the gene name
 
@@ -205,9 +206,9 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
     - Default reference genome and annotation: `GCF_000091045.1` (ASM9104v1)
     - Default gene query: product IDs are queried
 
-        | Gene | Locus tag | Product |
-        |---|---|---|
-        | _ERG11_ | CNA00300 | `sterol.14-demethylase` |
+        | Gene | Locus tag |
+        |---|---|
+        | _ERG11_ | CNA00300 |
 
 ### Outputs
 

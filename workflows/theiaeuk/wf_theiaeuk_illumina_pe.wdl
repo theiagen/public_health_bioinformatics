@@ -215,9 +215,9 @@ workflow theiaeuk_illumina_pe {
               "n50_value": quast.n50_value,
               "quast_gc_percent": quast.gc_percent,
               "busco_completeness": busco.busco_results,
-              "mapping_stats_coverage": medea_magic.mapping_stats_coverage,
-              "mapping_stats_depth": medea_magic.mapping_stats_depth,
-              "mapping_stats_percentage_mapped_reads": medea_magic.mapping_stats_percentage_mapped_reads
+              "genome_mapping_coverage": medea_magic.mapping_stats_coverage,
+              "genome_mapping_depth": medea_magic.mapping_stats_depth,
+              "genome_mapping_percentage_mapped_reads": medea_magic.mapping_stats_percentage_mapped_reads
             }
         }
       }
@@ -244,7 +244,7 @@ workflow theiaeuk_illumina_pe {
     File? mapped_read_removal_bai = read_QC_trim.mapped_read_removal_bai
     Float? mapped_read_removal_coverage = read_QC_trim.mapped_read_removal_coverage
     Float? mapped_read_removal_mean_depth = read_QC_trim.mapped_read_removal_mean_depth
-    File? mapped_read_removal_mapping_stats = read_QC_trim.mapped_read_removal_mapping_stats
+    File? mapped_read_removal_genome_mapping = read_QC_trim.mapped_read_removal_mapping_stats
     File? mapped_read_removal_cov_hist = read_QC_trim.mapped_read_removal_cov_hist
     File? mapped_read_removal_mapping_flagstat = read_QC_trim.mapped_read_removal_mapping_flagstat
     Float? mapped_read_removal_percent_mapped_reads = read_QC_trim.mapped_read_removal_percent_mapped_reads
@@ -358,21 +358,21 @@ workflow theiaeuk_illumina_pe {
     String? reference_gff_used = medea_magic.reference_gff_used
     String? reference_fasta_used = medea_magic.reference_fasta_used
     String? bwa_version = medea_magic.bwa_version
-    File? variant_calling_bam = medea_magic.variant_calling_bam
-    File? variant_calling_bai = medea_magic.variant_calling_bai
+    File? bwa_genome_variants_bam = medea_magic.variant_calling_bam
+    File? bwa_genome_variants_bai = medea_magic.variant_calling_bai
     String? gatk_genome_variants_version = medea_magic.gatk_genome_variants_version
     File? gatk_genome_variants_unfiltered_vcf = medea_magic.gatk_genome_variants_genotype_vcf
     File? gatk_genome_variants_unfiltered_vcf_index = medea_magic.gatk_genome_variants_genotype_vcf_index
     File? gatk_genome_variants_selected_vcf = medea_magic.gatk_genome_variants_selected_vcf
     Float? gatk_genome_variants_percent_passing = medea_magic.gatk_genome_variants_percent_passing
     # read mapping statistics
-    String? mapping_stats_samtools_version = medea_magic.mapping_stats_samtools_version
-    Float? mapping_stats_percentage_mapped_reads = medea_magic.mapping_stats_percentage_mapped_reads
-    Float? mapping_stats_depth = medea_magic.mapping_stats_depth
-    Float? mapping_stats_percent_coverage = medea_magic.mapping_stats_coverage
-    Int? mapping_stats_total_snps = medea_magic.mapping_stats_total_snps
-    File? mapping_stats_cov_hist = medea_magic.mapping_stats_cov_hist
-    File? mapping_stats_cov_stats = medea_magic.mapping_stats_cov_stats
+    String? genome_mapping_samtools_version = medea_magic.mapping_stats_samtools_version
+    Float? genome_mapping_percentage_mapped_reads = medea_magic.mapping_stats_percentage_mapped_reads
+    Float? genome_mapping_depth = medea_magic.mapping_stats_depth
+    Float? genome_mapping_percent_coverage = medea_magic.mapping_stats_coverage
+    Int? genome_mapping_total_snps = medea_magic.mapping_stats_total_snps
+    File? genome_mapping_cov_hist = medea_magic.mapping_stats_cov_hist
+    File? genome_mapping_cov_stats = medea_magic.mapping_stats_cov_stats
     # Gene Coverage Outputs
     String? gene_query = medea_magic.gene_query
     File? gene_coverage_stats = medea_magic.gene_coverage_stats

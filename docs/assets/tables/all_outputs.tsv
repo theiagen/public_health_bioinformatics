@@ -702,13 +702,13 @@ mapped_read_removal_mapping_stats	File	samtools statistics of reads mapped to co
 mapped_read_removal_mean_depth	Float	Mean depth of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
 mapped_read_removal_percent_mapped_reads	Float	Percent of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
 mapped_read_removal_reads_by_sequence	Map[String,Float]	A JSON map relating contaminant sequences to the number of reads mapped	TheiaProk_Illumina_PE
-mapping_stats_cov_hist	File	Coverage histogram from read mapping to the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-mapping_stats_cov_stats	File	Coverage statistics from read mapping to the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-mapping_stats_depth	Float	Mean depth of coverage of the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-mapping_stats_percent_coverage	Float	Percent breadth of coverage of reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-mapping_stats_percentage_mapped_reads	Float	Percent of cleaned reads mapped to the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-mapping_stats_samtools_version	String	samtools version used	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-mapping_stats_total_snps	Int	Number of SNP positions among passing (PASS/".") records of the VCF called against the reference genome. Excludes indels, multi-nucleotide variants, and alleles with ambiguous nucleotides.	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+genome_mapping_cov_hist	File	Coverage histogram from read mapping to the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+genome_mapping_cov_stats	File	Coverage statistics from read mapping to the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+genome_mapping_depth	Float	Mean depth of coverage of the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+genome_mapping_percent_coverage	Float	Percent breadth of coverage of reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+genome_mapping_percentage_mapped_reads	Float	Percent of cleaned reads mapped to the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+genome_mapping_samtools_version	String	samtools version used	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+genome_mapping_total_snps	Int	Number of SNP positions among passing (PASS/".") records of the VCF called against the reference genome. Excludes indels, multi-nucleotide variants, and alleles with ambiguous nucleotides.	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 mashtree_docker	String	The Docker image used to run the mashtree task	MashTree_FASTA
 mashtree_filtered_metadata	File	Optional output file with filtered metadata that is only produced if the optional `summarize_data` task is used	MashTree_FASTA
 mashtree_matrix	File	The distance matrix made	MashTree_FASTA
@@ -1426,8 +1426,10 @@ vadr_flu_segment_concatenated_fasta	File	Assembly FASTA file of all Influenza ge
 vadr_num_alerts	String	Number of fatal alerts as determined by VADR	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, VADR_Update
 vadr_update_analysis_date	String	Date of analysis	VADR_Update
 vadr_update_version	String	Version of the Public Health Bioinformatics (PHB) repository used	VADR_Update
-variant_calling_bai	File	Read mapping BAM index file used for variant calling	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-variant_calling_bam	File	Read mapping BAM file used for variant calling	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+bwa_genome_variants_bai	File	Read mapping BAM index file used for variant calling	TheiaEuk_Illumina_PE
+bwa_genome_variants_bam	File	Read mapping BAM file used for variant calling	TheiaEuk_Illumina_PE
+minimap2_genome_variants_bai	File	Read mapping BAM index file used for variant calling	TheiaEuk_ONT
+minimap2_genome_variants_bam	File	Read mapping BAM file used for variant calling	TheiaEuk_ONT
 variants_from_ref_vcf	File	Number of variants relative to the reference genome	TheiaCoV_ClearLabs
 vibecheck_classification_notes	String	Additional information provided by Vibecheck during classification	TheiaProk_Illumina_PE
 vibecheck_confidence	Float	How confidence lineage assignment is. 0 - uncertain; 100 - Very certain	TheiaProk_Illumina_PE
