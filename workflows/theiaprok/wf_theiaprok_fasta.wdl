@@ -452,6 +452,7 @@ workflow theiaprok_fasta {
             "prokka_gbk": prokka.prokka_gbk,
             "prokka_gff": prokka.prokka_gff,
             "prokka_sqn": prokka.prokka_sqn,
+            "prokka_tsv": prokka.prokka_tsv,
             "qc_check": qc_check_task.qc_check,
             "qc_standard": qc_check_task.qc_standard,
             "quast_gc_percent": quast.gc_percent,
@@ -675,6 +676,7 @@ workflow theiaprok_fasta {
     File? prokka_gff = prokka.prokka_gff
     File? prokka_gbk = prokka.prokka_gbk
     File? prokka_sqn = prokka.prokka_sqn
+    File? prokka_tsv = prokka.prokka_tsv
     String? prokka_version = prokka.prokka_version
     # Bakta Results
     File? bakta_gbff = bakta.bakta_gbff
