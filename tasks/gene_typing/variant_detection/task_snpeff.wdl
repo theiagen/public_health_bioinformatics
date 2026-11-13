@@ -112,8 +112,8 @@ task snpeff {
         ~{"--bedfile " + bedfile} \
         ~{if exact_match then "--exact_match" else ""} \
         --feature_qualifier "~{feature_qualifier}" \
-        --suppress ~{suppress} \
-        --output ~{samplename}_~{vcf_scope}_variant_report.tsv \
+        --suppress "~{suppress}" \
+        --output ~{samplename}_~{vcf_scope}_variant_report.tsv
 
       # join each record into one comma-delimited string: the full REPORT column (the
       # last), and an abbreviated GENE:AA, falling back to GENE:NT for a record with
