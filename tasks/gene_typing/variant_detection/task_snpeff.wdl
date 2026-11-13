@@ -127,7 +127,7 @@ task snpeff {
 
     # report the queried genes, else the bedfile basename, else a generic message
     # when no variant was reported
-    if [ ! -s VARIANT_REPORT ]; then
+    if ! grep -q "[^[:space:]]" VARIANT_REPORT; then
       if [ -n "~{query_genes}" ]; then
         no_variants="No variants detected: ~{query_genes}"
       elif [ -n "~{bedfile}" ]; then
