@@ -90,12 +90,12 @@ task fastq_scan {
     awk -F'\t' 'NR==2 {print $18}' seqkit_stats.tsv > READ1_GC_PERCENT
     echo "DEBUG: GC content in $(basename ~{read1}): $(cat READ1_GC_PERCENT)"
     # add GC content to the fastq-scan json alongside the other qc_stats
-    jq --argjson gc "$(cat READ1_GC_PERCENT)" '.qc_stats.gc_percent = $gc' ~{read1_name}_fastq-scan.json > tmp.json
+    jq --arg gc "$(cat READ1_GC_PERCENT)" '.qc_stats.gc_percent = ($gc | tonumber? // null)' ~{read1_name}_fastq-scan.json > tmp.json
     mv tmp.json ~{read1_name}_fastq-scan.json
     if [[ -n "~{read2}" ]]; then
       awk -F'\t' 'NR==3 {print $18}' seqkit_stats.tsv > READ2_GC_PERCENT
       echo "DEBUG: GC content in $(basename ~{read2}): $(cat READ2_GC_PERCENT)"
-      jq --argjson gc "$(cat READ2_GC_PERCENT)" '.qc_stats.gc_percent = $gc' ~{read2_name}_fastq-scan.json > tmp.json
+      jq --arg gc "$(cat READ2_GC_PERCENT)" '.qc_stats.gc_percent = ($gc | tonumber? // null)' ~{read2_name}_fastq-scan.json > tmp.json
       mv tmp.json ~{read2_name}_fastq-scan.json
     fi
 
@@ -118,8 +118,8 @@ task fastq_scan {
     Float read2_mean_length = read_float("READ2_MEAN_LENGTH")
     Float read1_mean_quality = read_float("READ1_MEAN_QUALITY")
     Float read2_mean_quality = read_float("READ2_MEAN_QUALITY")
-    Float read1_gc_percent = read_float("READ1_GC_PERCENT")
-    Float read2_gc_percent = read_float("READ2_GC_PERCENT")
+    String read1_gc_percent = read_string("READ1_GC_PERCENT")
+    String read2_gc_percent = read_string("READ2_GC_PERCENT")
     Float total_mean_quality = read_float("COMBINED_MEAN_QUALITY")
     Float total_gc_percent = read_float("COMBINED_GC_PERCENT")
     String read_pairs = read_string("READ_PAIRS")
