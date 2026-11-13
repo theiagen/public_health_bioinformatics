@@ -89,33 +89,9 @@ workflow medea_magic {
         max_distance = cladetyper_max_distance,
         docker = cauris_cladetyper_docker_image
     }
-    # a user-supplied GFF has unknown locus tags, so only product names are queried
-    String cauris_product_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,sterol.24-C-methyltransferase"
-    if (defined(reference_gff)) {
-      String cauris_custom_query_genes = cauris_product_query_genes
-    }
-    # AMR reference defaults: product names plus the B11205 ortholog locus tags (FLO8 [single gene], MEC3, ERG3,
-    # PSK74852); a non-default cauris_amr_gff has unknown locus tags, so only product names are queried
-    String cauris_amr_query_genes = if basename(cauris_amr_gff) == "Cauris_Clade1-B11205_GCA_016772135.1_ASM1677213v1_genomic.gff" then cauris_product_query_genes + ",CJI82_02621,CJI82_01006,CJI82_00364,CJI82_03986" else cauris_product_query_genes
-    # clade reference defaults: product names where they resolve a single gene, otherwise the
-    # clade reference's ortholog locus tags (FLO8, FLO8 N-terminus, MEC3, ERG3, PSK74852)
-    if (cladetyper.gambit_cladetype == "Clade1") {
-      String cauris_clade1_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,sterol.24-C-methyltransferase,B9J08_02359,B9J08_02360,B9J08_00960,B9J08_01595,B9J08_04226"
-    }
-    # Clade II writes products with "_" and annotates FLO8 as a single gene
-    if (cladetyper.gambit_cladetype == "Clade2") {
-      String cauris_clade2_query_genes = "FKS1,lanosterol_14-alpha_demethylase,uracil_phosphoribosyltransferase,sterol_24-C-methyltransferase,CJI96_0001121,CJI96_0001637,CJI96_0002270,CJI96_0004130"
-    }
-    if (cladetyper.gambit_cladetype == "Clade3") {
-      String cauris_clade3_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,sterol.24-C-methyltransferase,CJI97_000401,CJI97_000402,CJI97_003175,CJI97_003811,CJI97_005426"
-    }
-    # Clade IV and V annotate FLO8 as a single gene
-    if (cladetyper.gambit_cladetype == "Clade4") {
-      String cauris_clade4_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,sterol.24-C-methyltransferase,CJJ07_003930,CJJ07_005307,CJJ07_003685,CJJ07_003405"
-    }
-    if (cladetyper.gambit_cladetype == "Clade5") {
-      String cauris_clade5_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,sterol.24-C-methyltransferase,FDK38_002567,FDK38_000935,FDK38_001564,FDK38_004143"
-    }
+    # B11205 (cauris_amr_gff) defaults: product names, plus locus tags for genes annotated only as
+    # "hypothetical protein" (MEC3, ERG3, PSK74852)
+    String cauris_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,sterol.24-C-methyltransferase,FLO8,CJI82_01006,CJI82_00364,CJI82_03986"
   }
   if (medea_tag == "Aspergillus fumigatus") {
     File afumigatus_variant_fasta = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.fasta"
@@ -140,10 +116,8 @@ workflow medea_magic {
   if ((defined(reference_gff) && defined(reference_fasta)) || (! defined(reference_gff) && ! defined(reference_fasta))) {
     String resolved_reference_gff = select_first([reference_gff, cladetyper.annotated_reference_gff, afumigatus_reference_gff, cryptoneo_reference_gff, ""])
   }
-  # The user-supplied query_genes takes priority; otherwise the organism-specific default
-  # set (if any) is used, with the C. auris user-supplied GFF set preceding the clade sets.
-  # Inherently depends on variant calling
-  String resolved_query_genes = select_first([query_genes, cauris_custom_query_genes, cauris_clade1_query_genes, cauris_clade2_query_genes, cauris_clade3_query_genes, cauris_clade4_query_genes, cauris_clade5_query_genes, afumigatus_query_genes, cryptoneo_query_genes, ""])
+  # The user-supplied query_genes takes priority; otherwise the organism-specific default set (if any) is used
+  String resolved_query_genes = select_first([query_genes, cauris_query_genes, afumigatus_query_genes, cryptoneo_query_genes, ""])
 
   # REFERENCE-BASED VARIANT CALLING
   # variant calling runs automatically whenever a reference fasta and read1 are available;
@@ -217,14 +191,10 @@ workflow medea_magic {
 
   # C. AURIS AMR VARIANT CALLING
   # C. auris gene-level AMR characterization is standardized to cauris_amr_fasta (B11205 by default), so reads
-  # are additionally called against it unless it matches the genome-wide reference resolved above. References
-  # are compared by basename because cladetyper renames the reference it selects. These outputs are only used
-  # by the gene-centric modules; the genome-wide variant files are not exposed.
+  # are additionally called against it unless it matches (by basename) the genome-wide reference resolved above.
+  # These outputs are only used by the gene-centric modules; the genome-wide variant files are not exposed.
   if (medea_tag == "Candidozyma auris" || medea_tag == "Candida auris") {
-    if (defined(reference_fasta)) {
-      String user_reference_basename = basename(select_first([reference_fasta]))
-    }
-    String resolved_reference_basename = select_first([user_reference_basename, cladetyper.assembly_reference_basename, ""])
+    String resolved_reference_basename = if resolved_reference_fasta != "" then basename(resolved_reference_fasta) else ""
     if (basename(cauris_amr_fasta) != resolved_reference_basename && defined(read1) && (ont_data || defined(read2))) {
       if (!ont_data) {
         call gatk_variants_illumina_workflow.gatk_variants_illumina as cauris_amr_gatk_variants {
@@ -281,7 +251,6 @@ workflow medea_magic {
       File cauris_amr_vcf = select_first([cauris_amr_gatk_variants.gatk_selected_vcf, cauris_amr_clair3_variants.clair3_selected_vcf])
       File cauris_amr_reference_fasta = cauris_amr_fasta
       File cauris_amr_reference_gff = cauris_amr_gff
-      String cauris_amr_resolved_query_genes = select_first([query_genes, cauris_amr_query_genes])
     }
   }
 
@@ -290,14 +259,13 @@ workflow medea_magic {
   # C. auris samples whose AMR reference matches the genome-wide reference) the genome-wide outputs are used
   String gene_reference_fasta = select_first([cauris_amr_reference_fasta, resolved_reference_fasta])
   String gene_reference_gff = select_first([cauris_amr_reference_gff, resolved_reference_gff, ""])
-  String gene_query_genes = select_first([cauris_amr_resolved_query_genes, resolved_query_genes])
   if (gene_reference_gff != "") {
     File used_reference_gff = gene_reference_gff
   }
 
   # GENE-CENTRIC COVERAGE CALCULATIONS AND VARIANT ANNOTATION
   # Terra can pass empty strings, so check for empty strings as well
-  if ((gene_reference_gff != "" && gene_query_genes != "") || defined(query_genes_bed)) {
+  if ((gene_reference_gff != "" && resolved_query_genes != "") || defined(query_genes_bed)) {
     if (defined(cauris_amr_bam) || defined(resolved_bam)) {
       call gene_coverage_task.gene_coverage {
         input:
@@ -306,21 +274,21 @@ workflow medea_magic {
           samplename = samplename,
           reference_gff = used_reference_gff,
           bedfile = query_genes_bed,
-          query_genes = gene_query_genes,
+          query_genes = resolved_query_genes,
           exact_match = query_exact_match,
           min_map_quality = min_gene_coverage_map_quality,
           min_base_quality = min_gene_coverage_base_quality,
           min_depth = min_gene_coverage_depth,
           query_check_hard_fail = true
       }
-      if (gene_query_genes != "" && (defined(cauris_amr_vcf) || defined(resolved_vcf)) && gene_reference_gff != "") {
+      if (resolved_query_genes != "" && (defined(cauris_amr_vcf) || defined(resolved_vcf)) && gene_reference_gff != "") {
         call snpeff_task.snpeff as snpeff_gene_variants {
           input:
             samplename = samplename,
             organism = medea_tag,
             reference_fasta = gene_reference_fasta,
             reference_gff = gene_reference_gff,
-            query_genes = gene_query_genes,
+            query_genes = resolved_query_genes,
             exact_match = query_exact_match,
             suppress = suppressed_variants,
             vcf = select_first([cauris_amr_vcf, resolved_vcf]),
@@ -402,7 +370,7 @@ workflow medea_magic {
     File? mapping_stats_cov_stats = mapping_stats.cov_stats
     File? mapping_stats_flagstat = mapping_stats.flagstat
     # gene query actually used (user-supplied or organism-derived)
-    String gene_query = gene_query_genes
+    String gene_query = resolved_query_genes
     # gene coverage
     File? gene_coverage_stats = gene_coverage.gene_coverage_stats
     Map[String, String]? gene_coverage_depth_by_gene = gene_coverage.depth_by_gene

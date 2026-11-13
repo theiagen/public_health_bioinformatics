@@ -159,43 +159,21 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 
     - Standardizing on a single AMR reference reports AMR gene variants in the same coordinates for every clade, including Clade VI and genomes without a clade match, which lack a clade reference annotation.
     - `reference_fasta_used` reports the genome-wide reference, while `reference_gff_used` and `gene_query` report the GFF and query used by the gene-level modules (i.e., `cauris_amr_gff` when the AMR track runs). A `query_genes_bed` must use `cauris_amr_fasta` coordinates.
-    - If `cauris_amr_fasta` matches the genome-wide reference (compared by file name), variant calling runs only once and the gene-level modules use the genome-wide reference, its GFF (`reference_gff` or the `cladetyper` GFF), and the clade-specific gene query below.
-    - Default gene query (AMR track): product IDs for genes with a unique product annotation, plus B11205 locus tags for genes annotated only as "hypothetical protein". A user-supplied `query_genes` takes precedence.
+    - If `cauris_amr_fasta` matches the genome-wide reference (compared by file name), variant calling runs only once and the gene-level modules use the genome-wide reference and its GFF (`reference_gff` or the `cladetyper` GFF).
+    - Default gene query: product IDs for genes with a unique product annotation, plus B11205 locus tags for genes annotated only as "hypothetical protein". A user-supplied `query_genes` takes precedence, and must be provided when the GFF used is not the B11205 annotation (a non-default `cauris_amr_gff`, or a `reference_gff` whose `reference_fasta` matches `cauris_amr_fasta`).
 
-        | Gene | B11205 (`cauris_amr_gff`) |
+        | Gene | Query |
         |---|---|
         | _FKS1_ | `FKS1` |
         | _ERG11_ | `lanosterol.14-alpha.demethylase` |
         | _FUR1_ | `uracil.phosphoribosyltransferase` |
         | _ERG6_ | `sterol.24-C-methyltransferase` |
-        | _FLO8_ | `CJI82_02621`\* |
+        | _FLO8_ | `FLO8` |
         | _MEC3_ | `CJI82_01006` |
         | _ERG3_ | `CJI82_00364` |
         | _PSK74852_ | `CJI82_03986` |
 
-        \* _FLO8_ is annotated as a single gene in the B11205 reference
-
-        NOTE: If a non-default `cauris_amr_gff` is supplied, only the product IDs (_FKS1_, _ERG11_, _FUR1_, and _ERG6_ rows) are queried by default. To include the remaining genes, supply their locus tags in `query_genes` alongside the product IDs.
-
-    - Clade-specific gene query (only used when `cauris_amr_fasta` matches the genome-wide reference): the Clade II reference delimits product IDs with "_"
-
-        | Gene | Clade I | Clade II | Clade III | Clade IV | Clade V |
-        |---|---|---|---|---|---|
-        | _FKS1_ | `FKS1` | `FKS1` | `FKS1` | `FKS1` | `FKS1` |
-        | _ERG11_ | `lanosterol.14-alpha.demethylase` | `lanosterol_14-alpha_demethylase` | `lanosterol.14-alpha.demethylase` | `lanosterol.14-alpha.demethylase` | `lanosterol.14-alpha.demethylase` |
-        | _FUR1_ | `uracil.phosphoribosyltransferase` | `uracil_phosphoribosyltransferase` | `uracil.phosphoribosyltransferase` | `uracil.phosphoribosyltransferase` | `uracil.phosphoribosyltransferase` |
-        | _ERG6_ | `sterol.24-C-methyltransferase` | `sterol_24-C-methyltransferase` | `sterol.24-C-methyltransferase` | `sterol.24-C-methyltransferase` | `sterol.24-C-methyltransferase` |
-        | _FLO8_ | `B9J08_02359` | `CJI96_0001121`\* | `CJI97_000401` | `CJJ07_003930`\* | `FDK38_002567`\* |
-        | _FLO8_ N-terminus | `B9J08_02360` | \* | `CJI97_000402` | \* | \* |
-        | _MEC3_ | `B9J08_00960` | `CJI96_0001637` | `CJI97_003175` | `CJJ07_005307` | `FDK38_000935` |
-        | _ERG3_ | `B9J08_01595` | `CJI96_0002270` | `CJI97_003811` | `CJJ07_003685` | `FDK38_001564` |
-        | _PSK74852_ | `B9J08_04226` | `CJI96_0004130` | `CJI97_005426` | `CJJ07_003405` | `FDK38_004143` |
-
-        \* _FLO8_ is annotated as a single gene in the Clade II, IV, and V references
-
         NOTE: Variants derived from locus tag searches will be reported with respect to the locus tag name, not the gene name
-
-        NOTE: If a `reference_gff` is supplied alongside a `reference_fasta` that matches `cauris_amr_fasta`, only the product IDs (_FKS1_, _ERG11_, _FUR1_, and _ERG6_ rows; "." delimited) are queried by default. To include the remaining genes above, supply their locus tags in `query_genes` alongside the product IDs.
 
 {{ include_md("common_text/cauris_cladetyper.md", indent=4) }}
 {{ include_md("common_text/amr_search_task.md", indent=4, condition="theiaeuk") }}
