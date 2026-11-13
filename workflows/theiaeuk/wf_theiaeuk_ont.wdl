@@ -280,10 +280,9 @@ workflow theiaeuk_ont {
     File? variant_calling_bam = medea_magic.variant_calling_bam
     File? variant_calling_bai = medea_magic.variant_calling_bai
     String? clair3_genome_variants_version = medea_magic.clair3_genome_variants_version
-    File? clair3_genome_variants_vcf = medea_magic.clair3_genome_variants_vcf
-    # filtered here is the SELECTED variants (PASS records only), mirroring gatk_genome_variants_filtered_vcf
-    File? clair3_genome_variants_filtered_vcf = medea_magic.clair3_genome_variants_selected_vcf
-    File? clair3_genome_variants_gvcf = medea_magic.clair3_genome_variants_gvcf
+    File? clair3_genome_variants_unfiltered_vcf = medea_magic.clair3_genome_variants_vcf
+    File? clair3_genome_variants_selected_vcf = medea_magic.clair3_genome_variants_selected_vcf
+    File? clair3_genome_variants_unfiltered_gvcf = medea_magic.clair3_genome_variants_gvcf
     String? clair3_genome_variants_docker = medea_magic.clair3_genome_variants_docker
     String? clair3_genome_variants_model_used = medea_magic.clair3_genome_variants_model_used
     # read mapping statistics

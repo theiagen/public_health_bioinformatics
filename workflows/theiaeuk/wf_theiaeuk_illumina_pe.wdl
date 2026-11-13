@@ -363,8 +363,7 @@ workflow theiaeuk_illumina_pe {
     String? gatk_genome_variants_version = medea_magic.gatk_genome_variants_version
     File? gatk_genome_variants_unfiltered_vcf = medea_magic.gatk_genome_variants_genotype_vcf
     File? gatk_genome_variants_unfiltered_vcf_index = medea_magic.gatk_genome_variants_genotype_vcf_index
-    # filtered here is the SELECTED variants (PASS records only), not the full gatk_filter-annotated VCF
-    File? gatk_genome_variants_filtered_vcf = medea_magic.gatk_genome_variants_selected_vcf
+    File? gatk_genome_variants_selected_vcf = medea_magic.gatk_genome_variants_selected_vcf
     Float? gatk_genome_variants_percent_passing = medea_magic.gatk_genome_variants_percent_passing
     # read mapping statistics
     String? mapping_stats_samtools_version = medea_magic.mapping_stats_samtools_version

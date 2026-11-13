@@ -35,8 +35,8 @@ fragment: true
 <!-- if: theiaeuk -->
 
     !!! info "Outputs"
-        - `clair3_genome_variants_vcf` — the unfiltered Clair3 VCF, including `RefCall` and `LowQual` records.
-        - `clair3_genome_variants_filtered_vcf` — the records with a `PASS` (or unset) `FILTER`. This VCF is used for downstream variant annotation.
+        - `clair3_genome_variants_unfiltered_vcf` — the unfiltered Clair3 VCF, including `RefCall` and `LowQual` records.
+        - `clair3_genome_variants_selected_vcf` — the records with a `PASS` (or unset) `FILTER`. This VCF is used for downstream variant annotation.
 <!-- endif -->
 
     !!! techdetails "Clair3 Technical Details"

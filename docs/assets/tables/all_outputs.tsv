@@ -239,10 +239,10 @@ clair3_aligned_bam	File	Sorted BAM file containing the alignments of reads to th
 clair3_docker	String	Docker image used for Clair3	TheiaViral_ONT
 clair3_docker_image	String	Version of the Docker container used for Clair3 variant calling	Clair3_Variants_ONT
 clair3_genome_variants_docker	String	Docker image used for Clair3	TheiaEuk_ONT
-clair3_genome_variants_filtered_vcf	File	Records from the Clair3 VCF with a PASS (or unset) FILTER - removes RefCall and LowQual entries	TheiaEuk_ONT
-clair3_genome_variants_gvcf	File	Optional genome VCF file containing information about all genomic positions, including non-variant sites	TheiaEuk_ONT
 clair3_genome_variants_model_used	String	Name of the Clair3 model used for variant calling	TheiaEuk_ONT
-clair3_genome_variants_vcf	File	Final merged VCF file containing high-confidence variant calls, combining results from both pileup and full-alignment approaches	TheiaEuk_ONT
+clair3_genome_variants_selected_vcf	File	Records from the Clair3 VCF with a PASS (or unset) FILTER - removes RefCall and LowQual entries	TheiaEuk_ONT
+clair3_genome_variants_unfiltered_gvcf	File	Optional genome VCF file containing information about all genomic positions, including non-variant sites	TheiaEuk_ONT
+clair3_genome_variants_unfiltered_vcf	File	Final merged VCF file containing high-confidence variant calls, combining results from both pileup and full-alignment approaches	TheiaEuk_ONT
 clair3_genome_variants_version	String	Clair3 Version being used	TheiaEuk_ONT
 clair3_gvcf	File	Genomic VCF file from Clair3	TheiaViral_ONT
 clair3_model	String	Model used for Clair3 variant calling	TheiaViral_ONT
@@ -500,8 +500,8 @@ gamma_fasta	File	The FASTA file reporting gene matches if boolean was set to tru
 gamma_gff	File	The GFF file reporting gene matches if boolean was set to true	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 gamma_results	File	The .gamma file reporting gene matches	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 gamma_version	String	The version of GAMMA used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-gatk_genome_variants_filtered_vcf	File	Uncompressed records extracted from the filtered VCF by GATK SelectVariants - removes entries that failed filtration	TheiaEuk_Illumina_PE
 gatk_genome_variants_percent_passing	Float	Percent of variant records that passed filtering	TheiaEuk_Illumina_PE
+gatk_genome_variants_selected_vcf	File	Uncompressed records extracted from the filtered VCF by GATK SelectVariants - removes entries that failed filtration	TheiaEuk_Illumina_PE
 gatk_genome_variants_unfiltered_vcf	File	VCF annotated with the raw, unfiltered variant calls	TheiaEuk_Illumina_PE
 gatk_genome_variants_unfiltered_vcf_index	File	VCF index for the raw, unfiltered variant calls	TheiaEuk_Illumina_PE
 gatk_genome_variants_version	String	Version of GATK used for variant calling and filtering	TheiaEuk_Illumina_PE
@@ -1048,8 +1048,8 @@ read_screen_clean	String	PASS or FAIL result from clean read screening; FAIL acc
 read_screen_clean_tsv	File	Clean read screening report TSV depicting read counts, total read base pairs, and estimated genome length	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 read_screen_raw	String	PASS or FAIL result from raw read screening; FAIL accompanied by the reason(s) for failure	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 read_screen_raw_tsv	File	Raw read screening report TSV depicting read counts, total read base pairs, and estimated genome length	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-reference_fasta_used	String	Reference FASTA used in genome-wide variant calling; C. auris gene-level AMR results are instead called against cauris_amr_fasta unless the two references match	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-reference_gff_used	String	Reference GFF used in gene variant annotation and coverage calculations	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+reference_fasta_used	String	Reference FASTA used in genome-wide variant calling; by default, C. auris gene-level AMR results are instead called against the B11205 reference unless both reference_fasta and reference_gff are provided	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+reference_gff_used	String	Reference GFF used in gene variant annotation and coverage calculations; by default, this is the B11205 annotation for C. auris unless both reference_fasta and reference_gff are provided	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 rename_fastq_files_analysis_date	String	Date of analysis	Rename_FASTQ
 rename_fastq_files_version	String	Version of PHB used for the analysis	Rename_FASTQ
 resfinder_db_version	String	Version of ResFinder database	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT

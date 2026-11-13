@@ -30,12 +30,10 @@ workflow medea_magic {
     Int? cladetyper_kmer_size
     Float? cladetyper_max_distance
     # user-supplied reference fasta; when provided, overrides the hosted/organism reference
+    # for C. auris, supplying both reference_fasta and reference_gff consolidates the (by default bifurcated)
+    # genome-wide and gene-level AMR variant calling paths onto the user-supplied reference
     File? reference_fasta
     File? reference_gff
-    # C. auris gene-level AMR characterization is standardized to this reference, independent of the
-    # genome-wide (cladetyper-selected or user-supplied) reference
-    File cauris_amr_fasta = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1-B11205_GCA_016772135.1_ASM1677213v1_genomic.fasta"
-    File cauris_amr_gff = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1-B11205_GCA_016772135.1_ASM1677213v1_genomic.gff"
     # shared compute for the read_aligners (bwa for illumina, minimap2 for ont);
     String? read_aligner_docker
     Int? read_aligner_cpu
@@ -89,8 +87,8 @@ workflow medea_magic {
         max_distance = cladetyper_max_distance,
         docker = cauris_cladetyper_docker_image
     }
-    # B11205 (cauris_amr_gff) defaults: product names, plus locus tags for genes annotated only as
-    # "hypothetical protein" (MEC3, ERG3, PSK74852)
+    # B11205 (default C. auris AMR reference) defaults: product names, plus locus tags for genes annotated
+    # only as "hypothetical protein" (MEC3, ERG3, PSK74852)
     String cauris_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,sterol.24-C-methyltransferase,FLO8,CJI82_01006,CJI82_00364,CJI82_03986"
   }
   if (medea_tag == "Aspergillus fumigatus") {
@@ -190,18 +188,24 @@ workflow medea_magic {
   }
 
   # C. AURIS AMR VARIANT CALLING
-  # C. auris gene-level AMR characterization is standardized to cauris_amr_fasta (B11205 by default), so reads
-  # are additionally called against it unless it matches (by basename) the genome-wide reference resolved above.
-  # These outputs are only used by the gene-centric modules; the genome-wide variant files are not exposed.
-  if (medea_tag == "Candidozyma auris" || medea_tag == "Candida auris") {
-    String resolved_reference_basename = if resolved_reference_fasta != "" then basename(resolved_reference_fasta) else ""
-    if (basename(cauris_amr_fasta) != resolved_reference_basename && defined(read1) && (ont_data || defined(read2))) {
+  # C. auris variant calling is bifurcated by default: genome-wide variants are called against the
+  # cladetyper-selected (or user-supplied) reference above, while gene-level AMR characterization is standardized to B11205, so reads
+  # are additionally called against it. These outputs are only used by the gene-centric modules; the AMR alignment
+  # and its genome-wide variant files are not exposed.
+  # Supplying both reference_fasta and reference_gff consolidates the two paths: the AMR variant calling is skipped
+  # and the gene-centric modules use the genome-wide outputs and the user-supplied GFF. Supplying only one of the
+  # two does not consolidate the paths, so gene-level AMR characterization remains standardized to B11205.
+  if ((medea_tag == "Candidozyma auris" || medea_tag == "Candida auris") && !(defined(reference_fasta) && defined(reference_gff))) {
+    if (defined(read1) && (ont_data || defined(read2))) {
+      # bundle the AMR inputs so the gene-centric modules never mix references
+      File cauris_amr_reference_fasta = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1-B11205_GCA_016772135.1_ASM1677213v1_genomic.fasta"
+      File cauris_amr_reference_gff = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1-B11205_GCA_016772135.1_ASM1677213v1_genomic.gff"
       if (!ont_data) {
         call gatk_variants_illumina_workflow.gatk_variants_illumina as cauris_amr_gatk_variants {
           input:
             read1 = select_first([read1]),
             read2 = select_first([read2]),
-            reference_genome_file = cauris_amr_fasta,
+            reference_genome_file = cauris_amr_reference_fasta,
             samplename = samplename,
             bwa_docker = read_aligner_docker,
             bwa_cpu = read_aligner_cpu,
@@ -226,7 +230,7 @@ workflow medea_magic {
         call clair3_variants_ont_workflow.clair3_variants_ont as cauris_amr_clair3_variants {
           input:
             read1 = select_first([read1]),
-            reference_genome_file = cauris_amr_fasta,
+            reference_genome_file = cauris_amr_reference_fasta,
             samplename = samplename,
             minimap2_docker = read_aligner_docker,
             minimap2_cpu = read_aligner_cpu,
@@ -245,18 +249,15 @@ workflow medea_magic {
             clair3_disk_size = clair3_disk_size
         }
       }
-      # bundle the AMR inputs so the gene-centric modules never mix references
       File cauris_amr_bam = select_first([cauris_amr_gatk_variants.gatk_aligned_bam, cauris_amr_clair3_variants.clair3_aligned_bam])
       File cauris_amr_bai = select_first([cauris_amr_gatk_variants.gatk_aligned_bai, cauris_amr_clair3_variants.clair3_aligned_bai])
       File cauris_amr_vcf = select_first([cauris_amr_gatk_variants.gatk_selected_vcf, cauris_amr_clair3_variants.clair3_selected_vcf])
-      File cauris_amr_reference_fasta = cauris_amr_fasta
-      File cauris_amr_reference_gff = cauris_amr_gff
     }
   }
 
   # GENE-CENTRIC INPUT RESOLUTION
   # the C. auris AMR variant calling outputs take priority when generated; otherwise (other organisms and
-  # C. auris samples whose AMR reference matches the genome-wide reference) the genome-wide outputs are used
+  # C. auris samples with a user-supplied reference_fasta and reference_gff) the genome-wide outputs are used
   String gene_reference_fasta = select_first([cauris_amr_reference_fasta, resolved_reference_fasta])
   String gene_reference_gff = select_first([cauris_amr_reference_gff, resolved_reference_gff, ""])
   if (gene_reference_gff != "") {
@@ -339,7 +340,7 @@ workflow medea_magic {
     String? cladetyper_docker_image = cladetyper.gambit_cladetyper_docker_image
     # species-agnostic genome-wide reference actually used (user-supplied or organism-derived)
     File? reference_fasta_used = used_reference_fasta
-    # GFF used by the gene-centric modules (cauris_amr_gff for C. auris when its AMR variant calling runs)
+    # GFF used by the gene-centric modules (the B11205 GFF for C. auris when its AMR variant calling runs)
     File? reference_gff_used = used_reference_gff
     # variant calling - illumina (bwa alignment + gatk)
     String? bwa_version = gatk_genome_variants.bwa_version
