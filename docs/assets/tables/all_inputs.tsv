@@ -512,7 +512,6 @@ clair3	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optiona
 clair3	snp_min_af	Float	Minimum SNP allele frequency required for a candidate variant. Lowering the value might increase a bit of sensitivity in trade of speed and accuracy	0.08	Optional	TheiaViral_ONT	general	
 clair3	variant_quality	Int	If set, variants with >$qual will be marked PASS, or LowQual otherwise	2	Optional	TheiaViral_ONT	general	
 clair3_variants	indel_min_af	Float	Minimum Indel AF required for a candidate variant		Optional	Clair3_Variants_ONT	general	
-clair3_variants	reference_genome_file_index	File	DESCRIPTION		Optional	Clair3_Variants_ONT	general	
 clair3_variants	snp_min_af	Float	Minimum SNP AF required for a candidate variant	0.08	Optional	Clair3_Variants_ONT	general	
 clair3_variants_ont	clair3_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Clair3_Variants_ONT	runtime	
 clair3_variants_ont	clair3_disable_phasing	Boolean	Disable whatshap phasing	True	Optional	Clair3_Variants_ONT	general	
