@@ -366,7 +366,7 @@ workflow medea_magic {
     Float? mapping_stats_percentage_mapped_reads = mapping_stats.percentage_mapped_reads
     Float? mapping_stats_depth = mapping_stats.depth
     Float? mapping_stats_coverage = mapping_stats.coverage
-    Int? mapping_stats_total_snps = mapping_stats.total_snps
+    String? mapping_stats_total_snps = mapping_stats.total_snps
     File? mapping_stats_stats = mapping_stats.stats
     File? mapping_stats_cov_hist = mapping_stats.cov_hist
     File? mapping_stats_cov_stats = mapping_stats.cov_stats

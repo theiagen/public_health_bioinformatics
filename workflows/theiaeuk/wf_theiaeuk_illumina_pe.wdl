@@ -370,7 +370,7 @@ workflow theiaeuk_illumina_pe {
     Float? genome_mapping_percentage_mapped_reads = medea_magic.mapping_stats_percentage_mapped_reads
     Float? genome_mapping_depth = medea_magic.mapping_stats_depth
     Float? genome_mapping_percent_coverage = medea_magic.mapping_stats_coverage
-    Int? genome_mapping_total_snps = medea_magic.mapping_stats_total_snps
+    String? genome_mapping_total_snps = medea_magic.mapping_stats_total_snps
     File? genome_mapping_cov_hist = medea_magic.mapping_stats_cov_hist
     File? genome_mapping_cov_stats = medea_magic.mapping_stats_cov_stats
     # Gene Coverage Outputs
