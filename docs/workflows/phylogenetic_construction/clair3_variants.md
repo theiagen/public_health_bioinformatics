@@ -69,7 +69,7 @@ The `Clair3_Variants` workflow processes Oxford Nanopore Technologies (ONT) sequ
 
 ??? task "`Clair3`: Variant Calling"
 
-    `Clair3` performs deep learning-based variant detection using a multi-stage approach. The reference genome is indexed with `samtools faidx` within the task prior to variant calling. The process begins with pileup-based calling for initial variant identification, followed by full-alignment analysis for comprehensive variant detection. Results are merged into a final high-confidence call set.
+    `Clair3` performs deep learning-based variant detection using a multi-stage approach. The process begins with pileup-based calling for initial variant identification, followed by full-alignment analysis for comprehensive variant detection. Results are merged into a final high-confidence call set.
 
     The variant calling pipeline employs specialized neural networks trained on ONT data to accurately identify:
     - Single nucleotide variants (SNVs)
