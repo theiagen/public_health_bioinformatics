@@ -79,7 +79,9 @@ workflow theiacov_illumina_se {
       vadr_mem = vadr_memory,
       primer_bed_file = primer_bed,
       pangolin_docker_image = pangolin_docker_image,
-      flu_genoflu_genotype = ""
+      flu_genoflu_genotype = "",
+      flu_segment = "",
+      flu_type = ""
   }
   if (! skip_screen_raw) {
     call screen.check_reads_se as raw_check_reads {
