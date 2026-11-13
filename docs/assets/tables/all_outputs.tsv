@@ -199,6 +199,8 @@ busco_docker	String	BUSCO docker image used	TheiaEuk_Illumina_PE, TheiaEuk_ONT, 
 busco_report	File	A plain text summary of the results in BUSCO notation	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 busco_results	String	BUSCO results (see relevant toggle in [this block](https://theiagen.github.io/public_health_bioinformatics/latest/workflows/genomic_characterization/theiaprok/#post-assembly-tasks))	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 busco_version	String	BUSCO software version used	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+bwa_genome_variants_bai	File	Read mapping BAM index file used for variant calling	TheiaEuk_Illumina_PE
+bwa_genome_variants_bam	File	Read mapping BAM file used for variant calling	TheiaEuk_Illumina_PE
 bwa_read1_aligned	File	Forward reads aligned to reference	TheiaViral_Illumina_PE
 bwa_read1_unaligned	File	Forward reads not aligned to reference	TheiaViral_Illumina_PE
 bwa_read2_aligned	File	Reverse reads aligned to reference	TheiaViral_Illumina_PE
@@ -521,6 +523,13 @@ genoflu_all_segments	String	The genotypes for each individual flu segment	TheiaC
 genoflu_genotype	String	The genotype of the whole genome, based off of the individual segments types	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 genoflu_output_tsv	File	The output file from GenoFLU	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 genoflu_version	String	The version of GenoFLU used	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+genome_mapping_cov_hist	File	Coverage histogram from read mapping to the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+genome_mapping_cov_stats	File	Coverage statistics from read mapping to the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+genome_mapping_depth	Float	Mean depth of coverage of the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+genome_mapping_percent_coverage	Float	Percent breadth of coverage of reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+genome_mapping_percentage_mapped_reads	Float	Percent of cleaned reads mapped to the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+genome_mapping_samtools_version	String	samtools version used	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+genome_mapping_total_snps	String	Number of SNP positions among passing (PASS/".") records of the VCF called against the reference genome. Excludes indels, multi-nucleotide variants, and alleles with ambiguous nucleotides.	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 genotyphi_final_genotype	String	Final genotype call from GenoTyphi	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 genotyphi_genotype_confidence	String	Confidence in the final genotype call made by GenoTyphi	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 genotyphi_mykrobe_json	File	JSON file of GenoTyphi output, described <https://github.com/katholt/genotyphi#explanation-of-columns-in-the-output>	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
@@ -697,18 +706,12 @@ mapped_read_removal_cov_hist	File	Coverage histogram of reads mapped to contamin
 mapped_read_removal_coverage	Float	Mean coverage of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
 mapped_read_removal_coverage_by_sequence	Map[String,Float]	A JSON map relating identified contaminant sequence headers to read mapping coverage	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
 mapped_read_removal_depth_by_sequence	Map[String,Float]	A JSON map relating identified contaminant sequence headers to read mapping depth	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
+mapped_read_removal_genome_mapping	File	DESCRIPTION	TheiaEuk_Illumina_PE
 mapped_read_removal_mapping_flagstat	File	samtools flagstat of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
-mapped_read_removal_mapping_stats	File	samtools statistics of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
+mapped_read_removal_mapping_stats	File	samtools statistics of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
 mapped_read_removal_mean_depth	Float	Mean depth of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
 mapped_read_removal_percent_mapped_reads	Float	Percent of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
 mapped_read_removal_reads_by_sequence	Map[String,Float]	A JSON map relating contaminant sequences to the number of reads mapped	TheiaProk_Illumina_PE
-genome_mapping_cov_hist	File	Coverage histogram from read mapping to the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-genome_mapping_cov_stats	File	Coverage statistics from read mapping to the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-genome_mapping_depth	Float	Mean depth of coverage of the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-genome_mapping_percent_coverage	Float	Percent breadth of coverage of reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-genome_mapping_percentage_mapped_reads	Float	Percent of cleaned reads mapped to the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-genome_mapping_samtools_version	String	samtools version used	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-genome_mapping_total_snps	Int	Number of SNP positions among passing (PASS/".") records of the VCF called against the reference genome. Excludes indels, multi-nucleotide variants, and alleles with ambiguous nucleotides.	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 mashtree_docker	String	The Docker image used to run the mashtree task	MashTree_FASTA
 mashtree_filtered_metadata	File	Optional output file with filtered metadata that is only produced if the optional `summarize_data` task is used	MashTree_FASTA
 mashtree_matrix	File	The distance matrix made	MashTree_FASTA
@@ -782,6 +785,8 @@ midas_secondary_genus	String	Genus of the next most abundant species after remov
 midas_secondary_genus_abundance	Float	Relative abundance of secondary genus	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 midas_secondary_genus_coverage	Float	Absolute coverage of secondary genus	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 minimap2_docker	String	The Docker image of minimap2	Freyja_FASTQ, TheiaMeta_Illumina_PE, TheiaViral_ONT
+minimap2_genome_variants_bai	File	Read mapping BAM index file used for variant calling	TheiaEuk_ONT
+minimap2_genome_variants_bam	File	Read mapping BAM file used for variant calling	TheiaEuk_ONT
 minimap2_out	File	Output file from Minimap2 alignment	TheiaViral_ONT
 minimap2_version	String	The version of minimap2	Clair3_Variants_ONT, Freyja_FASTQ, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaViral_ONT
 morgana_magic_organism	String	Standardized organism name used for characterization	TheiaViral_Illumina_PE, TheiaViral_ONT
@@ -1426,10 +1431,6 @@ vadr_flu_segment_concatenated_fasta	File	Assembly FASTA file of all Influenza ge
 vadr_num_alerts	String	Number of fatal alerts as determined by VADR	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, VADR_Update
 vadr_update_analysis_date	String	Date of analysis	VADR_Update
 vadr_update_version	String	Version of the Public Health Bioinformatics (PHB) repository used	VADR_Update
-bwa_genome_variants_bai	File	Read mapping BAM index file used for variant calling	TheiaEuk_Illumina_PE
-bwa_genome_variants_bam	File	Read mapping BAM file used for variant calling	TheiaEuk_Illumina_PE
-minimap2_genome_variants_bai	File	Read mapping BAM index file used for variant calling	TheiaEuk_ONT
-minimap2_genome_variants_bam	File	Read mapping BAM file used for variant calling	TheiaEuk_ONT
 variants_from_ref_vcf	File	Number of variants relative to the reference genome	TheiaCoV_ClearLabs
 vibecheck_classification_notes	String	Additional information provided by Vibecheck during classification	TheiaProk_Illumina_PE
 vibecheck_confidence	Float	How confidence lineage assignment is. 0 - uncertain; 100 - Very certain	TheiaProk_Illumina_PE
