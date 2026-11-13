@@ -26,7 +26,7 @@ fragment: true
 
     `<query>` is the `query_genes`/`query_genes_bed` term.
 
-    The `snpeff_gene_variants_hits_abbreviated` output condenses each entry into `<query>:<amino acid change>` using one-letter residue codes (e.g. `FKS1:S639F`), falling back to `<query>:<nucleotide change>` (e.g. `FKKS1:428A>G`) for a variant with no protein change. When no variants are reported, both outputs read `No variants detected: <query_genes>`.
+    The `snpeff_gene_variants_hits_abbreviated` output condenses each entry into `<query>:<amino acid change>` using one-letter residue codes (e.g. `FKS1:S639F`), falling back to `<query>:<nucleotide change>` (e.g. `FKKS1:428A>G`) for a variant with no protein change (e.g. a partial transcript or intron). When no variants are reported, both outputs read `No variants detected: <query_genes>`.
 
     Entries are omitted if: any of their consequence terms are listed in `suppressed_variants` (see below), they are not annotated against a transcript (e.g. `intergenic_region`, incomplete transcript, or lacking a stop codon), resolve to neither a coding nor a protein change, and if the variant cannot be traced back to a gene product in the reference GFF. The full set of annotations is retained in `snpeff_gene_variants_vcf`, alongside SnpEff's HTML summary (`snpeff_gene_variants_summary_html`). Every reported entry is also tabulated in `snpeff_gene_variants_report_tsv` as follows:
 
@@ -48,10 +48,8 @@ fragment: true
         - `query_genes_bed` supplies gene names from the fourth column of the BED file when `query_genes` is not supplied; coordinates are always taken from the reference GFF
         - If neither is supplied, the entire VCF is annotated
 
-    ??? dna "`suppressed_variants` input parameter"
-        `suppressed_variants` is a comma-delimited list of [SnpEff consequence terms](https://pcingola.github.io/SnpEff/snpeff/inputoutput/) (e.g. `upstream_gene_variant,downstream_gene_variant,synonymous_variant`) whose annotations are excluded from `snpeff_gene_variants_hits`, `snpeff_gene_variants_hits_abbreviated`, and `snpeff_gene_variants_report_tsv`. An annotation is excluded if any of its consequence terms are listed. By default, `upstream_gene_variant`, `downstream_gene_variant`, and `synonymous_variant` are suppressed. Suppressed annotations are still retained in `snpeff_gene_variants_vcf`.
-
-        Supplying `suppressed_variants` replaces the defaults rather than adding to them, so re-list any defaults (e.g. `synonymous_variant`) that should still be excluded.
+    ??? dna "`suppressed_variants` input parameter and synonymous mutations"
+        `suppressed_variants` is a comma-delimited list of [SnpEff consequence terms](https://pcingola.github.io/SnpEff/snpeff/inputoutput/) whose annotations are excluded from `snpeff_gene_variants_hits`, `snpeff_gene_variants_hits_abbreviated`, and `snpeff_gene_variants_report_tsv`. An annotation is excluded if any of its consequence terms are listed. By default, `synonymous_variant` are suppressed and can be exposed if `suppressed_variants` is populated with different consequence terms or an empty string (`""`). Suppressed annotations are still retained in `snpeff_gene_variants_vcf`.
 
     ??? dna "Codon translation tables"
         By default, each contig is assigned the codon table from the GFF `transl_table` attribute. Contigs without a translation use SnpEff's default (Standard) table, and contigs with multiple translation tables within a single contig raise an error. A genome-wide translation table can be input via the `translation_table` input, referencing [NCBI's translation table integer codes](https://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi).

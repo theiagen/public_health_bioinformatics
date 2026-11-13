@@ -12,7 +12,8 @@ task snpeff {
     File vcf
     Int? translation_table # NCBI translation table number; detected dynamically from the GFF transl_table attribute when unset
 
-    String suppress = "upstream_gene_variant,downstream_gene_variant,synonymous_variant" # default theiagene suppression in addition to synonymous
+    # suppress synonymous variants by default (upstream_*/downstream_gene_variant are inherently suppressed via -ud 0 in snpeff ann)
+    String suppress = "synonymous_variant"     
     String feature_qualifier = "product,locus_tag" # comma-delimited GFF feature qualifier(s) to use for comparison to query gene
     Boolean exact_match = false # use an exact match for qualifier mapping (always case-sensitive)
     Boolean ambiguous_contig = false # relate bedfile to GFF and FASTA ambiguous
