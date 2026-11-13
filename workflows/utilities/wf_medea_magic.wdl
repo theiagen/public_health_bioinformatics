@@ -70,6 +70,7 @@ workflow medea_magic {
     # gene coverage options; user-supplied inputs take priority
     String? query_genes
     String? suppressed_variants # comma-delimited string of suppressed variants
+    Int? translation_table
     File? query_genes_bed
     Boolean query_exact_match = false
     Int min_gene_coverage_depth = 10 # mirror Snippy variants v4.6.0
@@ -289,6 +290,7 @@ workflow medea_magic {
             organism = medea_tag,
             reference_fasta = gene_reference_fasta,
             reference_gff = gene_reference_gff,
+            translation_table = translation_table,
             query_genes = resolved_query_genes,
             exact_match = query_exact_match,
             suppress = suppressed_variants,

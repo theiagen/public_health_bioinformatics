@@ -54,7 +54,7 @@ fragment: true
         Supplying `suppressed_variants` replaces the defaults rather than adding to them, so re-list any defaults (e.g. `synonymous_variant`) that should still be excluded.
 
     ??? dna "Codon translation tables"
-        By default, each contig is assigned the codon table its GFF features declare via the `transl_table` attribute. Contigs without a translation to SnpEff's default (Standard) table, and contigs with multiple translation tables raise an error. A genome-wide translation table can be used based on the `translation_table` input.
+        By default, each contig is assigned the codon table from the GFF `transl_table` attribute. Contigs without a translation use SnpEff's default (Standard) table, and contigs with multiple translation tables within a single contig raise an error. A genome-wide translation table can be input via the `translation_table` input, referencing [NCBI's translation table integer codes](https://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi).
 
     ??? dna "Depth annotation with complementary nucleotides"
         Depths are annotated with the reference and alternate nucleotides as they appear in the VCF (forward strand). When the query region is annotated on the negative strand, these are the complements of the nucleotides in the HGVS coding notation (e.g. `c.428A>G` with depths `T:0 C:562`).
