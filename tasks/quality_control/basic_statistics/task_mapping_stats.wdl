@@ -12,8 +12,10 @@ task mapping_stats {
     Int cpu = 2
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23.2"
   }
-  # stage an unset_int to pass the null if no VCF is input
-  Int? = unset_int
+  # stage an unset_int as a null if no VCF is input
+  if defined(vcf) {
+    Int null_placeholder = 1
+  }
   command <<<
     # fail hard
     set -euo pipefail
@@ -174,7 +176,7 @@ task mapping_stats {
     Float meanbaseq = read_string("MEANBASEQ")
     Float meanmapq = read_string("MEANMAPQ")
     Float percentage_mapped_reads = read_string("PERCENTAGE_MAPPED_READS")
-    Int? total_snps = if defined(vcf) then read_int("TOTAL_SNPS") else unset_int
+    Int? total_snps = if defined(vcf) then read_int("TOTAL_SNPS") else null_placeholder
   }
   runtime {
     docker: docker
