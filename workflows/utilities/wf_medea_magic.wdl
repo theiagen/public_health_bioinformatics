@@ -211,7 +211,6 @@ workflow medea_magic {
             bwa_memory = read_aligner_memory,
             bwa_disk_size = read_aligner_disk_size,
             gatk_ploidy = gatk_ploidy,
-            gatk_decompress = gatk_decompress,
             gatk_filter_min_variant_quality = gatk_filter_min_variant_quality,
             gatk_filter_min_depth = gatk_filter_min_depth,
             gatk_filter_min_map_quality = gatk_filter_min_map_quality,
