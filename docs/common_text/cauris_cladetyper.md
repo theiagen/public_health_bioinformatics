@@ -21,7 +21,7 @@ fragment: true
     | Clade VI | GCA_032714025.1 | ASM3271402v1 | F1580 | SAMN36753179 |
 
     !!! warning "Clade VI annotation"
-        Clade VI will not be does not have an available reference genome annotation at the time of adding the reference genome into this task.
+        Clade VI does not have an available reference genome annotation at the time of adding the reference genome into this task.
 
     !!! techdetails "Cladetyper Technical Details"
         |  | Links |
