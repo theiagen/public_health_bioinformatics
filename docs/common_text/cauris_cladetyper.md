@@ -21,7 +21,7 @@ fragment: true
     | Clade VI | GCA_032714025.1 | ASM3271402v1 | F1580 | SAMN36753179 |
 
     !!! warning "Clade VI annotation"
-        Clade VI does not have an available reference genome annotation at the time of adding the reference genome into this task. While Clade VI assignment is functional, gene-level variant characterization against the Clade VI reference is not currently possible without an annotation. TheiaEuk instead characterizes AMR genes of every clade, including Clade VI, against its standardized _C. auris_ AMR reference (`cauris_amr_fasta`). Users may otherwise provide a close relative annotation, such as Clade IV, though it is unknown if Clade VI variants can reliably be called with respect to such a reference.
+        Clade VI will not be does not have an available reference genome annotation at the time of adding the reference genome into this task.
 
     !!! techdetails "Cladetyper Technical Details"
         |  | Links |

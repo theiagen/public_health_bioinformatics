@@ -30,8 +30,9 @@ task snpeff {
     # fail hard
     set -euo pipefail
 
-    # obtain version
+    # obtain versions
     snpeff -version 2>/dev/null | head -n 1 | cut -f 2 | tee VERSION
+    theiagene --version | cut -d ' ' -f 2 | tee THEIAGENE_VERSION
 
     # cap the JVM heap for every downstream snpeff call
     export JAVA_TOOL_OPTIONS="-Xmx~{memory}G"
@@ -139,6 +140,7 @@ task snpeff {
   >>>
   output {
     String snpeff_version = read_string("VERSION")
+    String theiagene_version = read_string("THEIAGENE_VERSION")
     File? snpeff_annotated_vcf = "~{samplename}_~{vcf_scope}_snpeff.vcf"
     File? snpeff_summary_html = "~{samplename}_~{vcf_scope}_snpeff_summary.html"
     File? snpeff_genes_txt = "~{samplename}_~{vcf_scope}_snpeff_summary.genes.txt"
