@@ -204,16 +204,16 @@ workflow freyja_fastq {
     String fastq_scan_num_reads_raw1 = select_first([read_QC_trim_pe.fastq_scan_raw1, read_QC_trim_se.fastq_scan_raw1, ""])
     Int? fastq_scan_num_reads_raw2 = read_QC_trim_pe.fastq_scan_raw2
     String? fastq_scan_num_reads_raw_pairs = read_QC_trim_pe.fastq_scan_raw_pairs
-    Float? fastq_scan_r1_gc_percent_raw = if defined(read_QC_trim_pe.fastq_scan_r1_gc_percent_raw) then read_QC_trim_pe.fastq_scan_r1_gc_percent_raw else read_QC_trim_se.fastq_scan_r1_gc_percent_raw
-    Float? fastq_scan_r2_gc_percent_raw = read_QC_trim_pe.fastq_scan_r2_gc_percent_raw
+    String? fastq_scan_r1_gc_percent_raw = if defined(read_QC_trim_pe.fastq_scan_r1_gc_percent_raw) then read_QC_trim_pe.fastq_scan_r1_gc_percent_raw else read_QC_trim_se.fastq_scan_r1_gc_percent_raw
+    String? fastq_scan_r2_gc_percent_raw = read_QC_trim_pe.fastq_scan_r2_gc_percent_raw
     String fastq_scan_raw1_json = select_first([read_QC_trim_pe.fastq_scan_raw1_json, read_QC_trim_se.fastq_scan_raw1_json, ""])
     File? fastq_scan_raw2_json = read_QC_trim_pe.fastq_scan_raw2_json
     String fastq_scan_version = select_first([read_QC_trim_pe.fastq_scan_version, read_QC_trim_se.fastq_scan_version, ""])
     String fastq_scan_num_reads_clean1 = select_first([read_QC_trim_pe.fastq_scan_clean1, read_QC_trim_se.fastq_scan_clean1, ""])
     Int? fastq_scan_num_reads_clean2 = read_QC_trim_pe.fastq_scan_clean2
     String? fastq_scan_num_reads_clean_pairs = read_QC_trim_pe.fastq_scan_clean_pairs
-    Float? fastq_scan_r1_gc_percent_clean = if defined(read_QC_trim_pe.fastq_scan_r1_gc_percent_clean) then read_QC_trim_pe.fastq_scan_r1_gc_percent_clean else read_QC_trim_se.fastq_scan_r1_gc_percent_clean
-    Float? fastq_scan_r2_gc_percent_clean = read_QC_trim_pe.fastq_scan_r2_gc_percent_clean
+    String? fastq_scan_r1_gc_percent_clean = if defined(read_QC_trim_pe.fastq_scan_r1_gc_percent_clean) then read_QC_trim_pe.fastq_scan_r1_gc_percent_clean else read_QC_trim_se.fastq_scan_r1_gc_percent_clean
+    String? fastq_scan_r2_gc_percent_clean = read_QC_trim_pe.fastq_scan_r2_gc_percent_clean
     String fastq_scan_clean1_json = select_first([read_QC_trim_pe.fastq_scan_clean1_json, read_QC_trim_se.fastq_scan_clean1_json, ""])
     File? fastq_scan_clean2_json = read_QC_trim_pe.fastq_scan_clean2_json
     # Read QC - fastqc outputs - Illumina PE and SE
@@ -239,6 +239,7 @@ workflow freyja_fastq {
     Float? nanoplot_r1_n50_raw = nanoplot_raw.n50
     Float? nanoplot_r1_mean_q_raw = nanoplot_raw.mean_q
     Float? nanoplot_r1_median_q_raw = nanoplot_raw.median_q
+    Float? nanoplot_r1_gc_percent_raw = nanoplot_raw.gc_percent
     Float? nanoplot_r1_est_coverage_raw = nanoplot_raw.est_coverage
     File? nanoplot_html_clean = nanoplot_clean.nanoplot_html
     File? nanoplot_tsv_clean = nanoplot_clean.nanoplot_tsv
@@ -249,6 +250,7 @@ workflow freyja_fastq {
     Float? nanoplot_r1_n50_clean = nanoplot_clean.n50
     Float? nanoplot_r1_mean_q_clean = nanoplot_clean.mean_q
     Float? nanoplot_r1_median_q_clean = nanoplot_clean.median_q
+    Float? nanoplot_r1_gc_percent_clean = nanoplot_clean.gc_percent
     Float? nanoplot_r1_est_coverage_clean = nanoplot_clean.est_coverage
     # Read QC - trimmomatic outputs - Illumina PE and SE
     String trimmomatic_version = select_first([read_QC_trim_pe.trimmomatic_version, read_QC_trim_se.trimmomatic_version, ""])
