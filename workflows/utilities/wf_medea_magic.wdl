@@ -280,8 +280,7 @@ workflow medea_magic {
           exact_match = query_exact_match,
           min_map_quality = min_gene_coverage_map_quality,
           min_base_quality = min_gene_coverage_base_quality,
-          min_depth = min_gene_coverage_depth,
-          query_check_hard_fail = true
+          min_depth = min_gene_coverage_depth
       }
       if (resolved_query_genes != "" && (defined(cauris_amr_vcf) || defined(resolved_vcf)) && gene_reference_gff != "") {
         call snpeff_task.snpeff as snpeff_gene_variants {
