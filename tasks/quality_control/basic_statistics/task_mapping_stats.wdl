@@ -92,7 +92,8 @@ task mapping_stats {
       json.dump(read_dict, f, indent=4)
     CODE
 
-    # count SNPs in the optional VCF; TOTAL_SNPS is only written when a VCF is provided
+    # count SNPs in the optional VCF
+    touch TOTAL_SNPS
     python3 <<'CODE'
     import gzip
 
