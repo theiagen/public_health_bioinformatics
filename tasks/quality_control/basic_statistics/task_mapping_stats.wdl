@@ -13,7 +13,7 @@ task mapping_stats {
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23.2"
   }
   # stage an unset_int to pass the null if no VCF is input
-  Int? unset_int
+  Int? = unset_int
   command <<<
     # fail hard
     set -euo pipefail
