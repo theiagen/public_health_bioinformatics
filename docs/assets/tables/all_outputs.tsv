@@ -529,7 +529,7 @@ genome_mapping_depth	Float	Mean depth of coverage of the reference genome	TheiaE
 genome_mapping_percent_coverage	Float	Percent breadth of coverage of reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 genome_mapping_percentage_mapped_reads	Float	Percent of cleaned reads mapped to the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 genome_mapping_samtools_version	String	samtools version used	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-genome_mapping_total_snps	String	Number of SNP positions among passing (PASS/".") records of the VCF called against the reference genome. Excludes indels, multi-nucleotide variants, and alleles with ambiguous nucleotides.	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+genome_mapping_total_snps	String	Number of unfiltered (PASS/".") SNP positions relative to the reference genome. Excludes indels, multi-nucleotide variants, and ambiguous nucleotides (including "N").	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 genotyphi_final_genotype	String	Final genotype call from GenoTyphi	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 genotyphi_genotype_confidence	String	Confidence in the final genotype call made by GenoTyphi	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 genotyphi_mykrobe_json	File	JSON file of GenoTyphi output, described <https://github.com/katholt/genotyphi#explanation-of-columns-in-the-output>	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
@@ -1047,7 +1047,7 @@ read_mapping_meanmapq	Float	Mean mapping quality from read mapping	TheiaViral_Il
 read_mapping_percentage_mapped_reads	Float	Percentage of clean reads that mapped to the reference genome	TheiaViral_Illumina_PE, TheiaViral_ONT
 read_mapping_samtools_version	String	Version of samtools used in read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT
 read_mapping_statistics	File	Statistics file from read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT
-read_mapping_total_snps	Int	Number of passing SNP positions (PASS/".") relative to the reference genome. Excludes indels, multi-nucleotide variants, and variants with ambiguous nucleotides.	TheiaViral_Illumina_PE, TheiaViral_ONT
+read_mapping_total_snps	Int	Number of unfiltered (PASS/".") SNP positions relative to the reference genome. Excludes indels, multi-nucleotide variants, and ambiguous nucleotides (including "N").	TheiaViral_Illumina_PE, TheiaViral_ONT
 read_screen_clean	String	PASS or FAIL result from clean read screening; FAIL accompanied by the reason(s) for failure	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 read_screen_clean_tsv	File	Clean read screening report TSV depicting read counts, total read base pairs, and estimated genome length	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 read_screen_raw	String	PASS or FAIL result from raw read screening; FAIL accompanied by the reason(s) for failure	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
