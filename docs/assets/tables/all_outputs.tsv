@@ -707,7 +707,7 @@ mapped_read_removal_coverage	Float	Mean coverage of reads mapped to contaminant 
 mapped_read_removal_coverage_by_sequence	Map[String,Float]	A JSON map relating identified contaminant sequence headers to read mapping coverage	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
 mapped_read_removal_depth_by_sequence	Map[String,Float]	A JSON map relating identified contaminant sequence headers to read mapping depth	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
 mapped_read_removal_mapping_flagstat	File	samtools flagstat of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
-mapped_read_removal_mapping_stats	File	samtools statistics of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
+mapped_read_removal_mapping_stats	File	samtools statistics of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
 mapped_read_removal_mean_depth	Float	Mean depth of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
 mapped_read_removal_percent_mapped_reads	Float	Percent of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
 mapped_read_removal_reads_by_sequence	Map[String,Float]	A JSON map relating contaminant sequences to the number of reads mapped	TheiaProk_Illumina_PE
