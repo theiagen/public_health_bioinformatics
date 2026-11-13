@@ -68,6 +68,10 @@ task clair3_variants {
     gunzip ~{samplename}/merge_output.vcf.gz
     mv "~{samplename}/merge_output.vcf" ~{samplename}_merge_output.vcf
 
+    # mirror GATK SelectVariants --exclude-filtered: retain the header and records whose
+    # FILTER is PASS or "." (unfiltered), dropping Clair3's RefCall and LowQual records
+    awk -F'\t' '/^#/ || $7 == "PASS" || $7 == "."' ~{samplename}_merge_output.vcf > ~{samplename}_selected.vcf
+
     # If gvcf is enabled, move the gvcf file to the output directory
     if [ "~{enable_gvcf}" == "true" ]; then
       gunzip ~{samplename}/merge_output.gvcf.gz
@@ -77,6 +81,7 @@ task clair3_variants {
   output {
     String clair3_version = read_string("VERSION")
     File clair3_variants_vcf = "~{samplename}_merge_output.vcf"
+    File clair3_selected_vcf = "~{samplename}_selected.vcf"
     File? clair3_variants_gvcf = "~{samplename}_merge_output.gvcf"
     String clair3_variants_docker_image = docker
     String clair3_model_used = clair3_model

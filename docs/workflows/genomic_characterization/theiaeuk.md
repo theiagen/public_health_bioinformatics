@@ -79,6 +79,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
     === "TheiaEuk_ONT"
 {{ include_md("common_text/read_screen_task.md", condition="theiaeukont", indent=8) }}
 {{ include_md("common_text/read_qc_trim_ont_wf.md", condition="theiaeuk", indent=8) }}
+{{ include_md("common_text/qc_check_task.md", condition="theiaeuk", indent=8) }}
 
         !!! dna ""
             These tasks assemble the reads into a _de novo_ assembly and assess the quality of the assembly.
@@ -96,10 +97,10 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 #### Organism-specific characterization
 
 !!! tip ""
-    The TheiaEuk workflow automatically activates taxa-specific tasks after identification of the relevant taxa using `GAMBIT`. Default taxa (_Candidozyma auris_, _Cryptococcus neoformans_, or _Aspergillus fumigatus_) do not require user input to run characterization modules, and other taxa can undergo reference-based variant calling and gene characterization by inputting a `reference_fasta` and `reference_gff`.
+    The TheiaEuk workflow automatically activates taxa-specific tasks after identification of the relevant taxa using `GAMBIT`. If an `expected_taxon` is provided (e.g., "Candidozyma auris"), it overrides the `GAMBIT` taxonomic assignment. Default taxa (_Candidozyma auris_, _Cryptococcus neoformans_, or _Aspergillus fumigatus_) do not require user input to run characterization modules, and other taxa can undergo reference-based variant calling and gene characterization by inputting a `reference_fasta` and `reference_gff`.
 
 ??? toggle "Reference-based variant calling"
-    After taxonomic identification, TheiaEuk performs reference-based variant calling whenever a `reference_fasta` is provided or a default organism is selected (user input takes precedence). The resulting variants are summarized with respect to target regions if a `reference_gff` and `query_genes`/`query_genes_bed` are populated.
+    After taxonomic identification, TheiaEuk performs reference-based variant calling whenever a `reference_fasta` is provided or a default organism is selected (user input takes precedence). The resulting variants are summarized with respect to target regions if a `reference_gff` and `query_genes`/`query_genes_bed` are populated; these are populated automatically for default organisms. For _C. auris_, genome-wide reference-based variant calling is reported against a clade-specific reference genome by default, while _C. auris_ antimicrobial resistance (AMR) gene variants are called relative to the B11205 reference by default. This bifurcation produces a high-quality VCF for downstream phylogenetic analysis and complies with standardized variant reporting respectively. Providing both a `reference_fasta` and a `reference_gff` consolidates these two _C. auris_ paths, so that genome-wide and AMR gene variants are both called relative to the user-supplied reference.
 
     Default values are depicted for default organisms in their respective sections below.
 
@@ -114,12 +115,15 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
         For any other identified organism (e.g. _Candida albicans_), variant calling only runs if `reference_fasta` is supplied by the user.
 
     ??? dna "`reference_gff` input parameter"
-        The annotated reference (General Features Format, GFF) used by the `gene_coverage` and `gene_variants` tasks to extract query genes list into genomic coordinates. A user-supplied `reference_gff` always takes precedence over the defaults below. When it is not provided, an organism-specific default is selected automatically if a default organism is identified:
+        The annotated reference (General Features Format, GFF) used by the `gene_coverage` and `snpeff_gene_variants` tasks to extract query genes list into genomic coordinates. A user-supplied `reference_gff` always takes precedence over the defaults below. When it is not provided, an organism-specific default is selected automatically if a default organism is identified:
 
         !!! warning "Keep the FASTA and GFF matched"
             The reference FASTA and GFF must use the same assembly. If a custom `reference_fasta` is provided, an associated `reference_gff` must also be provided (and vice versa).
 
             If only one of these inputs is provided, gene coverage calculations and gene-centric variant reporting will not run under the assumption there is a discrepancy.
+
+        !!! info "_C. auris_ uses a separate AMR reference by default"
+            For _C. auris_, gene coverage and gene-centric variant reporting are bifurcated from genome-wide variant calling by default and use the B11205 reference and its annotation. Providing both `reference_fasta` and `reference_gff` consolidates the two paths onto the user-supplied reference. If only one of these inputs is provided, the paths remain bifurcated and the gene-level modules continue to use B11205 (see the _Candidozyma auris_ section below).
 
 
     ??? dna "`query_genes` and `query_genes_bed` input parameter"
@@ -139,34 +143,45 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 
     === "TheiaEuk_ONT"
 {{ include_md("common_text/minimap2_task.md", indent=8, condition="long_read_flags") }}
-{{ include_md("common_text/clair3_task.md", indent=8) }}
+{{ include_md("common_text/clair3_task.md", indent=8, condition="theiaeuk") }}
 
+{{ include_md("common_text/mapping_stats_task.md", indent=4) }}
 {{ include_md("common_text/gene_coverage_task.md", indent=4, condition="theiaeuk") }}
-{{ include_md("common_text/variant_annotate_task.md", indent=4) }}
+{{ include_md("common_text/snpeff_task.md", indent=4) }}
 
 ??? toggle "_Candidozyma auris_ (also known as _Candida auris_)"
-    When this species is detected by GAMBIT, clade typing determines the clade the genome belongs to. Reference-based variant calling is performed against the clade-specific reference, and AMR detection is conducted.
+    When this species is detected by GAMBIT, clade typing determines the clade the genome belongs to, and AMR detection is conducted. By default, variant calling is bifurcated: reads are aligned and variants called against two references, each fit for its purpose:
 
-    - Default reference genome and annotation: a clade-specific reference is selected by the `cladetyper` task. NOTE: Gene-specific variant calling is skipped for Clade VI because a reference gene annotation is not present for this lineage.
-    - Default gene query: product IDs for genes with a unique product annotation, plus clade-specific locus tags for genes annotated only as "hypothetical protein" (the Clade II reference delimits product IDs with "_")
+    | Track | Reference | Reported outputs |
+    |---|---|---|
+    | Genome-wide (phylogenetics) | `reference_fasta` if supplied, otherwise the clade-specific reference selected by `cladetyper` | Genome-wide read alignment, genome-wide VCFs, and reference genome mapping stats |
+    | Gene-level AMR | Clade I strain B11205 (`GCA_016772135.1`) and its annotation | `gene_coverage` and `snpeff_gene_variants` only |
 
-        | Gene | Clade I | Clade II | Clade III | Clade IV | Clade V |
-        |---|---|---|---|---|---|
-        | _FKS1_ | `FKS1` | `FKS1` | `FKS1` | `FKS1` | `FKS1` |
-        | _ERG11_ | `lanosterol.14-alpha.demethylase` | `lanosterol_14-alpha_demethylase` | `lanosterol.14-alpha.demethylase` | `lanosterol.14-alpha.demethylase` | `lanosterol.14-alpha.demethylase` |
-        | _FUR1_ | `uracil.phosphoribosyltransferase` | `uracil_phosphoribosyltransferase` | `uracil.phosphoribosyltransferase` | `uracil.phosphoribosyltransferase` | `uracil.phosphoribosyltransferase` |
-        | _ERG6_ | `sterol.24-C-methyltransferase` | `sterol_24-C-methyltransferase` | `sterol.24-C-methyltransferase` | `sterol.24-C-methyltransferase` | `sterol.24-C-methyltransferase` |
-        | _FLO8_ | `B9J08_02359` | `CJI96_0001121`\* | `CJI97_000401` | `CJJ07_003930`\* | `FDK38_002567`\* |
-        | _FLO8_ N-terminus | `B9J08_02360` | \* | `CJI97_000402` | \* | \* |
-        | _MEC3_ | `B9J08_00960` | `CJI96_0001637` | `CJI97_003175` | `CJJ07_005307` | `FDK38_000935` |
-        | _ERG3_ | `B9J08_01595` | `CJI96_0002270` | `CJI97_003811` | `CJJ07_003685` | `FDK38_001564` |
-        | _PSK74852_ | `B9J08_04226` | `CJI96_0004130` | `CJI97_005426` | `CJJ07_003405` | `FDK38_004143` |
+    - Genome-wide variant calling with respect to a clade-specific reference increases the quality of downstream phylogenetic analysis
+    - Reporting AMR variants with respect to the B11205 reference ensures coordinates are the same for every clade and standardized with the broader field
+    - `reference_fasta_used` reports the genome-wide reference, while `reference_gff_used` and `gene_query` report the GFF and query used by the gene-level modules (i.e., the B11205 GFF when the AMR track runs).
+    - Default gene query: product IDs for genes with a unique product annotation, plus B11205 locus tags for genes annotated only as "hypothetical protein". A user-supplied `query_genes` takes precedence.
 
-        \* _FLO8_ is annotated as a single gene in the Clade II, IV, and V references
+    !!! info "Providing `reference_fasta` and `reference_gff` consolidates the two tracks"
+        When both `reference_fasta` and `reference_gff` are provided, the genome-wide and gene-level AMR tracks are consolidated: variant calling runs once against the user-supplied reference, and `gene_coverage` and `snpeff_gene_variants` use that alignment, VCF, and `reference_gff` instead of B11205.
 
-        NOTE: Variants derived from locus tag searches will be reported with respect to the locus tag name, not the gene name
+        - The default gene query contains B11205-specific locus tags, so a `query_genes` (or `query_genes_bed`) matching the supplied `reference_gff` must be provided unless that GFF is the B11205 annotation; `gene_coverage` fails when a query gene is missing from the GFF.
+        - If only one of `reference_fasta` or `reference_gff` is provided, the tracks remain bifurcated: a lone `reference_fasta` replaces the clade-specific genome-wide reference, a lone `reference_gff` is not used, and the gene-level AMR track continues to use B11205.
 
-        NOTE: If a `reference_gff` is supplied, only the product IDs (_FKS1_, _ERG11_, _FUR1_, and _ERG6_ rows; "." delimited) are queried by default. To include the remaining genes above, supply their locus tags in `query_genes` alongside the product IDs.
+    The default gene query is:
+
+    | Gene | Query |
+    |---|---|
+    | _FKS1_ | `FKS1` |
+    | _ERG11_ | `lanosterol.14-alpha.demethylase` |
+    | _FUR1_ | `uracil.phosphoribosyltransferase` |
+    | _ERG6_ | `sterol.24-C-methyltransferase` |
+    | _FLO8_ | `FLO8` |
+    | _MEC3_ | `CJI82_01006` |
+    | _ERG3_ | `CJI82_00364` |
+    | _PSK74852_ | `CJI82_03986` |
+
+    NOTE: Variants derived from locus tag searches will be reported with respect to the locus tag name, not the gene name
 
 {{ include_md("common_text/cauris_cladetyper.md", indent=4) }}
 {{ include_md("common_text/amr_search_task.md", indent=4, condition="theiaeuk") }}
@@ -177,11 +192,11 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
     - Default reference genome and annotation: `GCF_000002655.1` (ASM265v1)
     - Default gene query: locus tags are queried instead of product names to maintain search specificity
 
-        | Gene | Locus tag | Product |
-        |---|---|---|
-        | _CYP51A_ | `AFUA_4G06890` | cytochrome P450 |
-        | _HAPE_ | `AFUA_6G05300` | CCAAT-binding factor complex subunit HapE |
-        | _COX10_ | `AFUA_4G08340` | protoheme IX farnesyltransferase |
+        | Gene | Locus tag |
+        |---|---|
+        | _CYP51A_ | `AFUA_4G06890` |
+        | _HAPE_ | `AFUA_6G05300` |
+        | _COX10_ | `AFUA_4G08340` |
 
         NOTE: Variants derived from locus tag searches will be reported with respect to the locus tag name, not the gene name
 
@@ -191,9 +206,9 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
     - Default reference genome and annotation: `GCF_000091045.1` (ASM9104v1)
     - Default gene query: product IDs are queried
 
-        | Gene | Locus tag | Product |
-        |---|---|---|
-        | _ERG11_ | CNA00300 | `sterol.14-demethylase` |
+        | Gene | Locus tag |
+        |---|---|
+        | _ERG11_ | CNA00300 |
 
 ### Outputs
 

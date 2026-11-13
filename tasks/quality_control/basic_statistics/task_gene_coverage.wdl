@@ -22,7 +22,7 @@ task gene_coverage {
 
     String? organism # used to determine if S gene coverage should be reported for SARS-CoV-2
 
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/ensembl-vep:116.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/snpeff:5.4c-dev"
     Int disk_size = 100
     Int memory = 8
     Int cpu = 2
@@ -39,6 +39,7 @@ task gene_coverage {
       --min_depth ~{min_depth} \
       --min_base_quality ~{min_base_quality} \
       --min_mapping_quality ~{min_map_quality} \
+      --decimal_places 2 \
       ~{'--query_genes "' + query_genes + '"'} \
       ~{if exact_match then "--exact_match" else ""} \
       ~{"--bedfile " + bedfile} \

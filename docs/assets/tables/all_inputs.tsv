@@ -512,6 +512,7 @@ clair3	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optiona
 clair3	snp_min_af	Float	Minimum SNP allele frequency required for a candidate variant. Lowering the value might increase a bit of sensitivity in trade of speed and accuracy	0.08	Optional	TheiaViral_ONT	general	
 clair3	variant_quality	Int	If set, variants with >$qual will be marked PASS, or LowQual otherwise	2	Optional	TheiaViral_ONT	general	
 clair3_variants	indel_min_af	Float	Minimum Indel AF required for a candidate variant		Optional	Clair3_Variants_ONT	general	
+clair3_variants	reference_genome_file_index	File	Internal component, do not modify		Optional	Clair3_Variants_ONT	general	
 clair3_variants	snp_min_af	Float	Minimum SNP AF required for a candidate variant	0.08	Optional	Clair3_Variants_ONT	general	
 clair3_variants_ont	clair3_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Clair3_Variants_ONT	runtime	
 clair3_variants_ont	clair3_disable_phasing	Boolean	Disable whatshap phasing	True	Optional	Clair3_Variants_ONT	general	
@@ -524,6 +525,10 @@ clair3_variants_ont	clair3_include_all_contigs	Boolean	Call variants on all cont
 clair3_variants_ont	clair3_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Clair3_Variants_ONT	runtime	
 clair3_variants_ont	clair3_model	String	Model name for variant calling (see supported models for available options)	r1041_e82_400bps_sup_v500	Optional	Clair3_Variants_ONT	general	
 clair3_variants_ont	clair3_variant_quality	Int	Minimum variant quality score	2	Optional	Clair3_Variants_ONT	general	
+clair3_variants_ont	minimap2_cpu	Int	Number of CPUs to allocate to the minimap2 task	2	Optional	Clair3_Variants_ONT	runtime	
+clair3_variants_ont	minimap2_disk_size	Int	Amount of storage (in GB) to allocate to the minimap2 task	100	Optional	Clair3_Variants_ONT	runtime	
+clair3_variants_ont	minimap2_docker	String	The Docker container to use for the minimap2 task	us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22	Optional	Clair3_Variants_ONT	docker	
+clair3_variants_ont	minimap2_memory	Int	Amount of memory/RAM (in GB) to allocate to the minimap2 task	8	Optional	Clair3_Variants_ONT	runtime	
 clean_check_reads	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 clean_check_reads	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 clean_check_reads	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	docker	
@@ -1252,7 +1257,7 @@ medea_magic	clair3_memory	Int	Amount of memory/RAM (in GB) to allocate to the ta
 medea_magic	clair3_model	String	Model name for Clair3 variant calling (see supported models for available options)	r1041_e82_400bps_sup_v500	Optional	TheiaEuk_ONT	general	
 medea_magic	clair3_variant_quality	Int	Minimum variant quality score for Clair3	2	Optional	TheiaEuk_ONT	general	
 medea_magic	gatk_cpu	Int	Number of CPUs to allocate to the task	8	Optional	TheiaEuk_Illumina_PE	runtime	
-medea_magic	gatk_decompress	Boolean	Output uncompressed GATK VCFs (.vcf with a .idx index) instead of bgzipped VCFs (.vcf.gz with a .tbi index)	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	gatk_decompress	Boolean	Output uncompressed GATK genotype and filtered VCFs (.vcf with a .idx index) instead of bgzipped VCFs (.vcf.gz with a .tbi index); the selected VCF is always uncompressed	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	gatk_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_Illumina_PE	runtime	
 medea_magic	gatk_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/gatk:4.6.2.0	Optional	TheiaEuk_Illumina_PE	docker	
 medea_magic	gatk_filter_expression	String	Custom JEXL filter expression applied by GATK VariantFiltration (annotated with the filter name 'user_filter')		Optional	TheiaEuk_Illumina_PE	general	
@@ -1275,9 +1280,11 @@ medea_magic	read_aligner_cpu	Int	Number of CPUs to allocate to the task		Optiona
 medea_magic	read_aligner_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	runtime	
 medea_magic	read_aligner_docker	String	The Docker container to use for the task		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	read_aligner_memory	Int	Amount of memory/RAM (in GB) to allocate to the task		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-medea_magic	reference_fasta	File	Reference genome FASTA used for variant calling, variant annotation, and gene coordinate extraction		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-medea_magic	reference_gff	File	Reference GFF annotation used for gene coordinate extraction and variant annotation		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	reference_fasta	File	Reference genome FASTA used for variant calling, variant annotation, and gene coordinate extraction. For C. auris, genome-wide and gene-level AMR variant calling are bifurcated by default (clade-specific reference and B11205, respectively); providing both reference_fasta and reference_gff consolidates them onto this reference		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	reference_gff	File	Reference GFF annotation matching reference_fasta, used for gene coordinate extraction and variant annotation. For C. auris, gene-level AMR results use the B11205 annotation by default; providing both reference_fasta and reference_gff consolidates genome-wide and gene-level AMR variant calling onto the user-supplied reference		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	run_amr_search	Boolean	Set to true to run AMR_Search workflow for support taxa. See AMR_Search documentation	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	suppressed_variants	String	Comma-delimited SnpEff consequence terms (e.g. synonymous_variant) to exclude from the snpeff_gene_variants report and hits outputs	upstream_gene_variant,downstream_gene_variant,synonymous_variant	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	translation_table	Int	Integer-based codon translation table (https://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi)		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 megahit	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_Illumina_PE	runtime	
 megahit	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE	runtime	
 megahit	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/megahit:1.2.9	Optional	TheiaViral_Illumina_PE	docker	
@@ -1508,10 +1515,10 @@ metaspades_pe	kmers	String	Kmers to use for the task		Optional	TheiaMeta_Illumin
 metaspades_pe	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaMeta_Illumina_PE	runtime	
 metaspades_pe	metaspades_opts	String	Metaspades optional parameters		Optional	TheiaMeta_Illumina_PE	general	
 metaspades_pe	phred_offset	Int	Phred offset to use for the task	33	Optional	TheiaMeta_Illumina_PE	general	
-minimap2	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Clair3_Variants_ONT, Freyja_FASTQ, TheiaViral_ONT	runtime	
-minimap2	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Clair3_Variants_ONT, Freyja_FASTQ, TheiaViral_ONT	runtime	
-minimap2	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22	Optional	Clair3_Variants_ONT, Freyja_FASTQ, TheiaViral_ONT	docker	
-minimap2	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Clair3_Variants_ONT, Freyja_FASTQ, TheiaViral_ONT	runtime	
+minimap2	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Freyja_FASTQ, TheiaViral_ONT	runtime	
+minimap2	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ, TheiaViral_ONT	runtime	
+minimap2	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22	Optional	Freyja_FASTQ, TheiaViral_ONT	docker	
+minimap2	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ, TheiaViral_ONT	runtime	
 minimap2	query2	File	Internal component, do not modify		Optional	Clair3_Variants_ONT, Freyja_FASTQ, TheiaViral_ONT	general	
 minimap2_assembly	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaMeta_Illumina_PE	runtime	
 minimap2_assembly	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaMeta_Illumina_PE	runtime	
@@ -1771,12 +1778,12 @@ prune_table	docker	String	The Docker container to use for the task	us-docker.pkg
 prune_table	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Terra_2_NCBI	runtime	
 prune_table	read1_column_name	String	The column header of the read1 column	read1	Optional	Terra_2_NCBI	general	
 prune_table	read2_column_name	String	The column header of the read2 column	read2	Optional	Terra_2_NCBI	general	
-qc_check_task	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
-qc_check_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
-qc_check_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2024-08-27	Optional	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
+qc_check_task	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
+qc_check_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
+qc_check_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2024-08-27	Optional	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
 qc_check_task	gambit_predicted_taxon	String	Internal component, do not modify		Optional	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	general	
-qc_check_task	irma_qc_table	File	Internal component, do not modify		Optional	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-qc_check_task	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
+qc_check_task	irma_qc_table	File	Internal component, do not modify		Optional	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+qc_check_task	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 qualimap	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Freyja_FASTQ	runtime	
 qualimap	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Freyja_FASTQ	runtime	
 qualimap	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/qualimap-custom-html:2.3	Optional	Freyja_FASTQ	docker	
@@ -2082,10 +2089,6 @@ sam_to_sorted_bam	disk_size	Int	Amount of storage (in GB) to allocate to the tas
 sam_to_sorted_bam	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17	Optional	Clair3_Variants_ONT, Freyja_FASTQ, TheiaMeta_Illumina_PE	docker	
 sam_to_sorted_bam	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Clair3_Variants_ONT, Freyja_FASTQ, TheiaMeta_Illumina_PE	runtime	
 sam_to_sorted_bam	min_qual	Int	Minimum quality score for reads to be included in the analysis		Optional	Clair3_Variants_ONT, Freyja_FASTQ, TheiaMeta_Illumina_PE	general	
-samtools_faidx	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Clair3_Variants_ONT	runtime	
-samtools_faidx	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Clair3_Variants_ONT	runtime	
-samtools_faidx	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17	Optional	Clair3_Variants_ONT	docker	
-samtools_faidx	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Clair3_Variants_ONT	runtime	
 semibin	cpu	Int	Number of CPUs to allocate to the task	6	Optional	TheiaMeta_Illumina_PE	runtime	
 semibin	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaMeta_Illumina_PE	runtime	
 semibin	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/semibin:2.0.2--pyhdfd78af_0	Optional	TheiaMeta_Illumina_PE	docker	
@@ -2400,7 +2403,7 @@ theiaeuk_illumina_pe	busco_docker_image	String	The Docker container to use for t
 theiaeuk_illumina_pe	busco_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	24	Optional	TheiaEuk_Illumina_PE	runtime	
 theiaeuk_illumina_pe	call_rasusa	Boolean	True/False variable that determines if the RASUSA task should be called.	True	Optional	TheiaEuk_Illumina_PE	general	
 theiaeuk_illumina_pe	cpu	Int	Number of CPUs to allocate to the task	8	Optional	TheiaEuk_Illumina_PE	runtime	
-theiaeuk_illumina_pe	expected_taxon	String	If provided, this input will override the taxonomic assignment made by GAMBIT and launch the relevant taxon-specific submodules. It will also modify the organism flag used by AMRFinderPlus. Example format: "Salmonella enterica"		Optional	TheiaEuk_Illumina_PE	general	
+theiaeuk_illumina_pe	expected_taxon	String	If provided, this input will override the taxonomic assignment made by GAMBIT, launching the relevant taxon-specific submodules and selecting the QC Check thresholds. Example format: "Candidozyma auris"		Optional	TheiaEuk_Illumina_PE	general	
 theiaeuk_illumina_pe	gambit_db_genomes	File	User-provided database of assembled query genomes; requires complementary signatures file. If not provided, uses default database, "/gambit-db"	gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-metadata-1.0.0-20241213.gdb	Optional	TheiaEuk_Illumina_PE	database	
 theiaeuk_illumina_pe	gambit_db_signatures	File	User-provided signatures file; requires complementary genomes file. If not specified, the file from the docker container will be used.	gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-signatures-1.0.0-20241213.gs	Optional	TheiaEuk_Illumina_PE	database	
 theiaeuk_illumina_pe	genome_length	Int	User-specified expected genome length to be used in genome statistics calculations		Optional	TheiaEuk_Illumina_PE	general	
@@ -2421,6 +2424,7 @@ theiaeuk_illumina_pe	trim_quality_min_score	Int	Specifies the minimum average qu
 theiaeuk_illumina_pe	trim_window_size	Int	Size of the trimming window to use	10	Optional	TheiaEuk_Illumina_PE	general	
 theiaeuk_ont	busco_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.3.2_cv1	Optional	TheiaEuk_ONT	docker	
 theiaeuk_ont	busco_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	24	Optional	TheiaEuk_ONT	runtime	
+theiaeuk_ont	expected_taxon	String	If provided, this input will override the taxonomic assignment made by GAMBIT, launching the relevant taxon-specific submodules and selecting the QC Check thresholds. Example format: "Candidozyma auris"		Optional	TheiaEuk_ONT	general	
 theiaeuk_ont	gambit_db_genomes	File	User-provided database of assembled query genomes; requires complementary signatures file. If not provided, uses default database, "/gambit-db"	gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-metadata-1.0.0-20241213.gdb	Optional	TheiaEuk_ONT	database	
 theiaeuk_ont	gambit_db_signatures	File	User-provided signatures file; requires complementary genomes file. If not specified, the file from the docker container will be used.	gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-signatures-1.0.0-20241213.gs	Optional	TheiaEuk_ONT	database	
 theiaeuk_ont	genome_length	Int	User-specified expected genome length to be used in genome statistics calculations		Optional	TheiaEuk_ONT	general	
@@ -2429,6 +2433,7 @@ theiaeuk_ont	min_basepairs	Int	Minimum number of base pairs able to pass read sc
 theiaeuk_ont	min_coverage	Int	Minimum genome coverage able to pass read screening; only applied when `skip_mash` is false	5	Optional	TheiaEuk_ONT	general	
 theiaeuk_ont	min_genome_length	Int	Minimum genome size able to pass read screening; only applied when `skip_mash` is false	9000000	Optional	TheiaEuk_ONT	general	
 theiaeuk_ont	min_reads	Int	Minimum number of reads to pass read screening	5000	Optional	TheiaEuk_ONT	general	
+theiaeuk_ont	qc_check_table	File	TSV value with taxons for rows and QC values for columns; internal cells represent user-determined QC thresholds; if provided, turns on the QC Check task. See below for an example QC Check table.		Optional	TheiaEuk_ONT	general	
 theiaeuk_ont	skip_mash	Boolean	If true, skips the genome size and coverage checks in read screening. If false, coverage is calculated from `genome_length` when provided; otherwise genome size and coverage are estimated with Mash	True	Optional	TheiaEuk_ONT	general	
 theiaeuk_ont	skip_screen	Boolean	Option to skip the read screening prior to analysis; if setting to true, please provide a value for the theiaeuk_pe genome_length optional input, OR set call_rasusa to false. Otherwise RASUSA will attempt to downsample to an expected genome size of 0 bp, and the workflow will fail.	False	Optional	TheiaEuk_ONT	general	
 theiameta_illumina_pe	call_bracken	Boolean	Call Bracken kraken2 report refinement	False	Optional	TheiaMeta_Illumina_PE	general	

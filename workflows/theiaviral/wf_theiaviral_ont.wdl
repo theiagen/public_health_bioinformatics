@@ -200,13 +200,6 @@ workflow theiaviral_ont {
                 samplename = samplename,
                 min_qual = min_map_quality
             }
-            # quality control metrics for reads mapping to reference (ie. coverage, depth, base/map quality)
-            call mapping_stats_task.mapping_stats as read_mapping_stats {
-              input:
-                bamfile = parse_mapping.bam,
-                samplename = samplename,
-                read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract])
-            }
             # Index the reference genome for Clair3
             call fasta_utilities_task.samtools_faidx as fasta_utilities{
               input:
@@ -239,6 +232,14 @@ workflow theiaviral_ont {
                 min_depth = min_depth,
                 min_freq = min_allele_freq,
                 samplename = samplename
+            }
+            # quality control metrics for reads mapping to reference (ie. coverage, depth, base/map quality)
+            call mapping_stats_task.mapping_stats as read_mapping_stats {
+              input:
+                bamfile = parse_mapping.bam,
+                samplename = samplename,
+                read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
+                vcf = bcftools_consensus.bcftools_filtered_vcf
             }
             # quality control metrics for consensus (ie. number of bases, degenerate bases, genome length)
             call consensus_qc_task.consensus_qc as consensus_qc {
@@ -408,6 +409,7 @@ workflow theiaviral_ont {
     Float? read_mapping_meanbaseq = read_mapping_stats.meanbaseq
     Float? read_mapping_meanmapq = read_mapping_stats.meanmapq
     Float? read_mapping_percentage_mapped_reads = read_mapping_stats.percentage_mapped_reads
+    Int? read_mapping_total_snps = read_mapping_stats.total_snps
     Map[String, Float]? read_mapping_coverage_by_sequence = read_mapping_stats.coverage_by_sequence
     Map[String, Float]? read_mapping_depth_by_sequence = read_mapping_stats.depth_by_sequence
     String? read_mapping_date = read_mapping_stats.date

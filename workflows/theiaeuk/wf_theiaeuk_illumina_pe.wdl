@@ -155,6 +155,30 @@ workflow theiaeuk_illumina_pe {
           memory = busco_memory,
           docker = busco_docker_image
       }
+      # a user-provided expected_taxon overrides the GAMBIT taxonomic assignment; underscores are
+      # converted to spaces to match the "Genus species" format of GAMBIT's merlin_tag
+      String resolved_medea_tag = sub(select_first([expected_taxon, gambit.merlin_tag]), "_", " ")
+      call medea_magic_workflow.medea_magic {
+        input:
+          medea_tag = resolved_medea_tag,
+          assembly = digger_denovo.assembly_fasta,
+          samplename = samplename,
+          read1 = read_QC_trim.read1_clean,
+          read2 = read_QC_trim.read2_clean,
+          ont_data = false,
+          # mask ONT-specific inputs from the user
+          clair3_model = "",
+          clair3_variant_quality = 0,
+          clair3_include_all_contigs = false,
+          clair3_enable_haploid_precise = false,
+          clair3_disable_phasing = false,
+          clair3_enable_gvcf = false,
+          clair3_enable_long_indel = false,
+          clair3_docker = "",
+          clair3_cpu = 0,
+          clair3_memory = 0,
+          clair3_disk_size = 0
+      }
       if (defined(qc_check_table)) {
         call qc_check.qc_check_phb as qc_check_task {
           input:
@@ -180,34 +204,22 @@ workflow theiaeuk_illumina_pe {
               "combined_mean_readlength_clean": cg_pipeline_clean.combined_mean_readlength,
               "est_coverage_raw": cg_pipeline_raw.est_coverage,
               "est_coverage_clean": cg_pipeline_clean.est_coverage,
+              "r1_gc_percent_raw": read_QC_trim.fastq_scan_r1_gc_percent_raw,
+              "r2_gc_percent_raw": read_QC_trim.fastq_scan_r2_gc_percent_raw,
+              "combined_gc_percent_raw": read_QC_trim.fastq_scan_gc_percent_raw,
+              "r1_gc_percent_clean": read_QC_trim.fastq_scan_r1_gc_percent_clean,
+              "r2_gc_percent_clean": read_QC_trim.fastq_scan_r2_gc_percent_clean,
+              "combined_gc_percent_clean": read_QC_trim.fastq_scan_gc_percent_clean,
               "assembly_length": quast.genome_length,
               "number_contigs": quast.number_contigs,
               "n50_value": quast.n50_value,
               "quast_gc_percent": quast.gc_percent,
-              "busco_completeness": busco.busco_results
+              "busco_completeness": busco.busco_results,
+              "genome_mapping_coverage": medea_magic.mapping_stats_coverage,
+              "genome_mapping_depth": medea_magic.mapping_stats_depth,
+              "genome_mapping_percentage_mapped_reads": medea_magic.mapping_stats_percentage_mapped_reads
             }
         }
-      }
-      call medea_magic_workflow.medea_magic {
-        input:
-          medea_tag = gambit.merlin_tag,
-          assembly = digger_denovo.assembly_fasta,
-          samplename = samplename,
-          read1 = read_QC_trim.read1_clean,
-          read2 = read_QC_trim.read2_clean,
-          ont_data = false,
-          # mask ONT-specific inputs from the user
-          clair3_model = "",
-          clair3_variant_quality = 0,
-          clair3_include_all_contigs = false,
-          clair3_enable_haploid_precise = false,
-          clair3_disable_phasing = false,
-          clair3_enable_gvcf = false,
-          clair3_enable_long_indel = false,
-          clair3_docker = "",
-          clair3_cpu = 0,
-          clair3_memory = 0,
-          clair3_disk_size = 0
       }
     }
   }
@@ -326,6 +338,7 @@ workflow theiaeuk_illumina_pe {
     String? gambit_version = gambit.gambit_version
     String? gambit_db_version = gambit.gambit_db_version
     String? gambit_docker = gambit.gambit_docker
+    String? medea_tag = resolved_medea_tag
     # QC_Check Results
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
@@ -345,28 +358,34 @@ workflow theiaeuk_illumina_pe {
     String? reference_gff_used = medea_magic.reference_gff_used
     String? reference_fasta_used = medea_magic.reference_fasta_used
     String? bwa_version = medea_magic.bwa_version
-    File? variant_calling_bam = medea_magic.variant_calling_bam
-    File? variant_calling_bai = medea_magic.variant_calling_bai
-    String? gatk_version = medea_magic.gatk_version
-    File? gatk_genotype_vcf = medea_magic.gatk_genotype_vcf
-    File? gatk_genotype_vcf_index = medea_magic.gatk_genotype_vcf_index
-    File? gatk_filtered_vcf = medea_magic.gatk_filtered_vcf
-    File? gatk_selected_vcf = medea_magic.gatk_selected_vcf
-    Float? gatk_percent_passing_variants = medea_magic.gatk_percent_passing_variants
+    File? bwa_genome_variants_bam = medea_magic.variant_calling_bam
+    File? bwa_genome_variants_bai = medea_magic.variant_calling_bai
+    String? gatk_genome_variants_version = medea_magic.gatk_genome_variants_version
+    File? gatk_genome_variants_unfiltered_vcf = medea_magic.gatk_genome_variants_genotype_vcf
+    File? gatk_genome_variants_unfiltered_vcf_index = medea_magic.gatk_genome_variants_genotype_vcf_index
+    File? gatk_genome_variants_selected_vcf = medea_magic.gatk_genome_variants_selected_vcf
+    Float? gatk_genome_variants_percent_passing = medea_magic.gatk_genome_variants_percent_passing
+    # read mapping statistics
+    String? genome_mapping_samtools_version = medea_magic.mapping_stats_samtools_version
+    Float? genome_mapping_percentage_mapped_reads = medea_magic.mapping_stats_percentage_mapped_reads
+    Float? genome_mapping_depth = medea_magic.mapping_stats_depth
+    Float? genome_mapping_percent_coverage = medea_magic.mapping_stats_coverage
+    String? genome_mapping_total_snps = medea_magic.mapping_stats_total_snps
+    File? genome_mapping_cov_hist = medea_magic.mapping_stats_cov_hist
+    File? genome_mapping_cov_stats = medea_magic.mapping_stats_cov_stats
     # Gene Coverage Outputs
+    String? gene_query = medea_magic.gene_query
     File? gene_coverage_stats = medea_magic.gene_coverage_stats
-    String? gene_coverage_reads_mapped = medea_magic.gene_coverage_reads_mapped
-    String? gene_coverage_mean_percent_coverage = medea_magic.gene_coverage_mean_breadth
-    String? gene_coverage_mean_depth = medea_magic.gene_coverage_mean_depth
     Map[String, String]? gene_coverage_depth_by_gene = medea_magic.gene_coverage_depth_by_gene
     Map[String, String]? gene_coverage_breadth_by_gene = medea_magic.gene_coverage_breadth_by_gene
     Map[String, String]? gene_coverage_reads_by_gene = medea_magic.gene_coverage_reads_by_gene
     String? gene_coverage_query_check = medea_magic.gene_coverage_query_check
     String? gene_coverage_query_check_status = medea_magic.gene_coverage_query_check_status
-    File? gene_variants_vcf = medea_magic.gene_variants_vcf
-    File? gene_variants_warnings = medea_magic.gene_variants_warnings
-    File? gene_variants_summary = medea_magic.gene_variants_summary
-    File? gene_variants_tsv = medea_magic.gene_variants_tsv
-    String? gene_variants_annotations = medea_magic.gene_variants_annotations
+    String? snpeff_gene_variants_version = medea_magic.snpeff_gene_variants_version
+    File? snpeff_gene_variants_vcf = medea_magic.snpeff_gene_variants_vcf
+    File? snpeff_gene_variants_summary_html = medea_magic.snpeff_gene_variants_summary_html
+    File? snpeff_gene_variants_report_tsv = medea_magic.snpeff_gene_variants_report_tsv
+    String? snpeff_gene_variants_hits = medea_magic.snpeff_gene_variants_hits
+    String? snpeff_gene_variants_hits_abbreviated = medea_magic.snpeff_gene_variants_hits_abbreviated
   }
 }
