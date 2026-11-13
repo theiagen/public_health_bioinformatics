@@ -112,8 +112,8 @@ task snpeff {
         ~{"--bedfile " + bedfile} \
         ~{if exact_match then "--exact_match" else ""} \
         --feature_qualifier "~{feature_qualifier}" \
-        --suppress ~{suppress} \
-        --output ~{samplename}_~{vcf_scope}_variant_report.tsv \
+        --suppress "~{suppress}" \
+        --output ~{samplename}_~{vcf_scope}_variant_report.tsv
 
       # join each record into one comma-delimited string: the full REPORT column (the
       # last), and an abbreviated GENE:AA, falling back to GENE:NT for a record with
@@ -127,7 +127,7 @@ task snpeff {
 
     # report the queried genes, else the bedfile basename, else a generic message
     # when no variant was reported
-    if [ ! -s VARIANT_REPORT ]; then
+    if ! grep -q "[^[:space:]]" VARIANT_REPORT; then
       if [ -n "~{query_genes}" ]; then
         no_variants="No variants detected: ~{query_genes}"
       elif [ -n "~{bedfile}" ]; then
