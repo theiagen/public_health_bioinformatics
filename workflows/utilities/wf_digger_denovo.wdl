@@ -12,7 +12,6 @@ workflow digger_denovo {
     File read1
     File? read2
     String samplename
-    String assembler = "skesa" # Options: spades, skesa, megahit
     Int min_contig_length = 200
     String? kmers
     Boolean call_pilon = false
@@ -20,21 +19,13 @@ workflow digger_denovo {
     Boolean run_filter_contigs = true # Default: Filter contigs after assembly
     # Optional parameters for spades
     String? spades_type = "isolate"
-    Int? spades_cpu
-    Int? spades_memory
-    Int? spades_disk_size
     Int spades_timeout = 0
-    String? spades_docker
-    # Optional parameters for skesa
-    Int? skesa_cpu
-    Int? skesa_memory
-    Int? skesa_disk_size
-    String? skesa_docker
-    # Optional parameters for megahit
-    Int? megahit_cpu
-    Int? megahit_memory
-    Int? megahit_disk_size
-    String? megahit_docker
+    # assembler default values
+    String assembler = "skesa" # Options: spades, skesa, megahit
+    Int? assembler_memory
+    Int? assembler_cpu
+    Int? assembler_disk_size
+    String? assembler_docker
     # Optional parameters for bwa
     Int? bwa_cpu
     Int? bwa_memory
@@ -70,10 +61,10 @@ workflow digger_denovo {
         spades_type = spades_type,
         spades_opts = assembler_options,
         timeout = spades_timeout,
-        cpu = spades_cpu,
-        memory = spades_memory,
-        disk_size = spades_disk_size,
-        docker = spades_docker
+        cpu = assembler_cpu,
+        memory = assembler_memory,
+        disk_size = assembler_disk_size,
+        docker = assembler_docker
     }
   }
   if (assembler == "megahit") {
@@ -85,10 +76,10 @@ workflow digger_denovo {
         kmers = kmers,
         min_contig_length = min_contig_length,
         megahit_opts = assembler_options,
-        cpu = megahit_cpu,
-        memory = megahit_memory,
-        disk_size = megahit_disk_size,
-        docker = megahit_docker
+        cpu = assembler_cpu,
+        memory = assembler_memory,
+        disk_size = assembler_disk_size,
+        docker = assembler_docker
     }
   }
   if (assembler == "skesa") {
@@ -99,10 +90,10 @@ workflow digger_denovo {
         samplename = samplename,
         min_contig_length = min_contig_length,
         skesa_opts = assembler_options,
-        cpu = skesa_cpu,
-        memory = skesa_memory,
-        disk_size = skesa_disk_size,
-        docker = skesa_docker
+        cpu = assembler_cpu,
+        memory = assembler_memory,
+        disk_size = assembler_disk_size,
+        docker = assembler_docker
     }
   }
   if (call_pilon) {
