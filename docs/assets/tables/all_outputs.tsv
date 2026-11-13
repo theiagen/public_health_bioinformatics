@@ -704,13 +704,11 @@ mapped_read_removal_percent_mapped_reads	Float	Percent of reads mapped to contam
 mapped_read_removal_reads_by_sequence	Map[String,Float]	A JSON map relating contaminant sequences to the number of reads mapped	TheiaProk_Illumina_PE
 mapping_stats_cov_hist	File	Coverage histogram from read mapping to the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 mapping_stats_cov_stats	File	Coverage statistics from read mapping to the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-mapping_stats_coverage	Float	Percent breadth of coverage of the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 mapping_stats_depth	Float	Mean depth of coverage of the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-mapping_stats_flagstat	File	samtools flagstat from read mapping to the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+mapping_stats_percent_coverage	Float	DESCRIPTION	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 mapping_stats_percentage_mapped_reads	Float	Percent of cleaned reads mapped to the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 mapping_stats_samtools_version	String	samtools version used	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 mapping_stats_total_snps	Int	Number of SNP positions among passing (PASS/".") records of the VCF called against the reference genome. Excludes indels, multi-nucleotide variants, and alleles with ambiguous nucleotides.	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-mapping_stats_output	File	Statistics file from read mapping to the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 mashtree_docker	String	The Docker image used to run the mashtree task	MashTree_FASTA
 mashtree_filtered_metadata	File	Optional output file with filtered metadata that is only produced if the optional `summarize_data` task is used	MashTree_FASTA
 mashtree_matrix	File	The distance matrix made	MashTree_FASTA
