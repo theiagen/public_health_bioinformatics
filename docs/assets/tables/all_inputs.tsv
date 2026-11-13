@@ -512,7 +512,7 @@ clair3	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optiona
 clair3	snp_min_af	Float	Minimum SNP allele frequency required for a candidate variant. Lowering the value might increase a bit of sensitivity in trade of speed and accuracy	0.08	Optional	TheiaViral_ONT	general	
 clair3	variant_quality	Int	If set, variants with >$qual will be marked PASS, or LowQual otherwise	2	Optional	TheiaViral_ONT	general	
 clair3_variants	indel_min_af	Float	Minimum Indel AF required for a candidate variant		Optional	Clair3_Variants_ONT	general	
-clair3_variants	reference_genome_file_index	File	DESCRIPTION		Optional	Clair3_Variants_ONT	general	
+clair3_variants	reference_genome_file_index	File	Internal component, do not modify		Optional	Clair3_Variants_ONT	general	
 clair3_variants	snp_min_af	Float	Minimum SNP AF required for a candidate variant	0.08	Optional	Clair3_Variants_ONT	general	
 clair3_variants_ont	clair3_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Clair3_Variants_ONT	runtime	
 clair3_variants_ont	clair3_disable_phasing	Boolean	Disable whatshap phasing	True	Optional	Clair3_Variants_ONT	general	
@@ -1284,7 +1284,7 @@ medea_magic	reference_fasta	File	Reference genome FASTA used for variant calling
 medea_magic	reference_gff	File	Reference GFF annotation matching reference_fasta, used for gene coordinate extraction and variant annotation. For C. auris, gene-level AMR results use the B11205 annotation by default; providing both reference_fasta and reference_gff consolidates genome-wide and gene-level AMR variant calling onto the user-supplied reference		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	run_amr_search	Boolean	Set to true to run AMR_Search workflow for support taxa. See AMR_Search documentation	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	suppressed_variants	String	Comma-delimited SnpEff consequence terms (e.g. synonymous_variant) to exclude from the snpeff_gene_variants report and hits outputs	upstream_gene_variant,downstream_gene_variant,synonymous_variant	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-medea_magic	translation_table	Int	DESCRIPTION		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	translation_table	Int	Integer-based codon translation table (https://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi)		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 megahit	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_Illumina_PE	runtime	
 megahit	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE	runtime	
 megahit	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/megahit:1.2.9	Optional	TheiaViral_Illumina_PE	docker	

@@ -9,7 +9,7 @@ import "../../tasks/task_versioning.wdl" as versioning
 workflow clair3_variants_ont {
   meta {
     description: "Call variants using Clair3 for ONT data"
-  }
+  } 
   input {
     File read1
     File reference_genome_file

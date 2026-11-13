@@ -244,7 +244,7 @@ workflow theiaeuk_illumina_pe {
     File? mapped_read_removal_bai = read_QC_trim.mapped_read_removal_bai
     Float? mapped_read_removal_coverage = read_QC_trim.mapped_read_removal_coverage
     Float? mapped_read_removal_mean_depth = read_QC_trim.mapped_read_removal_mean_depth
-    File? mapped_read_removal_genome_mapping = read_QC_trim.mapped_read_removal_mapping_stats
+    File? mapped_read_removal_mapping_stats = read_QC_trim.mapped_read_removal_mapping_stats
     File? mapped_read_removal_cov_hist = read_QC_trim.mapped_read_removal_cov_hist
     File? mapped_read_removal_mapping_flagstat = read_QC_trim.mapped_read_removal_mapping_flagstat
     Float? mapped_read_removal_percent_mapped_reads = read_QC_trim.mapped_read_removal_percent_mapped_reads
