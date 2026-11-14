@@ -310,6 +310,7 @@ workflow theiaviral_ont {
     Float? nanoplot_r1_n50_raw = nanoplot_raw.n50
     Float? nanoplot_r1_mean_q_raw = nanoplot_raw.mean_q
     Float? nanoplot_r1_median_q_raw = nanoplot_raw.median_q
+    Float? nanoplot_r1_gc_percent_raw = nanoplot_raw.gc_percent
     # porechop outputs - adapter trimming
     File? porechop_trimmed_read1 = porechop.trimmed_reads
     String? porechop_version = porechop.porechop_version
@@ -344,6 +345,7 @@ workflow theiaviral_ont {
     Float? nanoplot_r1_n50_clean = nanoplot_clean.n50
     Float? nanoplot_r1_mean_q_clean = nanoplot_clean.mean_q
     Float? nanoplot_r1_median_q_clean = nanoplot_clean.median_q
+    Float? nanoplot_r1_gc_percent_clean = nanoplot_clean.gc_percent
     # clean read screen outputs
     String? read_screen_clean = clean_check_reads.read_screen
     File? read_screen_clean_tsv = clean_check_reads.read_screen_tsv

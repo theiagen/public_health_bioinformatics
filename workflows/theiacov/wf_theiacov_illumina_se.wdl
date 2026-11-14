@@ -220,7 +220,7 @@ workflow theiacov_illumina_se {
     Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
     Float? fastq_scan_r1_mean_readlength_raw = read_QC_trim.fastq_scan_r1_mean_readlength_raw
     Float? fastq_scan_r1_mean_q_raw = read_QC_trim.fastq_scan_r1_mean_q_raw
-    Float? fastq_scan_r1_gc_percent_raw = read_QC_trim.fastq_scan_r1_gc_percent_raw
+    String? fastq_scan_r1_gc_percent_raw = read_QC_trim.fastq_scan_r1_gc_percent_raw
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
     String? fastq_scan_docker = read_QC_trim.fastq_scan_docker
     File? fastq_scan_raw1_json = read_QC_trim.fastq_scan_raw1_json
@@ -228,7 +228,7 @@ workflow theiacov_illumina_se {
     Int? fastq_scan_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
     Float? fastq_scan_r1_mean_readlength_clean = read_QC_trim.fastq_scan_r1_mean_readlength_clean
     Float? fastq_scan_r1_mean_q_clean = read_QC_trim.fastq_scan_r1_mean_q_clean
-    Float? fastq_scan_r1_gc_percent_clean = read_QC_trim.fastq_scan_r1_gc_percent_clean
+    String? fastq_scan_r1_gc_percent_clean = read_QC_trim.fastq_scan_r1_gc_percent_clean
     File? fastq_scan_clean1_json = read_QC_trim.fastq_scan_clean1_json
     # Read QC - fastqc outputs
     Int? fastqc_num_reads_raw1 = read_QC_trim.fastqc_raw1
