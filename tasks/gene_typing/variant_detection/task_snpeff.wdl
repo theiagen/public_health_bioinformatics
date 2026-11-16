@@ -130,11 +130,11 @@ task snpeff {
     # when no variant was reported
     if ! grep -q "[^[:space:]]" VARIANT_REPORT; then
       if [ -n "~{query_genes}" ]; then
-        no_variants="No variants detected: ~{query_genes}"
+        no_variants="No unsuppressed variants detected: ~{query_genes}"
       elif [ -n "~{bedfile}" ]; then
-        no_variants="No variants detected: $(basename ~{bedfile})"
+        no_variants="No unsuppressed variants detected: $(basename ~{bedfile})"
       else
-        no_variants="No variants detected"
+        no_variants="No unsuppressed variants detected"
       fi
       echo "${no_variants}" | tee VARIANT_REPORT > VARIANT_REPORT_ABBREVIATED
     fi
@@ -148,6 +148,7 @@ task snpeff {
     File? snpeff_variant_report_tsv = "~{samplename}_~{vcf_scope}_variant_report.tsv"
     String snpeff_variant_hits = read_string("VARIANT_REPORT")
     String snpeff_variant_hits_abbreviated = read_string("VARIANT_REPORT_ABBREVIATED")
+    String suppressed_variants_used = suppress
   }
   runtime {
     docker: docker

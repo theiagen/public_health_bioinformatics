@@ -384,5 +384,7 @@ workflow medea_magic {
     File? snpeff_gene_variants_report_tsv = snpeff_gene_variants.snpeff_variant_report_tsv
     String? snpeff_gene_variants_hits = snpeff_gene_variants.snpeff_variant_hits
     String? snpeff_gene_variants_hits_abbreviated = snpeff_gene_variants.snpeff_variant_hits_abbreviated
+    # suppressed SnpEff consequence terms actually used (user-supplied or task default)
+    String? suppressed_variants_used = snpeff_gene_variants.suppressed_variants_used
   }
 }

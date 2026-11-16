@@ -1305,6 +1305,7 @@ stxtyper_partial_hits	String	Possible outputs "stx1", "stx2", or "stx1,stx2". Te
 stxtyper_report	File	Raw results TSV file produced by StxTyper	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 stxtyper_stx_frameshifts_or_internal_stop_hits	String	Comma-separated list of matches that have the OPERON output of "FRAMESHIFT" or "INTERNAL_STOP". Possible outputs "stx1", "stx2", or "stx1,stx2"	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 stxtyper_version	String	Version of StxTyper used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+suppressed_variants_used	String	Comma-delimited SnpEff consequence terms excluded from the snpeff_gene_variants report and hits outputs	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 taxon_avg_genome_length	String	Average genome length for taxon obtained from NCBI datasets summary	TheiaViral_Illumina_PE, TheiaViral_ONT
 taxon_table_status	String	Status of the taxon table upload	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 tbp_parser_average_genome_depth	Float	The mean depth of coverage across all target regions included in the analysis	TBProfiler_tNGS, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
