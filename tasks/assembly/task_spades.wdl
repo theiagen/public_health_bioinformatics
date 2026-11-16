@@ -58,7 +58,7 @@ task spades {
 
     if [ ~{spades_type} == "metaviral" ]; then
       # if metaviralspades fails, or fails to output a contigs.fasta, we want to report that for falling back
-      if [ -f spades/contigs.fasta ]; then
+      if [ -s spades/contigs.fasta ]; then
         echo "DEBUG: Metaviralspades successfully identified a complete virus"
         mv spades/contigs.fasta ~{samplename}~{'_' + spades_type + 'spades'}_contigs.fasta
         # Move the contigs.gfa file to the top level directory

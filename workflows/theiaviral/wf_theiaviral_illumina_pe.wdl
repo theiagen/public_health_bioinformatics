@@ -65,7 +65,7 @@ workflow theiaviral_illumina_pe {
     }
     if (ete4_identify.ete4_status == "PASS") {
       # read QC, classification, extraction, and trimming
-      call fastq_scan_task.fastq_scan_pe as fastq_scan_raw {
+      call fastq_scan_task.fastq_scan as fastq_scan_raw {
         input:
           read1 = read1,
           read2 = read2
@@ -77,60 +77,67 @@ workflow theiaviral_illumina_pe {
           read1 = read1,
           read2 = read2
       }
-      # adapter + read trimming
-      call fastp_task.fastp {
-        input:
-          samplename = samplename,
-          read1 = ncbi_scrub_pe.read1_dehosted,
-          read2 = ncbi_scrub_pe.read2_dehosted
-      }
-      call bbduk_task.bbduk {
-        input:
-          samplename = samplename,
-          read1 = fastp.read1_trimmed,
-          read2 = select_first([fastp.read2_trimmed])
-      }
-      # host read decontamination
-      if (defined(host)) {
-        call host_decontaminate_wf.read_decontaminate as host_decontaminate {
+      if (ncbi_scrub_pe.ncbi_scrub_status == "PASS") {
+        # adapter + read trimming
+        call fastp_task.fastp {
           input:
             samplename = samplename,
-            read1 = bbduk.read1_clean,
-            read2 = bbduk.read2_clean,
-            contaminant = select_first([host])
+            read1 = ncbi_scrub_pe.read1_dehosted,
+            read2 = ncbi_scrub_pe.read2_dehosted
         }
-      }
-      # taxon-based read extraction
-      call kraken2_task.kraken2 {
-        input:
-          samplename = samplename,
-          read1 = select_first([host_decontaminate.decontaminate_read1, bbduk.read1_clean]),
-          read2 = select_first([host_decontaminate.decontaminate_read2, bbduk.read2_clean]),
-          kraken2_db = kraken2_db,
-          target_organism = ete4_identify.taxon_id
-      }
-      call krakentools_task.extract_kraken_reads as kraken2_extract {
-        input:
-          read1 = kraken2.kraken2_classified_read1,
-          read2 = select_first([kraken2.kraken2_classified_read2]),
-          taxon_id = ete4_identify.taxon_id,
-          kraken2_output = kraken2.kraken2_classified_report,
-          kraken2_report = kraken2.kraken2_report
-      }
-      # inclusion of unclassified reads
-      if (extract_unclassified) {
-        call cat_lanes_task.cat_lanes {
+        call bbduk_task.bbduk {
           input:
             samplename = samplename,
-            read1_lane1 = kraken2.kraken2_unclassified_read1,
-            read1_lane2 = select_first([kraken2_extract.extracted_read1]),
-            read2_lane1 = kraken2.kraken2_unclassified_read2,
-            read2_lane2 = select_first([kraken2_extract.extracted_read2])
+            read1 = fastp.read1_trimmed,
+            read2 = select_first([fastp.read2_trimmed])
+        }
+        # host read decontamination
+        if (defined(host)) {
+          call host_decontaminate_wf.read_decontaminate as host_decontaminate {
+            input:
+              samplename = samplename,
+              read1 = bbduk.read1_clean,
+              read2 = bbduk.read2_clean,
+              contaminant = select_first([host])
+          }
+        }
+        # taxon-based read extraction
+        call kraken2_task.kraken2 {
+          input:
+            samplename = samplename,
+            read1 = select_first([host_decontaminate.decontaminate_read1, bbduk.read1_clean]),
+            read2 = select_first([host_decontaminate.decontaminate_read2, bbduk.read2_clean]),
+            kraken2_db = kraken2_db,
+            target_organism = ete4_identify.taxon_id
+        }
+        call krakentools_task.extract_kraken_reads as kraken2_extract {
+          input:
+            read1 = kraken2.kraken2_classified_read1,
+            read2 = select_first([kraken2.kraken2_classified_read2]),
+            taxon_id = ete4_identify.taxon_id,
+            kraken2_output = kraken2.kraken2_classified_report,
+            kraken2_report = kraken2.kraken2_report
+        }
+        # inclusion of unclassified reads
+        if (extract_unclassified) {
+          call cat_lanes_task.cat_lanes {
+            input:
+              samplename = samplename,
+              read1_lane1 = kraken2.kraken2_unclassified_read1,
+              read1_lane2 = select_first([kraken2_extract.extracted_read1]),
+              read2_lane1 = kraken2.kraken2_unclassified_read2,
+              read2_lane2 = select_first([kraken2_extract.extracted_read2])
+          }
         }
       }
     }
   }
-  if (! defined(genome_length)) {
+  # true when ete4 resolved the taxon, or when QC (and ete4) was skipped
+  Boolean taxon_resolved = select_first([ete4_identify.ete4_status, "PASS"]) == "PASS"
+  # true when the raw reads passed scrubbing, or when scrubbing was not run
+  Boolean reads_scrubbed = select_first([ncbi_scrub_pe.ncbi_scrub_status, "PASS"]) == "PASS"
+  Boolean qc_passed = taxon_resolved && reads_scrubbed
+  if (! defined(genome_length) && taxon_resolved) {
     # get average genome length for the taxon
     call genome_length_task.datasets_genome_length as est_genome_length {
       input:
@@ -140,7 +147,7 @@ workflow theiaviral_illumina_pe {
         refseq = true
     }
   }
-  if (!skip_qc) {
+  if (!skip_qc && qc_passed) {
     if (!skip_rasusa) {
       # downsample reads to a specific coverage
       call rasusa_task.rasusa as rasusa {
@@ -152,14 +159,14 @@ workflow theiaviral_illumina_pe {
       }
     }
     # clean read stat gathering
-    call fastq_scan_task.fastq_scan_pe as fastq_scan_clean {
+    call fastq_scan_task.fastq_scan as fastq_scan_clean {
       input:
         read1 = select_first([rasusa.read1_subsampled, cat_lanes.read1_concatenated, kraken2_extract.extracted_read1]),
         read2 = select_first([rasusa.read2_subsampled, cat_lanes.read2_concatenated, kraken2_extract.extracted_read2])
     }
   }
   # clean read screening
-  if (! skip_screen) {
+  if (! skip_screen && qc_passed) {
     call read_screen_task.check_reads as clean_check_reads {
       input:
         read1 = select_first([rasusa.read1_subsampled, cat_lanes.read1_concatenated, kraken2_extract.extracted_read1, read1]),
@@ -168,7 +175,7 @@ workflow theiaviral_illumina_pe {
         expected_genome_length = select_first([est_genome_length.avg_genome_length, genome_length])
     }
   }
-  if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
+  if (qc_passed && (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen)) {
     # run de novo if no reference genome is provided so we can select a reference
     if (! defined(reference_fasta)) {
       # de novo assembly - prioritize metaviralspades
@@ -304,7 +311,9 @@ workflow theiaviral_illumina_pe {
     Int? fastq_scan_num_reads_raw1 = fastq_scan_raw.read1_seq
     Int? fastq_scan_num_reads_raw2 = fastq_scan_raw.read2_seq
     String? fastq_scan_raw_pairs = fastq_scan_raw.read_pairs
-    String? fastq_scan_version = fastq_scan_raw.version
+    Float? fastq_scan_r1_gc_percent_raw = fastq_scan_raw.read1_gc_percent
+    Float? fastq_scan_r2_gc_percent_raw = fastq_scan_raw.read2_gc_percent
+    String? fastq_scan_version = fastq_scan_raw.fastq_scan_version
     String? fastq_scan_docker = fastq_scan_raw.fastq_scan_docker
     File? fastq_scan_raw1_json = fastq_scan_raw.read1_fastq_scan_json
     File? fastq_scan_raw2_json = fastq_scan_raw.read2_fastq_scan_json
@@ -313,6 +322,7 @@ workflow theiaviral_illumina_pe {
     File? ncbi_scrub_read2_dehosted = ncbi_scrub_pe.read2_dehosted
     Int? ncbi_scrub_human_spots_removed = ncbi_scrub_pe.human_spots_removed
     String? ncbi_scrub_docker = ncbi_scrub_pe.ncbi_scrub_docker
+    String? ncbi_scrub_status = ncbi_scrub_pe.ncbi_scrub_status
     # host decontamination outputs
     File? dehost_wf_dehost_read1 = host_decontaminate.decontaminate_read1
     File? dehost_wf_dehost_read2 = host_decontaminate.decontaminate_read2
@@ -353,6 +363,8 @@ workflow theiaviral_illumina_pe {
     Int? fastq_scan_num_reads_clean1 = fastq_scan_clean.read1_seq
     Int? fastq_scan_num_reads_clean2 = fastq_scan_clean.read2_seq
     String? fastq_scan_clean_pairs = fastq_scan_clean.read_pairs
+    Float? fastq_scan_r1_gc_percent_clean = fastq_scan_clean.read1_gc_percent
+    Float? fastq_scan_r2_gc_percent_clean = fastq_scan_clean.read2_gc_percent
     File? fastq_scan_clean1_json = fastq_scan_clean.read1_fastq_scan_json
     File? fastq_scan_clean2_json = fastq_scan_clean.read2_fastq_scan_json
     # subsampled reads
@@ -507,14 +519,6 @@ workflow theiaviral_illumina_pe {
     String? nextclade_aa_dels_flu_na = morgana_magic.nextclade_aa_dels_flu_na
     String? nextclade_clade_flu_na = morgana_magic.nextclade_clade_flu_na
     String? nextclade_qc_flu_na = morgana_magic.nextclade_qc_flu_na
-    # Flu IRMA Outputs
-    String? irma_version = morgana_magic.irma_version
-    String? irma_docker = morgana_magic.irma_docker
-    String? irma_type = morgana_magic.irma_type
-    String? irma_subtype = morgana_magic.irma_subtype
-    String? irma_subtype_notes = morgana_magic.irma_subtype_notes
-    File? irma_read1_aligned = morgana_magic.irma_read1_aligned
-    File? irma_read2_aligned = morgana_magic.irma_read2_aligned
     # Flu GenoFLU Outputs
     String? genoflu_version = morgana_magic.genoflu_version
     String? genoflu_genotype = morgana_magic.genoflu_genotype

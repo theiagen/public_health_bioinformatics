@@ -48,7 +48,7 @@ workflow theiaviral_panel {
   }
 
   # read QC, classification, extraction, and trimming
-  call fastq_scan_task.fastq_scan_pe as fastq_scan_raw {
+  call fastq_scan_task.fastq_scan as fastq_scan_raw {
     input:
       read1 = read1,
       read2 = read2
@@ -100,7 +100,7 @@ workflow theiaviral_panel {
       kraken2_db = kraken2_db
   }
   # clean read stat gathering
-  call fastq_scan_task.fastq_scan_pe as fastq_scan_clean {
+  call fastq_scan_task.fastq_scan as fastq_scan_clean {
     input:
       read1 = select_first([host_decontaminate.decontaminate_read1, bbduk.read1_clean]),
       read2 = select_first([host_decontaminate.decontaminate_read2, bbduk.read2_clean])
@@ -289,13 +289,6 @@ workflow theiaviral_panel {
             "nextclade_aa_dels_flu_na": theiaviral_illumina_pe.nextclade_aa_dels_flu_na,
             "nextclade_clade_flu_na": theiaviral_illumina_pe.nextclade_clade_flu_na,
             "nextclade_qc_flu_na": theiaviral_illumina_pe.nextclade_qc_flu_na,
-            "irma_version": theiaviral_illumina_pe.irma_version,
-            "irma_docker": theiaviral_illumina_pe.irma_docker,
-            "irma_type": theiaviral_illumina_pe.irma_type,
-            "irma_subtype": theiaviral_illumina_pe.irma_subtype,
-            "irma_subtype_notes": theiaviral_illumina_pe.irma_subtype_notes,
-            "irma_read1_aligned": theiaviral_illumina_pe.irma_read1_aligned,
-            "irma_read2_aligned": theiaviral_illumina_pe.irma_read2_aligned,
             "genoflu_version": theiaviral_illumina_pe.genoflu_version,
             "genoflu_genotype": theiaviral_illumina_pe.genoflu_genotype,
             "genoflu_all_segments": theiaviral_illumina_pe.genoflu_all_segments,
@@ -333,7 +326,9 @@ workflow theiaviral_panel {
     Int? fastq_scan_num_reads_raw1 = fastq_scan_raw.read1_seq
     Int? fastq_scan_num_reads_raw2 = fastq_scan_raw.read2_seq
     String? fastq_scan_raw_pairs = fastq_scan_raw.read_pairs
-    String? fastq_scan_version = fastq_scan_raw.version
+    Float? fastq_scan_r1_gc_percent_raw = fastq_scan_raw.read1_gc_percent
+    Float? fastq_scan_r2_gc_percent_raw = fastq_scan_raw.read2_gc_percent
+    String? fastq_scan_version = fastq_scan_raw.fastq_scan_version
     String? fastq_scan_docker = fastq_scan_raw.fastq_scan_docker
     File? fastq_scan_raw1_json = fastq_scan_raw.read1_fastq_scan_json
     File? fastq_scan_raw2_json = fastq_scan_raw.read2_fastq_scan_json
@@ -371,6 +366,8 @@ workflow theiaviral_panel {
     Int? fastq_scan_num_reads_clean1 = fastq_scan_clean.read1_seq
     Int? fastq_scan_num_reads_clean2 = fastq_scan_clean.read2_seq
     String? fastq_scan_clean_pairs = fastq_scan_clean.read_pairs
+    Float? fastq_scan_r1_gc_percent_clean = fastq_scan_clean.read1_gc_percent
+    Float? fastq_scan_r2_gc_percent_clean = fastq_scan_clean.read2_gc_percent
     File? fastq_scan_clean1_json = fastq_scan_clean.read1_fastq_scan_json
     File? fastq_scan_clean2_json = fastq_scan_clean.read2_fastq_scan_json
   }

@@ -17,12 +17,14 @@ workflow dehost_pe {
       read1 = read1,
       read2 = read2
   }
-  call kraken.kraken2 {
-    input:
-      samplename = samplename,
-      read1 = ncbi_scrub_pe.read1_dehosted,
-      read2 = ncbi_scrub_pe.read2_dehosted,
-      target_organism = target_organism
+  if (ncbi_scrub_pe.ncbi_scrub_status == "PASS") {
+    call kraken.kraken2 {
+      input:
+        samplename = samplename,
+        read1 = ncbi_scrub_pe.read1_dehosted,
+        read2 = ncbi_scrub_pe.read2_dehosted,
+        target_organism = target_organism
+    }
   }
   call versioning.version_capture {
     input:
@@ -34,9 +36,10 @@ workflow dehost_pe {
     File read2_dehosted = ncbi_scrub_pe.read2_dehosted
     Int ncbi_scrub_human_spots_removed = ncbi_scrub_pe.human_spots_removed
     String ncbi_scrub_docker = ncbi_scrub_pe.ncbi_scrub_docker
-    Float kraken_human_dehosted = kraken2.kraken2_percent_human
-    String kraken_target_organism_dehosted = kraken2.kraken2_percent_target_organism
-    File kraken_report_dehosted = kraken2.kraken2_report
-    String kraken_version_dehosted = kraken2.kraken2_version
+    String ncbi_scrub_status = ncbi_scrub_pe.ncbi_scrub_status
+    Float? kraken_human_dehosted = kraken2.kraken2_percent_human
+    String? kraken_target_organism_dehosted = kraken2.kraken2_percent_target_organism
+    File? kraken_report_dehosted = kraken2.kraken2_report
+    String? kraken_version_dehosted = kraken2.kraken2_version
   }
 }

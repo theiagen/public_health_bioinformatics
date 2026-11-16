@@ -13,6 +13,9 @@
 3. ONT sequencing (**TheiaProk_ONT**)
 4. Genome assemblies (**TheiaProk_FASTA**)
 
+!!! warning "Breaking change: `skip_screen` split into `skip_screen_raw` and `skip_screen_clean`"
+    TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, and TheiaProk_ONT no longer accept a `skip_screen` input. The raw and cleaned read screens are now gated independently by `skip_screen_raw` and `skip_screen_clean`, both defaulting to `false`.
+
 === "TheiaProk_Illumina_PE"
 
     !!! caption "TheiaProk Illumina Workflow Overview"

@@ -22,12 +22,6 @@ workflow morgana_magic {
     Int? assembly_metrics_disk_size
     String? assembly_metrics_docker
     Int? assembly_metrics_memory
-    # flu track - irma
-    Int? irma_cpu
-    Int? irma_disk_size
-    String? irma_docker_image
-    Boolean? irma_keep_ref_deletions
-    Int? irma_memory
     # flu track - genoflu
     Int? genoflu_cpu
     File? genoflu_cross_reference
@@ -140,11 +134,6 @@ workflow morgana_magic {
         assembly_metrics_disk_size = assembly_metrics_disk_size,
         assembly_metrics_docker = assembly_metrics_docker,
         assembly_metrics_memory = assembly_metrics_memory,
-        irma_cpu = irma_cpu,
-        irma_disk_size = irma_disk_size,
-        irma_docker_image = irma_docker_image,
-        irma_keep_ref_deletions = irma_keep_ref_deletions,
-        irma_memory = irma_memory,
         genoflu_cross_reference = genoflu_cross_reference,
         genoflu_cpu = genoflu_cpu,
         genoflu_disk_size = genoflu_disk_size,
@@ -336,19 +325,8 @@ workflow morgana_magic {
     String? nextclade_aa_dels_flu_na = flu_track.nextclade_aa_dels_flu_na
     String? nextclade_clade_flu_na = flu_track.nextclade_clade_flu_na
     String? nextclade_qc_flu_na = flu_track.nextclade_qc_flu_na
-    # Flu IRMA Outputs
-    String? irma_version = flu_track.irma_version
-    String? irma_docker = flu_track.irma_docker
-    String? irma_type = flu_track.irma_type
-    String? irma_subtype = flu_track.irma_subtype
-    String? irma_subtype_notes = flu_track.irma_subtype_notes
-    File? irma_assembly_fasta = flu_track.irma_assembly_fasta
-    File? irma_aligned_fastqs = flu_track.irma_aligned_fastqs
-    File? irma_read1_aligned = flu_track.irma_read1_aligned
-    File? irma_read2_aligned = flu_track.irma_read2_aligned
+    # Flu segment outputs
     File? flu_assembly_fasta_concatenated = flu_track.flu_assembly_fasta_concatenated
-    Int? irma_minimum_consensus_support = flu_track.irma_minimum_consensus_support
-    String? ha_na_assembly_coverage = flu_track.ha_na_assembly_coverage
     File? flu_ha_segment_fasta = flu_track.flu_ha_segment_fasta
     File? flu_na_segment_fasta = flu_track.flu_na_segment_fasta
     File? flu_pa_segment_fasta = flu_track.flu_pa_segment_fasta
@@ -395,7 +373,5 @@ workflow morgana_magic {
     Float? sc2_s_gene_mean_coverage = gene_coverage.sc2_s_gene_depth
     Float? sc2_s_gene_percent_coverage = gene_coverage.sc2_s_gene_coverage
     File? gene_coverage_stats = gene_coverage.gene_coverage_stats
-    # Flu Track Percentage Mapped Reads
-    String? percentage_mapped_reads = flu_track.percentage_mapped_reads
   }
 }
