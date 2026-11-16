@@ -504,13 +504,6 @@ workflow theiaviral_ont {
     String? nextclade_aa_dels_flu_na = morgana_magic.nextclade_aa_dels_flu_na
     String? nextclade_clade_flu_na = morgana_magic.nextclade_clade_flu_na
     String? nextclade_qc_flu_na = morgana_magic.nextclade_qc_flu_na
-    # Flu IRMA Outputs
-    String? irma_version = morgana_magic.irma_version
-    String? irma_docker = morgana_magic.irma_docker
-    String? irma_type = morgana_magic.irma_type
-    String? irma_subtype = morgana_magic.irma_subtype
-    String? irma_subtype_notes = morgana_magic.irma_subtype_notes
-    File? irma_aligned_fastqs = morgana_magic.irma_aligned_fastqs
     # Flu GenoFLU Outputs
     String? genoflu_version = morgana_magic.genoflu_version
     String? genoflu_genotype = morgana_magic.genoflu_genotype

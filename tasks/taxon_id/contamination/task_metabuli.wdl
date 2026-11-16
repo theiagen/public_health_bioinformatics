@@ -72,9 +72,11 @@ task metabuli {
 
     # Extract the reads
     echo "" > PERCENT_TARGET_LINEAGE
+    echo "" > READS_TARGET_LINEAGE
     if [[ -n "~{taxon_id}" ]]; then
       echo "DEBUG: Extracting reads"
       awk -F '\t' '$5 == "~{taxon_id}" {print $1}' output_dir/~{samplename}_report.tsv > PERCENT_TARGET_LINEAGE
+      awk -F '\t' '$5 == "~{taxon_id}" {print $2}' output_dir/~{samplename}_report.tsv > READS_TARGET_LINEAGE
       if [[ -s PERCENT_TARGET_LINEAGE ]]; then
         echo "DEBUG: Taxon ID ~{taxon_id} found in report, proceeding with read extraction"
         echo "DEBUG: ~{taxon_id} comprises $(cat PERCENT_TARGET_LINEAGE)% of reads"
@@ -110,17 +112,23 @@ task metabuli {
         # Metabuli doesn't have a built-in option for extracting unclassified reads
         if [[ ~{extract_unclassified} == "true" ]]; then
           echo "DEBUG: Extracting unclassified reads"
-          grep -P "^0\t" output_dir/~{samplename}_classifications.tsv | cut -f 2 > unclassified_reads.txt
-          seqkit grep -f unclassified_reads.txt ~{read1} | gzip > ~{samplename}_unclassified_1.fq.gz
-          zcat ${read1_basename}_~{taxon_id}.fq.gz ~{samplename}_unclassified_1.fq.gz | gzip > ~{samplename}_~{taxon_id}_extracted_1.fq.gz
-          if [[ ~{if defined(read2) then "true" else "false"} == "true" ]]; then
-            seqkit grep -f unclassified_reads.txt ~{read2} | gzip > ~{samplename}_unclassified_2.fq.gz
-            zcat ${read2_basename}_~{taxon_id}.fq.gz ~{samplename}_unclassified_2.fq.gz | gzip > ~{samplename}_~{taxon_id}_extracted_2.fq.gz
+          grep -P "^0\t" output_dir/~{samplename}_classifications.tsv | cut -f 2 > unclassified_reads.txt || true
+
+          if [[ -s unclassified_reads.txt ]]; then
+            seqkit grep -f unclassified_reads.txt ~{read1} | gzip > ~{samplename}_unclassified_1.fq.gz
+            zcat ${read1_basename}_~{taxon_id}.fq.gz ~{samplename}_unclassified_1.fq.gz | gzip > ~{samplename}_~{taxon_id}_extracted_1.fq.gz
+            if [[ ~{if defined(read2) then "true" else "false"} == "true" ]]; then
+              seqkit grep -f unclassified_reads.txt ~{read2} | gzip > ~{samplename}_unclassified_2.fq.gz
+              zcat ${read2_basename}_~{taxon_id}.fq.gz ~{samplename}_unclassified_2.fq.gz | gzip > ~{samplename}_~{taxon_id}_extracted_2.fq.gz
+            fi
+          else
+            echo "DEBUG: No unclassified reads found"
           fi
         fi
 
       else
         echo "0" > PERCENT_TARGET_LINEAGE
+        echo "0" > READS_TARGET_LINEAGE
         echo "ERROR: Taxon ID ~{taxon_id} not found in report, skipping read extraction"
         metabuli_status="FAIL; taxon not recovered"
       fi
@@ -139,6 +147,7 @@ task metabuli {
     String metabuli_docker = docker
     String metabuli_database = metabuli_db
     String metabuli_percent_target_lineage = read_string("PERCENT_TARGET_LINEAGE")
+    String metabuli_reads_target_lineage = read_string("READS_TARGET_LINEAGE")
     Float metabuli_percent_human = read_float("PERCENT_HUMAN")
   }
   runtime {

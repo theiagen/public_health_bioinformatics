@@ -21,7 +21,7 @@ task flye {
 
     Int cpu = 4
     Int disk_size = 100
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/flye:2.9.4"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/flye:2.9.6"
     Int memory = 32
   }
   command <<<
@@ -31,7 +31,7 @@ task flye {
     flye \
       "~{read_type}" "~{read1}" \
       --iterations ~{flye_polishing_iterations} \
-      ~{"--min-overlap" + minimum_overlap} \
+      ~{"--min-overlap " + minimum_overlap} \
       ~{if defined(asm_coverage) then "--genome-size " + genome_length else ""} \
       ~{"--asm-coverage " + asm_coverage} \
       ~{"--read-error " + read_error_rate} \

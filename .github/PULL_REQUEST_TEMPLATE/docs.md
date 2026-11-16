@@ -28,3 +28,4 @@ This PR closes #
 - [ ] You have verified all changes render correctly in the documentation by serving it locally.
 - [ ] The changes adhere to the [documentation style guide](https://theiagen.github.io/public_health_bioinformatics/main/contributing/doc_contribution/)
 - [ ] The PR author has addressed all comments
+- [ ] Once approved, a Code Owner has applied the `-merge` label instead of using the merge button (Theiagen developers; see [Merging Pull Requests](https://theiagen.github.io/public_health_bioinformatics/main/contributing/code_contribution/#merging))

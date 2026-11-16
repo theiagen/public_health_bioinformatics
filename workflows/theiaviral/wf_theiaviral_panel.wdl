@@ -20,17 +20,17 @@ workflow theiaviral_panel {
     File read1
     File read2
     String samplename
-    # Default Taxon IDs 
-    Array[String] taxon_ids = ["1618189", "37124", "46839", "12637", "1216928", "59301", "2169701", "118655", "11587", "11029", "11033", "11034", "1608084", "64286", 
-      "11082", "11089", "64320", "10804", "12092", "3052230", "12475", "11676", "11709", "68887", "1980456", "3052470", "3052490", "169173", 
-      "3052489", "238817", "1980442", "3052496", "3052499", "90961", "80935", "35305", "1221391", "38767", "11021", "38768", "2847089", 
-      "3052223", "260964", "35511", "11072", "11577", "38766", "1474807", "12538", "11079", "3052225", "11083", "11292", "11580", "11080", "45270", "11084", 
-      "11036", "11039", "1313215", "138948", "138949", "138950", "138951", "1239565", "1239570", "1239573", "142786", 
-      "28875", "28876", "36427", "1348384", "1330524", "95341", "2849717", "1424613", "2010960", "565995", "3052302", "3052518", "3052477", "3052307", "3052480", 
-      "2169991", "33743", "3052310", "3052148", "3052314", "3052303", "3052317", "33727", "12542", "3052493", "186539", "11588", "2907957", 
-      "3052498", "1003835", "1452514", "186540", "186541", "3052503", "1891762", "10376", "10359", "333760", "333761", "337044", "337050", "1671798", "333754", "333767", "746830", "746831", "943908", "10632", "1891764", "1965344", "493803", "1203539", "1497391", "1891767", "1277649", "862909", "862909", "440266", 
-      "11234", "152219", "10244", "2560602", "11041", "10335", "10255", "129875", "108098", "129951", "130310", "130308", "130309", "536079", "329641", "11137", "290028", "277944", 
-      "31631", "162145", "12730", "2560525", "11216", "2560526", "1803956", "10798", "11250", "11320", "11520", "11552", "1335626", "147711", "147712", "463676", "2901879", 
+    # Default Taxon IDs
+    Array[String] taxon_ids = ["1618189", "37124", "46839", "12637", "1216928", "59301", "2169701", "118655", "11587", "11029", "11033", "11034", "1608084", "64286",
+      "11082", "11089", "64320", "10804", "12092", "3052230", "12475", "11676", "11709", "68887", "1980456", "3052470", "3052490", "169173",
+      "3052489", "238817", "1980442", "3052496", "3052499", "90961", "80935", "35305", "1221391", "38767", "11021", "38768", "2847089",
+      "3052223", "260964", "35511", "11072", "11577", "38766", "1474807", "12538", "11079", "3052225", "11083", "11292", "11580", "11080", "45270", "11084",
+      "11036", "11039", "1313215", "138948", "138949", "138950", "138951", "1239565", "1239570", "1239573", "142786",
+      "28875", "28876", "36427", "1348384", "1330524", "95341", "2849717", "1424613", "2010960", "565995", "3052302", "3052518", "3052477", "3052307", "3052480",
+      "2169991", "33743", "3052310", "3052148", "3052314", "3052303", "3052317", "33727", "12542", "3052493", "186539", "11588", "2907957",
+      "3052498", "1003835", "1452514", "186540", "186541", "3052503", "1891762", "10376", "10359", "333760", "333761", "337044", "337050", "1671798", "333754", "333767", "746830", "746831", "943908", "10632", "1891764", "1965344", "493803", "1203539", "1497391", "1891767", "1277649", "862909", "862909", "440266",
+      "11234", "152219", "10244", "2560602", "11041", "10335", "10255", "129875", "108098", "129951", "130310", "130308", "130309", "536079", "329641", "11137", "290028", "277944",
+      "31631", "162145", "12730", "2560525", "11216", "2560526", "1803956", "10798", "11250", "11320", "11520", "11552", "1335626", "147711", "147712", "463676", "2901879",
       "2697049", "10404", "3052505", "337041", "337042", "333757", "337048", "333754", "333766", "337049"
     ]
     File output_taxon_table = "gs://theiagen-public-resources-rp/reference_data/family_agnostic/theiaviral_panel_taxon_table_20251111.tsv"
@@ -42,13 +42,13 @@ workflow theiaviral_panel {
     Int min_read_count = 1000
     Boolean call_metaviralspades = true
     String? host
-  }  
+  }
   call versioning.version_capture {
     input:
   }
 
   # read QC, classification, extraction, and trimming
-  call fastq_scan_task.fastq_scan_pe as fastq_scan_raw {
+  call fastq_scan_task.fastq_scan as fastq_scan_raw {
     input:
       read1 = read1,
       read2 = read2
@@ -100,7 +100,7 @@ workflow theiaviral_panel {
       kraken2_db = kraken2_db
   }
   # clean read stat gathering
-  call fastq_scan_task.fastq_scan_pe as fastq_scan_clean {
+  call fastq_scan_task.fastq_scan as fastq_scan_clean {
     input:
       read1 = select_first([host_decontaminate.decontaminate_read1, bbduk.read1_clean]),
       read2 = select_first([host_decontaminate.decontaminate_read2, bbduk.read2_clean])
@@ -289,13 +289,6 @@ workflow theiaviral_panel {
             "nextclade_aa_dels_flu_na": theiaviral_illumina_pe.nextclade_aa_dels_flu_na,
             "nextclade_clade_flu_na": theiaviral_illumina_pe.nextclade_clade_flu_na,
             "nextclade_qc_flu_na": theiaviral_illumina_pe.nextclade_qc_flu_na,
-            "irma_version": theiaviral_illumina_pe.irma_version,
-            "irma_docker": theiaviral_illumina_pe.irma_docker,
-            "irma_type": theiaviral_illumina_pe.irma_type,
-            "irma_subtype": theiaviral_illumina_pe.irma_subtype,
-            "irma_subtype_notes": theiaviral_illumina_pe.irma_subtype_notes,
-            "irma_read1_aligned": theiaviral_illumina_pe.irma_read1_aligned,
-            "irma_read2_aligned": theiaviral_illumina_pe.irma_read2_aligned,
             "genoflu_version": theiaviral_illumina_pe.genoflu_version,
             "genoflu_genotype": theiaviral_illumina_pe.genoflu_genotype,
             "genoflu_all_segments": theiaviral_illumina_pe.genoflu_all_segments,
@@ -308,7 +301,7 @@ workflow theiaviral_panel {
             "gene_coverage_stats": theiaviral_illumina_pe.gene_coverage_stats
           }
       }
-    }  
+    }
   }
   output {
     # Number of assembled viruses
@@ -333,7 +326,9 @@ workflow theiaviral_panel {
     Int? fastq_scan_num_reads_raw1 = fastq_scan_raw.read1_seq
     Int? fastq_scan_num_reads_raw2 = fastq_scan_raw.read2_seq
     String? fastq_scan_raw_pairs = fastq_scan_raw.read_pairs
-    String? fastq_scan_version = fastq_scan_raw.version
+    Float? fastq_scan_r1_gc_percent_raw = fastq_scan_raw.read1_gc_percent
+    Float? fastq_scan_r2_gc_percent_raw = fastq_scan_raw.read2_gc_percent
+    String? fastq_scan_version = fastq_scan_raw.fastq_scan_version
     String? fastq_scan_docker = fastq_scan_raw.fastq_scan_docker
     File? fastq_scan_raw1_json = fastq_scan_raw.read1_fastq_scan_json
     File? fastq_scan_raw2_json = fastq_scan_raw.read2_fastq_scan_json
@@ -371,6 +366,8 @@ workflow theiaviral_panel {
     Int? fastq_scan_num_reads_clean1 = fastq_scan_clean.read1_seq
     Int? fastq_scan_num_reads_clean2 = fastq_scan_clean.read2_seq
     String? fastq_scan_clean_pairs = fastq_scan_clean.read_pairs
+    Float? fastq_scan_r1_gc_percent_clean = fastq_scan_clean.read1_gc_percent
+    Float? fastq_scan_r2_gc_percent_clean = fastq_scan_clean.read2_gc_percent
     File? fastq_scan_clean1_json = fastq_scan_clean.read1_fastq_scan_json
     File? fastq_scan_clean2_json = fastq_scan_clean.read2_fastq_scan_json
   }

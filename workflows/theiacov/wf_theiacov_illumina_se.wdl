@@ -48,7 +48,9 @@ workflow theiacov_illumina_se {
     Int min_genome_length = 1700 # size of hepatitis delta virus
     Int max_genome_length = 2673870 # size of Pandoravirus salinus + 200 kb
     Int min_coverage = 10
-    Boolean skip_screen = false
+    # skip screen gates
+    Boolean skip_screen_raw = false
+    Boolean skip_screen_clean = false
     Boolean skip_mash = false
     # vadr parameters
     Int? vadr_max_length
@@ -76,9 +78,10 @@ workflow theiacov_illumina_se {
       vadr_model = vadr_model_file,
       vadr_mem = vadr_memory,
       primer_bed_file = primer_bed,
-      pangolin_docker_image = pangolin_docker_image
+      pangolin_docker_image = pangolin_docker_image,
+      flu_genoflu_genotype = ""
   }
-  if (! skip_screen) {
+  if (! skip_screen_raw) {
     call screen.check_reads_se as raw_check_reads {
       input:
         read1 = read1,
@@ -92,7 +95,7 @@ workflow theiacov_illumina_se {
         expected_genome_length = organism_parameters.genome_length
     }
   }
-  if (select_first([raw_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
+  if (select_first([raw_check_reads.read_screen, ""]) == "PASS" || skip_screen_raw) {
     call read_qc.read_QC_trim_se as read_QC_trim {
       input:
         samplename = samplename,
@@ -108,7 +111,7 @@ workflow theiacov_illumina_se {
         rasusa_downsampling_coverage = rasusa_downsampling_coverage,
         rasusa_genome_length = select_first([genome_length, raw_check_reads.est_genome_length, 0]),
     }
-    if (! skip_screen) {
+    if (! skip_screen_clean) {
       call screen.check_reads_se as clean_check_reads {
         input:
           read1 = read_QC_trim.read1_clean,
@@ -122,7 +125,7 @@ workflow theiacov_illumina_se {
           expected_genome_length = organism_parameters.genome_length
       }
     }
-    if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
+    if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen_clean) {
       call consensus_call.ivar_consensus {
         input:
           samplename = samplename,
@@ -157,18 +160,15 @@ workflow theiacov_illumina_se {
           nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
           nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
           pangolin_docker_image = organism_parameters.pangolin_docker,
-          # Setting flu_track related inputs to default values as they are not utilized in TheiaCov, decreasing external input bloat
+          workflow_type = "theiacov_se",
+          # hiding internal components to decrease input bloat
           seq_method = "",
           assembly_metrics_cpu = 0,
           assembly_metrics_disk_size = 0,
           assembly_metrics_docker = "",
           assembly_metrics_memory = 0,
-          irma_cpu = 0,
-          irma_disk_size = 0,
-          irma_docker_image = "",
-          irma_keep_ref_deletions = false,
-          irma_memory = 0,
           genoflu_cpu = 0,
+          genoflu_cross_reference = "gs://theiagen-public-resources-rp/empty_files/empty.fasta",
           genoflu_disk_size = 0,
           genoflu_docker = "",
           genoflu_memory = 0,
@@ -179,7 +179,7 @@ workflow theiacov_illumina_se {
           abricate_flu_min_percent_coverage = 0,
           abricate_flu_min_percent_identity = 0,
           flu_track_antiviral_aa_subs = "",
-          workflow_type = "theiacov_se"
+          nextclade_custom_input_dataset = "gs://theiagen-public-resources-rp/empty_files/empty.txt"
       }
       if (defined(qc_check_table)) {
         call qc_check.qc_check_phb as qc_check_task {
@@ -220,6 +220,7 @@ workflow theiacov_illumina_se {
     Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
     Float? fastq_scan_r1_mean_readlength_raw = read_QC_trim.fastq_scan_r1_mean_readlength_raw
     Float? fastq_scan_r1_mean_q_raw = read_QC_trim.fastq_scan_r1_mean_q_raw
+    Float? fastq_scan_r1_gc_percent_raw = read_QC_trim.fastq_scan_r1_gc_percent_raw
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
     String? fastq_scan_docker = read_QC_trim.fastq_scan_docker
     File? fastq_scan_raw1_json = read_QC_trim.fastq_scan_raw1_json
@@ -227,6 +228,7 @@ workflow theiacov_illumina_se {
     Int? fastq_scan_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
     Float? fastq_scan_r1_mean_readlength_clean = read_QC_trim.fastq_scan_r1_mean_readlength_clean
     Float? fastq_scan_r1_mean_q_clean = read_QC_trim.fastq_scan_r1_mean_q_clean
+    Float? fastq_scan_r1_gc_percent_clean = read_QC_trim.fastq_scan_r1_gc_percent_clean
     File? fastq_scan_clean1_json = read_QC_trim.fastq_scan_clean1_json
     # Read QC - fastqc outputs
     Int? fastqc_num_reads_raw1 = read_QC_trim.fastqc_raw1
@@ -252,10 +254,12 @@ workflow theiacov_illumina_se {
     Float? kraken_human = read_QC_trim.kraken2_human
     String? kraken_target_organism = read_QC_trim.kraken2_target_organism
     String? kraken_target_organism_name = read_QC_trim.kraken2_target_organism_name
+    String? kraken_target_organism_reads = read_QC_trim.kraken2_reads_target_organism
     File? kraken_report = read_QC_trim.kraken2_report
     String? bracken_report = read_QC_trim.bracken_report
     Float? kraken_human_dehosted = read_QC_trim.kraken2_human_dehosted
     String? kraken_target_organism_dehosted = read_QC_trim.kraken2_target_organism_dehosted
+    String? kraken_target_organism_dehosted_reads = read_QC_trim.kraken2_reads_target_organism_dehosted
     File? kraken_report_dehosted = read_QC_trim.kraken2_report_dehosted
     File? bracken_report_dehosted = read_QC_trim.bracken_report_dehosted
     # Read QC - rasusa outputs

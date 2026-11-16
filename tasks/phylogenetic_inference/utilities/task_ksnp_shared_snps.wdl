@@ -15,12 +15,12 @@ task ksnp_shared_snps {
     file_path="~{ksnp_vcf_ref_genome}"
     samplename_array = "~{sep=',' samplename}"
 
-    # split the samplename_array into a list 
+    # split the samplename_array into a list
     # this will be used to isolate only columns in the df with sample data
     sample_columns = samplename_array.split(',')
 
     # we want to skip the commented lines and use the line starting with #CHROM as the header
-    # grab the line that starts with #CHROM 
+    # grab the line that starts with #CHROM
     header = None
     with open(file_path, 'r') as file:
         for line in file:
@@ -42,7 +42,7 @@ task ksnp_shared_snps {
     # Drop rows where the number of '.' is greater than 0
     data_core = data[data['num_dots'] == 0].drop(columns='num_dots')
 
-    # Convert the values in selected columns to numeric 
+    # Convert the values in selected columns to numeric
     data_core[sample_columns] = data_core[sample_columns].apply(pd.to_numeric, errors='coerce')
 
     # Sum values by row after the 'FORMAT' column

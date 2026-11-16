@@ -1,0 +1,39 @@
+name: Stamp branch version
+
+on:
+  push:
+    branches-ignore: [main, gh-pages]
+
+concurrency:
+  group: stamp-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  stamp:
+    # don't do anything if the last actor was GHA (prevent double stamping),
+    # and never stamp in a fork — fork prs are merged without the merge bot,
+    # so their BRANCH_TAG must stay empty.
+    if: ${{ !endsWith(github.actor, '[bot]') && !github.event.repository.fork }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - name: Set BRANCH_TAG
+        # tr guards against sed replacement metacharacters such as & in
+        # branch names; slashes are allowed but not recommended
+        run: |
+          NAME=$(printf '%s' "$GITHUB_REF_NAME" | tr -c 'A-Za-z0-9._/-' '-')
+          sed -i "s|^\( *BRANCH_TAG=\).*|\1\"${NAME}\"|" tasks/task_versioning.wdl
+
+      - name: Commit if changed
+        run: |
+          git diff --quiet && exit 0
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "ci: stamp branch version tag"
+          git push

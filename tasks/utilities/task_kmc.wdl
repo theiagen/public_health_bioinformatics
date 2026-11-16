@@ -23,7 +23,7 @@ task kmc {
     # run kmc
     # kmc [options] <input_file> <output_file> <working_dir>
     # -sm - uses strict memory mode (memory from -m<size> switch will not be exceeded)
-    # -m<size> - the max amount of RAM in GB (default: 12) 
+    # -m<size> - the max amount of RAM in GB (default: 12)
     # -t<value> - total number of threads to use
     # -k<len> - k-mer length (default: 25)
     # -ci<value> - exclude k-mers occuring less than <value> times (default: 1e9)
@@ -39,7 +39,7 @@ task kmc {
       > LOG
 
     # kmc_outputs is a mess of files that are not human readable
-    # however, the stdout does produce some useful stats. 
+    # however, the stdout does produce some useful stats.
     #  the no. of unique counted k-mers can be used as an estimate of genome size
     grep "unique counted k" LOG | tr -s ' ' | cut -d ' ' -f8 >> UNIQUE_COUNTED
 

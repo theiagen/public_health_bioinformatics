@@ -1,0 +1,4 @@
+{
+    "gambit_query.assembly_fasta":"this.assembly_fasta",
+    "gambit_query.samplename":"this.theiaprok_fasta_id"
+}

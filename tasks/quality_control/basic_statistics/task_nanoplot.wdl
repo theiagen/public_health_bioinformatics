@@ -42,12 +42,12 @@ task nanoplot {
     grep "mean_qual" ~{samplename}_NanoStats.txt | cut -f 2 | tee MEAN_QUAL
     grep "median_qual" ~{samplename}_NanoStats.txt | cut -f 2 | tee MEDIAN_QUAL
 
-    if [ ~{if defined(est_genome_length)  then "true" else "false" } == true ]; then 
+    if [ ~{if defined(est_genome_length)  then "true" else "false" } == true ]; then
       # estimate coverage
       # using math: C = N / G where N is number of bases, and G is estimated genome size
       python3 -c "print(round(${NUM_BASES} / ~{est_genome_length}, 2))" | tee EST_COVERAGE
     fi
-    
+
   >>>
   output {
     File nanoplot_html = "~{samplename}_NanoPlot-report.html"

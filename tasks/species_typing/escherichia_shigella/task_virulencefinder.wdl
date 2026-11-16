@@ -44,8 +44,8 @@ task virulencefinder {
       ~{'-l ' + min_percent_coverage} \
       ~{'-t ' + min_percent_identity} \
       ~{'-d' + database} \
-      -x 
-    # else 
+      -x
+    # else
     #   # run the reads version if PE data
     #   virulencefinder.py \
     #     -i {read1} {read2} \
@@ -56,7 +56,7 @@ task virulencefinder {
     #     ~{'-d' + database} \
     #     -x
     # fi
-   
+
     # rename output file
     mv results_tab.tsv ~{samplename}_results_tab.tsv
 
@@ -66,7 +66,7 @@ task virulencefinder {
     # if virulencefinder fails/no hits are found, the results_tab.tsv file will still exist but only be the header
     # check to see if VIRULENCE_FACTORS is just whitespace
     # if so, say that no virulence factors were found instead
-    if ! grep -q '[^[:space:]]' VIRULENCE_FACTORS ; then 
+    if ! grep -q '[^[:space:]]' VIRULENCE_FACTORS ; then
       echo "No virulence factors found" | tee VIRULENCE_FACTORS
     fi
   >>>

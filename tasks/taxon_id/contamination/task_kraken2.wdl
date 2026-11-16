@@ -125,17 +125,40 @@ task kraken2 {
       mv "~{samplename}.unclassified#.fastq.gz" ~{samplename}.unclassified_1.fastq.gz
     fi
 
-    # capture target org percentage
+    # capture target org percent_target_organism and reads_target_organism
     if [ ! -z "~{target_organism}" ]; then
       echo "DEBUG: Target org designated: ~{target_organism}"
-      percent_target_organism=$(grep -P "\s~{target_organism}$" $kraken2_report  | cut -f1 | head -n1 )
+      # stage the line
+      target_organism_line=$(grep -P "\s~{target_organism}$" $kraken2_report | head -n1)
+
+      percent_target_organism=$(echo "$target_organism_line" | cut -f1)
       if [ -z "$percent_target_organism" ]; then
         percent_target_organism="0"
       fi
       echo "INFO: Percentage target organism (~{target_organism}):"
       echo $percent_target_organism | tee PERCENT_TARGET_ORGANISM
+
+      # column 2 of the kraken2 report is fragments covered by the clade. In --paired
+      # mode kraken2 counts a read pair as a single fragment, so this is read pairs for
+      # paired-end data and reads for single-end data
+      fragments_target_organism=$(echo "$target_organism_line" | cut -f2)
+      if [ -z "$fragments_target_organism" ]; then
+        fragments_target_organism="0"
+      fi
+      echo "INFO: Fragments assigned to target organism clade (~{target_organism}):"
+      echo $fragments_target_organism
+
+      # convert fragments to reads so the value means reads on every platform
+      if [ "$mode" == "--paired" ]; then
+        reads_target_organism=$(( fragments_target_organism * 2 ))
+      else
+        reads_target_organism="$fragments_target_organism"
+      fi
+      echo "INFO: Reads assigned to target organism clade (~{target_organism}):"
+      echo $reads_target_organism | tee READS_TARGET_ORGANISM
     else
       echo "" > PERCENT_TARGET_ORGANISM
+      echo "" > READS_TARGET_ORGANISM
     fi
   >>>
   output {
@@ -145,6 +168,7 @@ task kraken2 {
     File? bracken_report = "~{samplename}_bracken_report.txt"
     Float kraken2_percent_human = read_float("PERCENT_HUMAN")
     String kraken2_percent_target_organism = read_string("PERCENT_TARGET_ORGANISM")
+    String kraken2_reads_target_organism = read_string("READS_TARGET_ORGANISM")
     String? kraken2_target_organism = target_organism
     File kraken2_classified_report = "~{samplename}.classifiedreads.txt.gz"
     File kraken2_unclassified_read1 = "~{samplename}.unclassified_1.fastq.gz"

@@ -138,7 +138,7 @@ workflow theiaprok_fasta {
         File bakta_db_full = "gs://theiagen-public-resources-rp/reference_data/databases/bakta/bakta_db_full_2026-08-06.tar.gz"
       }
       if (!(bakta_db == "light" || bakta_db == "full")) {
-          File bakta_custom_db = bakta_db
+        File bakta_custom_db = bakta_db
       }
       call bakta_task.bakta {
         input:
@@ -167,8 +167,44 @@ workflow theiaprok_fasta {
         merlin_tag = select_first([expected_taxon, gambit.merlin_tag]),
         assembly = assembly_fasta,
         samplename = samplename,
+        gambit_predicted_taxon = gambit.gambit_predicted_taxon,
         assembly_only = true,
-        paired_end = false
+        paired_end = false,
+        # hiding these inputs from terra to avoid input bloat
+        call_tbp_parser = false,
+        tbp_parser_config = "gs://theiagen-public-resources-rp/empty_files/empty.txt",
+        tbp_parser_coverage_bed = "gs://theiagen-public-resources-rp/empty_files/empty.bed",
+        tbp_parser_debug = false,
+        tbp_parser_docker_image = "",
+        tbp_parser_err_coverage_bed = "gs://theiagen-public-resources-rp/empty_files/empty.bed",
+        tbp_parser_find_and_replace = {"": ""},
+        tbp_parser_gene_database_yml = "gs://theiagen-public-resources-rp/empty_files/empty.txt",
+        tbp_parser_lims_report_format_yml = "gs://theiagen-public-resources-rp/empty_files/empty.txt",
+        tbp_parser_min_depth = 0,
+        tbp_parser_min_frequency = 0.0,
+        tbp_parser_min_percent_coverage = 0.0,
+        tbp_parser_min_percent_loci_covered = 0.0,
+        tbp_parser_min_read_support = 0,
+        tbp_parser_operator = "",
+        tbp_parser_resolve_overlapping_regions = false,
+        tbp_parser_sequencing_method = "",
+        tbp_parser_tngs_data = false,
+        tbp_parser_tngs_frequency_boundaries = "",
+        tbp_parser_tngs_read_support_boundaries = "",
+        tbp_parser_use_err_for_qc = false,
+        tbprofiler_additional_parameters = "",
+        tbprofiler_custom_db = "gs://theiagen-public-resources-rp/empty_files/empty.txt",
+        tbprofiler_docker_image = "",
+        tbprofiler_mapper = "",
+        tbprofiler_min_af = 0.0,
+        tbprofiler_tbdb_branch = "",
+        tbprofiler_tbdb_branch_commit_hash = "",
+        tbprofiler_variant_caller = "",
+        tbprofiler_variant_calling_params = "",
+        vibecheck_docker_image = "",
+        vibecheck_lineage_barcodes = "gs://theiagen-public-resources-rp/empty_files/empty.txt",
+        vibecheck_skip_subsampling = false,
+        vibecheck_subsampling_fraction = 0.0
     }
     if (defined(qc_check_table)) {
       call qc_check.qc_check_phb as qc_check_task {
@@ -205,6 +241,7 @@ workflow theiaprok_fasta {
           gambit_predicted_taxon = gambit.gambit_predicted_taxon,
           taxon_table = taxon_tables,
           samplename = samplename,
+          theiaviral_panel = false,
           columns_to_export = {
             "abricate_abaum_database": merlin_magic.abricate_abaum_database,
             "abricate_abaum_docker": merlin_magic.abricate_abaum_docker,
@@ -234,6 +271,16 @@ workflow theiaprok_fasta {
             "agrvate_results": merlin_magic.agrvate_results,
             "agrvate_summary": merlin_magic.agrvate_summary,
             "agrvate_version": merlin_magic.agrvate_version,
+            "allele_calling_accessory_count": merlin_magic.allele_calling_accessory_count,
+            "allele_calling_accessory_percentage": merlin_magic.allele_calling_accessory_percentage,
+            "allele_calling_core_count": merlin_magic.allele_calling_core_count,
+            "allele_calling_core_percentage": merlin_magic.allele_calling_core_percentage,
+            "allele_calling_docker": merlin_magic.allele_calling_docker,
+            "allele_calling_result": merlin_magic.allele_calling_result,
+            "allele_calling_scheme": merlin_magic.allele_calling_scheme,
+            "allele_calling_standard_json": merlin_magic.allele_calling_standard_json,
+            "allele_calling_core_json": merlin_magic.allele_calling_core_json,
+            "allele_calling_total_loci_count": merlin_magic.allele_calling_total_loci_count,
             "amr_search_all_resistances": merlin_magic.amr_search_all_resistances,
             "amr_search_associated_resistances": merlin_magic.amr_search_associated_resistances,
             "amr_search_csv": merlin_magic.amr_results_csv,
@@ -512,7 +559,7 @@ workflow theiaprok_fasta {
             "virulencefinder_hits": merlin_magic.virulencefinder_hits,
             "virulencefinder_report_tsv": merlin_magic.virulencefinder_report_tsv,
             "zip": zip
-        }
+          }
       }
     }
   }
@@ -628,6 +675,7 @@ workflow theiaprok_fasta {
     File? prokka_gff = prokka.prokka_gff
     File? prokka_gbk = prokka.prokka_gbk
     File? prokka_sqn = prokka.prokka_sqn
+    String? prokka_version = prokka.prokka_version
     # Bakta Results
     File? bakta_gbff = bakta.bakta_gbff
     File? bakta_gff3 = bakta.bakta_gff3
@@ -854,5 +902,16 @@ workflow theiaprok_fasta {
     String? arln_taxon_gc_mean = arln_stats.taxon_gc_mean
     String? arln_assembly_zscore = arln_stats.assembly_zscore
     String? arln_stats_docker_version = arln_stats.docker_version
+    # allele caller outputs
+    String? allele_calling_scheme = merlin_magic.allele_calling_scheme
+    String? allele_calling_result = merlin_magic.allele_calling_result
+    File? allele_calling_standard_json = merlin_magic.allele_calling_standard_json
+    File? allele_calling_core_json = merlin_magic.allele_calling_core_json
+    Int? allele_calling_core_count = merlin_magic.allele_calling_core_count
+    Float? allele_calling_core_percentage = merlin_magic.allele_calling_core_percentage
+    Int? allele_calling_accessory_count = merlin_magic.allele_calling_accessory_count
+    Float? allele_calling_accessory_percentage = merlin_magic.allele_calling_accessory_percentage
+    Int? allele_calling_total_loci_count = merlin_magic.allele_calling_total_loci_count
+    String? allele_calling_docker = merlin_magic.allele_calling_docker
   }
 }

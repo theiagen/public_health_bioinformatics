@@ -10,7 +10,7 @@ task genoflu {
     File? cross_reference
     Int cpu = 1
     Int disk_size = 25
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/genoflu:1.07"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/genoflu:1.08"
     Int memory = 2
   }
   command <<<
@@ -26,7 +26,7 @@ task genoflu {
       --fasta ~{assembly_fasta} \
       --sample_name ~{samplename} \
       ~{"--pident_threshold " + min_percent_identity} \
-      ~{"--cross_reference" + cross_reference} > genoflu.output.txt
+      ~{"--cross_reference " + cross_reference} > genoflu.output.txt
 
     GENOTYPE=$(grep "~{samplename} Genotype" genoflu.output.txt | cut -d ">" -f2 | cut -d " " -f2 | cut -d ":" -f1)
     ALL_SEGMENTS=$(grep "~{samplename} Genotype" genoflu.output.txt | cut -d ">" -f2 | cut -d " " -f3-)

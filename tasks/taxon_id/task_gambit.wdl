@@ -5,8 +5,8 @@ task gambit {
     File assembly
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0"
-    File gambit_db_genomes = "gs://gambit-databases-rp/3.0.0/gambit-metadata-3.0.0-20260601.gdb"
-    File gambit_db_signatures = "gs://gambit-databases-rp/3.0.0/gambit-signatures-3.0.0-20260601.gs"
+    File gambit_db_genomes = "gs://gambit-databases-rp/3.1.0/gambit-metadata-3.1.0-20260911.gdb"
+    File gambit_db_signatures = "gs://gambit-databases-rp/3.1.0/gambit-signatures-3.1.0-20260911.gs"
     Int disk_size = 20
     Int memory = 2
     Int cpu = 1
@@ -120,10 +120,22 @@ task gambit {
     # The purpose of the merlin_tag output is for use as a trigger for organism-specific or taxon-specific workflows
     # One primary & important example is running NCBI amrfinderplus with the appropriate 'amrfinder --organism <organism>' option
 
-    merlin_tag_designations = {"Escherichia" : "Escherichia", "Shigella" : "Escherichia", "Shigella sonnei" : "Shigella sonnei",
-        "Klebsiella" : "Klebsiella", "Klebsiella pneumoniae" : "Klebsiella pneumoniae", "Klebsiella oxytoca" : "Klebsiella oxytoca",
-        "Klebsiella aerogenes" : "Klebsiella aerogenes", "Listeria" : "Listeria", "Salmonella" : "Salmonella", "Vibrio" : "Vibrio",
-        "Vibrio cholerae" : "Vibrio cholerae"
+    merlin_tag_designations = {
+        "Campylobacter": "Campylobacter",
+        "Clostridium botulinum": "Clostridium botulinum",
+        "Cronobacter": "Cronobacter",
+        "Escherichia": "Escherichia",
+        "Shigella": "Escherichia",
+        "Shigella sonnei": "Shigella sonnei",
+        "Klebsiella": "Klebsiella",
+        "Klebsiella pneumoniae": "Klebsiella pneumoniae",
+        "Klebsiella oxytoca": "Klebsiella oxytoca",
+        "Klebsiella aerogenes": "Klebsiella aerogenes",
+        "Listeria": "Listeria",
+        "Salmonella": "Salmonella",
+        "Vibrio": "Vibrio",
+        "Vibrio cholerae": "Vibrio cholerae",
+        "Yersinia": "Yersinia",
     }
 
     try:

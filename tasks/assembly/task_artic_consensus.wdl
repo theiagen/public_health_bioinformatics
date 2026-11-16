@@ -27,7 +27,7 @@ task consensus {
   cp "~{reference_genome}" reference.fasta
 
   # ARTIC claims to expect 6 column BED files, but BEDs w/o the sequence column fail primalbedtools
-  # SPOOF the sequence column if a 6 column BED file is encountered 
+  # SPOOF the sequence column if a 6 column BED file is encountered
   python3 <<CODE
   with open("~{primer_bed}", "r") as infile, open("primer.bed", "w") as outfile:
     for line in infile:
@@ -57,14 +57,14 @@ task consensus {
 
   # Grab reads from alignment
   # 0x904 means we are now filtering out unaligned, secondary, and supplemental alignments - thanks Curtis
-  samtools fastq -F0x904 ~{samplename}.primertrimmed.rg.sorted.bam | gzip > ~{samplename}.fastq.gz  
+  samtools fastq -F0x904 ~{samplename}.primertrimmed.rg.sorted.bam | gzip > ~{samplename}.fastq.gz
 
   # rename fasta headers to remove description; append a contig number if multiple contigs
   # Rename FASTA headers to samplename, stripping description field; append _# suffix only if multiple sequences present
   header_count=$(grep -c '^>' ~{samplename}.consensus.fasta)
   awk -v sample="~{samplename}" -v count="$header_count" \
     'BEGIN{n=0} /^>/{n++; print (count==1) ? ">"sample : ">"sample"_"n; next} {print}' \
-    ~{samplename}.consensus.fasta > renamed.fasta 
+    ~{samplename}.consensus.fasta > renamed.fasta
   mv renamed.fasta ~{samplename}.consensus.fasta
   >>>
   output {

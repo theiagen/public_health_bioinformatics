@@ -7,7 +7,7 @@ task spades {
     String samplename
     String? spades_type
     Int timeout = 360 # timeout in minutes
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/spades:4.1.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/spades:4.3.0"
     Int disk_size = 100
     Int cpu = 4
     Int memory = 16
@@ -58,7 +58,7 @@ task spades {
 
     if [ ~{spades_type} == "metaviral" ]; then
       # if metaviralspades fails, or fails to output a contigs.fasta, we want to report that for falling back
-      if [ -f spades/contigs.fasta ]; then
+      if [ -s spades/contigs.fasta ]; then
         echo "DEBUG: Metaviralspades successfully identified a complete virus"
         mv spades/contigs.fasta ~{samplename}~{'_' + spades_type + 'spades'}_contigs.fasta
         # Move the contigs.gfa file to the top level directory

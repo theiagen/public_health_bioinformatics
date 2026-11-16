@@ -14,17 +14,17 @@ task seroba {
     # grab version
     seroba version > VERSION
 
-    # database path will need to be changed if/when docker image is updated. 
+    # database path will need to be changed if/when docker image is updated.
     seroba runSerotyping /seroba-1.0.2/database/ ~{read1} ~{read2} ~{samplename}
 
     # check for serotype grouping & contamination flag
     cut -f2 ~{samplename}/pred.tsv > SEROTYPE
 
     # check for detailed serogroup information
-    if [ -f ~{samplename}/detailed_serogroup_info.txt ]; then 
+    if [ -f ~{samplename}/detailed_serogroup_info.txt ]; then
       grep "Serotype predicted by ariba" ~{samplename}/detailed_serogroup_info.txt | cut -f2 | sed 's/://' > ARIBA_SEROTYPE
       grep "assembly from ariba" ~{samplename}/detailed_serogroup_info.txt | cut -f2 | sed 's/://' > ARIBA_IDENTITY
-    else 
+    else
       # if the details do not exist, output blanks to ariba columns
       echo "" > ARIBA_SEROTYPE
       echo "" > ARIBA_IDENTITY

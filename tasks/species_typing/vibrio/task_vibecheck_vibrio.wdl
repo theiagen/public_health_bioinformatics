@@ -10,7 +10,7 @@ task vibecheck_vibrio {
     File? lineage_barcodes
     Float subsampling_fraction = 0.2 # set to mirror v2025.02.24 default
     Boolean skip_subsampling = false
-    String docker = "watronfire/vibecheck:2025.06.26"
+    String docker = "us-docker.pkg.dev/general-theiagen/watronfire/vibecheck:2025.06.26"
     Int disk_size = 16
     Int cpu = 2
     Int memory = 3

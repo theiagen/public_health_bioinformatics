@@ -34,14 +34,14 @@ workflow phylocompare {
   }
   call task_cophylogeny.cophylogeny as cophylo_task {
     input:
-        tree1 = select_first([root_tree1_task.rooted_tree, tree1]),
-        tree2 = select_first([root_tree2_task.rooted_tree, tree2])
+      tree1 = select_first([root_tree1_task.rooted_tree, tree1]),
+      tree2 = select_first([root_tree2_task.rooted_tree, tree2])
   }
   if (validate == true) {
     call task_phylovalidate.phylovalidate as phylovalidate_task {
       input:
-          tree1 = select_first([root_tree1_task.rooted_tree, tree1]),
-          tree2 = select_first([root_tree2_task.rooted_tree, tree2]),
+        tree1 = select_first([root_tree1_task.rooted_tree, tree1]),
+        tree2 = select_first([root_tree2_task.rooted_tree, tree2]),
     }
   }
   output {

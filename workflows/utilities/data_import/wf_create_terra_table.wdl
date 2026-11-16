@@ -22,7 +22,8 @@ workflow create_terra_table {
       assembly_data = assembly_data,
       file_ending = file_ending,
       terra_project = terra_project,
-      terra_workspace = terra_workspace
+      terra_workspace = terra_workspace,
+      responsible_workflow = "Create_Terra_Table_PHB"
   }
   output {
   }

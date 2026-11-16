@@ -50,7 +50,7 @@ workflow digger_denovo {
     Float? pilon_min_depth = 0.25 # Shovill default
     String? pilon_fix = "bases" # Options: all, snps, indels, gaps
     # Optional parameters for filtering
-    Int filter_contigs_min_length = 200 # Default we set before
+    Int? filter_contigs_min_length # let users specify stricter min_length criteria if desired
     Float filter_contigs_min_coverage = 2.0 # Default we set before
     Boolean filter_contigs_skip_length_filter = false
     Boolean filter_contigs_skip_coverage_filter = false
@@ -138,7 +138,7 @@ workflow digger_denovo {
       input:
         samplename = samplename,
         assembly_fasta = select_first([pilon.assembly_fasta, spades.assembly_fasta, megahit.assembly_fasta, skesa.assembly_fasta]),
-        min_length = filter_contigs_min_length,
+        min_length = select_first([filter_contigs_min_length, min_contig_length]),
         min_coverage = filter_contigs_min_coverage,
         skip_length_filter = filter_contigs_skip_length_filter,
         skip_coverage_filter = filter_contigs_skip_coverage_filter,
@@ -147,8 +147,8 @@ workflow digger_denovo {
         memory = filter_contigs_memory,
         disk_size = filter_contigs_disk_size,
         docker = filter_contigs_docker
-      }
     }
+  }
   output {
     File assembly_fasta = select_first([filter_contigs.filtered_fasta, pilon.assembly_fasta, spades.assembly_fasta, megahit.assembly_fasta, skesa.assembly_fasta])
     File? contigs_gfa = spades.assembly_gfa

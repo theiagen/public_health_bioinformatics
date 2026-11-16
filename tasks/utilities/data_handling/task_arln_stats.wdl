@@ -74,7 +74,7 @@ task arln_stats {
       # StDev
       echo "${ref_assem_st_dev}" > TAXON_ASSEMBLY_RATIO_STDEV
       echo "${ref_gc_st_dev}" > TAXON_GC_ST_DEV
-      # Zscore 
+      # Zscore
       echo "${assem_zscore}" > ASSEMBLY_ZSCORE
       # Mean
       gc_mean=$(printf "%.5f" ${gc_mean})
@@ -102,7 +102,8 @@ task arln_stats {
   runtime {
     cpu: cpu
     memory: "~{memory} GB"
-    disk: "~{disk_size} GB"
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
     docker: docker
     maxRetries: 0
   }

@@ -41,9 +41,10 @@ workflow theiacov_clearlabs {
       reference_genome = reference_genome,
       nextclade_dataset_tag_input = nextclade_dataset_tag,
       nextclade_dataset_name_input = nextclade_dataset_name,
-      kraken_target_organism_input = target_organism
+      kraken_target_organism_input = target_organism,
+      flu_genoflu_genotype = ""
   }
-  call fastq_scan.fastq_scan_se as fastq_scan_raw_reads {
+  call fastq_scan.fastq_scan as fastq_scan_raw_reads {
     input:
       read1 = read1
   }
@@ -52,7 +53,7 @@ workflow theiacov_clearlabs {
       samplename = samplename,
       read1 = read1
   }
-  call fastq_scan.fastq_scan_se as fastq_scan_clean_reads {
+  call fastq_scan.fastq_scan as fastq_scan_clean_reads {
     input:
       read1 = ncbi_scrub_se.read1_dehosted
   }
@@ -114,28 +115,26 @@ workflow theiacov_clearlabs {
         nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
         nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
         pangolin_docker_image = organism_parameters.pangolin_docker,
+        workflow_type = "theiacov_clearlabs",
+        # hiding internal components to decrease input bloat
         seq_method = "",
         assembly_metrics_cpu = 0,
         assembly_metrics_disk_size = 0,
         assembly_metrics_docker = "",
         assembly_metrics_memory = 0,
-        irma_cpu = 0,
-        irma_disk_size = 0,
-        irma_docker_image = "",
-        irma_keep_ref_deletions = false,
-        irma_memory = 0,
         genoflu_cpu = 0,
         genoflu_disk_size = 0,
         genoflu_docker = "",
         genoflu_memory = 0,
+        genoflu_cross_reference = "gs://theiagen-public-resources-rp/empty_files/empty.txt",
+        nextclade_custom_input_dataset = "gs://theiagen-public-resources-rp/empty_files/empty.txt",
         abricate_flu_cpu = 0,
         abricate_flu_disk_size = 0,
         abricate_flu_docker = "",
         abricate_flu_memory = 0,
         abricate_flu_min_percent_coverage = 0,
         abricate_flu_min_percent_identity = 0,
-        flu_track_antiviral_aa_subs = "",
-        workflow_type = "theiacov_clearlabs"
+        flu_track_antiviral_aa_subs = ""
     }
   }
   if (defined(qc_check_table)) {
@@ -172,17 +171,21 @@ workflow theiacov_clearlabs {
     # Read QC - fastq_scan outputs
     Int fastq_scan_num_reads_raw1 = fastq_scan_raw_reads.read1_seq
     Int fastq_scan_num_reads_clean1 = fastq_scan_clean_reads.read1_seq
-    String fastq_scan_version = fastq_scan_raw_reads.version
-    File fastq_scan_raw1_json = fastq_scan_raw_reads.fastq_scan_json
-    File fastq_scan_clean1_json = fastq_scan_clean_reads.fastq_scan_json
+    Float fastq_scan_r1_gc_percent_raw = fastq_scan_raw_reads.read1_gc_percent
+    Float fastq_scan_r1_gc_percent_clean = fastq_scan_clean_reads.read1_gc_percent
+    String fastq_scan_version = fastq_scan_raw_reads.fastq_scan_version
+    File fastq_scan_raw1_json = fastq_scan_raw_reads.read1_fastq_scan_json
+    File fastq_scan_clean1_json = fastq_scan_clean_reads.read1_fastq_scan_json
     # Read QC - kraken outputs
     String kraken_version = kraken2_raw.kraken2_version
     Float kraken_human = kraken2_raw.kraken2_percent_human
     String kraken_target_organism = kraken2_raw.kraken2_percent_target_organism
+    String kraken_target_organism_reads = kraken2_raw.kraken2_reads_target_organism
     String kraken_target_organism_name = organism_parameters.kraken_target_organism
     File kraken_report = kraken2_raw.kraken2_report
     Float kraken_human_dehosted = kraken2_dehosted.kraken2_percent_human
     String kraken_target_organism_dehosted = kraken2_dehosted.kraken2_percent_target_organism
+    String kraken_target_organism_dehosted_reads = kraken2_dehosted.kraken2_reads_target_organism
     File kraken_report_dehosted = kraken2_dehosted.kraken2_report
     # Read Alignment - Artic consensus outputs
     File aligned_bam = consensus.trim_sorted_bam

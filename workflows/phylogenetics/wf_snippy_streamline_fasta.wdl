@@ -38,14 +38,14 @@ workflow snippy_streamline_fasta {
   }
   # see https://github.com/openwdl/wdl/issues/279 for syntax explanation
   # see also https://github.com/openwdl/wdl/blob/main/versions/1.1/SPEC.md#arraypairxy-ziparrayx-arrayy for zip explanation
-   scatter (duplet in zip(assembly_fasta, samplenames)) {
-      call snippy_variants_workflow.snippy_variants_wf {
-        input:
-            assembly_fasta = duplet.left,
-            reference_genome_file = select_first([reference_genome_file, ncbi_datasets_download_genome_accession.ncbi_datasets_gbff, ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta, centroid.centroid_genome_fasta]),
-            samplename = duplet.right
-        }
+  scatter (duplet in zip(assembly_fasta, samplenames)) {
+    call snippy_variants_workflow.snippy_variants_wf {
+      input:
+        assembly_fasta = duplet.left,
+        reference_genome_file = select_first([reference_genome_file, ncbi_datasets_download_genome_accession.ncbi_datasets_gbff, ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta, centroid.centroid_genome_fasta]),
+        samplename = duplet.right
     }
+  }
   call snippy_tree_workflow.snippy_tree_wf {
     input:
       tree_name = tree_name_updated,

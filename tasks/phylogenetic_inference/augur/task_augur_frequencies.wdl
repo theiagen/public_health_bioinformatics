@@ -23,7 +23,7 @@ task augur_frequencies {
     Int memory = 30
     Int disk_size = 100
     Int cpu = 4
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/augur:34.1.3"
   }
   command <<<
     AUGUR_RECURSION_LIMIT=10000 augur frequencies \

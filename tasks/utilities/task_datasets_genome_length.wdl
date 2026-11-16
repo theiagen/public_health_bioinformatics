@@ -42,7 +42,7 @@ task datasets_genome_length {
         ~{true="--assembly-source RefSeq" false="" refseq} \
         --as-json-lines | \
       dataformat tsv genome \
-        --fields accession,assmstats-number-of-contigs,checkm-completeness,assmstats-total-sequence-len	\
+        --fields accession,assmstats-number-of-contigs,checkm-completeness,assmstats-total-sequence-len \
          > ncbi_genome_summary.tsv
     fi
 

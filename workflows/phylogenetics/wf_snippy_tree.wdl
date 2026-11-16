@@ -24,7 +24,7 @@ workflow snippy_tree_wf {
     Boolean core_genome = true
     Boolean call_shared_variants = true
     Array[File]? snippy_variants_qc_metrics
-    
+
     String? data_summary_terra_project
     String? data_summary_terra_workspace
     String? data_summary_terra_table
@@ -33,16 +33,16 @@ workflow snippy_tree_wf {
 
     # the following parameters are exposed to allow modification in snippy_streamline
     String? snippy_core_docker
-    Int? snippy_core_cpu 
+    Int? snippy_core_cpu
     Int? snippy_core_disk_size
     Int? snippy_core_memory
     File? snippy_core_bed
-    
+
     Int? gubbins_disk_size
     Int? gubbins_memory
     Int? gubbins_cpu
     String? gubbins_docker
-    
+
     Int? iqtree2_cpu
     Int? iqtree2_memory
     Int? iqtree2_disk_size
@@ -50,12 +50,12 @@ workflow snippy_tree_wf {
     String? iqtree2_docker
     Int? iqtree2_ultrafast_bootstraps
     String? iqtree2_model
-    
+
     Int? snp_dists_cpu
     Int? snp_dists_memory
     Int? snp_dists_disk_size
     String? snp_dists_docker
-    
+
     Int? snp_sites_cpu
     Int? snp_sites_disk_size
     Int? snp_sites_memory
@@ -96,7 +96,7 @@ workflow snippy_tree_wf {
   if (core_genome) {
     call snp_sites_task.snp_sites as snp_sites {
       input:
-        # input is either the whole genome MSA, this MSA with the recombinant sites removed, 
+        # input is either the whole genome MSA, this MSA with the recombinant sites removed,
         # or the MSA of only core sites (with or without recombinant sites as specified by use_gubbins)
         msa_fasta = select_first([gubbins.gubbins_polymorphic_fasta, snippy_core.snippy_full_alignment_clean]),
         output_name = tree_name_updated,
@@ -127,7 +127,7 @@ workflow snippy_tree_wf {
       disk_size = iqtree2_disk_size
   }
   # creates a pairwise snp-distance matrix from the whole-genome MSA, with or without recombination removal.
-  # whole-genome SNP matrix will always be produced regardless of whether core_genome is used 
+  # whole-genome SNP matrix will always be produced regardless of whether core_genome is used
   # because this is always valuable for interpreting strain-relatedness
   call snp_dists_task.snp_dists as wg_snp_dists {
     input:
@@ -154,7 +154,7 @@ workflow snippy_tree_wf {
       input:
         alignment = select_first([snp_sites.snp_sites_multifasta]),
         cluster_name = tree_name_updated,
-        docker = snp_dists_docker,   
+        docker = snp_dists_docker,
         cpu = snp_dists_cpu,
         memory = snp_dists_memory,
         disk_size = snp_dists_disk_size
@@ -186,13 +186,13 @@ workflow snippy_tree_wf {
   if (call_shared_variants) {
     call file_handling.cat_variants as concatenate_variants {
       input:
-        variants_to_cat = snippy_core.snippy_variants_csv, 
+        variants_to_cat = snippy_core.snippy_variants_csv,
         samplenames = samplenames,
         concatenated_file_name = tree_name_updated
     }
     call shared_variants_task.shared_variants {
       input:
-        concatenated_variants = concatenate_variants.concatenated_variants, 
+        concatenated_variants = concatenate_variants.concatenated_variants,
         concatenated_file_name = tree_name_updated
     }
   }
@@ -238,7 +238,7 @@ workflow snippy_tree_wf {
     String snippy_snp_dists_docker = wg_snp_dists.snp_dists_docker
     File snippy_wg_snp_matrix = wg_reorder_matrix.ordered_matrix
     File? snippy_cg_snp_matrix = cg_reorder_matrix.ordered_matrix
-    
+
     File snippy_final_tree = select_first([cg_reorder_matrix.tree, wg_reorder_matrix.tree]) # depending on user input for core_genome
 
     # data summary outputs

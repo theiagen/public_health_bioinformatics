@@ -8,7 +8,7 @@ task fastp {
     String samplename
 
     # quality trimming options
-    Int fastp_window_size = 4 # set to mirror v1.1.0 default 
+    Int fastp_window_size = 4 # set to mirror v1.1.0 default
     Int fastp_quality_trim_score = 20 # set to mirror v1.1.0 default
     Int fastp_min_length = 15 # set to mirror v1.1.0 default
 
@@ -21,7 +21,7 @@ task fastp {
     String? fastp_args
 
     # runtime options
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/fastp:1.1.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/fastp:1.3.6"
     Int disk_size = 100
     Int cpu = 4
     Int memory = 8
@@ -30,7 +30,7 @@ task fastp {
     # fail hard
     set -euo pipefail
 
-    # date 
+    # date
     date | tee DATE
 
     # version

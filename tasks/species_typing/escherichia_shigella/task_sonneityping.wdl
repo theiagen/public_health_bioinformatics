@@ -34,7 +34,7 @@ task sonneityping {
     python /sonneityping/parse_mykrobe_predict.py \
     --jsons ~{samplename}.mykrobe.json --alleles /sonneityping/alleles.txt \
     --prefix ~{samplename}.sonneityping
-    
+
     #Used for testing the soft fail if mykrobe doesnt return predictions as seen before, keeping for posterity's sake
     #echo "DEBUG: Removing output to test if sonneityping script soft fails"
     #rm -rf ~{samplename}.sonneityping_predictResults.tsv
@@ -43,7 +43,7 @@ task sonneityping {
       echo "DEBUG: sonneityping produced expected output file"
       # rename output TSV to something prettier
       mv -v ~{samplename}.sonneityping_predictResults.tsv ~{samplename}.sonneityping.tsv
-    else 
+    else
       echo "Error: sonneityping did not produce expected output file. Check mykrobe logs."
       touch SPECIES.txt
       touch FINAL_GENOTYPE.txt

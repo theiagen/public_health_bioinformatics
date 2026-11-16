@@ -21,7 +21,7 @@ workflow ont_barcode_concatenation {
       output_bucket_path = output_bucket_path,
       file_extension = file_extension,
       barcode_renaming_file = barcode_renaming_file
-  } 
+  }
   if (defined(cat_ont_barcodes.concatenation_log)) {
     call create_terra_table_task.create_terra_table {
       input:

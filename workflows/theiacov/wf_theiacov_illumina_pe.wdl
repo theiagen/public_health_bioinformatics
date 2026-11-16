@@ -57,7 +57,9 @@ workflow theiacov_illumina_pe {
     Int max_genome_length = 2673870 # size of Pandoravirus salinus + 200 kb
     Int min_coverage = 10
     Int min_proportion = 40
-    Boolean skip_screen = false
+    # skip screen gates
+    Boolean skip_screen_raw = false
+    Boolean skip_screen_clean = false
     # pangolin parameters
     String? pangolin_docker_image
     # kraken parameters
@@ -81,9 +83,11 @@ workflow theiacov_illumina_pe {
       vadr_mem = vadr_memory,
       primer_bed_file = primer_bed,
       pangolin_docker_image = pangolin_docker_image,
-      kraken_target_organism_input = target_organism
+      kraken_target_organism_input = target_organism,
+      # hiding parameters from terra to avoid input bloat
+      flu_genoflu_genotype = ""
   }
-  if (! skip_screen) {
+  if (! skip_screen_raw) {
     call screen.check_reads as raw_check_reads {
       input:
         read1 = read1,
@@ -98,7 +102,7 @@ workflow theiacov_illumina_pe {
         expected_genome_length = organism_parameters.genome_length
     }
   }
-  if (select_first([raw_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
+  if (select_first([raw_check_reads.read_screen, ""]) == "PASS" || skip_screen_raw) {
     call read_qc.read_QC_trim_pe as read_QC_trim {
       input:
         samplename = samplename,
@@ -115,7 +119,7 @@ workflow theiacov_illumina_pe {
         rasusa_downsampling_coverage = rasusa_downsampling_coverage,
         rasusa_genome_length = select_first([genome_length, raw_check_reads.est_genome_length, 0]),
     }
-    if (! skip_screen) {
+    if (! skip_screen_clean) {
       call screen.check_reads as clean_check_reads {
         input:
           read1 = read_QC_trim.read1_clean,
@@ -130,7 +134,7 @@ workflow theiacov_illumina_pe {
           expected_genome_length = organism_parameters.genome_length
       }
     }
-    if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
+    if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen_clean) {
       # assembly via bwa and ivar for non-flu data
       if (organism_parameters.standardized_organism != "flu") {
         call consensus_call.ivar_consensus {
@@ -156,7 +160,10 @@ workflow theiacov_illumina_pe {
             samplename = samplename,
             standardized_organism = organism_parameters.standardized_organism,
             seq_method = seq_method,
-            irma_min_consensus_support = select_first([min_depth, 30])
+            irma_min_consensus_support = select_first([min_depth, 30]),
+            # hiding parameters from terra to avoid input bloat
+            assembly_fasta = "gs://theiagen-public-resources-rp/empty_files/empty.fasta",
+            vadr_outputs_tgz = "gs://theiagen-public-resources-rp/empty_files/empty.txt"
         }
       }
       if (defined(ivar_consensus.assembly_fasta) || defined(flu_track.irma_assembly_fasta)) {
@@ -184,17 +191,12 @@ workflow theiacov_illumina_pe {
             nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
             nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
             pangolin_docker_image = organism_parameters.pangolin_docker,
-            # Setting flu_track related inputs to default values as they are not utilized in TheiaCov, decreasing external input bloat
+            # hiding internal components to decrease input bloat
             seq_method = "",
             assembly_metrics_cpu = 0,
             assembly_metrics_disk_size = 0,
             assembly_metrics_docker = "",
             assembly_metrics_memory = 0,
-            irma_cpu = 0,
-            irma_disk_size = 0,
-            irma_docker_image = "",
-            irma_keep_ref_deletions = false,
-            irma_memory = 0,
             genoflu_cpu = 0,
             genoflu_disk_size = 0,
             genoflu_docker = "",
@@ -229,7 +231,7 @@ workflow theiacov_illumina_pe {
                 "number_Degenerate":  consensus_qc.number_Degenerate,
                 "percent_reference_coverage":  consensus_qc.percent_reference_coverage,
                 "vadr_num_alerts": morgana_magic.vadr_num_alerts
-            }
+              }
           }
         }
       }
@@ -257,22 +259,23 @@ workflow theiacov_illumina_pe {
     Float? fastq_scan_r2_mean_readlength_raw = read_QC_trim.fastq_scan_r2_mean_readlength_raw
     Float? fastq_scan_r1_mean_q_raw = read_QC_trim.fastq_scan_r1_mean_q_raw
     Float? fastq_scan_r2_mean_q_raw = read_QC_trim.fastq_scan_r2_mean_q_raw
+    Float? fastq_scan_r1_gc_percent_raw = read_QC_trim.fastq_scan_r1_gc_percent_raw
+    Float? fastq_scan_r2_gc_percent_raw = read_QC_trim.fastq_scan_r2_gc_percent_raw
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
     String? fastq_scan_docker = read_QC_trim.fastq_scan_docker
     File? fastq_scan_raw1_json = read_QC_trim.fastq_scan_raw1_json
     File? fastq_scan_raw2_json = read_QC_trim.fastq_scan_raw2_json
-    # Read QC - decontaminate outputs
-    File? contaminant_bam = read_QC_trim.contaminant_bam
-    File? contaminant_bai = read_QC_trim.contaminant_bai
-    Float? contaminant_coverage = read_QC_trim.contaminant_coverage
-    Float? contaminant_mean_depth = read_QC_trim.contaminant_mean_depth
-    File? contaminant_mapping_stats = read_QC_trim.contaminant_mapping_stats
-    File? contaminant_cov_hist = read_QC_trim.contaminant_cov_hist
-    File? contaminant_mapping_flagstat = read_QC_trim.contaminant_mapping_flagstat
-    Float? contaminant_percent_mapped_reads = read_QC_trim.contaminant_percent_mapped_reads
-    Map[String, Float]? contaminant_coverage_by_sequence = read_QC_trim.contaminant_sequence_coverage
-    Map[String, Float]? contaminant_depth_by_sequence = read_QC_trim.contaminant_sequence_depth
-    String? contaminant_status = read_QC_trim.contaminant_status
+    # Read QC - mapped read removal outputs
+    File? mapped_read_removal_bam = read_QC_trim.mapped_read_removal_bam
+    File? mapped_read_removal_bai = read_QC_trim.mapped_read_removal_bai
+    Float? mapped_read_removal_coverage = read_QC_trim.mapped_read_removal_coverage
+    Float? mapped_read_removal_mean_depth = read_QC_trim.mapped_read_removal_mean_depth
+    File? mapped_read_removal_mapping_stats = read_QC_trim.mapped_read_removal_mapping_stats
+    File? mapped_read_removal_cov_hist = read_QC_trim.mapped_read_removal_cov_hist
+    File? mapped_read_removal_mapping_flagstat = read_QC_trim.mapped_read_removal_mapping_flagstat
+    Float? mapped_read_removal_percent_mapped_reads = read_QC_trim.mapped_read_removal_percent_mapped_reads
+    Map[String, Float]? mapped_read_removal_coverage_by_sequence = read_QC_trim.mapped_read_removal_sequence_coverage
+    Map[String, Float]? mapped_read_removal_depth_by_sequence = read_QC_trim.mapped_read_removal_sequence_depth
     # Read QC - fastq_scan clean outputs
     Int? fastq_scan_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
     Int? fastq_scan_num_reads_clean2 = read_QC_trim.fastq_scan_clean2
@@ -281,6 +284,8 @@ workflow theiacov_illumina_pe {
     Float? fastq_scan_r2_mean_readlength_clean = read_QC_trim.fastq_scan_r2_mean_readlength_clean
     Float? fastq_scan_r1_mean_q_clean = read_QC_trim.fastq_scan_r1_mean_q_clean
     Float? fastq_scan_r2_mean_q_clean = read_QC_trim.fastq_scan_r2_mean_q_clean
+    Float? fastq_scan_r1_gc_percent_clean = read_QC_trim.fastq_scan_r1_gc_percent_clean
+    Float? fastq_scan_r2_gc_percent_clean = read_QC_trim.fastq_scan_r2_gc_percent_clean
     File? fastq_scan_clean1_json = read_QC_trim.fastq_scan_clean1_json
     File? fastq_scan_clean2_json = read_QC_trim.fastq_scan_clean2_json
     # Read QC - fastqc outputs
@@ -316,11 +321,13 @@ workflow theiacov_illumina_pe {
     String? bracken_version = read_QC_trim.bracken_version
     Float? kraken_human = read_QC_trim.kraken2_human
     String? kraken_target_organism = read_QC_trim.kraken2_target_organism
+    String? kraken_target_organism_reads = read_QC_trim.kraken2_reads_target_organism
     String? kraken_target_organism_name = read_QC_trim.kraken2_target_organism_name
     File? kraken_report = read_QC_trim.kraken2_report
     String? bracken_report = read_QC_trim.bracken_report
     Float? kraken_human_dehosted = read_QC_trim.kraken2_human_dehosted
     String? kraken_target_organism_dehosted = read_QC_trim.kraken2_target_organism_dehosted
+    String? kraken_target_organism_dehosted_reads = read_QC_trim.kraken2_reads_target_organism_dehosted
     File? kraken_report_dehosted = read_QC_trim.kraken2_report_dehosted
     String? bracken_report_dehosted = read_QC_trim.bracken_report_dehosted
     # Read QC - rasusa outputs

@@ -18,7 +18,7 @@ task create_table_from_array {
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21"
     Int memory = 2
   }
-    File columns_to_export_json = write_json(columns_to_export)
+  File columns_to_export_json = write_json(columns_to_export)
   meta {
     volatile: true
   }
@@ -31,13 +31,13 @@ task create_table_from_array {
     echo "DEBUG: file_ending: ~{file_ending}" >&2
     echo "DEBUG: file_column_name: ~{output_file_column_name}" >&2
     echo "DEBUG: data_source: ~{data_source}" >&2
-    
+
     # add additional columns to the terra table
     jq -r '[.[] | .left], [.[] | .right] | @tsv' ~{columns_to_export_json} > exported_columns.tsv
 
     column_names=$(head -n1 exported_columns.tsv)
     column_content=$(tail -n1 exported_columns.tsv)
- 
+
     echo -e "entity:~{new_table_name_updated}_id\t~{output_file_column_name}\tupload_date\ttable_created_by\t${column_names}" > terra_table_to_upload.tsv
 
     UPLOAD_DATE=$(date -I)
@@ -48,7 +48,7 @@ task create_table_from_array {
 
       echo -e "${file_basename}\t${file//*\/cromwell_root/gs:\/}\t${UPLOAD_DATE}\t~{data_source}\t${column_content}" >> terra_table_to_upload.tsv
     done
-    
+
     echo "DEBUG: terra_table_to_upload.tsv created"
     # set error handling to exit if the subsequent import_large_tsv.py task fails
     set -euo pipefail

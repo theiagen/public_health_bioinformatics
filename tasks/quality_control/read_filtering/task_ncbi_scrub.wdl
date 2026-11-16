@@ -51,8 +51,9 @@ task ncbi_scrub_pe {
     echo "DEBUG: /opt/scrubber/scripts/scrub.sh -p ~{cpu} -x -s -i interleaved.fastq"
     /opt/scrubber/scripts/scrub.sh -p ~{cpu} -x -s -i interleaved.fastq > STDOUT 2> STDERR
 
-    # |& tail -n1 | awk -F" " '{print $1}' > SPOTS_REMOVED ; capture the number of spots removed by fetching the first item on the last line of stderr
-    cat STDERR |& tail -n1 | awk -F" " '{print $1}' > SPOTS_REMOVED
+    # capture the number of spots removed by fetching the first item on the last line of stderr
+    # if the scrubbing failed, it will start with "exception" so we want to print 0 instead
+    cat STDERR |& tail -n1 | awk -F" " '{if ($1 ~ /^exception/) print 0; else print $1}' > SPOTS_REMOVED
 
     # split interleaved reads and compress files
     # paste takes 8 at a time and merges them into a single line with tabs
@@ -69,13 +70,13 @@ task ncbi_scrub_pe {
     String ncbi_scrub_docker = docker
   }
   runtime {
-      docker: "~{docker}"
-      memory: memory + " GB"
-      cpu: cpu
-      disks: "local-disk " + disk_size + " SSD"
-      disk: disk_size + " GB" # TES
-      preemptible: 0
-      maxRetries: 3
+    docker: "~{docker}"
+    memory: memory + " GB"
+    cpu: cpu
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB" # TES
+    preemptible: 0
+    maxRetries: 3
   }
 }
 

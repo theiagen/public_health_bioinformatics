@@ -17,7 +17,7 @@ workflow rename_fastq_files {
         read2 = select_first([read2]),
         new_filename = new_filename_updated
     }
-  } 
+  }
   if (!defined(read2)) {
     call rename_files_task.rename_SE_files {
       input:

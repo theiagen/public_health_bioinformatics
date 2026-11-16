@@ -14,7 +14,7 @@ fragment: true
 
         | **Parameter** | **Explanation** |
         | --- | --- |
-        | `--nano-hq` (default) | Optimized for ONT high-quality reads, such as Guppy5+ SUP or Q20 (<5% error). Recommended for ONT reads processed with Guppy5 or newer |
+        | `--nano-hq` (default) | Optimized for ONT high-quality reads, such as Guppy5+ SUP or Q20 (<3% error). Recommended for ONT reads processed with Guppy5 or newer |
         | `--nano-raw` | For ONT regular reads, pre-Guppy5 (<20% error) |
         | `--nano-corr` | ONT reads corrected with other methods (<3% error) |
         | `--pacbio-raw` | PacBio regular CLR reads (<20% error) |

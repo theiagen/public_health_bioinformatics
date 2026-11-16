@@ -39,7 +39,7 @@ task check_reads {
     fi
 
     if [[ $($cat_reads ~{read1} | head -n1 | wc -l) -eq 0 || $($cat_reads ~{read2} | head -n1 |wc -l) -eq 0 ]]; then
-      echo "DEBUG: CAUTION! one of the read files is empty!"
+      echo "DEBUG: CAUTION! one or both of the read files are empty!"
       fail_log+="; one or both of the read files are empty"
     else
       # check one: number of reads
@@ -52,7 +52,7 @@ task check_reads {
       echo "DEBUG: Number of reads total in R1 and R2: ${reads_total}"
 
       if [ "${reads_total}" -le "~{min_reads}" ]; then
-        fail_log+="; the total number of reads is below the minimum of ~{min_reads}"
+        fail_log+="; the total number of reads (${reads_total}) is below the minimum of ~{min_reads}"
       fi
 
       # count number of basepairs
@@ -68,10 +68,10 @@ task check_reads {
       percent_read2=$(python3 -c "print(round(($read2_bp / ($read1_bp + $read2_bp))*100))")
 
       if [ "$percent_read1" -lt "~{min_proportion}" ] ; then
-        fail_log+="; more than ~{min_proportion} percent of the total sequence is found in R2 (BP: $read2_bp; PERCENT: $percent_read2) compared to R1 (BP: $read1_bp; PERCENT: $percent_read1)"
+        fail_log+="; R1 carries less than ~{min_proportion} percent of the total sequence (R1 BP: $read1_bp; PERCENT: $percent_read1; R2 BP: $read2_bp; PERCENT: $percent_read2)"
       fi
       if [ "$percent_read2" -lt "~{min_proportion}" ] ; then
-        fail_log+="; more than ~{min_proportion} percent of the total sequence is found in R1 (BP: $read1_bp; PERCENT: $percent_read1) compared to R2 (BP: $read2_bp; PERCENT: $percent_read2)"
+        fail_log+="; R2 carries less than ~{min_proportion} percent of the total sequence (R1 BP: $read1_bp; PERCENT: $percent_read1; R2 BP: $read2_bp; PERCENT: $percent_read2)"
       fi
 
       # check total number of basepairs
@@ -102,7 +102,7 @@ task check_reads {
           estimated_coverage=`head -n1 coverage_output`
 
           # Check if second pass is needed in theiaprok
-          if [ "{~workflow_series}" == "theiaprok" ]; then
+          if [ "~{workflow_series}" == "theiaprok" ]; then
             if [ ${estimated_genome_length} -gt "~{max_genome_length}" ] || [ ${estimated_genome_length} -lt "~{min_genome_length}" ] ; then
               # Probably high coverage, try increasing number of kmer copies to 10
               M="-m 10"
@@ -110,16 +110,24 @@ task check_reads {
                 # Probably low coverage, try decreasing the number of kmer copies to 1
                 M="-m 1"
               fi
-              mash sketch -o test -k 31 ${M} -r ~{read1} ~{read2} > mash-output.txt 2>&1
-              grep "Estimated genome size:" mash-output.txt | \
-                awk '{if($4){printf("%5.0f\n", $4)}} END {if (!NR) print "0"}' > genome_length_output
-              grep "Estimated coverage:" mash-output.txt | \
-                awk '{if($3){printf("%d", $3)}} END {if (!NR) print "0"}' > coverage_output
-              rm -rf test.msh
-              rm -rf mash-output.txt
+              mash sketch -o test -k 31 ${M} -r ~{read1} ~{read2} > mash-output.txt 2>&1 || true
+              # check if the mash file was generated (successful run)
+              if [ ! -f test.msh ]; then
+                fail_log+="; mash failed - cannot estimate genome length and coverage"
+                estimated_coverage=0
+                estimated_genome_length=0
+                rm mash-output.txt
+              else
+                grep "Estimated genome size:" mash-output.txt | \
+                  awk '{if($4){printf("%5.0f\n", $4)}} END {if (!NR) print "0"}' > genome_length_output
+                grep "Estimated coverage:" mash-output.txt | \
+                  awk '{if($3){printf("%d", $3)}} END {if (!NR) print "0"}' > coverage_output
+                rm -rf test.msh
+                rm -rf mash-output.txt
 
-              estimated_genome_length=`head -n1 genome_length_output`
-              estimated_coverage=`head -n1 coverage_output`
+                estimated_genome_length=`head -n1 genome_length_output`
+                estimated_coverage=`head -n1 coverage_output`
+              fi
             fi
           fi
         fi
@@ -235,7 +243,7 @@ task check_reads_se {
       echo "DEBUG: Number of reads in R1: ${read1_num}"
 
       if [ "${read1_num}" -le "~{min_reads}" ] ; then
-        fail_log+="; the number of reads (${read1_num}) is below the minimum of ~{min_reads}"
+        fail_log+="; the total number of reads (${read1_num}) is below the minimum of ~{min_reads}"
       fi
 
       # checks two and three: number of basepairs and proportion of sequence
@@ -283,19 +291,26 @@ task check_reads_se {
                   M="-m 1"
                 fi
 
-                mash sketch -o test -k 31 ${M} -r ~{read1} > mash-output.txt 2>&1
-                grep "Estimated genome size:" mash-output.txt | \
-                  awk '{if($4){printf("%d", $4)}} END {if (!NR) print "0"}' > genome_length_output
-                grep "Estimated coverage:" mash-output.txt | \
-                  awk '{if($3){printf("%d", $3)}} END {if (!NR) print "0"}' > coverage_output
+                mash sketch -o test -k 31 ${M} -r ~{read1} > mash-output.txt 2>&1 || true
+                if [ ! -f test.msh ]; then
+                  fail_log+="; mash failed - cannot estimate genome length and coverage"
+                  estimated_coverage=0
+                  estimated_genome_length=0
+                  rm mash-output.txt
+                else
+                  grep "Estimated genome size:" mash-output.txt | \
+                    awk '{if($4){printf("%d", $4)}} END {if (!NR) print "0"}' > genome_length_output
+                  grep "Estimated coverage:" mash-output.txt | \
+                    awk '{if($3){printf("%d", $3)}} END {if (!NR) print "0"}' > coverage_output
 
-                # remove mash outputs
-                rm -rf test.msh
-                rm -rf mash-output.txt
+                  # remove mash outputs
+                  rm -rf test.msh
+                  rm -rf mash-output.txt
+
+                  estimated_genome_length=`head -n1 genome_length_output`
+                  estimated_coverage=`head -n1 coverage_output`
+                fi
               fi
-
-              estimated_genome_length=`head -n1 genome_length_output`
-              estimated_coverage=`head -n1 coverage_output`
             fi
           fi
 
@@ -316,6 +331,7 @@ task check_reads_se {
           estimated_genome_length=0
           estimated_coverage=0
         fi
+
         if [ "${estimated_genome_length}" -ge "~{max_genome_length}" ] ; then
           fail_log+="; the estimated genome length (${estimated_genome_length}) is larger than the maximum of ~{max_genome_length} bps"
         elif [ "${estimated_genome_length}" -le "~{min_genome_length}" ] ; then

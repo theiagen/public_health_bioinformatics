@@ -42,19 +42,19 @@ workflow theiameta_illumina_pe {
       samplename = samplename
   }
   call read_qc_wf.read_QC_trim_pe as read_QC_trim {
-      input:
-        samplename = samplename,
-        read1 = read1,
-        read2 = read2,
-        workflow_series = "theiameta",
-        # mask the kraken inputs because they aren't used
-        kraken_disk_size = 0,
-        kraken_memory = 0,
-        kraken_cpu = 0,
-        kraken_db = kraken2_db,
-        call_bracken = false,
-        call_kraken = false
-    }
+    input:
+      samplename = samplename,
+      read1 = read1,
+      read2 = read2,
+      workflow_series = "theiameta",
+      # mask the kraken inputs because they aren't used
+      kraken_disk_size = 0,
+      kraken_memory = 0,
+      kraken_cpu = 0,
+      kraken_db = kraken2_db,
+      call_bracken = false,
+      call_kraken = false
+  }
   call kraken_task.kraken2 as kraken2_clean {
     input:
       samplename = samplename,
@@ -98,93 +98,93 @@ workflow theiameta_illumina_pe {
       bai = sort_bam_assembly_correction.bai,
       samplename = samplename
   }
-    # if reference is provided, perform mapping of assembled contigs to
-    # reference with minimap2, and extract those as final assembly
-    if (defined(reference)) {
-      call minimap2_task.minimap2 as minimap2_assembly {
-        input:
-          query1 = pilon.assembly_fasta,
-          reference = select_first([reference]),
-          samplename = samplename,
-          mode = "asm20",
-          output_sam = false,
-          long_read_flags = false
-      }
-      call parse_mapping_task.retrieve_aligned_contig_paf {
-        input:
-          paf = minimap2_assembly.minimap2_out,
-          assembly = pilon.assembly_fasta,
-          samplename = samplename
-      }
-      call parse_mapping_task.calculate_coverage_paf {
-        input:
-          paf = minimap2_assembly.minimap2_out
-      }
-    }
-    call quast_task.quast {
+  # if reference is provided, perform mapping of assembled contigs to
+  # reference with minimap2, and extract those as final assembly
+  if (defined(reference)) {
+    call minimap2_task.minimap2 as minimap2_assembly {
       input:
-        assembly = select_first([retrieve_aligned_contig_paf.final_assembly, pilon.assembly_fasta]),
+        query1 = pilon.assembly_fasta,
+        reference = select_first([reference]),
         samplename = samplename,
-        min_contig_length = 1
-      }
-    if (output_additional_files) {
-      call minimap2_task.minimap2 as minimap2_reads {
-        input:
-          query1 = read_QC_trim.read1_clean,
-          query2 = read_QC_trim.read2_clean,
-          reference = select_first([retrieve_aligned_contig_paf.final_assembly, pilon.assembly_fasta]),
-          samplename = samplename,
-          mode = "sr",
-          output_sam = true,
-          long_read_flags = false
-      }
-      call parse_mapping_task.sam_to_sorted_bam {
-        input:
-          sam = minimap2_reads.minimap2_out,
-          samplename = samplename
-      }
-      call parse_mapping_task.calculate_coverage {
-        input:
-          bam = sam_to_sorted_bam.bam,
-          bai = sam_to_sorted_bam.bai
-      }
-      call parse_mapping_task.retrieve_pe_reads_bam as retrieve_unaligned_pe_reads_sam {
-        input:
-          bam = sam_to_sorted_bam.bam,
-          samplename = samplename,
-          prefix = "unassembled",
-          sam_flag = 4
-      }
-      call parse_mapping_task.retrieve_pe_reads_bam as retrieve_aligned_pe_reads_sam {
-        input:
-          bam = sam_to_sorted_bam.bam,
-          samplename = samplename,
-          sam_flag = 2,
-          prefix = "assembled"
-      }
-      call parse_mapping_task.assembled_reads_percent {
-        input:
-          bam = sam_to_sorted_bam.bam,
-      }
+        mode = "asm20",
+        output_sam = false,
+        long_read_flags = false
     }
-    if (! defined(reference)) {
-      call bwa_task.bwa as bwa {
-        input:
-          read1 = read_QC_trim.read1_clean,
-          read2 = read_QC_trim.read2_clean,
-          reference_genome = pilon.assembly_fasta,
-          samplename = samplename
-      }
-      call semibin_task.semibin as semibin {
-        input:
-          sorted_bam = bwa.sorted_bam,
-          sorted_bai = bwa.sorted_bai,
-          assembly_fasta = pilon.assembly_fasta,
-          samplename = samplename
-      }
-    }
-    call versioning.version_capture {
+    call parse_mapping_task.retrieve_aligned_contig_paf {
       input:
+        paf = minimap2_assembly.minimap2_out,
+        assembly = pilon.assembly_fasta,
+        samplename = samplename
+    }
+    call parse_mapping_task.calculate_coverage_paf {
+      input:
+        paf = minimap2_assembly.minimap2_out
+    }
+  }
+  call quast_task.quast {
+    input:
+      assembly = select_first([retrieve_aligned_contig_paf.final_assembly, pilon.assembly_fasta]),
+      samplename = samplename,
+      min_contig_length = 1
+  }
+  if (output_additional_files) {
+    call minimap2_task.minimap2 as minimap2_reads {
+      input:
+        query1 = read_QC_trim.read1_clean,
+        query2 = read_QC_trim.read2_clean,
+        reference = select_first([retrieve_aligned_contig_paf.final_assembly, pilon.assembly_fasta]),
+        samplename = samplename,
+        mode = "sr",
+        output_sam = true,
+        long_read_flags = false
+    }
+    call parse_mapping_task.sam_to_sorted_bam {
+      input:
+        sam = minimap2_reads.minimap2_out,
+        samplename = samplename
+    }
+    call parse_mapping_task.calculate_coverage {
+      input:
+        bam = sam_to_sorted_bam.bam,
+        bai = sam_to_sorted_bam.bai
+    }
+    call parse_mapping_task.retrieve_pe_reads_bam as retrieve_unaligned_pe_reads_sam {
+      input:
+        bam = sam_to_sorted_bam.bam,
+        samplename = samplename,
+        prefix = "unassembled",
+        sam_flag = 4
+    }
+    call parse_mapping_task.retrieve_pe_reads_bam as retrieve_aligned_pe_reads_sam {
+      input:
+        bam = sam_to_sorted_bam.bam,
+        samplename = samplename,
+        sam_flag = 2,
+        prefix = "assembled"
+    }
+    call parse_mapping_task.assembled_reads_percent {
+      input:
+        bam = sam_to_sorted_bam.bam,
+    }
+  }
+  if (! defined(reference)) {
+    call bwa_task.bwa as bwa {
+      input:
+        read1 = read_QC_trim.read1_clean,
+        read2 = read_QC_trim.read2_clean,
+        reference_genome = pilon.assembly_fasta,
+        samplename = samplename
+    }
+    call semibin_task.semibin as semibin {
+      input:
+        sorted_bam = bwa.sorted_bam,
+        sorted_bai = bwa.sorted_bai,
+        assembly_fasta = pilon.assembly_fasta,
+        samplename = samplename
+    }
+  }
+  call versioning.version_capture {
+    input:
   }
   output {
     # Version capture
@@ -209,27 +209,30 @@ workflow theiameta_illumina_pe {
     File? read1_dehosted = read_QC_trim.read1_dehosted
     File? read2_dehosted = read_QC_trim.read2_dehosted
     String? ncbi_scrub_docker = read_QC_trim.ncbi_scrub_docker
-    # Read QC - decontaminate outputs
-    File? contaminant_bam = read_QC_trim.contaminant_bam
-    File? contaminant_bai = read_QC_trim.contaminant_bai
-    Float? contaminant_coverage = read_QC_trim.contaminant_coverage
-    Float? contaminant_mean_depth = read_QC_trim.contaminant_mean_depth
-    File? contaminant_mapping_stats = read_QC_trim.contaminant_mapping_stats
-    File? contaminant_cov_hist = read_QC_trim.contaminant_cov_hist
-    File? contaminant_mapping_flagstat = read_QC_trim.contaminant_mapping_flagstat
-    Float? contaminant_percent_mapped_reads = read_QC_trim.contaminant_percent_mapped_reads
-    Map[String, Float]? contaminant_coverage_by_sequence = read_QC_trim.contaminant_sequence_coverage
-    Map[String, Float]? contaminant_depth_by_sequence = read_QC_trim.contaminant_sequence_depth
-    String? contaminant_status = read_QC_trim.contaminant_status
+    # Read QC - mapped read removal outputs
+    File? mapped_read_removal_bam = read_QC_trim.mapped_read_removal_bam
+    File? mapped_read_removal_bai = read_QC_trim.mapped_read_removal_bai
+    Float? mapped_read_removal_coverage = read_QC_trim.mapped_read_removal_coverage
+    Float? mapped_read_removal_mean_depth = read_QC_trim.mapped_read_removal_mean_depth
+    File? mapped_read_removal_mapping_stats = read_QC_trim.mapped_read_removal_mapping_stats
+    File? mapped_read_removal_cov_hist = read_QC_trim.mapped_read_removal_cov_hist
+    File? mapped_read_removal_mapping_flagstat = read_QC_trim.mapped_read_removal_mapping_flagstat
+    Float? mapped_read_removal_percent_mapped_reads = read_QC_trim.mapped_read_removal_percent_mapped_reads
+    Map[String, Float]? mapped_read_removal_coverage_by_sequence = read_QC_trim.mapped_read_removal_sequence_coverage
+    Map[String, Float]? mapped_read_removal_depth_by_sequence = read_QC_trim.mapped_read_removal_sequence_depth
     # Read QC - fastq_scan outputs
     Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
     Int? fastq_scan_num_reads_raw2 = read_QC_trim.fastq_scan_raw2
     String? fastq_scan_num_reads_raw_pairs = read_QC_trim.fastq_scan_raw_pairs
+    Float? fastq_scan_r1_gc_percent_raw = read_QC_trim.fastq_scan_r1_gc_percent_raw
+    Float? fastq_scan_r2_gc_percent_raw = read_QC_trim.fastq_scan_r2_gc_percent_raw
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
     String? fastq_scan_docker = read_QC_trim.fastq_scan_docker
     Int? fastq_scan_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
     Int? fastq_scan_num_reads_clean2 = read_QC_trim.fastq_scan_clean2
     String? fastq_scan_num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
+    Float? fastq_scan_r1_gc_percent_clean = read_QC_trim.fastq_scan_r1_gc_percent_clean
+    Float? fastq_scan_r2_gc_percent_clean = read_QC_trim.fastq_scan_r2_gc_percent_clean
     File? fastq_scan_raw1_json = read_QC_trim.fastq_scan_raw1_json
     File? fastq_scan_raw2_json = read_QC_trim.fastq_scan_raw2_json
     File? fastq_scan_clean1_json = read_QC_trim.fastq_scan_clean1_json
@@ -298,5 +301,5 @@ workflow theiameta_illumina_pe {
     String? semibin_version = semibin.semibin_version
     String? semibin_docker = semibin.semibin_docker
     Array[File]? semibin_bins = semibin.semibin_bins
-    }
+  }
 }

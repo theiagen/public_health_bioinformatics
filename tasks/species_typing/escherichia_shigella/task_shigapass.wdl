@@ -4,7 +4,7 @@ task shigapass {
   input {
     File assembly
     String samplename
-    
+
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/shigapass:1.5.0"
     Int disk_size = 50
     Int cpu = 2
@@ -12,10 +12,10 @@ task shigapass {
   }
   command <<<
     set -euo pipefail
-    
+
     ShigaPass.sh -v | sed 's/ShigaPass version //g' | tee VERSION
-    
-    # shigapass requires a text file containing the filepath instead of the filepath itself 
+
+    # shigapass requires a text file containing the filepath instead of the filepath itself
     realpath ~{assembly} > assembly_path.txt
 
     ShigaPass.sh \
@@ -24,7 +24,7 @@ task shigapass {
       -t ~{cpu} \
       -k \
       -o shigapass/
-   
+
     # convert summary files from semi-colon separate values into TSV format
     sed 's/;/\t/g' shigapass/ShigaPass_summary.csv > shigapass/ShigaPass_summary.tsv
 

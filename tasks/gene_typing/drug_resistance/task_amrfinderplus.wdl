@@ -32,7 +32,7 @@ task amrfinderplus_nuc {
     declare -A organisms=( ["Acinetobacter baumannii"]="Acinetobacter_baumannii" ["Burkholderia cepacia"]="Burkholderia_cepacia" \
       ["Burkholderia pseudomallei"]="Burkholderia_pseudomallei" ["Campylobacter coli"]="Campylobacter" ["Campylobacter jejuni"]="Campylobacter" \
       ["Citrobacter freundii"]="Citrobacter_freundii" ["Clostridioides difficile"]="Clostridioides_difficile" ["Enterobacter asburiae"]="Enterobacter_asburiae" ["Enterobacter cloacae"]="Enterobacter_cloacae" \
-      ["Enterococcus faecalis"]="Enterococcus_faecalis" ["Enterococcus hirae"]="Enterococcus_faecium" ["Enterococcusfaecium"]="Enterococcus_faecium" \
+      ["Enterococcus faecalis"]="Enterococcus_faecalis" ["Enterococcus hirae"]="Enterococcus_faecium" ["Enterococcus faecium"]="Enterococcus_faecium" \
       [*"Escherichia"*]="Escherichia" [*"Shigella"*]="Escherichia" ["Klebsiella aerogenes"]="Klebsiella_pneumoniae" ["Klebsiella pneumoniae"]="Klebsiella_pneumoniae" \
       ["Klebsiella variicola"]="Klebsiella_pneumoniae" ["Klebsiella oxytoca"]="Klebsiella_oxytoca" ["Neisseria gonorrhea"]="Neisseria_gonorrhoeae" \
       ["Neisseria gonorrhoeae"]="Neisseria_gonorrhoeae" ["Neisseria meningitidis"]="Neisseria_meningitidis" ["Pseudomonas aeruginosa"]="Pseudomonas_aeruginosa" \
@@ -104,9 +104,10 @@ task amrfinderplus_nuc {
       fi
     fi
 
-    # remove mutations where Element subtype is "POINT"
+    # remove mutations where Element subtype is "POINT" or "POINT_DISRUPT"
+    # see https://github.com/ncbi/amr/wiki/Interpreting-results#element-type-and-subtype for element explainations
     if [[ "~{hide_point_mutations}" == "true" ]]; then
-      awk -F "\t" '$11 != "POINT"' ~{samplename}_amrfinder_all.tsv >> temp.tsv
+      awk -F "\t" '$11 != "POINT" && $11 != "POINT_DISRUPT"' ~{samplename}_amrfinder_all.tsv >> temp.tsv
       mv temp.tsv ~{samplename}_amrfinder_all.tsv
     fi
 

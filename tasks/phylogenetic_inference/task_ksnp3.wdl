@@ -119,6 +119,7 @@ task ksnp3 {
     memory: "~{memory} GB"
     cpu: cpu
     disks: "local-disk ~{disk_size} SSD"
+    disk: disk_size + " GB"
     preemptible: 0
     maxRetries: 0
   }

@@ -14,14 +14,14 @@ task pasty {
   command <<<
     # date and version control
     date | tee DATE
-    pasty --version > VERSION && sed -i -e 's/pasty\, version //' VERSION  
+    pasty --version > VERSION && sed -i -e 's/pasty\, version //' VERSION
     pasty \
     --assembly ~{assembly} \
     --min_pident ~{min_percent_identity} \
     --min_coverage ~{min_percent_coverage} \
     --prefix ~{samplename} \
-    --outdir .  
-    
+    --outdir .
+
     awk 'FNR==2' "~{samplename}.tsv" | cut -d$'\t' -f2 > SEROGROUP
     awk 'FNR==2' "~{samplename}.tsv" | cut -d$'\t' -f3 > COVERAGE
     awk 'FNR==2' "~{samplename}.tsv" | cut -d$'\t' -f4 > FRAGMENTS
