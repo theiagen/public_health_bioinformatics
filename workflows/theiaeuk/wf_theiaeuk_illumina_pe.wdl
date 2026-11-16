@@ -169,6 +169,7 @@ workflow theiaeuk_illumina_pe {
           # mask ONT-specific inputs from the user
           clair3_model = "",
           clair3_variant_quality = 0,
+          clair3_min_depth = 0,
           clair3_include_all_contigs = false,
           clair3_enable_haploid_precise = false,
           clair3_disable_phasing = false,

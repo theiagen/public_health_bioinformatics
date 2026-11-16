@@ -240,7 +240,8 @@ workflow theiaviral_ont {
                 bamfile = parse_mapping.bam,
                 samplename = samplename,
                 read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
-                vcf = bcftools_consensus.bcftools_filtered_vcf
+                vcf = bcftools_consensus.bcftools_filtered_vcf,
+                min_depth = min_depth
             }
             # quality control metrics for consensus (ie. number of bases, degenerate bases, genome length)
             call consensus_qc_task.consensus_qc as consensus_qc {

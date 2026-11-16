@@ -57,6 +57,7 @@ workflow medea_magic {
     # clair3 variant-calling & filtering options (ont)
     String? clair3_model
     Int? clair3_variant_quality
+    Int? clair3_min_depth
     Boolean? clair3_include_all_contigs
     Boolean? clair3_enable_haploid_precise
     Boolean? clair3_disable_phasing
@@ -160,6 +161,7 @@ workflow medea_magic {
           minimap2_disk_size = read_aligner_disk_size,
           clair3_model = clair3_model,
           clair3_variant_quality = clair3_variant_quality,
+          clair3_min_depth = clair3_min_depth,
           clair3_include_all_contigs = clair3_include_all_contigs,
           clair3_enable_haploid_precise = clair3_enable_haploid_precise,
           clair3_disable_phasing = clair3_disable_phasing,
@@ -175,6 +177,9 @@ workflow medea_magic {
     File resolved_bam = select_first([gatk_genome_variants.gatk_aligned_bam, clair3_genome_variants.clair3_aligned_bam])
     File resolved_bai = select_first([gatk_genome_variants.gatk_aligned_bai, clair3_genome_variants.clair3_aligned_bai])
     File resolved_vcf = select_first([gatk_genome_variants.gatk_selected_vcf, clair3_genome_variants.clair3_selected_vcf])
+    # mapping statistics adopt the variant caller's minimum depth; fallbacks mirror the
+    # task_gatk_filter (10) and task_clair3_variants (2) defaults
+    Int mapping_stats_min_depth = if ont_data then select_first([clair3_min_depth, 2]) else select_first([gatk_filter_min_depth, 10])
     # genome-wide read mapping statistics against the resolved reference
     call mapping_stats_task.mapping_stats {
       input:
@@ -182,7 +187,8 @@ workflow medea_magic {
         samplename = samplename,
         read1 = select_first([read1]),
         read2 = read2,
-        vcf = resolved_vcf
+        vcf = resolved_vcf,
+        min_depth = mapping_stats_min_depth
     }
   }
 
@@ -236,6 +242,7 @@ workflow medea_magic {
             minimap2_disk_size = read_aligner_disk_size,
             clair3_model = clair3_model,
             clair3_variant_quality = clair3_variant_quality,
+            clair3_min_depth = clair3_min_depth,
             clair3_include_all_contigs = clair3_include_all_contigs,
             clair3_enable_haploid_precise = clair3_enable_haploid_precise,
             clair3_disable_phasing = clair3_disable_phasing,
