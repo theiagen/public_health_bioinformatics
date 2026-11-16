@@ -25,6 +25,7 @@ workflow clair3_variants_ont {
     Int? clair3_cpu
     Int? clair3_disk_size
     Int? clair3_variant_quality
+    Int? clair3_min_depth
     # Boolean flags for controlling Clair3's behavior, defaults set to true for haploid calling
     Boolean? clair3_include_all_contigs
     Boolean? clair3_enable_haploid_precise
@@ -61,6 +62,7 @@ workflow clair3_variants_ont {
       samplename = samplename,
       clair3_model = clair3_model,
       variant_quality = clair3_variant_quality,
+      min_depth = clair3_min_depth,
       include_all_contigs = clair3_include_all_contigs,
       enable_haploid_precise = clair3_enable_haploid_precise,
       disable_phasing = clair3_disable_phasing,
