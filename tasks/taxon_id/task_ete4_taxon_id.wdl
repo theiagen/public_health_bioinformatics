@@ -14,7 +14,7 @@ task ete4_taxon_id {
     ete4 version | sed 's| Tools path.*||' | tee ete4_VERSION
 
     echo "DEBUG: Obtaining taxon report for taxon: ~{taxon} and rank: ~{rank}"
-    echo "PASS" > TAXON_ID_STATUS
+    echo "FAIL" > TAXON_ID_STATUS
     echo "" > "TAXON_ID"
     echo "" > "TAXON_NAME"
     echo "" > "TAXON_RANK"
@@ -34,11 +34,13 @@ task ete4_taxon_id {
         query_taxid = taxa.get_name_translator(["~{taxon}"]).get("~{taxon}")[0]
       # error out if the taxon was not recovered
       except TypeError:
-        with open("TAXON_ID_STATUS", "w") as f:
-          f.write("FAIL")
         raise ValueError(f"ERROR: Invalid taxon name: '~{taxon}'")
 
-    lineage = taxa.get_lineage(query_taxid)
+    try:
+      lineage = taxa.get_lineage(query_taxid)
+    except Exception:
+      raise ValueError(f"ERROR: Invalid taxon ID: '{query_taxid}'")
+
     lineage2rank = taxa.get_rank(lineage)
     # will overwrite multiple "no rank" entries, but these won't be used later
     rank2lineage = {v: k for k, v in lineage2rank.items()}
@@ -75,6 +77,9 @@ task ete4_taxon_id {
     for filename, value in outputs.items():
       with open(filename, "w") as f:
         f.write(value)
+
+    with open("TAXON_ID_STATUS", "w") as status:
+      status.write("PASS")
     CODE
     echo "DEBUG: Reported TAXON_ID: $(cat TAXON_ID), TAXON_NAME: $(cat TAXON_NAME), TAXON_RANK: $(cat TAXON_RANK)"
   >>>
