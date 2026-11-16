@@ -16977,6 +16977,11 @@
 <td>Dehosted reads after NCBI scrub</td>
 </tr>
 <tr>
+<td>ncbi_scrub_status</td>
+<td>String</td>
+<td>Pass/Fail status if ncbi_scrub completed successfully</td>
+</tr>
+<tr>
 <td>ncbi_taxon_id</td>
 <td>String</td>
 <td>NCBI taxonomy ID of inputted organism following rank extraction</td>
@@ -18007,6 +18012,11 @@
 <td>Standard deviation read length of raw forward reads</td>
 </tr>
 <tr>
+<td>nanoplot_status</td>
+<td>String</td>
+<td>Pass/Fail status if nanoplot completed successfully</td>
+</tr>
+<tr>
 <td>nanoplot_tsv_clean</td>
 <td>File</td>
 <td>A TSV report describing the clean reads</td>
@@ -18045,6 +18055,11 @@
 <td>ncbi_scrub_read1_dehosted</td>
 <td>File</td>
 <td>Dehosted reads after NCBI scrub</td>
+</tr>
+<tr>
+<td>ncbi_scrub_status</td>
+<td>String</td>
+<td>Pass/Fail status if ncbi_scrub completed successfully</td>
 </tr>
 <tr>
 <td>ncbi_taxon_id</td>
@@ -18947,6 +18962,8 @@
 <li><code>kraken2_extraction_status</code>: No reads could be extracted, likely because no reads correspond to the input taxon. Check the <code>kraken2_report</code>.</li>
 <li><code>read_screen_clean</code>: Reads did not pass the imposed thresholds. Either the reads are poor quality or the thresholds are too stringent, in which case the thresholds can be relaxed or <code>skip_screen</code> can be set to "true".</li>
 <li><code>dehost_wf_download_status</code>: A host genome could not be retrieved for decontamination. See the <code>host</code> input explanation for more information and review the <code>download_accession</code>/<code>download_taxonomy</code> task output logs for advanced error parsing.</li>
+<li><code>ncbi_scrub_status</code>: The reads passed to the NCBI scrubber were empty, truncated, or not valid gzip, or (TheiaViral Illumina PE only) R1 and R2 had different read counts. Re-upload or re-download the read files if they are truncated or corrupt. For TheiaViral ONT, an empty input here usually means nanoq removed every read; check the raw read lengths and qualities in the NanoPlot raw report and relax the <code>nanoq</code> filtering thresholds if appropriate.</li>
+<li><code>nanoplot_status</code>: (TheiaViral ONT only) The raw read file contains no reads. This is expected for negative controls such as reagent blanks.</li>
 <li><code>ete4_status</code>: A refined taxon ID could not be retrieved for the provided <code>taxon</code>. Ensure the taxon name is a valid, complete name/Taxon ID listed in <a href="https://www.ncbi.nlm.nih.gov/datasets/taxonomy/tree/">NCBI's Taxonomy Browser</a> and the <code>read_extraction_rank</code> is a taxonomic rank above the provided <code>taxon</code>.</li>
 </ul>
 </details>
