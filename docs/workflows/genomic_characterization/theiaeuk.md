@@ -226,7 +226,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
         ///
 
 ??? info "> v5.0.0 output equivalents for PHB < v4.3.1"
-    Snippy-based variant calling was replaced by `BWA` + `GATK` (TheiaEuk_Illumina_PE) and `minimap2` + `Clair3` (TheiaEuk_ONT), with gene-level variant reporting moved to `snpeff_gene_variants`. The following outputs are approximately 1:1 replacements of their v4.3.1 counterparts. v4.3.1 outputs absent from this table (e.g., `theiaeuk_snippy_variants_summary`, `theiaeuk_snippy_variants_outdir_tarball`, `theiaeuk_snippy_variants_num_reads_aligned`, and `cladetyper_annotated_reference`) have no direct equivalent.
+    Snippy-based variant calling was replaced by `BWA` + `GATK` (TheiaEuk_Illumina_PE) and `minimap2` + `Clair3` (TheiaEuk_ONT), with gene-level variant reporting moved to `snpeff_gene_variants`. The following outputs are approximate or direct replacements of their v4.3.1 counterparts.
 
     | v4.3.1 Output | Current Output | Workflow(s) | Notes |
     |---|---|---|---|
@@ -236,10 +236,11 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
     | `theiaeuk_snippy_variants_bai` | `bwa_genome_variants_bai` (Illumina_PE); `minimap2_genome_variants_bai` (ONT) | Both | See above |
     | `theiaeuk_snippy_variants_results` | `gatk_genome_variants_selected_vcf` (Illumina_PE); `clair3_genome_variants_selected_vcf` (ONT) | Both | Filtered genome-wide variants; previously Snippy's CSV, now a VCF |
     | `theiaeuk_snippy_variants_num_variants` | `genome_mapping_total_snps` | Both | Now counts unique SNP sites that pass filtering; indels, MNPs, and complex variants are no longer counted |
-    | `theiaeuk_snippy_variants_coverage_tsv` | `genome_mapping_cov_stats` | Both | Both are `samtools coverage` output |
-    | `theiaeuk_snippy_variants_percent_ref_coverage` | `genome_mapping_percent_coverage` | Both | Previously the percent of reference positions with depth ≥ `snippy_min_coverage` (default 10); now the percent of reference positions covered by ≥ 1 read |
+    | `theiaeuk_snippy_variants_coverage_tsv` | `genome_mapping_cov_stats` | Both | Same format |
+    | `theiaeuk_snippy_variants_percent_ref_coverage` | `genome_mapping_percent_coverage` | Both | Same format |
     | `theiaeuk_snippy_variants_query` | `gene_query` | Both | The _C. auris_ default query now uses B11205 locus tags |
     | `theiaeuk_snippy_variants_query_check` | `gene_coverage_query_check` | Both | Same format; a PASS/FAIL summary is reported in `gene_coverage_query_check_status` |
     | `theiaeuk_snippy_variants_hits` | `snpeff_gene_variants_hits` | Both | Similar format; synonymous variants are suppressed by default (see `suppressed_variants`). A condensed form is reported in `snpeff_gene_variants_hits_abbreviated` |
     | `theiaeuk_snippy_variants_gene_query_results` | `snpeff_gene_variants_report_tsv` | Both | Previously Snippy's CSV rows for queried genes; now a gene-labelled TSV of SnpEff annotations |
+    | `theiaeuk_snippy_variants_num_reads_aligned` | `genome_mapping_percentage_mapped_reads` | Both | Previously a raw number of reads aligned, now it is a percent of the total cleaned reads |
     | `gene_coverage_percent_coverage_by_gene` | `gene_coverage_breadth_by_gene` | Illumina_PE | Renamed |
