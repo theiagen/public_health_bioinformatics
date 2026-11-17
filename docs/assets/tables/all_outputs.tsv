@@ -1057,13 +1057,15 @@ semibin_bins	Array[File]	An array of binned metagenomic assembled genome files	T
 semibin_docker	String	The Docker image of semibin	TheiaMeta_Illumina_PE
 semibin_version	String	The version of Semibin used	TheiaMeta_Illumina_PE
 seq_platform	String	Description of the sequencing methodology used to generate the input read data	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-seqsender_database_status	File	SeqSender's `submission_log.csv`, listing each database's latest submission status (e.g., `PROCESSING`, `PROCESSED`, `ERROR`)	SeqSender
+seqsender_database_statuses	String	Each database's status when polling stopped (e.g., `BIOSAMPLE=PROCESSED SRA=PROCESSED GENBANK=PROCESSING`)	SeqSender
 seqsender_docker	String	Docker image used to run SeqSender	SeqSender
 seqsender_final_status	String	Overall status when polling stopped: `COMPLETE`, `PENDING`, or `ERROR`	SeqSender
 seqsender_report_xml_biosample	File	XML file containing the latest response from NCBI regarding your BioSample submission	SeqSender
 seqsender_report_xml_genbank	File	XML file containing the latest response from NCBI regarding your GenBank submission	SeqSender
 seqsender_report_xml_sra	File	XML file containing the latest response from NCBI regarding your SRA submission	SeqSender
-seqsender_submission_status	File	SeqSender's `submission_status_report.csv`, listing each sample's status, accession, and any NCBI message for each database	SeqSender
+seqsender_submission_status_log	File	SeqSender's `submission_log.csv`, listing each database's latest submission status (e.g., `PROCESSING`, `PROCESSED`, `ERROR`)	SeqSender
+seqsender_submission_status_report	File	SeqSender's `submission_status_report.csv`, listing each sample's status, accession, and any NCBI message for each database	SeqSender
+seqsender_submission_type	String	`TEST` or `PRODUCTION`, as recorded when the samples were submitted to seqsender	SeqSender
 seqsender_version	String	Version of SeqSender used	SeqSender
 seqsender_wf_analysis_date	String	Date of analysis	SeqSender
 seqsender_wf_version	String	Version of PHB used for analysis	SeqSender

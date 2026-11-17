@@ -216,6 +216,7 @@ task seqsender_poll_and_wait {
   output {
     File tarball = "seqsender_post_polling_checkpoint.tar.gz"
     String submission_name = read_string("SUBMISSION_NAME")
+    String submission_type = read_string("SUBMISSION_TYPE")
     String final_status = read_string("FINAL_STATUS")
     String database_statuses = read_string("DATABASE_STATUSES")
     File log = "seqsender_poll_and_wait.log"

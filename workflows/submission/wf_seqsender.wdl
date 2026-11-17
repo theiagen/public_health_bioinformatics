@@ -80,7 +80,8 @@ workflow seqsender {
     }
   }
   # skipped when testing with input_table, since the samples aren't in a Terra table
-  if (!defined(input_table) && defined(polling.submission_status_report)) {
+  # skipped for TEST submissions, placeholder accessions can be found in the status report, but not the Terra table
+  if (!defined(input_table) && defined(polling.submission_status_report) && select_first([polling.submission_type, ""]) == "PRODUCTION") {
     call seqsender_tasks.seqsender_upload_accessions {
       input:
         terra_project_name = terra_project_name,
@@ -105,9 +106,11 @@ workflow seqsender {
     File? validation_metadata_template = validation.metadata_template
     # Poll - use `checkpoint_tarball` with `resume_checkpoint_tarball`
     File? checkpoint_tarball = polling.tarball
+    String? seqsender_submission_type = polling.submission_type
     String? seqsender_final_status = polling.final_status
-    File? seqsender_database_status = polling.submission_log_csv
-    File? seqsender_submission_status = polling.submission_status_report
+    String? seqsender_database_statuses = polling.database_statuses
+    File? seqsender_submission_status_log = polling.submission_log_csv
+    File? seqsender_submission_status_report = polling.submission_status_report
     File? seqsender_report_xml_biosample = polling.report_xml_biosample
     File? seqsender_report_xml_sra = polling.report_xml_sra
     File? seqsender_report_xml_genbank = polling.report_xml_genbank

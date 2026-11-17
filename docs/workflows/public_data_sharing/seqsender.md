@@ -159,16 +159,16 @@ The [SeqSender](https://github.com/CDCgov/seqsender) workflow sends samples from
         - **Several shorter runs**: keep `max_wait_hours` low, and resume with the newest `checkpoint_tarball` until `seqsender_final_status` is `COMPLETE`. Each run costs less, but you relaunch it yourself each time.
 
     <h3>What happens?</h3>
-    See the [`Submission`workflow diagram](#submission) above. When you submit new samples, only samples that pass SeqSender validation checks will proceed to submission. After submitting the samples to NCBI's `Test`/`Production` databases, the workflow will begin polling NCBI every `poll_interval_minutes`, for up to `max_wait_hours`. If you're attempting to submit to all three databases, and your configuration specifies to link `GenBank` to `BioSample` and `SRA` records, the workflow will wait for `BioSample` and `SRA` to be processed before submitting to `GenBank`. Once all submissions are processed, the workflow will update the final status and record the generated accessions to your Terra data table.
+    See the [`Submission`workflow diagram](#submission) above. When you submit new samples, only samples that pass SeqSender validation checks will proceed to submission. After submitting the samples to NCBI's `Test`/`Production` databases, the workflow will begin polling NCBI every `poll_interval_minutes`, for up to `max_wait_hours`. If you're attempting to submit to all three databases, and your configuration specifies to link `GenBank` to `BioSample` and `SRA` records, the workflow will wait for `BioSample` and `SRA` to be processed before submitting to `GenBank`. Once all submissions are processed, the workflow will update the final status and, for production submissions, record the generated accessions to your Terra data table.
 
     <h3>Next Steps</h3>
 
     1. After the run is completed, check that `seqsender_final_status` is `COMPLETE`. This means NCBI processed every database you submitted to and every submitted sample received an accession.
-    2. Check that the new `biosample_accession`, `sra_accession`, and/or `genbank_accession` columns are populated in your Terra data table. GenBank gives one accession per FASTA record (e.g. one per flu segment), so `genbank_accession` lists each `gb-sample_name` with its accession.
+    2. For production submissions, check that the new `biosample_accession`, `sra_accession`, and/or `genbank_accession` columns are populated in your Terra data table. GenBank gives one accession per FASTA record (e.g. one per flu segment), so `genbank_accession` lists each `gb-sample_name` with its accession. For test submissions, accessions do not get repopulated to your Terra data table. Instead, check that the NCBI's placeholder accessions are listed in the corresponding `seqsender_report_xml_*` outputs.
     3. Check the number of `validation_samples_failed`. Any samples marked FAIL in `validation_summary` were left out of the final submission. Fix them as described in [Step 2](#step-2-validate-metadata), then submit them again in a new **SET**.
 
     !!! tip "Moving from `Test` to `Production`"
-        Test submissions (`submit_to_production` = `false`) also write accessions to your Terra table. Clear them before submitting the same samples to production, or validation will fail those samples as already submitted.
+        Test submissions (`submit_to_production` = `false`) don't write accessions to your Terra table, so you can submit the same samples to production without changing it. Check `seqsender_submission_type` to see which kind of submission a run made.
 
     <h3>Final Status</h3>
 
@@ -184,7 +184,7 @@ The [SeqSender](https://github.com/CDCgov/seqsender) workflow sends samples from
     ??? info "**If `seqsender_final_status` is `ERROR`**"
         NCBI rejected at least one database or sample. Next steps include:
 
-        1. Review what NCBI rejected in the `seqsender_submission_status` and `seqsender_report_xml_*` outputs.
+        1. Review what NCBI rejected in the `seqsender_database_statuses`, `seqsender_submission_status_report` and `seqsender_report_xml_*` outputs.
         2. Fix those samples' metadata or files in your Terra data table.
         3. Create a new **SET** with only those samples, and relaunch this workflow with `submit_to_*` parameters set to `true` only for the databases that errored. Validation checks will fail if you try to resubmit samples that already have accessions for the selected databases. If `Link_Sample_Between_NCBI_Databases` is on (based on your config file), a new GenBank submission will still be linked to the BioSample and SRA accessions in your table.
 
@@ -244,7 +244,7 @@ The [SeqSender](https://github.com/CDCgov/seqsender) workflow sends samples from
         | Error Message | Recommended Actions |
         | :--- | :--- |
         | `fill in or clear the metadata template's '<description>' text in: <columns>` | Replace the `<...>` text in the listed columns with the sample's values, then upload the updated table to Terra. |
-        | `already has <accession columns>; turn off <submit_to_* inputs>` | Set the listed `submit_to_*` inputs to `false` to submit the sample to the other databases only. If the accession is wrong, e.g. from a test submission, clear it in your Terra table first. |
+        | `already has <accession columns>; turn off <submit_to_* inputs>` | Set the listed `submit_to_*` inputs to `false` to submit the sample to the other databases only. If the accession is wrong, clear it in your Terra table first. |
         | `Organism '<organism>' isn't accepted for GenBank flu submissions; ...` | Set the sample's `organism` column to `Influenza A virus`, `Influenza B virus` or `Influenza C virus`. |
         | `assembly FASTA is empty or has an empty sequence` | Check the sample's `assembly_fasta`, and replace it with one where every record has a sequence. |
 
