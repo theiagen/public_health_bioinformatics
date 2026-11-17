@@ -93,21 +93,22 @@ The [SeqSender](https://github.com/CDCgov/seqsender) workflow sends samples from
     ///
 
     <h3>What happens?</h3>
-    See the [`Validation`workflow diagram](#validation) above. The workflow pulls the selected rows from your Terra table, builds each sample's submission files, and checks/validates each sample with SeqSender. Nothing gets submitted to NCBI.
+    See the [`Validation`workflow diagram](#validation) above. The workflow retrieves the selected rows from your Terra table, generates the submission files for each sample, and runs each sample through SeqSender for validation. Nothing gets submitted to NCBI.
 
     <h3>Next Steps</h3>
 
-    1. After the run is completed, download the `validation_metadata_template` output file, populate it with the necessary information, and re-upload it to your Terra table (Import Data -> Upload TSV).
+    1. After the run is completed, download the `validation_metadata_template` output file and fill in the required metadata columns using the bracketed descriptions as guidance. Then re-upload the completed file to your Terra table (Import Data -> Upload TSV).
     2. Re-run the SeqSender workflow in `validation_only` mode to check if all samples now pass validation.
     3. Once completed, review the `validation_samples_passed`, `validation_samples_failed`, and `validation_summary` workflow outputs to understand the status of each sample and what additional metadata is required for submission. These outputs can be found in your **SET** table.
     4. Repeat the process of downloading, populating, and re-uploading the `validation_metadata_template` until all samples pass validation.
 
     !!! info "One error per sample, per run"
+
         Validation stops at the first check a sample fails, so the `validation_summary` may not list all of a sample's problems at once. After you fix one, rerun the validation again to ensure all issues are resolved.
 
     !!! info "Optional Columns"
 
-        The metadata template output file lists only the required columns. To submit additional/optional metadata, add a column to your Terra table with the SeqSender column name, and the workflow passes it along. SeqSender's [metadata templates](https://github.com/CDCgov/seqsender/tree/v1.5.2/shiny/templates) list every column it accepts, with a description of each.
+        The metadata template output file lists only the **required** columns. To submit additional optional metadata, add a column to your Terra table with the corresponding SeqSender column name. The workflow will pass it along automatically. SeqSender's [metadata templates](https://github.com/CDCgov/seqsender/tree/v1.5.2/shiny/templates) list all accepted columns and their descriptions.
 
 === "Step 3: Submit new samples"
 
@@ -119,7 +120,7 @@ The [SeqSender](https://github.com/CDCgov/seqsender) workflow sends samples from
     2. Set the `validation_only` parameter to `false`.
     3. Set the `submit_to_production` parameter to `false` to send to NCBI's test server, or set it to `true` for the real public submission.
     4. Enter any other SeqSender workflow inputs as needed. See table below for key input parameters specific to this step in the workflow.
-    4. Launch the SeqSender workflow.
+    5. Launch the SeqSender workflow.
 
     <h3>Inputs Configured</h3>
 
@@ -136,7 +137,11 @@ The [SeqSender](https://github.com/CDCgov/seqsender) workflow sends samples from
         - **Several shorter runs**: keep `max_wait_hours` low, and resume with the newest `checkpoint_tarball` until `seqsender_final_status` is `COMPLETE`. Each run costs less, but you relaunch it yourself each time.
 
     <h3>What happens?</h3>
-    See the [`Submission`workflow diagram](#submission) above. When you submit new samples, only samples that pass SeqSender validation checks will proceed to submission. After submitting the samples to NCBI's `Test`/`Production` databases, the workflow will begin polling NCBI every `poll_interval_minutes`, for up to `max_wait_hours`. If you're attempting to submit to all three databases, and your configuration specifies to link `GenBank` to `BioSample` and `SRA` records, the workflow will wait for `BioSample` and `SRA` to be processed before submitting to `GenBank`. Once all submissions are processed, the workflow will update the final status and, for production submissions, record the generated accessions to your Terra data table.
+    See the [`Submission`workflow diagram](#submission) above. Only samples that pass SeqSender's validation checks will proceed to submission. Once submitted to NCBI's `Test` or `Production` database, the workflow will poll NCBI every `poll_interval_minutes`, for up to `max_wait_hours`.
+
+    If submitting to all three databases with GenBank linking enabled (set in the config file), the workflow will wait for the `BioSample` and `SRA` submissions to finish processing before submitting to `GenBank`.
+
+    Once processing is complete, the workflow will update the final submission statuses and, for `Production` submissions, write the generated accessions back to your Terra data table.
 
     <h3>Next Steps</h3>
 
@@ -169,7 +174,7 @@ The [SeqSender](https://github.com/CDCgov/seqsender) workflow sends samples from
 
     <h3>Resuming Submissions</h3>
 
-    Resume a submission when `seqsender_final_status` is `PENDING`, or when the run stopped while checking NCBI (a failed `polling` or `upload_accessions` task). Resuming picks up from the earlier run's checkpoint, so samples that were already submitted aren't sent to NCBI again.
+    Resume a submission when `seqsender_final_status` is `PENDING`, or if the run stopped while checking NCBI (a failed `polling` or `upload_accessions` task). Resuming picks up from the earlier run's checkpoint, so samples that were already submitted aren't sent to NCBI again.
 
     1. Open the SeqSender workflow in your Terra workspace and select the same **SET** as the earlier run, keeping the same required inputs.
     2. Set `resume_checkpoint_tarball` to the earlier run's `checkpoint_tarball` output. If that run failed and has no `checkpoint_tarball`, use the newest checkpoint from its execution directory (see [`polling` input errors](#polling-errors)).
