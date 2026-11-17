@@ -36,6 +36,7 @@ Bakta
 Bandage
 Bexsero
 Bioconda
+Bioproject
 Biopython
 Bruijn
 Bruna
