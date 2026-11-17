@@ -109,7 +109,6 @@ The [SeqSender](https://github.com/CDCgov/seqsender) workflow sends samples from
 
         The metadata template output file lists only the required columns. To submit additional/optional metadata, add a column to your Terra table with the SeqSender column name, and the workflow passes it along. SeqSender's [metadata templates](https://github.com/CDCgov/seqsender/tree/v1.5.2/shiny/templates) list every column it accepts, with a description of each.
 
-
 === "Step 3: Submit new samples"
 
     <h3>Submitting New Samples</h3>
@@ -166,7 +165,6 @@ The [SeqSender](https://github.com/CDCgov/seqsender) workflow sends samples from
         2. Fix those samples' metadata or files in your Terra data table.
         3. Create a new **SET** with only those samples, and relaunch this workflow with `submit_to_*` parameters set to `true` only for the databases that errored. Validation checks will fail if you try to resubmit samples that already have accessions for the selected databases. If `Link_Sample_Between_NCBI_Databases` is on (based on your config file), a new GenBank submission will still be linked to the BioSample and SRA accessions in your table.
 
-
 === "Step 4: Resume submissions"
 
     <h3>Resuming Submissions</h3>
@@ -174,7 +172,7 @@ The [SeqSender](https://github.com/CDCgov/seqsender) workflow sends samples from
     Resume a submission when `seqsender_final_status` is `PENDING`, or when the run stopped while checking NCBI (a failed `polling` or `upload_accessions` task). Resuming picks up from the earlier run's checkpoint, so samples that were already submitted aren't sent to NCBI again.
 
     1. Open the SeqSender workflow in your Terra workspace and select the same **SET** as the earlier run, keeping the same required inputs.
-    2. Set `resume_checkpoint_tarball` to the earlier run's `checkpoint_tarball` output. If that run failed and has no `checkpoint_tarball`, use the newest checkpoint from its execution directory (see [`polling`](#polling)).
+    2. Set `resume_checkpoint_tarball` to the earlier run's `checkpoint_tarball` output. If that run failed and has no `checkpoint_tarball`, use the newest checkpoint from its execution directory (see [`polling` input errors](#polling-errors)).
     3. Enter any other SeqSender workflow inputs as needed. See table below for key input parameters specific to this step in the workflow.
     4. Launch the SeqSender workflow.
 
@@ -236,7 +234,6 @@ The [SeqSender](https://github.com/CDCgov/seqsender) workflow sends samples from
         | **Google Cloud errors such as `403 Forbidden` or `404 Not Found` while copying reads** | Check the `sra_transfer_gcp_bucket` name, and give your Terra proxy group write access to the bucket. |
         | **`No space left on device`** | Raise `disk_size` for this task (25 GB by default). Without a `sra_transfer_gcp_bucket`, the reads are transferred via FTP locally, and the task needs about twice the total size of the reads. |
 
-
 ??? toggle "`submission` task"
 
     <a id="submission-errors"></a>
@@ -256,7 +253,6 @@ The [SeqSender](https://github.com/CDCgov/seqsender) workflow sends samples from
         - **`Error unable to connect to FTP site`**: NCBI's FTP server couldn't be reached. Try again later.
         - **Samples fail set level validation**: Samples are individually checked during the `validation` task, but the `submit` task checks them all together as a set. This can catch conflicts between samples if they share the same `bs-sample_name`, `sra-sample_name`, `gb-sample_name`, or FASTA `sequence_name`. Each name must be unique across the set.
 
-
 ??? toggle "`polling` task"
 
     <a id="polling-errors"></a>
@@ -271,6 +267,3 @@ The [SeqSender](https://github.com/CDCgov/seqsender) workflow sends samples from
         | `ERROR: seqsender submission_status failed; see the seqsender output in the log` | Read the lines starting with `seqsender:` just above this message, fix the cause, then resume with the newest checkpoint. |
 
         After this task fails, the run has no `checkpoint_tarball` output. Open the run's execution directory from the Job Manager and use the newest checkpoint for `resume_checkpoint_tarball`: `call-polling/.../seqsender_post_polling_checkpoint.tar.gz` if it's there, otherwise `call-submission/.../seqsender_post_submission_checkpoint.tar.gz`. Prefer the polling one, since the submission one is from before the wait, so resuming from it may send GenBank again.
-
-
-
