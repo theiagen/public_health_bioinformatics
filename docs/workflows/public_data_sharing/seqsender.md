@@ -36,13 +36,16 @@ The [SeqSender](https://github.com/CDCgov/seqsender) workflow sends samples from
 
 ???+ toggle "Click to expand"
 
-    Inspired by [SeqSender's Submission Wizard](https://cdcgov.github.io/seqsender/), this config builder runs in your browser and can be used to create a config file used in the [SeqSender_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/SeqSender_PHB) workflow. It will encrypt your NCBI FTP password and generate a corresponding key which will be required for any subsequent submissions.
+    Inspired by [SeqSender's Submission Wizard](https://cdcgov.github.io/seqsender/), this config builder runs in your browser and can be used to create a config file used in the [SeqSender_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/SeqSender_PHB) workflow. It will encrypt your NCBI FTP password and generate a corresponding key which will be **required for any subsequent submissions**.
 
     --8<-- "docs/workflows/public_data_sharing/seqsender_config_builder.html"
 
 ---
 
 ## Launching the Workflow
+
+!!! warning "Influenza only"
+    **This workflow has only been validated for influenza samples (`seqsender_organism_tag` = `FLU`). Other organisms are currently not supported.**
 
 /// html | div[class="grid cards four-row" markdown]
 
@@ -97,7 +100,9 @@ The [SeqSender](https://github.com/CDCgov/seqsender) workflow sends samples from
     ///
 
     !!! info "Using `sra_transfer_gcp_bucket`"
-        Optional, for SRA only. When set, the workflow copies the passing samples' reads to this bucket and NCBI fetches them from there, instead of the workflow uploading them over FTP. Reads aren't copied when `validation_only` is `true`. The bucket must be readable by NCBI, and the reads must stay in it until SRA is `PROCESSED`. Read files already in the bucket with the same name are **KEPT**, not replaced.
+        Optional, for SRA only. When set, the workflow copies the passing samples' reads to this bucket and NCBI fetches them from there, instead of the workflow uploading them over FTP. The bucket must be readable by NCBI, and the reads must stay in it until SRA is `PROCESSED`. Read files already in the bucket with the same name are **KEPT**, not replaced. Reads aren't copied when `validation_only` is `true`.
+
+        **Contact Theiagen to request access to our `gs://theiagen_sra_transfer` GCP bucket.**
 
 === "Step 2: Validate metadata"
 
@@ -126,6 +131,9 @@ The [SeqSender](https://github.com/CDCgov/seqsender) workflow sends samples from
     2. Re-run the SeqSender workflow in `validation_only` mode to check if all samples now pass validation.
     3. Once completed, review the `validation_samples_passed`, `validation_samples_failed`, and `validation_summary` workflow outputs to understand the status of each sample and what additional metadata is required for submission. These outputs can be found in your **SET** table.
     4. Repeat the process of downloading, populating, and re-uploading the `validation_metadata_template` until all samples pass validation.
+
+    !!! info "One error per sample, per run"
+        Validation stops at the first check a sample fails, so the `validation_summary` may not list all of a sample's problems at once. After you fix one, rerun the validation again to ensure all issues are resolved.
 
     !!! info "Optional Columns"
 
