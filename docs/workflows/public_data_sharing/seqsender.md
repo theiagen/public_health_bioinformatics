@@ -47,36 +47,6 @@ The [SeqSender](https://github.com/CDCgov/seqsender) workflow sends samples from
 !!! warning "Influenza only"
     **This workflow has only been validated for influenza samples (`seqsender_organism_tag` = `FLU`). Other organisms are currently not supported.**
 
-/// html | div[class="grid cards four-row" markdown]
-
--   <center>
-
-    [Step 1:<br>Initial Setup](#step-1-initial-setup){ .md-button .md-button--primary }
-
-    </center>
-
--   <center>
-
-    [Step 2:<br>Validate metadata](#step-2-validate-metadata){ .md-button .md-button--primary }
-
-    </center>
-
--   <center>
-
-    [Step 3:<br>Submit new samples](#step-3-submit-new-samples){ .md-button .md-button--primary }
-
-    </center>
-
--   <center>
-
-    [Step 4:<br>Resume submissions](#step-4-resume-submissions){ .md-button .md-button--primary }
-
-    </center>
-
-///
-
-<br>
-
 === "Step 1: Initial Setup"
 
     <h3>Initial Setup</h3>
