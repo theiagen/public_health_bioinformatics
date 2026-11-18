@@ -72,7 +72,8 @@ task freyja_one_sample {
     ~{"--annot " + reference_gff} \
     --variants ~{samplename}_freyja_variants.tsv \
     --depths ~{samplename}_freyja_depths.tsv \
-    --ref ~{reference_genome}
+    --ref ~{reference_genome} \
+    || { echo "ERROR: freyja variants failed" | tee FREYJA_WARNING; exit 1; }
 
   # soft-fail: freyja boot/demix fail on a variants file with no calls (e.g., reads identical to the reference)
   variant_count=$(awk 'NR > 1 && NF {n++} END {print n + 0}' ~{samplename}_freyja_variants.tsv)
