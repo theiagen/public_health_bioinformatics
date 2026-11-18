@@ -2,7 +2,7 @@
 <script type="module" src="https://pyscript.net/releases/2026.7.3/core.js"></script>
 
 <div class="config-builder">
-  <form id="cb-form" autocomplete="off">
+  <form id="cb-form" autocomplete="off" spellcheck="false">
     <fieldset>
       <div class="cb-groups">
         <fieldset class="cb-narrow">
@@ -61,7 +61,7 @@
               <label>
                 <input id="cb-link_samples" type="checkbox">
                 Link GenBank records to each sample's BioSample/SRA records
-                <span class="cb-tip">Not required for valid GenBank submissions. Submitting all three at once, GenBank submissions are contingent on successful BioSample/SRA processing: SeqSender holds GenBank until NCBI has fully processed BioSample and SRA, and GenBank isn't submitted if either fails/stalls. Submitting only GenBank, the workflow uses the <code>biosample_accession</code> and <code>sra_accession</code> already in your Terra table; samples without them are submitted unlinked.</span>
+                <span class="cb-tip">Not required for valid GenBank submissions. When submitting to GenBank together with BioSample and/or SRA, the GenBank submissions become contingent on successful BioSample/SRA processing: SeqSender holds GenBank until NCBI has fully processed them, and GenBank isn't submitted if either fails/stalls. Submitting only GenBank, the workflow uses the <code>biosample_accession</code> and <code>sra_accession</code> already in your Terra table; samples without them are submitted unlinked.</span>
               </label>
             </fieldset>
           </fieldset>
