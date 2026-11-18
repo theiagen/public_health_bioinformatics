@@ -41,7 +41,7 @@ fragment: true
         - TheiaProk_FASTA: [theiaprok_fasta_qc_check_template.tsv](../../assets/files/TheiaProk_FASTA_qc_check_template.tsv)
 <!-- endif -->
 <!-- if: theiaeuk -->
-        - TheiaEuk_Illumina_PE_PHB: [theiaeuk_qc_check_template.tsv](../../assets/files/TheiaEuk_qc_check_template.tsv)
+        - TheiaEuk_Illumina_PE_PHB: [theiaeuk_illumina_qc_check_template.tsv](../../assets/files/TheiaEuk_Illumina_qc_check_template.tsv)
         - TheiaEuk_ONT_PHB: [theiaeuk_ont_qc_check_template.tsv](../../assets/files/TheiaEuk_ONT_qc_check_template.tsv)
 <!-- endif -->
 <!-- if: freyja -->
