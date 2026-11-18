@@ -1,6 +1,10 @@
 # SeqSender
 
-The [SeqSender](https://github.com/CDCgov/seqsender) workflow sends samples from a Terra table to NCBI's BioSample, SRA and GenBank databases.
+## Quick Facts
+
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**SeqSender**](../workflows/public_data_sharing/seqsender.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level", "Dockstore"]) }}
+
+The SeqSender workflow uses the CDC's [SeqSender](https://github.com/CDCgov/seqsender) tool to send samples from a Terra table to NCBI's BioSample, SRA and GenBank databases.
 
 ## Requirements
 
