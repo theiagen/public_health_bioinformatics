@@ -175,6 +175,7 @@ workflow theiaeuk_illumina_pe {
           clair3_disable_phasing = false,
           clair3_enable_gvcf = false,
           clair3_enable_long_indel = false,
+          clair3_min_variant_quality = 0,
           clair3_docker = "",
           clair3_cpu = 0,
           clair3_memory = 0,
