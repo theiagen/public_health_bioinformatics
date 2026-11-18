@@ -1,6 +1,9 @@
 /*
  * Adds a toolbar above each ".searchable-table" containing a search box and a
  * reset button to clear any search or table visual manipulation
+ *
+ * Adding the "search-reveal" class too (".searchable-table.search-reveal") hides
+ * the table until something is typed in the search box
  */
 (function () {
   // functions from table-utils.js
@@ -64,6 +67,12 @@
       // add the toolbar before the table
       container.insertBefore(toolbar, container.firstChild);
 
+      // ".search-reveal" tables start hidden
+      const reveal = container.classList.contains("search-reveal");
+      if (reveal) {
+        container.classList.add("is-concealed");
+      }
+
       // save the original row order so reset can restore it (tablesort
       // reorders these same <tr> nodes in place, so the references stay valid).
       const tbody = table.tBodies[0];
@@ -122,6 +131,10 @@
         // update the list of visible rows and lastFilter
         visibleRows = nextVisible;
         lastFilter = filter;
+        // ".search-reveal" tables only show while there's a search
+        if (reveal) {
+          container.classList.toggle("is-concealed", filter.trim() === "");
+        }
         // indicate that a filter was set
         updateResetVisibility();
       }
@@ -180,6 +193,11 @@
         resetSort(table);
         resetResize(table);
         scrollTableToTop(table);
+
+        // hide a ".search-reveal" table again
+        if (reveal) {
+          container.classList.add("is-concealed");
+        }
 
         // re-hide the reset button
         updateResetVisibility();

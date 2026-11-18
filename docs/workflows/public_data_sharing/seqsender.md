@@ -272,3 +272,44 @@ The [SeqSender](https://github.com/CDCgov/seqsender) workflow sends samples from
         | `ERROR: seqsender submission_status failed; see the seqsender output in the log` | Read the lines starting with `seqsender:` just above this message, fix the cause, then resume with the newest checkpoint. |
 
         After this task fails, the run has no `checkpoint_tarball` output. Open the run's execution directory from the Job Manager and use the newest checkpoint for `resume_checkpoint_tarball`: `call-polling/.../seqsender_post_polling_checkpoint.tar.gz` if it's there, otherwise `call-submission/.../seqsender_post_submission_checkpoint.tar.gz`. Prefer the polling one, since the submission one is from before the wait, so resuming from it may send GenBank again.
+## Troubleshooting
+
+Paste part or all of an error message in the search box below to find its recommended action. Alternatively, search by task name (e.g. `validation`, `submission`, `polling`) to browse possible errors.
+
+/// html | div[class="searchable-table search-reveal"]
+
+| Task | Error Message | Recommended Action |
+| :--- | :--- | :--- |
+| `validation` | `No tables match '<table>' in the Terra workspace` | Set `terra_table_name` to the name of your **sample** table (e.g. `sample`), not the **SET** table (e.g. `sample_set`). Also double check `terra_project_name` and `terra_workspace_name`. |
+| `validation` | `Samples [<samples>] not found in the '<column>' column` | The samples in the **SET** aren't in the `terra_table_name` table. Set `terra_table_name` to the table the samples come from. |
+| `validation` | `choose at least one of --biosample, --sra or --genbank` | Set at least one of `submit_to_biosample`, `submit_to_sra` or `submit_to_genbank` to `true`. |
+| `validation` | `--read1_fastqs is required for SRA submission` | Provide `read1_fastqs` (plus `read2_fastqs` for paired-end reads), or set `submit_to_sra` to `false`. |
+| `validation` | `--assembly_fastas is required for GenBank submission` | Provide `assembly_fastas`, or set `submit_to_genbank` to `false`. |
+| `validation` | `GenBank submission is only supported for --seqsender_organism_tag FLU and COV, not <organism>` | Set `submit_to_genbank` to `false`. |
+| `validation` | `--sra_transfer_bucket must be a gs:// bucket, not <bucket>` | Give `sra_transfer_gcp_bucket` as a full `gs://` path, e.g. `gs://<bucket>/<folder>`. |
+| `validation` | `<n> <files> given for <n> sample_ids; they must be the same length and order` | Make sure `assembly_fastas`, `read1_fastqs` and `read2_fastqs` each have one file per sample. Run single-end and paired-end samples in separate sets. |
+| `validation` | `read files must have unique names; repeated: <names>` | Rename the listed read files so every file name in the **SET** is unique. |
+| `validation` | `seqsender has no metadata template <file>; check BioSample_Package in the config file` | Rebuild the config file with a BioSample package SeqSender supports, e.g. `Pathogen.cl.1.0`. |
+| `validation` | `Config file is not properly setup` | The config file's password isn't encrypted, or a field is missing or invalid. Rebuild it with the [config builder](#create-your-config-file). |
+| `validation` | `the samples that passed on their own fail seqsender prep together: <errors>` | The samples pass one at a time but conflict as a **SET**, usually because two share a `bs-sample_name`, `sra-sample_name`, or FASTA header (which becomes the `gb-sample_name`). Each must be unique across the **SET**. |
+| `validation` | `fill in or clear the metadata template's '<description>' text in: <columns>` | Replace the `<...>` text in the listed columns with the sample's values, then upload the updated table to Terra. |
+| `validation` | `already has <accession columns>; turn off <submit_to_* inputs>` | Set the listed `submit_to_*` inputs to `false` to submit the sample to the other databases only. If the accession is wrong, clear it in your Terra table first. |
+| `validation` | `Organism '<organism>' isn't accepted for GenBank flu submissions` | Set the sample's `organism` column to `Influenza A virus`, `Influenza B virus` or `Influenza C virus`. |
+| `validation` | `NCBI requires <columns> for '<organism>' submissions to GenBank` | Fill in the listed columns: `src-Isolation-source` for every flu sample, and `src-Serotype` (e.g. `H3N2`) for Influenza A. |
+| `validation` | `assembly FASTA is empty or has an empty sequence` | Check the sample's `assembly_fasta`, and replace it with one where every record has a sequence. |
+| `validation` | `assembly FASTA can't be read` | Replace the sample's `assembly_fasta` with a valid FASTA file. |
+| `validation` | `Column '<column>' ...` | One of SeqSender's own metadata checks failed. Fix the named column in your Terra table; SeqSender's [metadata templates](https://github.com/CDCgov/seqsender/tree/v1.5.2/shiny/templates) describe what each column accepts. |
+| `validation` | `Forbidden: 403`, `NotFound: 404` | The reads couldn't be copied to the bucket. Check the `sra_transfer_gcp_bucket` name, and give your Terra proxy group write access to the bucket. |
+| `validation` | `No space left on device` | Raise `disk_size` for this task (25 GB by default). Without a `sra_transfer_gcp_bucket`, the task needs about twice the total size of the reads. |
+| `submission` | `seqsender submit failed before anything was submitted; see seqsender_submit.log` | Nothing was sent to NCBI, so relaunching is safe. Find the cause in this task's **stdout** and search for it here. |
+| `submission`, `polling` | `InvalidToken`, `endswith first arg must be bytes` | `seqsender_key` isn't the key that encrypted this config file's password. Use the original key; for a new submission, you can also rebuild the config file. |
+| `submission`, `polling` | `Fernet key must be 32 url-safe base64-encoded bytes` | `seqsender_key` is mistyped or incomplete. A key is 44 characters long and ends with `=`. |
+| `submission` | `login error. Possible incorrect credentials for NCBI FTP site` | The NCBI FTP username or password is wrong, e.g. the password changed after the config file was built. Rebuild the config file, entering your current key as the **Existing key** to keep using it. |
+| `submission` | `Error unable to connect to FTP site` | NCBI's FTP server couldn't be reached. Try again later. |
+| `submission` | `No space left on device` | Raise `disk_size` for this task (100 GB by default). |
+| `polling` | `submission_log.csv not found; this state hasn't been submitted` | Set `resume_checkpoint_tarball` to the `checkpoint_tarball` output of a run that submitted samples. |
+| `polling` | `seqsender submission_status failed; see the seqsender output in the log` | Read the lines starting with `seqsender:` in this task's **stdout**, fix the cause, then resume with the newest checkpoint (see Step 4). |
+| `polling` | `<path> from submission_log.csv doesn't exist` | Use the original `checkpoint_tarball` output; this one is incomplete or was changed. |
+| `seqsender_upload_accessions` | Any error | Check that `terra_project_name` and `terra_workspace_name` are correct, then resume the submission (see Step 4). The workflow checks NCBI again and uploads the accessions. |
+
+///

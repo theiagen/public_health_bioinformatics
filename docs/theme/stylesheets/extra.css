@@ -648,6 +648,13 @@ div.searchable-table .table-reset-button svg {
   /* tilt the circular arrow 30° counter-clockwise */
   transform: rotate(-30deg);
 }
+/*
+ * A ".search-reveal" table hides everything but its toolbar until something is
+ * typed in the search box. table-search.js adds and removes .is-concealed.
+ */
+div.searchable-table.search-reveal.is-concealed > :not(.table-toolbar) {
+  display: none;
+}
 
 /* 7. SCROLL-TO-TOP */
 
