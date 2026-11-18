@@ -2108,7 +2108,7 @@ semibin	min_length	Int	Minimum contig length for binning	1000	Optional	TheiaMeta
 semibin	ratio	Float	If the ratio of the number of base pairs of contigs between 1000-2500 bp smaller than this value, the minimal length will be set as 1000bp, otherwise 2500bp.	0.05	Optional	TheiaMeta_Illumina_PE	general	
 seqsender	assembly_fastas	Array[File]	The assembly FASTA files, one per sample in the same order as `sample_ids`; required when `submit_to_genbank` is true		Optional	SeqSender	general	
 seqsender	input_table	File	**For command-line testing only**		Optional	SeqSender	general	
-seqsender	max_wait_hours	Float	The maximum number of hours to wait for NCBI to process the submission;	48	Optional	SeqSender	general	
+seqsender	max_wait_hours	Float	The maximum number of hours to wait for NCBI to process the submission	48	Optional	SeqSender	general	
 seqsender	poll_interval_minutes	Float	The number of minutes between each check of the submission's status with NCBI	10	Optional	SeqSender	general	
 seqsender	read1_fastqs	Array[File]	The read1 FASTQ files, one per sample in the same order as `sample_ids`; required when `submit_to_sra` is true		Optional	SeqSender	general	
 seqsender	read2_fastqs	Array[File]	The read2 FASTQ files for paired-end reads, one per sample in the same order as `sample_ids`; leave empty for single-end reads		Optional	SeqSender	general	
