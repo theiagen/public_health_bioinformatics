@@ -79,7 +79,9 @@ workflow theiacov_illumina_se {
       vadr_mem = vadr_memory,
       primer_bed_file = primer_bed,
       pangolin_docker_image = pangolin_docker_image,
-      flu_genoflu_genotype = ""
+      flu_genoflu_genotype = "",
+      flu_segment = "",
+      flu_type = ""
   }
   if (! skip_screen_raw) {
     call screen.check_reads_se as raw_check_reads {
@@ -167,11 +169,6 @@ workflow theiacov_illumina_se {
           assembly_metrics_disk_size = 0,
           assembly_metrics_docker = "",
           assembly_metrics_memory = 0,
-          irma_cpu = 0,
-          irma_disk_size = 0,
-          irma_docker_image = "",
-          irma_keep_ref_deletions = false,
-          irma_memory = 0,
           genoflu_cpu = 0,
           genoflu_cross_reference = "gs://theiagen-public-resources-rp/empty_files/empty.fasta",
           genoflu_disk_size = 0,

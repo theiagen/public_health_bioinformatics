@@ -165,13 +165,13 @@ workflow theiacov_ont {
         input:
           read1 = read1,
           samplename = samplename,
-          est_genome_length = select_first([genome_length, organism_parameters.genome_length])
+          est_genome_length = select_first([genome_length, flu_track.flu_genome_length, organism_parameters.genome_length])
       }
       call nanoplot_task.nanoplot as nanoplot_clean {
         input:
           read1 = read_QC_trim.read1_clean,
           samplename = samplename,
-          est_genome_length = select_first([genome_length, organism_parameters.genome_length])
+          est_genome_length = select_first([genome_length, flu_track.flu_genome_length, organism_parameters.genome_length])
       }
       # consensus QC check
       if (defined(flu_track.irma_assembly_fasta) || defined(consensus.consensus_seq)) {
@@ -179,7 +179,7 @@ workflow theiacov_ont {
           input:
             assembly_fasta =  select_first([flu_track.irma_assembly_fasta, consensus.consensus_seq]),
             reference_genome = organism_parameters.reference,
-            genome_length = organism_parameters.genome_length
+            genome_length = select_first([genome_length, flu_track.flu_genome_length, organism_parameters.genome_length])
         }
         # run organism-specific typing
         call morgana_magic_wf.morgana_magic {
@@ -205,11 +205,6 @@ workflow theiacov_ont {
             assembly_metrics_disk_size = 0,
             assembly_metrics_docker = "",
             assembly_metrics_memory = 0,
-            irma_cpu = 0,
-            irma_disk_size = 0,
-            irma_docker_image = "",
-            irma_keep_ref_deletions = false,
-            irma_memory = 0,
             genoflu_cpu = 0,
             genoflu_disk_size = 0,
             genoflu_docker = "",

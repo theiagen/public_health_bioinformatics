@@ -16,6 +16,17 @@ task nanoplot {
     # get version
     NanoPlot --version | tee "VERSION"
 
+    if [[ $(zcat -f ~{read1} | head -n 4 | wc -l) -lt 4 ]]; then
+      echo "FAIL: no reads in input" | tee STATUS
+      for metric in NUMBER_OF_READS NUMBER_OF_BASES MEDIAN_READ_LENGTH MEAN_READ_LENGTH READ_LENGTH_STDEV N50 MEAN_QUAL MEDIAN_QUAL EST_COVERAGE; do
+        echo 0 > "$metric"
+      done
+      echo -e "Metrics\tdataset\nnumber_of_reads\t0\nnumber_of_bases\t0" > ~{samplename}_NanoStats.txt
+      echo "<html><body>No reads in input; NanoPlot was not run.</body></html>" > ~{samplename}_NanoPlot-report.html
+      exit 0
+    fi
+    echo "PASS" > STATUS
+
     # run nanoplot
     # --prefix for output file tag
     # --threads for number of threads allowed
@@ -60,6 +71,7 @@ task nanoplot {
     Float mean_q = read_float("MEAN_QUAL")
     Float median_q = read_float("MEDIAN_QUAL")
     Float? est_coverage = read_float("EST_COVERAGE")
+    String nanoplot_status = read_string("STATUS")
     String nanoplot_version = read_string("VERSION")
     String nanoplot_docker = docker
   }
