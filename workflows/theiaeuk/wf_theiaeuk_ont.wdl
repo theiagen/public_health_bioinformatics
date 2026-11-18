@@ -165,9 +165,9 @@ workflow theiaeuk_ont {
                 "n50_value": quast.n50_value,
                 "quast_gc_percent": quast.gc_percent,
                 "busco_completeness": busco.busco_results,
-                "mapping_stats_coverage": medea_magic.mapping_stats_coverage,
-                "mapping_stats_depth": medea_magic.mapping_stats_depth,
-                "mapping_stats_percentage_mapped_reads": medea_magic.mapping_stats_percentage_mapped_reads
+                "genome_mapping_coverage": medea_magic.mapping_stats_coverage,
+                "genome_mapping_depth": medea_magic.mapping_stats_depth,
+                "genome_mapping_percentage_mapped_reads": medea_magic.mapping_stats_percentage_mapped_reads
               }
           }
         }

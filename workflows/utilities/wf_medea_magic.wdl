@@ -241,7 +241,7 @@ workflow medea_magic {
             minimap2_memory = read_aligner_memory,
             minimap2_disk_size = read_aligner_disk_size,
             clair3_model = clair3_model,
-            clair3_variant_quality = clair3_variant_quality,
+            clair3_variant_quality = clair3_min_variant_quality,
             clair3_min_depth = clair3_min_depth,
             clair3_include_all_contigs = clair3_include_all_contigs,
             clair3_enable_haploid_precise = clair3_enable_haploid_precise,
