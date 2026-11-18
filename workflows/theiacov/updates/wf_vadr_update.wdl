@@ -27,6 +27,7 @@ workflow vadr_update {
       flu_genoflu_genotype = "",
       flu_segment = "",
       flu_subtype = "",
+      flu_type = "",
       gene_locations_bed_file = "gs://theiagen-public-resources-rp/empty_files/empty.bed",
       genome_length_input = 0,
       hiv_primer_version = "",

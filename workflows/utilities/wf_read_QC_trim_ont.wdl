@@ -88,43 +88,45 @@ workflow read_QC_trim_ont {
         docker = ncbi_scrub_docker,
         memory = ncbi_scrub_memory
     }
-    call artic_guppyplex.read_filtering {
-      input:
-        read1 = ncbi_scrub_se.read1_dehosted,
-        samplename = samplename,
-        min_length = min_length,
-        max_length = max_length,
-        run_prefix = run_prefix,
-        cpu = artic_guppyplex_cpu,
-        disk_size = artic_guppyplex_disk_size,
-        docker = artic_guppyplex_docker,
-        memory = artic_guppyplex_memory
-    }
-    call metabuli.metabuli as metabuli_theiacov_raw {
-      input:
-        samplename = samplename,
-        read1 = read1,
-        metabuli_db = metabuli_db,
-        seq_mode = 3,
-        taxon_id = ete4_taxon_id.taxon_id,
-        disk_size = metabuli_disk_size,
-        memory = metabuli_memory,
-        cpu = metabuli_cpu,
-        docker = metabuli_docker_image,
-        taxdump_path = metabuli_taxdump_path
-    }
-    call metabuli.metabuli as metabuli_theiacov_dehosted {
-      input:
-        samplename = samplename,
-        read1 = ncbi_scrub_se.read1_dehosted,
-        taxon_id = ete4_taxon_id.taxon_id,
-        metabuli_db = metabuli_db,
-        seq_mode = 3,
-        disk_size = metabuli_disk_size,
-        memory = metabuli_memory,
-        cpu = metabuli_cpu,
-        docker = metabuli_docker_image,
-        taxdump_path = metabuli_taxdump_path
+    if (ncbi_scrub_se.ncbi_scrub_status == "PASS") {
+      call artic_guppyplex.read_filtering {
+        input:
+          read1 = ncbi_scrub_se.read1_dehosted,
+          samplename = samplename,
+          min_length = min_length,
+          max_length = max_length,
+          run_prefix = run_prefix,
+          cpu = artic_guppyplex_cpu,
+          disk_size = artic_guppyplex_disk_size,
+          docker = artic_guppyplex_docker,
+          memory = artic_guppyplex_memory
+      }
+      call metabuli.metabuli as metabuli_theiacov_raw {
+        input:
+          samplename = samplename,
+          read1 = read1,
+          metabuli_db = metabuli_db,
+          seq_mode = 3,
+          taxon_id = ete4_taxon_id.taxon_id,
+          disk_size = metabuli_disk_size,
+          memory = metabuli_memory,
+          cpu = metabuli_cpu,
+          docker = metabuli_docker_image,
+          taxdump_path = metabuli_taxdump_path
+      }
+      call metabuli.metabuli as metabuli_theiacov_dehosted {
+        input:
+          samplename = samplename,
+          read1 = ncbi_scrub_se.read1_dehosted,
+          taxon_id = ete4_taxon_id.taxon_id,
+          metabuli_db = metabuli_db,
+          seq_mode = 3,
+          disk_size = metabuli_disk_size,
+          memory = metabuli_memory,
+          cpu = metabuli_cpu,
+          docker = metabuli_docker_image,
+          taxdump_path = metabuli_taxdump_path
+      }
     }
   }
   if ( "~{workflow_series}" == "theiaprok" || "~{workflow_series}" == "theiaeuk" ) {
@@ -180,6 +182,7 @@ workflow read_QC_trim_ont {
     # theiacov outputs
     # ncbi scrub outputs
     File? read1_dehosted = ncbi_scrub_se.read1_dehosted
+    String? ncbi_scrub_status = ncbi_scrub_se.ncbi_scrub_status
 
     # metabuli - theiacov and theiaprok
     String metabuli_version = select_first([metabuli_theiacov_raw.metabuli_version, metabuli_theiaprok.metabuli_version, ""])
