@@ -7958,6 +7958,14 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
+<td><strong>flu_type</strong></td>
+<td>String</td>
+<td>The influenza type being analyzed. Options: "Type_A" or "Type_B". Automatically determined by Abricate. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
+<td>N/A</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
 <td><strong>hiv_primer_version</strong></td>
 <td>String</td>
 <td>The version of HIV primers used. Options are "v1" (HIV-1 originating from Oregon) and "v2" (HIV-1 originating from Southern Africa); each version sets its own reference genome, reference GFF, and primer BED file, which can be found in <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
@@ -9243,6 +9251,14 @@
 <td><strong>flu_subtype</strong></td>
 <td>String</td>
 <td>The influenza subtype being analyzed. Options: "Yamagata", "Victoria", "H1N1", "H3N2", "H5N1". Automatically determined. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
+<td>N/A</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>flu_type</strong></td>
+<td>String</td>
+<td>The influenza type being analyzed. Options: "Type_A" or "Type_B". Automatically determined by Abricate. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
 <td>N/A</td>
 <td>Optional</td>
 </tr>
@@ -10738,6 +10754,14 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
+<td><strong>flu_type</strong></td>
+<td>String</td>
+<td>The influenza type being analyzed. Options: "Type_A" or "Type_B". Automatically determined by Abricate. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
+<td>N/A</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
 <td><strong>hiv_primer_version</strong></td>
 <td>String</td>
 <td>The version of HIV primers used. Options are "v1" (HIV-1 originating from Oregon) and "v2" (HIV-1 originating from Southern Africa); each version sets its own reference genome, reference GFF, and primer BED file, which can be found in <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
@@ -12092,6 +12116,14 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
+<td><strong>flu_type</strong></td>
+<td>String</td>
+<td>The influenza type being analyzed. Options: "Type_A" or "Type_B". Automatically determined by Abricate. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
+<td>N/A</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
 <td><strong>gene_locations_bed_file</strong></td>
 <td>File</td>
 <td>Use to provide locations of interest where average coverage will be calculated</td>
@@ -13022,6 +13054,14 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
+<td><strong>flu_type</strong></td>
+<td>String</td>
+<td>The influenza type being analyzed. Options: "Type_A" or "Type_B". Automatically determined by Abricate. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
+<td>N/A</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
 <td><strong>gene_locations_bed_file</strong></td>
 <td>File</td>
 <td>Use to provide locations of interest where average coverage will be calculated</td>
@@ -13808,6 +13848,14 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
+<td><strong>flu_type</strong></td>
+<td>String</td>
+<td>The influenza type being analyzed. Options: "Type_A" or "Type_B". Automatically determined by Abricate. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
+<td>N/A</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
 <td><strong>gene_locations_bed_file</strong></td>
 <td>File</td>
 <td>Use to provide locations of interest where average coverage will be calculated</td>
@@ -14280,7 +14328,7 @@
 <td>all</td>
 <td>all</td>
 <td><code>13500</code></td>
-<td></td>
+<td>TheiaCoV_Illumina_PE and TheiaCoV_ONT use 13164 (Type A) or 13779 (Type B), based on the ABRicate flu type, when calculating <code>percent_reference_coverage</code> (and NanoPlot estimated coverage on ONT). 13500 is used for read screening and when no type is found.</td>
 </tr>
 <tr>
 <td>vadr_max_length</td>
@@ -19864,7 +19912,7 @@
 <tr>
 <td>percent_reference_coverage</td>
 <td>Float</td>
-<td>Percent coverage of the reference genome after performing primer trimming; calculated as assembly_length_unambiguous / length of the reference genome (SC2: 29903) x 100</td>
+<td>Percent coverage of the reference genome after performing primer trimming; calculated as assembly_length_unambiguous / length of the reference genome (SC2: 29903; flu: 13164 for Type A, 13779 for Type B) x 100</td>
 </tr>
 <tr>
 <td>percentage_mapped_reads</td>
@@ -20519,7 +20567,7 @@
 <tr>
 <td>percent_reference_coverage</td>
 <td>Float</td>
-<td>Percent coverage of the reference genome after performing primer trimming; calculated as assembly_length_unambiguous / length of the reference genome (SC2: 29903) x 100</td>
+<td>Percent coverage of the reference genome after performing primer trimming; calculated as assembly_length_unambiguous / length of the reference genome (SC2: 29903; flu: 13500) x 100</td>
 </tr>
 <tr>
 <td>percentage_mapped_reads</td>
@@ -21419,7 +21467,7 @@
 <tr>
 <td>percent_reference_coverage</td>
 <td>Float</td>
-<td>Percent coverage of the reference genome after performing primer trimming; calculated as assembly_length_unambiguous / length of the reference genome (SC2: 29903) x 100</td>
+<td>Percent coverage of the reference genome after performing primer trimming; calculated as assembly_length_unambiguous / length of the reference genome (SC2: 29903; flu: 13164 for Type A, 13779 for Type B) x 100</td>
 </tr>
 <tr>
 <td>percentage_mapped_reads</td>
@@ -21934,7 +21982,7 @@
 <tr>
 <td>percent_reference_coverage</td>
 <td>Float</td>
-<td>Percent coverage of the reference genome after performing primer trimming; calculated as assembly_length_unambiguous / length of the reference genome (SC2: 29903) x 100</td>
+<td>Percent coverage of the reference genome after performing primer trimming; calculated as assembly_length_unambiguous / length of the reference genome (SC2: 29903; flu: 13500) x 100</td>
 </tr>
 <tr>
 <td>qc_check</td>
@@ -22344,7 +22392,7 @@
 <tr>
 <td>percent_reference_coverage</td>
 <td>Float</td>
-<td>Percent coverage of the reference genome after performing primer trimming; calculated as assembly_length_unambiguous / length of the reference genome (SC2: 29903) x 100</td>
+<td>Percent coverage of the reference genome after performing primer trimming; calculated as assembly_length_unambiguous / length of the reference genome (SC2: 29903; flu: 13500) x 100</td>
 </tr>
 <tr>
 <td>percentage_mapped_reads</td>
