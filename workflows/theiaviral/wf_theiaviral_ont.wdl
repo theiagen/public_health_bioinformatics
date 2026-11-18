@@ -223,7 +223,8 @@ workflow theiaviral_ont {
                     reference_genome_file_index = fasta_utilities.fai,
                     sequencing_platform = "ont",
                     enable_long_indel = true,
-                    samplename = samplename
+                    samplename = samplename,
+                    min_depth = min_depth
                 }
                 # mask low coverage regions with Ns
                 call parse_mapping_task.mask_low_coverage {

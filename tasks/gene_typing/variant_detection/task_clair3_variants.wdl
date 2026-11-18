@@ -19,6 +19,7 @@ task clair3_variants {
     Boolean enable_gvcf = false
     Boolean enable_long_indel = false
     Int variant_quality = 2
+    Int min_depth = 2 # Minimum coverage required to call a variant (clair3 --min_coverage), set to default (v1.0.10)
     Float snp_min_af = 0.08 # Minimum SNP AF required for a candidate variant.
     Float? indel_min_af # Minimum Indel AF required for a candidate variant. Default dependent on sequencing platform
   }
@@ -57,6 +58,7 @@ task clair3_variants {
         --output=~{samplename} \
         --sample_name=~{samplename} \
         --qual=~{variant_quality} \
+        --min_coverage=~{min_depth} \
         ~{"--snp_min_af=" + snp_min_af} \
         ~{"--indel_min_af=" + indel_min_af} \
         ~{true="--include_all_ctgs" false="" include_all_contigs} \
