@@ -18,6 +18,8 @@ task minimap2 {
     Int memory = 8
   }
   command <<<
+    set -euo pipefail
+
     # Preset options - https://lh3.github.io/minimap2/minimap2.html
     # Version capture
     minimap2 --version | tee VERSION
