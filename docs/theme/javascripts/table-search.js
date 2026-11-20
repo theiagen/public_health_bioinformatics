@@ -1,6 +1,10 @@
 /*
  * Adds a toolbar above each ".searchable-table" containing a search box and a
  * reset button to clear any search or table visual manipulation
+ *
+ * Adding the "search-reveal" class too (".searchable-table.search-reveal") hides
+ * the table until something is typed in the search box, and adds a "Show all"
+ * button beside the search box to browse every row without searching
  */
 (function () {
   // functions from table-utils.js
@@ -58,11 +62,29 @@
       resetButton.setAttribute("aria-label", "Reset table");
       resetButton.innerHTML = RESET_ICON;
 
+      // ".search-reveal" tables start hidden
+      const reveal = container.classList.contains("search-reveal");
+
+      // ".search-reveal" tables also get a "Show all" button (middle) that shows
+      // every row without searching; it reads "Hide all" while they're shown
+      let showAll = false; // true after "Show all" is clicked, until "Hide all" or reset
+      const showAllButton = document.createElement("button");
+      showAllButton.type = "button";
+      showAllButton.classList.add("table-showall-button");
+      showAllButton.textContent = "Show all";
+
       toolbar.appendChild(searchInput);
+      if (reveal) {
+        toolbar.appendChild(showAllButton);
+      }
       toolbar.appendChild(resetButton);
 
       // add the toolbar before the table
       container.insertBefore(toolbar, container.firstChild);
+
+      if (reveal) {
+        container.classList.add("is-concealed");
+      }
 
       // save the original row order so reset can restore it (tablesort
       // reorders these same <tr> nodes in place, so the references stay valid).
@@ -122,6 +144,14 @@
         // update the list of visible rows and lastFilter
         visibleRows = nextVisible;
         lastFilter = filter;
+        // ".search-reveal" tables only show while there's a search, or after "Show all"
+        if (reveal) {
+          const noSearch = filter.trim() === "";
+          container.classList.toggle("is-concealed", noSearch && !showAll);
+          // "Hide all" only while every row is shown; once a search narrows the
+          // rows, the button offers "Show all" again (which clears the search)
+          showAllButton.textContent = showAll && noSearch ? "Hide all" : "Show all";
+        }
         // indicate that a filter was set
         updateResetVisibility();
       }
@@ -131,6 +161,13 @@
         if (filterScheduled) return;
         filterScheduled = true;
         requestAnimationFrame(applyFilter);
+      });
+
+      // "Show all" clears any search and shows every row; "Hide all" hides the table again
+      showAllButton.addEventListener("click", function () {
+        showAll = showAllButton.textContent === "Show all";
+        searchInput.value = "";
+        applyFilter();
       });
 
 /* ======================================================================
@@ -180,6 +217,13 @@
         resetSort(table);
         resetResize(table);
         scrollTableToTop(table);
+
+        // hide a ".search-reveal" table again
+        if (reveal) {
+          showAll = false;
+          showAllButton.textContent = "Show all";
+          container.classList.add("is-concealed");
+        }
 
         // re-hide the reset button
         updateResetVisibility();

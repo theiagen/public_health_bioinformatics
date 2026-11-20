@@ -133,7 +133,7 @@ def render_tsv_table(
             for col, vals in exclude_filters.items():
                 if col in row:
                     cell = [v.strip() for v in row[col].split(",")]
-                    if all(v in cell for v in vals):
+                    if any(v in cell for v in vals):
                         return True
             return False
 
