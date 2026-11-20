@@ -6,7 +6,7 @@ task gatk_filter {
     File reference_genome
     File vcf
     File vcf_index # tabix (.tbi) index for a bgzipped VCF or Tribble (.idx) index for an uncompressed VCF
-    Boolean decompress = false # output uncompressed VCFs instead of bgzipped VCFs
+    Boolean decompress = false # output an uncompressed filtered VCF instead of a bgzipped one; the selected VCF is always uncompressed
 
     # defaults informed by here: https://gatk.broadinstitute.org/hc/en-us/articles/360035890471-Hard-filtering-germline-short-variants
     Float min_variant_quality = 30
@@ -95,10 +95,12 @@ task gatk_filter {
       ~{'--filter-name "user_filter" --filter-expression "' + filter_expression + '"'} \
       ${FILTER_ARGS[@]}
 
-    # call SelectVariants and drop those without PASS flags
+    # call SelectVariants and drop those without PASS flags; the ".vcf" extension makes GATK
+    # write plain text (with a Tribble index) regardless of the input's compression, so the
+    # selected VCF matches Clair3's uncompressed selected VCF for downstream consumers
     gatk --java-options "-Xmx~{memory}G" SelectVariants \
       -V ~{samplename}_filtered~{vcf_suffix} \
-      -O ~{samplename}_selected~{vcf_suffix} \
+      -O ~{samplename}_selected.vcf \
       --exclude-filtered true
 
     # quantify the proportion of records that survived filtering; the FILTER
@@ -113,8 +115,8 @@ task gatk_filter {
     String gatk_version = read_string("VERSION")
     File gatk_filtered_vcf = "~{samplename}_filtered~{vcf_suffix}"
     File gatk_filtered_vcf_index = "~{samplename}_filtered~{vcf_suffix}~{index_suffix}"
-    File gatk_selected_vcf = "~{samplename}_selected~{vcf_suffix}"
-    File gatk_selected_vcf_index = "~{samplename}_selected~{vcf_suffix}~{index_suffix}"
+    File gatk_selected_vcf = "~{samplename}_selected.vcf"
+    File gatk_selected_vcf_index = "~{samplename}_selected.vcf.idx"
     Float gatk_percent_passing = read_float("PERCENT_PASS.txt")
   }
   runtime {

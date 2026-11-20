@@ -6,6 +6,8 @@ task mapping_stats {
     String samplename
     File read1
     File? read2
+    File? vcf # variants called against the mapped reference (bgzipped or uncompressed); enables total_snps
+    Int min_depth = 1 # positions below this depth are treated as uncovered (samtools coverage --min-depth)
     Int disk_size = 100
     Int memory = 8
     Int cpu = 2
@@ -19,8 +21,8 @@ task mapping_stats {
     samtools --version | head -n1 | tee VERSION
 
     samtools stats ~{bamfile} > ~{samplename}.stats.txt
-    samtools coverage ~{bamfile} -m -o ~{samplename}.cov.hist
-    samtools coverage ~{bamfile} -o ~{samplename}.cov.txt
+    samtools coverage ~{bamfile} -m --min-depth ~{min_depth} -o ~{samplename}.cov.hist
+    samtools coverage ~{bamfile} --min-depth ~{min_depth} -o ~{samplename}.cov.txt
     samtools flagstat ~{bamfile} > ~{samplename}.flagstat.txt
 
      # Extracting coverage, depth, meanbaseq, and meanmapq
@@ -35,7 +37,7 @@ task mapping_stats {
       seq_data = line.strip().split("\t")
       seq, start, end, reads, cov_bases, coverage, meandepth, meanbaseq, meanmapq = seq_data
       seq2data[seq] = {
-        "length": int(end) - int(start),
+        "length": int(end) - int(start) + 1,
         "reads": int(reads),
         "cov_bases": int(cov_bases),
         "coverage": float(coverage),
@@ -67,21 +69,21 @@ task mapping_stats {
 
     # report total stats
     with open("COVERAGE", "w") as f:
-      f.write(str(total_breadth))
+      f.write(f"{total_breadth:.2f}")
     with open("DEPTH", "w") as f:
-      f.write(str(total_depth))
+      f.write(f"{total_depth:.2f}")
     with open("MEANBASEQ", "w") as f:
-      f.write(str(total_meanbaseq))
+      f.write(f"{total_meanbaseq:.2f}")
     with open("MEANMAPQ", "w") as f:
-      f.write(str(total_meanmapq))
+      f.write(f"{total_meanmapq:.2f}")
 
     # report sequence specific mapping stats
     cov_dict = {}
     depth_dict = {}
     read_dict = {}
     for seq, part in seq2data.items():
-      cov_dict[seq] = part["coverage"]
-      depth_dict[seq] = part["meandepth"]
+      cov_dict[seq] = round(part["coverage"], 2)
+      depth_dict[seq] = round(part["meandepth"], 2)
       read_dict[seq] = part["reads"]
     with open("SEQ2COVERAGE.json", "w") as f:
       json.dump(cov_dict, f, indent=4)
@@ -89,6 +91,45 @@ task mapping_stats {
       json.dump(depth_dict, f, indent=4)
     with open("SEQ2READS.json", "w") as f:
       json.dump(read_dict, f, indent=4)
+    CODE
+
+    # count SNPs in the optional VCF
+    touch TOTAL_SNPS
+    python3 <<'CODE'
+    import gzip
+
+    vcf_path = "~{default="" vcf}"
+    if vcf_path:
+      # detect bgzip/gzip compression from the magic number rather than the extension
+      with open(vcf_path, "rb") as f:
+        is_gzipped = f.read(2) == b"\x1f\x8b"
+      opener = gzip.open if is_gzipped else open
+
+      # collect the (contig, position) of each SNP so a site counts once, even when its alleles
+      # are split across records (e.g. iVar writes one record per ALT allele)
+      snp_sites = set()
+      with opener(vcf_path, "rt") as f:
+        for line in f:
+          if line.startswith("#") or not line.strip():
+            continue
+          chrom, pos, _, ref, alts, _, filt = line.split("\t", 8)[:7]
+          # skip records that did not pass filtering (FILTER of PASS or unfiltered ".")
+          if filt not in ("PASS", "."):
+            continue
+          ref = ref.upper()
+          for alt in alts.upper().split(","):
+            # require a same-length allele of unambiguous bases; excludes indels, spanning
+            # deletions ("*"), missing (".") and symbolic ("<...>") alleles
+            if len(alt) != len(ref) or not set(alt) <= set("ACGT"):
+              continue
+            # a SNP differs from REF at exactly one base (more is an MNP); the offset locates SNPs
+            # padded to a longer REF in records shared with a deletion (e.g. REF=AT ALT=A,GT)
+            diffs = [i for i, (r, a) in enumerate(zip(ref, alt)) if r != a]
+            if len(diffs) == 1:
+              snp_sites.add((chrom, int(pos) + diffs[0]))
+
+      with open("TOTAL_SNPS", "w") as f:
+        f.write(str(len(snp_sites)))
     CODE
 
     # parse inputted reads for total read count
@@ -110,7 +151,7 @@ task mapping_stats {
     percentage_mapped_reads=$(awk "BEGIN {printf \"%.2f\", ($mapped_reads / $total_reads) * 100}")
 
     # If the percentage calculation fails, default to 0.0
-    if [ -z "$percentage_mapped_reads" ]; then percentage_mapped_reads="0.0"; fi
+    if [ -z "$percentage_mapped_reads" ]; then percentage_mapped_reads="0.00"; fi
 
     # Output the result
     echo $percentage_mapped_reads | tee PERCENTAGE_MAPPED_READS
@@ -133,6 +174,7 @@ task mapping_stats {
     Float meanbaseq = read_string("MEANBASEQ")
     Float meanmapq = read_string("MEANMAPQ")
     Float percentage_mapped_reads = read_string("PERCENTAGE_MAPPED_READS")
+    String? total_snps = read_string("TOTAL_SNPS")
   }
   runtime {
     docker: docker
