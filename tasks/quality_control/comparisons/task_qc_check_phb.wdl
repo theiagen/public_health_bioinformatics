@@ -70,7 +70,8 @@ task qc_check_phb {
       "r2_mean_readlength_raw": {"type": float, "operator": operator.ge},
       "sc2_s_gene_mean_coverage": {"type": float, "operator": operator.ge},
       "sc2_s_gene_percent_coverage": {"type": float, "operator": operator.ge},
-      "vadr_num_alerts": {"type": int, "operator": operator.le}
+      "vadr_num_alerts": {"type": int, "operator": operator.le},
+      "vadr_frameshift_stop_codon_num_alerts": {"type": int, "operator": operator.le}
     }
     # create a map for segment-based checks
     segment_check_criteria = {
@@ -227,7 +228,7 @@ task qc_check_phb {
                   qc_note += f"{base_metric} ({obs_val}) could not be parsed; "
                 else:
                   qc_note = compare(qc_note, metric, cast_val, obs_operator, float(taxon_df[metric][0]))
-              elif base_metric == "vadr_num_alerts" and str(obs_val).startswith("VADR skipped"):
+              elif (base_metric == "vadr_num_alerts" or base_metric == "vadr_frameshift_stop_codon_num_alerts") and str(obs_val).startswith("VADR"):
                 qc_note += f"{base_metric} not evaluated ({obs_val}); "
               else:
                 cast_val = safe_cast(obs_val, val_type)
