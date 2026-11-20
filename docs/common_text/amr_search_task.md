@@ -18,7 +18,7 @@ fragment: true
     Currently, only a subset of species are supported by this task.
 
     ??? toggle "Supported Species"
-        The following table shows the species name and the associated NCBI Code. If you are running AMR Search as part of TheiaProk and TheiaEuk, these codes will be automatically determined based on the GAMBIT predicted taxon, or the user-provided `expected_taxon` input.
+        The following table shows the species name and the associated NCBI Code. If you are running AMR Search as part of TheiaProk and TheiaEuk, these codes will be automatically determined based on the GAMBIT predicted taxon, or the user-provided `expected_taxon` input, except for Salmonella Typhi. Determination comes from a combination of SeqSero2 and SISTR. If neither provide "Typhi" AMRSearch will not run.
 
         | Species                      | NCBI Code |
         |------------------------------|-----------|
