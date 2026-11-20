@@ -63,12 +63,22 @@ workflow read_QC_trim_se {
   }
 
   if (call_rasusa) {
+    # initially check for a specified genome length
+    # "0" counts as unspecified
+    if (select_first([rasusa_genome_length, "0"]) != "0") {
+      String rasusa_genome_length_specified = select_first([rasusa_genome_length])
+    }
+    if ( ! (defined(rasusa_fraction_of_reads) || defined(rasusa_num_bases) || defined(rasusa_num_reads))) {
+      # fails workflow evaluation, before rasusa is dispatched, when no genome length was specified or specified as 0
+      # since rasusa_genome_length_specified would not be assigned
+      String rasusa_genome_length_required = select_first([rasusa_genome_length_specified])
+    }
     call rasusa_task.rasusa {
       input:
         read1 = select_first([ncbi_scrub_se.read1_dehosted, read1]),
         samplename = samplename,
         coverage = rasusa_downsampling_coverage,
-        genome_length = rasusa_genome_length,
+        genome_length = if defined(rasusa_genome_length_required) then rasusa_genome_length_required else rasusa_genome_length,
         seed = rasusa_seed,
         num_bases = rasusa_num_bases,
         fraction_of_reads = rasusa_fraction_of_reads,
