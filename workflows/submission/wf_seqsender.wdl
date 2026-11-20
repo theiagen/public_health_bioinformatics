@@ -25,8 +25,8 @@ workflow seqsender {
     Boolean submit_to_production = false
     Boolean validation_only = false
     File? resume_checkpoint_tarball # checkpoint_tarball from an earlier run; skips build_and_prep and submit, and only polls
-    Float max_wait_hours = 48
-    Float poll_interval_minutes = 10
+    Float max_wait_hours = 0.5
+    Float poll_interval_minutes = 1
 
     File? input_table # for command line testing only; skips the Terra download
   }
