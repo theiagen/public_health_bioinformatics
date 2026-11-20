@@ -14,7 +14,7 @@ task download_terra_table {
     Int disk_size = 10
     Int memory = 2
     Int cpu = 1
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2026-11-20"
   }
   command <<<
     # set -euo pipefail to avoid silent failure

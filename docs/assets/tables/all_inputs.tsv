@@ -221,7 +221,7 @@ abricate	min_percent_coverage	Int	Minimum DNA %coverage for the ABRicate task	80
 abricate	min_percent_identity	Int	Minimum DNA %identity for the ABRicate task	80	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 add_biosample_accessions	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Terra_2_NCBI	runtime	
 add_biosample_accessions	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Terra_2_NCBI	runtime	
-add_biosample_accessions	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16	Optional	Terra_2_NCBI	docker	
+add_biosample_accessions	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2026-11-20	Optional	Terra_2_NCBI	docker	
 add_biosample_accessions	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Terra_2_NCBI	runtime	
 allele_clustering_task	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Allele_Clustering	runtime	
 allele_clustering_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Allele_Clustering	runtime	
@@ -622,11 +622,11 @@ create_microreact_project	docker	String	The Docker container to use for the task
 create_microreact_project	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Microreact_Export	runtime	
 create_table_from_array	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Dorado_Basecalling	runtime	
 create_table_from_array	disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	Dorado_Basecalling	runtime	
-create_table_from_array	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21	Optional	Dorado_Basecalling	docker	
+create_table_from_array	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2026-11-20	Optional	Dorado_Basecalling	docker	
 create_table_from_array	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Dorado_Basecalling	runtime	
 create_terra_table	cpu	Int	Number of CPUs to allocate to the task	1	Optional	ONT_Barcode_Concatenation	runtime	
 create_terra_table	disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	ONT_Barcode_Concatenation	runtime	
-create_terra_table	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21	Optional	ONT_Barcode_Concatenation	docker	
+create_terra_table	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2026-11-20	Optional	ONT_Barcode_Concatenation	docker	
 create_terra_table	file_ending	String	Use to provide file ending(s) to determine what should be dropped from the filename to determine the name of the sample (see above for more information)		Optional	Create_Terra_Table	general	
 create_terra_table	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	ONT_Barcode_Concatenation	runtime	
 dehost_pe	target_organism	String	Target organism for Kraken2 reporting	Severe acute respiratory syndrome coronavirus 2	Optional	NCBI_Scrub_PE	general	
@@ -690,7 +690,7 @@ dorado_trim	docker	String	The Docker container to use for the task. This is not 
 dorado_trim	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	Dorado_Basecalling	runtime	
 download_terra_table	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Mercury_Prep_N_Batch, Microreact_Export, Terra_2_ENA	runtime	
 download_terra_table	disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	Mercury_Prep_N_Batch, Microreact_Export, Terra_2_ENA	runtime	
-download_terra_table	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21	Optional	Mercury_Prep_N_Batch, Microreact_Export, Terra_2_ENA	docker	
+download_terra_table	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2026-11-20	Optional	Mercury_Prep_N_Batch, Microreact_Export, Terra_2_ENA	docker	
 download_terra_table	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Mercury_Prep_N_Batch, Microreact_Export, Terra_2_ENA	runtime	
 est_genome_length	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 est_genome_length	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
@@ -706,11 +706,11 @@ ete4_identify	memory	Int	Amount of memory (in GB) to allocate to the task	4	Opti
 ete4_identify	rank	String	Internal component, do not modify		Optional	Metabuli, TheiaViral_Panel	general	
 export_taxon_table	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Panel	runtime	
 export_taxon_table	disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Panel	runtime	
-export_taxon_table	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Panel	docker	
+export_taxon_table	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2026-11-20	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Panel	docker	
 export_taxon_table	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Panel	runtime	
 export_two_tsvs	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaValidate	runtime	
 export_two_tsvs	disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	TheiaValidate	runtime	
-export_two_tsvs	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16	Optional	TheiaValidate	docker	
+export_two_tsvs	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2026-11-20	Optional	TheiaValidate	docker	
 export_two_tsvs	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	1	Optional	TheiaValidate	runtime	
 fasta_to_ids	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Augur	runtime	
 fasta_to_ids	disk_size	Int	Amount of storage (in GB) to allocate to the task	375	Optional	Augur	runtime	
@@ -1216,7 +1216,7 @@ lyveset	sample_sites	Boolean	If true, randomly choose a genome and find SNPs in 
 lyveset	snpcaller	String	Which SNP caller? Choices: "varscan", "vcftools"	varscan	Optional	Lyve_SET	general	
 make_table	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Create_Terra_Table	runtime	
 make_table	disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	Create_Terra_Table	runtime	
-make_table	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21	Optional	Create_Terra_Table	docker	
+make_table	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2026-11-20	Optional	Create_Terra_Table	docker	
 make_table	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Create_Terra_Table	runtime	
 mashtree_fasta	data_summary_column_names	String	A comma-separated list of the column names from the sample-level data table for generating a data summary (presence/absence .csv matrix); e.g., "amrfinderplus_amr_genes,amrfinderplus_virulence_genes"		Optional	MashTree_FASTA	general	
 mashtree_fasta	data_summary_terra_project	String	The billing project for your current workspace. This can be found after the "#workspaces/" section in the workspace's URL		Optional	MashTree_FASTA	general	
@@ -1270,7 +1270,7 @@ medea_magic	read1	File	Internal component, do not modify		Optional	TheiaEuk_ONT	
 medea_magic	read2	File	Internal component, do not modify		Optional	TheiaEuk_ONT	general	
 medea_magic	run_amr_search	Boolean	Set to true to run AMR_Search workflow for support taxa. See AMR_Search documentation	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	snippy_base_quality	Int	Minimum quality for a nucelotide to be used in variant calling	13	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-medea_magic	snippy_gene_query_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	docker	
+medea_magic	snippy_gene_query_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2026-11-20	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	docker	
 medea_magic	snippy_map_qual	Int	Minimum mapping quality to accept in variant calling	60	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	snippy_maxsoft	Int	Number of bases of alignment to soft-clip before discarding the alignment	10	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	snippy_min_coverage	Int	Minimum read coverage of a position to identify a mutation	10	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
@@ -1647,9 +1647,9 @@ nextclade_v3_set	memory	Int	Amount of memory/RAM (in GB) to allocate to the task
 nextclade_v3_set	verbosity	String	Set the nextclade output verbosity level. Options: off, error, warn, info, debug, trace	warn	Optional	Nextclade_Batch	general	
 ont_barcode_concatenation	barcode_renaming_file	File	A tab-delimited file where the name of the barcode folders are mapped to the desired sample name in the Terra table (see above for examples)		Optional	ONT_Barcode_Concatenation	general	
 ont_barcode_concatenation	file_extension	String	If your ONT data ends in a different extension, like ".fq.gz" or ".fastq", you can indicate that here.	.fastq.gz	Optional	ONT_Barcode_Concatenation	general	
-organism_parameters	flu_segment	String	Influenza genome segment being analyzed. Options: "HA" or "NA". Automatically determined. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs	N/A	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	general	
+organism_parameters	flu_segment	String	Influenza genome segment being analyzed. Options: "HA" or "NA". Automatically determined. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs	N/A	Optional	TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
 organism_parameters	flu_subtype	String	The influenza subtype being analyzed. Options: "Yamagata", "Victoria", "H1N1", "H3N2", "H5N1". Automatically determined. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs	N/A	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	general	
-organism_parameters	flu_type	String	The influenza type being analyzed. Options: "Type_A" or "Type_B". Automatically determined by Abricate. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs	N/A	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	general	
+organism_parameters	flu_type	String	The influenza type being analyzed. Options: "Type_A" or "Type_B". Automatically determined by Abricate. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs	N/A	Optional	TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
 organism_parameters	gene_locations_bed_file	File	Use to provide locations of interest where average coverage will be calculated	Default provided for SARS-CoV-2 ("gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_gene_locations.bed") and mpox ("gs://theiagen-public-resources-rp/reference_data/viral/mpox/mpox_gene_locations.bed")	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch	general	True
 organism_parameters	genome_length_input	Int	Use to specify the expected genome length; provided by default for all supported organisms	Default provided for SARS-CoV-2 (29903), mpox (197200), WNV (11000), flu (13500), RSV-A (15500), RSV-B (15500), HIV (primer versions 1 [9181] and 2 [9840]), measles (16000), mumps (15300), rubella (9800)	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA_Batch	general	True
 organism_parameters	hiv_primer_version	String	The version of HIV primers used. Options are "v1" (HIV-1 originating from Oregon) and "v2" (HIV-1 originating from Southern Africa); each version sets its own reference genome, reference GFF, and primer BED file, which can be found in <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs	v1	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	general	
@@ -1761,13 +1761,13 @@ prokka	prokka_arguments	String	Any additional <https://github.com/tseemann/prokk
 prokka	proteins	Boolean	FASTA file of trusted proteins for Prokka to first use for annotations	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 prune_table	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Terra_2_NCBI	runtime	
 prune_table	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Terra_2_NCBI	runtime	
-prune_table	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16	Optional	Terra_2_NCBI	docker	
+prune_table	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2026-11-20	Optional	Terra_2_NCBI	docker	
 prune_table	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Terra_2_NCBI	runtime	
 prune_table	read1_column_name	String	The column header of the read1 column	read1	Optional	Terra_2_NCBI	general	
 prune_table	read2_column_name	String	The column header of the read2 column	read2	Optional	Terra_2_NCBI	general	
 qc_check_task	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 qc_check_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
-qc_check_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2024-08-27	Optional	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
+qc_check_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2026-11-20	Optional	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
 qc_check_task	gambit_predicted_taxon	String	Internal component, do not modify		Optional	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	general	
 qc_check_task	irma_qc_table	File	Internal component, do not modify		Optional	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 qc_check_task	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
@@ -2089,7 +2089,7 @@ semibin	min_length	Int	Minimum contig length for binning	1000	Optional	TheiaMeta
 semibin	ratio	Float	If the ratio of the number of base pairs of contigs between 1000-2500 bp smaller than this value, the minimal length will be set as 1000bp, otherwise 2500bp.	0.05	Optional	TheiaMeta_Illumina_PE	general	
 shared_variants	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Find_Shared_Variants, Snippy_Tree	runtime	
 shared_variants	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Find_Shared_Variants, Snippy_Tree	runtime	
-shared_variants	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16	Optional	Find_Shared_Variants, Snippy_Tree	docker	
+shared_variants	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2026-11-20	Optional	Find_Shared_Variants, Snippy_Tree	docker	
 shared_variants	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Find_Shared_Variants, Snippy_Tree	runtime	
 skani	acc2taxon_map	File	Tab-delimited map between reference genome accessions and their affiliated taxon	gs://theiagen-public-resources-rp/reference_data/databases/skani/viral_fna_20251107/viral_accession2taxon_20251107.tsv	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general	
 skani	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
@@ -2100,11 +2100,11 @@ skani	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional
 skani	skani_db	File	Skani database file	gs://theiagen-public-resources-rp/reference_data/databases/skani/skani_db_20251107.tar	Optional	TheiaViral_ONT	database	
 sm_theiacov_fasta_wrangling	cpu	Int	Number of CPUs to allocate to the task	8	Optional	TheiaCoV_FASTA_Batch	runtime	
 sm_theiacov_fasta_wrangling	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_FASTA_Batch	runtime	
-sm_theiacov_fasta_wrangling	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4	Optional	TheiaCoV_FASTA_Batch	docker	
+sm_theiacov_fasta_wrangling	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2026-11-20	Optional	TheiaCoV_FASTA_Batch	docker	
 sm_theiacov_fasta_wrangling	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaCoV_FASTA_Batch	runtime	
 snippy_gene_query	cpu	Int	Number of CPUs to allocate to the task	8	Optional	Snippy_Variants	runtime	
 snippy_gene_query	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Snippy_Variants	runtime	
-snippy_gene_query	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21	Optional	Snippy_Variants	docker	
+snippy_gene_query	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2026-11-20	Optional	Snippy_Variants	docker	
 snippy_gene_query	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Snippy_Variants	runtime	
 snippy_streamline	assembly_fasta	Array[File]	The assembly files for your samples (Required if a reference genome is not provided)		Optional	Snippy_Streamline	general	
 snippy_streamline	reference_genome_file	File	Reference genome in FASTA or GENBANK format (must be the same reference used in Snippy_Variants workflow); provide this if you want to skip the detection of a suitable reference		Optional	Snippy_Streamline	general	
@@ -2209,7 +2209,7 @@ submit_ena_data	read2_column	String	Column name containing read2 file paths	read
 submit_ena_data	submit_to_production	Boolean	If false, performs a test submission of metadata	False	Optional	Terra_2_ENA	general	
 summarize_data	cpu	Int	Number of CPUs to allocate to the task	8	Optional	Core_Gene_SNP, MashTree_FASTA, Snippy_Tree, kSNP3, kSNP4	runtime	
 summarize_data	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Core_Gene_SNP, MashTree_FASTA, Snippy_Tree, kSNP3, kSNP4	runtime	
-summarize_data	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16	Optional	Core_Gene_SNP, MashTree_FASTA, Snippy_Tree, kSNP3, kSNP4	docker	
+summarize_data	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2026-11-20	Optional	Core_Gene_SNP, MashTree_FASTA, Snippy_Tree, kSNP3, kSNP4	docker	
 summarize_data	id_column_name	String	If the sample IDs are in a different column to samplenames, it can be passed here and it will be used instead.		Optional	Core_Gene_SNP, MashTree_FASTA, Snippy_Tree, kSNP3, kSNP4	general	
 summarize_data	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	1	Optional	Core_Gene_SNP, MashTree_FASTA, Snippy_Tree, kSNP3, kSNP4	runtime	
 table2asn	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Mercury_Prep_N_Batch	runtime	

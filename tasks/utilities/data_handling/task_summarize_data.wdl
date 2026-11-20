@@ -13,7 +13,7 @@ task summarize_data {
     Int disk_size = 100
     Int cpu = 8
     Int memory = 1
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2026-11-20"
     # commenting out this option since it's for local dev. Prefer this option to not appear in Terra
     #File? input_table
     Boolean phandango_coloring = false

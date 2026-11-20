@@ -14,7 +14,7 @@ task qc_check_phb {
     Int disk_size = 100
     Int memory = 8
     Int cpu = 4
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2024-08-27"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2026-11-20"
   }
   File qc_check_input_json = write_json(qc_check_inputs)
   command <<<

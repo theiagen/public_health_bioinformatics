@@ -4,7 +4,7 @@ task shared_variants {
   input {
     File concatenated_variants
     String concatenated_file_name
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2026-11-20"
     Int disk_size = 100
     Int cpu = 1
     Int memory = 8

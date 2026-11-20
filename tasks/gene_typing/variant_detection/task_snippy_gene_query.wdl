@@ -6,7 +6,7 @@ task snippy_gene_query {
     File snippy_variants_results
     String? query_gene
     File? reference
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2026-11-20"
     Int cpu = 8
     Int memory = 32
     Int disk_size = 100

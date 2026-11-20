@@ -15,7 +15,7 @@ task create_table_from_array {
 
     Int cpu = 1
     Int disk_size = 25
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2026-11-20"
     Int memory = 2
   }
   File columns_to_export_json = write_json(columns_to_export)
