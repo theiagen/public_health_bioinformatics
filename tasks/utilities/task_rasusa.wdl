@@ -23,7 +23,7 @@ task rasusa {
     String? num_bases
     Float coverage = 250
     Int? genome_length
-    Int? seed
+    Int seed = 1
     Float? fraction_of_reads
     Int? num_reads
   }
