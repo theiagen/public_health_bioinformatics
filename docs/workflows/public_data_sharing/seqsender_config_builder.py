@@ -104,6 +104,36 @@ def create_config(event):
     document.getElementById("cb-result").hidden = False
 
 
+@when("click", "#cb-toggle-password")
+def toggle_password(event):
+    # a type="password" box shows asterisks; type="text" shows what was typed
+    password = document.getElementById("cb-password")
+    showing = password.type == "password"
+    password.type = "text" if showing else "password"
+    # <svg> elements lack the .hidden property, so set the attribute directly (extra.css hides [hidden])
+    document.getElementById("cb-eye").toggleAttribute("hidden", showing)
+    document.getElementById("cb-eye-off").toggleAttribute("hidden", not showing)
+    label = "Hide password" if showing else "Show password"
+    button = document.getElementById("cb-toggle-password")
+    button.setAttribute("aria-label", label)
+    button.title = label
+
+
+@when("keydown", ".config-builder")
+def keyboard_mode(event):
+    # Tab moves between fields: show the active field's tip instead of the hovered one's (extra.css)
+    if event.key == "Tab":
+        document.querySelector(".config-builder").classList.add("cb-keyboard")
+
+
+@when("mousemove", ".config-builder")
+def mouse_mode(event):
+    # back to hover tips once the mouse actually moves; browsers can send a zero-distance mousemove
+    # when the page shifts under a still cursor (e.g. a tip appearing), which shouldn't count
+    if event.movementX or event.movementY:
+        document.querySelector(".config-builder").classList.remove("cb-keyboard")
+
+
 @when("click", "#cb-copy-key")
 def copy_key(event):
     navigator.clipboard.writeText(document.getElementById("cb-key-output").textContent)

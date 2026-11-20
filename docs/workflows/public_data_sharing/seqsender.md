@@ -86,7 +86,7 @@ The SeqSender workflow uses the CDC's [SeqSender](https://github.com/CDCgov/seqs
 
         <div align="center">
 
-        [Back to top](#step-1-initial-setup)
+        [Back to top](#step-1-initial-setup) &nbsp;|&nbsp; [Next: Step 2 :material-arrow-right:](#step-2-validate-metadata)
 
         </div>
 
@@ -129,7 +129,7 @@ The SeqSender workflow uses the CDC's [SeqSender](https://github.com/CDCgov/seqs
 
         <div align="center">
 
-        [Back to top](#step-2-validate-metadata)
+        [Back to top](#step-2-validate-metadata) &nbsp;|&nbsp; [Next: Step 3 :material-arrow-right:](#step-3-submit-new-samples)
 
         </div>
 
@@ -195,7 +195,7 @@ The SeqSender workflow uses the CDC's [SeqSender](https://github.com/CDCgov/seqs
 
         <div align="center">
 
-        [Back to top](#step-3-submit-new-samples)
+        [Back to top](#step-3-submit-new-samples) &nbsp;|&nbsp; [Next: Step 4 :material-arrow-right:](#step-4-resume-submissions)
 
         </div>
 
