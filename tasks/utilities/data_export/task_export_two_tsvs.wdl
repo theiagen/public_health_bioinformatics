@@ -11,7 +11,7 @@ task export_two_tsvs {
     Int disk_size = 10
     Int memory = 1
     Int cpu = 1
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2026-11-20"
   }
   meta {
     # added so that call caching is always turned off

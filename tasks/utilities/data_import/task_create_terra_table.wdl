@@ -16,7 +16,7 @@ task create_terra_table {
     Int disk_size = 25
     Int cpu = 1
     Int memory = 4
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2026-11-20"
   }
   meta {
     volatile: true

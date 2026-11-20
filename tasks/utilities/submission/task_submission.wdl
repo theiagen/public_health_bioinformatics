@@ -15,7 +15,7 @@ task prune_table {
     String read2_column_name = "read2"
     Int memory = 8
     Int cpu = 4
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2026-11-20"
     Int disk_size = 100
     File? column_mapping_file # Optional file for column mappings
   }
@@ -211,7 +211,7 @@ task add_biosample_accessions {
     String table_name
     Int memory = 8
     Int cpu = 4
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2026-11-20"
     Int disk_size = 100
   }
   command <<<
