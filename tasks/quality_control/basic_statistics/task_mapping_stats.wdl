@@ -37,7 +37,7 @@ task mapping_stats {
       seq_data = line.strip().split("\t")
       seq, start, end, reads, cov_bases, coverage, meandepth, meanbaseq, meanmapq = seq_data
       seq2data[seq] = {
-        "length": int(end) - int(start),
+        "length": int(end) - int(start) + 1,
         "reads": int(reads),
         "cov_bases": int(cov_bases),
         "coverage": float(coverage),
