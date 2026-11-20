@@ -522,6 +522,7 @@ clair3_variants_ont	clair3_enable_haploid_precise	Boolean	Enable haploid precise
 clair3_variants_ont	clair3_enable_long_indel	Boolean	Enable long indel calling	False	Optional	Clair3_Variants_ONT	general	
 clair3_variants_ont	clair3_include_all_contigs	Boolean	Call variants on all contigs, should always be true for non-human samples	True	Optional	Clair3_Variants_ONT	general	
 clair3_variants_ont	clair3_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Clair3_Variants_ONT	runtime	
+clair3_variants_ont	clair3_min_depth	Int	Minimum coverage required to call a variant (Clair3 --min_coverage)	2	Optional	Clair3_Variants_ONT	general	
 clair3_variants_ont	clair3_model	String	Model name for variant calling (see supported models for available options)	r1041_e82_400bps_sup_v500	Optional	Clair3_Variants_ONT	general	
 clair3_variants_ont	clair3_variant_quality	Int	Minimum variant quality score	2	Optional	Clair3_Variants_ONT	general	
 clean_check_reads	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
@@ -2605,7 +2606,7 @@ theiaviral_ont	extract_unclassified	Boolean	True/False that determines if unclas
 theiaviral_ont	genome_length	Int	Expected genome length of taxon of interest		Optional	TheiaViral_ONT	general	
 theiaviral_ont	host	String	Host taxon/accession to dehost reads, if provided		Optional	TheiaViral_ONT	general	
 theiaviral_ont	min_allele_freq	Float	Minimum allele frequency required for a variant to populate the consensus sequence	0.6	Optional	TheiaViral_ONT	general	
-theiaviral_ont	min_depth	Int	Minimum read depth required for a variant to populate the consensus sequence	10	Optional	TheiaViral_ONT	general	
+theiaviral_ont	min_depth	Int	Minimum read depth required for a variant to populate the consensus sequence; also the minimum coverage for Clair3 to call a variant	10	Optional	TheiaViral_ONT	general	
 theiaviral_ont	min_map_quality	Int	Minimum mapping quality required for read alignments	20	Optional	TheiaViral_ONT	general	
 theiaviral_ont	read_extraction_rank	String	Taxonomic rank to use for read extraction - limits taxons to only those within the specified ranks.	family	Optional	TheiaViral_ONT	general	
 theiaviral_ont	reference_fasta	File	Reference genome in FASTA format		Optional	TheiaViral_ONT	general	
