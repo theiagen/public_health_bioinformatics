@@ -125,6 +125,7 @@ Kraken2
 KrakenTools
 Krona
 Kropp
+LIMSport
 Legionella
 Libuit
 Lipooligosaccharide
