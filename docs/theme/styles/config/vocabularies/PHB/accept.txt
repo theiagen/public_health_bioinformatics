@@ -67,6 +67,7 @@ Dorado
 ECtyper
 ENA
 EcOH
+Ensembl
 Enterobacter
 Entrez
 Escherichia
@@ -296,6 +297,7 @@ VADR
 VADR_Update
 VCF
 VCFs
+VEP
 VFDB
 VSCode
 Varghese
@@ -413,6 +415,7 @@ fumigatus
 genome_annotations
 genome_sets
 genotype
+genotyped
 genotyping
 geospatial
 gisaid_credentials
@@ -493,8 +496,10 @@ phylogenies
 phylogeny
 plasmid
 plasmids
+ploidy
 pneumoniae
 pneumophila
+polyploid
 polytomy
 prefilter
 prokaryote
@@ -573,11 +578,8 @@ vadr_model_file
 vadr_opts
 virulence
 wgMLST
-<<<<<<< HEAD
 whipplei
-=======
 Hansenula
 polymorpha
 Cenococcum
 geophilum
->>>>>>> origin/main

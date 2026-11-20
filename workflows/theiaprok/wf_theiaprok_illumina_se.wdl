@@ -402,7 +402,7 @@ workflow theiaprok_illumina_se {
                 "arln_taxon_assembly_ratio_stdev": arln_stats.taxon_assembly_ratio_stdev,
                 "arln_taxon_gc_mean": arln_stats.taxon_gc_mean,
                 "arln_taxon_gc_percent_stdev": arln_stats.taxon_gc_percent_stdev,
-                "assembler": digger_denovo.assembler_used,
+                "assembler_used": digger_denovo.assembler_used,
                 "assembler_version": digger_denovo.assembler_version,
                 "assembly_fasta": digger_denovo.assembly_fasta,
                 "assembly_length": quast.genome_length,
@@ -785,10 +785,10 @@ workflow theiaprok_illumina_se {
     File? read_screen_clean_tsv = clean_check_reads.read_screen_tsv
     # Read QC - fastq_scan outputs
     Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
-    Float? fastq_scan_r1_gc_percent_raw = read_QC_trim.fastq_scan_r1_gc_percent_raw
+    String? fastq_scan_r1_gc_percent_raw = read_QC_trim.fastq_scan_r1_gc_percent_raw
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
     Int? fastq_scan_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
-    Float? fastq_scan_r1_gc_percent_clean = read_QC_trim.fastq_scan_r1_gc_percent_clean
+    String? fastq_scan_r1_gc_percent_clean = read_QC_trim.fastq_scan_r1_gc_percent_clean
     File? fastq_scan_raw1_json = read_QC_trim.fastq_scan_raw1_json
     File? fastq_scan_clean1_json = read_QC_trim.fastq_scan_clean1_json
     # Read QC - fastqc outputs
@@ -836,7 +836,7 @@ workflow theiaprok_illumina_se {
     File? assembly_fasta = digger_denovo.assembly_fasta
     File? contigs_gfa = digger_denovo.contigs_gfa
     File? filtered_contigs_metrics = digger_denovo.filtered_contigs_metrics
-    String? assembler = digger_denovo.assembler_used
+    String? assembler_used = digger_denovo.assembler_used
     String? assembler_version = digger_denovo.assembler_version
     String? pilon_version = digger_denovo.pilon_version
     # Assembly QC - quast outputs

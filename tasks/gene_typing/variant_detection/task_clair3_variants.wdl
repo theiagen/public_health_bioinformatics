@@ -5,7 +5,7 @@ task clair3_variants {
     File alignment_bam_file
     File alignment_bam_file_index
     File reference_genome_file
-    File reference_genome_file_index
+    File? reference_genome_file_index
     String sequencing_platform
     String samplename
     String clair3_model = "r1041_e82_400bps_sup_v500"
@@ -19,6 +19,7 @@ task clair3_variants {
     Boolean enable_gvcf = false
     Boolean enable_long_indel = false
     Int variant_quality = 2
+    Int min_depth = 2 # Minimum coverage required to call a variant (clair3 --min_coverage), set to default (v1.0.10)
     Float snp_min_af = 0.08 # Minimum SNP AF required for a candidate variant.
     Float? indel_min_af # Minimum Indel AF required for a candidate variant. Default dependent on sequencing platform
   }
@@ -40,7 +41,13 @@ task clair3_variants {
     # in working directory, but fai not set explicitly, bam and bai coming from same task
     # so we can assume they are in the same directory
     cp ~{reference_genome_file} ~{ref_basename}
-    cp ~{reference_genome_file_index} ~{ref_basename}.fai
+
+    # index reference FASTA (fast enough to rerun w/o importing)
+    if [ -z "~{reference_genome_file_index}" ]; then
+      samtools faidx ~{ref_basename}
+    else
+      cp ~{reference_genome_file_index} ~{ref_basename}.fai
+    fi
 
     run_clair3.sh \
         --bam_fn=~{alignment_bam_file} \
@@ -51,6 +58,7 @@ task clair3_variants {
         --output=~{samplename} \
         --sample_name=~{samplename} \
         --qual=~{variant_quality} \
+        --min_coverage=~{min_depth} \
         ~{"--snp_min_af=" + snp_min_af} \
         ~{"--indel_min_af=" + indel_min_af} \
         ~{true="--include_all_ctgs" false="" include_all_contigs} \
