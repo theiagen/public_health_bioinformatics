@@ -18,7 +18,6 @@ workflow seqsender {
     Array[File]? read2_fastqs # optional for SRA (single-end)
     String? sra_transfer_gcp_bucket # NCBI-readable bucket the passing samples' reads are copied to
 
-    String seqsender_organism_tag # options: "FLU", "COV", "OTHER"
     Boolean submit_to_biosample
     Boolean submit_to_sra
     Boolean submit_to_genbank
@@ -31,6 +30,9 @@ workflow seqsender {
 
     File? input_table # for command line testing only; skips the Terra download
   }
+  # currently only validated for influenza submissions
+  String seqsender_organism_tag = "FLU" # options: "FLU", "COV", "OTHER"
+
   call versioning.version_capture {
     input:
   }

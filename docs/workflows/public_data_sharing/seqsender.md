@@ -52,7 +52,7 @@ The SeqSender workflow uses the CDC's [SeqSender](https://github.com/CDCgov/seqs
 ## Launching the Workflow
 
 !!! warning "Influenza only"
-    **This workflow has only been validated for influenza samples (`seqsender_organism_tag` = `FLU`). Other organisms are currently not supported.**
+    **This workflow currently supports influenza samples only.**
 
 !!! caption ""
     === "Step 1: Initial Setup"

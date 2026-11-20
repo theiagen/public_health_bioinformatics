@@ -111,7 +111,6 @@ seqsender	bioproject	String	The NCBI BioProject accession that every submitted s
 seqsender	sample_ids	Array[String]	The IDs of the samples in your Terra table to validate and submit		Required	SeqSender	general	
 seqsender	seqsender_config	File	The SeqSender config YAML file containing your NCBI account credentials and submission details		Required	SeqSender	general	
 seqsender	seqsender_key	String	The key generated for decrypting your NCBI password in your `seqsender_config`		Required	SeqSender	general	
-seqsender	seqsender_organism_tag	String	The SeqSender organism type, which determines the required metadata and submission format; options: `FLU`, `COV`, or `OTHER`		Required	SeqSender	general	
 seqsender	submit_to_biosample	Boolean	Set to true to submit samples to the BioSample database		Required	SeqSender	general	
 seqsender	submit_to_genbank	Boolean	Set to true to submit samples (assemblies) to the GenBank database		Required	SeqSender	general	
 seqsender	submit_to_sra	Boolean	Set to true to submit samples (reads) to the SRA database		Required	SeqSender	general	
