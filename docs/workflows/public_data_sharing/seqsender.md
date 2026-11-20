@@ -52,7 +52,7 @@ The SeqSender workflow uses the CDC's [SeqSender](https://github.com/CDCgov/seqs
 ## Launching the Workflow
 
 !!! warning "Influenza only"
-    **This workflow currently supports influenza samples only.**
+    This workflow currently supports **Influenza** samples only.
 
 !!! caption ""
     === "Step 1: Initial Setup"
@@ -65,8 +65,9 @@ The SeqSender workflow uses the CDC's [SeqSender](https://github.com/CDCgov/seqs
         4. Open the SeqSender workflow in your Terra workspace and select the **SET** table containing the samples you plan to submit.
         5. Enter the appropriate values into the SeqSender workflow inputs. See table below for the required input parameters specific to this step in the workflow.
 
-        !!! tip "Note"
-            This workflow must be launched using a **SET** in your Terra workspace. This **SET** also must be created **PRIOR** to selecting your samples in the "Workflows" tab on Terra.
+        !!! tip "SeqSender requires *preexisting* sets"
+            This workflow must be launched using a *preexisting* SET in your Terra workspace. The **SET** must be created **BEFORE** sample selection during workflow configuration.
+
 
         <h2>Inputs Configured</h2>
 
