@@ -649,6 +649,24 @@ div.searchable-table .table-reset-button svg {
   transform: rotate(-30deg);
 }
 /*
+ * "Show all" / "Hide all" button beside the search box, only on ".search-reveal"
+ * tables (added by table-search.js). Same border, height and colors as the reset
+ * button, but sized to its text.
+ */
+div.searchable-table .table-showall-button {
+  flex: 0 0 auto; /* keep its width; don't let the search box squeeze it */
+  align-self: stretch; /* match the search box height */
+  padding: 0 0.7rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.2rem;
+  background-color: transparent;
+  color: var(--md-default-fg-color--light);
+  font-size: 0.64rem; /* match the search box text */
+  white-space: nowrap; /* keep "Show all" on one line */
+  cursor: pointer;
+  transition: color 120ms ease, border-color 120ms ease, background-color 120ms ease;
+}
+/*
  * A ".search-reveal" table hides everything but its toolbar until something is
  * typed in the search box. table-search.js adds and removes .is-concealed.
  */
@@ -718,6 +736,7 @@ div.searchable-table.search-reveal.is-concealed > :not(.table-toolbar) {
  * wash.
  */
 div.searchable-table .table-reset-button:hover,
+div.searchable-table .table-showall-button:hover,
 .md-typeset .table-scrolltop:hover {
   color: var(--md-primary-fg-color);
   border-color: var(--md-primary-fg-color);
@@ -728,6 +747,7 @@ div.searchable-table .table-reset-button:hover,
  * into the button; brighten it to a white icon instead.
  */
 [data-md-color-scheme="slate"] div.searchable-table .table-reset-button:hover,
+[data-md-color-scheme="slate"] div.searchable-table .table-showall-button:hover,
 [data-md-color-scheme="slate"] .md-typeset .table-scrolltop:hover {
   color: #ffffff;
   border-color: var(--md-default-fg-color--light);
@@ -829,6 +849,51 @@ div.searchable-table .table-reset-button:hover,
   border-color: var(--brand-green);
 }
 
+/*
+ * a green ring around the checkbox or button reached with the Tab key, so keyboard users can see where they are
+ * (text boxes and dropdowns already turn their border green, above). :focus-visible only matches keyboard focus for these,
+ * so clicking them with the mouse doesn't draw the ring.
+ */
+.md-typeset .config-builder input[type="checkbox"]:focus-visible,
+.md-typeset .config-builder button:focus-visible {
+  outline: 2px solid var(--brand-green);
+  outline-offset: 2px; /* a small gap between the item and the ring */
+}
+
+/* the Password box and its show/hide (eye) button; the button sits on top of the box's right end */
+.md-typeset .config-builder .cb-password {
+  display: block;
+  position: relative; /* the anchor for the eye button below, so it's placed relative to the box */
+}
+.md-typeset .config-builder .cb-password input {
+  padding-right: 1.8rem; /* keep typed text from running under the eye button */
+}
+/* Edge draws its own reveal button inside password boxes; hide it so there aren't two eyes */
+.md-typeset .config-builder .cb-password input::-ms-reveal {
+  display: none;
+}
+.md-typeset .config-builder .cb-password button {
+  position: absolute;
+  top: 0;
+  bottom: 0; /* top and bottom 0 stretch the button to the box's full height */
+  right: 0.3rem;
+  display: flex;
+  align-items: center; /* center the icon vertically */
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--md-default-fg-color--light);
+  cursor: pointer;
+}
+.md-typeset .config-builder .cb-password button:hover {
+  color: var(--brand-green);
+}
+.md-typeset .config-builder .cb-password svg {
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor; /* the icon takes the button's text color, so the hover color above applies */
+}
+
 /* a field's description: a bubble to the right of its box, hidden until the rule below shows it */
 .md-typeset .config-builder .cb-tip {
   display: none;
@@ -847,11 +912,19 @@ div.searchable-table .table-reset-button:hover,
   font-size: 0.64rem;
 }
 /*
- * a field's description: hidden until the field is hovered or typed in, then shown in a bubble to the right of its box;
- * hovering only shows the tip while nothing in the form has focus, that way description bubbles don't overlap.
+ * a field's description: hidden until the field is hovered or typed in, then shown in a bubble to the right of its box.
+ * Only one tip shows at a time, so bubbles don't overlap. Which one depends on whether the Tab key or the mouse was used last;
+ * the Python adds the .cb-keyboard class when Tab is pressed and removes it when the mouse moves.
+ *   - mouse (no .cb-keyboard): hovering any field shows its tip. When the mouse isn't over any field, the active field keeps its tip
+ *     open (e.g. the text box being typed in).
+ *   - keyboard (.cb-keyboard): only the active field's tip shows, even if the mouse is resting over another field.
+ * :focus-visible is the browser's "show a focus highlight here" state: text boxes get it whenever they're active, but checkboxes,
+ * dropdowns and buttons only get it from the keyboard, so clicking a checkbox or dropdown doesn't pin its tip open after the click.
+ * :has(...) matches an element that contains something matching the selector inside, e.g. a label containing the active field.
  */
-.md-typeset .config-builder:not(:focus-within) label:hover .cb-tip,
-.md-typeset .config-builder label:focus-within .cb-tip {
+.md-typeset .config-builder:not(.cb-keyboard) label:hover .cb-tip,
+.md-typeset .config-builder:not(.cb-keyboard):not(:has(label:hover)) label:has(:focus-visible) .cb-tip,
+.md-typeset .config-builder.cb-keyboard label:has(:focus-visible) .cb-tip {
   display: block;
 }
 /* an invisible bridge over the gap between a field and its description, so the mouse can cross to the description (to click a link in it) without leaving the field */
