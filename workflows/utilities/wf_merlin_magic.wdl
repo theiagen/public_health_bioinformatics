@@ -677,9 +677,10 @@ workflow merlin_magic {
       "Klebsiella pneumoniae" : "573",
       "Vibrio cholerae" : "666"
     }
+
     # Check for Salmonella typing first then default to merlin_tag
-    String taxon = select_first([seqsero2s.seqsero2s_predicted_serotype,
-      seqsero2s_assembly.seqsero2s_predicted_serotype,sistr.sistr_predicted_serotype, merlin_tag])
+    Boolean is_typhi = select_first([seqsero2s.seqsero2s_predicted_serotype, seqsero2s_assembly.seqsero2s_predicted_serotype, ""]) == "Typhi" || select_first([sistr.sistr_predicted_serotype, ""]) == "Typhi"
+    String taxon = if is_typhi then "Typhi" else merlin_tag
 
     # Checks for a match to the AMR_Search available taxon codes
     if (taxon == "Neisseria gonorrhoeae" || taxon == "Staphylococcus aureus" ||
