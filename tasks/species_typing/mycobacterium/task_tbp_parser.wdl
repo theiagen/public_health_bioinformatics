@@ -35,7 +35,7 @@ task tbp_parser {
     Int cpu = 1
     Int disk_size = 100
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:v3.0.3"
-    Int memory = 8
+    Int memory = 16
   }
   command <<<
     # NOTE must explicity set this default in order to determine GENOME_PC and AVERAGE_DEPTH
