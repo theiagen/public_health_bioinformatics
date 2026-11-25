@@ -222,9 +222,9 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
     - Default reference genome and annotation: `GCF_000091045.1` (ASM9104v1)
     - Default gene query: product IDs are queried
 
-        | Gene | Locus tag |
-        |---|---|
-        | _ERG11_ | CNA00300 |
+        | Gene | Locus tag | Query |
+        |---|---|---|
+        | _ERG11_ | CNA00300 | `sterol.14-demethylase` |
 
 ### Outputs
 
