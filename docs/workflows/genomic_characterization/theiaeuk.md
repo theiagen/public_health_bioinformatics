@@ -176,7 +176,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
         - `reference_fasta`: replaces the clade-specific genome-wide reference only
         - `reference_gff`: not used for _C. auris_
         - `cauris_amr_fasta` and `cauris_amr_gff`: replace the B11205 AMR reference and its annotation (required together). 
-        - `query_genes`/`query_genes_bed` default to B11205 GFF product names and locus tags (described below). If `cauris_amr_fasta` and `cauris_amr_gff` are provided, check/modify one of the `gene_query` inputs to ensure the queries are identified in the `cauris_amr_gff`. 
+        - `query_genes` defaults to B11205 GFF product names and locus tags (described below). If `cauris_amr_fasta` and `cauris_amr_gff` are provided, check or replace `query_genes` so the queries are found in the `cauris_amr_gff`.
         - To synchronize variant calling against single reference, provide the same FASTA as both `reference_fasta` and `cauris_amr_fasta`, and its annotation as `cauris_amr_gff`.
 
         Outputs:
