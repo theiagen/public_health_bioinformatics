@@ -155,7 +155,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 
         `query_genes_bed` is a BED file whose regions are used directly as the query coordinates, rather than resolving gene coordinates from the GFF:
 
-        - At least four columns are required: contig, start (0-based), end, and region name. 
+        - At least four columns are required: contig, start (0-based), end, and region name.
         - Contig names and coordinates must correspond to the gene-level reference: `cauris_amr_fasta` (B11205 by default) for _C. auris_, otherwise the default or user-supplied `reference_fasta`
         - Regions must belong to a gene annotated within the GFF: coverage is quantified over each region as written, and every variant within a region is annotated.
         - `query_exact_match` does not apply to BED regions

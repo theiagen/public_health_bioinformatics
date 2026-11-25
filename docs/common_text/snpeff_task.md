@@ -7,7 +7,7 @@ fragment: true
 
     The task proceeds in four steps:
 
-    1. **Database preparation** - reference GFF annotations and the reference genome FASTA are used to generate a custom SnpEff database.     
+    1. **Database preparation** - reference GFF annotations and the reference genome FASTA are used to generate a custom SnpEff database.  
     2. **Variant extraction** - variants that overlap the CDS coordinates of `query_genes`, or the regions of `query_genes_bed` as written, are extracted and annotated into a sub-VCF.
     3. **Annotation** - SnpEff annotates the consequences of gene variants from the sub-VCF.
     4. **Reporting** - the SnpEff VCF annotations entries are transformed into a gene-labelled report
