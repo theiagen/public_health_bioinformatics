@@ -99,9 +99,12 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 !!! tip ""
     The TheiaEuk workflow automatically activates taxa-specific tasks after identification of the relevant taxa using `GAMBIT`. If an `expected_taxon` is provided (e.g., "Candidozyma auris"), it overrides the `GAMBIT` taxonomic assignment. Default taxa (_Candidozyma auris_, _Cryptococcus neoformans_, or _Aspergillus fumigatus_) do not require user input to run characterization modules, and other taxa can undergo reference-based variant calling and gene characterization by inputting a `reference_fasta` and `reference_gff`.
 
-??? toggle "Reference-based variant calling"
-    After taxonomic identification, TheiaEuk performs reference-based variant calling whenever a `reference_fasta` is provided or a default organism is selected (user input takes precedence). The resulting variants are summarized with respect to target regions if a `reference_gff` and `query_genes`/`query_genes_bed` are populated; these are populated automatically for default organisms. For _C. auris_, genome-wide reference-based variant calling is reported against a clade-specific reference genome by default, while _C. auris_ antimicrobial resistance (AMR) gene variants are called relative to `cauris_amr_fasta` (the B11205 reference by default). This bifurcation produces a high-quality VCF for downstream phylogenetic analysis and complies with standardized variant reporting respectively. For _C. auris_, `reference_fasta` only replaces the genome-wide reference; the AMR reference is changed with `cauris_amr_fasta` and `cauris_amr_gff`.
-
+??? toggle "Reference-based whole genome and AMR gene variant calling"
+    After taxonomic identification, TheiaEuk performs reference-based variant calling whenever a `reference_fasta` is provided or a default organism is selected (user input takes precedence). The resulting variants are summarized with respect to target regions if a `reference_gff`/`cauris_amr_gff` and `query_genes`/`query_genes_bed` are populated, which are also populated automatically for default organisms.
+    
+    _C. auris_ variant calling is conducted separately for whole genome variants and antimicrobial resistance (AMR) gene variants. A clade-specific reference is determined by default for whole genome variant calling, whereas the standardized B11205 reference is used for AMR variant reporting. See `reference_fasta` below for whole genome variant toggling and `cauris_amr_fasta`/`cauris_amr_gff` for AMR genes.
+    
+    
     Default values are depicted for default organisms in their respective sections below.
 
     Two data-type-specific tracks are supported:
@@ -109,13 +112,11 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
     - **Illumina (paired-end):** reads are aligned to the reference with `BWA`, variants are called with `gatk_variants`, and the genotyped GVCF is filtered with `gatk_filter`.
     - **ONT:** reads are aligned with `minimap2` and variants are called and filtered with `Clair3`.
 
-    ??? dna "`reference_fasta` input parameter"
-        The reference FASTA used for read alignment and variant calling. A user-supplied `reference_fasta` always takes precedence over the defaults below. When it is not provided, an organism-specific default reference is selected automatically:
+    ??? dna "`reference_fasta` input parameter (whole genome variant calling)"
+        The reference FASTA used for read alignment and whole genome variant calling. By default, an organism-specific reference genome is selected automatically. For _C. auris_, a clade-specific reference is identified by the CladeTyper task by default. For any other identified organism (e.g. _Candida albicans_), variant calling only runs if `reference_fasta` is supplied by the user.
 
-        For any other identified organism (e.g. _Candida albicans_), variant calling only runs if `reference_fasta` is supplied by the user.
-
-    ??? dna "`reference_gff` input parameter"
-        The annotated reference (General Features Format, GFF) used by the `gene_coverage` and `snpeff_gene_variants` tasks to extract query genes list into genomic coordinates. A user-supplied `reference_gff` always takes precedence over the defaults below. When it is not provided, an organism-specific default is selected automatically if a default organism is identified:
+    ??? dna "`reference_gff` input parameter (non-_C. auris_ gene variant reporting)"
+        The annotated reference (General Features Format, GFF) used by the `gene_coverage` and `snpeff_gene_variants` tasks to extract query genes list into genomic coordinates. A user-supplied `reference_gff` always takes precedence. When it is not provided, an organism-specific default is selected automatically if a default organism is identified:
 
         !!! warning "Keep the FASTA and GFF matched"
             The reference FASTA and GFF must use the same assembly. If a custom `reference_fasta` is provided, an associated `reference_gff` must also be provided (and vice versa).
@@ -123,8 +124,15 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
             If only one of these inputs is provided, gene coverage calculations and gene-centric variant reporting will not run under the assumption there is a discrepancy.
 
         !!! info "_C. auris_ uses a separate AMR reference"
-            For _C. auris_, gene coverage and gene-centric variant reporting always use `cauris_amr_fasta` and `cauris_amr_gff` (B11205 by default) instead, so `reference_gff` is not used and `reference_fasta` only affects genome-wide variant calling (see the _Candidozyma auris_ section below).
+            For _C. auris_, gene coverage and gene-centric variant reporting always use `cauris_amr_fasta` and `cauris_amr_gff` (B11205 by default) instead, so `reference_gff` is not used and `reference_fasta` only affects genome-wide variant calling (see the `cauris_amr_fasta`/`cauris_amr_gff` and _Candidozyma auris_ sections below).
 
+    ??? dna "`cauris_amr_fasta`/`cauris_amr_gff` input parameters (_C. auris_ AMR gene variant calling)"
+        The reference FASTA and GFF used for AMR gene variant calling. By default, the B11205 reference is used to enable standardized _C. auris_ AMR gene reporting. `reference_fasta` will modify the whole genome variants called, whereas `cauris_amr_fasta` affects the gene-specific variant calling modules.
+
+        !!! warning "Keep the FASTA and GFF matched"
+            The _C. auris_ FASTA and GFF must use the same assembly. If a custom `cauris_amr_fasta` is provided, an associated `cauris_amr_gff` must also be provided (and vice versa).
+
+            If only one of these inputs is provided, gene coverage calculations and gene-centric variant reporting will not run under the assumption there is a discrepancy.
 
     ??? dna "`query_genes` and `query_genes_bed` input parameter"
         `query_genes` is a comma-delimited list of query genes to extract from the `reference_gff` supplied by default/the user. These `query_genes` _must_ correspond to the associated "product" or "locus_tag" field of gene/CDS entries within the `reference_gff`. By default, "FKS1" will match "1,3-beta-D-glucan synthase_complex_FKS1", though exact product matching can be enforced by setting `query_exact_match` to "true".
@@ -134,7 +142,6 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 
         !!! warning "`query_exact_match` input parameter"
             `query_exact_match` is set to "false" by default, which enables gene shorthand names to be used when they correspond to entries within the `reference_gff`. However, this can lead to substring matching, where "ERG11" can match entries with the name "ERG112". To prevent this, completely enter the exact product name of desired genes by referencing the GFF.
-
 
     === "TheiaEuk_Illumina_PE"
 {{ include_md("common_text/bwa_task.md", indent=8, condition="theiaeuk") }}
@@ -150,15 +157,9 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 {{ include_md("common_text/snpeff_task.md", indent=4) }}
 
 ??? toggle "_Candidozyma auris_ (also known as _Candida auris_)"
-    When this species is detected by GAMBIT, clade typing determines the clade the genome belongs to, and AMR detection is conducted. Variant calling is bifurcated: reads are aligned and variants called against two references, each fit for its purpose:
+    When this species is detected by GAMBIT, clade typing identifies a closely related clade-specific reference genome for whole genome variant calling, and AMR detection is conducted against the strain B11205 reference genome.
 
-    | Track | Reference | Reported outputs |
-    |---|---|---|
-    | Genome-wide (phylogenetics) | `reference_fasta` if supplied, otherwise the clade-specific reference selected by `cladetyper` | Genome-wide read alignment, genome-wide VCFs, and reference genome mapping stats |
-    | Gene-level AMR | `cauris_amr_fasta` and `cauris_amr_gff` (default: Clade I strain B11205, `GCA_016772135.1`) | `gene_coverage` and `snpeff_gene_variants` only |
-
-    - Genome-wide variant calling with respect to a clade-specific reference increases the quality of downstream phylogenetic analysis
-    - Reporting AMR variants with respect to the B11205 reference ensures coordinates are the same for every clade and standardized with the broader field
+    Using a clade-specific reference for genome-wide variant calling increases the quality of whole genome variant predictions (e.g. for downstream phylogenetic analysis), while the AMR-specific B11205 reference enables standardized AMR reporting.
     - `reference_fasta_used` reports the genome-wide reference, while `reference_gff_used` and `gene_query` report the GFF and query used by the gene-level modules (i.e., `cauris_amr_gff`). A `query_genes_bed` must use `cauris_amr_fasta` coordinates.
     - Default gene query: product IDs for genes with a unique product annotation, plus B11205 locus tags for genes annotated only as "hypothetical protein". A user-supplied `query_genes` takes precedence.
 
@@ -166,8 +167,9 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
         The two tracks are configured independently:
 
         - `reference_fasta` replaces the clade-specific genome-wide reference only; `reference_gff` is not used for _C. auris_.
-        - `cauris_amr_fasta` and `cauris_amr_gff` replace the B11205 AMR reference and its annotation. The default gene query contains B11205-specific locus tags, so a `query_genes` (or `query_genes_bed`) matching a non-default `cauris_amr_gff` must be provided; queries missing from the GFF are reported as not found in `gene_coverage_query_check`.
-        - If `cauris_amr_fasta` matches the genome-wide reference (compared by file name), variant calling runs only once and the gene-level modules reuse the genome-wide alignment and VCF with `cauris_amr_gff`. To call all variants against a single reference, provide the same FASTA as both `reference_fasta` and `cauris_amr_fasta`, and its annotation as `cauris_amr_gff`.
+        - `cauris_amr_fasta` and `cauris_amr_gff` replace the B11205 AMR reference and its annotation. 
+        - `query_genes`/`query_genes_bed` default to B11205 GFF product names and locus tags (described below). If `cauris_amr_fasta` and `cauris_amr_gff` are provided, check/modify one of the `gene_query` inputs to ensure the queries are identified in the `cauris_amr_gff`. 
+        - To synchronize variant calling against single reference, provide the same FASTA as both `reference_fasta` and `cauris_amr_fasta`, and its annotation as `cauris_amr_gff`.
 
     The default gene query is:
 
