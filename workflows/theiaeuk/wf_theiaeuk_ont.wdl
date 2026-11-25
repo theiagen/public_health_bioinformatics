@@ -274,8 +274,9 @@ workflow theiaeuk_ont {
     String? amr_search_docker = medea_magic.amr_search_docker
     String? amr_search_version = medea_magic.amr_search_version
     # Variant Calling Outputs (minimap2 alignment + Clair3)
-    String? reference_gff_used = medea_magic.reference_gff_used
-    String? reference_fasta_used = medea_magic.reference_fasta_used
+    String? reference_gff_used = medea_magic.reference_gene_gff_used
+    String? reference_gene_fasta_used = medea_magic.reference_gene_fasta_used
+    String? reference_fasta_used = medea_magic.reference_genome_fasta_used
     String? minimap2_version = medea_magic.minimap2_version
     File? minimap2_genome_variants_bam = medea_magic.variant_calling_bam
     File? minimap2_genome_variants_bai = medea_magic.variant_calling_bai

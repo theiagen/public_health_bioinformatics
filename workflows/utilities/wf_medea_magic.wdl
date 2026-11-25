@@ -213,7 +213,7 @@ workflow medea_magic {
     # This is a weak check:
     # skip redundant variant calling if the basenames are the same
     if (basename(resolved_cauris_amr_fasta) != resolved_reference_basename) {
-      if (select_first([cauris_amr_unpaired, false]) == false) {
+      if (! cauris_amr_unpaired) {
         if (! ont_data) {
           call gatk_variants_illumina_workflow.gatk_variants_illumina as cauris_amr_gatk_variants {
             input:
@@ -276,23 +276,26 @@ workflow medea_magic {
   # alignment and VCF are used
   String gene_reference_fasta = select_first([resolved_cauris_amr_fasta, resolved_reference_fasta])
   String gene_reference_gff = select_first([resolved_cauris_amr_gff, resolved_reference_gff, ""])
+  if (gene_reference_fasta != "") {
+    File used_gene_fasta = gene_reference_fasta
+  }
   if (gene_reference_gff != "") {
-    File used_reference_gff = gene_reference_gff
+    File used_gene_reference_gff = gene_reference_gff
   }
 
   # GENE-CENTRIC COVERAGE CALCULATIONS AND VARIANT ANNOTATION
   # Terra can pass empty strings, so check for empty strings as well
   if ((gene_reference_gff != "" && resolved_query_genes != "") || defined(query_genes_bed)) {
     if (defined(cauris_amr_bam) || defined(resolved_bam)) {
-      # GATE USER-ERROR for C. auris: 
-      # skip AMR calling if only one AMR reference is defined because this can cause reference discrepancy errors
+      # GATE USER-ERROR for C. auris:
+      # skip gene coverage and annotation if only one AMR reference is defined because this can cause reference discrepancy errors
       if (select_first([cauris_amr_unpaired, false]) == false) {
         call gene_coverage_task.gene_coverage {
           input:
             bam = select_first([cauris_amr_bam, resolved_bam]),
             bai = select_first([cauris_amr_bai, resolved_bai]),
             samplename = samplename,
-            reference_gff = used_reference_gff,
+            reference_gff = used_gene_reference_gff,
             bedfile = query_genes_bed,
             query_genes = resolved_query_genes,
             exact_match = query_exact_match,
@@ -360,7 +363,7 @@ workflow medea_magic {
     String? cladetyper_docker_image = cladetyper.gambit_cladetyper_docker_image
     # species-agnostic genome-wide reference actually used (user-supplied or organism-derived)
     File? reference_genome_fasta_used = used_reference_fasta
-    # GFF used by the gene-centric modules (cauris_amr_gff for C. auris)
+    # FASTA and GFF used by the gene-centric modules (cauris_amr_fasta/cauris_amr_gff for C. auris)
     File? reference_gene_fasta_used = used_gene_fasta
     File? reference_gene_gff_used = used_gene_reference_gff
     # variant calling - illumina (bwa alignment + gatk)

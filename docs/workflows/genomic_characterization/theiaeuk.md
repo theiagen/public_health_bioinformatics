@@ -160,7 +160,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
     When this species is detected by GAMBIT, clade typing identifies a closely related clade-specific reference genome for whole genome variant calling, and AMR detection is conducted against the strain B11205 reference genome.
 
     Using a clade-specific reference for genome-wide variant calling increases the quality of whole genome variant predictions (e.g. for downstream phylogenetic analysis), while the AMR-specific B11205 reference enables standardized AMR reporting.
-    - `reference_fasta_used` reports the genome-wide reference, while `reference_gff_used` and `gene_query` report the GFF and query used by the gene-level modules (i.e., `cauris_amr_gff`). A `query_genes_bed` must use `cauris_amr_fasta` coordinates.
+    - `reference_fasta_used` reports the genome-wide reference, while `reference_gene_fasta_used`, `reference_gff_used`, and `gene_query` report the FASTA, GFF, and query used by the gene-level modules (i.e., `cauris_amr_fasta` and `cauris_amr_gff`). A `query_genes_bed` must use `cauris_amr_fasta` coordinates.
     - Default gene query: product IDs for genes with a unique product annotation, plus B11205 locus tags for genes annotated only as "hypothetical protein". A user-supplied `query_genes` takes precedence.
 
     !!! info "Changing the _C. auris_ references"

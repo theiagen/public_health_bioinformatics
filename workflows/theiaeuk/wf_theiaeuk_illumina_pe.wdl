@@ -356,8 +356,9 @@ workflow theiaeuk_illumina_pe {
     String? cladetyper_gambit_version = medea_magic.cladetyper_version
     String? cladetyper_docker_image = medea_magic.cladetyper_docker_image
     # Variant Calling Outputs (BWA alignment + GATK)
-    String? reference_gff_used = medea_magic.reference_gff_used
-    String? reference_fasta_used = medea_magic.reference_fasta_used
+    String? reference_gff_used = medea_magic.reference_gene_gff_used
+    String? reference_gene_fasta_used = medea_magic.reference_gene_fasta_used
+    String? reference_fasta_used = medea_magic.reference_genome_fasta_used
     String? bwa_version = medea_magic.bwa_version
     File? bwa_genome_variants_bam = medea_magic.variant_calling_bam
     File? bwa_genome_variants_bai = medea_magic.variant_calling_bai
