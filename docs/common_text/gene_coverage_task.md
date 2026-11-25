@@ -31,10 +31,10 @@ fragment: true
 
 <!-- if: theiaeuk -->
     ??? dna "GFF and BED file usage"
-        Gene coverage runs when a reference GFF (default or user-supplied) is available alongside either `query_genes` or `query_genes_bed`, which are mutually exclusive:
+        Gene coverage runs when a reference GFF (default or user-supplied) is available alongside either `query_genes` or `query_genes_bed`:
 
         - **`query_genes`**: the comma-delimited gene names (for example: `geneA,geneB,geneC`) are matched against the product and locus tag fields of the GFF, and the CDS coordinates of each matched gene are quantified
-        - **`query_genes_bed`**: takes precedence over `query_genes` and any organism default; each BED region is quantified as written and labelled by the BED name column (column 4), so the GFF does not contribute coordinates
+        - **`query_genes_bed`**: takes precedence over `query_genes` and any organism default; each BED region is quantified as written and labelled by the BED name column (column 4)
 <!-- endif -->
 
     ??? dna "How is coverage quantified?"
