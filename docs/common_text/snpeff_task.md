@@ -26,7 +26,7 @@ fragment: true
 
     `<query>` is the `query_genes`/`query_genes_bed` term.
 
-    The `snpeff_gene_variants_hits_abbreviated` output condenses each entry into `<query>:<amino acid change>` using one-letter residue codes (e.g. `FKS1:S639F`), falling back to `<query>:<nucleotide change>` (e.g. `FKKS1:428A>G`) for a variant with no protein change (e.g. a partial transcript or intron). When no variants are reported, both outputs read `No variants detected: <query_genes>`.
+    The `snpeff_gene_variants_hits_abbreviated` output condenses each entry into `<query>:<amino acid change>` using one-letter residue codes (e.g. `FKS1:S639F`), falling back to `<query>:<nucleotide change>` (e.g. `FKS1:428A>G`) for a variant with no protein change (e.g. a partial transcript or intron). When no variants are reported, both outputs read `No unsuppressed variants detected: <query_genes>`.
 
     Entries are omitted if: any of their consequence terms are listed in `suppressed_variants` (see below), they are not annotated against a transcript (e.g. `intergenic_region`, incomplete transcript, or lacking a stop codon), resolve to neither a coding nor a protein change, and if the variant cannot be traced back to a gene product in the reference GFF. The full set of annotations is retained in `snpeff_gene_variants_vcf`, alongside SnpEff's HTML summary (`snpeff_gene_variants_summary_html`). Every reported entry is also tabulated in `snpeff_gene_variants_report_tsv` as follows:
 
