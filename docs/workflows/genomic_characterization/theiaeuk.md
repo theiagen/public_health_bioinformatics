@@ -10,6 +10,16 @@
 
 All input reads are processed through "core tasks" in each workflow. The core tasks include raw read quality assessment, read cleaning (quality trimming and adapter removal), de novo assembly, assembly quality assessment, species taxon identification, and antimicrobial resistance (AMR) _in silico_ prediction. For some taxa identified, taxa-specific sub-workflows will be automatically activated, undertaking additional taxa-specific characterization steps, including clade-typing and/or antifungal resistance detection.
 
+??? warning "Diploid and polyploid organisms"
+    Taxonomic identification of diploid, polyploid, and aneuploid fungi is functional with TheiaEuk, though there are multiple conceptual challenges that affect the broader usage of the _de novo_ assembly, variant reporting, and downstream phylogenetic analysis of non-haploid fungi:
+    
+    - **_De novo_ assemblies** may have highly similar duplicate contigs that depict different haplotypes of the same chromosome or some haplotypes may be masked because they are collapsed into a single position by the assembler. This will also lead to longer than expected assemblies and high BUSCO duplicate content.
+    
+    - **Variant calling** in TheiaEuk can account for ploidy within the generated VCFs, but allelic diversity is collapsed to a single nucleotide in downstream gene variant reporting.
+
+    - **Phylogenetic analysis** often assumes homozygosity at all positions, which disregards the haplotype allelic diversity. This has little effect on multispecies phylogenetic analysis, but makes intraspecies evolutionary analysis via SNP-based phylogenies misleading.
+
+
 === "TheiaEuk_Illumina_PE"
 
     !!! caption "TheiaEuk Illumina PE Workflow Overview"
