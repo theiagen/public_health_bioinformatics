@@ -232,13 +232,13 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
         {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False,  filters={"Workflow": "TheiaEuk_ONT"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
-??? info "> v5.0.0 output equivalents for PHB < v4.3.1"
+??? info "> v5.0.0 output equivalents to < v4.3.1"
     Snippy-based variant calling was replaced by `BWA` + `GATK` (TheiaEuk_Illumina_PE) and `minimap2` + `Clair3` (TheiaEuk_ONT), with gene-level variant reporting moved to `snpeff_gene_variants`. The following outputs are approximate or direct replacements of their v4.3.1 counterparts.
 
     | v4.3.1 Output | Current Output | Workflow(s) | Notes |
     |---|---|---|---|
     | `assembler` | `assembler_used` | Illumina_PE | Renamed only |
-    | `theiaeuk_snippy_variants_reference_genome` | `reference_fasta_used` | Illumina_PE | Previously a GenBank file; now a FASTA, with its annotation reported in `reference_gff_used`. For _C. auris_, this is the genome-wide reference; gene-level outputs use `cauris_amr_fasta` (B11205 by default) |
+    | `theiaeuk_snippy_variants_reference_genome` | `reference_fasta_used` (genome-wide); `reference_gene_fasta_used` (gene-level) | Illumina_PE | Previously a single GenBank file; now FASTAs, with the gene-level annotation reported in `reference_gff_used`. The two FASTAs can differ only for _C. auris_, where gene-level outputs use `cauris_amr_fasta` (B11205 by default) |
     | `theiaeuk_snippy_variants_bam` | `bwa_genome_variants_bam` (Illumina_PE); `minimap2_genome_variants_bam` (ONT) | Both | v4.3.1 TheiaEuk_ONT aligned assembly contigs; cleaned reads are now aligned |
     | `theiaeuk_snippy_variants_bai` | `bwa_genome_variants_bai` (Illumina_PE); `minimap2_genome_variants_bai` (ONT) | Both | See above |
     | `theiaeuk_snippy_variants_results` | `gatk_genome_variants_selected_vcf` (Illumina_PE); `clair3_genome_variants_selected_vcf` (ONT) | Both | Filtered genome-wide variants; previously Snippy's CSV, now a VCF |
@@ -247,7 +247,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
     | `theiaeuk_snippy_variants_percent_ref_coverage` | `genome_mapping_percent_coverage` | Both | Same format |
     | `theiaeuk_snippy_variants_query` | `gene_query` | Both | The _C. auris_ default query now uses B11205 locus tags |
     | `theiaeuk_snippy_variants_query_check` | `gene_coverage_query_check` | Both | Same format; a PASS/FAIL summary is reported in `gene_coverage_query_check_status` |
-    | `theiaeuk_snippy_variants_hits` | `snpeff_gene_variants_hits` | Both | Similar format; synonymous variants are suppressed by default (see `suppressed_variants`). A condensed form is reported in `snpeff_gene_variants_hits_abbreviated` |
-    | `theiaeuk_snippy_variants_gene_query_results` | `snpeff_gene_variants_report_tsv` | Both | Previously Snippy's CSV rows for queried genes; now a gene-labelled TSV of SnpEff annotations |
+    | `theiaeuk_snippy_variants_hits` | `snpeff_gene_variants_hits` | Both | Similar format; synonymous variants are suppressed by default (see `suppressed_variants`). A condensed form is reported in `snpeff_gene_variants_hits_abbreviated`. For _C. auris_, variants are now called against `reference_gene_fasta_used` (B11205 by default) instead of the clade-specific reference |
+    | `theiaeuk_snippy_variants_gene_query_results` | `snpeff_gene_variants_report_tsv` | Both | Previously Snippy's CSV rows for queried genes; now a gene-labelled TSV of SnpEff annotations. For _C. auris_, coordinates are relative to `reference_gene_fasta_used` (B11205 by default) instead of the clade-specific reference |
     | `theiaeuk_snippy_variants_num_reads_aligned` | `genome_mapping_percentage_mapped_reads` | Both | Previously a raw number of reads aligned, now it is a percent of the total cleaned reads |
     | `gene_coverage_percent_coverage_by_gene` | `gene_coverage_breadth_by_gene` | Illumina_PE | Renamed |
