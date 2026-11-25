@@ -8,7 +8,7 @@ task nanoplot {
     Int? est_genome_length
 
     Int disk_size = 100
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/nanoplot:1.48.0-seqkit-dev"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/nanoplot:1.48.0-seqkit"
     Int memory = 16
     Int cpu = 4
   }
