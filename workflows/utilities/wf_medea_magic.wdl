@@ -397,7 +397,7 @@ workflow medea_magic {
     File? mapping_stats_cov_stats = mapping_stats.cov_stats
     File? mapping_stats_flagstat = mapping_stats.flagstat
     # gene query actually used: the query_genes_bed basename when supplied, else the user-supplied or organism-derived query_genes
-    String gene_query = if defined(query_genes_bed) then basename(select_first([query_genes_bed])) else resolved_query_genes
+    String gene_query = if defined(query_genes_bed) then select_first([query_genes_bed]) else resolved_query_genes
     # gene coverage
     File? gene_coverage_stats = gene_coverage.gene_coverage_stats
     Map[String, String]? gene_coverage_depth_by_gene = gene_coverage.depth_by_gene
