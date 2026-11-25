@@ -417,7 +417,7 @@ workflow theiaviral_ont {
     Float? read_mapping_meanbaseq = read_mapping_stats.meanbaseq
     Float? read_mapping_meanmapq = read_mapping_stats.meanmapq
     Float? read_mapping_percentage_mapped_reads = read_mapping_stats.percentage_mapped_reads
-    Int? read_mapping_total_snps = read_mapping_stats.total_snps
+    Int? read_mapping_total_variants = read_mapping_stats.total_variants
     Map[String, Float]? read_mapping_coverage_by_sequence = read_mapping_stats.coverage_by_sequence
     Map[String, Float]? read_mapping_depth_by_sequence = read_mapping_stats.depth_by_sequence
     String? read_mapping_date = read_mapping_stats.date

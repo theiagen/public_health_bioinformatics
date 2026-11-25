@@ -6,7 +6,7 @@ task mapping_stats {
     String samplename
     File read1
     File? read2
-    File? vcf # variants called against the mapped reference (bgzipped or uncompressed); enables total_snps
+    File? vcf # variants called against the mapped reference (bgzipped or uncompressed); enables total_variants
     Int min_depth = 1 # positions below this depth are treated as uncovered (samtools coverage --min-depth)
     Int disk_size = 100
     Int memory = 8
@@ -93,8 +93,8 @@ task mapping_stats {
       json.dump(read_dict, f, indent=4)
     CODE
 
-    # count SNPs in the optional VCF
-    touch TOTAL_SNPS
+    # count variants in the optional VCF
+    touch TOTAL_VARIANTS
     python3 <<'CODE'
     import gzip
 
@@ -105,31 +105,29 @@ task mapping_stats {
         is_gzipped = f.read(2) == b"\x1f\x8b"
       opener = gzip.open if is_gzipped else open
 
-      # collect the (contig, position) of each SNP so a site counts once, even when its alleles
-      # are split across records (e.g. iVar writes one record per ALT allele)
-      snp_sites = set()
+      # ALT placeholders that do not represent a variant: missing ("."), spanning deletion ("*"),
+      # and gVCF reference blocks ("<*>", "<NON_REF>")
+      non_variant_alts = {".", "*", "<*>", "<NON_REF>"}
+
+      # mirror Snippy's VariantTotal, which counts each record of its filtered VCF once regardless
+      # of variant type (SNP, MNP, indel, complex); records are keyed by (contig, position) so a
+      # site counts once even when its alleles are split across records (e.g. iVar writes one
+      # record per ALT allele)
+      variant_sites = set()
       with opener(vcf_path, "rt") as f:
         for line in f:
           if line.startswith("#") or not line.strip():
             continue
-          chrom, pos, _, ref, alts, _, filt = line.split("\t", 8)[:7]
+          chrom, pos, _, _, alts, _, filt = line.split("\t", 8)[:7]
           # skip records that did not pass filtering (FILTER of PASS or unfiltered ".")
           if filt not in ("PASS", "."):
             continue
-          ref = ref.upper()
-          for alt in alts.upper().split(","):
-            # require a same-length allele of unambiguous bases; excludes indels, spanning
-            # deletions ("*"), missing (".") and symbolic ("<...>") alleles
-            if len(alt) != len(ref) or not set(alt) <= set("ACGT"):
-              continue
-            # a SNP differs from REF at exactly one base (more is an MNP); the offset locates SNPs
-            # padded to a longer REF in records shared with a deletion (e.g. REF=AT ALT=A,GT)
-            diffs = [i for i, (r, a) in enumerate(zip(ref, alt)) if r != a]
-            if len(diffs) == 1:
-              snp_sites.add((chrom, int(pos) + diffs[0]))
+          # require at least one ALT allele that is an actual variant
+          if any(alt not in non_variant_alts for alt in alts.upper().split(",")):
+            variant_sites.add((chrom, int(pos)))
 
-      with open("TOTAL_SNPS", "w") as f:
-        f.write(str(len(snp_sites)))
+      with open("TOTAL_VARIANTS", "w") as f:
+        f.write(str(len(variant_sites)))
     CODE
 
     # parse inputted reads for total read count
@@ -174,7 +172,7 @@ task mapping_stats {
     Float meanbaseq = read_string("MEANBASEQ")
     Float meanmapq = read_string("MEANMAPQ")
     Float percentage_mapped_reads = read_string("PERCENTAGE_MAPPED_READS")
-    String? total_snps = read_string("TOTAL_SNPS")
+    String? total_variants = read_string("TOTAL_VARIANTS")
   }
   runtime {
     docker: docker

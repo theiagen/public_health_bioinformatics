@@ -19,7 +19,6 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 
     - **Phylogenetic analysis** often assumes homozygosity at all positions, which disregards haplotype allelic diversity. This may have little effect on multispecies phylogenetic analysis, but makes intraspecies evolutionary analysis via SNP-based phylogenies misleading.
 
-
 === "TheiaEuk_Illumina_PE"
 
     !!! caption "TheiaEuk Illumina PE Workflow Overview"
@@ -126,7 +125,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
         The reference FASTA used for read alignment and whole genome variant calling. By default, an organism-specific reference genome is selected automatically. For _C. auris_, a clade-specific reference is identified by the CladeTyper task by default. For any other identified organism (e.g. _Candida albicans_), variant calling only runs if `reference_fasta` is supplied by the user.
 
     ??? dna "`reference_gff` input parameter (non-_C. auris_ gene variant reporting)"
-        The annotated reference (General Features Format, GFF) used by the `gene_coverage` and `snpeff_gene_variants` tasks to extract query genes list into genomic coordinates. A user-supplied `reference_gff` always takes precedence. When it is not provided, an organism-specific default is selected automatically if a default organism is identified:
+        The annotated reference (General Features Format, GFF) used by the `gene_coverage` and `snpeff_gene_variants` tasks to extract query genes into genomic coordinates. A user-supplied `reference_gff` always takes precedence. When it is not provided, an organism-specific default is selected automatically if a default organism is identified:
 
         !!! warning "Keep the FASTA and GFF matched"
             The reference FASTA and GFF must use the same assembly. If a custom `reference_fasta` is provided, an associated `reference_gff` must also be provided (and vice versa).
@@ -252,7 +251,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
     | `theiaeuk_snippy_variants_bam` | `bwa_genome_variants_bam` (Illumina_PE); `minimap2_genome_variants_bam` (ONT) | Both | v4.3.1 TheiaEuk_ONT aligned assembly contigs; cleaned reads are now aligned |
     | `theiaeuk_snippy_variants_bai` | `bwa_genome_variants_bai` (Illumina_PE); `minimap2_genome_variants_bai` (ONT) | Both | See above |
     | `theiaeuk_snippy_variants_results` | `gatk_genome_variants_selected_vcf` (Illumina_PE); `clair3_genome_variants_selected_vcf` (ONT) | Both | Filtered genome-wide variants; previously Snippy's CSV, now a VCF |
-    | `theiaeuk_snippy_variants_num_variants` | `genome_mapping_total_snps` | Both | Now counts unique SNP sites that pass filtering; indels, MNPs, and complex variants are no longer counted |
+    | `theiaeuk_snippy_variants_num_variants` | `genome_mapping_total_variants` | Both | Counts variant sites (SNPs, MNPs, indels, and complex variants) that pass filtering, as Snippy's `VariantTotal` did; counts differ because the variant caller and filters changed |
     | `theiaeuk_snippy_variants_coverage_tsv` | `genome_mapping_cov_stats` | Both | Same format |
     | `theiaeuk_snippy_variants_percent_ref_coverage` | `genome_mapping_percent_coverage` | Both | Same format |
     | `theiaeuk_snippy_variants_query` | `gene_query` | Both | The _C. auris_ default query now uses B11205 locus tags |

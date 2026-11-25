@@ -437,7 +437,7 @@ workflow theiaviral_illumina_pe {
     Float? read_mapping_meanbaseq = read_mapping_stats.meanbaseq
     Float? read_mapping_meanmapq = read_mapping_stats.meanmapq
     Float? read_mapping_percentage_mapped_reads = read_mapping_stats.percentage_mapped_reads
-    Int? read_mapping_total_snps = read_mapping_stats.total_snps
+    Int? read_mapping_total_variants = read_mapping_stats.total_variants
     String? read_mapping_date = read_mapping_stats.date
     String? read_mapping_samtools_version = read_mapping_stats.samtools_version
     # Read Alignment - variant call outputs
