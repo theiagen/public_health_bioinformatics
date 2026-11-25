@@ -194,7 +194,6 @@ workflow theiaeuk_ont {
     File? filtered_contigs_metrics = flye_denovo.filtered_contigs_metrics
     String? flye_assembly_info = flye_denovo.flye_assembly_info
     String? dorado_version = flye_denovo.dorado_version
-    String? flye_assembly_status = flye_denovo.flye_assembly_status
     String? medaka_model = flye_denovo.medaka_model_used
     String? porechop_version = flye_denovo.porechop_version
     String? flye_version = flye_denovo.flye_version
@@ -274,7 +273,7 @@ workflow theiaeuk_ont {
     String? amr_search_docker = medea_magic.amr_search_docker
     String? amr_search_version = medea_magic.amr_search_version
     # Variant Calling Outputs (minimap2 alignment + Clair3)
-    String? reference_gff_used = medea_magic.reference_gene_gff_used
+    String? reference_gene_gff_used = medea_magic.reference_gene_gff_used
     String? reference_gene_fasta_used = medea_magic.reference_gene_fasta_used
     String? reference_fasta_used = medea_magic.reference_genome_fasta_used
     String? minimap2_version = medea_magic.minimap2_version
@@ -301,7 +300,6 @@ workflow theiaeuk_ont {
     Map[String, String]? gene_coverage_breadth_by_gene = medea_magic.gene_coverage_breadth_by_gene
     Map[String, String]? gene_coverage_reads_by_gene = medea_magic.gene_coverage_reads_by_gene
     String? gene_coverage_query_check = medea_magic.gene_coverage_query_check
-    String? gene_coverage_query_check_status = medea_magic.gene_coverage_query_check_status
     String? snpeff_gene_variants_version = medea_magic.snpeff_gene_variants_version
     File? snpeff_gene_variants_vcf = medea_magic.snpeff_gene_variants_vcf
     File? snpeff_gene_variants_summary_html = medea_magic.snpeff_gene_variants_summary_html

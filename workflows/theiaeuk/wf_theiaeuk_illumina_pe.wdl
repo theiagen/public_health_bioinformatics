@@ -205,11 +205,7 @@ workflow theiaeuk_illumina_pe {
               "combined_mean_readlength_clean": cg_pipeline_clean.combined_mean_readlength,
               "est_coverage_raw": cg_pipeline_raw.est_coverage,
               "est_coverage_clean": cg_pipeline_clean.est_coverage,
-              "r1_gc_percent_raw": read_QC_trim.fastq_scan_r1_gc_percent_raw,
-              "r2_gc_percent_raw": read_QC_trim.fastq_scan_r2_gc_percent_raw,
               "combined_gc_percent_raw": read_QC_trim.fastq_scan_gc_percent_raw,
-              "r1_gc_percent_clean": read_QC_trim.fastq_scan_r1_gc_percent_clean,
-              "r2_gc_percent_clean": read_QC_trim.fastq_scan_r2_gc_percent_clean,
               "combined_gc_percent_clean": read_QC_trim.fastq_scan_gc_percent_clean,
               "assembly_length": quast.genome_length,
               "number_contigs": quast.number_contigs,
@@ -256,16 +252,12 @@ workflow theiaeuk_illumina_pe {
     Int? fastq_scan_num_reads_raw2 = read_QC_trim.fastq_scan_raw2
     String? fastq_scan_num_reads_raw_pairs = read_QC_trim.fastq_scan_raw_pairs
     Float? fastq_scan_mean_q_raw = read_QC_trim.fastq_scan_mean_q_raw
-    String? fastq_scan_r1_gc_percent_raw = read_QC_trim.fastq_scan_r1_gc_percent_raw
-    String? fastq_scan_r2_gc_percent_raw = read_QC_trim.fastq_scan_r2_gc_percent_raw
     Float? fastq_scan_gc_percent_raw = read_QC_trim.fastq_scan_gc_percent_raw
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
     Int? fastq_scan_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
     Int? fastq_scan_num_reads_clean2 = read_QC_trim.fastq_scan_clean2
     String? fastq_scan_num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
     Float? fastq_scan_mean_q_clean = read_QC_trim.fastq_scan_mean_q_clean
-    String? fastq_scan_r1_gc_percent_clean = read_QC_trim.fastq_scan_r1_gc_percent_clean
-    String? fastq_scan_r2_gc_percent_clean = read_QC_trim.fastq_scan_r2_gc_percent_clean
     Float? fastq_scan_gc_percent_clean = read_QC_trim.fastq_scan_gc_percent_clean
     File? fastq_scan_raw1_json = read_QC_trim.fastq_scan_raw1_json
     File? fastq_scan_raw2_json = read_QC_trim.fastq_scan_raw2_json
@@ -356,7 +348,7 @@ workflow theiaeuk_illumina_pe {
     String? cladetyper_gambit_version = medea_magic.cladetyper_version
     String? cladetyper_docker_image = medea_magic.cladetyper_docker_image
     # Variant Calling Outputs (BWA alignment + GATK)
-    String? reference_gff_used = medea_magic.reference_gene_gff_used
+    String? reference_gene_gff_used = medea_magic.reference_gene_gff_used
     String? reference_gene_fasta_used = medea_magic.reference_gene_fasta_used
     String? reference_fasta_used = medea_magic.reference_genome_fasta_used
     String? bwa_version = medea_magic.bwa_version
@@ -364,7 +356,6 @@ workflow theiaeuk_illumina_pe {
     File? bwa_genome_variants_bai = medea_magic.variant_calling_bai
     String? gatk_genome_variants_version = medea_magic.gatk_genome_variants_version
     File? gatk_genome_variants_unfiltered_vcf = medea_magic.gatk_genome_variants_genotype_vcf
-    File? gatk_genome_variants_unfiltered_vcf_index = medea_magic.gatk_genome_variants_genotype_vcf_index
     File? gatk_genome_variants_selected_vcf = medea_magic.gatk_genome_variants_selected_vcf
     Float? gatk_genome_variants_percent_passing = medea_magic.gatk_genome_variants_percent_passing
     # read mapping statistics
@@ -382,7 +373,6 @@ workflow theiaeuk_illumina_pe {
     Map[String, String]? gene_coverage_breadth_by_gene = medea_magic.gene_coverage_breadth_by_gene
     Map[String, String]? gene_coverage_reads_by_gene = medea_magic.gene_coverage_reads_by_gene
     String? gene_coverage_query_check = medea_magic.gene_coverage_query_check
-    String? gene_coverage_query_check_status = medea_magic.gene_coverage_query_check_status
     String? snpeff_gene_variants_version = medea_magic.snpeff_gene_variants_version
     File? snpeff_gene_variants_vcf = medea_magic.snpeff_gene_variants_vcf
     File? snpeff_gene_variants_summary_html = medea_magic.snpeff_gene_variants_summary_html

@@ -392,14 +392,14 @@ fastq_scan_num_reads_raw1	Int	The number of input forward reads as calculated by
 fastq_scan_num_reads_raw1	String	The number of input forward reads as calculated by fastq_scan	Freyja_FASTQ
 fastq_scan_num_reads_raw2	Int	The number of input reserve reads as calculated by fastq_scan	Freyja_FASTQ, TBProfiler_tNGS, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastq_scan_num_reads_raw_pairs	String	The number of input read pairs as calculated by fastq_scan	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
-fastq_scan_r1_gc_percent_clean	String	Percent GC content of forward reads after cleaning as calculated by seqkit	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
-fastq_scan_r1_gc_percent_raw	String	Percent GC content of input forward reads as calculated by seqkit	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastq_scan_r1_gc_percent_clean	String	Percent GC content of forward reads after cleaning as calculated by seqkit	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastq_scan_r1_gc_percent_raw	String	Percent GC content of input forward reads as calculated by seqkit	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastq_scan_r1_mean_q_clean	Float	The average quality of forward reads after cleaning as calculated by fastq_scan	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 fastq_scan_r1_mean_q_raw	Float	The average quality of forward reads as calculated by fastq_scan	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 fastq_scan_r1_mean_readlength_clean	Float	The average read length of forward reads after cleaning as calculated by fastq_scan	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 fastq_scan_r1_mean_readlength_raw	Float	The average read length of forward reads as calculated by fastq_scan	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
-fastq_scan_r2_gc_percent_clean	String	Percent GC content of reverse reads after cleaning as calculated by seqkit	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
-fastq_scan_r2_gc_percent_raw	String	Percent GC content of input reverse reads as calculated by seqkit	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastq_scan_r2_gc_percent_clean	String	Percent GC content of reverse reads after cleaning as calculated by seqkit	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastq_scan_r2_gc_percent_raw	String	Percent GC content of input reverse reads as calculated by seqkit	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastq_scan_r2_mean_q_clean	Float	The average quality of reverse reads after cleaning as calculated by fastq_scan	TheiaCoV_Illumina_PE
 fastq_scan_r2_mean_q_raw	Float	The average quality of reverse reads as calculated by fastq_scan	TheiaCoV_Illumina_PE
 fastq_scan_r2_mean_readlength_clean	Float	The average read length of reverse reads after cleaning as calculated by fastq_scan	TheiaCoV_Illumina_PE
@@ -443,7 +443,7 @@ flu_rimantadine_resistance	String	resistance mutations to rimantadine	TheiaCoV_F
 flu_xofluza_resistance	String	resistance mutations to xofluza (Baloxavir marboxil)	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT
 flu_zanamivir_resistance	String	resistance mutations to zanamivir (Relenza®)	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT
 flye_assembly_info	String	Information file from Flye assembly	TheiaEuk_ONT, TheiaProk_ONT
-flye_assembly_status	String	Status of Flye assembly	TheiaEuk_ONT, TheiaProk_ONT
+flye_assembly_status	String	Status of Flye assembly	TheiaProk_ONT
 flye_denovo_docker	String	Docker image used for Flye	TheiaViral_ONT
 flye_denovo_info	File	Information file from Flye assembly	TheiaViral_ONT
 flye_denovo_status	String	Status of Flye assembly	TheiaViral_ONT
@@ -505,7 +505,6 @@ gamma_version	String	The version of GAMMA used	TheiaProk_FASTA, TheiaProk_Illumi
 gatk_genome_variants_percent_passing	Float	Percent of variant records that passed filtering	TheiaEuk_Illumina_PE
 gatk_genome_variants_selected_vcf	File	Uncompressed records extracted from the filtered VCF by GATK SelectVariants - removes entries that failed filtration	TheiaEuk_Illumina_PE
 gatk_genome_variants_unfiltered_vcf	File	VCF annotated with the raw, unfiltered variant calls	TheiaEuk_Illumina_PE
-gatk_genome_variants_unfiltered_vcf_index	File	VCF index for the raw, unfiltered variant calls	TheiaEuk_Illumina_PE
 gatk_genome_variants_version	String	Version of GATK used for variant calling and filtering	TheiaEuk_Illumina_PE
 genbank_fasta	File	**Only for SARS-CoV-2 submission**: GenBank fasta file for upload	Mercury_Prep_N_Batch
 genbank_metadata	File	**Only for SARS-CoV-2 submission**: GenBank metadata for upload	Mercury_Prep_N_Batch
@@ -514,7 +513,6 @@ gene_coverage_depth_by_gene	Map[String,Float]	A JSON map relating gene queries t
 gene_coverage_depth_by_gene	Map[String,String]	A JSON map relating gene queries to their depth of coverage	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 gene_coverage_percent_coverage_by_gene	Map[String,Float]	A JSON map relating gene queries to their percent breadth of coverage	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 gene_coverage_query_check	String	Comma-delimited report of whether each gene query was found in the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-gene_coverage_query_check_status	String	PASS if every gene query was found in the reference genome, else FAIL	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 gene_coverage_reads_by_gene	Map[String,String]	A JSON map relating gene queries to the number of reads mapped	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 gene_coverage_stats	File	A tab-delimited table depicting gene coverage depth and breadth on a gene-by-gene basis	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 gene_query	String	Comma-delimited gene query used for gene coverage and gene variant annotation	TheiaEuk_Illumina_PE, TheiaEuk_ONT
@@ -1054,7 +1052,7 @@ read_screen_raw	String	PASS or FAIL result from raw read screening; FAIL accompa
 read_screen_raw_tsv	File	Raw read screening report TSV depicting read counts, total read base pairs, and estimated genome length	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 reference_fasta_used	String	Reference FASTA used in genome-wide variant calling; C. auris gene-level AMR results are instead called against cauris_amr_fasta	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 reference_gene_fasta_used	String	Reference FASTA used in gene variant annotation and coverage calculations; cauris_amr_fasta for C. auris	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-reference_gff_used	String	Reference GFF used in gene variant annotation and coverage calculations; cauris_amr_gff for C. auris	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+reference_gene_gff_used	String	Reference GFF used in gene variant annotation and coverage calculations; cauris_amr_gff for C. auris	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 rename_fastq_files_analysis_date	String	Date of analysis	Rename_FASTQ
 rename_fastq_files_version	String	Version of PHB used for the analysis	Rename_FASTQ
 resfinder_db_version	String	Version of ResFinder database	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT

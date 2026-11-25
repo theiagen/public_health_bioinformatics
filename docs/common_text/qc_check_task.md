@@ -21,7 +21,7 @@ fragment: true
 <!-- endif -->
 <!-- if: theiaeuk -->
 
-    Read GC content thresholds are checked against the `fastq_scan` GC percentages (`r1_gc_percent_*`, `r2_gc_percent_*`, and `combined_gc_percent_*`) in TheiaEuk_Illumina_PE and against the `NanoPlot` GC percentages (`r1_gc_percent_*`) in TheiaEuk_ONT. The `genome_mapping_percent_coverage`, `genome_mapping_depth`, and `genome_mapping_percentage_mapped_reads` thresholds are checked against the reference-based read mapping statistics, which are only generated for taxa with an organism-specific reference or when a reference is provided by the user (see the [Organism-specific characterization](#organism-specific-characterization) section); leave these columns blank for other taxa.
+    Read GC content thresholds are checked against the `fastq_scan` combined GC percentages (`combined_gc_percent_*`) in TheiaEuk_Illumina_PE and against the `NanoPlot` GC percentages (`r1_gc_percent_*`) in TheiaEuk_ONT. The `genome_mapping_percent_coverage`, `genome_mapping_depth`, and `genome_mapping_percentage_mapped_reads` thresholds are checked against the reference-based read mapping statistics, which are only generated for taxa with an organism-specific reference or when a reference is provided by the user (see the [Organism-specific characterization](#organism-specific-characterization) section); leave these columns blank for other taxa.
 <!-- endif -->
 
     ??? toggle "Formatting the _qc_check_table.tsv_"
