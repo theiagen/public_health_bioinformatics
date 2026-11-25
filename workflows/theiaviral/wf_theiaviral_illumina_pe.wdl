@@ -261,8 +261,7 @@ workflow theiaviral_illumina_pe {
             samplename = samplename,
             read1 = select_first([rasusa.read1_subsampled, cat_lanes.read1_concatenated, kraken2_extract.extracted_read1, read1]),
             read2 = select_first([rasusa.read2_subsampled, cat_lanes.read2_concatenated, kraken2_extract.extracted_read2, read2]),
-            vcf = ivar_variants.sample_variants_vcf,
-            min_depth = min_depth
+            vcf = ivar_variants.sample_variants_vcf
         }
         # quality control metrics for consensus (ie. number of bases, degenerate bases, genome length)
         call consensus_qc_task.consensus_qc as consensus_qc {

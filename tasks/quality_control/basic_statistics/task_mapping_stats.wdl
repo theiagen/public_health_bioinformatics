@@ -7,7 +7,6 @@ task mapping_stats {
     File read1
     File? read2
     File? vcf # variants called against the mapped reference (bgzipped or uncompressed); enables total_variants
-    Int min_depth = 1 # positions below this depth are treated as uncovered (samtools coverage --min-depth)
     Int disk_size = 100
     Int memory = 8
     Int cpu = 2
@@ -21,8 +20,8 @@ task mapping_stats {
     samtools --version | head -n1 | tee VERSION
 
     samtools stats ~{bamfile} > ~{samplename}.stats.txt
-    samtools coverage ~{bamfile} -m --min-depth ~{min_depth} -o ~{samplename}.cov.hist
-    samtools coverage ~{bamfile} --min-depth ~{min_depth} -o ~{samplename}.cov.txt
+    samtools coverage ~{bamfile} -m -o ~{samplename}.cov.hist
+    samtools coverage ~{bamfile} -o ~{samplename}.cov.txt
     samtools flagstat ~{bamfile} > ~{samplename}.flagstat.txt
 
      # Extracting coverage, depth, meanbaseq, and meanmapq

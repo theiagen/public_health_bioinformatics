@@ -1257,7 +1257,7 @@ medea_magic	clair3_enable_haploid_precise	Boolean	Enable haploid precise calling
 medea_magic	clair3_enable_long_indel	Boolean	Enable long indel calling	False	Optional	TheiaEuk_ONT	general	
 medea_magic	clair3_include_all_contigs	Boolean	Call variants on all contigs, should always be true for non-human samples	True	Optional	TheiaEuk_ONT	general	
 medea_magic	clair3_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaEuk_ONT	runtime	
-medea_magic	clair3_min_depth	Int	Minimum coverage required for Clair3 to call a variant (--min_coverage); also the minimum depth for a position to count as covered in the genome-wide mapping statistics	2	Optional	TheiaEuk_ONT	general	
+medea_magic	clair3_min_depth	Int	Minimum coverage required for Clair3 to call a variant (--min_coverage)	2	Optional	TheiaEuk_ONT	general	
 medea_magic	clair3_min_variant_quality	Int	Minimum variant quality (QUAL) to declare a variant passing 	2	Optional	TheiaEuk_ONT	general	
 medea_magic	clair3_model	String	Model name for Clair3 variant calling (see supported models for available options)	r1041_e82_400bps_sup_v500	Optional	TheiaEuk_ONT	general	
 medea_magic	gatk_cpu	Int	Number of CPUs to allocate to the task	8	Optional	TheiaEuk_Illumina_PE	runtime	
@@ -1266,7 +1266,7 @@ medea_magic	gatk_docker	String	The Docker container to use for the task	us-docke
 medea_magic	gatk_filter_expression	String	Custom JEXL filter expression applied by GATK VariantFiltration (annotated with the filter name 'user_filter')		Optional	TheiaEuk_Illumina_PE	general	
 medea_magic	gatk_filter_max_fisher_strand_bias	Float	Maximum Phred-scaled p-value for strand bias derived from Fisher's Exact Test	60	Optional	TheiaEuk_Illumina_PE	general	
 medea_magic	gatk_filter_max_strand_odds_ratio	Float	Maximum strand odds ratio for strand bias	3	Optional	TheiaEuk_Illumina_PE	general	
-medea_magic	gatk_filter_min_depth	Int	Minimum read depth (DP); variants below this threshold are flagged by GATK VariantFiltration; also the minimum depth for a position to count as covered in the genome-wide mapping statistics	10	Optional	TheiaEuk_Illumina_PE	general	
+medea_magic	gatk_filter_min_depth	Int	Minimum read depth (DP); variants below this threshold are flagged by GATK VariantFiltration	10	Optional	TheiaEuk_Illumina_PE	general	
 medea_magic	gatk_filter_min_map_quality	Float	Minimum RMS mapping quality (MQ); variants below this threshold are flagged by GATK VariantFiltration	40	Optional	TheiaEuk_Illumina_PE	general	
 medea_magic	gatk_filter_min_quality_by_depth	Float	Minimum quality-by-depth (QD); variants below this threshold are flagged by GATK VariantFiltration	2.0	Optional	TheiaEuk_Illumina_PE	general	
 medea_magic	gatk_filter_min_variant_quality	Float	Minimum variant quality (QUAL); variants below this threshold are flagged by GATK VariantFiltration	30	Optional	TheiaEuk_Illumina_PE	general	
@@ -2604,7 +2604,7 @@ theiaviral_illumina_pe	host	String	Host taxon/accession to dehost reads, if prov
 theiaviral_illumina_pe	host	String	Internal component, do not modify		Optional	TheiaViral_Panel	general	
 theiaviral_illumina_pe	kraken2_db	File	Kraken2 database file	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz	Optional	TheiaViral_Illumina_PE	database	
 theiaviral_illumina_pe	min_allele_freq	Float	Minimum allele frequency required for a variant to populate the consensus sequence	0.6	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
-theiaviral_illumina_pe	min_depth	Int	Minimum read depth required for a variant to populate the consensus sequence; also the minimum depth for a position to count as covered in the reference mapping statistics	10	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+theiaviral_illumina_pe	min_depth	Int	Minimum read depth required for a variant to populate the consensus sequence	10	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
 theiaviral_illumina_pe	min_map_quality	Int	Minimum mapping quality required for read alignments	20	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
 theiaviral_illumina_pe	read_extraction_rank	String	Taxonomic rank to use for read extraction - limits taxons to only those within the specified ranks.	family	Optional	TheiaViral_Illumina_PE	general	
 theiaviral_illumina_pe	read_extraction_rank	String	Internal component, do not modify	family	Optional	TheiaViral_Panel	general	
@@ -2620,7 +2620,7 @@ theiaviral_ont	extract_unclassified	Boolean	True/False that determines if unclas
 theiaviral_ont	genome_length	Int	Expected genome length of taxon of interest		Optional	TheiaViral_ONT	general	
 theiaviral_ont	host	String	Host taxon/accession to dehost reads, if provided		Optional	TheiaViral_ONT	general	
 theiaviral_ont	min_allele_freq	Float	Minimum allele frequency required for a variant to populate the consensus sequence	0.6	Optional	TheiaViral_ONT	general	
-theiaviral_ont	min_depth	Int	Minimum read depth required for a variant to populate the consensus sequence; also the minimum coverage for Clair3 to call a variant and the minimum depth for a position to count as covered in the reference mapping statistics	10	Optional	TheiaViral_ONT	general	
+theiaviral_ont	min_depth	Int	Minimum read depth required for a variant to populate the consensus sequence; also the minimum coverage for Clair3 to call a variant	10	Optional	TheiaViral_ONT	general	
 theiaviral_ont	min_map_quality	Int	Minimum mapping quality required for read alignments	20	Optional	TheiaViral_ONT	general	
 theiaviral_ont	read_extraction_rank	String	Taxonomic rank to use for read extraction - limits taxons to only those within the specified ranks.	family	Optional	TheiaViral_ONT	general	
 theiaviral_ont	reference_fasta	File	Reference genome in FASTA format		Optional	TheiaViral_ONT	general	
