@@ -32,6 +32,12 @@ fragment: true
         - The `min_map_quality` parameter is applied before calling variants.
         - The `min_depth` and `min_allele_freq` parameters are applied after variant calling during consensus genome construction.
 <!-- endif -->
+<!-- if: theiaeuk -->
+
+    !!! info "Outputs"
+        - `clair3_genome_variants_unfiltered_vcf` — the unfiltered Clair3 VCF, including `RefCall` and `LowQual` records.
+        - `clair3_genome_variants_selected_vcf` — the records with a `PASS` (or unset) `FILTER`. This VCF is used for downstream variant annotation.
+<!-- endif -->
 
     !!! techdetails "Clair3 Technical Details"
         |  | Links |

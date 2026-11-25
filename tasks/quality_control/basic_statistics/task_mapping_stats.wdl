@@ -6,6 +6,7 @@ task mapping_stats {
     String samplename
     File read1
     File? read2
+    File? vcf # variants called against the mapped reference (bgzipped or uncompressed); enables total_variants
     Int disk_size = 100
     Int memory = 8
     Int cpu = 2
@@ -35,7 +36,7 @@ task mapping_stats {
       seq_data = line.strip().split("\t")
       seq, start, end, reads, cov_bases, coverage, meandepth, meanbaseq, meanmapq = seq_data
       seq2data[seq] = {
-        "length": int(end) - int(start),
+        "length": int(end) - int(start) + 1,
         "reads": int(reads),
         "cov_bases": int(cov_bases),
         "coverage": float(coverage),
@@ -67,21 +68,21 @@ task mapping_stats {
 
     # report total stats
     with open("COVERAGE", "w") as f:
-      f.write(str(total_breadth))
+      f.write(f"{total_breadth:.2f}")
     with open("DEPTH", "w") as f:
-      f.write(str(total_depth))
+      f.write(f"{total_depth:.2f}")
     with open("MEANBASEQ", "w") as f:
-      f.write(str(total_meanbaseq))
+      f.write(f"{total_meanbaseq:.2f}")
     with open("MEANMAPQ", "w") as f:
-      f.write(str(total_meanmapq))
+      f.write(f"{total_meanmapq:.2f}")
 
     # report sequence specific mapping stats
     cov_dict = {}
     depth_dict = {}
     read_dict = {}
     for seq, part in seq2data.items():
-      cov_dict[seq] = part["coverage"]
-      depth_dict[seq] = part["meandepth"]
+      cov_dict[seq] = round(part["coverage"], 2)
+      depth_dict[seq] = round(part["meandepth"], 2)
       read_dict[seq] = part["reads"]
     with open("SEQ2COVERAGE.json", "w") as f:
       json.dump(cov_dict, f, indent=4)
@@ -89,6 +90,43 @@ task mapping_stats {
       json.dump(depth_dict, f, indent=4)
     with open("SEQ2READS.json", "w") as f:
       json.dump(read_dict, f, indent=4)
+    CODE
+
+    # count variants in the optional VCF
+    touch TOTAL_VARIANTS
+    python3 <<'CODE'
+    import gzip
+
+    vcf_path = "~{default="" vcf}"
+    if vcf_path:
+      # detect bgzip/gzip compression from the magic number rather than the extension
+      with open(vcf_path, "rb") as f:
+        is_gzipped = f.read(2) == b"\x1f\x8b"
+      opener = gzip.open if is_gzipped else open
+
+      # ALT placeholders that do not represent a variant: missing ("."), spanning deletion ("*"),
+      # and gVCF reference blocks ("<*>", "<NON_REF>")
+      non_variant_alts = {".", "*", "<*>", "<NON_REF>"}
+
+      # mirror Snippy's VariantTotal, which counts each record of its filtered VCF once regardless
+      # of variant type (SNP, MNP, indel, complex); records are keyed by (contig, position) so a
+      # site counts once even when its alleles are split across records (e.g. iVar writes one
+      # record per ALT allele)
+      variant_sites = set()
+      with opener(vcf_path, "rt") as f:
+        for line in f:
+          if line.startswith("#") or not line.strip():
+            continue
+          chrom, pos, _, _, alts, _, filt = line.split("\t", 8)[:7]
+          # skip records that did not pass filtering (FILTER of PASS or unfiltered ".")
+          if filt not in ("PASS", "."):
+            continue
+          # require at least one ALT allele that is an actual variant
+          if any(alt not in non_variant_alts for alt in alts.upper().split(",")):
+            variant_sites.add((chrom, int(pos)))
+
+      with open("TOTAL_VARIANTS", "w") as f:
+        f.write(str(len(variant_sites)))
     CODE
 
     # parse inputted reads for total read count
@@ -110,7 +148,7 @@ task mapping_stats {
     percentage_mapped_reads=$(awk "BEGIN {printf \"%.2f\", ($mapped_reads / $total_reads) * 100}")
 
     # If the percentage calculation fails, default to 0.0
-    if [ -z "$percentage_mapped_reads" ]; then percentage_mapped_reads="0.0"; fi
+    if [ -z "$percentage_mapped_reads" ]; then percentage_mapped_reads="0.00"; fi
 
     # Output the result
     echo $percentage_mapped_reads | tee PERCENTAGE_MAPPED_READS
@@ -133,6 +171,7 @@ task mapping_stats {
     Float meanbaseq = read_string("MEANBASEQ")
     Float meanmapq = read_string("MEANMAPQ")
     Float percentage_mapped_reads = read_string("PERCENTAGE_MAPPED_READS")
+    String? total_variants = read_string("TOTAL_VARIANTS")
   }
   runtime {
     docker: docker

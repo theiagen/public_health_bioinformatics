@@ -2,14 +2,11 @@ version 1.0
 
 import "../../tasks/species_typing/candidozyma/task_cauris_cladetyper.wdl" as cauris_cladetyper
 import "../../tasks/gene_typing/drug_resistance/task_amr_search.wdl" as amr_search_task
-import "../../tasks/alignment/task_bwa.wdl" as bwa_task
-import "../../tasks/gene_typing/variant_detection/task_gatk_variants.wdl" as gatk_variants_task
-import "../../tasks/gene_typing/variant_detection/task_gatk_filter.wdl" as gatk_filter_task
-import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
-import "../../tasks/gene_typing/variant_detection/task_clair3_variants.wdl" as clair3_task
-import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
 import "../../tasks/quality_control/basic_statistics/task_gene_coverage.wdl" as gene_coverage_task
-import "../../tasks/gene_typing/variant_detection/task_variant_annotate.wdl" as variant_annotate_task
+import "../../tasks/quality_control/basic_statistics/task_mapping_stats.wdl" as mapping_stats_task
+import "../../tasks/gene_typing/variant_detection/task_snpeff.wdl" as snpeff_task
+import "../standalone_modules/wf_clair3_variants_ont.wdl" as clair3_variants_ont_workflow
+import "wf_gatk_variants_illumina.wdl" as gatk_variants_illumina_workflow
 
 workflow medea_magic {
   meta {
@@ -19,7 +16,7 @@ workflow medea_magic {
     String samplename
     String medea_tag
     File assembly
-    File? read1
+    File read1
     File? read2
     Boolean ont_data = false
     # amr_search options
@@ -33,8 +30,14 @@ workflow medea_magic {
     Int? cladetyper_kmer_size
     Float? cladetyper_max_distance
     # user-supplied reference fasta; when provided, overrides the hosted/organism reference
+    # for C. auris, these only apply to the genome-wide track; gene-level AMR characterization uses cauris_amr_fasta/gff
     File? reference_fasta
     File? reference_gff
+    # C. auris gene-level AMR characterization is standardized to this reference, independent of the
+    # genome-wide (cladetyper-selected or user-supplied) reference
+    # EFFECTIVE DEFAULTS ARE SET IN THE WF BELOW; not set here to streamline user-error checking
+    File? cauris_amr_fasta
+    File? cauris_amr_gff
     # shared compute for the read_aligners (bwa for illumina, minimap2 for ont);
     String? read_aligner_docker
     Int? read_aligner_cpu
@@ -45,7 +48,6 @@ workflow medea_magic {
     Int? gatk_cpu
     Int? gatk_memory
     Int? gatk_disk_size
-    Boolean? gatk_decompress # output uncompressed GATK VCFs instead of bgzipped VCFs
     # gatk-specific variant-calling options (illumina)
     Int? gatk_ploidy
     # gatk-specific filtering options (illumina)
@@ -58,7 +60,8 @@ workflow medea_magic {
     String? gatk_filter_expression
     # clair3 variant-calling & filtering options (ont)
     String? clair3_model
-    Int? clair3_variant_quality
+    Int? clair3_min_variant_quality
+    Int? clair3_min_depth
     Boolean? clair3_include_all_contigs
     Boolean? clair3_enable_haploid_precise
     Boolean? clair3_disable_phasing
@@ -70,7 +73,9 @@ workflow medea_magic {
     Int? clair3_disk_size
     # gene coverage options; user-supplied inputs take priority
     String? query_genes
-    File? query_genes_bed
+    String? suppressed_variants # comma-delimited string of suppressed variants
+    Int? translation_table
+    File? query_genes_bed # takes precedence over query_genes and organism defaults
     Boolean query_exact_match = false
     Int min_gene_coverage_depth = 10 # mirror Snippy variants v4.6.0
     Int min_gene_coverage_map_quality = 60 # mirror Snippy variants v4.6.0
@@ -87,29 +92,9 @@ workflow medea_magic {
         max_distance = cladetyper_max_distance,
         docker = cauris_cladetyper_docker_image
     }
-    # a user-supplied GFF has unknown locus tags, so only product names are queried
-    if (defined(reference_gff)) {
-      String cauris_custom_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,sterol.24-C-methyltransferase"
-    }
-    # clade reference defaults: product names where they resolve a single gene, otherwise the
-    # clade reference's ortholog locus tags (FLO8, FLO8 N-terminus, MEC3, ERG3, PSK74852)
-    if (cladetyper.gambit_cladetype == "Clade1") {
-      String cauris_clade1_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,sterol.24-C-methyltransferase,B9J08_02359,B9J08_02360,B9J08_00960,B9J08_01595,B9J08_04226"
-    }
-    # Clade II writes products with "_" and annotates FLO8 as a single gene
-    if (cladetyper.gambit_cladetype == "Clade2") {
-      String cauris_clade2_query_genes = "FKS1,lanosterol_14-alpha_demethylase,uracil_phosphoribosyltransferase,sterol_24-C-methyltransferase,CJI96_0001121,CJI96_0001637,CJI96_0002270,CJI96_0004130"
-    }
-    if (cladetyper.gambit_cladetype == "Clade3") {
-      String cauris_clade3_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,sterol.24-C-methyltransferase,CJI97_000401,CJI97_000402,CJI97_003175,CJI97_003811,CJI97_005426"
-    }
-    # Clade IV and V annotate FLO8 as a single gene
-    if (cladetyper.gambit_cladetype == "Clade4") {
-      String cauris_clade4_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,sterol.24-C-methyltransferase,CJJ07_003930,CJJ07_005307,CJJ07_003685,CJJ07_003405"
-    }
-    if (cladetyper.gambit_cladetype == "Clade5") {
-      String cauris_clade5_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,sterol.24-C-methyltransferase,FDK38_002567,FDK38_000935,FDK38_001564,FDK38_004143"
-    }
+    # B11205 (cauris_amr_gff) defaults: product names, plus locus tags for genes annotated only as
+    # "hypothetical protein" (MEC3, ERG3, PSK74852)
+    String cauris_query_genes = "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,sterol.24-C-methyltransferase,FLO8,CJI82_01006,CJI82_00364,CJI82_03986"
   }
   if (medea_tag == "Aspergillus fumigatus") {
     File afumigatus_variant_fasta = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.fasta"
@@ -134,136 +119,206 @@ workflow medea_magic {
   if ((defined(reference_gff) && defined(reference_fasta)) || (! defined(reference_gff) && ! defined(reference_fasta))) {
     String resolved_reference_gff = select_first([reference_gff, cladetyper.annotated_reference_gff, afumigatus_reference_gff, cryptoneo_reference_gff, ""])
   }
-  # The user-supplied query_genes takes priority; otherwise the organism-specific default
-  # set (if any) is used, with the C. auris user-supplied GFF set preceding the clade sets.
-  # Inherently depends on variant calling
-  String resolved_query_genes = select_first([query_genes, cauris_custom_query_genes, cauris_clade1_query_genes, cauris_clade2_query_genes, cauris_clade3_query_genes, cauris_clade4_query_genes, cauris_clade5_query_genes, afumigatus_query_genes, cryptoneo_query_genes, ""])
+  # A user-supplied query_genes_bed takes precedence over any query_genes list (user-supplied or organism default),
+  # so the queries are left empty and the BED supplies them; otherwise the user-supplied query_genes takes priority
+  # over the organism-specific default set (if any)
+  String resolved_query_genes = if defined(query_genes_bed) then "" else select_first([query_genes, cauris_query_genes, afumigatus_query_genes, cryptoneo_query_genes, ""])
 
   # REFERENCE-BASED VARIANT CALLING
-  # variant calling runs automatically whenever a reference fasta and read1 are available
-  if (resolved_reference_fasta != "" && defined(read1)) {
-    # Illumina short-read track: BWA alignment + GATK variant calling
+  # variant calling runs automatically whenever a reference fasta and read1 are available;
+  # Illumina data additionally requires read2, as only paired-end reads are supported
+  if (resolved_reference_fasta != "" && defined(read1) && (ont_data || defined(read2))) {
+    # Illumina paired-end track: BWA alignment + GATK variant calling (gatk_variants_illumina)
     if (!ont_data) {
-      call bwa_task.bwa as bwa_variant_calling {
+      call gatk_variants_illumina_workflow.gatk_variants_illumina as gatk_genome_variants {
         input:
           read1 = select_first([read1]),
-          read2 = read2,
+          read2 = select_first([read2]),
+          reference_genome_file = resolved_reference_fasta,
           samplename = samplename,
-          reference_genome = resolved_reference_fasta,
-          cpu = read_aligner_cpu,
-          memory = read_aligner_memory,
-          disk_size = read_aligner_disk_size,
-          docker = read_aligner_docker
-      }
-      call gatk_variants_task.gatk_variants as gatk_variants {
-        input:
-          samplename = samplename,
-          bam = bwa_variant_calling.sorted_bam,
-          bai = bwa_variant_calling.sorted_bai,
-          reference_genome = resolved_reference_fasta,
-          ploidy = gatk_ploidy,
-          decompress = gatk_decompress,
-          docker = gatk_docker,
-          cpu = gatk_cpu,
-          memory = gatk_memory,
-          disk_size = gatk_disk_size
-      }
-      call gatk_filter_task.gatk_filter as gatk_filter {
-        input:
-          samplename = samplename,
-          reference_genome = resolved_reference_fasta,
-          vcf = gatk_variants.gatk_genotype_vcf,
-          vcf_index = gatk_variants.gatk_genotype_vcf_index,
-          min_variant_quality = gatk_filter_min_variant_quality,
-          min_depth = gatk_filter_min_depth,
-          min_map_quality = gatk_filter_min_map_quality,
-          min_quality_by_depth = gatk_filter_min_quality_by_depth,
-          max_fisher_strand_bias = gatk_filter_max_fisher_strand_bias,
-          max_strand_odds_ratio = gatk_filter_max_strand_odds_ratio,
-          filter_expression = gatk_filter_expression,
-          decompress = gatk_decompress,
-          docker = gatk_docker,
-          cpu = gatk_cpu,
-          memory = gatk_memory,
-          disk_size = gatk_disk_size
+          bwa_docker = read_aligner_docker,
+          bwa_cpu = read_aligner_cpu,
+          bwa_memory = read_aligner_memory,
+          bwa_disk_size = read_aligner_disk_size,
+          gatk_ploidy = gatk_ploidy,
+          gatk_filter_min_variant_quality = gatk_filter_min_variant_quality,
+          gatk_filter_min_depth = gatk_filter_min_depth,
+          gatk_filter_min_map_quality = gatk_filter_min_map_quality,
+          gatk_filter_min_quality_by_depth = gatk_filter_min_quality_by_depth,
+          gatk_filter_max_fisher_strand_bias = gatk_filter_max_fisher_strand_bias,
+          gatk_filter_max_strand_odds_ratio = gatk_filter_max_strand_odds_ratio,
+          gatk_filter_expression = gatk_filter_expression,
+          gatk_docker = gatk_docker,
+          gatk_cpu = gatk_cpu,
+          gatk_memory = gatk_memory,
+          gatk_disk_size = gatk_disk_size
       }
     }
-    # ONT long-read track: minimap2 alignment + Clair3 variant calling
+    # ONT long-read track: minimap2 alignment + Clair3 variant calling (Clair3_Variants_ONT)
     if (ont_data) {
-      call minimap2_task.minimap2 as minimap2_variant_calling {
+      call clair3_variants_ont_workflow.clair3_variants_ont as clair3_genome_variants {
         input:
-          query1 = select_first([read1]),
-          reference = resolved_reference_fasta,
-          samplename = samplename,
-          mode = "map-ont",
-          output_sam = true,
-          long_read_flags = true,
-          docker = read_aligner_docker,
-          cpu = read_aligner_cpu,
-          memory = read_aligner_memory,
-          disk_size = read_aligner_disk_size
-      }
-      # convert the minimap2 SAM to the sorted, indexed BAM Clair3 expects
-      call parse_mapping_task.sam_to_sorted_bam as ont_bam_sorting {
-        input:
-          sam = minimap2_variant_calling.minimap2_out,
-          samplename = samplename
-      }
-      # variant calling
-      call clair3_task.clair3_variants as clair3_variant_calling {
-        input:
-          alignment_bam_file = ont_bam_sorting.bam,
-          alignment_bam_file_index = ont_bam_sorting.bai,
+          read1 = select_first([read1]),
           reference_genome_file = resolved_reference_fasta,
-          sequencing_platform = "ont",
           samplename = samplename,
+          minimap2_docker = read_aligner_docker,
+          minimap2_cpu = read_aligner_cpu,
+          minimap2_memory = read_aligner_memory,
+          minimap2_disk_size = read_aligner_disk_size,
           clair3_model = clair3_model,
-          variant_quality = clair3_variant_quality,
-          include_all_contigs = clair3_include_all_contigs,
-          enable_haploid_precise = clair3_enable_haploid_precise,
-          disable_phasing = clair3_disable_phasing,
-          enable_gvcf = clair3_enable_gvcf,
-          enable_long_indel = clair3_enable_long_indel,
-          docker = clair3_docker,
-          memory = clair3_memory,
-          cpu = clair3_cpu,
-          disk_size = clair3_disk_size
+          clair3_variant_quality = clair3_min_variant_quality,
+          clair3_min_depth = clair3_min_depth,
+          clair3_include_all_contigs = clair3_include_all_contigs,
+          clair3_enable_haploid_precise = clair3_enable_haploid_precise,
+          clair3_disable_phasing = clair3_disable_phasing,
+          clair3_enable_gvcf = clair3_enable_gvcf,
+          clair3_enable_long_indel = clair3_enable_long_indel,
+          clair3_docker = clair3_docker,
+          clair3_memory = clair3_memory,
+          clair3_cpu = clair3_cpu,
+          clair3_disk_size = clair3_disk_size
       }
     }
     # Resolve newly-generated alignment files for downstream use
-    File resolved_bam = select_first([bwa_variant_calling.sorted_bam, ont_bam_sorting.bam])
-    File resolved_bai = select_first([bwa_variant_calling.sorted_bai, ont_bam_sorting.bai])
-    File resolved_vcf = select_first([gatk_filter.gatk_selected_vcf, clair3_variant_calling.clair3_variants_vcf])
+    File resolved_bam = select_first([gatk_genome_variants.gatk_aligned_bam, clair3_genome_variants.clair3_aligned_bam])
+    File resolved_bai = select_first([gatk_genome_variants.gatk_aligned_bai, clair3_genome_variants.clair3_aligned_bai])
+    File resolved_vcf = select_first([gatk_genome_variants.gatk_selected_vcf, clair3_genome_variants.clair3_selected_vcf])
+    # genome-wide read mapping statistics against the resolved reference
+    call mapping_stats_task.mapping_stats {
+      input:
+        bamfile = resolved_bam,
+        samplename = samplename,
+        read1 = select_first([read1]),
+        read2 = read2,
+        vcf = resolved_vcf
+    }
+  }
+
+  # C. AURIS AMR VARIANT CALLING
+  # C. auris variant calling is bifurcated: genome-wide variants are called against the cladetyper-selected (or
+  # user-supplied) reference above, while gene-level AMR characterization is standardized to cauris_amr_fasta and
+  # cauris_amr_gff (B11205 by default). Reads are additionally called against cauris_amr_fasta unless it matches (by
+  # basename) the genome-wide reference, in which case the genome-wide alignment and VCF are reused. The AMR
+  # alignment and VCF are only used by the gene-centric modules and are not exposed.
+  if (medea_tag == "Candidozyma auris" || medea_tag == "Candida auris") {
+    # GATE USER-ERROR:
+    # skip AMR calling if only one AMR reference is defined because this can cause reference discrepancy errors
+    Boolean cauris_amr_unpaired = defined(cauris_amr_fasta) != defined(cauris_amr_gff)
+    # set the default
+    File resolved_cauris_amr_fasta = select_first([cauris_amr_fasta, "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1-B11205_GCA_016772135.1_ASM1677213v1_genomic.fasta"])
+    File resolved_cauris_amr_gff = select_first([cauris_amr_gff, "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1-B11205_GCA_016772135.1_ASM1677213v1_genomic.gff"])
+    String resolved_reference_basename = if resolved_reference_fasta != "" then basename(resolved_reference_fasta) else ""
+    # This is a weak check:
+    # skip redundant variant calling if the basenames are the same
+    if (basename(resolved_cauris_amr_fasta) != resolved_reference_basename) {
+      if (! cauris_amr_unpaired) {
+        if (! ont_data) {
+          call gatk_variants_illumina_workflow.gatk_variants_illumina as cauris_amr_gatk_variants {
+            input:
+              read1 = select_first([read1]),
+              read2 = select_first([read2]),
+              reference_genome_file = resolved_cauris_amr_fasta,
+              samplename = samplename,
+              bwa_docker = read_aligner_docker,
+              bwa_cpu = read_aligner_cpu,
+              bwa_memory = read_aligner_memory,
+              bwa_disk_size = read_aligner_disk_size,
+              gatk_ploidy = gatk_ploidy,
+              gatk_filter_min_variant_quality = gatk_filter_min_variant_quality,
+              gatk_filter_min_depth = gatk_filter_min_depth,
+              gatk_filter_min_map_quality = gatk_filter_min_map_quality,
+              gatk_filter_min_quality_by_depth = gatk_filter_min_quality_by_depth,
+              gatk_filter_max_fisher_strand_bias = gatk_filter_max_fisher_strand_bias,
+              gatk_filter_max_strand_odds_ratio = gatk_filter_max_strand_odds_ratio,
+              gatk_filter_expression = gatk_filter_expression,
+              gatk_docker = gatk_docker,
+              gatk_cpu = gatk_cpu,
+              gatk_memory = gatk_memory,
+              gatk_disk_size = gatk_disk_size
+          }
+        }
+        if (ont_data) {
+          call clair3_variants_ont_workflow.clair3_variants_ont as cauris_amr_clair3_variants {
+            input:
+              read1 = select_first([read1]),
+              reference_genome_file = resolved_cauris_amr_fasta,
+              samplename = samplename,
+              minimap2_docker = read_aligner_docker,
+              minimap2_cpu = read_aligner_cpu,
+              minimap2_memory = read_aligner_memory,
+              minimap2_disk_size = read_aligner_disk_size,
+              clair3_model = clair3_model,
+              clair3_variant_quality = clair3_min_variant_quality,
+              clair3_min_depth = clair3_min_depth,
+              clair3_include_all_contigs = clair3_include_all_contigs,
+              clair3_enable_haploid_precise = clair3_enable_haploid_precise,
+              clair3_disable_phasing = clair3_disable_phasing,
+              clair3_enable_gvcf = clair3_enable_gvcf,
+              clair3_enable_long_indel = clair3_enable_long_indel,
+              clair3_docker = clair3_docker,
+              clair3_memory = clair3_memory,
+              clair3_cpu = clair3_cpu,
+              clair3_disk_size = clair3_disk_size
+          }
+        }
+        File cauris_amr_bam = select_first([cauris_amr_gatk_variants.gatk_aligned_bam, cauris_amr_clair3_variants.clair3_aligned_bam])
+        File cauris_amr_bai = select_first([cauris_amr_gatk_variants.gatk_aligned_bai, cauris_amr_clair3_variants.clair3_aligned_bai])
+        File cauris_amr_vcf = select_first([cauris_amr_gatk_variants.gatk_selected_vcf, cauris_amr_clair3_variants.clair3_selected_vcf])
+      }
+    }
+  }
+
+  # GENE-CENTRIC INPUT RESOLUTION
+  # C. auris always uses the AMR references; its AMR alignment and VCF take priority when generated, otherwise
+  # (other organisms and C. auris samples whose AMR reference matches the genome-wide reference) the genome-wide
+  # alignment and VCF are used
+  String gene_reference_fasta = select_first([resolved_cauris_amr_fasta, resolved_reference_fasta])
+  String gene_reference_gff = select_first([resolved_cauris_amr_gff, resolved_reference_gff, ""])
+  if (gene_reference_fasta != "") {
+    File used_gene_fasta = gene_reference_fasta
+  }
+  if (gene_reference_gff != "") {
+    File used_gene_reference_gff = gene_reference_gff
+    # a supplied BED is the coordinate source for gene coverage, so the GFF is only passed without a BED
+    if (! defined(query_genes_bed)) {
+      File gene_coverage_reference_gff = gene_reference_gff
+    }
   }
 
   # GENE-CENTRIC COVERAGE CALCULATIONS AND VARIANT ANNOTATION
-  # Terra can pass empty strings, so check for empty strings as well
-  if ((select_first([resolved_reference_gff, ""]) != "" && resolved_query_genes != "") || defined(query_genes_bed)) {
-    if (defined(resolved_bam)) {
-      call gene_coverage_task.gene_coverage {
-        input:
-          bam = select_first([resolved_bam]),
-          bai = select_first([resolved_bai]),
-          samplename = samplename,
-          reference_gff = resolved_reference_gff,
-          bedfile = query_genes_bed,
-          query_genes = resolved_query_genes,
-          exact_match = query_exact_match,
-          min_map_quality = min_gene_coverage_map_quality,
-          min_base_quality = min_gene_coverage_base_quality,
-          min_depth = min_gene_coverage_depth,
-          query_check_hard_fail = true
-      }
-      if (resolved_query_genes != "" && defined(resolved_vcf) && select_first([resolved_reference_gff, ""]) != "") {
-        call variant_annotate_task.variant_annotate as gene_variants {
+  # a GFF is required alongside the queries (query_genes or query_genes_bed)
+  if (gene_reference_gff != "" && (resolved_query_genes != "" || defined(query_genes_bed))) {
+    if (defined(cauris_amr_bam) || defined(resolved_bam)) {
+      # GATE USER-ERROR for C. auris:
+      # skip gene coverage and annotation if only one AMR reference is defined because this can cause reference discrepancy errors
+      if (select_first([cauris_amr_unpaired, false]) == false) {
+        call gene_coverage_task.gene_coverage {
           input:
+            bam = select_first([cauris_amr_bam, resolved_bam]),
+            bai = select_first([cauris_amr_bai, resolved_bai]),
             samplename = samplename,
-            reference_fasta = resolved_reference_fasta,
-            reference_gff = select_first([resolved_reference_gff]),
+            reference_gff = gene_coverage_reference_gff,
+            bedfile = query_genes_bed,
             query_genes = resolved_query_genes,
             exact_match = query_exact_match,
-            vcf = select_first([resolved_vcf]),
-            bedfile = query_genes_bed
+            min_map_quality = min_gene_coverage_map_quality,
+            min_base_quality = min_gene_coverage_base_quality,
+            min_depth = min_gene_coverage_depth
+        }
+        if (defined(cauris_amr_vcf) || defined(resolved_vcf)) {
+          call snpeff_task.snpeff as snpeff_gene_variants {
+            input:
+              samplename = samplename,
+              organism = medea_tag,
+              reference_fasta = gene_reference_fasta,
+              reference_gff = gene_reference_gff,
+              translation_table = translation_table,
+              query_genes = resolved_query_genes,
+              exact_match = query_exact_match,
+              suppress = suppressed_variants,
+              vcf = select_first([cauris_amr_vcf, resolved_vcf]),
+              bedfile = query_genes_bed
+          }
         }
       }
     }
@@ -295,9 +350,6 @@ workflow medea_magic {
   if (resolved_reference_fasta != "") {
     File used_reference_fasta = resolved_reference_fasta
   }
-  if (select_first([resolved_reference_gff, ""]) != "") {
-    File used_reference_gff = select_first([resolved_reference_gff])
-  }
   output {
     # AMR_Search
     File? amr_search_results = amr_search.amr_search_json_output
@@ -311,42 +363,56 @@ workflow medea_magic {
     String? clade_type = cladetyper.gambit_cladetype
     String? cladetyper_version = cladetyper.gambit_version
     String? cladetyper_docker_image = cladetyper.gambit_cladetyper_docker_image
-    # species-agnostic reference actually used (user-supplied or organism-derived)
-    File? reference_fasta_used = used_reference_fasta
-    File? reference_gff_used = used_reference_gff
+    # species-agnostic genome-wide reference actually used (user-supplied or organism-derived)
+    File? reference_genome_fasta_used = used_reference_fasta
+    # FASTA and GFF used by the gene-centric modules (cauris_amr_fasta/cauris_amr_gff for C. auris)
+    File? reference_gene_fasta_used = used_gene_fasta
+    File? reference_gene_gff_used = used_gene_reference_gff
     # variant calling - illumina (bwa alignment + gatk)
-    String? bwa_version = bwa_variant_calling.bwa_version
-    String? gatk_version = gatk_variants.gatk_version
-    File? gatk_genotype_vcf = gatk_variants.gatk_genotype_vcf
-    File? gatk_genotype_vcf_index = gatk_variants.gatk_genotype_vcf_index
-    File? gatk_filtered_vcf = gatk_filter.gatk_filtered_vcf
-    File? gatk_filtered_vcf_index = gatk_filter.gatk_filtered_vcf_index
-    File? gatk_selected_vcf = gatk_filter.gatk_selected_vcf
-    File? gatk_selected_vcf_index = gatk_filter.gatk_selected_vcf_index
-    Float? gatk_percent_passing_variants = gatk_filter.gatk_percent_passing
+    String? bwa_version = gatk_genome_variants.bwa_version
+    String? gatk_genome_variants_version = gatk_genome_variants.gatk_version
+    File? gatk_genome_variants_genotype_vcf = gatk_genome_variants.gatk_genotype_vcf
+    File? gatk_genome_variants_genotype_vcf_index = gatk_genome_variants.gatk_genotype_vcf_index
+    File? gatk_genome_variants_selected_vcf = gatk_genome_variants.gatk_selected_vcf
+    File? gatk_genome_variants_selected_vcf_index = gatk_genome_variants.gatk_selected_vcf_index
+    Float? gatk_genome_variants_percent_passing = gatk_genome_variants.gatk_percent_passing
     # variant calling - ont (minimap2 alignment + clair3)
-    String? minimap2_version = minimap2_variant_calling.minimap2_version
+    String? minimap2_version = clair3_genome_variants.minimap2_version
     File? variant_calling_bam = resolved_bam
     File? variant_calling_bai = resolved_bai
-    String? clair3_version = clair3_variant_calling.clair3_version
-    File? clair3_variants_vcf = clair3_variant_calling.clair3_variants_vcf
-    File? clair3_variants_gvcf = clair3_variant_calling.clair3_variants_gvcf
-    String? clair3_variants_docker = clair3_variant_calling.clair3_variants_docker_image
-    String? clair3_model_used = clair3_variant_calling.clair3_model_used
+    String? clair3_genome_variants_version = clair3_genome_variants.clair3_version
+    File? clair3_genome_variants_vcf = clair3_genome_variants.clair3_variants_vcf
+    File? clair3_genome_variants_selected_vcf = clair3_genome_variants.clair3_selected_vcf
+    File? clair3_genome_variants_gvcf = clair3_genome_variants.clair3_variants_gvcf
+    String? clair3_genome_variants_docker = clair3_genome_variants.clair3_docker_image
+    String? clair3_genome_variants_model_used = clair3_genome_variants.clair3_model_used
+    # read mapping statistics
+    String? mapping_stats_samtools_version = mapping_stats.samtools_version
+    Float? mapping_stats_percentage_mapped_reads = mapping_stats.percentage_mapped_reads
+    Float? mapping_stats_depth = mapping_stats.depth
+    Float? mapping_stats_coverage = mapping_stats.coverage
+    String? mapping_stats_total_variants = mapping_stats.total_variants
+    File? mapping_stats_stats = mapping_stats.stats
+    File? mapping_stats_cov_hist = mapping_stats.cov_hist
+    File? mapping_stats_cov_stats = mapping_stats.cov_stats
+    File? mapping_stats_flagstat = mapping_stats.flagstat
+    # gene query actually used: the query_genes_bed basename when supplied, else the user-supplied or organism-derived query_genes
+    String gene_query = if defined(query_genes_bed) then select_first([query_genes_bed]) else resolved_query_genes
     # gene coverage
     File? gene_coverage_stats = gene_coverage.gene_coverage_stats
-    String? gene_coverage_reads_mapped = gene_coverage.num_reads_aligned_to_genes
-    String? gene_coverage_mean_breadth = gene_coverage.mean_breadth
-    String? gene_coverage_mean_depth = gene_coverage.mean_depth
     Map[String, String]? gene_coverage_depth_by_gene = gene_coverage.depth_by_gene
     Map[String, String]? gene_coverage_breadth_by_gene = gene_coverage.breadth_by_gene
     Map[String, String]? gene_coverage_reads_by_gene = gene_coverage.reads_by_gene
     String? gene_coverage_query_check = gene_coverage.gene_coverage_query_check
     String? gene_coverage_query_check_status = gene_coverage.gene_coverage_query_check_status
-    File? gene_variants_warnings = gene_variants.variant_annotation_warnings
-    File? gene_variants_summary = gene_variants.variant_annotation_html
-    File? gene_variants_vcf = gene_variants.variant_annotation_gene_vcf
-    File? gene_variants_tsv = gene_variants.variant_annotation_tsv
-    String? gene_variants_annotations = gene_variants.variant_annotation
+    # snpeff gene variant annotation
+    String? snpeff_gene_variants_version = snpeff_gene_variants.snpeff_version
+    File? snpeff_gene_variants_vcf = snpeff_gene_variants.snpeff_annotated_vcf
+    File? snpeff_gene_variants_summary_html = snpeff_gene_variants.snpeff_summary_html
+    File? snpeff_gene_variants_report_tsv = snpeff_gene_variants.snpeff_variant_report_tsv
+    String? snpeff_gene_variants_hits = snpeff_gene_variants.snpeff_variant_hits
+    String? snpeff_gene_variants_hits_abbreviated = snpeff_gene_variants.snpeff_variant_hits_abbreviated
+    # suppressed SnpEff consequence terms actually used (user-supplied or task default)
+    String? suppressed_variants_used = snpeff_gene_variants.suppressed_variants_used
   }
 }

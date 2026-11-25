@@ -12,8 +12,8 @@ task cauris_cladetyper {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0"
     Int memory = 16
 
-    File ref_clade1 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.fasta"
-    File ref_clade1_gff = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.gff"
+    File ref_clade1 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1-B11205_GCA_016772135.1_ASM1677213v1_genomic.fasta"
+    File ref_clade1_gff = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1-B11205_GCA_016772135.1_ASM1677213v1_genomic.gff"
     File ref_clade2 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.fasta"
     File ref_clade2_gff = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.gff"
     File ref_clade3 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCA_002775015.1_Cand_auris_B11221_V1_genomic.fasta"
@@ -93,11 +93,11 @@ task cauris_cladetyper {
             cladefa = ref
             break
 
-    # report top clade
+    # report top clade; copies retain the original reference basenames
     if cladegff:
-        shutil.copy(cladegff, "CAURIS_REFERENCE.gff")
+        shutil.copy(cladegff, os.path.basename(cladegff))
     if cladefa:
-        shutil.copy(cladefa, "CAURIS_REFERENCE.fasta")
+        shutil.copy(cladefa, os.path.basename(cladefa))
     with open("CLADETYPE", 'w') as cladetype_file:
         cladetype_file.write(cladetype)
     CODE
@@ -105,8 +105,9 @@ task cauris_cladetyper {
   output {
     String gambit_version = read_string("VERSION")
     String gambit_cladetype = read_string("CLADETYPE")
-    File? annotated_reference_gff = "CAURIS_REFERENCE.gff"
-    File? assembly_reference = "CAURIS_REFERENCE.fasta"
+    # select the copied reference by its original basename; the placeholder is absent when no clade matches
+    File? annotated_reference_gff = if gambit_cladetype == "Clade1" then basename(ref_clade1_gff) else if gambit_cladetype == "Clade2" then basename(ref_clade2_gff) else if gambit_cladetype == "Clade3" then basename(ref_clade3_gff) else if gambit_cladetype == "Clade4" then basename(ref_clade4_gff) else if gambit_cladetype == "Clade5" then basename(ref_clade5_gff) else if gambit_cladetype == "Clade6" then basename(select_first([ref_clade6_gff, "NO_CLADE_REFERENCE.gff"])) else "NO_CLADE_REFERENCE.gff"
+    File? assembly_reference = if gambit_cladetype == "Clade1" then basename(ref_clade1) else if gambit_cladetype == "Clade2" then basename(ref_clade2) else if gambit_cladetype == "Clade3" then basename(ref_clade3) else if gambit_cladetype == "Clade4" then basename(ref_clade4) else if gambit_cladetype == "Clade5" then basename(ref_clade5) else if gambit_cladetype == "Clade6" then basename(ref_clade6) else "NO_CLADE_REFERENCE.fasta"
     String gambit_cladetyper_docker_image = docker
   }
   runtime {
