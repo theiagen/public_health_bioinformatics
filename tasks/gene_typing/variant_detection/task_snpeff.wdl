@@ -59,11 +59,13 @@ task snpeff {
     # stage the reference FASTA where SnpEff expects it
     zcat -f ~{reference_fasta} > "${data_dir}/${genome_id}/sequences.fa"
 
-    # extract a sub-VCF only when a subset of genes/regions is requested 
+    # extract a sub-VCF only when a subset of genes/regions is requested; a supplied BED is the
+    # coordinate source, so the GFF is only passed without one (unbraced bash variables, as WDL
+    # string literals interpolate ${})
     if ~{extract}; then
       theiagene extract_variants \
         --vcf ~{vcf} \
-        --reference_gff "${data_dir}/${genome_id}/genes.gff" \
+        ~{if defined(bedfile) then "" else '--reference_gff "$data_dir/$genome_id/genes.gff"'} \
         ~{'--query_genes "' + query_genes + '"'} \
         ~{"--bedfile " + bedfile} \
         ~{if exact_match then "--exact_match" else ""} \

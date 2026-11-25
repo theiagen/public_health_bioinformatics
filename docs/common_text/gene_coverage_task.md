@@ -31,10 +31,10 @@ fragment: true
 
 <!-- if: theiaeuk -->
     ??? dna "GFF and BED file usage"
-        A GFF and/or a BED file may be used for gene coverage coordinate selection.
+        Gene coverage runs when a reference GFF (default or user-supplied) is available alongside either `query_genes` or `query_genes_bed`, which are mutually exclusive:
 
-        - If a GFF is used, a comma-delimited `query_genes` list must be provided (for example: `geneA,geneB,geneC`) to extract gene coordinates
-        - If a BED is used, gene names can be taken from the BED entries; if `query_genes` is supplied, particular regions will be extracted
+        - **`query_genes`**: the comma-delimited gene names (for example: `geneA,geneB,geneC`) are matched against the product and locus tag fields of the GFF, and the CDS coordinates of each matched gene are quantified
+        - **`query_genes_bed`**: takes precedence over `query_genes` and any organism default; each BED region is quantified as written and labelled by the BED name column (column 4), so the GFF does not contribute coordinates
 <!-- endif -->
 
     ??? dna "How is coverage quantified?"

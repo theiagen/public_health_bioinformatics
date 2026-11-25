@@ -75,7 +75,7 @@ workflow medea_magic {
     String? query_genes
     String? suppressed_variants # comma-delimited string of suppressed variants
     Int? translation_table
-    File? query_genes_bed
+    File? query_genes_bed # takes precedence over query_genes and organism defaults
     Boolean query_exact_match = false
     Int min_gene_coverage_depth = 10 # mirror Snippy variants v4.6.0
     Int min_gene_coverage_map_quality = 60 # mirror Snippy variants v4.6.0
@@ -119,8 +119,10 @@ workflow medea_magic {
   if ((defined(reference_gff) && defined(reference_fasta)) || (! defined(reference_gff) && ! defined(reference_fasta))) {
     String resolved_reference_gff = select_first([reference_gff, cladetyper.annotated_reference_gff, afumigatus_reference_gff, cryptoneo_reference_gff, ""])
   }
-  # The user-supplied query_genes takes priority; otherwise the organism-specific default set (if any) is used
-  String resolved_query_genes = select_first([query_genes, cauris_query_genes, afumigatus_query_genes, cryptoneo_query_genes, ""])
+  # A user-supplied query_genes_bed takes precedence over any query_genes list (user-supplied or organism default),
+  # so the queries are left empty and the BED supplies them; otherwise the user-supplied query_genes takes priority
+  # over the organism-specific default set (if any)
+  String resolved_query_genes = if defined(query_genes_bed) then "" else select_first([query_genes, cauris_query_genes, afumigatus_query_genes, cryptoneo_query_genes, ""])
 
   # REFERENCE-BASED VARIANT CALLING
   # variant calling runs automatically whenever a reference fasta and read1 are available;
@@ -277,11 +279,16 @@ workflow medea_magic {
   }
   if (gene_reference_gff != "") {
     File used_gene_reference_gff = gene_reference_gff
+    # a supplied BED is the coordinate source for gene coverage, so the GFF is only passed without one
+    if (! defined(query_genes_bed)) {
+      File gene_coverage_reference_gff = gene_reference_gff
+    }
   }
 
   # GENE-CENTRIC COVERAGE CALCULATIONS AND VARIANT ANNOTATION
-  # Terra can pass empty strings, so check for empty strings as well
-  if ((gene_reference_gff != "" && resolved_query_genes != "") || defined(query_genes_bed)) {
+  # a GFF is required alongside the queries (query_genes or query_genes_bed) for both modules, as SnpEff builds
+  # its database from it; Terra can pass empty strings, so check for empty strings as well
+  if (gene_reference_gff != "" && (resolved_query_genes != "" || defined(query_genes_bed))) {
     if (defined(cauris_amr_bam) || defined(resolved_bam)) {
       # GATE USER-ERROR for C. auris:
       # skip gene coverage and annotation if only one AMR reference is defined because this can cause reference discrepancy errors
@@ -291,7 +298,7 @@ workflow medea_magic {
             bam = select_first([cauris_amr_bam, resolved_bam]),
             bai = select_first([cauris_amr_bai, resolved_bai]),
             samplename = samplename,
-            reference_gff = used_gene_reference_gff,
+            reference_gff = gene_coverage_reference_gff,
             bedfile = query_genes_bed,
             query_genes = resolved_query_genes,
             exact_match = query_exact_match,
@@ -299,7 +306,7 @@ workflow medea_magic {
             min_base_quality = min_gene_coverage_base_quality,
             min_depth = min_gene_coverage_depth
         }
-        if (resolved_query_genes != "" && (defined(cauris_amr_vcf) || defined(resolved_vcf)) && gene_reference_gff != "") {
+        if (defined(cauris_amr_vcf) || defined(resolved_vcf)) {
           call snpeff_task.snpeff as snpeff_gene_variants {
             input:
               samplename = samplename,
@@ -390,8 +397,8 @@ workflow medea_magic {
     File? mapping_stats_cov_hist = mapping_stats.cov_hist
     File? mapping_stats_cov_stats = mapping_stats.cov_stats
     File? mapping_stats_flagstat = mapping_stats.flagstat
-    # gene query actually used (user-supplied or organism-derived)
-    String gene_query = resolved_query_genes
+    # gene query actually used: the query_genes_bed basename when supplied, else the user-supplied or organism-derived query_genes
+    String gene_query = if defined(query_genes_bed) then basename(select_first([query_genes_bed])) else resolved_query_genes
     # gene coverage
     File? gene_coverage_stats = gene_coverage.gene_coverage_stats
     Map[String, String]? gene_coverage_depth_by_gene = gene_coverage.depth_by_gene
