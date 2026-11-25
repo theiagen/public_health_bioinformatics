@@ -42,7 +42,9 @@ workflow theiacov_clearlabs {
       nextclade_dataset_tag_input = nextclade_dataset_tag,
       nextclade_dataset_name_input = nextclade_dataset_name,
       kraken_target_organism_input = target_organism,
-      flu_genoflu_genotype = ""
+      flu_genoflu_genotype = "",
+      flu_segment = "",
+      flu_type = ""
   }
   call fastq_scan.fastq_scan as fastq_scan_raw_reads {
     input:
@@ -122,11 +124,6 @@ workflow theiacov_clearlabs {
         assembly_metrics_disk_size = 0,
         assembly_metrics_docker = "",
         assembly_metrics_memory = 0,
-        irma_cpu = 0,
-        irma_disk_size = 0,
-        irma_docker_image = "",
-        irma_keep_ref_deletions = false,
-        irma_memory = 0,
         genoflu_cpu = 0,
         genoflu_disk_size = 0,
         genoflu_docker = "",

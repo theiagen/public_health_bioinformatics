@@ -171,7 +171,7 @@ workflow theiacov_illumina_pe {
           input:
             assembly_fasta = select_first([ivar_consensus.assembly_fasta, flu_track.irma_assembly_fasta]),
             reference_genome = organism_parameters.reference,
-            genome_length = organism_parameters.genome_length
+            genome_length = select_first([genome_length, flu_track.flu_genome_length, organism_parameters.genome_length])
         }
         call morgana_magic_wf.morgana_magic {
           input:
@@ -197,11 +197,6 @@ workflow theiacov_illumina_pe {
             assembly_metrics_disk_size = 0,
             assembly_metrics_docker = "",
             assembly_metrics_memory = 0,
-            irma_cpu = 0,
-            irma_disk_size = 0,
-            irma_docker_image = "",
-            irma_keep_ref_deletions = false,
-            irma_memory = 0,
             genoflu_cpu = 0,
             genoflu_disk_size = 0,
             genoflu_docker = "",
